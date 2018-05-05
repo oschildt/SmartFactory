@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>Framework SmartFactory</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">Framework SmartFactory</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/SmartFactory.html">\SmartFactory</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1738541172"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1738541172" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-928025343"></a>
+                                <a href="../namespaces/SmartFactory.html" style="margin-left: 30px; padding-left: 0">SmartFactory</a>
+            </div>
+            <div id="namespace-928025343" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-962494876"></a>
+                                <a href="../namespaces/SmartFactory.DatabaseWorkers.html" style="margin-left: 30px; padding-left: 0">DatabaseWorkers</a>
+            </div>
+            <div id="namespace-962494876" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html">MSSQL_DBWorker</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.DatabaseWorkers.MySQL_DBWorker.html">MySQL_DBWorker</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1988435474"></a>
+                                <a href="../namespaces/SmartFactory.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
+            </div>
+            <div id="namespace-1988435474" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.IApiRequestHandler.html">IApiRequestHandler</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.IDebugProfiler.html">IDebugProfiler</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.IErrorHandler.html">IErrorHandler</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.IEventManager.html">IEventManager</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.IInitable.html">IInitable</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.ILanguageManager.html">ILanguageManager</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.IMessageManager.html">IMessageManager</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.IRecordsetManager.html">IRecordsetManager</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.ISessionManager.html">ISessionManager</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.ISettingsManager.html">ISettingsManager</a></li>
+                                                    <li class="interface"><a href="../classes/SmartFactory.Interfaces.ISettingsValidator.html">ISettingsValidator</a></li>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/SmartFactory.ApplicationSettingsManager.html">ApplicationSettingsManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.ConfigSettingsManager.html">ConfigSettingsManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.DebugProfiler.html">DebugProfiler</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.ErrorHandler.html">ErrorHandler</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.EventManager.html">EventManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.FactoryBuilder.html">FactoryBuilder</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.JsonApiRequestHandler.html">JsonApiRequestHandler</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.LanguageManager.html">LanguageManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.MessageManager.html">MessageManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.RecordsetManager.html">RecordsetManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.SessionManager.html">SessionManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.UserSettingsManager.html">UserSettingsManager</a></li>
+                                                    <li class="class"><a href="../classes/SmartFactory.XmlApiRequestHandler.html">XmlApiRequestHandler</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/SmartFactory.html">\SmartFactory</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\SmartFactory</small>ConfigSettingsManager</h1>
+                    <p><em>Class for management of the config settings stored in a config XML dile.</em></p>
+                    <p>This settings manager supports the multistep wizard like processing. That means
+that you do not have to put all settings in one big form and save them in one action.
+You can collect them over multiple steps (requests), go forward ad back, validate them
+on each step and finally save them after the final step.</p>
+<p>You do not need any preliminary special settings name definitions. When you introduce
+a new setting, just start saving and getting it.</p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_init" class="">init()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_setValidator" class="">setValidator()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_getValidator" class="">getValidator()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_setContext" class="">setContext()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_getContext" class="">getContext()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_isDirty" class="">isDirty()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_setParameter" class="">setParameter()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_getParameter" class="">getParameter()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_validateSettings" class="">validateSettings()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_loadSettings" class="">loadSettings()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_saveSettings" class="">saveSettings()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_saveXML" class="">saveXML()</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#method_loadXML" class="">loadXML()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_save_path" class="">$save_path</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_save_encrypted" class="">$save_encrypted</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_salt_key" class="">$salt_key</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_config_file_must_exist" class="">$config_file_must_exist</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_context" class="">$context</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_validator" class="">$validator</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_temp_settings" class="">$temp_settings</a><br />
+                                                                    <a href="../classes/SmartFactory.ConfigSettingsManager.html#property_settings" class="">$settings</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/classes.SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">classes\SmartFactory\ConfigSettingsManager.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">System</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\SmartFactory\ConfigSettingsManager</div>
+                            </dd>
+
+                                                                            <dt>Implements</dt>
+                                                        <dd><a href="../classes/SmartFactory.Interfaces.ISettingsManager.html"><div class="namespace-wrapper">\SmartFactory\Interfaces\ISettingsManager</div></a></dd>
+                        
+                        
+                        
+                                                                            <dt>See also</dt>
+                                                                                        <dd><a href="../classes/SmartFactory.ApplicationSettingsManager.html"><span class="namespace-wrapper">\SmartFactory\ApplicationSettingsManager</span></a></dd>
+                                                            <dd><a href="../classes/SmartFactory.UserSettingsManager.html"><span class="namespace-wrapper">\SmartFactory\UserSettingsManager</span></a></dd>
+                                                                            
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                                                        <p>Oleg Schildt</p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_save_path" name="property_save_path" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$save_path</h3>
+                <pre class="signature">$save_path : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; Internal variable that holds the target file path for storing the settings data.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_save_encrypted" name="property_save_encrypted" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$save_encrypted</h3>
+                <pre class="signature">$save_encrypted : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; Internal variable for storing the state whether the data should be encrypted.
+before saving.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_salt_key" name="property_salt_key" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$salt_key</h3>
+                <pre class="signature">$salt_key : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; Internal variable for storing the salt key if the data should be encrypted
+before saving.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_config_file_must_exist" name="property_config_file_must_exist" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$config_file_must_exist</h3>
+                <pre class="signature">$config_file_must_exist : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; Internal variable for storing the state whether the config file must exist.
+before saving.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_context" name="property_context" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$context</h3>
+                <pre class="signature">$context : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; Internal variable for storing the current context.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\getContext</span></a></dd>
+                                            <dd><a href=""><span class="namespace-wrapper">\SmartFactory\setContext</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_validator" name="property_validator" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$validator</h3>
+                <pre class="signature">$validator : \SmartFactory\Interfaces\ISettingsValidator</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a>
+                &mdash; Internal variable for storing the validator.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\getValidator</span></a></dd>
+                                            <dd><a href=""><span class="namespace-wrapper">\SmartFactory\setValidator</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_temp_settings" name="property_temp_settings" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$temp_settings</h3>
+                <pre class="signature">$temp_settings : array</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                &mdash; Internal variable for storing the array of settings values.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_settings" name="property_settings" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$settings</h3>
+                <pre class="signature">$settings : array</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                &mdash; Internal variable for storing the array of changed settings values.
+
+The changes are set to the temp_settings and are persisted and
+written to the storage by saving.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct() : \SmartFactory\ConfigSettingsManager</pre>
+                <p><em>Default constructor.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/SmartFactory.ConfigSettingsManager.html">\SmartFactory\ConfigSettingsManager</a>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_init" name="method_init" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">init()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">init(array  <span class="argument">$parameters</span>) : boolean</pre>
+                <p><em>Initializes the settings manager parameters.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$parameters </td>
+                                <td><p>Settings for saving ad loading as an associative array in the form key =&gt; value:</p>
+<ul>
+<li>
+<p>$parameters[&quot;save_path&quot;] - the target file path where the settings data should be stored.</p>
+</li>
+<li>
+<p>$parameters[&quot;save_encrypted&quot;] - if it is true, the data is encrypted before saving.</p>
+</li>
+<li>
+<p>$parameters[&quot;salt_key&quot;] - the salt key if the data should be encrypted before saving.</p>
+</li>
+<li>
+<p>$parameters[&quot;config_file_must_exist&quot;] - if this paremeter is true and the config file does not exist,
+the loading function will fail.</p>
+</li>
+</ul></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns true upon successful initialization, otherwise false.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setValidator" name="method_setValidator" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setValidator()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setValidator(\SmartFactory\Interfaces\ISettingsValidator  <span class="argument">$validator</span>) : void</pre>
+                <p><em>Sets the validator for the settings.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a></td>
+                                <td>$validator </td>
+                                <td><p>The settings validator.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\getValidator</span></a></dd>
+                                            <dd><a href=""><span class="namespace-wrapper">\SmartFactory\validateSettings</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getValidator" name="method_getValidator" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getValidator()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getValidator() : \SmartFactory\Interfaces\ISettingsValidator|null</pre>
+                <p><em>Returns the validator for the settings.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a>|null
+                                            &mdash; <p>Returns the validator for the settings or null if none is defined.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\setValidator</span></a></dd>
+                                            <dd><a href=""><span class="namespace-wrapper">\SmartFactory\validateSettings</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setContext" name="method_setContext" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setContext()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setContext(string  <span class="argument">$context = &quot;default&quot;</span>) : void</pre>
+                <p><em>Sets the settings context.</em></p>
+                <p>Settings might be edited not in one dialog,
+There can be several masks for different type of settings,
+or the settings can be configured in a wizard.
+In this case, only a subset of settings has to be
+saved and validated.
+To be able to write a flexible validator for the subsets,
+the $context is used. It can be - step1, step1, server_settings,
+db_connection_settings etc.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$context </td>
+                                <td><p>The settings context.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\getContext</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getContext" name="method_getContext" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getContext()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getContext() : string</pre>
+                <p><em>Returns the current settings context.</em></p>
+                <p>Settings might be edited not in one dialog,
+There can be several masks for different type of settings,
+or the settings can be configured in a wizard.
+In this case, only a subset of settings has to be
+saved and validated.
+To be able to write a flexible validator for the subsets,
+the $context is used. It can be - step1, step1, server_settings,
+db_connection_settings etc.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Returns the current settings context.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\setContext</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_isDirty" name="method_isDirty" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">isDirty()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">isDirty(boolean  <span class="argument">$global = false</span>) : boolean</pre>
+                <p><em>Checks whether the settings data is dirty (not saved) within a context or globally.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$global </td>
+                                <td><p>If $global is false, the dirty state is checked only within the current context.
+If $global is true, the dirty state is checked globally.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returs true if the settings data is dirty, otherwise false.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setParameter" name="method_setParameter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setParameter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setParameter(string  <span class="argument">$name</span>, mixed  <span class="argument">$value</span>) : void</pre>
+                <p><em>Sets a settings parameter.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td><p>The name of the settings parameter.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$value </td>
+                                <td><p>The value of the settings parameter.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\getParameter</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getParameter" name="method_getParameter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getParameter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getParameter(string  <span class="argument">$name</span>, boolean  <span class="argument">$get_dirty = false</span>, mixed  <span class="argument">$default = null</span>) : mixed</pre>
+                <p><em>Returns the value of a settings parameter.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td><p>The name of the settings parameter.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$get_dirty </td>
+                                <td><p>If settings are not saved yet, the unsaved new value
+of the parameter is returned if $get_dirty is true.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$default </td>
+                                <td><p>The default value of the settings parameter if it is not set yet.
+The parameter is a confortable way to pre-set a parameter
+to a default value if its value is not set yet.
+However, if the status of the data is dirty and the unsaved
+last entered value is requested, then always the actual
+last entered value is returned and this paramter is ignored.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                            &mdash; <p>Returns the value of the settings parameter.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\setParameter</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_validateSettings" name="method_validateSettings" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">validateSettings()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">validateSettings() : boolean</pre>
+                <p><em>Validates the current settings values.</em></p>
+                <p>It should be called after settings the new values of the parameters
+and before their saving.</p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns true if there is no validator defined, otherwise lets
+the validator validate the settings.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\getValidator</span></a></dd>
+                                            <dd><a href=""><span class="namespace-wrapper">\SmartFactory\setValidator</span></a></dd>
+                                                                                                <dt>Uses</dt>
+                                                                <dd><a href="../classes/SmartFactory.Interfaces.ISettingsValidator.html"><span class="namespace-wrapper">\SmartFactory\Interfaces\ISettingsValidator</span></a></dd>
+                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_loadSettings" name="method_loadSettings" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">loadSettings()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">loadSettings() : boolean</pre>
+                <p><em>Loads the settings from the target file.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns true if the settings have been successfully loaded, otherwise false.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\saveSettings</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_saveSettings" name="method_saveSettings" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">saveSettings()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">saveSettings() : boolean</pre>
+                <p><em>Saves the settings from to the target file.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns true if the settings have been successfully saved, otherwise false.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\loadSettings</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_saveXML" name="method_saveXML" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">saveXML()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">saveXML(array  <span class="argument">$data</span>) : boolean</pre>
+                <p><em>This is internal auxiliary function for converting the settings to XML and storing it
+to the target file defined by the iniailization.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$data </td>
+                                <td><p>The array with the settings values to be saved.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns true if the data has been successfully saved, otherwise false.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\loadXML</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_loadXML" name="method_loadXML" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">loadXML()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">loadXML(array  <span class="argument">$data</span>) : boolean</pre>
+                <p><em>This is internal auxiliary function for loading the settings from the target file
+defined by the iniailization.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$data </td>
+                                <td><p>The target array with the settings values to be loaded.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns true if the data has been successfully loaded, otherwise false.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/SmartFactory.ConfigSettingsManager.html"><div class="path-wrapper">\SmartFactory\ConfigSettingsManager</div></a></dd>
+                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\SmartFactory\saveXML</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">ConfigSettingsManager.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/classes\SmartFactory\ConfigSettingsManager.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/SmartFactory.html">\SmartFactory</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on May 5th, 2018 at 12:46.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
