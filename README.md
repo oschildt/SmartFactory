@@ -7,14 +7,14 @@
 
 For more details see [Wiki](https://github.com/oschildt/SmartFactory/wiki).
 
-## To get familiar with the SmartFactory do the following
+### To get familiar with the SmartFactory do the following
 
 - View and study the usage examples in the folder examples.
 - Use the script database/restore_database.cmd to create a demo database necessary for some examples.
 - View and study the API documentation in the folder docs.
 - Study the core code of the framework SmartFactory.
 
-## To start writing own application
+### To start writing own application
 
 1. Put the clean directory structure of the framework SmartFactory into the root directory of your web application.
 Use namespace for your application, e.g. MyApplication.
