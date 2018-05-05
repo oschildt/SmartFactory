@@ -43,4 +43,3 @@ class UserSettingsValidator implements ISettingsValidator
   //-----------------------------------------------------------------
 } // UserSettingsValidator
 //-------------------------------------------------------------------
-?>
