@@ -5,6 +5,8 @@
 - Without overhead
 - Designed based on IoC 
 
+For more details see [Wiki](https://github.com/oschildt/SmartFactory/wiki).
+
 ## To get familiar with the SmartFactory do the following
 
 - View and study the usage examples in the folder examples.
