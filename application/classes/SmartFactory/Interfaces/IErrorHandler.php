@@ -106,4 +106,3 @@ interface IErrorHandler
    */
   public function disableTrace();
 } // IErrorHandler
-?>

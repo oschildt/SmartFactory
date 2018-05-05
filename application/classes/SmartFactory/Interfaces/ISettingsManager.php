@@ -202,4 +202,3 @@ interface ISettingsManager extends IInitable
    */
   public function saveSettings();
 } // ISettingsManager
-?>

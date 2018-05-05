@@ -17,4 +17,3 @@ $aroot = str_replace("includes/SmartFactory/$basename", "", $aroot);
  * @author Oleg Schildt
  */
 define('APPLICATION_ROOT', $aroot);
-?>

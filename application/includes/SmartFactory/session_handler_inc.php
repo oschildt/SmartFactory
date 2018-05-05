@@ -15,4 +15,3 @@ $smanager = singleton(ISessionManager::class);
 
 session_set_save_handler($smanager, true);
 //------------------------------------------------------------------------------
-?>

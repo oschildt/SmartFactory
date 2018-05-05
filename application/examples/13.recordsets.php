@@ -39,7 +39,7 @@ if(empty($id)) $id = "-1";
 function load_page_list(&$page_list)
 {
   $dbw = dbworker();
-  if(!$dbw) return;
+  if(!$dbw) return false;
   
   if(!$dbw->execute_query("SELECT ID, PAGE_NAME, PAGE_TYPE FROM PAGES ORDER BY PAGE_NAME"))
   {

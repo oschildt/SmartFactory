@@ -69,4 +69,3 @@ FactoryBuilder::bindClass(UserSettingsManager::class, UserSettingsManager::class
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(IUser::class, User::class);
 //-------------------------------------------------------------------
-?>

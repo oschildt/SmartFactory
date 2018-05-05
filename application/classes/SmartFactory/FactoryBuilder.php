@@ -109,7 +109,7 @@ class FactoryBuilder
     if($c != $ic)
       if(!$c->isSubclassOf($ic)) throw new \Exception(sprintf("The class '%s' does not implement the interface '%s'!", $c->getName(), $ic->getName()));
     
-    if(!empty(self::$itable[$ic->getName()])) throw new \Exception(sprintf("The interfase '%s' is already bound to the class '%s'!", $ic->getName(), self::$itable[$i->getName()]["class"]->getName()));
+    if(!empty(self::$itable[$ic->getName()])) throw new \Exception(sprintf("The interfase '%s' is already bound to the class '%s'!", $ic->getName(), self::$itable[$ic->getName()]["class"]->getName()));
     
     $f = null;
     if($init_function !== null) 
@@ -189,4 +189,3 @@ class FactoryBuilder
     return self::$singletons[$class_name];
   } // getInstance
 } // FactoryBuilder
-?>

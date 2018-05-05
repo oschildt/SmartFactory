@@ -106,9 +106,7 @@ class MySQL_DBWorker extends DBWorker
   /**
    * Default constructor.
    *
-   * @return MySQL_DBWorker 
-   *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function __construct()
   {
@@ -588,7 +586,7 @@ class MySQL_DBWorker extends DBWorker
         $parameters[0] .= "s";
         $parameters[$counter] = &$argval;
 
-        $this->last_query = preg_replace("/\\?/", preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
+        $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
       }
 
       $counter++;
@@ -1017,7 +1015,9 @@ class MySQL_DBWorker extends DBWorker
       while($this->statement->fetch())
       {
         $counter++;
-
+  
+        $rowcpy = [];
+        
         // we must create a copy from $row, because its
         // items are bound per reference        
         foreach($row as $key => $val)
@@ -1240,9 +1240,9 @@ class MySQL_DBWorker extends DBWorker
   public function field_name($num)
   {
     $info = $this->field_info_by_num($num);
-    if(!$info) return "";
+    if(!$info) return null;
 
-    return val_or_empty($info["name"]);
+    return \SmartFactory\checkempty($info["name"]);
   } // field_name
   
   /**
@@ -1400,4 +1400,3 @@ class MySQL_DBWorker extends DBWorker
   } // format_datetime
 } // MySQL_DBWorker
 //----------------------------------------------------------------------
-?>

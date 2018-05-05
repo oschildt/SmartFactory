@@ -178,4 +178,3 @@ class DebugProfiler implements IDebugProfiler
     return true;
   } // clearLogFiles
 } // IDebugProfiler
-?>

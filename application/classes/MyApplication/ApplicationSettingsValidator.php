@@ -57,4 +57,3 @@ class ApplicationSettingsValidator implements ISettingsValidator
   //-----------------------------------------------------------------
 } // ApplicationSettingsValidator
 //-------------------------------------------------------------------
-?>

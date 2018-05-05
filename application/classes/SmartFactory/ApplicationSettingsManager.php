@@ -70,7 +70,7 @@ class ApplicationSettingsManager implements ISettingsManager
   protected $context = "default";
 
   /**
-   * @var \SmartFactory\Interfaces\ISettingsValidator
+   * @var Interfaces\ISettingsValidator
    * Internal variable for storing the validator.
    *
    * @see getValidator
@@ -241,9 +241,7 @@ class ApplicationSettingsManager implements ISettingsManager
   /**
    * Default constructor.
    *
-   * @return ApplicationSettingsManager 
-   *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function __construct()
   {
@@ -280,7 +278,7 @@ class ApplicationSettingsManager implements ISettingsManager
   /**
    * Sets the validator for the settings.
    * 
-   * @param \SmartFactory\Interfaces\ISettingsValidator $validator 
+   * @param Interfaces\ISettingsValidator $validator
    * The settings validator.
    *
    * @return void   
@@ -298,7 +296,7 @@ class ApplicationSettingsManager implements ISettingsManager
   /**
    * Returns the validator for the settings.
    * 
-   * @return \SmartFactory\Interfaces\ISettingsValidator|null  
+   * @return Interfaces\ISettingsValidator|null
    * Returns the validator for the settings or null if none is defined.
    *
    * @see setValidator
@@ -451,7 +449,7 @@ class ApplicationSettingsManager implements ISettingsManager
    * Returns true if there is no validator defined, otherwise lets 
    * the validator validate the settings.   
    *
-   * @uses SmartFactory\Interfaces\ISettingsValidator
+   * @uses \SmartFactory\Interfaces\ISettingsValidator
    *
    * @see getValidator
    * @see setValidator
@@ -518,4 +516,3 @@ class ApplicationSettingsManager implements ISettingsManager
     return false;  
   } // saveSettings
 } // ApplicationSettingsManager
-?>

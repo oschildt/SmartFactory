@@ -159,4 +159,3 @@ interface IEventManager
    */
   public function fireEvent($event, $parameters);
 } // IEventManager
-?>

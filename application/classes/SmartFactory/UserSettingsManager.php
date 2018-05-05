@@ -310,9 +310,7 @@ class UserSettingsManager implements ISettingsManager
   /**
    * Default constructor.
    *
-   * @return UserSettingsManager 
-   *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function __construct()
   {
@@ -552,7 +550,7 @@ class UserSettingsManager implements ISettingsManager
    * Returns true if there is no validator defined, otherwise lets 
    * the validator validate the settings.   
    *
-   * @uses SmartFactory\Interfaces\ISettingsValidator
+   * @uses \SmartFactory\Interfaces\ISettingsValidator
    *
    * @see getValidator
    * @see setValidator
@@ -624,4 +622,3 @@ class UserSettingsManager implements ISettingsManager
     return false;  
   } // saveSettings
 } // UserSettingsManager
-?>

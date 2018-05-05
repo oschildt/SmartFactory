@@ -41,4 +41,3 @@ interface ISettingsValidator
    */
   public function validate($settingsmanager, $context);
 } // ISettingsValidator
-?>

@@ -69,11 +69,10 @@ class MessageManager implements IMessageManager, IInitable
    */
   protected function extractMessagesForDisplay(&$messages)
   {
-    if(empty($messages) || count($messages) == 0) return "";
-
     $output = [];
-
-    $counter = 0;
+  
+    if(empty($messages) || count($messages) == 0) return $output;
+  
     foreach($messages as $current)
     {
       $message_entry["message"] = $current["message"];
@@ -103,9 +102,7 @@ class MessageManager implements IMessageManager, IInitable
   /**
    * Default constructor.
    *
-   * @return MessageManager 
-   *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function __construct()
   {
@@ -903,4 +900,3 @@ class MessageManager implements IMessageManager, IInitable
     self::$prog_warnings_disabled = true;
   } // disableProgWarnings
 } // MessageManager
-?>

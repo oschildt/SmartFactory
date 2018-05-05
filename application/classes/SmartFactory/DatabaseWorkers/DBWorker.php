@@ -689,4 +689,3 @@ abstract class DBWorker implements IInitable
     $this->last_query = NULL;
   } // clear_messages
 } // class DBWorker
-?>

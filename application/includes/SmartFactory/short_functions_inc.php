@@ -136,7 +136,7 @@ function user_settings()
  *
  * It should be called if a SQL query failed.
  *
- * @param DBWorker $dbw
+ * @param DatabaseWorkers\DBWorker $dbw
  * The dbworker used to perform the SQL query.
  *
  * @return false
@@ -164,4 +164,3 @@ function sql_error($dbw)
                        );
   return false;
 } // sql_error
-?>

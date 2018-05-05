@@ -363,4 +363,3 @@ class ErrorHandler implements IErrorHandler
     self::$trace_disabled = true;
   } // disableTrace
 } // ErrorHandler
-?>

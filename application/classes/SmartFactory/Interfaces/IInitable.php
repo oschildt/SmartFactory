@@ -33,4 +33,3 @@ interface IInitable
    */
   public function init($parameters);
 } // IInitable
-?>

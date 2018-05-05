@@ -44,6 +44,14 @@ class MSSQL_DBWorker extends DBWorker
   protected $statement = null;
   
   /**
+   * @var string
+   * Internal variable for storing of the last prepared query.
+   *
+   * @author Oleg Schildt
+   */
+  protected $prepared_query = null;
+
+  /**
    * @var boolean 
    * Stores the state whether the last query was an insert or not.
    *
@@ -131,9 +139,7 @@ class MSSQL_DBWorker extends DBWorker
   /**
    * Default constructor.
    *
-   * @return MSSQL_DBWorker 
-   *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function __construct()
   {
@@ -629,8 +635,9 @@ class MSSQL_DBWorker extends DBWorker
 
     // Send up to 8K of parameter data to the server 
     // with each call to sqlsrv_send_stream_data.
-    while(sqlsrv_send_stream_data($this->statement)) 
+    while(sqlsrv_send_stream_data($this->statement))
     {
+      null;
     }
     
    if(is_resource($this->statement)) @sqlsrv_free_stmt($this->statement);
@@ -704,7 +711,7 @@ class MSSQL_DBWorker extends DBWorker
       {
         $this->query_parameters[$counter] = $argval;
 
-        $this->last_query = preg_replace("/\\?/", preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
+        $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
       }
 
       $counter++;
@@ -931,7 +938,6 @@ class MSSQL_DBWorker extends DBWorker
     $this->query_parameters = null;
 
     $this->last_query_is_insert = false;
-    $counter = 0;
 
     return true;
   } // free_prepared_query
@@ -1258,7 +1264,7 @@ class MSSQL_DBWorker extends DBWorker
    * @param int $num
    * The number of the field.
    *
-   * @return array
+   * @return array|false
    * Returns the associative array with properties. In the case
    * of any error returns null.
    *
@@ -1355,9 +1361,8 @@ class MSSQL_DBWorker extends DBWorker
    * @param int $num
    * The number of the field.
    *
-   * @return object|null
-   * Returns the value of a field specified by number as an object with properties. In the case
-   * of any error returns null.
+   * @return string|null
+   * Returns the name of the field by number.
    *
    * @see field_by_num
    * @see field_info_by_num
@@ -1367,9 +1372,9 @@ class MSSQL_DBWorker extends DBWorker
   public function field_name($num)
   {
     $info = $this->field_info_by_num($num);
-    if(!$info) return "";
+    if(!$info) return null;
 
-    return val_or_empty($info->name);
+    return \SmartFactory\checkempty($info["name"]);
   } // field_name
 
   /**
@@ -1430,4 +1435,3 @@ class MSSQL_DBWorker extends DBWorker
   } // format_datetime
 } // MSSQL_DBWorker
 //----------------------------------------------------------------------
-?>

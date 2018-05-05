@@ -195,4 +195,3 @@ interface ISessionManager
    */
   public function &vars();
 } // ISessionManager
-?>

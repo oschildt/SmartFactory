@@ -855,7 +855,7 @@ function replace_input(elm, name)
   ti.name = name;
   ti.value = elm.getAttribute("data-content");
   
-  ti.onchange = function () { check_changes(ti, true); }
+  ti.onchange = function () { check_changes(ti, true); };
   
   if(ti.value == "") ti.classList.add("empty_field");
   else               ti.classList.remove("empty_field");
@@ -871,7 +871,7 @@ function replace_textarea(elm, name)
   ta.name = name;
   ta.value = elm.getAttribute("data-content");
   
-  ta.onchange = function () { check_changes(ta, true); }
+  ta.onchange = function () { check_changes(ta, true); };
   
   if(ta.value == "") ta.classList.add("empty_field");
   else               ta.classList.remove("empty_field");
@@ -960,7 +960,7 @@ window.onpopstate = function(e) {
   goto_tab(e.state.tab, true);
   
   if(e.state.tab == "check") window.location.reload();
-}
+};
 
 var active_tab = "<?php echo($active_tab); ?>";
 window.history.replaceState({ tab: active_tab }, null, "edit.php?tab=" + active_tab);

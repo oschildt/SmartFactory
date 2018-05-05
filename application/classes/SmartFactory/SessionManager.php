@@ -482,4 +482,3 @@ class SessionManager
     return $_SESSION[$this->getContext()];
   } // getSessionVariables
 } // class
-?>

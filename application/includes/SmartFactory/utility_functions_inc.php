@@ -560,4 +560,3 @@ function aes_256_decrypt($edata, $password_key)
 
   return openssl_decrypt($ct, 'AES-256-CBC', $key, true, $iv);
 } // aes_256_decrypt
-?>

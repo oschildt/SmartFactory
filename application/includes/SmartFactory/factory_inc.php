@@ -239,4 +239,3 @@ FactoryBuilder::bindClass(IRecordsetManager::class, RecordsetManager::class, fun
   $instance->setDBWorker(dbworker());
 });
 //-------------------------------------------------------------------
-?>

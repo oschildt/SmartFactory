@@ -67,7 +67,7 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
    *
    * @author Oleg Schildt 
    */
-  public abstract function reportErrors($response_data, $headers);
+  public abstract function reportErrors($response_data, $headers = []);
   
   /**
    * This is an auxiliary function for sending the response in XML
@@ -209,4 +209,3 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
     return self::$handler_table[$api_request]->invoke($this, $api_request, $xmldoc);    
   } // handleApiRequest
 } // XmlApiRequestHandler
-?>

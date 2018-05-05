@@ -100,4 +100,3 @@ interface IDebugProfiler
    */
   public function clearLogFiles();
 } // IDebugProfiler
-?>

@@ -37,4 +37,3 @@ foreach($files as $file)
 }
 
 $apireqhandler->handleApiRequest();
-?>

@@ -25,4 +25,3 @@ singleton(IEventManager::class)->addHandler("php_error", function($event, $param
                                                     "line " . $params["errline"]);
 });
 //------------------------------------------------------------------------------
-?>

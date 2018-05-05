@@ -540,4 +540,3 @@ interface IMessageManager
    */
   public function disableProgWarnings();
 } // IMessageManager
-?>

@@ -63,17 +63,13 @@ class JsonApiRequestHandler implements IApiRequestHandler
    *
    * @author Oleg Schildt 
    */
-  public function reportErrors(&$response_data, $headers = null)
+  public function reportErrors(&$response_data, $headers = [])
   {
     header('Content-type: application/json');
     
     if(!empty($headers))
     {
-      if(!is_array($headers))
-      {
-        header($headers);
-      }
-      else
+      if(is_array($headers))
       {
         foreach($headers as $header) header($header);
       }
@@ -205,4 +201,3 @@ class JsonApiRequestHandler implements IApiRequestHandler
     return self::$handler_table[$api_request]->invoke($this, $api_request);    
   } // handleApiRequest
 } // JsonApiRequestHandler
-?>

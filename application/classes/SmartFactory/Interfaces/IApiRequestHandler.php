@@ -67,4 +67,3 @@ interface IApiRequestHandler
    */
   public function handleApiRequest();
 } // IApiRequestHandler
-?>

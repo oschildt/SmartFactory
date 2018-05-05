@@ -538,4 +538,3 @@ class RecordsetManager implements IRecordsetManager
     return true;
   } // saveRecordSet
 } // RecordsetManager
-?>

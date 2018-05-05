@@ -322,4 +322,3 @@ interface ILanguageManager
    */
   public function getCountryList(&$country_list, $lng = "");
 } // ILanguageManager
-?>

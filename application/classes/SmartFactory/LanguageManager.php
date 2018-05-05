@@ -154,9 +154,7 @@ class LanguageManager implements ILanguageManager
   /**
    * Default constructor.
    *
-   * @return LanguageManager 
-   *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function __construct()
   {
@@ -207,7 +205,9 @@ class LanguageManager implements ILanguageManager
     // 5) the first one from the supported list
     
     // Let's go
-
+  
+    $language = "en";
+    
     // 5) the first one from the supported list
     foreach(self::$supported_languages as $lng)
     {
@@ -306,7 +306,8 @@ class LanguageManager implements ILanguageManager
    * @param string $language
    * The language ISO code to be set.
    *
-   * @return void
+   * @return boolean
+   * Returns true if the current language has been successfully set, otherwise false.
    *
    * @see getCurrentLanguage
    *
@@ -658,4 +659,3 @@ class LanguageManager implements ILanguageManager
     return true;
   } // getCountryList
 } // LanguageManager
-?>

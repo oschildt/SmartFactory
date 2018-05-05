@@ -618,7 +618,7 @@ function checkbox($parameters, $echo = true)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  *
- * @return string|void 
+ * @return string|null
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise void.
  *
@@ -666,6 +666,8 @@ function radiobutton($parameters, $echo = true)
   
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // radiobutton
 
 /**
@@ -754,7 +756,7 @@ function radiobutton($parameters, $echo = true)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  *
- * @return string|void 
+ * @return string|null
  * If the paramter $echo is true, the string of the table html
  * code is returned, otherwise void.
  *
@@ -835,5 +837,6 @@ function table(&$array, $parameters = [], $echo = true)
 
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // table
-?>

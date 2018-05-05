@@ -96,28 +96,28 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1734594704"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1694233424"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1734594704" class="accordion-body collapse in">
+            <div id="namespace-1694233424" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2018379793"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-769538184"></a>
                                 <a href="../namespaces/SmartFactory.html" style="margin-left: 30px; padding-left: 0">SmartFactory</a>
             </div>
-            <div id="namespace-2018379793" class="accordion-body collapse ">
+            <div id="namespace-769538184" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1972013114"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-157005132"></a>
                                 <a href="../namespaces/SmartFactory.DatabaseWorkers.html" style="margin-left: 30px; padding-left: 0">DatabaseWorkers</a>
             </div>
-            <div id="namespace-1972013114" class="accordion-body collapse ">
+            <div id="namespace-157005132" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -134,10 +134,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-891940834"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-184104679"></a>
                                 <a href="../namespaces/SmartFactory.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
             </div>
-            <div id="namespace-891940834" class="accordion-body collapse ">
+            <div id="namespace-184104679" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -1901,7 +1901,7 @@ expression replacement.</em></p>
             <article class="method">
                 <h3 class=" ">radiobutton()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">radiobutton(array  <span class="argument">$parameters</span>, boolean  <span class="argument">$echo = true</span>) : string|void</pre>
+                <pre class="signature" style="margin-right: 54px;">radiobutton(array  <span class="argument">$parameters</span>, boolean  <span class="argument">$echo = true</span>) : string|null</pre>
                 <p><em>Function for rendering the radiobutton field.</em></p>
                 <p>This function renders a radiobutton field that is bound to
 the request variable with the corresponding name.</p>
@@ -1951,7 +1951,7 @@ other rendering functions instead of echoing.</p></td>
                 
                 
                                     <h4>Returns</h4>
-                    string|void
+                    string|null
                                             &mdash; <p>If the paramter $echo is true, the string of the field html
 code is returned, otherwise void.</p>
                                     
@@ -2255,14 +2255,14 @@ it wastes the computer resources and might cause errors.</p>
             <article class="method">
                 <h3 class=" ">sql_error()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">sql_error(\SmartFactory\DBWorker  <span class="argument">$dbw</span>) : false</pre>
+                <pre class="signature" style="margin-right: 54px;">sql_error(\SmartFactory\DatabaseWorkers\DBWorker  <span class="argument">$dbw</span>) : false</pre>
                 <p><em>Short function for reporting the SQL error.</em></p>
                 <p>It should be called if a SQL query failed.</p>
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td>\SmartFactory\DBWorker</td>
+                                <td><a href="../classes/SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a></td>
                                 <td>$dbw </td>
                                 <td><p>The dbworker used to perform the SQL query.</p></td>
                             </tr>
@@ -2311,7 +2311,7 @@ it wastes the computer resources and might cause errors.</p>
             <article class="method">
                 <h3 class=" ">table()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">table(array  <span class="argument">$array</span>, array  <span class="argument">$parameters = array()</span>, boolean  <span class="argument">$echo = true</span>) : string|void</pre>
+                <pre class="signature" style="margin-right: 54px;">table(array  <span class="argument">$array</span>, array  <span class="argument">$parameters = array()</span>, boolean  <span class="argument">$echo = true</span>) : string|null</pre>
                 <p><em>Function for rendering tables.</em></p>
                 <p>This function renders a tables based on the values of an array.</p>
 
@@ -2412,7 +2412,7 @@ other rendering functions instead of echoing.</p></td>
                 
                 
                                     <h4>Returns</h4>
-                    string|void
+                    string|null
                                             &mdash; <p>If the paramter $echo is true, the string of the table html
 code is returned, otherwise void.</p>
                                     
@@ -2734,7 +2734,7 @@ returned, otherwise the string &quot;error&quot; is returned.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on May 5th, 2018 at 12:46.
+                    on May 5th, 2018 at 20:29.
                 </section>
             </section>
         </section>

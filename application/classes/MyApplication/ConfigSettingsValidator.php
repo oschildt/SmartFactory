@@ -71,4 +71,3 @@ class ConfigSettingsValidator implements ISettingsValidator
   //-----------------------------------------------------------------
 } // ConfigSettingsValidator
 //-------------------------------------------------------------------
-?>

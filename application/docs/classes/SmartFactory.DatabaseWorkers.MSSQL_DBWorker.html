@@ -144,28 +144,28 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1325292154"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-480927072"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1325292154" class="accordion-body collapse in">
+            <div id="namespace-480927072" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1147518558"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-583072841"></a>
                                 <a href="../namespaces/SmartFactory.html" style="margin-left: 30px; padding-left: 0">SmartFactory</a>
             </div>
-            <div id="namespace-1147518558" class="accordion-body collapse ">
+            <div id="namespace-583072841" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-960023888"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1672947414"></a>
                                 <a href="../namespaces/SmartFactory.DatabaseWorkers.html" style="margin-left: 30px; padding-left: 0">DatabaseWorkers</a>
             </div>
-            <div id="namespace-960023888" class="accordion-body collapse ">
+            <div id="namespace-1672947414" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -182,10 +182,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-18635029"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-37336065"></a>
                                 <a href="../namespaces/SmartFactory.Interfaces.html" style="margin-left: 30px; padding-left: 0">Interfaces</a>
             </div>
-            <div id="namespace-18635029" class="accordion-body collapse ">
+            <div id="namespace-37336065" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -338,6 +338,7 @@ Adding support for new database types is also much easier with this wrapping app
                                                                     <a href="../classes/SmartFactory.DatabaseWorkers.DBWorker.html#property_is_clone" class="">$is_clone</a><br />
                                                                     <a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#property_connection" class="">$connection</a><br />
                                                                     <a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#property_statement" class="">$statement</a><br />
+                                                                    <a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#property_prepared_query" class="">$prepared_query</a><br />
                                                                     <a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#property_last_query_is_insert" class="">$last_query_is_insert</a><br />
                                                                     <a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#property_row" class="">$row</a><br />
                                                                     <a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#property_field_names" class="">$field_names</a><br />
@@ -813,6 +814,37 @@ Adding support for new database types is also much easier with this wrapping app
                 resource
                 &mdash; Stores the resource handle of the statement 
 of the last executed query.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Oleg Schildt</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_prepared_query" name="property_prepared_query" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$prepared_query</h3>
+                <pre class="signature">$prepared_query : string</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string
+                &mdash; Internal variable for storing of the last prepared query.                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -2273,7 +2305,7 @@ of any error returns null.</p>
             <article class="method">
                 <h3 class="public ">field_info_by_num()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">field_info_by_num(integer  <span class="argument">$num</span>) : array</pre>
+                <pre class="signature" style="margin-right: 54px;">field_info_by_num(integer  <span class="argument">$num</span>) : array|false</pre>
                 <p><em>Returns the meta information about the field as an object with properties.</em></p>
                 
 
@@ -2288,7 +2320,7 @@ of any error returns null.</p>
                 
                 
                                     <h4>Returns</h4>
-                    array
+                    array|false
                                             &mdash; <p>Returns the associative array with properties. In the case
 of any error returns null.</p>
 <p>$info[&quot;name&quot;] - name of the field.</p>
@@ -2328,7 +2360,7 @@ of any error returns null.</p>
             <article class="method">
                 <h3 class="public ">field_name()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">field_name(integer  <span class="argument">$num</span>) : object|null</pre>
+                <pre class="signature" style="margin-right: 54px;">field_name(integer  <span class="argument">$num</span>) : string|null</pre>
                 <p><em>Returns the name of the field by number.</em></p>
                 
 
@@ -2343,9 +2375,8 @@ of any error returns null.</p>
                 
                 
                                     <h4>Returns</h4>
-                    object|null
-                                            &mdash; <p>Returns the value of a field specified by number as an object with properties. In the case
-of any error returns null.</p>
+                    string|null
+                                            &mdash; <p>Returns the name of the field by number.</p>
                                     
                             </article>
         </div>
@@ -2674,15 +2705,13 @@ of any error returns null.</p>
             <article class="method">
                 <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct() : \SmartFactory\DatabaseWorkers\MSSQL_DBWorker</pre>
+                <pre class="signature" style="margin-right: 54px;">__construct() </pre>
                 <p><em>Default constructor.</em></p>
                 
 
                 
                 
-                                    <h4>Returns</h4>
-                    <a href="../classes/SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html">\SmartFactory\DatabaseWorkers\MSSQL_DBWorker</a>
-                                    
+                
                             </article>
         </div>
         <aside class="span4 detailsbar">
@@ -2828,7 +2857,7 @@ of any error returns null.</p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on May 5th, 2018 at 12:46.
+                    on May 5th, 2018 at 20:29.
                 </section>
             </section>
         </section>

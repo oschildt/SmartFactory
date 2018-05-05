@@ -86,15 +86,11 @@ class HotelXmlApiRequestHandler extends XmlApiRequestHandler
     return $xmldoc;
   } // parseXML
   //-----------------------------------------------------------------
-  public function reportErrors($response_data, $headers)
+  public function reportErrors($response_data, $headers = [])
   {
     if(!empty($headers))
     {
-      if(!is_array($headers))
-      {
-        header($headers);
-      }
-      else
+      if(is_array($headers))
       {
         foreach($headers as $header) header($header);
       }
@@ -125,4 +121,3 @@ class HotelXmlApiRequestHandler extends XmlApiRequestHandler
   //-----------------------------------------------------------------
 } // HotelXmlApiRequestHandler
 //-------------------------------------------------------------------
-?>

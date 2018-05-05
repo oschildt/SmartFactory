@@ -34,4 +34,3 @@ require_once APPLICATION_ROOT . "includes/user_factory_inc.php";
 
 /** user includes */
 require_once APPLICATION_ROOT . "includes/user_includes_inc.php";
-?>

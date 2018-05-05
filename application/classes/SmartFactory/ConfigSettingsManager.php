@@ -189,9 +189,7 @@ class ConfigSettingsManager implements ISettingsManager
   /**
    * Default constructor.
    *
-   * @return ConfigSettingsManager 
-   *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function __construct()
   {
@@ -404,7 +402,7 @@ class ConfigSettingsManager implements ISettingsManager
    * Returns true if there is no validator defined, otherwise lets 
    * the validator validate the settings.   
    *
-   * @uses SmartFactory\Interfaces\ISettingsValidator
+   * @uses \SmartFactory\Interfaces\ISettingsValidator
    *
    * @see getValidator
    * @see setValidator
@@ -477,4 +475,3 @@ class ConfigSettingsManager implements ISettingsManager
     return false;  
   } // saveSettings
 } // ConfigSettingsManager
-?>
