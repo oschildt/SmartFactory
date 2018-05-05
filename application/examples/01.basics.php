@@ -22,6 +22,8 @@ require_once "../includes/_general_inc.php";
 echo "<p>Application root: " . APPLICATION_ROOT . "</p>";
 
 $user = singleton(IUser::class);
+
+8888
 ?>
 
 <div class="code">$user = singleton(IUser::class);
