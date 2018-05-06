@@ -145,8 +145,8 @@ class FactoryBuilder
    * - If the interface or class does not exist.
    * - If the interface or class has no bound class.
    *
-   * @used-by instance
-   * @used-by singleton
+   * @used_by instance()
+   * @used_by singleton()
    *
    * @author Oleg Schildt
   */

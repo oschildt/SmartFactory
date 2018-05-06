@@ -1,1 +1,1 @@
-c:\projects\php\phpdoc3\vendor\bin\phpdoc  888
+c:\projects\php\phpdoc3\vendor\bin\phpdoc  

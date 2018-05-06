@@ -27,14 +27,14 @@ use SmartFactory\DatabaseWorkers\DBWorker;
  * @see ConfigSettingsManager
  * @see ApplicationSettingsManager
  *
- * @uses \SmartFactory\DatabaseWorkers\DBWorker
+ * @uses DBWorker
  *
  * @author Oleg Schildt 
  */
 class UserSettingsManager implements ISettingsManager
 {
   /**
-   * @var \SmartFactory\DatabaseWorkers\DBWorker
+   * @var DBWorker
    * Internal variable for storing the dbworker.
    *
    * @author Oleg Schildt 
@@ -550,7 +550,7 @@ class UserSettingsManager implements ISettingsManager
    * Returns true if there is no validator defined, otherwise lets 
    * the validator validate the settings.   
    *
-   * @uses \SmartFactory\Interfaces\ISettingsValidator
+   * @uses Interfaces\ISettingsValidator
    *
    * @see getValidator
    * @see setValidator

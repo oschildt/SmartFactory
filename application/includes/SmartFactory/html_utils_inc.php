@@ -81,9 +81,16 @@ function reqvar_value($name)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  *
- * @return string|void 
+ * @return string|null
  * If the paramter $echo is true, the string of the field html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
+ *
+ * @see input_password()
+ * @see input_hidden()
+ * @see textarea()
+ * @see select()
+ * @see checkbox()
+ * @see radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -128,6 +135,8 @@ function input_text($parameters, $echo = true)
   
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // input_text
 
 /**
@@ -162,9 +171,16 @@ function input_text($parameters, $echo = true)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  *
- * @return string|void 
+ * @return string|null
  * If the paramter $echo is true, the string of the field html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
+ *
+ * @see input_text()
+ * @see input_hidden()
+ * @see textarea()
+ * @see select()
+ * @see checkbox()
+ * @see radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -209,6 +225,8 @@ function input_password($parameters, $echo = true)
 
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // input_password
 
 /**
@@ -242,9 +260,16 @@ function input_password($parameters, $echo = true)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  * 
- * @return string|void 
+ * @return string|null 
  * If the paramter $echo is true, the string of the field html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
+ *
+ * @see input_text()
+ * @see input_password()
+ * @see textarea()
+ * @see select()
+ * @see checkbox()
+ * @see radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -289,6 +314,8 @@ function input_hidden($parameters, $echo = true)
   
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // input_hidden
 
 /**
@@ -327,9 +354,16 @@ function input_hidden($parameters, $echo = true)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  *
- * @return string|void 
+ * @return string|null 
  * If the paramter $echo is true, the string of the field html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
+ *
+ * @see input_text()
+ * @see input_password()
+ * @see input_hidden()
+ * @see select()
+ * @see checkbox()
+ * @see radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -373,6 +407,8 @@ function textarea($parameters, $echo = true)
 
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // textarea
 
 /**
@@ -425,9 +461,16 @@ function textarea($parameters, $echo = true)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  *
- * @return string|void 
+ * @return string|null 
  * If the paramter $echo is true, the string of the field html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
+ *
+ * @see input_text()
+ * @see input_password()
+ * @see input_hidden()
+ * @see textarea()
+ * @see checkbox()
+ * @see radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -489,6 +532,8 @@ function select($parameters, $echo = true)
 
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // select
 
 /**
@@ -528,9 +573,16 @@ function select($parameters, $echo = true)
  * Otherwise it is returned as string. It might be useful to pass this code to 
  * other rendering functions instead of echoing.
  *
- * @return string|void 
+ * @return string|null 
  * If the paramter $echo is true, the string of the field html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
+ *
+ * @see input_text()
+ * @see input_password()
+ * @see input_hidden()
+ * @see textarea()
+ * @see select()
+ * @see radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -577,6 +629,8 @@ function checkbox($parameters, $echo = true)
   
   //echo("<pre>" . escape_html($html) . "</pre>");
   echo($html);
+  
+  return null;
 } // checkbox
 
 /**
@@ -620,9 +674,16 @@ function checkbox($parameters, $echo = true)
  *
  * @return string|null
  * If the paramter $echo is true, the string of the field html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
  *
- * @author Oleg Schildt 
+ * @see input_text()
+ * @see input_password()
+ * @see input_hidden()
+ * @see textarea()
+ * @see select()
+ * @see checkbox()
+ *
+ * @author Oleg Schildt
  */
 function radiobutton($parameters, $echo = true)
 {
@@ -758,7 +819,7 @@ function radiobutton($parameters, $echo = true)
  *
  * @return string|null
  * If the paramter $echo is true, the string of the table html
- * code is returned, otherwise void.
+ * code is returned, otherwise null.
  *
  * @author Oleg Schildt 
  */

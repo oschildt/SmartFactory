@@ -146,7 +146,7 @@ class ErrorHandler implements IErrorHandler
    * @return string
    * Returns the detailed string from the function arguments.
    *
-   * @used-by make_arg_list
+   * @used_by make_arg_list()
    *
    * @author Oleg Schildt 
    */

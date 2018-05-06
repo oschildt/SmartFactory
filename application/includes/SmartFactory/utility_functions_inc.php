@@ -148,7 +148,7 @@ function array_to_dom(&$node, &$array)
 
     if(is_array($val))
     {
-      array_to_dom($xmldoc, $child, $val);
+      array_to_dom($child, $val);
     }
     else
     {
@@ -228,10 +228,10 @@ function dom_to_array(&$node, &$array)
  *
  * @return void
  *
- * @see escape_js
- * @see escape_html
+ * @see escape_js()
+ * @see escape_html()
  *
- * @uses escape_html
+ * @uses escape_html()
  *
  * @author Oleg Schildt 
  */
@@ -296,19 +296,17 @@ function escape_html_array(&$array)
  * @see echo_js
  * @see escape_html
  *
- * @used-by echo_js
- *
  * @author Oleg Schildt 
  */
 function escape_js($text)
 {
-  $text = text_replace("\\", "\\\\", $text);
-  $text = text_replace("\n", "\\n", $text);
-  $text = text_replace("\r", "\\r", $text);
+  $text = str_replace("\\", "\\\\", $text);
+  $text = str_replace("\n", "\\n", $text);
+  $text = str_replace("\r", "\\r", $text);
 
-  $text = text_replace("/", "\\/", $text);
-  $text = text_replace("'", "\\'", $text);
-  $text = text_replace("\"", "\\\"", $text);
+  $text = str_replace("/", "\\/", $text);
+  $text = str_replace("'", "\\'", $text);
+  $text = str_replace("\"", "\\\"", $text);
 
   return $text;
 } // escape_js
@@ -321,10 +319,10 @@ function escape_js($text)
  *
  * @return void
  *
- * @see echo_html
- * @see escape_js
+ * @see echo_html()
+ * @see escape_js()
  *
- * @uses escape_js
+ * @uses escape_js()
  *
  * @author Oleg Schildt 
  */
@@ -426,7 +424,6 @@ function timestamp($time_string, $format)
   $order = preg_replace("/[^YmdHis]/", "", $format);
 
   $date_part = "";
-  $result = "";
   $pos_Y = strpos($order, "Y");
   $pos_m = strpos($order, "m");
   $pos_d = strpos($order, "d");
@@ -463,7 +460,7 @@ function timestamp($time_string, $format)
  *
  * It is a wrapper over the system function number_format.
  *
- * @param number $number 
+ * @param float $number 
  * The number to be formatted.
  *
  * @param int $decimals 
