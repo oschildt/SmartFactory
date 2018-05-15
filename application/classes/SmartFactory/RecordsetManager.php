@@ -16,14 +16,14 @@ use SmartFactory\DatabaseWorkers\DBWorker;
 /**
  * Class for working with record sets.
  *
- * @uses \SmartFactory\DatabaseWorkers\DBWorker
+ * @uses DatabaseWorkers\DBWorker
  *
  * @author Oleg Schildt 
  */
 class RecordsetManager implements IRecordsetManager
 {
   /**
-   * @var \SmartFactory\DatabaseWorkers\DBWorker
+   * @var DatabaseWorkers\DBWorker
    * Internal variable for storing the dbworker.
    *
    * @author Oleg Schildt 
@@ -107,8 +107,10 @@ class RecordsetManager implements IRecordsetManager
 
   /**
    * This is internal auxiliary function for saving a record set from an array
-   * with key field values as array dimensions. It expand this multidimensional
-   * array into the set of flat records suitable for call {@see saveRecord}.
+   * with key field values as array dimensions.
+   *
+   * It expand this multidimensional
+   * array into the set of flat records suitable for call {@see RecordsetManager::saveRecord()}.
    *
    * @param array $subarray
    * The current subarray ro be processed.
@@ -160,12 +162,12 @@ class RecordsetManager implements IRecordsetManager
   /**
    * Sets the dbworker to be used for working with the database.
    *
-   * @param \SmartFactory\DatabaseWorkers\DBWorker $dbworker
+   * @param DatabaseWorkers\DBWorker $dbworker
    * The dbworker to be used for working with the database.
    *
    * @return void
    *
-   * @see getDBWorker
+   * @see getDBWorker()
    *
    * @author Oleg Schildt 
    */
@@ -177,10 +179,10 @@ class RecordsetManager implements IRecordsetManager
   /**
    * Returns the dbworker to be used for working with the database.
    *
-   * @return \SmartFactory\DatabaseWorkers\DBWorker
+   * @return DatabaseWorkers\DBWorker
    * Returns the dbworker to be used for working with the database.
    *
-   * @see getDBWorker
+   * @see getDBWorker()
    *
    * @author Oleg Schildt 
    */
@@ -227,8 +229,8 @@ class RecordsetManager implements IRecordsetManager
    * @return boolean
    * Returns true if the record has been successfully loaded, otherwise false.
    *
-   * @see saveRecord
-   * @see loadRecordSet
+   * @see saveRecord()
+   * @see loadRecordSet()
    *
    * @uses \SmartFactory\DatabaseWorkers\DBWorker
    *
@@ -278,8 +280,8 @@ class RecordsetManager implements IRecordsetManager
    * @return boolean
    * Returns true if the record has been successfully loaded, otherwise false.
    *
-   * @see loadRecord
-   * @see saveRecordSet
+   * @see loadRecord()
+   * @see saveRecordSet()
    *
    * @uses \SmartFactory\DatabaseWorkers\DBWorker
    *
@@ -350,10 +352,10 @@ class RecordsetManager implements IRecordsetManager
    * @return boolean
    * Returns true if the record has been successfully saved, otherwise false.
    *
-   * @see loadRecord
-   * @see saveRecordSet
+   * @see loadRecord()
+   * @see saveRecordSet()
    *
-   * @uses \SmartFactory\DatabaseWorkers\DBWorker
+   * @uses DatabaseWorkers\DBWorker
    *
    * @author Oleg Schildt 
    */
@@ -511,10 +513,10 @@ class RecordsetManager implements IRecordsetManager
    * @return boolean
    * Returns true if the records have been successfully saved, otherwise false.
    *
-   * @see loadRecordSet
-   * @see saveRecord
+   * @see loadRecordSet()
+   * @see saveRecord()
    *
-   * @uses \SmartFactory\DatabaseWorkers\DBWorker
+   * @uses DatabaseWorkers\DBWorker
    *
    * @author Oleg Schildt 
    */

@@ -8,7 +8,7 @@
  */
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\ISessionManager;
+use Smartfactory\Interfaces\ISessionManager;
 
 //------------------------------------------------------------------------------
 $smanager = singleton(ISessionManager::class);

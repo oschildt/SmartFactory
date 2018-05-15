@@ -25,7 +25,7 @@ class MessageManager implements IMessageManager, IInitable
    * Internal variable for storing the auto hide time
    * for the info messages with flag auto_hide = true.
    *
-   * @see getAutoHideTime
+   * @see getAutoHideTime()
    *
    * @author Oleg Schildt 
    */
@@ -43,9 +43,9 @@ class MessageManager implements IMessageManager, IInitable
    * @var boolean
    * Internal variable for storing the state of programming warnings - active or not.
    *
-   * @see progWarningsActive
-   * @see enableProgWarnings
-   * @see disableProgWarnings
+   * @see progWarningsActive()
+   * @see enableProgWarnings()
+   * @see disableProgWarnings()
    *
    * @author Oleg Schildt 
    */
@@ -137,7 +137,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see setFocusElement
+   * @see setFocusElement()
    *
    * @author Oleg Schildt 
    */
@@ -155,7 +155,7 @@ class MessageManager implements IMessageManager, IInitable
    * @return string
    * Returns the ID of the element to be focused.
    *
-   * @see getFocusElement
+   * @see getFocusElement()
    *
    * @author Oleg Schildt 
    */
@@ -178,7 +178,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see getActiveTab
+   * @see getActiveTab()
    *
    * @author Oleg Schildt 
    */
@@ -196,7 +196,7 @@ class MessageManager implements IMessageManager, IInitable
    * @return string
    * Returns the ID of the tab to be activated.
    *
-   * @see setActiveTab
+   * @see setActiveTab()
    *
    * @author Oleg Schildt 
    */
@@ -219,7 +219,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see getErrorElement
+   * @see getErrorElement()
    *
    * @author Oleg Schildt 
    */
@@ -238,7 +238,7 @@ class MessageManager implements IMessageManager, IInitable
    * @return string
    * Returns the ID of the field to be highlighted.
    *
-   * @see setErrorElement
+   * @see setErrorElement()
    *
    * @author Oleg Schildt 
    */
@@ -270,9 +270,9 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see getErrors
-   * @see clearErrors
-   * @see errorsExist
+   * @see getErrors()
+   * @see clearErrors()
+   * @see errorsExist()
    *
    * @author Oleg Schildt 
    */
@@ -292,12 +292,12 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see setError
-   * @see clearWarnings
-   * @see clearProgWarnings
-   * @see clearDebugMessages
-   * @see clearInfos
-   * @see clearAll
+   * @see setError()
+   * @see clearWarnings()
+   * @see clearProgWarnings()
+   * @see clearDebugMessages()
+   * @see clearInfos()
+   * @see clearAll()
    *
    * @author Oleg Schildt 
    */
@@ -312,11 +312,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return boolean
    * Returns true if the stored error message exists, otherwise false.
    *
-   * @see setError
-   * @see warningsExist
-   * @see progWarningsExist
-   * @see debugMessageExists
-   * @see infosExist
+   * @see setError()
+   * @see warningsExist()
+   * @see progWarningsExist()
+   * @see debugMessageExists()
+   * @see infosExist()
    *
    * @author Oleg Schildt 
    */
@@ -334,11 +334,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return array
    * Returns the array of errors if any have been stored.
    *
-   * @see setError
-   * @see getWarnings
-   * @see getProgWarnings
-   * @see getDebugMessages
-   * @see getInfos
+   * @see setError()
+   * @see getWarnings()
+   * @see getProgWarnings()
+   * @see getDebugMessages()
+   * @see getInfos()
    * 
    * @author Oleg Schildt 
    */
@@ -367,9 +367,9 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see getWarnings
-   * @see clearWarnings
-   * @see warningsExist
+   * @see getWarnings()
+   * @see clearWarnings()
+   * @see warningsExist()
    *
    * @author Oleg Schildt 
    */
@@ -389,12 +389,12 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see setWarning
-   * @see clearErrors
-   * @see clearProgWarnings
-   * @see clearDebugMessages
-   * @see clearInfos
-   * @see clearAll
+   * @see setWarning()
+   * @see clearErrors()
+   * @see clearProgWarnings()
+   * @see clearDebugMessages()
+   * @see clearInfos()
+   * @see clearAll()
    *
    * @author Oleg Schildt 
    */
@@ -409,11 +409,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return boolean
    * Returns true if the stored warning message exists, otherwise false.
    *
-   * @see setWarning
-   * @see errorsExist
-   * @see progWarningsExist
-   * @see debugMessageExists
-   * @see infosExist
+   * @see setWarning()
+   * @see errorsExist()
+   * @see progWarningsExist()
+   * @see debugMessageExists()
+   * @see infosExist()
    *
    * @author Oleg Schildt 
    */
@@ -431,11 +431,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return array
    * Returns the array of warnings if any have been stored.
    *
-   * @see setWarning
-   * @see getErrors
-   * @see getProgWarnings
-   * @see getDebugMessages
-   * @see getInfos
+   * @see setWarning()
+   * @see getErrors()
+   * @see getProgWarnings()
+   * @see getDebugMessages()
+   * @see getInfos()
    *
    * @author Oleg Schildt 
    */
@@ -467,9 +467,9 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see getProgWarnings
-   * @see clearProgWarnings
-   * @see progWarningsExist
+   * @see getProgWarnings()
+   * @see clearProgWarnings()
+   * @see progWarningsExist()
    *
    * @author Oleg Schildt 
    */
@@ -489,12 +489,12 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see setProgWarning
-   * @see clearErrors
-   * @see clearWarnings
-   * @see clearDebugMessages
-   * @see clearInfos
-   * @see clearAll
+   * @see setProgWarning()
+   * @see clearErrors()
+   * @see clearWarnings()
+   * @see clearDebugMessages()
+   * @see clearInfos()
+   * @see clearAll()
    *
    * @author Oleg Schildt 
    */
@@ -509,11 +509,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return boolean
    * Returns true if the stored programming warning message exists, otherwise false.
    *
-   * @see setProgWarning
-   * @see errorsExist
-   * @see warningsExist
-   * @see debugMessageExists
-   * @see infosExist
+   * @see setProgWarning()
+   * @see errorsExist()
+   * @see warningsExist()
+   * @see debugMessageExists()
+   * @see infosExist()
    *
    * @author Oleg Schildt 
    */
@@ -531,11 +531,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return array
    * Returns the array of programming warnings if any have been stored.
    *
-   * @see setProgWarning
-   * @see getErrors
-   * @see getWarnings
-   * @see getDebugMessages
-   * @see getInfos
+   * @see setProgWarning()
+   * @see getErrors()
+   * @see getWarnings()
+   * @see getDebugMessages()
+   * @see getInfos()
    *
    * @author Oleg Schildt 
    */
@@ -568,9 +568,9 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see getDebugMessages
-   * @see clearDebugMessages
-   * @see debugMessageExists
+   * @see getDebugMessages()
+   * @see clearDebugMessages()
+   * @see debugMessageExists()
    *
    * @author Oleg Schildt 
    */
@@ -590,12 +590,12 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see setDebugMessage
-   * @see clearErrors
-   * @see clearWarnings
-   * @see clearProgWarnings
-   * @see clearInfos
-   * @see clearAll
+   * @see setDebugMessage()
+   * @see clearErrors()
+   * @see clearWarnings()
+   * @see clearProgWarnings()
+   * @see clearInfos()
+   * @see clearAll()
    *
    * @author Oleg Schildt 
    */
@@ -610,11 +610,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return boolean
    * Returns true if the stored debugging message exists, otherwise false.
    *
-   * @see setDebugMessage
-   * @see errorsExist
-   * @see warningsExist
-   * @see progWarningsExist
-   * @see infosExist
+   * @see setDebugMessage()
+   * @see errorsExist()
+   * @see warningsExist()
+   * @see progWarningsExist()
+   * @see infosExist()
    *
    * @author Oleg Schildt 
    */
@@ -632,11 +632,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return array
    * Returns the array of debugging messages if any have been stored.
    *
-   * @see setDebugMessage
-   * @see getErrors
-   * @see getWarnings
-   * @see getProgWarnings
-   * @see getInfos
+   * @see setDebugMessage()
+   * @see getErrors()
+   * @see getWarnings()
+   * @see getProgWarnings()
+   * @see getInfos()
    *
    * @author Oleg Schildt 
    */
@@ -669,9 +669,9 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see getInfos
-   * @see clearInfos
-   * @see infosExist
+   * @see getInfos()
+   * @see clearInfos()
+   * @see infosExist()
    *
    * @author Oleg Schildt 
    */
@@ -691,12 +691,12 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see setInfo
-   * @see clearErrors
-   * @see clearWarnings
-   * @see clearProgWarnings
-   * @see clearDebugMessages
-   * @see clearAll
+   * @see setInfo()
+   * @see clearErrors()
+   * @see clearWarnings()
+   * @see clearProgWarnings()
+   * @see clearDebugMessages()
+   * @see clearAll()
    *
    * @author Oleg Schildt 
    */
@@ -711,11 +711,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return boolean
    * Returns true if the information message exists, otherwise false.
    *
-   * @see setInfo
-   * @see errorsExist
-   * @see warningsExist
-   * @see progWarningsExist
-   * @see debugMessageExists
+   * @see setInfo()
+   * @see errorsExist()
+   * @see warningsExist()
+   * @see progWarningsExist()
+   * @see debugMessageExists()
    *
    * @author Oleg Schildt 
    */
@@ -733,11 +733,11 @@ class MessageManager implements IMessageManager, IInitable
    * @return array
    * Returns the array of information messages if any have been stored.
    *
-   * @see setInfo
-   * @see getErrors
-   * @see getWarnings
-   * @see getProgWarnings
-   * @see getDebugMessages
+   * @see setInfo()
+   * @see getErrors()
+   * @see getWarnings()
+   * @see getProgWarnings()
+   * @see getDebugMessages()
    *
    * @author Oleg Schildt 
    */
@@ -757,11 +757,11 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see clearErrors
-   * @see clearWarnings
-   * @see clearProgWarnings
-   * @see clearDebugMessages
-   * @see clearInfos
+   * @see clearErrors()
+   * @see clearWarnings()
+   * @see clearProgWarnings()
+   * @see clearDebugMessages()
+   * @see clearInfos()
    *
    * @author Oleg Schildt 
    */
@@ -855,8 +855,8 @@ class MessageManager implements IMessageManager, IInitable
    * @return boolean
    * Returns the state whether the display of the programming warnings is active or not.
    *
-   * @see enableProgWarnings
-   * @see disableProgWarnings
+   * @see enableProgWarnings()
+   * @see disableProgWarnings()
    *
    * @author Oleg Schildt 
    */
@@ -873,8 +873,8 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see progWarningsActive
-   * @see disableProgWarnings
+   * @see progWarningsActive()
+   * @see disableProgWarnings()
    *
    * @author Oleg Schildt 
    */
@@ -890,8 +890,8 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @see progWarningsActive
-   * @see enableProgWarnings
+   * @see progWarningsActive()
+   * @see enableProgWarnings()
    *
    * @author Oleg Schildt 
    */

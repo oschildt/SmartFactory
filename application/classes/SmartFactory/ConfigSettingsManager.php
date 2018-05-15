@@ -70,8 +70,8 @@ class ConfigSettingsManager implements ISettingsManager
    * @var string
    * Internal variable for storing the current context.
    *
-   * @see getContext
-   * @see setContext
+   * @see getContext()
+   * @see setContext()
    *
    * @author Oleg Schildt 
    */
@@ -81,8 +81,8 @@ class ConfigSettingsManager implements ISettingsManager
    * @var \SmartFactory\Interfaces\ISettingsValidator
    * Internal variable for storing the validator.
    *
-   * @see getValidator
-   * @see setValidator
+   * @see getValidator()
+   * @see setValidator()
    *
    * @author Oleg Schildt 
    */
@@ -117,7 +117,7 @@ class ConfigSettingsManager implements ISettingsManager
    * @return boolean
    * Returns true if the data has been successfully saved, otherwise false.
    *
-   * @see loadXML
+   * @see loadXML()
    *
    * @author Oleg Schildt 
    */
@@ -159,7 +159,7 @@ class ConfigSettingsManager implements ISettingsManager
    * @return boolean
    * Returns true if the data has been successfully loaded, otherwise false.
    *
-   * @see saveXML
+   * @see saveXML()
    *
    * @author Oleg Schildt 
    */
@@ -231,13 +231,13 @@ class ConfigSettingsManager implements ISettingsManager
   /**
    * Sets the validator for the settings.
    * 
-   * @param \SmartFactory\Interfaces\ISettingsValidator $validator 
+   * @param Interfaces\ISettingsValidator $validator
    * The settings validator.
    *
    * @return void   
    *
-   * @see getValidator
-   * @see validateSettings
+   * @see getValidator()
+   * @see validateSettings()
    *
    * @author Oleg Schildt 
    */
@@ -252,8 +252,8 @@ class ConfigSettingsManager implements ISettingsManager
    * @return \SmartFactory\Interfaces\ISettingsValidator|null  
    * Returns the validator for the settings or null if none is defined.
    *
-   * @see setValidator
-   * @see validateSettings
+   * @see setValidator()
+   * @see validateSettings()
    *
    * @author Oleg Schildt 
    */
@@ -279,7 +279,7 @@ class ConfigSettingsManager implements ISettingsManager
    *
    * @return void
    *
-   * @see getContext
+   * @see getContext()
    *
    * @author Oleg Schildt 
    */
@@ -303,7 +303,7 @@ class ConfigSettingsManager implements ISettingsManager
    * @return string
    * Returns the current settings context.
    *
-   * @see setContext
+   * @see setContext()
    *
    * @author Oleg Schildt 
    */
@@ -342,7 +342,7 @@ class ConfigSettingsManager implements ISettingsManager
    *
    * @return void   
    *
-   * @see getParameter
+   * @see getParameter()
    *
    * @author Oleg Schildt 
    */
@@ -374,7 +374,7 @@ class ConfigSettingsManager implements ISettingsManager
    * @return mixed   
    * Returns the value of the settings parameter.
    *
-   * @see setParameter
+   * @see setParameter()
    *
    * @author Oleg Schildt 
    */
@@ -402,10 +402,10 @@ class ConfigSettingsManager implements ISettingsManager
    * Returns true if there is no validator defined, otherwise lets 
    * the validator validate the settings.   
    *
-   * @uses \SmartFactory\Interfaces\ISettingsValidator
+   * @uses Interfaces\ISettingsValidator
    *
-   * @see getValidator
-   * @see setValidator
+   * @see getValidator()
+   * @see setValidator()
    *
    * @author Oleg Schildt 
    */
@@ -422,7 +422,7 @@ class ConfigSettingsManager implements ISettingsManager
    * @return boolean
    * Returns true if the settings have been successfully loaded, otherwise false.
    *
-   * @see saveSettings
+   * @see saveSettings()
    *
    * @author Oleg Schildt 
    */
@@ -451,7 +451,7 @@ class ConfigSettingsManager implements ISettingsManager
    * @return boolean
    * Returns true if the settings have been successfully saved, otherwise false.
    *
-   * @see loadSettings
+   * @see loadSettings()
    *
    * @author Oleg Schildt 
    */

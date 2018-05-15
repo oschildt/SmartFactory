@@ -111,7 +111,7 @@ function instance($interface_or_class)
  *                 ]);
  * ```
  *
- * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+ * @return DatabaseWorkers\DBWorker|null
  * returns DBWorker object or null if the object could not be created.
  *
  * @author Oleg Schildt

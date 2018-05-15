@@ -23,7 +23,7 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
    * @var array
    * Internal array for storing the handler mappings.
    *
-   * @see registerApiRequestHandler
+   * @see registerApiRequestHandler()
    *
    * @author Oleg Schildt 
    */
@@ -90,11 +90,12 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
   /**
    * Not implemented in this class since the API call name is defined
    * not based on the URL but on a tag name in the incoming XML data.
-   * For that reason the method {@see parseXML} is used.
+   *
+   * For that reason the method {@see XmlApiRequestHandler::parseXML()} is used.
    *
    * @return null
    *
-   * @see parseXML
+   * @see parseXML()
    *
    * @author Oleg Schildt 
    */

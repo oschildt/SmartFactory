@@ -23,10 +23,10 @@ class EventManager implements IEventManager
    * @var array
    * Internal array for storing the event handler mappings.
    *
-   * @see addHandler
-   * @see deleteHandler
-   * @see deleteHandlers
-   * @see deleteAllHandlers
+   * @see addHandler()
+   * @see deleteHandler()
+   * @see deleteHandlers()
+   * @see deleteAllHandlers()
    *
    * @author Oleg Schildt 
    */
@@ -36,9 +36,9 @@ class EventManager implements IEventManager
    * @var array
    * Internal array for storing the suspended events.
    *
-   * @see suspendEvent
-   * @see resumeEvent
-   * @see resumeAllEvents
+   * @see suspendEvent()
+   * @see resumeEvent()
+   * @see resumeAllEvents()
    *
    * @author Oleg Schildt 
    */
@@ -65,9 +65,9 @@ class EventManager implements IEventManager
    * @return boolean
    * Returns true if the adding was successfull, otherwise false.
    *
-   * @see deleteHandler
-   * @see deleteHandlers
-   * @see deleteAllHandlers
+   * @see deleteHandler()
+   * @see deleteHandlers()
+   * @see deleteAllHandlers()
    *
    * @author Oleg Schildt 
    */
@@ -96,9 +96,9 @@ class EventManager implements IEventManager
    * @return boolean
    * Returns true if the deletion was successfull, otherwise false.
    *
-   * @see addHandler
-   * @see deleteHandlers
-   * @see deleteAllHandlers
+   * @see addHandler()
+   * @see deleteHandlers()
+   * @see deleteAllHandlers()
    *
    * @author Oleg Schildt 
    */
@@ -124,9 +124,9 @@ class EventManager implements IEventManager
    * @return boolean
    * Returns true if the deletion was successfull, otherwise false.
    *
-   * @see addHandler
-   * @see deleteHandler
-   * @see deleteAllHandlers
+   * @see addHandler()
+   * @see deleteHandler()
+   * @see deleteAllHandlers()
    *
    * @author Oleg Schildt 
    */
@@ -145,9 +145,9 @@ class EventManager implements IEventManager
    * @return boolean
    * Returns true if the deletion was successfull, otherwise false.
    *
-   * @see addHandler
-   * @see deleteHandler
-   * @see deleteHandlers
+   * @see addHandler()
+   * @see deleteHandler()
+   * @see deleteHandlers()
    *
    * @author Oleg Schildt 
    */
@@ -169,8 +169,8 @@ class EventManager implements IEventManager
    * @return boolean
    * Returns true if the suspesion was successfull, otherwise false.
    *
-   * @see resumeEvent
-   * @see resumeAllEvents
+   * @see resumeEvent()
+   * @see resumeAllEvents()
    *
    * @author Oleg Schildt 
    */
@@ -192,8 +192,8 @@ class EventManager implements IEventManager
    * @return boolean
    * Returns true if the suspesion was successfull, otherwise false.
    *
-   * @see suspendEvent
-   * @see resumeAllEvents
+   * @see suspendEvent()
+   * @see resumeAllEvents()
    *
    * @author Oleg Schildt 
    */
@@ -212,8 +212,8 @@ class EventManager implements IEventManager
    * @return boolean
    * Returns true if the suspesion was successfull, otherwise false.
    *
-   * @see suspendEvent
-   * @see resumeEvent
+   * @see suspendEvent()
+   * @see resumeEvent()
    *
    * @author Oleg Schildt 
    */

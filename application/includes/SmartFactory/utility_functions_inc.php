@@ -51,6 +51,7 @@ function array_to_json(&$array)
 
   // PHP json_encode escapes forward slash and the ExtJS says JSON parse error
 
+  /*
   $result = "";
   if(is_associative($array))
   {
@@ -116,6 +117,7 @@ function array_to_json(&$array)
   }
 
   return $result;
+  */
 } // array_to_json
 
 /**
@@ -133,7 +135,7 @@ function array_to_json(&$array)
  *
  * @return void
  *
- * @see dom_to_array
+ * @see \SmartFactory\dom_to_array()
  *
  * @author Oleg Schildt 
  */
@@ -175,7 +177,7 @@ function array_to_dom(&$node, &$array)
  *
  * @return void
  *
- * @see array_to_dom
+ * @see \SmartFactory\array_to_dom()
  *
  * @author Oleg Schildt 
  */
@@ -221,37 +223,37 @@ function dom_to_array(&$node, &$array)
 } // dom_to_array
 
 /**
- * Echoes the text with escaping of HTML special charaters.
+ * Echoes the text with escaping of HTML special characters.
  *
  * @param string $text 
  * The text to be escaped.
  *
  * @return void
  *
- * @see escape_js()
- * @see escape_html()
+ * @see \SmartFactory\escape_js()
+ * @see \SmartFactory\escape_html()
  *
- * @uses escape_html()
+ * @uses \SmartFactory\escape_html()
  *
  * @author Oleg Schildt 
  */
 function echo_html($text)
 {
-  echo htmlspecialchars($text, ENT_QUOTES);
+  echo escape_html($text);
 } // echo_html
 
 /**
- * Escapes the HTML special charaters in the text.
+ * Escapes the HTML special characters in the text.
  *
  * @param string $text 
  * The text to be escaped.
  *
  * @return string
- * Returns the text with escaped HTML special charaters.
+ * Returns the text with escaped HTML special characters.
  *
- * @see echo_html 
- * @see escape_html_array 
- * @see escape_js
+ * @see \SmartFactory\echo_html()
+ * @see \SmartFactory\escape_html_array()
+ * @see \SmartFactory\escape_js()
  *
  * @author Oleg Schildt 
  */
@@ -261,7 +263,7 @@ function escape_html($text)
 } // escape_html
 
 /**
- * Escapes recursively the HTML special charaters in the values
+ * Escapes recursively the HTML special characters in the values
  * of the array.
  *
  * @param array $array 
@@ -269,8 +271,8 @@ function escape_html($text)
  *
  * @return void
  *
- * @see escape_html 
- * @see escape_js
+ * @see \SmartFactory\escape_html()
+ * @see \SmartFactory\escape_js()
  *
  * @author Oleg Schildt 
  */
@@ -285,16 +287,16 @@ function escape_html_array(&$array)
 } // escape_html_array
 
 /**
- * Escapes the JavaScript special charaters in the text.
+ * Escapes the JavaScript special characters in the text.
  *
  * @param string $text 
  * The text to be escaped.
  *
  * @return string
- * Returns the text with escaped JavaScript special charaters.
+ * Returns the text with escaped JavaScript special characters.
  *
- * @see echo_js
- * @see escape_html
+ * @see \SmartFactory\echo_js()
+ * @see \SmartFactory\escape_html()
  *
  * @author Oleg Schildt 
  */
@@ -312,17 +314,17 @@ function escape_js($text)
 } // escape_js
 
 /**
- * Echoes the text with escaping of JavaScript special charaters.
+ * Echoes the text with escaping of JavaScript special characters.
  *
  * @param string $text 
  * The text to be escaped.
  *
  * @return void
  *
- * @see echo_html()
- * @see escape_js()
+ * @see \SmartFactory\echo_html()
+ * @see \SmartFactory\escape_js()
  *
- * @uses escape_js()
+ * @uses \SmartFactory\escape_js()
  *
  * @author Oleg Schildt 
  */
@@ -332,16 +334,16 @@ function echo_js($text)
 } // echo_js
 
 /**
- * Escapes the special charaters in the text used for the regular
+ * Escapes the special characters in the text used for the regular
  * expression pattern.
  *
  * @param string $pattern 
  * The pattern to be escaped.
  *
  * @return string
- * Returns the text with escaped special charaters.
+ * Returns the text with escaped special characters.
  *
- * @see preg_r_escape
+ * @see \SmartFactory\preg_r_escape()
  *
  * @author Oleg Schildt 
  */
@@ -351,16 +353,16 @@ function preg_p_escape($pattern)
 } // preg_p_escape
 
 /**
- * Escapes the special charaters in the text used for the regular
+ * Escapes the special characters in the text used for the regular
  * expression replacement.
  *
  * @param string $pattern 
  * The pattern to be escaped.
  *
  * @return string
- * Returns the text with escaped special charaters.
+ * Returns the text with escaped special characters.
  *
- * @see preg_p_escape
+ * @see \SmartFactory\preg_p_escape()
  *
  * @author Oleg Schildt 
  */
@@ -497,7 +499,7 @@ function format_number($number, $decimals = 0, $dec_point = ".", $thousand_sep =
  * @return string
  * Returns the encrypted text.
  *
- * @see aes_256_decrypt
+ * @see \SmartFactory\aes_256_decrypt()
  *
  * @author Oleg Schildt 
  */
@@ -533,7 +535,7 @@ function aes_256_encrypt($data, $password_key)
  * @return string
  * Returns the decrypted text.
  *
- * @see aes_256_decrypt
+ * @see \SmartFactory\aes_256_decrypt()
  *
  * @author Oleg Schildt 
  */

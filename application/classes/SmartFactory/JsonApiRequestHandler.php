@@ -23,7 +23,7 @@ class JsonApiRequestHandler implements IApiRequestHandler
    * @var array
    * Internal array for storing the handler mappings.
    *
-   * @see registerApiRequestHandler
+   * @see registerApiRequestHandler()
    *
    * @author Oleg Schildt 
    */

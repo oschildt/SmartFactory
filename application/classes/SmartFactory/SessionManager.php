@@ -40,8 +40,8 @@ class SessionManager
    * then you can use different $context in each instance to ensure 
    * that the session data of these instances does not mix.
    *
-   * @see getContext
-   * @see switchContext
+   * @see getContext()
+   * @see switchContext()
    *
    * @author Oleg Schildt 
    */
@@ -299,7 +299,7 @@ class SessionManager
    *
    * @return void
    *
-   * @see getContext
+   * @see getContext()
    *
    * @author Oleg Schildt 
    */
@@ -320,7 +320,7 @@ class SessionManager
    * @return string
    * Returns the current session context.
    *
-   * @see switchContext
+   * @see switchContext()
    *
    * @author Oleg Schildt 
    */
@@ -371,7 +371,7 @@ class SessionManager
    * @return string
    * Returns the current session variable name.
    *
-   * @see setSessionName
+   * @see setSessionName()
    *
    * @author Oleg Schildt 
    */
@@ -389,7 +389,7 @@ class SessionManager
    * @return boolean
    * Returns true if the session variable name has been successfully set, otherwise false.
    *
-   * @see getSessionName
+   * @see getSessionName()
    *
    * @author Oleg Schildt 
    */
@@ -404,7 +404,7 @@ class SessionManager
    * @return string
    * Returns the ID of the current session.
    *
-   * @see setSessionId
+   * @see setSessionId()
    *
    * @author Oleg Schildt 
    */
@@ -424,7 +424,7 @@ class SessionManager
    * @return boolean
    * Returns true if the session ID has been successfully set, otherwise false.
    *
-   * @see getSessionId
+   * @see getSessionId()
    *
    * @author Oleg Schildt 
    */

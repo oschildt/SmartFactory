@@ -23,8 +23,8 @@ class ErrorHandler implements IErrorHandler
    * @var string
    * Internal variable for storing the last error.
    *
-   * @see getLastError
-   * @see setLastError
+   * @see getLastError()
+   * @see setLastError()
    *
    * @author Oleg Schildt 
    */
@@ -34,9 +34,9 @@ class ErrorHandler implements IErrorHandler
    * @var boolean
    * Internal variable for storing the state of tracing - active or not.
    *
-   * @see traceActive
-   * @see enableTrace
-   * @see disableTrace
+   * @see traceActive()
+   * @see enableTrace()
+   * @see disableTrace()
    *
    * @author Oleg Schildt 
    */
@@ -316,8 +316,8 @@ class ErrorHandler implements IErrorHandler
    * @return boolean
    * Returns the state whether the trace is active or not.
    *
-   * @see enableTrace
-   * @see disableTrace
+   * @see enableTrace()
+   * @see disableTrace()
    *
    * @author Oleg Schildt 
    */
@@ -335,8 +335,8 @@ class ErrorHandler implements IErrorHandler
    *
    * @return void
    *
-   * @see traceActive
-   * @see disableTrace
+   * @see traceActive()
+   * @see disableTrace()
    *
    * @author Oleg Schildt 
    */
@@ -353,8 +353,8 @@ class ErrorHandler implements IErrorHandler
    *
    * @return void
    *
-   * @see traceActive
-   * @see enableTrace
+   * @see traceActive()
+   * @see enableTrace()
    *
    * @author Oleg Schildt 
    */

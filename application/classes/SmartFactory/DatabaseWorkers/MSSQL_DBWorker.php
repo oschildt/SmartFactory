@@ -194,7 +194,7 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * The method should return true if the extension is installed, otherwise false.   
    *
-   * @see get_extension_name
+   * @see get_extension_name()
    *
    * @author Oleg Schildt 
    */
@@ -209,7 +209,7 @@ class MSSQL_DBWorker extends DBWorker
    * @return string 
    * Returns the name of the required PHP extension - "sqlsrv".
    *
-   * @see is_extension_installed
+   * @see is_extension_installed()
    *
    * @author Oleg Schildt 
    */
@@ -237,8 +237,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the connection is open, otherwise false.
    *
-   * @see connect
-   * @see close_connection
+   * @see connect()
+   * @see close_connection()
    *
    * @author Oleg Schildt 
    */
@@ -254,8 +254,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the connection has been successfully established, otherwise false.
    *
-   * @see is_connected
-   * @see close_connection
+   * @see is_connected()
+   * @see close_connection()
    *
    * @author Oleg Schildt 
    */
@@ -381,7 +381,7 @@ class MSSQL_DBWorker extends DBWorker
    * @return string 
    * Returns the name of the database schema if applicable, or an empty string.
    *
-   * @see qualify_name_with_schema
+   * @see qualify_name_with_schema()
    *
    * @author Oleg Schildt 
    */
@@ -400,7 +400,7 @@ class MSSQL_DBWorker extends DBWorker
    * Returns the name of the database object with the schema name if applicable,
    * otherwise the name of the database object remains unchanged.
    *
-   * @see get_schema
+   * @see get_schema()
    *
    * @author Oleg Schildt 
    */
@@ -477,8 +477,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the SQL query has been successfully prepared, otherwise false.
    *
-   * @see execute_prepared_query
-   * @see free_prepared_query
+   * @see execute_prepared_query()
+   * @see free_prepared_query()
    *
    * @author Oleg Schildt 
    */
@@ -658,8 +658,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the prepared SQL query has been successfully executed, otherwise false.
    *
-   * @see prepare_query
-   * @see free_prepared_query
+   * @see prepare_query()
+   * @see free_prepared_query()
    *
    * @author Oleg Schildt 
    */
@@ -795,8 +795,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the connection has been successfully closed, otherwise false.
    *
-   * @see is_connected
-   * @see connect
+   * @see is_connected()
+   * @see connect()
    *
    * @author Oleg Schildt 
    */
@@ -827,8 +827,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the transaction has been successfully started, otherwise false.
    *
-   * @see commit_transaction
-   * @see rollback_transaction
+   * @see commit_transaction()
+   * @see rollback_transaction()
    *
    * @author Oleg Schildt 
    */
@@ -849,8 +849,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the transaction has been successfully committed, otherwise false.
    *
-   * @see start_transaction
-   * @see rollback_transaction
+   * @see start_transaction()
+   * @see rollback_transaction()
    *
    * @author Oleg Schildt 
    */
@@ -871,8 +871,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the transaction has been successfully rolled back, otherwise false.
    *
-   * @see start_transaction
-   * @see commit_transaction
+   * @see start_transaction()
+   * @see commit_transaction()
    *
    * @author Oleg Schildt 
    */
@@ -919,8 +919,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return boolean 
    * Returns true if the prepared query has been successfully freed, otherwise false.
    *
-   * @see prepare_query
-   * @see execute_prepared_query
+   * @see prepare_query()
+   * @see execute_prepared_query()
    *
    * @author Oleg Schildt 
    */
@@ -1211,8 +1211,8 @@ class MSSQL_DBWorker extends DBWorker
    * Returns the value of a field specified by name. In the case
    * of any error returns null.
    *
-   * @see field_by_num
-   * @see field_name
+   * @see field_by_num()
+   * @see field_name()
    *
    * @author Oleg Schildt 
    */
@@ -1239,9 +1239,9 @@ class MSSQL_DBWorker extends DBWorker
    * Returns the value of a field specified by number. In the case
    * of any error returns null.
    *
-   * @see field_by_name
-   * @see field_info_by_num
-   * @see field_name 
+   * @see field_by_name()
+   * @see field_info_by_num()
+   * @see field_name()
    *
    * @author Oleg Schildt 
    */
@@ -1278,8 +1278,8 @@ class MSSQL_DBWorker extends DBWorker
    *
    * $info["numeric"] - whether the filed is numeric.
    *
-   * @see field_by_num
-   * @see field_name 
+   * @see field_by_num()
+   * @see field_name() 
    *
    * @author Oleg Schildt 
    */
@@ -1364,8 +1364,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return string|null
    * Returns the name of the field by number.
    *
-   * @see field_by_num
-   * @see field_info_by_num
+   * @see field_by_num()
+   * @see field_info_by_num()
    *
    * @author Oleg Schildt 
    */
@@ -1386,8 +1386,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return string
    * Returns the escaped string.
    *
-   * @see format_date
-   * @see format_datetime
+   * @see format_date()
+   * @see format_datetime()
    *
    * @author Oleg Schildt 
    */
@@ -1405,8 +1405,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return string
    * Returns the string representation of the date compatible for the corresponding database.
    *
-   * @see escape
-   * @see format_datetime
+   * @see escape()
+   * @see format_datetime()
    *
    * @author Oleg Schildt 
    */
@@ -1424,8 +1424,8 @@ class MSSQL_DBWorker extends DBWorker
    * @return string
    * Returns the string representation of the date/time compatible for the corresponding database.
    *
-   * @see escape
-   * @see format_date
+   * @see escape()
+   * @see format_date()
    *
    * @author Oleg Schildt 
    */
