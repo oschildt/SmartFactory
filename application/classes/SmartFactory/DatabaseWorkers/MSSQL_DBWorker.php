@@ -317,7 +317,8 @@ class MSSQL_DBWorker extends DBWorker
         "UID" => $this->db_user,
         "PWD" => $this->db_password,
         //"CharacterSet" => "UTF-8",
-        "ReturnDatesAsStrings" => true
+        "ReturnDatesAsStrings" => true,
+        "MultipleActiveResultSets" => false
       ];
 
       $this->connection = @sqlsrv_connect($this->db_server, $config);
@@ -786,7 +787,23 @@ class MSSQL_DBWorker extends DBWorker
       $this->last_query = trim("EXEC ${proc_name} ${arg_list}");
     }
 
-    return $this->execute_query($this->last_query);
+    $result = $this->execute_query($this->last_query);
+    
+    if(!$result) return $result;
+    
+    // A stored procedure may generate many result objects.
+    // If the procedure has a select statement at the end,
+    // its data is in the last result.
+    
+    while(!sqlsrv_has_rows($this->statement))
+    {
+      if(!sqlsrv_next_result($this->statement))
+      {
+        break;
+      }
+    }
+
+    return $result;
   } // execute_procedure
 
   /**

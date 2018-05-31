@@ -232,6 +232,20 @@ function connect_mssql()
 
   $dbw->free_result();
   
+  echo "<h2>Getting data from stored procedure</h2>";
+  
+  if(!$dbw->execute_procedure("GET_USERS", 100))
+  {
+    return sql_error($dbw);
+  }
+
+  while($dbw->fetch_row())
+  {
+    echo $dbw->field_by_name("FIRST_NAME") . " " . $dbw->field_by_name("LAST_NAME") . "<br>";
+  }
+
+  $dbw->free_result();
+  
   return true;
 } // connect_mssql
 
