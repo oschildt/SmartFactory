@@ -92,7 +92,7 @@ class LanguageManager implements ILanguageManager
     
     $xmldoc = new \DOMDocument();
     
-    if(!$xmldoc->load(APPLICATION_ROOT . "localization/texts.xml"))
+    if(!$xmldoc->load(approot() . "localization/texts.xml"))
     {
       trigger_error("Translation file 'localization/texts.xml' cannot be loaded!", E_USER_ERROR);
       return false;

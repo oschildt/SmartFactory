@@ -1,6 +1,7 @@
 <?php
 /**
- * Definition of the application root and placing the value to the constact APPLICATION_ROOT.
+ * Definition of the short functions for the more confortable programming
+ * and code elegance.
  *
  * @package System
  *

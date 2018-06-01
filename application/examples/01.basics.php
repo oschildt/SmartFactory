@@ -2,6 +2,7 @@
 namespace MyApplication;
 
 use function SmartFactory\singleton;
+use function SmartFactory\approot;
 
 use MyApplication\Interfaces\IUser;
 
@@ -19,7 +20,7 @@ require_once "../includes/_general_inc.php";
 <h2>Object creation over factory</h2>
 
 <?php
-echo "<p>Application root: " . APPLICATION_ROOT . "</p>";
+echo "<p>Application root: " . approot() . "</p>";
 
 $user = singleton(IUser::class);
 ?>

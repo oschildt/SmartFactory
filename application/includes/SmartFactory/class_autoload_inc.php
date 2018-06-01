@@ -10,11 +10,14 @@
  *
  * @author Oleg Schildt 
  */
+ 
+use function SmartFactory\approot;
+ 
 spl_autoload_register(function ($class_name) {
   
   //echo "Looking for class: " . $class_name . "<br>";
   
-  $class_path = APPLICATION_ROOT . "classes/" . str_replace("\\", "/", $class_name) . ".php";
+  $class_path = approot() . "classes/" . str_replace("\\", "/", $class_name) . ".php";
 
   //echo "In path: " . $class_path . "<br>";
   

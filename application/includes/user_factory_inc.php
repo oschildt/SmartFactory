@@ -9,6 +9,7 @@ use SmartFactory\UserSettingsManager;
 use SmartFactory\DatabaseWorkers\DBWorker;
 
 use function SmartFactory\dbworker;
+use function SmartFactory\approot;
 
 use MyApplication\Interfaces\IUser;
 use MyApplication\HotelXmlApiRequestHandler;
@@ -26,7 +27,7 @@ use MyApplication\HotelXmlApiRequestHandler;
 FactoryBuilder::bindClass(HotelXmlApiRequestHandler::class, HotelXmlApiRequestHandler::class);
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(ConfigSettingsManager::class, ConfigSettingsManager::class, function($instance) {
-  $instance->init(["save_path" => APPLICATION_ROOT . "config/settings.xml",
+  $instance->init(["save_path" => approot() . "config/settings.xml",
                    "config_file_must_exist" => false
                    //"save_encrypted" => true,
                    //"salt_key" => "demotest"

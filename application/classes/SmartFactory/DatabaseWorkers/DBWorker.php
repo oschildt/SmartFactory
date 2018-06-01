@@ -28,80 +28,96 @@ abstract class DBWorker implements IInitable
 {
   /**
    * The constant for the number type.
+   *
+   * @author Oleg Schildt 
    */
   const db_number = 1;
   /**
    * The constant for the string type.
+   *
+   * @author Oleg Schildt 
    */
   const db_string = 2;
   /**
    * The constant for the date type.
+   *
+   * @author Oleg Schildt 
    */
   const db_date = 3;
   /**
    * The constant for the date/time type.
+   *
+   * @author Oleg Schildt 
    */
   const db_datetime = 4;
 
   /**
-   * @var string $db_server
    * Name or IP address of the server.
+   *
+   * @var string $db_server
    *
    * @author Oleg Schildt 
    */
   protected $db_server;
   
   /**
-   * @var string $db_name
    * Name of the database.
+   *
+   * @var string $db_name
    *
    * @author Oleg Schildt 
    */
   protected $db_name;
   
   /**
-   * @var string $db_user
    * Name of the database user.
+   *
+   * @var string $db_user
    *
    * @author Oleg Schildt 
    */
   protected $db_user;
   
   /**
-   * @var string $db_password
    * Password of the database user.
+   *
+   * @var string $db_password
    *
    * @author Oleg Schildt 
    */
   protected $db_password;
 
   /**
-   * @var string $last_error
    * This variable stores the last occured error.
+   *
+   * @var string $last_error
    *
    * @author Oleg Schildt 
    */
   protected $last_error = NULL;
 
   /**
-   * @var string $last_error_id
    * This variable stores the ID of the last occured error.
+   *
+   * @var string $last_error_id
    *
    * @author Oleg Schildt 
    */
   protected $last_error_id = NULL;
 
   /**
-   * @var string $last_query
    * This variable stores the last executed query.
+   *
+   * @var string $last_query
    *
    * @author Oleg Schildt 
    */
   protected $last_query = NULL;
 
   /**
-   * @var boolean $is_clone
    * Flag property for storing the state whether it is clone or not.
+   *
+   * @var boolean $is_clone
    *
    * @author Oleg Schildt 
    */

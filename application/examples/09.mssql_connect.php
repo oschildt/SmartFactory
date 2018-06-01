@@ -3,6 +3,7 @@ namespace MyApplication;
 
 use function SmartFactory\dbworker;
 use function SmartFactory\sql_error;
+use function SmartFactory\approot;
 
 //-----------------------------------------------------------------
 require_once "../includes/_general_inc.php";
@@ -157,7 +158,7 @@ function connect_mssql()
 
   echo "<h2>Streaming large data</h2>";
   
-  $stream = fopen(APPLICATION_ROOT . "../documentation/examples/large_binary.jpg", "rb");
+  $stream = fopen(approot() . "../documentation/examples/large_binary.jpg", "rb");
 
   if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
   {
@@ -166,7 +167,7 @@ function connect_mssql()
   
   echo "Binary written.<br>";
 
-  $stream = fopen(APPLICATION_ROOT . "../documentation/examples/large_text.txt", "rt");
+  $stream = fopen(approot() . "../documentation/examples/large_text.txt", "rt");
 
   if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET TEXT_DATA = ? WHERE ID = 1", $stream))
   {

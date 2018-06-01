@@ -113,7 +113,7 @@ class ErrorHandler implements IErrorHandler
       
       $trace .= "[";
       
-      $trace .= str_replace(APPLICATION_ROOT, "", $aroot = str_replace("\\", "/", $btrace_entry["file"]));
+      $trace .= str_replace(approot(), "", str_replace("\\", "/", $btrace_entry["file"]));
 
       $trace .= ", ";
 

@@ -46,7 +46,7 @@ class DebugProfiler implements IDebugProfiler
    */
   public function logMessageToFile($message, $file_name)
   {
-    $path = APPLICATION_ROOT . "logs/";
+    $path = approot() . "logs/";
     $file = $path . $file_name;
 
     if((!file_exists($file) && is_writable($path)) || is_writable($file))
@@ -138,7 +138,7 @@ class DebugProfiler implements IDebugProfiler
    */
   public function clearLogFile($file_name)
   {
-    $path = APPLICATION_ROOT . "logs/";
+    $path = approot() . "logs/";
     $file = $path . $file_name;
 
     if((!file_exists($file) && is_writable($path)) || is_writable($file))
@@ -159,7 +159,7 @@ class DebugProfiler implements IDebugProfiler
    */
   public function clearLogFiles()
   {
-    $dir = APPLICATION_ROOT . "logs/";
+    $dir = approot() . "logs/";
     $files = scandir($dir);
     foreach($files as $file)
     {

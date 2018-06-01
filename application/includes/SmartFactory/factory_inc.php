@@ -40,7 +40,7 @@ use SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
  * - If the interface or class does not exist.
  * - If the interface or class has no bound class.
  *
- * @see instance()
+ * @see \SmartFactory\instance()
  *
  * @author Oleg Schildt
  */
@@ -66,7 +66,7 @@ function singleton($interface_or_class)
  * - If the interface or class does not exist.
  * - If the interface or class has no bound class.
  *
- * @see singleton()
+ * @see \SmartFactory\singleton()
  *
  * @author Oleg Schildt
  */

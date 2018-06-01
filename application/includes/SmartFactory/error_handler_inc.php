@@ -4,6 +4,8 @@
  * Adding the event for generation of the programmer warning
  * upon a PHP error, notice or warning.
  *
+ * @package System
+ *
  * @author Oleg Schildt
  */
  
