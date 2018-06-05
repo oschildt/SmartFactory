@@ -3,7 +3,7 @@
  * This file contains the implementation of the interface ILanguageManager 
  * in the class LanguageManager for working with localization of texts.
  *
- * @package Sytem
+ * @package System
  *
  * @author Oleg Schildt 
  */

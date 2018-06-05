@@ -3,7 +3,7 @@
  * This file contains the implementation of the interface IMessageManager 
  * in the class MessageManager for working with messages - errors, warnings etc.
  *
- * @package Sytem
+ * @package System
  *
  * @author Oleg Schildt 
  */
