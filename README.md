@@ -7,6 +7,10 @@
 
 For more details see [Wiki](https://github.com/oschildt/SmartFactory/wiki) and [Presentation](https://docs.google.com/presentation/d/1CcVX_bQQirFG0fq0CSQ2O7YTONQywyDtVJkai1GQhOM).
 
+### Requirements
+
+PHP 7.2.x
+
 ### To get familiar with the SmartFactory do the following
 
 - View and study the usage examples in the folder examples.
