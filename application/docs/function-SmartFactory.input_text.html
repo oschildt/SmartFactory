@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Function: input_text - Framework SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="active">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="constants.html" class="">
+                                Constants
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-primary">Function</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">input_text()</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Function: input_text</h1>
+
+<div class="definition"><b>input_text</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>, boolean &amp;<span class="php-var">$echo</span> = <span class="php-keyword1">true</span>) : string|<span class="php-keyword1">null</span></div>
+
+
+<div class="short-description">
+Function for rendering the text input field.
+</div>
+
+
+
+<div class="long-description">
+<h2>Details</h2>
+<p>This function renders a text input field that is bound to
+the request variable with the corresponding name.</p>
+</div>
+
+
+
+<h2>Parameters</h2>
+
+    <h3>$parameters</h3>
+    <span class="type_label">Type:</span> array
+    
+    <div class="param-description">
+    <p>The array of parameters as an associative array in the form key => value:</p>
+<ul>
+<li>
+<p>$parameters["id"] - id of the field.</p>
+</li>
+<li>
+<p>$parameters["name"] - name of the field.</p>
+</li>
+<li>
+<p>$parameters["value"] - value that should be set for the field. If it is not specified,
+the value of the corresponding request variable is taken.</p>
+</li>
+</ul>
+<p>Any other attributes may be specified.</p>
+<p>Example:</p>
+<pre><code class="language-php">input_text([<span class="php-quote">&quot;id&quot;</span> =&gt; <span class="php-quote">&quot;data_input_text&quot;</span>,
+            <span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;data[input_text]&quot;</span>,
+            <span class="php-quote">&quot;class&quot;</span> =&gt; <span class="php-quote">&quot;my_class&quot;</span>,
+            <span class="php-quote">&quot;style&quot;</span> =&gt; <span class="php-quote">&quot;width: 300px&quot;</span>,
+            <span class="php-quote">&quot;placeholder&quot;</span> =&gt; <span class="php-quote">&quot;enter the data&quot;</span>,
+            <span class="php-quote">&quot;title&quot;</span> =&gt; <span class="php-quote">&quot;enter the data&quot;</span>,
+            <span class="php-quote">&quot;data-prop&quot;</span> =&gt; <span class="php-quote">&quot;some-prop&quot;</span>,
+            <span class="php-quote">&quot;onblur&quot;</span> =&gt; <span class="php-quote">&quot;alert('Hello &amp; Buy!')&quot;</span>
+           ]);</code></pre>
+    </div>
+    
+
+    <h3>$echo</h3>
+    <span class="type_label">Type:</span> boolean
+    
+    <div class="param-description">
+    <p>If the value of $echo is true, the html code of the field is directly echoed.
+Otherwise it is returned as string. It might be useful to pass this code to
+other rendering functions instead of echoing.</p>
+    </div>
+    
+
+
+
+
+<h2>Returns</h2>
+<span class="type_label">Type:</span> string|null
+
+<div class="param-description">
+<p>If the paramter $echo is true, the string of the field html
+code is returned, otherwise null.</p>
+</div>
+
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-HTML_Utils.html">HTML Utils</a>
+
+
+<h2>Source code</h2>
+<a href="source-includes.SmartFactory.html_utils_inc.html#94">includes\SmartFactory\html_utils_inc.php</a>
+
+
+<h2>See also</h2>
+<div class="item_list">
+
+<a href="function-SmartFactory.input_password.html">\SmartFactory\input_password()</a><br>
+
+<a href="function-SmartFactory.input_hidden.html">\SmartFactory\input_hidden()</a><br>
+
+<a href="function-SmartFactory.textarea.html">\SmartFactory\textarea()</a><br>
+
+<a href="function-SmartFactory.select.html">\SmartFactory\select()</a><br>
+
+<a href="function-SmartFactory.checkbox.html">\SmartFactory\checkbox()</a><br>
+
+<a href="function-SmartFactory.radiobutton.html">\SmartFactory\radiobutton()</a><br>
+
+</div>
+
+
+
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-06-13 12:05
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+

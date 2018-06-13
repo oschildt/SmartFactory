@@ -1,0 +1,3420 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: DBWorker - Framework SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="constants.html" class="">
+                                Constants
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.DatabaseWorkers.html">DatabaseWorkers</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">DBWorker</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: DBWorker</h1>
+
+
+
+<span class="label label-primary">abstract</span>
+
+
+
+
+<div class="short-description">
+This is the abstract base class for all dbworkers for different databases.
+</div>
+
+
+
+<div class="long-description">
+<h2>Details</h2>
+<p>This is a wrapper around the database connectivity. It offers an universal
+common way for working with databases of different types. Currently, MySQL and
+MS SQL are supported. If in the future, there will be a better solution, or
+the current solution turns out to be inefficient in a new version of PHP,
+we can easily reimplement the DB wrapper without touching the business logic code.
+Adding support for new database types is also much easier with this wrapping approach.</p>
+</div>
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
+
+</div>
+
+
+
+<h2>Known derivations</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html">\SmartFactory\DatabaseWorkers\MSSQL_DBWorker</a><br>
+
+<a href="class-SmartFactory.DatabaseWorkers.MySQL_DBWorker.html">\SmartFactory\DatabaseWorkers\MySQL_DBWorker</a><br>
+
+</div>
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-Database.html">Database</a>
+
+
+<h2>Source code</h2>
+<a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#24">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Constants</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#db_date">db_date</a>
+          </td>
+          <td class="description_column">
+              The constant for the date type.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#db_datetime">db_datetime</a>
+          </td>
+          <td class="description_column">
+              The constant for the date/time type.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#db_number">db_number</a>
+          </td>
+          <td class="description_column">
+              The constant for the number type.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#db_string">db_string</a>
+          </td>
+          <td class="description_column">
+              The constant for the string type.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$db_name">$db_name</a>
+          </td>
+          <td class="description_column">
+              Name of the database.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$db_password">$db_password</a>
+          </td>
+          <td class="description_column">
+              Password of the database user.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$db_server">$db_server</a>
+          </td>
+          <td class="description_column">
+              Name or IP address of the server.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$db_user">$db_user</a>
+          </td>
+          <td class="description_column">
+              Name of the database user.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$is_clone">$is_clone</a>
+          </td>
+          <td class="description_column">
+              Flag property for storing the state whether it is clone or not.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$last_error">$last_error</a>
+          </td>
+          <td class="description_column">
+              This variable stores the last occured error.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$last_error_id">$last_error_id</a>
+          </td>
+          <td class="description_column">
+              This variable stores the ID of the last occured error.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$last_query">$last_query</a>
+          </td>
+          <td class="description_column">
+              This variable stores the last executed query.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#affected_count">affected_count</a>
+          </td>
+          <td class="description_column">
+              Returns the number of the rows affected by the last modification query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#clear_messages">clear_messages</a>
+          </td>
+          <td class="description_column">
+              Clears the last stored occured error, its ID and the last executed query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#close_connection">close_connection</a>
+          </td>
+          <td class="description_column">
+              Closes the currently opened connection.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#commit_transaction">commit_transaction</a>
+          </td>
+          <td class="description_column">
+              Commits the transation.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#connect">connect</a>
+          </td>
+          <td class="description_column">
+              Establishes the connection to the database using the connection
+settings parameters specified by the initialization.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#create_clone">create_clone</a>
+          </td>
+          <td class="description_column">
+              Creates a clone of the dbworker that is using the same open
+connection.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#escape">escape</a>
+          </td>
+          <td class="description_column">
+              Escapes the string so that it can be used in the query without causing an error.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#execute_prepared_query">execute_prepared_query</a>
+          </td>
+          <td class="description_column">
+              Executes the prepared SQL query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#execute_procedure">execute_procedure</a>
+          </td>
+          <td class="description_column">
+              Executes the SQL stored procedure.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#execute_query">execute_query</a>
+          </td>
+          <td class="description_column">
+              Executes the SQL query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#fetch_array">fetch_array</a>
+          </td>
+          <td class="description_column">
+              Fetches all rows from the result into an array.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#fetch_row">fetch_row</a>
+          </td>
+          <td class="description_column">
+              Fetches the next row of data from the result of the execution of the retrieving query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#fetched_count">fetched_count</a>
+          </td>
+          <td class="description_column">
+              Returns the number of the rows fetched by the last retrieving query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#field_by_name">field_by_name</a>
+          </td>
+          <td class="description_column">
+              Returns the value of a field specified by name.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#field_by_num">field_by_num</a>
+          </td>
+          <td class="description_column">
+              Returns the value of a field specified by number.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#field_count">field_count</a>
+          </td>
+          <td class="description_column">
+              Returns the number of the fields in the result of the last retrieving query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#field_info_by_num">field_info_by_num</a>
+          </td>
+          <td class="description_column">
+              Returns the meta information about the field as an object with properties.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#field_name">field_name</a>
+          </td>
+          <td class="description_column">
+              Returns the name of the field by number.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#format_date">format_date</a>
+          </td>
+          <td class="description_column">
+              Formats the date to a string compatible for the corresponding database.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#format_datetime">format_datetime</a>
+          </td>
+          <td class="description_column">
+              Formats the date/time to a string compatible for the corresponding database.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#free_prepared_query">free_prepared_query</a>
+          </td>
+          <td class="description_column">
+              Frees the prepared query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#free_result">free_result</a>
+          </td>
+          <td class="description_column">
+              Frees the result of the previously executed retrieving query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#get_extension_name">get_extension_name</a>
+          </td>
+          <td class="description_column">
+              Returns the name of the required PHP extension.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#get_last_error">get_last_error</a>
+          </td>
+          <td class="description_column">
+              Returns the last occured error.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#get_last_error_id">get_last_error_id</a>
+          </td>
+          <td class="description_column">
+              Returns the last occured error ID.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#get_last_query">get_last_query</a>
+          </td>
+          <td class="description_column">
+              Returns the last executed query.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#get_rdbms_name">get_rdbms_name</a>
+          </td>
+          <td class="description_column">
+              Returns the name of the supported database.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#get_schema">get_schema</a>
+          </td>
+          <td class="description_column">
+              Returns the name of the database schema if applicable.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#init">init</a>
+          </td>
+          <td class="description_column">
+              Initializes the dbworker with connection paramters.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#insert_id">insert_id</a>
+          </td>
+          <td class="description_column">
+              Returns the value of the auto increment field by the last insertion.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#is_connected">is_connected</a>
+          </td>
+          <td class="description_column">
+              Returns the connection state.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#is_extension_installed">is_extension_installed</a>
+          </td>
+          <td class="description_column">
+              Checks whether the extension is installed which is required for work with
+the corresponding database.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#prepare_query">prepare_query</a>
+          </td>
+          <td class="description_column">
+              Prepares the SQL query with bindable variables.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#qualify_name_with_schema">qualify_name_with_schema</a>
+          </td>
+          <td class="description_column">
+              Completes the name of a database object with the schema name if applicable.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#rollback_transaction">rollback_transaction</a>
+          </td>
+          <td class="description_column">
+              Rolls back the transation.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#start_transaction">start_transaction</a>
+          </td>
+          <td class="description_column">
+              Starts the transation.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#stream_long_data">stream_long_data</a>
+          </td>
+          <td class="description_column">
+              Stores long data from a stream.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#use_database">use_database</a>
+          </td>
+          <td class="description_column">
+              Sets the a database as working database.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  
+  <hr id="db_date">
+  
+  <h1>Constant: db_date</h1>
+
+  <div class="definition"><b>db_date</b> = <span class="php-num">3</span></div>
+
+  
+  <div class="short-description">
+  The constant for the date type.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#43">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="db_datetime">
+  
+  <h1>Constant: db_datetime</h1>
+
+  <div class="definition"><b>db_datetime</b> = <span class="php-num">4</span></div>
+
+  
+  <div class="short-description">
+  The constant for the date/time type.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#49">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="db_number">
+  
+  <h1>Constant: db_number</h1>
+
+  <div class="definition"><b>db_number</b> = <span class="php-num">1</span></div>
+
+  
+  <div class="short-description">
+  The constant for the number type.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#31">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="db_string">
+  
+  <h1>Constant: db_string</h1>
+
+  <div class="definition"><b>db_string</b> = <span class="php-num">2</span></div>
+
+  
+  <div class="short-description">
+  The constant for the string type.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#37">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="$db_name">
+  
+  <h1>Property: $db_name</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$db_name</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Name of the database.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#67">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$db_password">
+  
+  <h1>Property: $db_password</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$db_password</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Password of the database user.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#85">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$db_server">
+  
+  <h1>Property: $db_server</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$db_server</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Name or IP address of the server.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#58">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$db_user">
+  
+  <h1>Property: $db_user</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$db_user</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Name of the database user.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#76">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$is_clone">
+  
+  <h1>Property: $is_clone</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$is_clone</b> = <span class="php-keyword1">false</span></div>
+
+  <span class="type_label">Type:</span> boolean
+  
+  
+  <div class="short-description">
+  Flag property for storing the state whether it is clone or not.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#121">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$last_error">
+  
+  <h1>Property: $last_error</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$last_error</b> = <span class="php-keyword1">NULL</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  This variable stores the last occured error.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#94">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$last_error_id">
+  
+  <h1>Property: $last_error_id</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$last_error_id</b> = <span class="php-keyword1">NULL</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  This variable stores the ID of the last occured error.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#103">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$last_query">
+  
+  <h1>Property: $last_query</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$last_query</b> = <span class="php-keyword1">NULL</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  This variable stores the last executed query.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#112">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="affected_count">
+  
+  <h1>Method: affected_count</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>affected_count</b>() : integer|<span class="php-keyword1">false</span></div>
+
+  
+  <div class="short-description">
+  Returns the number of the rows affected by the last modification query.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> integer|false
+  
+  <div class="param-description">
+  <p>Returns the number of the rows affected by the last modification query. In the case
+of any error returns false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#501">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="clear_messages">
+  
+  <h1>Method: clear_messages</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>clear_messages</b>() : void</div>
+
+  
+  <div class="short-description">
+  Clears the last stored occured error, its ID and the last executed query.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#698">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="close_connection">
+  
+  <h1>Method: close_connection</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>close_connection</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Closes the currently opened connection.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the connection has been successfully closed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#352">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected">\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#connect">\SmartFactory\DatabaseWorkers\DBWorker::connect()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="commit_transaction">
+  
+  <h1>Method: commit_transaction</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>commit_transaction</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Commits the transation.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the transaction has been successfully committed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#378">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#start_transaction">\SmartFactory\DatabaseWorkers\DBWorker::start_transaction()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#rollback_transaction">\SmartFactory\DatabaseWorkers\DBWorker::rollback_transaction()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="connect">
+  
+  <h1>Method: connect</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>connect</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Establishes the connection to the database using the connection
+settings parameters specified by the initialization.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the connection has been successfully established, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#210">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected">\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection">\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="create_clone">
+  
+  <h1>Method: create_clone</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>create_clone</b>() : \SmartFactory\DatabaseWorkers\DBWorker</div>
+
+  
+  <div class="short-description">
+  Creates a clone of the dbworker that is using the same open
+connection.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>This might be useful if you want to execute some additional
+queries while iteration through the active results of a select query.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>
+  
+  <div class="param-description">
+  <p>Returns the clone of this dbworker.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#183">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="escape">
+  
+  <h1>Method: escape</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>escape</b>(string &amp;<span class="php-var">$str</span>) : string</div>
+
+  
+  <div class="short-description">
+  Escapes the string so that it can be used in the query without causing an error.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$str</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The string to be escaped.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the escaped string.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#618">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_date">\SmartFactory\DatabaseWorkers\DBWorker::format_date()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_datetime">\SmartFactory\DatabaseWorkers\DBWorker::format_datetime()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="execute_prepared_query">
+  
+  <h1>Method: execute_prepared_query</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>execute_prepared_query</b>(string &amp;<span class="php-var">$query_string</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Executes the prepared SQL query.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$query_string</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The SQL query to be executed.</p>
+<p>All subsequent parameters are the paramteres of the prepared SQL query</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the prepared SQL query has been successfully executed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#297">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_query">\SmartFactory\DatabaseWorkers\DBWorker::prepare_query()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#free_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::free_prepared_query()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="execute_procedure">
+  
+  <h1>Method: execute_procedure</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>execute_procedure</b>(string &amp;<span class="php-var">$procedure</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Executes the SQL stored procedure.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$procedure</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the SQL stored procedure.</p>
+<p>All subsequent parameters are the paramteres of the SQL stored procedure.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the stored procedure has been successfully executed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#279">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="execute_query">
+  
+  <h1>Method: execute_query</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>execute_query</b>(string &amp;<span class="php-var">$query_string</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Executes the SQL query.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$query_string</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The SQL query to be executed.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the query has been successfully executed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#264">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="fetch_array">
+  
+  <h1>Method: fetch_array</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>fetch_array</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$rows</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>) : integer|<span class="php-keyword1">false</span></div>
+
+  
+  <div class="short-description">
+  Fetches all rows from the result into an array.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$rows</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>Target array for loading the results.</p>
+      </div>
+      
+  
+      <h3>$dimension_keys</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>Array of the column names that should be used as dimensions.</p>
+<p>Per default, the rows are fetched as two dimensional array.</p>
+<p>Example:</p>
+<pre><code class="language-php"><span class="php-var">$rows</span> = [];
+<span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>);
+
+rows[n] = [<span class="php-quote">&quot;col1&quot;</span> =&gt; <span class="php-quote">&quot;val1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span> =&gt; <span class="php-quote">&quot;val2&quot;</span>, , <span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
+<p>If the dimension columns are specified, their values are used for the dimensions.</p>
+<p>Example:</p>
+<pre><code class="language-php"><span class="php-var">$rows</span> = [];
+<span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>, [<span class="php-quote">&quot;col1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span>]);
+
+rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&quot;val2&quot;</span>] = [<span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> integer|false
+  
+  <div class="param-description">
+  <p>Returns the number of the fetched rows. It might be also 0. In the case of
+any error returns false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#479">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="fetch_row">
+  
+  <h1>Method: fetch_row</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>fetch_row</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Fetches the next row of data from the result of the execution of the retrieving query.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the next row exists and has been successfully fetched, otherwise false.</p>
+<p>Example:</p>
+<pre><code class="language-php"><span class="php-keyword1">if</span>(!<span class="php-var">$dbw</span>-&gt;execute_query(<span class="php-quote">&quot;SELECT FIRST_NAME, LAST_NAME FROM USERS&quot;</span>))
+{
+  <span class="php-keyword1">return</span> sql_error(<span class="php-var">$dbw</span>);
+}
+
+<span class="php-keyword1">while</span>(<span class="php-var">$dbw</span>-&gt;fetch_row())
+{
+  <span class="php-keyword1">echo</span> <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;FIRST_NAME&quot;</span>) . <span class="php-quote">&quot; &quot;</span> . <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;LAST_NAME&quot;</span>) . <span class="php-quote">&quot;&lt;br&gt;&quot;</span>;
+}
+
+<span class="php-var">$dbw</span>-&gt;free_result();</code></pre>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#443">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="fetched_count">
+  
+  <h1>Method: fetched_count</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>fetched_count</b>() : integer|<span class="php-keyword1">false</span></div>
+
+  
+  <div class="short-description">
+  Returns the number of the rows fetched by the last retrieving query.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> integer|false
+  
+  <div class="param-description">
+  <p>Returns the number of the rows fetched by the last retrieving query. In the case
+of any error returns false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#490">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="field_by_name">
+  
+  <h1>Method: field_by_name</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_by_name</b>(string &amp;<span class="php-var">$name</span>) : mixed|<span class="php-keyword1">null</span></div>
+
+  
+  <div class="short-description">
+  Returns the value of a field specified by name.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the field.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> mixed|null
+  
+  <div class="param-description">
+  <p>Returns the value of a field specified by name. In the case
+of any error returns null.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#540">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_by_num">\SmartFactory\DatabaseWorkers\DBWorker::field_by_num()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_name">\SmartFactory\DatabaseWorkers\DBWorker::field_name()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="field_by_num">
+  
+  <h1>Method: field_by_num</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_by_num</b>(integer &amp;<span class="php-var">$num</span>) : mixed|<span class="php-keyword1">null</span></div>
+
+  
+  <div class="short-description">
+  Returns the value of a field specified by number.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$num</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The number of the field.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> mixed|null
+  
+  <div class="param-description">
+  <p>Returns the value of a field specified by number. In the case
+of any error returns null.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#558">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_by_name">\SmartFactory\DatabaseWorkers\DBWorker::field_by_name()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_info_by_num">\SmartFactory\DatabaseWorkers\DBWorker::field_info_by_num()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_name">\SmartFactory\DatabaseWorkers\DBWorker::field_name()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="field_count">
+  
+  <h1>Method: field_count</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_count</b>() : integer|<span class="php-keyword1">false</span></div>
+
+  
+  <div class="short-description">
+  Returns the number of the fields in the result of the last retrieving query.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> integer|false
+  
+  <div class="param-description">
+  <p>Returns the number of the fields in the result of the last retrieving query. In the case
+of any error returns false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#512">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="field_info_by_num">
+  
+  <h1>Method: field_info_by_num</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_info_by_num</b>(integer &amp;<span class="php-var">$num</span>) : <span class="php-keyword1">array</span></div>
+
+  
+  <div class="short-description">
+  Returns the meta information about the field as an object with properties.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$num</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The number of the field.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> array
+  
+  <div class="param-description">
+  <p>Returns the associative array with properties. In the case
+of any error returns null.</p>
+<p>$info["name"] - name of the field.</p>
+<p>$info["type"] - type of the field.</p>
+<p>$info["size"] - size of the field.</p>
+<p>$info["binary"] - whether the filed is binary.</p>
+<p>$info["numeric"] - whether the filed is numeric.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#585">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_by_num">\SmartFactory\DatabaseWorkers\DBWorker::field_by_num()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_name">\SmartFactory\DatabaseWorkers\DBWorker::field_name()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="field_name">
+  
+  <h1>Method: field_name</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_name</b>(integer &amp;<span class="php-var">$num</span>) : object|<span class="php-keyword1">null</span></div>
+
+  
+  <div class="short-description">
+  Returns the name of the field by number.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$num</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The number of the field.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> object|null
+  
+  <div class="param-description">
+  <p>Returns the value of a field specified by number as an object with properties. In the case
+of any error returns null.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#602">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_by_num">\SmartFactory\DatabaseWorkers\DBWorker::field_by_num()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#field_info_by_num">\SmartFactory\DatabaseWorkers\DBWorker::field_info_by_num()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="format_date">
+  
+  <h1>Method: format_date</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>format_date</b>(integer &amp;<span class="php-var">$date</span>) : string</div>
+
+  
+  <div class="short-description">
+  Formats the date to a string compatible for the corresponding database.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$date</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The date value as timestamp.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the string representation of the date compatible for the corresponding database.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#634">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#escape">\SmartFactory\DatabaseWorkers\DBWorker::escape()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_datetime">\SmartFactory\DatabaseWorkers\DBWorker::format_datetime()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="format_datetime">
+  
+  <h1>Method: format_datetime</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>format_datetime</b>(integer &amp;<span class="php-var">$datetime</span>) : string</div>
+
+  
+  <div class="short-description">
+  Formats the date/time to a string compatible for the corresponding database.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$datetime</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The date/time value as timestamp.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the string representation of the date/time compatible for the corresponding database.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#650">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#escape">\SmartFactory\DatabaseWorkers\DBWorker::escape()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_date">\SmartFactory\DatabaseWorkers\DBWorker::format_date()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="free_prepared_query">
+  
+  <h1>Method: free_prepared_query</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>free_prepared_query</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Frees the prepared query.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It should be called after all executions of the prepared query.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the prepared query has been successfully freed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#418">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_query">\SmartFactory\DatabaseWorkers\DBWorker::prepare_query()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::execute_prepared_query()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="free_result">
+  
+  <h1>Method: free_result</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>free_result</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Frees the result of the previously executed retrieving query.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It should be called only for the retrieving queries.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the result has been successfully freed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#403">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="get_extension_name">
+  
+  <h1>Method: get_extension_name</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>get_extension_name</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the name of the required PHP extension.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the name of the required PHP extension.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#159">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#is_extension_installed">\SmartFactory\DatabaseWorkers\DBWorker::is_extension_installed()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="get_last_error">
+  
+  <h1>Method: get_last_error</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>get_last_error</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the last occured error.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the last occured error.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#660">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="get_last_error_id">
+  
+  <h1>Method: get_last_error_id</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>get_last_error_id</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the last occured error ID.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the last occured error ID.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#673">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="get_last_query">
+  
+  <h1>Method: get_last_query</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>get_last_query</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the last executed query.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the last executed query.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#686">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="get_rdbms_name">
+  
+  <h1>Method: get_rdbms_name</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>get_rdbms_name</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the name of the supported database.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the name of the supported database.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#169">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="get_schema">
+  
+  <h1>Method: get_schema</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>get_schema</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the name of the database schema if applicable.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the name of the database schema if applicable, or an empty string.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#235">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#qualify_name_with_schema">\SmartFactory\DatabaseWorkers\DBWorker::qualify_name_with_schema()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="init">
+  
+  <h1>Method: init</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>init</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Initializes the dbworker with connection paramters.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$parameters</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The parameters may vary for each database.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>The method should return true upon successful initialization, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#134">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="insert_id">
+  
+  <h1>Method: insert_id</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>insert_id</b>() : integer|<span class="php-keyword1">false</span></div>
+
+  
+  <div class="short-description">
+  Returns the value of the auto increment field by the last insertion.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> integer|false
+  
+  <div class="param-description">
+  <p>Returns the value of the auto increment field by the last insertion. In the case
+of any error returns false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#523">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="is_connected">
+  
+  <h1>Method: is_connected</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>is_connected</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Returns the connection state.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the connection is open, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#196">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#connect">\SmartFactory\DatabaseWorkers\DBWorker::connect()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection">\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="is_extension_installed">
+  
+  <h1>Method: is_extension_installed</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>is_extension_installed</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Checks whether the extension is installed which is required for work with
+the corresponding database.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>The method should return true if the extension is installed, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#147">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#get_extension_name">\SmartFactory\DatabaseWorkers\DBWorker::get_extension_name()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="prepare_query">
+  
+  <h1>Method: prepare_query</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>prepare_query</b>(string &amp;<span class="php-var">$query_string</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Prepares the SQL query with bindable variables.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$query_string</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The SQL query to be prepared.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the SQL query has been successfully prepared, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#313">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::execute_prepared_query()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#free_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::free_prepared_query()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="qualify_name_with_schema">
+  
+  <h1>Method: qualify_name_with_schema</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>qualify_name_with_schema</b>(string &amp;<span class="php-var">$name</span>) : string</div>
+
+  
+  <div class="short-description">
+  Completes the name of a database object with the schema name if applicable.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the database object to be completed with the schema name.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the name of the database object with the schema name if applicable,
+otherwise the name of the database object remains unchanged.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#251">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#get_schema">\SmartFactory\DatabaseWorkers\DBWorker::get_schema()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="rollback_transaction">
+  
+  <h1>Method: rollback_transaction</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>rollback_transaction</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Rolls back the transation.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the transaction has been successfully rolled back, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#391">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#start_transaction">\SmartFactory\DatabaseWorkers\DBWorker::start_transaction()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#commit_transaction">\SmartFactory\DatabaseWorkers\DBWorker::commit_transaction()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="start_transaction">
+  
+  <h1>Method: start_transaction</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>start_transaction</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Starts the transation.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the transaction has been successfully started, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#365">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#commit_transaction">\SmartFactory\DatabaseWorkers\DBWorker::commit_transaction()</a><br>
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#rollback_transaction">\SmartFactory\DatabaseWorkers\DBWorker::rollback_transaction()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="stream_long_data">
+  
+  <h1>Method: stream_long_data</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>stream_long_data</b>(string &amp;<span class="php-var">$query_string</span>, resource &amp;<span class="php-var">$stream</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Stores long data from a stream.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$query_string</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The SQL query to be used for stroing the long data.</p>
+      </div>
+      
+  
+      <h3>$stream</h3>
+      <span class="type_label">Type:</span> resource
+      
+      <div class="param-description">
+      <p>The opened valid stream for reding the long data.</p>
+<p>Example:</p>
+<pre><code class="language-php"><span class="php-var">$stream</span> = <span class="php-keyword2">fopen</span>(<span class="php-quote">&quot;.../large_binary.jpg&quot;</span>, <span class="php-quote">&quot;rb&quot;</span>);
+
+<span class="php-keyword1">if</span>(!<span class="php-var">$dbw</span>-&gt;stream_long_data(<span class="php-quote">&quot;UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1&quot;</span>, <span class="php-var">$stream</span>))
+{
+  <span class="php-keyword1">return</span> sql_error(<span class="php-var">$dbw</span>);
+}</code></pre>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the long data has been successfully stored, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#339">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="use_database">
+  
+  <h1>Method: use_database</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>use_database</b>(string &amp;<span class="php-var">$db_name</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Sets the a database as working database.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$db_name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the database to be set as working database.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the database has been successfully set as working database, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.DatabaseWorkers.DBWorker.html#223">classes\SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-06-13 12:05
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+

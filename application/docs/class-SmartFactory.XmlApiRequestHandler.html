@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: XmlApiRequestHandler - Framework SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="constants.html" class="">
+                                Constants
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">XmlApiRequestHandler</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: XmlApiRequestHandler</h1>
+
+
+
+<span class="label label-primary">abstract</span>
+
+
+
+
+<div class="short-description">
+Class for handling JSON requests.
+</div>
+
+
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html">\SmartFactory\Interfaces\IApiRequestHandler</a><br>
+
+</div>
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-System.html">System</a>
+
+
+<h2>Source code</h2>
+<a href="source-classes.SmartFactory.XmlApiRequestHandler.html#17">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$handler_table">$handler_table</a>
+          </td>
+          <td class="description_column">
+              Internal array for storing the handler mappings.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#getApiRequest">getApiRequest</a>
+          </td>
+          <td class="description_column">
+              Not implemented in this class since the API call name is defined
+not based on the URL but on a tag name in the incoming XML data.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#handleApiRequest">handleApiRequest</a>
+          </td>
+          <td class="description_column">
+              Handles an API request call trying to call the handler registered
+for this API request.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#parseXML">parseXML</a>
+          </td>
+          <td class="description_column">
+              Parses the incoming XML data of the API request.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#registerApiRequestHandler">registerApiRequestHandler</a>
+          </td>
+          <td class="description_column">
+              Registers a handler function for an API request call.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#reportErrors">reportErrors</a>
+          </td>
+          <td class="description_column">
+              Reports an errors in the response in XML format.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#sendXMLResponse">sendXMLResponse</a>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for sending the response in XML
+format.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+
+
+  
+  <hr id="$handler_table">
+  
+  <h1>Property: $handler_table</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$handler_table</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal array for storing the handler mappings.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#28">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.XmlApiRequestHandler.html#registerApiRequestHandler">\SmartFactory\XmlApiRequestHandler::registerApiRequestHandler()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="getApiRequest">
+  
+  <h1>Method: getApiRequest</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getApiRequest</b>() : <span class="php-keyword1">null</span></div>
+
+  
+  <div class="short-description">
+  Not implemented in this class since the API call name is defined
+not based on the URL but on a tag name in the incoming XML data.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>For that reason the method <a href="class-SmartFactory.XmlApiRequestHandler.html#parseXML">\SmartFactory\XmlApiRequestHandler::parseXML()</a> is used.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> null
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html#getApiRequest">\SmartFactory\Interfaces\IApiRequestHandler::getApiRequest()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#100">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.XmlApiRequestHandler.html#parseXML">\SmartFactory\XmlApiRequestHandler::parseXML()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="handleApiRequest">
+  
+  <h1>Method: handleApiRequest</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>handleApiRequest</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Handles an API request call trying to call the handler registered
+for this API request.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It is called every time a request comes.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the handling was successfull, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html#handleApiRequest">\SmartFactory\Interfaces\IApiRequestHandler::handleApiRequest()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#167">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="parseXML">
+  
+  <h1>Method: parseXML</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <b>parseXML</b>(string &amp;<span class="php-var">$api_request</span>, \DOMDocument &amp;<span class="php-var">$xmldoc</span>) : void</div>
+
+  
+  <div class="short-description">
+  Parses the incoming XML data of the API request.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>This method should be implemented by the user.
+This method is called every time a new API request comes. The user
+should parse the incoming data. The result of parsing
+should be the detected API request name and the DOM document.</p>
+  </div>
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$api_request</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The detected DOM document.</p>
+      </div>
+      
+  
+      <h3>$xmldoc</h3>
+      <span class="type_label">Type:</span> \DOMDocument
+      
+      <div class="param-description">
+      <p>The resulting DOM document.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#48">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="registerApiRequestHandler">
+  
+  <h1>Method: registerApiRequestHandler</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>registerApiRequestHandler</b>(string &amp;<span class="php-var">$api_request</span>, <span class="php-keyword1">callable</span> &amp;<span class="php-var">$handler</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Registers a handler function for an API request call.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$api_request</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The target API request.</p>
+      </div>
+      
+  
+      <h3>$handler</h3>
+      <span class="type_label">Type:</span> callable
+      
+      <div class="param-description">
+      <p>The name or definition of the handler function. The signature of
+this function is:</p>
+<pre><code class="language-php"><span class="php-keyword1">function</span> (IApiRequestHandler <span class="php-var">$handler</span>, string <span class="php-var">$api_request</span>, &amp;<span class="php-var">$xmldoc</span>) : boolean;</code></pre>
+<ul>
+<li>
+<p>$handler - the reference to the current handler object.</p>
+</li>
+<li>
+<p>$api_request - the name of the API request for what it was called.</p>
+</li>
+<li>
+<p>$xmldoc - the DOM document of the incoming XML data.</p>
+</li>
+<li>
+<p>The handler function should return true if the request has been successfully
+handled, otherwise false.</p>
+</li>
+</ul>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the registration was successfull, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html#registerApiRequestHandler">\SmartFactory\Interfaces\IApiRequestHandler::registerApiRequestHandler()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#133">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="reportErrors">
+  
+  <h1>Method: reportErrors</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>reportErrors</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$response_data</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$headers</span> = <span class="php-keyword1">array</span>()) : void</div>
+
+  
+  <div class="short-description">
+  Reports an errors in the response in XML format.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>This method should be implemented by the user. The user
+should create error response in the desired format.</p>
+  </div>
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$response_data</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array with response data that contains error details.</p>
+      </div>
+      
+  
+      <h3>$headers</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of additional headers if necessary. The header
+'Content-type: text/xml; charset=UTF-8' should be send automatically
+in the method and should not be passed over this paramter.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#68">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="sendXMLResponse">
+  
+  <h1>Method: sendXMLResponse</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>sendXMLResponse</b>(\DOMDocument &amp;<span class="php-var">$outxmldoc</span>) : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for sending the response in XML
+format.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$outxmldoc</h3>
+      <span class="type_label">Type:</span> \DOMDocument
+      
+      <div class="param-description">
+      <p>The DOM document.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#81">classes\SmartFactory\XmlApiRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-06-13 12:05
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+

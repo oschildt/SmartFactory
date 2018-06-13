@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Function: table - Framework SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="active">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="constants.html" class="">
+                                Constants
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-primary">Function</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">table()</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Function: table</h1>
+
+<div class="definition"><b>table</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>,
+      <span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span> = <span class="php-keyword1">array</span>(),
+      boolean &amp;<span class="php-var">$echo</span> = <span class="php-keyword1">true</span>
+     ) : string|<span class="php-keyword1">null</span></div>
+
+
+<div class="short-description">
+Function for rendering tables.
+</div>
+
+
+
+<div class="long-description">
+<h2>Details</h2>
+<p>This function renders a tables based on the values of an array.</p>
+</div>
+
+
+
+<h2>Parameters</h2>
+
+    <h3>$array</h3>
+    <span class="type_label">Type:</span> array
+    
+    <div class="param-description">
+    <p>The array of the rows.</p>
+    </div>
+    
+
+    <h3>$parameters</h3>
+    <span class="type_label">Type:</span> array
+    
+    <div class="param-description">
+    <p>The array of parameters as an associative array in the form key => value:</p>
+<ul>
+<li>
+<p>$parameters["captions"] - the associative array of column captions. If
+it is not specified, the table is rendered without captions.</p>
+</li>
+<li>
+<p>$parameters["col_class_from_keys"] - if it is specified and set to true,
+the keys of the captions are used as the class names.</p>
+</li>
+<li>
+<p>$parameters["no_escape_html"] - if it is specified and set to true,
+the values of the data array are not escaped and passed as is. It is useful
+when html codes of other elements are passed. Per default, the table data
+is escaped for html.</p>
+</li>
+<li>
+<p>$parameters["formatter"] - this function is used for the value formatting
+if specified. It is called for evelry cell of the table. The signature of
+this function is:</p>
+</li>
+</ul>
+<pre><code class="language-php"><span class="php-keyword1">function</span> (<span class="php-var">$rownum</span>, <span class="php-var">$colnum</span>, <span class="php-var">$colname</span>, <span class="php-var">$val</span>) : string;</code></pre>
+<ul>
+<li>
+<p>$rownum - the row number.</p>
+</li>
+<li>
+<p>$colnum - the colnum number.</p>
+</li>
+<li>
+<p>$colname - the column name if the $parameters["captions"] are provided.
+The keys of the cpation array are used. If the $parameters["captions"]
+are not provided, $colname is equal to $colnum.</p>
+</li>
+<li>
+<p>$val - original value of the table cell.</p>
+</li>
+</ul>
+<p>If necessary, format the original value and return it. Otherwise,
+return the original value without changes.</p>
+<p>Any other attributes may be specified.</p>
+<p>Example:</p>
+<pre><code class="language-php"><span class="php-var">$rows</span> = [
+   [<span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;DB design&quot;</span>, <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Alex&quot;</span>, ... ],
+   [<span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;Mask implementation&quot;</span>, <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Boris&quot;</span>, ... ],
+   [<span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;Validation&quot;</span>, <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Alex&quot;</span>, ... ],
+   [<span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;Settings&quot;</span>, <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Boris&quot;</span>, ... ],
+   [<span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;About&quot;</span>, <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Robert&quot;</span>, ... ],
+   [<span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;Initialization&quot;</span>, <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Alon&quot;</span>, ... ]
+];
+
+<span class="php-var">$captions</span> = [
+  <span class="php-quote">&quot;name&quot;</span> =&gt; <span class="php-quote">&quot;Task name&quot;</span>,
+  <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Employee&quot;</span>,
+  <span class="php-quote">&quot;time_estimation&quot;</span> =&gt; <span class="php-quote">&quot;Time estimation&quot;</span>,
+  <span class="php-quote">&quot;deadline&quot;</span> =&gt; <span class="php-quote">&quot;Deadline&quot;</span>,
+  <span class="php-quote">&quot;comments&quot;</span> =&gt; <span class="php-quote">&quot;Conmments&quot;</span>
+];
+
+<span class="php-var">$formatter</span> = <span class="php-keyword1">function</span> (<span class="php-var">$rownum</span>, <span class="php-var">$colnum</span>, <span class="php-var">$colname</span>, <span class="php-var">$val</span>) {
+  <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;time_estimation&quot;</span>) <span class="php-keyword1">return</span> format_number(<span class="php-var">$val</span>, <span class="php-num">2</span>);
+  <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;deadline&quot;</span>) <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(text(<span class="php-quote">&quot;DateTimeFormat&quot;</span>), <span class="php-var">$val</span>);
+
+  <span class="php-keyword1">return</span> <span class="php-var">$val</span>;
+};
+
+table(<span class="php-var">$rows</span>,
+      [<span class="php-quote">&quot;captions&quot;</span> =&gt; <span class="php-var">$captions</span>,
+       <span class="php-quote">&quot;class&quot;</span> =&gt; <span class="php-quote">&quot;my_table&quot;</span>,
+       <span class="php-quote">&quot;style&quot;</span> =&gt; <span class="php-quote">&quot;background-color: #dddddd&quot;</span>,
+       <span class="php-quote">&quot;col_class_from_keys&quot;</span> =&gt; <span class="php-keyword1">true</span>,
+       <span class="php-quote">&quot;no_escape_html&quot;</span> =&gt; <span class="php-keyword1">false</span>,
+       <span class="php-quote">&quot;formatter&quot;</span> =&gt; <span class="php-var">$formatter</span>
+      ]);</code></pre>
+    </div>
+    
+
+    <h3>$echo</h3>
+    <span class="type_label">Type:</span> boolean
+    
+    <div class="param-description">
+    <p>If the value of $echo is true, the html code of the table is directly echoed.
+Otherwise it is returned as string. It might be useful to pass this code to
+other rendering functions instead of echoing.</p>
+    </div>
+    
+
+
+
+
+<h2>Returns</h2>
+<span class="type_label">Type:</span> string|null
+
+<div class="param-description">
+<p>If the paramter $echo is true, the string of the table html
+code is returned, otherwise null.</p>
+</div>
+
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-HTML_Utils.html">HTML Utils</a>
+
+
+<h2>Source code</h2>
+<a href="source-includes.SmartFactory.html_utils_inc.html#823">includes\SmartFactory\html_utils_inc.php</a>
+
+
+
+
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-06-13 12:05
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+
