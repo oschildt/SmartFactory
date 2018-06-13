@@ -20,8 +20,9 @@ use SmartFactory\Interfaces\IEventManager;
 class EventManager implements IEventManager
 {
   /**
-   * @var array
    * Internal array for storing the event handler mappings.
+   *
+   * @var array
    *
    * @see addHandler()
    * @see deleteHandler()
@@ -33,8 +34,9 @@ class EventManager implements IEventManager
   protected static $event_table = [];
 
   /**
-   * @var array
    * Internal array for storing the suspended events.
+   *
+   * @var array
    *
    * @see suspendEvent()
    * @see resumeEvent()
@@ -54,7 +56,7 @@ class EventManager implements IEventManager
    * The name or definition of the handler function. The signature of 
    * this function is:
    *
-   * ```
+   * ```php
    * function (string $event, array $parameters) : void;
    * ```
    *

@@ -325,7 +325,7 @@ abstract class DBWorker implements IInitable
    * The opened valid stream for reding the long data.
    *
    * Example:
-   * ```
+   * ```php
    * $stream = fopen(".../large_binary.jpg", "rb");
    *
    * if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
@@ -427,7 +427,7 @@ abstract class DBWorker implements IInitable
    * Returns true if the next row exists and has been successfully fetched, otherwise false.
    *
    * Example:
-   * ```
+   * ```php
    * if(!$dbw->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
    * {
    *   return sql_error($dbw);
@@ -457,7 +457,7 @@ abstract class DBWorker implements IInitable
    * Per default, the rows are fetched as two dimensional array.
    *
    * Example:
-   * ```
+   * ```php
    * $rows = [];
    * $dbw->fetch_array($rows);
    *
@@ -466,7 +466,7 @@ abstract class DBWorker implements IInitable
    * If the dimension columns are specified, their values are used for the dimensions.
    *
    * Example:
-   * ```
+   * ```php
    * $rows = [];
    * $dbw->fetch_array($rows, ["col1", "col2"]);
    *

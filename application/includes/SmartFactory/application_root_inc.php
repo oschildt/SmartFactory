@@ -9,13 +9,14 @@
 
 namespace SmartFactory;
 
-$aroot = __FILE__;
-$basename = basename(__FILE__);
+$aroot = __DIR__;
 $aroot = str_replace("\\", "/", $aroot);
-$aroot = str_replace("includes/SmartFactory/$basename", "", $aroot);
+$aroot = str_replace("includes/SmartFactory", "", $aroot);
 
 /**
  * The APPLICATION_ROOT contains the path to the application root directory.
+ *
+ * @used_by \SmartFactory\approot()
  *
  * @author Oleg Schildt
  */

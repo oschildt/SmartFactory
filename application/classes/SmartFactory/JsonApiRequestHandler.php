@@ -20,8 +20,9 @@ use SmartFactory\Interfaces\IApiRequestHandler;
 class JsonApiRequestHandler implements IApiRequestHandler
 {
   /**
-   * @var array
    * Internal array for storing the handler mappings.
+   *
+   * @var array
    *
    * @see registerApiRequestHandler()
    *
@@ -116,7 +117,7 @@ class JsonApiRequestHandler implements IApiRequestHandler
    * The name or definition of the handler function. The signature of 
    * this function is:
    *
-   * ```
+   * ```php
    * function (IApiRequestHandler $handler, string $api_request) : boolean;
    * ```
    *

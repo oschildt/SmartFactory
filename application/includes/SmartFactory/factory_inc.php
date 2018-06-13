@@ -101,7 +101,7 @@ function instance($interface_or_class)
  *                 upon creation.
  *
  * Example:
- * ```
+ * ```php
  * $dbw = dbworker(["db_type" => "MySQL",
  *                  "db_server" => "localhost",
  *                  "db_name" => "framework_demo", 

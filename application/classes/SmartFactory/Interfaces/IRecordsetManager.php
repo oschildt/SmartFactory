@@ -24,7 +24,7 @@ interface IRecordsetManager
    *
    * @return void
    *
-   * @see getDBWorker
+   * @see getDBWorker()
    *
    * @author Oleg Schildt 
    */
@@ -36,7 +36,7 @@ interface IRecordsetManager
    * @return \SmartFactory\DatabaseWorkers\DBWorker
    * Returns the dbworker to be used for working with the database.
    *
-   * @see getDBWorker
+   * @see getDBWorker()
    *
    * @author Oleg Schildt 
    */
@@ -73,8 +73,8 @@ interface IRecordsetManager
    * @return boolean
    * Returns true if the record has been successfully loaded, otherwise false.
    *
-   * @see saveRecord
-   * @see loadRecordSet
+   * @see saveRecord()
+   * @see loadRecordSet()
    *
    * @uses \SmartFactory\DatabaseWorkers\DBWorker
    *
@@ -97,8 +97,8 @@ interface IRecordsetManager
    * @return boolean
    * Returns true if the record has been successfully saved, otherwise false.
    *
-   * @see loadRecord
-   * @see saveRecordSet
+   * @see loadRecord()
+   * @see saveRecordSet()
    *
    * @uses \SmartFactory\DatabaseWorkers\DBWorker
    *
@@ -118,8 +118,8 @@ interface IRecordsetManager
    * @return boolean
    * Returns true if the record has been successfully loaded, otherwise false.
    *
-   * @see loadRecord
-   * @see saveRecordSet
+   * @see loadRecord()
+   * @see saveRecordSet()
    *
    * @uses \SmartFactory\DatabaseWorkers\DBWorker
    *
@@ -141,8 +141,8 @@ interface IRecordsetManager
    * @return boolean
    * Returns true if the records have been successfully saved, otherwise false.
    *
-   * @see loadRecordSet
-   * @see saveRecord
+   * @see loadRecordSet()
+   * @see saveRecord()
    *
    * @uses \SmartFactory\DatabaseWorkers\DBWorker
    *

@@ -51,8 +51,8 @@ interface ISettingsManager extends IInitable
    *
    * @return void   
    *
-   * @see getValidator
-   * @see validateSettings
+   * @see getValidator()
+   * @see validateSettings()
    *
    * @author Oleg Schildt 
    */
@@ -64,8 +64,8 @@ interface ISettingsManager extends IInitable
    * @return ISettingsValidator|null  
    * Returns the validator for the settings or null if none is defined.
    *
-   * @see setValidator
-   * @see validateSettings
+   * @see setValidator()
+   * @see validateSettings()
    *
    * @author Oleg Schildt 
    */
@@ -82,7 +82,7 @@ interface ISettingsManager extends IInitable
    *
    * @return void   
    *
-   * @see getParameter
+   * @see getParameter()
    *
    * @author Oleg Schildt 
    */
@@ -109,7 +109,7 @@ interface ISettingsManager extends IInitable
    * @return mixed   
    * Returns the value of the settings parameter.
    *
-   * @see setParameter
+   * @see setParameter()
    *
    * @author Oleg Schildt 
    */
@@ -132,7 +132,7 @@ interface ISettingsManager extends IInitable
    *
    * @return void
    *
-   * @see getContext
+   * @see getContext()
    *
    * @author Oleg Schildt 
    */
@@ -153,7 +153,7 @@ interface ISettingsManager extends IInitable
    * @return string
    * Returns the current settings context.
    *
-   * @see setContext
+   * @see setContext()
    *
    * @author Oleg Schildt 
    */
@@ -171,8 +171,8 @@ interface ISettingsManager extends IInitable
    *
    * @uses ISettingsValidator
    *
-   * @see getValidator
-   * @see setValidator
+   * @see getValidator()
+   * @see setValidator()
    *
    * @author Oleg Schildt 
    */
@@ -184,7 +184,7 @@ interface ISettingsManager extends IInitable
    * @return boolean
    * Returns true if the settings have been successfully loaded, otherwise false.
    *
-   * @see saveSettings
+   * @see saveSettings()
    *
    * @author Oleg Schildt 
    */
@@ -196,7 +196,7 @@ interface ISettingsManager extends IInitable
    * @return boolean
    * Returns true if the settings have been successfully saved, otherwise false.
    *
-   * @see loadSettings
+   * @see loadSettings()
    *
    * @author Oleg Schildt 
    */

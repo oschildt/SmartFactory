@@ -82,7 +82,7 @@ interface ILanguageManager
    *
    * @return void
    *
-   * @see getCurrentLanguage
+   * @see getCurrentLanguage()
    *
    * @author Oleg Schildt 
    */
@@ -94,7 +94,7 @@ interface ILanguageManager
    * @return string
    * Returns the current language ISO code.
    *
-   * @see setCurrentLanguage
+   * @see setCurrentLanguage()
    *
    * @author Oleg Schildt 
    */
@@ -160,10 +160,10 @@ interface ILanguageManager
    * Returns the translation text for the language name or the $code if no translation
    * is found.
    *
-   * @see getLanguageCode
-   * @see validateLanguageCode
-   * @see getLanguageList
-   * @see getCountryName
+   * @see getLanguageCode()
+   * @see validateLanguageCode()
+   * @see getLanguageList()
+   * @see getCountryName()
    *
    * @author Oleg Schildt 
    */
@@ -178,10 +178,10 @@ interface ILanguageManager
    * @return string
    * Returns the language code if it could be found, otherwise an empty string.
    *
-   * @see getLanguageName
-   * @see validateLanguageCode
-   * @see getLanguageList
-   * @see getCountryCode
+   * @see getLanguageName()
+   * @see validateLanguageCode()
+   * @see getLanguageList()
+   * @see getCountryCode()
    *
    * @author Oleg Schildt 
    */
@@ -200,10 +200,10 @@ interface ILanguageManager
    * @return boolean
    * Returns true if the langauge code is valid (has translation), otherwise false.
    *
-   * @see getLanguageName
-   * @see getLanguageCode
-   * @see getLanguageList
-   * @see validateCountryCode
+   * @see getLanguageName()
+   * @see getLanguageCode()
+   * @see getLanguageList()
+   * @see validateCountryCode()
    *
    * @author Oleg Schildt 
    */
@@ -222,10 +222,10 @@ interface ILanguageManager
    * @return boolean
    * Returns true if the langauge list is successfully retrieved, otherwise false.
    *
-   * @see getLanguageName
-   * @see getLanguageCode
-   * @see validateLanguageCode
-   * @see getCountryList
+   * @see getLanguageName()
+   * @see getLanguageCode()
+   * @see validateLanguageCode()
+   * @see getCountryList()
    *
    * @author Oleg Schildt 
    */
@@ -251,10 +251,10 @@ interface ILanguageManager
    * Returns the translation text for the country name or the $code if no translation
    * is found.
    *
-   * @see getCountryCode
-   * @see validateCountryCode
-   * @see getCountryList
-   * @see getLanguageName
+   * @see getCountryCode()
+   * @see validateCountryCode()
+   * @see getCountryList()
+   * @see getLanguageName()
    *
    * @author Oleg Schildt 
    */
@@ -269,10 +269,10 @@ interface ILanguageManager
    * @return string
    * Returns the country code if it could be found, otherwise an empty string.
    *
-   * @see getCountryName
-   * @see validateCountryCode
-   * @see getCountryList
-   * @see getLanguageCode
+   * @see getCountryName()
+   * @see validateCountryCode()
+   * @see getCountryList()
+   * @see getLanguageCode()
    *
    * @author Oleg Schildt 
    */
@@ -291,10 +291,10 @@ interface ILanguageManager
    * @return boolean
    * Returns true if the country code is valid (has translation), otherwise false.
    *
-   * @see getCountryName
-   * @see getCountryCode
-   * @see getCountryList
-   * @see validateLanguageCode
+   * @see getCountryName()
+   * @see getCountryCode()
+   * @see getCountryList()
+   * @see validateLanguageCode()
    *
    * @author Oleg Schildt 
    */
@@ -313,10 +313,10 @@ interface ILanguageManager
    * @return boolean
    * Returns true if the country list is successfully retrieved, otherwise false.
    *
-   * @see getCountryName
-   * @see getCountryCode
-   * @see validateCountryCode
-   * @see getLanguageList
+   * @see getCountryName()
+   * @see getCountryCode()
+   * @see validateCountryCode()
+   * @see getLanguageList()
    *
    * @author Oleg Schildt 
    */

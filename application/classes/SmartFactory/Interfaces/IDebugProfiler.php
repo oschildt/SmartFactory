@@ -54,7 +54,7 @@ interface IDebugProfiler
    * @return boolean
    * It should return true if the logging was successful, otherwise false.
    *
-   * @see fixProfilePoint
+   * @see fixProfilePoint()
    *
    * @author Oleg Schildt 
    */
@@ -71,7 +71,7 @@ interface IDebugProfiler
    * @return boolean
    * It should return true if the logging was successful, otherwise false.
    *
-   * @see startProfilePoint 
+   * @see startProfilePoint()
    *
    * @author Oleg Schildt 
    */

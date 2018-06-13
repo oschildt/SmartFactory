@@ -23,33 +23,37 @@ use SmartFactory\DatabaseWorkers\DBWorker;
 class RecordsetManager implements IRecordsetManager
 {
   /**
-   * @var DatabaseWorkers\DBWorker
    * Internal variable for storing the dbworker.
+   *
+   * @var DatabaseWorkers\DBWorker
    *
    * @author Oleg Schildt 
    */
   protected $dbworker = null;
 
   /**
-   * @var string
    * Internal variable for storing the target table name.
+   *
+   * @var string
    *
    * @author Oleg Schildt 
    */
   protected $table = null;
 
   /**
-   * @var array
    * Internal array for storing the target fields.
+   *
+   * @var array
    *
    * @author Oleg Schildt 
    */
   protected $fields = null;
 
   /**
-   * @var array
    * Internal array for storing the key fields. These are the fields that are used 
    * to uniquely identify a record.
+   *
+   * @var array
    *
    * @author Oleg Schildt 
    */

@@ -1,13 +1,13 @@
 <?php
 /**
- * This file contains the implementation of the interface IMessageManager 
+ * This file contains the implementation of the interface IMessageManager
  * in the class MessageManager for working with messages - errors, warnings etc.
  *
  * @package System
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
- 
+
 namespace SmartFactory;
 
 use SmartFactory\Interfaces\IInitable;
@@ -16,38 +16,41 @@ use SmartFactory\Interfaces\IMessageManager;
 /**
  * Class for working with messages - errors, warnings etc.
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
 class MessageManager implements IMessageManager, IInitable
 {
   /**
-   * @var int
    * Internal variable for storing the auto hide time
    * for the info messages with flag auto_hide = true.
    *
+   * @var int
+   *
    * @see getAutoHideTime()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected static $auto_hide_time = 3;
 
   /**
-   * @var array
    * Internal variable for storing the reference to session variables.
    *
-   * @author Oleg Schildt 
+   * @var array
+   *
+   * @author Oleg Schildt
    */
   protected static $session_vars = null;
 
   /**
-   * @var boolean
    * Internal variable for storing the state of programming warnings - active or not.
+   *
+   * @var boolean
    *
    * @see progWarningsActive()
    * @see enableProgWarnings()
    * @see disableProgWarnings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected static $prog_warnings_disabled = false;
 
@@ -59,37 +62,37 @@ class MessageManager implements IMessageManager, IInitable
    *
    * The message details are removed if the flag show_message_details is false.
    *
-   * @param array $messages 
+   * @param array $messages
    * The source array of messages.
    *
    * @return array
    * Returns the array of messages for displaying.
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected function extractMessagesForDisplay(&$messages)
   {
     $output = [];
-  
+
     if(empty($messages) || count($messages) == 0) return $output;
-  
+
     foreach($messages as $current)
     {
       $message_entry["message"] = $current["message"];
-      
+
       if(!empty($current["code"]))
         $message_entry["code"] = $current["code"];
 
       if(!empty($current["auto_hide"]))
         $message_entry["auto_hide"] = $this->getAutoHideTime();
-      
+
       if(!empty($current["details"]) &&
          config_settings()->getParameter("show_message_details", false, 1)
         )
       {
         $message_entry["details"] = $current["details"];
       }
-      
+
       $output[] = $message_entry;
     } // foreach
 
@@ -100,7 +103,7 @@ class MessageManager implements IMessageManager, IInitable
   } // extractMessagesForDisplay
 
   /**
-   * Default constructor.
+   * Constructor.
    *
    * @author Oleg Schildt
    */
@@ -111,24 +114,24 @@ class MessageManager implements IMessageManager, IInitable
 
   /**
    * Initializes the message manager.
-   * 
-   * @param array $parameters 
+   *
+   * @param array $parameters
    * Initialization parameters as an associative array in the form key => value:
    *
    * - $parameters["auto_hide_time"] - server address.
    *
-   * @return boolean 
-   * Returns true upon successful initialization, otherwise false.   
+   * @return boolean
+   * Returns true upon successful initialization, otherwise false.
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function init($parameters)
   {
     if(!empty($parameters["auto_hide_time"])) self::$auto_hide_time = $parameters["auto_hide_time"];
-    
+
     return true;
   } // init
-  
+
   /**
    * Sets the element to be focused.
    *
@@ -139,7 +142,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @see setFocusElement()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setFocusElement($element)
   {
@@ -151,13 +154,13 @@ class MessageManager implements IMessageManager, IInitable
    *
    * When this method is called, it is assumed that the element will be focused. Thus,
    * the stored element is cleared to avoid focusing of the same element twice.
-   * 
+   *
    * @return string
    * Returns the ID of the element to be focused.
    *
    * @see getFocusElement()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getFocusElement()
   {
@@ -180,7 +183,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @see getActiveTab()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setActiveTab($tab)
   {
@@ -198,7 +201,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @see setActiveTab()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getActiveTab()
   {
@@ -221,7 +224,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @see getErrorElement()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setErrorElement($element)
   {
@@ -234,13 +237,13 @@ class MessageManager implements IMessageManager, IInitable
    *
    * When this method is called, it is assumed that element will be highlighted. Thus,
    * the stored element is cleared to avoid highlighting of the same element twice.
-   * 
+   *
    * @return string
    * Returns the ID of the field to be highlighted.
    *
    * @see setErrorElement()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getErrorElement()
   {
@@ -260,7 +263,7 @@ class MessageManager implements IMessageManager, IInitable
    * The error message to be reported.
    *
    * @param string $details
-   * The error details to be reported. Here, more 
+   * The error details to be reported. Here, more
    * technical details should be placed. Displaying
    * of this part might be controlled over a option
    * "display message details".
@@ -274,7 +277,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearErrors()
    * @see errorsExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setError($message, $details = "", $code = "")
   {
@@ -299,7 +302,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearInfos()
    * @see clearAll()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function clearErrors()
   {
@@ -318,7 +321,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see debugMessageExists()
    * @see infosExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function errorsExist()
   {
@@ -339,8 +342,8 @@ class MessageManager implements IMessageManager, IInitable
    * @see getProgWarnings()
    * @see getDebugMessages()
    * @see getInfos()
-   * 
-   * @author Oleg Schildt 
+   *
+   * @author Oleg Schildt
    */
   public function getErrors()
   {
@@ -360,7 +363,7 @@ class MessageManager implements IMessageManager, IInitable
    * The warning message to be reported.
    *
    * @param string $details
-   * The warning details to be reported. Here, more 
+   * The warning details to be reported. Here, more
    * technical details should be placed. Displaying
    * of this part might be controlled over a option
    * "display message details".
@@ -371,7 +374,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearWarnings()
    * @see warningsExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setWarning($message, $details = "")
   {
@@ -396,7 +399,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearInfos()
    * @see clearAll()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function clearWarnings()
   {
@@ -415,7 +418,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see debugMessageExists()
    * @see infosExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function warningsExist()
   {
@@ -437,7 +440,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see getDebugMessages()
    * @see getInfos()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getWarnings()
   {
@@ -453,14 +456,14 @@ class MessageManager implements IMessageManager, IInitable
   /**
    * Stores the programming warning to be reported.
    *
-   * Programming warnings are shown only if the option 
+   * Programming warnings are shown only if the option
    * "show programming warning" is active.
    *
    * @param string $message
    * The programming warning message to be reported.
    *
    * @param string $details
-   * The programming warning details to be reported. Here, more 
+   * The programming warning details to be reported. Here, more
    * technical details should be placed. Displaying
    * of this part might be controlled over a option
    * "display message details".
@@ -471,7 +474,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearProgWarnings()
    * @see progWarningsExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setProgWarning($message, $details = "")
   {
@@ -496,7 +499,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearInfos()
    * @see clearAll()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function clearProgWarnings()
   {
@@ -515,7 +518,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see debugMessageExists()
    * @see infosExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function progWarningsExist()
   {
@@ -537,7 +540,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see getDebugMessages()
    * @see getInfos()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getProgWarnings()
   {
@@ -553,7 +556,7 @@ class MessageManager implements IMessageManager, IInitable
   /**
    * Stores the debugging message to be reported.
    *
-   * Displaying of the debugging messages might be 
+   * Displaying of the debugging messages might be
    * implemented to simplify the debugging process,
    * e.g. to the browser console or in a lightbox.
    *
@@ -561,7 +564,7 @@ class MessageManager implements IMessageManager, IInitable
    * The debugging message message to be reported.
    *
    * @param string $details
-   * The debugging message details to be reported. Here, more 
+   * The debugging message details to be reported. Here, more
    * technical details should be placed. Displaying
    * of this part might be controlled over a option
    * "display message details".
@@ -572,7 +575,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearDebugMessages()
    * @see debugMessageExists()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setDebugMessage($message, $details = "")
   {
@@ -584,7 +587,7 @@ class MessageManager implements IMessageManager, IInitable
     // because of redirection
     self::$session_vars["debug"][$message] = ["message" => $message, "details" => $details];
   } // setDebugMessage
-  
+
   /**
    * Clears the stored debugging messages.
    *
@@ -597,7 +600,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearInfos()
    * @see clearAll()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function clearDebugMessages()
   {
@@ -616,7 +619,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see progWarningsExist()
    * @see infosExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function debugMessageExists()
   {
@@ -638,7 +641,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see getProgWarnings()
    * @see getInfos()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getDebugMessages()
   {
@@ -658,7 +661,7 @@ class MessageManager implements IMessageManager, IInitable
    * The information message to be reported.
    *
    * @param string $details
-   * The information message details to be reported. Here, more 
+   * The information message details to be reported. Here, more
    * technical details should be placed. Displaying
    * of this part might be controlled over a option
    * "display message details".
@@ -673,7 +676,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearInfos()
    * @see infosExist()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setInfo($message, $details = "", $auto_hide = false)
   {
@@ -698,7 +701,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearDebugMessages()
    * @see clearAll()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function clearInfos()
   {
@@ -717,7 +720,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see progWarningsExist()
    * @see debugMessageExists()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function infosExist()
   {
@@ -739,7 +742,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see getProgWarnings()
    * @see getDebugMessages()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getInfos()
   {
@@ -763,7 +766,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see clearDebugMessages()
    * @see clearInfos()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function clearAll()
   {
@@ -777,22 +780,22 @@ class MessageManager implements IMessageManager, IInitable
     unset(self::$session_vars["error_element"]);
     unset(self::$session_vars["active_tab"]);
   } // clearAll
-  
+
   /**
-   * Returns the auto hide time in seconds for the info 
+   * Returns the auto hide time in seconds for the info
    * messages with flag auto_hide = true.
    *
    * @return int
-   * Returns the auto hide time in seconds for the info 
+   * Returns the auto hide time in seconds for the info
    * messages with flag auto_hide = true.
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getAutoHideTime()
   {
     return self::$auto_hide_time;
   } // getAutoHideTime
-  
+
   /**
    * Add all stored existing messages to the response.
    *
@@ -804,7 +807,7 @@ class MessageManager implements IMessageManager, IInitable
    *
    * @return void
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function addMessagesToResponse(&$response)
   {
@@ -858,7 +861,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see enableProgWarnings()
    * @see disableProgWarnings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function progWarningsActive()
   {
@@ -876,7 +879,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see progWarningsActive()
    * @see disableProgWarnings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function enableProgWarnings()
   {
@@ -893,7 +896,7 @@ class MessageManager implements IMessageManager, IInitable
    * @see progWarningsActive()
    * @see enableProgWarnings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function disableProgWarnings()
   {

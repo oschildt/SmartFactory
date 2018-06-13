@@ -145,7 +145,7 @@ function user_settings()
  *
  * Example:
  *
- * ```
+ * ```php
  * function some_function()
  * {
  *    ...

@@ -64,7 +64,7 @@ function reqvar_value($name)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * input_text(["id" => "data_input_text", 
  *             "name" => "data[input_text]", 
  *             "class" => "my_class",
@@ -85,12 +85,12 @@ function reqvar_value($name)
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
- * @see input_password()
- * @see input_hidden()
- * @see textarea()
- * @see select()
- * @see checkbox()
- * @see radiobutton()
+ * @see \SmartFactory\input_password()
+ * @see \SmartFactory\input_hidden()
+ * @see \SmartFactory\textarea()
+ * @see \SmartFactory\select()
+ * @see \SmartFactory\checkbox()
+ * @see \SmartFactory\radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -155,7 +155,7 @@ function input_text($parameters, $echo = true)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * input_password(["id" => "data_input_password", 
  *                 "name" => "data[input_password]", 
  *                 "class" => "my_class",
@@ -175,12 +175,12 @@ function input_text($parameters, $echo = true)
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
- * @see input_text()
- * @see input_hidden()
- * @see textarea()
- * @see select()
- * @see checkbox()
- * @see radiobutton()
+ * @see \SmartFactory\input_text()
+ * @see \SmartFactory\input_hidden()
+ * @see \SmartFactory\textarea()
+ * @see \SmartFactory\select()
+ * @see \SmartFactory\checkbox()
+ * @see \SmartFactory\radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -248,7 +248,7 @@ function input_password($parameters, $echo = true)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * input_hidden(["id" => "data_input_hidden", 
  *               "name" => "data[input_hidden]", 
  *               "data-prop" => "some-prop"
@@ -264,12 +264,12 @@ function input_password($parameters, $echo = true)
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
- * @see input_text()
- * @see input_password()
- * @see textarea()
- * @see select()
- * @see checkbox()
- * @see radiobutton()
+ * @see \SmartFactory\input_text()
+ * @see \SmartFactory\input_password()
+ * @see \SmartFactory\textarea()
+ * @see \SmartFactory\select()
+ * @see \SmartFactory\checkbox()
+ * @see \SmartFactory\radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -337,7 +337,7 @@ function input_hidden($parameters, $echo = true)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * textarea(["id" => "data_textarea", 
  *           "name" => "data[textarea]", 
  *           "class" => "my_class",
@@ -358,12 +358,12 @@ function input_hidden($parameters, $echo = true)
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
- * @see input_text()
- * @see input_password()
- * @see input_hidden()
- * @see select()
- * @see checkbox()
- * @see radiobutton()
+ * @see \SmartFactory\input_text()
+ * @see \SmartFactory\input_password()
+ * @see \SmartFactory\input_hidden()
+ * @see \SmartFactory\select()
+ * @see \SmartFactory\checkbox()
+ * @see \SmartFactory\radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -434,7 +434,7 @@ function textarea($parameters, $echo = true)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * $options = [
  *   "yellow" => "Yellow",
  *   "blue" => "Blue",
@@ -465,12 +465,12 @@ function textarea($parameters, $echo = true)
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
- * @see input_text()
- * @see input_password()
- * @see input_hidden()
- * @see textarea()
- * @see checkbox()
- * @see radiobutton()
+ * @see \SmartFactory\input_text()
+ * @see \SmartFactory\input_password()
+ * @see \SmartFactory\input_hidden()
+ * @see \SmartFactory\textarea()
+ * @see \SmartFactory\checkbox()
+ * @see \SmartFactory\radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -558,7 +558,7 @@ function select($parameters, $echo = true)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * checkbox(["id" => "data_checkbox", 
  *           "name" => "data[checkbox]", 
  *           "class" => "my_class",
@@ -577,12 +577,12 @@ function select($parameters, $echo = true)
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
- * @see input_text()
- * @see input_password()
- * @see input_hidden()
- * @see textarea()
- * @see select()
- * @see radiobutton()
+ * @see \SmartFactory\input_text()
+ * @see \SmartFactory\input_password()
+ * @see \SmartFactory\input_hidden()
+ * @see \SmartFactory\textarea()
+ * @see \SmartFactory\select()
+ * @see \SmartFactory\radiobutton()
  *
  * @author Oleg Schildt 
  */
@@ -655,7 +655,7 @@ function checkbox($parameters, $echo = true)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * radiobutton(["id" => "data_radiocolor_red", 
  *              "name" => "data[radiocolor]", 
  *              "value" => "red" 
@@ -676,12 +676,12 @@ function checkbox($parameters, $echo = true)
  * If the paramter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
- * @see input_text()
- * @see input_password()
- * @see input_hidden()
- * @see textarea()
- * @see select()
- * @see checkbox()
+ * @see \SmartFactory\input_text()
+ * @see \SmartFactory\input_password()
+ * @see \SmartFactory\input_hidden()
+ * @see \SmartFactory\textarea()
+ * @see \SmartFactory\select()
+ * @see \SmartFactory\checkbox()
  *
  * @author Oleg Schildt
  */
@@ -757,7 +757,7 @@ function radiobutton($parameters, $echo = true)
  * if specified. It is called for evelry cell of the table. The signature of 
  * this function is:
  *
- * ```
+ * ```php
  * function ($rownum, $colnum, $colname, $val) : string;
  * ```
  *
@@ -777,7 +777,7 @@ function radiobutton($parameters, $echo = true)
  * Any other attributes may be specified. 
  *
  * Example:
- * ```
+ * ```php
  * $rows = [
  *    ["name" => "DB design", "employee" => "Alex", ... ],
  *    ["name" => "Mask implementation", "employee" => "Boris", ... ],

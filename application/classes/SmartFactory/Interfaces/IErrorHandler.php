@@ -69,8 +69,8 @@ interface IErrorHandler
    * @return boolean
    * Returns the state whether the trace is active or not.
    *
-   * @see enableTrace
-   * @see disableTrace
+   * @see enableTrace()
+   * @see disableTrace()
    *
    * @author Oleg Schildt 
    */
@@ -84,8 +84,8 @@ interface IErrorHandler
    *
    * @return void
    *
-   * @see traceActive
-   * @see disableTrace
+   * @see traceActive()
+   * @see disableTrace()
    *
    * @author Oleg Schildt 
    */
@@ -99,8 +99,8 @@ interface IErrorHandler
    *
    * @return void
    *
-   * @see traceActive
-   * @see enableTrace
+   * @see traceActive()
+   * @see enableTrace()
    *
    * @author Oleg Schildt 
    */

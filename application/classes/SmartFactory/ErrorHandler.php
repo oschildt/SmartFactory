@@ -20,8 +20,9 @@ use SmartFactory\Interfaces\IErrorHandler;
 class ErrorHandler implements IErrorHandler
 {
   /**
-   * @var string
    * Internal variable for storing the last error.
+   *
+   * @var string
    *
    * @see getLastError()
    * @see setLastError()
@@ -31,8 +32,9 @@ class ErrorHandler implements IErrorHandler
   protected static $last_error;
 
   /**
-   * @var boolean
    * Internal variable for storing the state of tracing - active or not.
+   *
+   * @var boolean
    *
    * @see traceActive()
    * @see enableTrace()

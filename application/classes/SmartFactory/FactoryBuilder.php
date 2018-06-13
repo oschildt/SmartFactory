@@ -21,16 +21,18 @@ namespace SmartFactory;
 class FactoryBuilder
 {
   /**
-   * @var array
    * Internal array for storing the singleton instances for re-using.
+   *
+   * @var array
    *
    * @author Oleg Schildt 
    */
   static protected $singletons = [];
 
   /**
-   * @var array
    * Internal array for storing the mapping betwen interfaces/classes and the bound classes.
+   *
+   * @var array
    *
    * @author Oleg Schildt 
    */
@@ -60,7 +62,7 @@ class FactoryBuilder
    * custom intialization. The signature of 
    * this function is:
    *
-   * ```
+   * ```php
    * function (object $instance) : void;
    * ```
    *
@@ -68,7 +70,7 @@ class FactoryBuilder
    *
    * Example:
    *
-   * ```
+   * ```php
    * FactoryBuilder::bindClass(ILanguageManager::class, LanguageManager::class, function($instance) {
    *   $instance->detectLanguage();
    * });
@@ -145,8 +147,8 @@ class FactoryBuilder
    * - If the interface or class does not exist.
    * - If the interface or class has no bound class.
    *
-   * @used_by instance()
-   * @used_by singleton()
+   * @used_by \SmartFactory\instance()
+   * @used_by \SmartFactory\singleton()
    *
    * @author Oleg Schildt
   */

@@ -1,14 +1,14 @@
 <?php
 /**
- * This file contains the implementation of the interface ISettingsManager 
+ * This file contains the implementation of the interface ISettingsManager
  * in the class ApplicationSettingsManager for management of the
  * application settings.
  *
  * @package System
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
- 
+
 namespace SmartFactory;
 
 use SmartFactory\Interfaces\ISettingsManager;
@@ -16,86 +16,93 @@ use SmartFactory\Interfaces\ISettingsManager;
 /**
  * Class for management of the application settings.
  *
- * This settings manager supports the multistep wizard like processing. That means 
- * that you do not have to put all settings in one big form and save them in one action. 
- * You can collect them over multiple steps (requests), go forward ad back, validate them 
+ * This settings manager supports the multistep wizard like processing. That means
+ * that you do not have to put all settings in one big form and save them in one action.
+ * You can collect them over multiple steps (requests), go forward ad back, validate them
  * on each step and finally save them after the final step.
  *
- * You do not need any preliminary special settings name definitions. When you introduce 
+ * You do not need any preliminary special settings name definitions. When you introduce
  * a new setting, just start saving and getting it. But you need provide a settings table
  * with a column where the settings data will be saved.
  *
- * @see ConfigSettingsManager()
- * @see UserSettingsManager()
+ * @see ConfigSettingsManager
+ * @see UserSettingsManager
  *
  * @uses DatabaseWorkers\DBWorker
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
 class ApplicationSettingsManager implements ISettingsManager
 {
   /**
-   * @var DatabaseWorkers\DBWorker
    * Internal variable for storing the dbworker.
    *
-   * @author Oleg Schildt 
+   * @var DatabaseWorkers\DBWorker
+   *
+   * @author Oleg Schildt
    */
   protected $dbworker;
 
   /**
-   * @var string
    * Internal variable for storing the target settings table name.
    *
-   * @author Oleg Schildt 
+   * @var string
+   *
+   * @author Oleg Schildt
    */
   protected $settings_table;
 
   /**
-   * @var string
    * Internal variable for storing the target column.
    *
-   * @author Oleg Schildt 
+   * @var string
+   *
+   * @author Oleg Schildt
    */
   protected $settings_column;
 
   /**
-   * @var string
    * Internal variable for storing the current context.
+   *
+   * @var string
    *
    * @see getContext()
    * @see setContext()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected $context = "default";
 
   /**
-   * @var Interfaces\ISettingsValidator
    * Internal variable for storing the validator.
+   *
+   * @var Interfaces\ISettingsValidator
    *
    * @see getValidator()
    * @see setValidator()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
-  protected $validator = null;  
+  protected $validator = null;
 
   /**
-   * @var array
    * Internal variable for storing the array of settings values.
    *
-   * @author Oleg Schildt 
+   * @var array
+   *
+   * @author Oleg Schildt
    */
   protected $temp_settings;
 
   /**
-   * @var array
    * Internal variable for storing the array of changed settings values.
+   *
+   * @var array
    *
    * The changes are set to the temp_settings and are persisted and
    * written to the storage by saving.
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected $settings;
 
@@ -106,23 +113,23 @@ class ApplicationSettingsManager implements ISettingsManager
    * @return boolean
    * It should return true if the settings manager is intialized correctly, otherwise false.
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected function basic_check()
   {
-    if(empty($this->dbworker)) 
+    if(empty($this->dbworker))
     {
       trigger_error("DBWorker is not defined!", E_USER_ERROR);
       return false;
     }
-    
-    if(empty($this->settings_table)) 
+
+    if(empty($this->settings_table))
     {
       trigger_error("Settings table is not defined!", E_USER_ERROR);
       return false;
     }
 
-    if(empty($this->settings_column)) 
+    if(empty($this->settings_column))
     {
       trigger_error("Settings column is not defined!", E_USER_ERROR);
       return false;
@@ -135,7 +142,7 @@ class ApplicationSettingsManager implements ISettingsManager
    * This is internal auxiliary function for converting the settings to XML and storing it
    * to the target table defined by the iniailization.
    *
-   * @param array $data 
+   * @param array $data
    * The array with the settings values to be saved.
    *
    * @return boolean
@@ -143,7 +150,7 @@ class ApplicationSettingsManager implements ISettingsManager
    *
    * @see loadXMLfromDB()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected function saveXMLtoDB(&$data)
   {
@@ -154,29 +161,29 @@ class ApplicationSettingsManager implements ISettingsManager
     $root = $xmldoc->appendChild($root);
 
     array_to_dom($root, $data);
-    
+
     $xml = $xmldoc->saveXML();
-    
+
     // check existance
-    
+
     $query = "SELECT 1 FROM " . $this->settings_table;
-    
+
     if(!$this->dbworker->execute_query($query))
     {
       return sql_error($this->dbworker);
     }
-    
+
     $must_insert = true;
-    
+
     if($this->dbworker->fetch_row())
     {
       $must_insert = false;
     }
 
     $this->dbworker->free_result();
-    
+
     $xml = $this->dbworker->escape($xml);
-    
+
     if($must_insert)
     {
       $query = "INSERT INTO " . $this->settings_table . "(" . $this->settings_column . ")\n";
@@ -186,20 +193,20 @@ class ApplicationSettingsManager implements ISettingsManager
     {
       $query = "UPDATE " . $this->settings_table . " SET " . $this->settings_column . " = '$xml'";
     }
-    
+
     if(!$this->dbworker->execute_query($query))
     {
       return sql_error($this->dbworker);
     }
-    
+
     return true;
   } // saveXMLtoDB
 
   /**
-   * This is internal auxiliary function for loading the settings from the target table 
+   * This is internal auxiliary function for loading the settings from the target table
    * defined by the iniailization.
    *
-   * @param array $data 
+   * @param array $data
    * The target array with the settings values to be loaded.
    *
    * @return boolean
@@ -207,26 +214,26 @@ class ApplicationSettingsManager implements ISettingsManager
    *
    * @see saveXMLtoDB()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   protected function loadXMLfromDB(&$data)
   {
     $query = "SELECT " . $this->settings_column . " FROM " . $this->settings_table;
-    
+
     if(!$this->dbworker->execute_query($query))
     {
       return sql_error($this->dbworker);
     }
-    
+
     $xml = "";
-    
+
     if($this->dbworker->fetch_row())
     {
       $xml = $this->dbworker->field_by_name($this->settings_column);
     }
 
     $this->dbworker->free_result();
-    
+
     if(empty($xml)) return true;
 
     $xmldoc = new \DOMDocument();
@@ -234,12 +241,12 @@ class ApplicationSettingsManager implements ISettingsManager
     if(!@$xmldoc->loadXML($xml)) return false;
 
     dom_to_array($xmldoc->documentElement, $data);
-    
+
     return true;
   } // loadXMLfromDB
 
   /**
-   * Default constructor.
+   * Constructor.
    *
    * @author Oleg Schildt
    */
@@ -251,8 +258,8 @@ class ApplicationSettingsManager implements ISettingsManager
 
   /**
    * Initializes the settings manager parameters.
-   * 
-   * @param array $parameters 
+   *
+   * @param array $parameters
    * Settings for saving ad loading as an associative array in the form key => value:
    *
    * - $parameters["dbworker"] - the dbworker to used for loading and storing settings.
@@ -261,10 +268,10 @@ class ApplicationSettingsManager implements ISettingsManager
    *
    * - $parameters["settings_column"] - the name of the column for the storing of the settings.
    *
-   * @return boolean 
-   * Returns true upon successful initialization, otherwise false.   
+   * @return boolean
+   * Returns true upon successful initialization, otherwise false.
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function init($parameters)
   {
@@ -277,16 +284,16 @@ class ApplicationSettingsManager implements ISettingsManager
 
   /**
    * Sets the validator for the settings.
-   * 
+   *
    * @param Interfaces\ISettingsValidator $validator
    * The settings validator.
    *
-   * @return void   
+   * @return void
    *
    * @see getValidator()
    * @see validateSettings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setValidator($validator)
   {
@@ -295,14 +302,14 @@ class ApplicationSettingsManager implements ISettingsManager
 
   /**
    * Returns the validator for the settings.
-   * 
+   *
    * @return Interfaces\ISettingsValidator|null
    * Returns the validator for the settings or null if none is defined.
    *
    * @see setValidator()
    * @see validateSettings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getValidator()
   {
@@ -328,7 +335,7 @@ class ApplicationSettingsManager implements ISettingsManager
    *
    * @see getContext()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setContext($context = "default")
   {
@@ -352,7 +359,7 @@ class ApplicationSettingsManager implements ISettingsManager
    *
    * @see setContext()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getContext()
   {
@@ -361,37 +368,37 @@ class ApplicationSettingsManager implements ISettingsManager
 
   /**
    * Checks whether the settings data is dirty (not saved) within a context or globally.
-   * 
-   * @param boolean $global 
+   *
+   * @param boolean $global
    * If $global is false, the dirty state is checked only within the current context.
    * If $global is true, the dirty state is checked globally.
    *
-   * @return boolean 
-   * Returs true if the settings data is dirty, otherwise false.   
+   * @return boolean
+   * Returs true if the settings data is dirty, otherwise false.
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function isDirty($global = false)
   {
     if($global) return !empty($this->temp_settings["__dirty"]);
-    
+
     return !empty($this->temp_settings["__dirty"][$this->context]);
   } // isDirty
 
   /**
    * Sets a settings parameter.
-   * 
-   * @param string $name 
+   *
+   * @param string $name
    * The name of the settings parameter.
    *
-   * @param mixed $value 
+   * @param mixed $value
    * The value of the settings parameter.
    *
-   * @return void   
+   * @return void
    *
    * @see getParameter()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function setParameter($name, $value)
   {
@@ -402,40 +409,40 @@ class ApplicationSettingsManager implements ISettingsManager
 
   /**
    * Returns the value of a settings parameter.
-   * 
-   * @param string $name 
+   *
+   * @param string $name
    * The name of the settings parameter.
    *
-   * @param boolean $get_dirty 
+   * @param boolean $get_dirty
    * If settings are not saved yet, the unsaved new value
    * of the parameter is returned if $get_dirty is true.
    *
-   * @param mixed $default 
+   * @param mixed $default
    * The default value of the settings parameter if it is not set yet.
-   * The parameter is a confortable way to pre-set a parameter 
+   * The parameter is a confortable way to pre-set a parameter
    * to a default value if its value is not set yet.
    * However, if the status of the data is dirty and the unsaved
    * last entered value is requested, then always the actual
    * last entered value is returned and this paramter is ignored.
    *
-   * @return mixed   
+   * @return mixed
    * Returns the value of the settings parameter.
    *
    * @see setParameter()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function getParameter($name, $get_dirty = false, $default = null)
   {
     if($get_dirty && $this->isDirty())
     {
       if(empty($this->temp_settings[$name])) return null;
-      
+
       return $this->temp_settings[$name];
     }
-    
+
     if(!isset($this->settings[$name])) return $default;
-    
+
     return $this->settings[$name];
   } // getParameter
 
@@ -446,20 +453,20 @@ class ApplicationSettingsManager implements ISettingsManager
    * and before their saving.
    *
    * @return boolean
-   * Returns true if there is no validator defined, otherwise lets 
-   * the validator validate the settings.   
+   * Returns true if there is no validator defined, otherwise lets
+   * the validator validate the settings.
    *
    * @uses \SmartFactory\Interfaces\ISettingsValidator
    *
    * @see getValidator()
    * @see setValidator()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function validateSettings()
   {
     if(empty($this->validator)) return true;
-    
+
     return $this->validator->validate($this, $this->context);
   } // validateSettings
 
@@ -471,20 +478,20 @@ class ApplicationSettingsManager implements ISettingsManager
    *
    * @see saveSettings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function loadSettings()
   {
     if(!$this->basic_check()) return false;
 
     if($this->isDirty(true)) return true;
-    
-    if(!$this->loadXMLfromDB($this->settings)) return false; 
-    
+
+    if(!$this->loadXMLfromDB($this->settings)) return false;
+
     $this->temp_settings = $this->settings;
 
     unset($this->temp_settings["__dirty"]);
-    
+
     return true;
   } // loadSettings
 
@@ -496,7 +503,7 @@ class ApplicationSettingsManager implements ISettingsManager
    *
    * @see loadSettings()
    *
-   * @author Oleg Schildt 
+   * @author Oleg Schildt
    */
   public function saveSettings()
   {
@@ -504,15 +511,15 @@ class ApplicationSettingsManager implements ISettingsManager
 
     $old_dirty_state = $this->temp_settings["__dirty"];
     unset($this->temp_settings["__dirty"]);
-    
-    if($this->saveXMLtoDB($this->temp_settings)) 
+
+    if($this->saveXMLtoDB($this->temp_settings))
     {
       $this->settings = $this->temp_settings;
       return true;
     }
-     
+
     $this->temp_settings["__dirty"] = $old_dirty_state;
-    
-    return false;  
+
+    return false;
   } // saveSettings
 } // ApplicationSettingsManager

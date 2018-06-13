@@ -20,8 +20,9 @@ use SmartFactory\Interfaces\IDebugProfiler;
 class DebugProfiler implements IDebugProfiler
 {
   /**
-   * @var string
    * Internal variable for storing the time by profiling.
+   *
+   * @var string
    *
    * @see startProfilePoint()
    * @see fixProfilePoint()

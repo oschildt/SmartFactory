@@ -22,16 +22,16 @@ class SessionManager
       implements ISessionManager
 {
   /**
-   * @var string
    * Internal variable for storing the state whether the session is started
    * as readonly.
+   *
+   * @var string
    *
    * @author Oleg Schildt 
    */
   protected static $readonly = false;
 
   /**
-   * @var string
    * Internal variable for storing the current context.
    *
    * If many instances of the application should run in parallel 
@@ -39,6 +39,8 @@ class SessionManager
    * and the provider does not let you to change the session path,
    * then you can use different $context in each instance to ensure 
    * that the session data of these instances does not mix.
+   *
+   * @var string
    *
    * @see getContext()
    * @see switchContext()
@@ -468,7 +470,7 @@ class SessionManager
    * We return the reference to the internal data. It allows setting
    * multidimesional arrays as follows:
    *
-   * ```
+   * ```php
    * $smanager->vars()["user"]["name"] = "Alex";
    * $smanager->vars()["user"]["age"] = "22";
    * ```
