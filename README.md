@@ -5,7 +5,11 @@
 - Without overhead
 - Designed based on IoC 
 
-For more details see [Wiki](https://github.com/oschildt/SmartFactory/wiki) and [Presentation](https://docs.google.com/presentation/d/1CcVX_bQQirFG0fq0CSQ2O7YTONQywyDtVJkai1GQhOM).
+For more details see [Directory Structure](https://github.com/oschildt/SmartFactory/wiki/Directory-structure) and [Presentation](https://docs.google.com/presentation/d/1CcVX_bQQirFG0fq0CSQ2O7YTONQywyDtVJkai1GQhOM).
+
+### Requirements
+
+PHP 7.2.x
 
 ### To get familiar with the SmartFactory do the following
 
