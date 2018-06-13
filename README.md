@@ -10,7 +10,7 @@ For more details see [Presentation](https://docs.google.com/presentation/d/1CcVX
 
 ### Requirements
 
-PHP 7.2.x
+- PHP 7.2.x
 
 ### To get familiar with the SmartFactory do the following
 
