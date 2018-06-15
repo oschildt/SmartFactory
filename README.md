@@ -39,7 +39,6 @@ Add translation texts for your application over the localization/edit.php or dir
 
 ```
 api
-  handlers
 classes
   SmartFactory
     Interfaces
@@ -52,7 +51,6 @@ includes
 localization
 logs
 xmlapi
-  handlers
 ```
 
 ## Detailed description
