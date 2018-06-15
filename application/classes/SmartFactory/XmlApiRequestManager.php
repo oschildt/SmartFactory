@@ -1,23 +1,22 @@
 <?php
 /**
- * This file contains the implementation of the interface IApiRequestHandler 
- * in the class XmlApiRequestHandler for handling XML requests.
+ * This file contains the class XmlApiRequestManager for handling XML requests.
  *
  * @package System
  *
  * @author Oleg Schildt 
  */
-
+ 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IApiRequestHandler;
+use SmartFactory\Interfaces\IXmlApiRequestHandler;
 
 /**
- * Class for handling JSON requests.
+ * Class for for handling XML requests.
  *
  * @author Oleg Schildt 
  */
-abstract class XmlApiRequestHandler implements IApiRequestHandler
+abstract class XmlApiRequestManager 
 {
   /**
    * Internal array for storing the handler mappings.
@@ -49,7 +48,7 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
    * @author Oleg Schildt 
    */
   protected abstract function parseXML(&$api_request, &$xmldoc);
-
+  
   /**
    * Reports an errors in the response in XML format.
    *
@@ -87,12 +86,12 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
     
     echo $outxmldoc->saveXML();
   } // sendXMLResponse
-
+  
   /**
    * Not implemented in this class since the API call name is defined
    * not based on the URL but on a tag name in the incoming XML data.
    *
-   * For that reason the method {@see XmlApiRequestHandler::parseXML()} is used.
+   * For that reason the method {@see XmlApiRequestManager::parseXML()} is used.
    *
    * @return null
    *
@@ -104,46 +103,33 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
   {
     return null;
   } // getApiRequest
-
+  
   /**
    * Registers a handler function for an API request call.
    *
    * @param string $api_request
    * The target API request.
    *
-   * @param callable $handler
-   * The name or definition of the handler function. The signature of 
-   * this function is:
+   * @param string $handler_class_name
+   * The name of the class for handling this API request. 
    *
-   * ```php
-   * function (IApiRequestHandler $handler, string $api_request, &$xmldoc) : boolean;
-   * ```
+   * Important! It should be a name of the class, mneither the class instance 
+   * nor the class object. It is done to prevent situation that a wrong registration
+   * of a handler breaks the handling of all requests.
    *
-   * - $handler - the reference to the current handler object.
-   *
-   * - $api_request - the name of the API request for what it was called.
-   *
-   * - $xmldoc - the DOM document of the incoming XML data.
-   *
-   * - The handler function should return true if the request has been successfully 
-   * handled, otherwise false.
+   * The class instantiating and class loading occurs only if this API request
+   * comes.
    *
    * @return boolean
    * Returns true if the registration was successfull, otherwise false.
    *
    * @author Oleg Schildt 
    */
-  public function registerApiRequestHandler($api_request, $handler)
+  public function registerApiRequestHandler($api_request, $handler_class_name)
   {
     if(empty($api_request)) 
     {
       trigger_error("The API request is undefined (empty)!", E_USER_ERROR);
-      return false;
-    }
-    
-    if(!is_callable($handler)) 
-    {
-      trigger_error("The handler for the API request '$api_request' is not a fucntion!", E_USER_ERROR);
       return false;
     }
     
@@ -153,11 +139,11 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
       return false;
     }
     
-    self::$handler_table[$api_request] = new \ReflectionFunction($handler);
+    self::$handler_table[$api_request] = $handler_class_name;
     
     return true;
   } // registerApiRequestHandler
-
+  
   /**
    * Handles an API request call trying to call the handler registered
    * for this API request.
@@ -174,7 +160,7 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
     $xmldoc = null;
     
     if(!$this->parseXML($api_request, $xmldoc)) return false;
-
+    
     if(empty($api_request)) 
     {
       $response_data["errors"] = [
@@ -185,7 +171,7 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
       
       return false;
     }
-
+    
     if(empty($xmldoc)) 
     {
       $response_data["errors"] = [
@@ -196,7 +182,7 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
       
       return false;
     }
-
+    
     if(empty(self::$handler_table[$api_request])) 
     {
       $response_data["errors"] = [
@@ -208,6 +194,36 @@ abstract class XmlApiRequestHandler implements IApiRequestHandler
       return false;
     }
     
-    return self::$handler_table[$api_request]->invoke($this, $api_request, $xmldoc);    
+    if(!class_exists(self::$handler_table[$api_request])) 
+    {
+      $response_data["result"] = "error";
+      
+      $response_data["errors"] = [
+        ["error_code" => "api_request_class_not_found", "error_text" => sprintf("The handler class '%s' does not exist!", self::$handler_table[$api_request])]
+      ];
+      
+      $this->reportErrors($response_data);
+      
+      return false;
+    }
+    
+    $handler_class = new \ReflectionClass(self::$handler_table[$api_request]);
+    
+    if(!$handler_class->isSubclassOf("SmartFactory\Interfaces\IXmlApiRequestHandler"))
+    {
+      $response_data["result"] = "error";
+      
+      $response_data["errors"] = [
+        ["error_code" => "api_request_wrong_class", "error_text" => sprintf("The handler class '%s' does not implement the interface '%s'!", self::$handler_table[$api_request], "IXmlApiRequestHandler")]
+      ];
+      
+      $this->reportErrors($response_data);
+      
+      return false;
+    }
+    
+    $handler = $handler_class->newInstance();
+    
+    return $handler->handle($this, $api_request, $xmldoc);    
   } // handleApiRequest
-} // XmlApiRequestHandler
+} // XmlApiRequestManager

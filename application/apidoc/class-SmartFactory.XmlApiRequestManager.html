@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Class: XmlApiRequestHandler - Framework SmartFactory
+            Class: XmlApiRequestManager - Framework SmartFactory
         </title>
     </head>
 
@@ -105,7 +105,7 @@
                         
  
 
-                        <li class="active">XmlApiRequestHandler</li>
+                        <li class="active">XmlApiRequestManager</li>
                 </ol>
                 
             </div>
@@ -117,7 +117,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Class: XmlApiRequestHandler</h1>
+                    <h1>Class: XmlApiRequestManager</h1>
 
 
 
@@ -127,7 +127,7 @@
 
 
 <div class="short-description">
-Class for handling JSON requests.
+Class for for handling XML requests.
 </div>
 
 
@@ -135,13 +135,6 @@ Class for handling JSON requests.
 
 
 
-
-<h2>Implements</h2>
-<div class="item_list">
-
-<a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html">\SmartFactory\Interfaces\IApiRequestHandler</a><br>
-
-</div>
 
 
 
@@ -157,7 +150,7 @@ Oleg Schildt
 
 
 <h2>Source code</h2>
-<a href="source-classes.SmartFactory.XmlApiRequestHandler.html#17">classes\SmartFactory\XmlApiRequestHandler.php</a>
+<a href="source-classes.SmartFactory.XmlApiRequestManager.html#16">classes\SmartFactory\XmlApiRequestManager.php</a>
 
 
 
@@ -283,13 +276,13 @@ format.
   
 
   <h2>Source code</h2>
-  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#28">classes\SmartFactory\XmlApiRequestHandler.php</a>
+  <a href="source-classes.SmartFactory.XmlApiRequestManager.html#27">classes\SmartFactory\XmlApiRequestManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.XmlApiRequestHandler.html#registerApiRequestHandler">\SmartFactory\XmlApiRequestHandler::registerApiRequestHandler()</a><br>
+  <a href="class-SmartFactory.XmlApiRequestManager.html#registerApiRequestHandler">\SmartFactory\XmlApiRequestManager::registerApiRequestHandler()</a><br>
   
   </div>
   
@@ -318,7 +311,7 @@ not based on the URL but on a tag name in the incoming XML data.
   
   <div class="long-description">
   <h2>Details</h2>
-  <p>For that reason the method <a href="class-SmartFactory.XmlApiRequestHandler.html#parseXML">\SmartFactory\XmlApiRequestHandler::parseXML()</a> is used.</p>
+  <p>For that reason the method <a href="class-SmartFactory.XmlApiRequestManager.html#parseXML">\SmartFactory\XmlApiRequestManager::parseXML()</a> is used.</p>
   </div>
   
 
@@ -337,9 +330,6 @@ not based on the URL but on a tag name in the incoming XML data.
   
   
   
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html#getApiRequest">\SmartFactory\Interfaces\IApiRequestHandler::getApiRequest()</a><br>
-  
   
   
   <h2>Author</h2>
@@ -347,13 +337,13 @@ not based on the URL but on a tag name in the incoming XML data.
   
 
   <h2>Source code</h2>
-  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#100">classes\SmartFactory\XmlApiRequestHandler.php</a>
+  <a href="source-classes.SmartFactory.XmlApiRequestManager.html#99">classes\SmartFactory\XmlApiRequestManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.XmlApiRequestHandler.html#parseXML">\SmartFactory\XmlApiRequestHandler::parseXML()</a><br>
+  <a href="class-SmartFactory.XmlApiRequestManager.html#parseXML">\SmartFactory\XmlApiRequestManager::parseXML()</a><br>
   
   </div>
   
@@ -377,11 +367,6 @@ for this API request.
   
 
   
-  <div class="long-description">
-  <h2>Details</h2>
-  <p>It is called every time a request comes.</p>
-  </div>
-  
 
   
 
@@ -402,9 +387,6 @@ for this API request.
   
   
   
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html#handleApiRequest">\SmartFactory\Interfaces\IApiRequestHandler::handleApiRequest()</a><br>
-  
   
   
   <h2>Author</h2>
@@ -412,7 +394,7 @@ for this API request.
   
 
   <h2>Source code</h2>
-  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#167">classes\SmartFactory\XmlApiRequestHandler.php</a>
+  <a href="source-classes.SmartFactory.XmlApiRequestManager.html#153">classes\SmartFactory\XmlApiRequestManager.php</a>
 
   
 
@@ -484,7 +466,7 @@ should be the detected API request name and the DOM document.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#48">classes\SmartFactory\XmlApiRequestHandler.php</a>
+  <a href="source-classes.SmartFactory.XmlApiRequestManager.html#47">classes\SmartFactory\XmlApiRequestManager.php</a>
 
   
 
@@ -497,7 +479,7 @@ should be the detected API request name and the DOM document.</p>
   
   <h1>Method: registerApiRequestHandler</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>registerApiRequestHandler</b>(string &amp;<span class="php-var">$api_request</span>, <span class="php-keyword1">callable</span> &amp;<span class="php-var">$handler</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>registerApiRequestHandler</b>(string &amp;<span class="php-var">$api_request</span>, string &amp;<span class="php-var">$handler_class_name</span>) : boolean</div>
 
   
   <div class="short-description">
@@ -518,28 +500,16 @@ should be the detected API request name and the DOM document.</p>
       </div>
       
   
-      <h3>$handler</h3>
-      <span class="type_label">Type:</span> callable
+      <h3>$handler_class_name</h3>
+      <span class="type_label">Type:</span> string
       
       <div class="param-description">
-      <p>The name or definition of the handler function. The signature of
-this function is:</p>
-<pre><code class="language-php"><span class="php-keyword1">function</span> (IApiRequestHandler <span class="php-var">$handler</span>, string <span class="php-var">$api_request</span>, &amp;<span class="php-var">$xmldoc</span>) : boolean;</code></pre>
-<ul>
-<li>
-<p>$handler - the reference to the current handler object.</p>
-</li>
-<li>
-<p>$api_request - the name of the API request for what it was called.</p>
-</li>
-<li>
-<p>$xmldoc - the DOM document of the incoming XML data.</p>
-</li>
-<li>
-<p>The handler function should return true if the request has been successfully
-handled, otherwise false.</p>
-</li>
-</ul>
+      <p>The name of the class for handling this API request.</p>
+<p>Important! It should be a name of the class, mneither the class instance
+nor the class object. It is done to prevent situation that a wrong registration
+of a handler breaks the handling of all requests.</p>
+<p>The class instantiating and class loading occurs only if this API request
+comes.</p>
       </div>
       
   
@@ -562,9 +532,6 @@ handled, otherwise false.</p>
   
   
   
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IApiRequestHandler.html#registerApiRequestHandler">\SmartFactory\Interfaces\IApiRequestHandler::registerApiRequestHandler()</a><br>
-  
   
   
   <h2>Author</h2>
@@ -572,7 +539,7 @@ handled, otherwise false.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#133">classes\SmartFactory\XmlApiRequestHandler.php</a>
+  <a href="source-classes.SmartFactory.XmlApiRequestManager.html#125">classes\SmartFactory\XmlApiRequestManager.php</a>
 
   
 
@@ -644,7 +611,7 @@ in the method and should not be passed over this paramter.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#68">classes\SmartFactory\XmlApiRequestHandler.php</a>
+  <a href="source-classes.SmartFactory.XmlApiRequestManager.html#67">classes\SmartFactory\XmlApiRequestManager.php</a>
 
   
 
@@ -701,7 +668,7 @@ format.
   
 
   <h2>Source code</h2>
-  <a href="source-classes.SmartFactory.XmlApiRequestHandler.html#81">classes\SmartFactory\XmlApiRequestHandler.php</a>
+  <a href="source-classes.SmartFactory.XmlApiRequestManager.html#80">classes\SmartFactory\XmlApiRequestManager.php</a>
 
   
 
@@ -715,7 +682,7 @@ format.
 
                     
                     <div id="footer">
-                        Generated on 2018-06-13 12:05
+                        Generated on 2018-06-15 09:22
                     </div>                    
                 </div>
             </div>

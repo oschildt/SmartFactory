@@ -10,14 +10,14 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IApiRequestHandler;
+use SmartFactory\Interfaces\IJsonApiRequestHandler;
 
 /**
  * Class for handling JSON requests.
  *
  * @author Oleg Schildt 
  */
-class JsonApiRequestHandler implements IApiRequestHandler
+class JsonApiRequestManager
 {
   /**
    * Internal array for storing the handler mappings.
@@ -108,42 +108,31 @@ class JsonApiRequestHandler implements IApiRequestHandler
   } // getApiRequest
 
   /**
-   * Registers a handler function for an API request call.
+   * Registers a handler action for an API request call.
    *
    * @param string $api_request
    * The target API request.
    *
-   * @param callable $handler
-   * The name or definition of the handler function. The signature of 
-   * this function is:
+   * @param string $handler_class_name
+   * The name of the class for handling this API request. 
    *
-   * ```php
-   * function (IApiRequestHandler $handler, string $api_request) : boolean;
-   * ```
+   * Important! It should be a name of the class, mneither the class instance 
+   * nor the class object. It is done to prevent situation that a wrong registration
+   * of a handler breaks the handling of all requests.
    *
-   * - $handler - the reference to the current handler object.
-   *
-   * - $api_request - the name of the API request for what it was called.
-   *
-   * - The handler function should return true if the request has been successfully 
-   * handled, otherwise false.
+   * The class instantiating and class loading occurs only if this API request
+   * comes.
    *
    * @return boolean
    * Returns true if the registration was successfull, otherwise false.
    *
    * @author Oleg Schildt 
    */
-  public function registerApiRequestHandler($api_request, $handler)
+  public function registerApiRequestHandler($api_request, $handler_class_name)
   {
     if(empty($api_request)) 
     {
       trigger_error("The API request is undefined (empty)!", E_USER_ERROR);
-      return false;
-    }
-    
-    if(!is_callable($handler)) 
-    {
-      trigger_error("The handler for the API request '$api_request' is not a fucntion!", E_USER_ERROR);
       return false;
     }
     
@@ -153,7 +142,7 @@ class JsonApiRequestHandler implements IApiRequestHandler
       return false;
     }
     
-    self::$handler_table[$api_request] = new \ReflectionFunction($handler);
+    self::$handler_table[$api_request] = $handler_class_name;
     
     return true;
   } // registerApiRequestHandler
@@ -199,6 +188,36 @@ class JsonApiRequestHandler implements IApiRequestHandler
       return false;
     }
     
-    return self::$handler_table[$api_request]->invoke($this, $api_request);    
+    if(!class_exists(self::$handler_table[$api_request])) 
+    {
+      $response_data["result"] = "error";
+      
+      $response_data["errors"] = [
+        ["error_code" => "api_request_class_not_found", "error_text" => sprintf("The handler class '%s' does not exist!", self::$handler_table[$api_request])]
+      ];
+      
+      $this->reportErrors($response_data);
+      
+      return false;
+    }
+    
+    $handler_class = new \ReflectionClass(self::$handler_table[$api_request]);
+    
+    if(!$handler_class->isSubclassOf("SmartFactory\Interfaces\IJsonApiRequestHandler"))
+    {
+      $response_data["result"] = "error";
+      
+      $response_data["errors"] = [
+        ["error_code" => "api_request_wrong_class", "error_text" => sprintf("The handler class '%s' does not implement the interface '%s'!", self::$handler_table[$api_request], "IJsonApiRequestHandler")]
+      ];
+      
+      $this->reportErrors($response_data);
+      
+      return false;
+    }
+    
+    $handler = $handler_class->newInstance();
+    
+    return $handler->handle($this, $api_request);    
   } // handleApiRequest
-} // JsonApiRequestHandler
+} // JsonApiRequestManager

@@ -229,7 +229,7 @@ FactoryBuilder::bindClass(ILanguageManager::class, LanguageManager::class, funct
   $instance->detectLanguage();
 });
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(JsonApiRequestHandler::class, JsonApiRequestHandler::class);
+FactoryBuilder::bindClass(JsonApiRequestManager::class, JsonApiRequestManager::class);
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(MySQL_DBWorker::class, MySQL_DBWorker::class);
 //-------------------------------------------------------------------

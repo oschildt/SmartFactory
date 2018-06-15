@@ -24,8 +24,6 @@ use MyApplication\HotelXmlApiRequestHandler;
  */
 
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(HotelXmlApiRequestHandler::class, HotelXmlApiRequestHandler::class);
-//-------------------------------------------------------------------
 FactoryBuilder::bindClass(ConfigSettingsManager::class, ConfigSettingsManager::class, function($instance) {
   $instance->init(["save_path" => approot() . "config/settings.xml",
                    "config_file_must_exist" => false
@@ -69,4 +67,6 @@ FactoryBuilder::bindClass(UserSettingsManager::class, UserSettingsManager::class
 
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(IUser::class, User::class);
+//-------------------------------------------------------------------
+FactoryBuilder::bindClass(HotelXmlApiRequestManager::class, HotelXmlApiRequestManager::class);
 //-------------------------------------------------------------------

@@ -1,4 +1,6 @@
 <?php
+use function SmartFactory\approot;
+
 //-----------------------------------------------------------------
 require_once "../includes/SmartFactory/application_root_inc.php";
 //-----------------------------------------------------------------
@@ -37,9 +39,9 @@ function deep_include($dir)
   }  
 }
 
-deep_include(APPLICATION_ROOT . "classes/SmartFactory/Interfaces/");
+deep_include(approot() . "classes/SmartFactory/Interfaces/");
 
-deep_include(APPLICATION_ROOT . "classes/SmartFactory/");
+deep_include(approot() . "classes/SmartFactory/");
 
 echo "<p>Passed!</p>";
 ?>
@@ -47,11 +49,11 @@ echo "<p>Passed!</p>";
 <h2>Function tester</h2>
 
 <?php
-require_once APPLICATION_ROOT . "includes/SmartFactory/utility_functions_inc.php";
+require_once approot() . "includes/SmartFactory/utility_functions_inc.php";
 
-require_once APPLICATION_ROOT . "includes/SmartFactory/short_functions_inc.php";
+require_once approot() . "includes/SmartFactory/short_functions_inc.php";
 
-require_once APPLICATION_ROOT . "includes/SmartFactory/html_utils_inc.php";
+require_once approot() . "includes/SmartFactory/html_utils_inc.php";
 
 echo "<p>Passed!</p>";
 

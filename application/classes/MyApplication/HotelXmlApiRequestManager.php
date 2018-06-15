@@ -1,12 +1,12 @@
 <?php
 namespace MyApplication;
 
-use SmartFactory\XmlApiRequestHandler;
+use SmartFactory\XmlApiRequestManager;
 
 //-------------------------------------------------------------------
-// class HotelXmlApiRequestHandler
+// class HotelXmlApiRequestManager
 //-------------------------------------------------------------------
-class HotelXmlApiRequestHandler extends XmlApiRequestHandler
+class HotelXmlApiRequestManager extends XmlApiRequestManager
 {
   //-----------------------------------------------------------------
   protected static $handler_table = [];
@@ -119,5 +119,5 @@ class HotelXmlApiRequestHandler extends XmlApiRequestHandler
     return true;    
   } // reportErrors
   //-----------------------------------------------------------------
-} // HotelXmlApiRequestHandler
+} // HotelXmlApiRequestManager
 //-------------------------------------------------------------------

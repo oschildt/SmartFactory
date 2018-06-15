@@ -1,4 +1,6 @@
 <?php
+use function SmartFactory\approot;
+
 //-----------------------------------------------------------------
 require_once "../includes/SmartFactory/application_root_inc.php";
 //-----------------------------------------------------------------
@@ -21,7 +23,7 @@ function load_language_texts()
   
   $xmldoc = new DOMDocument();
   
-  if(!@$xmldoc->load(APPLICATION_ROOT . "localization/texts.xml"))
+  if(!@$xmldoc->load(approot() . "localization/texts.xml"))
   {
     echo("<p style='color:red; font-weight: bold'>Translation file 'localization/texts.xml' cannot be loaded!</p>");
     return false;
@@ -110,7 +112,7 @@ function process_file($file)
       
       if(empty($text_entries[$entry]))
       {
-        $f = str_replace(APPLICATION_ROOT, "", $file);
+        $f = str_replace(approot(), "", $file);
         
         $missing_definitions[$entry][$f] = $f;
       }
@@ -162,7 +164,7 @@ $success = false;
 
 if(load_language_texts())
 {
-  $dir = APPLICATION_ROOT;
+  $dir = approot();
   if(process_dir($dir))
   {
     echo "Supported languages: " . implode(", ", $supported_languages) . "<br>";
