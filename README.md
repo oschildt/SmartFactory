@@ -58,10 +58,7 @@ xmlapi
 ## Detailed description
 
 ### api
-This directory contains the processor index.php of the API requests and the directory handlers where the user can implement his handlers of the API requests.
-
-### api/handlers
-This directory contains the files where the user implements his handlers of the API requests.
+This directory contains the processor index.php of the API requests.
 
 ### classes
 This is the root directory for all classes and interfaces. The class loader is implemented based on PSR4 approach. You have no need to add additional class loader function for your classes.
@@ -97,7 +94,4 @@ This directory contains the translation file texts.xml and the editor edit.php f
 This directory is used for logging, debugging and tracing.
 
 ### xmlapi
-This directory contains the processor index.php of the XML API requests and the directory handlers where the user can implement his handlers of the XML API requests.
-
-### xmlapi/handlers
-This directory contains the files where the user implements his handlers of the XMLAPI requests.
+This directory contains the processor index.php of the XML API requests.
