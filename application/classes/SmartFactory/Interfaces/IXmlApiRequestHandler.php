@@ -16,6 +16,8 @@ use SmartFactory\XmlApiRequestManager;
  *
  * You should implement this interface in your action classes.
  *
+ * @used_by XmlApiRequestManager
+ *
  * @author Oleg Schildt 
  */
 interface IXmlApiRequestHandler

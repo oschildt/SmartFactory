@@ -16,6 +16,8 @@ use SmartFactory\JsonApiRequestManager;
  *
  * You should implement this interface in your action classes.
  *
+ * @used_by JsonApiRequestManager
+ *
  * @author Oleg Schildt 
  */
 interface IJsonApiRequestHandler

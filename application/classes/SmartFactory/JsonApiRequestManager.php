@@ -15,6 +15,8 @@ use SmartFactory\Interfaces\IJsonApiRequestHandler;
 /**
  * Class for handling JSON requests.
  *
+ * @see IJsonApiRequestHandler
+ *
  * @author Oleg Schildt 
  */
 class JsonApiRequestManager
@@ -153,6 +155,8 @@ class JsonApiRequestManager
    *
    * @return boolean
    * Returns true if the handling was successfull, otherwise false.
+   *
+   * @uses IJsonApiRequestHandler
    *
    * @author Oleg Schildt 
    */

@@ -14,6 +14,8 @@ use SmartFactory\Interfaces\IXmlApiRequestHandler;
 /**
  * Class for for handling XML requests.
  *
+ * @see IXmlApiRequestHandler
+ *
  * @author Oleg Schildt 
  */
 abstract class XmlApiRequestManager 
@@ -150,6 +152,8 @@ abstract class XmlApiRequestManager
    *
    * @return boolean
    * Returns true if the handling was successfull, otherwise false.
+   *
+   * @uses IXmlApiRequestHandler
    *
    * @author Oleg Schildt 
    */
