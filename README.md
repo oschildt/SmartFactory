@@ -12,6 +12,27 @@ For more details see [Presentation](https://docs.google.com/presentation/d/1CcVX
 
 - PHP 7.2.x
 
+### Installation
+
+```
+composer require smartfactory/smartfactory"
+```
+
+** composer.json **
+ 
+```
+{
+  ...
+
+  "require": {
+    "php": ">=7.2",
+    "smartfactory/smartfactory": ">=1.1.0"
+  }
+  
+  ...
+}
+```
+
 ### To get familiar with the SmartFactory do the following
 
 - Git-clone the demo application [SmartFactoryDemo](https://github.com/oschildt/SmartFactoryDemo).
