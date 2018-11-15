@@ -1,6 +1,6 @@
 ## SmartFactory
 
-- Lightweight simple PHP framework
+- Lightweight simple PHP library
 - With many useful tools and functions
 - Without overhead
 - Designed based on IoC 
@@ -14,7 +14,7 @@ For more details see [Presentation](https://docs.google.com/presentation/d/1CcVX
 
 ### To get familiar with the SmartFactory do the following
 
-- View and study the usage examples in the folder examples.
+- Clone the demo application.
 - Use the script database/restore_database.cmd to create a demo database necessary for some examples.
 - View and study the API documentation in the folder docs.
 - Study the core code of the framework SmartFactory.
@@ -38,58 +38,26 @@ Add translation texts for your application over the localization/edit.php or dir
 ## Directory Structure 
 
 ```
-api
-classes
+docs
+src
   SmartFactory
     Interfaces
     DatabaseWorkers
-config
-docs
-examples
-includes
-  SmartFactory
-localization
-logs
-xmlapi
 ```
 
 ## Detailed description
 
-### api
-This directory contains the processor index.php of the API requests.
-
-### classes
-This is the root directory for all classes and interfaces. The class loader is implemented based on PSR4 approach. You have no need to add additional class loader function for your classes.
-
-### classes/SmartFactory
-This directory contains the core classes and interfaces of the framework SmartFactory.
-
-### classes/SmartFactory/Interfaces
-This directory contains the core interfaces of the framework SmartFactory.
-
-### classes/SmartFactory/DatabaseWorkers
-This directory contains the core classes of the framework SmartFactory for working with databases.
-
-### config
-This directory contains the configuration files.
-
 ### docs
 This directory contains the documentation about classes, interfaces and functions of the framework SmartFactory.
 
-### examples
-This directory contains the examples of usage of the framework SmartFactory.
+### src
+This is the root directory for all classes and interfaces. The class loader is implemented based on PSR4 approach. You have no need to add additional class loader function for your classes.
 
-### includes
-This directory contains the general include files. The main file is _general_inc.php. You should include it in every of your files of the business logic.
+### src/SmartFactory
+This directory contains the core classes and interfaces of the framework SmartFactory.
 
-### includes/SmartFactory
-This directory contains the core include files of the framework SmartFactory.
+### src/SmartFactory/Interfaces
+This directory contains the core interfaces of the framework SmartFactory.
 
-### localization
-This directory contains the translation file texts.xml and the editor edit.php for user friendly editing of the translation texts.
-
-### logs
-This directory is used for logging, debugging and tracing.
-
-### xmlapi
-This directory contains the processor index.php of the XML API requests.
+### src/SmartFactory/DatabaseWorkers
+This directory contains the core classes of the framework SmartFactory for working with databases.
