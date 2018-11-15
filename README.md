@@ -69,16 +69,16 @@ src
 ## Detailed description
 
 ### docs
-This directory contains the documentation about classes, interfaces and functions of the framework SmartFactory.
+This directory contains the documentation about classes, interfaces and functions of the library SmartFactory.
 
 ### src
 This is the root directory for all classes and interfaces. The class loader is implemented based on PSR4 approach. You have no need to add additional class loader function for your classes.
 
 ### src/SmartFactory
-This directory contains the core classes and interfaces of the framework SmartFactory.
+This directory contains the core classes and interfaces of the library SmartFactory.
 
 ### src/SmartFactory/Interfaces
-This directory contains the core interfaces of the framework SmartFactory.
+This directory contains the core interfaces of the library SmartFactory.
 
 ### src/SmartFactory/DatabaseWorkers
-This directory contains the core classes of the framework SmartFactory for working with databases.
+This directory contains the core classes of the library SmartFactory for working with databases.
