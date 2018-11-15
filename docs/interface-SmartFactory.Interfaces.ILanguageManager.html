@@ -512,7 +512,7 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#289">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#292">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -592,7 +592,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#333">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#336">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -687,7 +687,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#271">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#274">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -812,7 +812,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#198">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#201">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -892,7 +892,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#242">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#245">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -987,7 +987,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#180">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#183">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1114,7 +1114,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#151">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#154">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
 
@@ -1251,7 +1251,8 @@ the default langauge is used.</p>
 
   <div class="definition"><span class="php-keyword1">public</span> <b>text</b>(string &amp;<span class="php-var">$text_id</span>,
             string &amp;<span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>,
-            boolean &amp;<span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>
+            boolean &amp;<span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>,
+            string &amp;<span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>
            ) : string</div>
 
   
@@ -1292,6 +1293,14 @@ translations.</p>
       </div>
       
   
+      <h3>$default_text</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The default text to be used if there is no translation.</p>
+      </div>
+      
+  
   
 
   
@@ -1299,7 +1308,7 @@ translations.</p>
   <span class="type_label">Type:</span> string
   
   <div class="param-description">
-  <p>Returns the translation text or the $text_id if no translation
+  <p>Returns the translation text or the $default_text/$text_id if no translation
 is found.</p>
   </div>
   
@@ -1317,7 +1326,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#134">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#137">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
 
@@ -1384,7 +1393,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#311">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#314">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1464,7 +1473,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#220">SmartFactory\Interfaces\ILanguageManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ILanguageManager.html#223">SmartFactory\Interfaces\ILanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1491,7 +1500,7 @@ the default langauge is used.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-11-15 01:27
+                        Generated on 2018-11-15 09:31
                     </div>                    
                 </div>
             </div>

@@ -131,7 +131,7 @@ function dbworker($parameters = null)
   
   if(empty($parameters["db_type"]))
   {
-    $msgmanager->setError($lngmanager->text("ErrDatabaseTypeEmpty"));
+    $msgmanager->setError($lngmanager->text("ErrDatabaseTypeEmpty", "", false, "Database type is not specified!"));
     return null;
   }
   
@@ -150,7 +150,7 @@ function dbworker($parameters = null)
   
   if(!$dbworker->is_extension_installed())
   {
-    $msgmanager->setError(sprintf($lngmanager->text("ErrDbExtenstionNotInstalled"), $dbworker->get_extension_name(), $dbworker->get_rdbms_name()));
+    $msgmanager->setError(sprintf($lngmanager->text("ErrDbExtenstionNotInstalled", "", false, "PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!"), $dbworker->get_extension_name(), $dbworker->get_rdbms_name()));
     return null;
   }
   
@@ -183,18 +183,18 @@ function dbworker($parameters = null)
 
   if($dbworker->get_last_error_id() == "conn_data_err")
   {
-    $msgmanager->setError($lngmanager->text("ErrNoDBConnectionData"));
+    $msgmanager->setError($lngmanager->text("ErrNoDBConnectionData", "", false, "No database connection information is available ot it is incomplete!"));
   }
   elseif($dbworker->get_last_error_id() == "conn_err")
   {
-    $msgmanager->setError($lngmanager->text("ErrDbInaccessible"),
-                             sprintf($lngmanager->text("ErrDbConnNoAccess"), checkempty($parameters["db_server"]), checkempty($parameters["db_user"]))
+    $msgmanager->setError($lngmanager->text("ErrDbInaccessible", "", false, "The database cannot be connected!"),
+                             sprintf($lngmanager->text("ErrDbConnNoAccess", "", false, "The server '%s' is unreachable or the user login '%s' or password are invalid!"), checkempty($parameters["db_server"]), checkempty($parameters["db_user"]))
                             );
   }
   elseif($dbworker->get_last_error_id() == "db_err")
   {
-    $msgmanager->setError($lngmanager->text("ErrDbInaccessible"),
-                             sprintf($lngmanager->text("ErrDbConnNoDB"), checkempty($parameters["db_name"]), checkempty($parameters["db_user"]))
+    $msgmanager->setError($lngmanager->text("ErrDbInaccessible", "", false, "The database cannot be connected!"),
+                             sprintf($lngmanager->text("ErrDbConnNoDB", "", false, "The database '%s' does not exist or is not accessible for this database user '%s'!"), checkempty($parameters["db_name"]), checkempty($parameters["db_user"]))
                             );
   }
   

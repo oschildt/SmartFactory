@@ -213,7 +213,7 @@
 <span class="line" id="131">131: </span>  
 <span class="line" id="132">132: </span>  <span class="php-keyword1">if</span>(<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_type&quot;</span>]))
 <span class="line" id="133">133: </span>  {
-<span class="line" id="134">134: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDatabaseTypeEmpty&quot;</span>));
+<span class="line" id="134">134: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDatabaseTypeEmpty&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;Database type is not specified!&quot;</span>));
 <span class="line" id="135">135: </span>    <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
 <span class="line" id="136">136: </span>  }
 <span class="line" id="137">137: </span>  
@@ -232,7 +232,7 @@
 <span class="line" id="150">150: </span>  
 <span class="line" id="151">151: </span>  <span class="php-keyword1">if</span>(!<span class="php-var">$dbworker</span>-&gt;is_extension_installed())
 <span class="line" id="152">152: </span>  {
-<span class="line" id="153">153: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-keyword2">sprintf</span>(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbExtenstionNotInstalled&quot;</span>), <span class="php-var">$dbworker</span>-&gt;get_extension_name(), <span class="php-var">$dbworker</span>-&gt;get_rdbms_name()));
+<span class="line" id="153">153: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-keyword2">sprintf</span>(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbExtenstionNotInstalled&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!&quot;</span>), <span class="php-var">$dbworker</span>-&gt;get_extension_name(), <span class="php-var">$dbworker</span>-&gt;get_rdbms_name()));
 <span class="line" id="154">154: </span>    <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
 <span class="line" id="155">155: </span>  }
 <span class="line" id="156">156: </span>  
@@ -265,18 +265,18 @@
 <span class="line" id="183">183: </span>
 <span class="line" id="184">184: </span>  <span class="php-keyword1">if</span>(<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == <span class="php-quote">&quot;conn_data_err&quot;</span>)
 <span class="line" id="185">185: </span>  {
-<span class="line" id="186">186: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrNoDBConnectionData&quot;</span>));
+<span class="line" id="186">186: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrNoDBConnectionData&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;No database connection information is available ot it is incomplete!&quot;</span>));
 <span class="line" id="187">187: </span>  }
 <span class="line" id="188">188: </span>  <span class="php-keyword1">elseif</span>(<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == <span class="php-quote">&quot;conn_err&quot;</span>)
 <span class="line" id="189">189: </span>  {
-<span class="line" id="190">190: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbInaccessible&quot;</span>),
-<span class="line" id="191">191: </span>                             <span class="php-keyword2">sprintf</span>(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbConnNoAccess&quot;</span>), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_server&quot;</span>]), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_user&quot;</span>]))
+<span class="line" id="190">190: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbInaccessible&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;The database cannot be connected!&quot;</span>),
+<span class="line" id="191">191: </span>                             <span class="php-keyword2">sprintf</span>(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbConnNoAccess&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;The server '%s' is unreachable or the user login '%s' or password are invalid!&quot;</span>), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_server&quot;</span>]), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_user&quot;</span>]))
 <span class="line" id="192">192: </span>                            );
 <span class="line" id="193">193: </span>  }
 <span class="line" id="194">194: </span>  <span class="php-keyword1">elseif</span>(<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == <span class="php-quote">&quot;db_err&quot;</span>)
 <span class="line" id="195">195: </span>  {
-<span class="line" id="196">196: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbInaccessible&quot;</span>),
-<span class="line" id="197">197: </span>                             <span class="php-keyword2">sprintf</span>(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbConnNoDB&quot;</span>), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_name&quot;</span>]), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_user&quot;</span>]))
+<span class="line" id="196">196: </span>    <span class="php-var">$msgmanager</span>-&gt;setError(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbInaccessible&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;The database cannot be connected!&quot;</span>),
+<span class="line" id="197">197: </span>                             <span class="php-keyword2">sprintf</span>(<span class="php-var">$lngmanager</span>-&gt;text(<span class="php-quote">&quot;ErrDbConnNoDB&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;The database '%s' does not exist or is not accessible for this database user '%s'!&quot;</span>), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_name&quot;</span>]), checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_user&quot;</span>]))
 <span class="line" id="198">198: </span>                            );
 <span class="line" id="199">199: </span>  }
 <span class="line" id="200">200: </span>  
@@ -289,7 +289,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-15 01:27
+                        Generated on 2018-11-15 09:31
                     </div>                    
                 </div>
             </div>

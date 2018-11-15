@@ -381,23 +381,28 @@ class LanguageManager implements ILanguageManager
    *
    * @param boolean $warn_missing
    * If it is set to true,
-   * the E_USER_NOTICE is triggered in the case of mussing
+   * the E_USER_NOTICE is triggered in the case of missing
    * translations.
    *
+   * @param string $default_text 
+   * The default text to be used if there is no translation.
+   *
    * @return string
-   * Returns the translation text or the $text_id if no translation
+   * Returns the translation text or the $default_text/$text_id if no translation
    * is found.
    *
    * @author Oleg Schildt
    */
-  public function text($text_id, $lng = "", $warn_missing = true)
+  public function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
   {
     if(empty($lng)) $lng = $this->getCurrentLanguage();
 
     if(empty(self::$texts[$lng][$text_id]))
     {
       if($warn_missing) trigger_error("No translation for the text '$text_id' in the language [$lng]!", E_USER_NOTICE);
-      return $text_id;
+      
+      if(empty($default_text)) return $text_id;
+      else                     return $default_text;
     }
 
     return self::$texts[$lng][$text_id];

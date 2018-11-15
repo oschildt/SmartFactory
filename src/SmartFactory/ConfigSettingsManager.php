@@ -439,8 +439,8 @@ class ConfigSettingsManager implements ISettingsManager
 
     if(!$this->loadXML($this->settings))
     {
-      messenger()->setError(text("ErrLoadingSettings"),
-                            sprintf(text("ErrReadingFile"), $this->save_path)
+      messenger()->setError(text("ErrLoadingSettings", "", false, "Unable to load settings!"),
+                            sprintf(text("ErrReadingFile", "", false, "The application has no read access to the file '%s'. Check the privileges of the application and the WEB server on this file and on the target directory!"), $this->save_path)
                            );
       return false;
     }
@@ -475,8 +475,8 @@ class ConfigSettingsManager implements ISettingsManager
 
     $this->temp_settings["__dirty"] = $old_dirty_state;
 
-    messenger()->setError(text("ErrSavingSettings"),
-                          sprintf(text("ErrWritingFile"), $this->save_path)
+    messenger()->setError(text("ErrSavingSettings", "", false, "Unable to save settings!"),
+                          sprintf(text("ErrWritingFile", "", false, "The application was unable to write the file '%s'. Check the privileges of the application and the WEB server on this file and on the target directory!"), $this->save_path)
                          );
 
     return false;

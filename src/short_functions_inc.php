@@ -29,16 +29,19 @@ use SmartFactory\Interfaces\IEventManager;
  *
  * @param boolean $warn_missing 
  * If it is set to true, 
- * the E_USER_NOTICE is triggered in the case of mussing
+ * the E_USER_NOTICE is triggered in the case of missing
  * translations.
+ *
+ * @param string $default_text 
+ * The default text to be used if there is no translation.
  *
  * @return string
  * Returns the translation text or the $text_id if no translation
  * is found.
  */
-function text($text_id, $lng = "", $warn_missing = true)
+function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
 {
-  return singleton(ILanguageManager::class)->text($text_id, $lng, $warn_missing);
+  return singleton(ILanguageManager::class)->text($text_id, $lng, $warn_missing, $default_text);
 } // text
 
 /**
@@ -159,7 +162,7 @@ function user_settings()
  */
 function sql_error($dbw)
 {
-  messenger()->setError(text("ErrQueryFailed"),
+  messenger()->setError(text("ErrQueryFailed", "", false, "SQL query error!"),
                         $dbw->get_last_error() . "\n\n" .
                         $dbw->get_last_query()
                        );

@@ -521,8 +521,8 @@
 <span class="line" id="439">439: </span>
 <span class="line" id="440">440: </span>    <span class="php-keyword1">if</span>(!<span class="php-var">$this</span>-&gt;loadXML(<span class="php-var">$this</span>-&gt;settings))
 <span class="line" id="441">441: </span>    {
-<span class="line" id="442">442: </span>      messenger()-&gt;setError(text(<span class="php-quote">&quot;ErrLoadingSettings&quot;</span>),
-<span class="line" id="443">443: </span>                            <span class="php-keyword2">sprintf</span>(text(<span class="php-quote">&quot;ErrReadingFile&quot;</span>), <span class="php-var">$this</span>-&gt;save_path)
+<span class="line" id="442">442: </span>      messenger()-&gt;setError(text(<span class="php-quote">&quot;ErrLoadingSettings&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;Unable to load settings!&quot;</span>),
+<span class="line" id="443">443: </span>                            <span class="php-keyword2">sprintf</span>(text(<span class="php-quote">&quot;ErrReadingFile&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;The application has no read access to the file '%s'. Check the privileges of the application and the WEB server on this file and on the target directory!&quot;</span>), <span class="php-var">$this</span>-&gt;save_path)
 <span class="line" id="444">444: </span>                           );
 <span class="line" id="445">445: </span>      <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="446">446: </span>    }
@@ -557,8 +557,8 @@
 <span class="line" id="475">475: </span>
 <span class="line" id="476">476: </span>    <span class="php-var">$this</span>-&gt;temp_settings[<span class="php-quote">&quot;__dirty&quot;</span>] = <span class="php-var">$old_dirty_state</span>;
 <span class="line" id="477">477: </span>
-<span class="line" id="478">478: </span>    messenger()-&gt;setError(text(<span class="php-quote">&quot;ErrSavingSettings&quot;</span>),
-<span class="line" id="479">479: </span>                          <span class="php-keyword2">sprintf</span>(text(<span class="php-quote">&quot;ErrWritingFile&quot;</span>), <span class="php-var">$this</span>-&gt;save_path)
+<span class="line" id="478">478: </span>    messenger()-&gt;setError(text(<span class="php-quote">&quot;ErrSavingSettings&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;Unable to save settings!&quot;</span>),
+<span class="line" id="479">479: </span>                          <span class="php-keyword2">sprintf</span>(text(<span class="php-quote">&quot;ErrWritingFile&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;The application was unable to write the file '%s'. Check the privileges of the application and the WEB server on this file and on the target directory!&quot;</span>), <span class="php-var">$this</span>-&gt;save_path)
 <span class="line" id="480">480: </span>                         );
 <span class="line" id="481">481: </span>
 <span class="line" id="482">482: </span>    <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
@@ -570,7 +570,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-15 01:27
+                        Generated on 2018-11-15 09:31
                     </div>                    
                 </div>
             </div>

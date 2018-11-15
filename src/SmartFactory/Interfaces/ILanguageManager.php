@@ -128,13 +128,16 @@ interface ILanguageManager extends IInitable
    * the E_USER_NOTICE is triggered in the case of mussing
    * translations.
    *
+   * @param string $default_text 
+   * The default text to be used if there is no translation.
+   *
    * @return string
-   * Returns the translation text or the $text_id if no translation
+   * Returns the translation text or the $default_text/$text_id if no translation
    * is found.
    *
    * @author Oleg Schildt 
    */
-  public function text($text_id, $lng = "", $warn_missing = true);
+  public function text($text_id, $lng = "", $warn_missing = true, $default_text = "");
   
   /**
    * Checks whether the text translation for the text ID for the given langauge exists.
