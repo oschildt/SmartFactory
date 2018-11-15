@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: RecordsetManager - Framework SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">RecordsetManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: RecordsetManager</h1>
+
+
+
+
+<div class="short-description">
+Class for working with record sets.
+</div>
+
+
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.IRecordsetManager.html">\SmartFactory\Interfaces\IRecordsetManager</a><br>
+
+</div>
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-Database.html">Database</a>
+
+
+<h2>Source code</h2>
+<a href="source-SmartFactory.RecordsetManager.html#20">SmartFactory\RecordsetManager.php</a>
+
+
+
+
+<h2>Uses</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+
+</div>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$dbworker">$dbworker</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the dbworker.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$fields">$fields</a>
+          </td>
+          <td class="description_column">
+              Internal array for storing the target fields.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$key_fields">$key_fields</a>
+          </td>
+          <td class="description_column">
+              Internal array for storing the key fields. These are the fields that are used
+to uniquely identify a record.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$table">$table</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the target table name.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#basic_check">basic_check</a>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for checking that the recordset manager
+is intialized correctly.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#defineTableMapping">defineTableMapping</a>
+          </td>
+          <td class="description_column">
+              Defines the mappings for working with record sets.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#getDBWorker">getDBWorker</a>
+          </td>
+          <td class="description_column">
+              Returns the dbworker to be used for working with the database.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#loadRecord">loadRecord</a>
+          </td>
+          <td class="description_column">
+              Loads a record into an array in the form "field_name" => "value".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#loadRecordSet">loadRecordSet</a>
+          </td>
+          <td class="description_column">
+              Loads records into an array in the form $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#process_subarray">process_subarray</a>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for saving a record set from an array
+with key field values as array dimensions.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#saveRecord">saveRecord</a>
+          </td>
+          <td class="description_column">
+              Saves a record from an array in the form "field_name" => "value" into the table.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#saveRecordSet">saveRecordSet</a>
+          </td>
+          <td class="description_column">
+              Saves records from an array in the form
+$records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#setDBWorker">setDBWorker</a>
+          </td>
+          <td class="description_column">
+              Sets the dbworker to be used for working with the database.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+
+
+  
+  <hr id="$dbworker">
+  
+  <h1>Property: $dbworker</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$dbworker</b> = <span class="php-keyword1">null</span></div>
+
+  <span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>
+  
+  
+  <div class="short-description">
+  Internal variable for storing the dbworker.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#29">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$fields">
+  
+  <h1>Property: $fields</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$fields</b> = <span class="php-keyword1">null</span></div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal array for storing the target fields.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#47">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$key_fields">
+  
+  <h1>Property: $key_fields</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$key_fields</b> = <span class="php-keyword1">null</span></div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal array for storing the key fields. These are the fields that are used
+to uniquely identify a record.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#57">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$table">
+  
+  <h1>Property: $table</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$table</b> = <span class="php-keyword1">null</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the target table name.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#38">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="basic_check">
+  
+  <h1>Method: basic_check</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>basic_check</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for checking that the recordset manager
+is intialized correctly.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the recordset manager is intialized correctly, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#68">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="defineTableMapping">
+  
+  <h1>Method: defineTableMapping</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>defineTableMapping</b>(string &amp;<span class="php-var">$table</span>,
+                          <span class="php-keyword1">array</span> &amp;<span class="php-var">$fields</span>,
+                          <span class="php-keyword1">array</span> &amp;<span class="php-var">$key_fields</span>
+                         ) : void</div>
+
+  
+  <div class="short-description">
+  Defines the mappings for working with record sets.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$table</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the table.</p>
+      </div>
+      
+  
+      <h3>$fields</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of fields in the form "field name" => "field type".</p>
+      </div>
+      
+  
+      <h3>$key_fields</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of key fields. These are the fields that are used
+to uniquely identify a record.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#defineTableMapping">\SmartFactory\Interfaces\IRecordsetManager::defineTableMapping()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#212">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="getDBWorker">
+  
+  <h1>Method: getDBWorker</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getDBWorker</b>() : \SmartFactory\DatabaseWorkers\DBWorker</div>
+
+  
+  <div class="short-description">
+  Returns the dbworker to be used for working with the database.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>
+  
+  <div class="param-description">
+  <p>Returns the dbworker to be used for working with the database.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#getDBWorker">\SmartFactory\Interfaces\IRecordsetManager::getDBWorker()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#190">SmartFactory\RecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RecordsetManager.html#getDBWorker">\SmartFactory\RecordsetManager::getDBWorker()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="loadRecord">
+  
+  <h1>Method: loadRecord</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string &amp;<span class="php-var">$where_clause</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Loads a record into an array in the form "field_name" => "value".
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$record</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The target array where the data should be loaded.</p>
+      </div>
+      
+  
+      <h3>$where_clause</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The where clause that should restrict the result to one record.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the record has been successfully loaded, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#loadRecord">\SmartFactory\Interfaces\IRecordsetManager::loadRecord()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#240">SmartFactory\RecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RecordsetManager.html#saveRecord">\SmartFactory\RecordsetManager::saveRecord()</a><br>
+  
+  <a href="class-SmartFactory.RecordsetManager.html#loadRecordSet">\SmartFactory\RecordsetManager::loadRecordSet()</a><br>
+  
+  </div>
+  
+
+  
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  </div>
+  
+
+  
+  
+  
+  <hr id="loadRecordSet">
+  
+  <h1>Method: loadRecordSet</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string &amp;<span class="php-var">$where_clause</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Loads records into an array in the form $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value".
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$records</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The target array where the data should be loaded.</p>
+      </div>
+      
+  
+      <h3>$where_clause</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The where clause that should restrict the result.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the record has been successfully loaded, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#loadRecordSet">\SmartFactory\Interfaces\IRecordsetManager::loadRecordSet()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#291">SmartFactory\RecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RecordsetManager.html#loadRecord">\SmartFactory\RecordsetManager::loadRecord()</a><br>
+  
+  <a href="class-SmartFactory.RecordsetManager.html#saveRecordSet">\SmartFactory\RecordsetManager::saveRecordSet()</a><br>
+  
+  </div>
+  
+
+  
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  </div>
+  
+
+  
+  
+  
+  <hr id="process_subarray">
+  
+  <h1>Method: process_subarray</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>process_subarray</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$subarray</span>,
+                           <span class="php-keyword1">array</span> &amp;<span class="php-var">$key_fields</span>,
+                           <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span>,
+                           <span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>
+                          ) : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for saving a record set from an array
+with key field values as array dimensions.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It expand this multidimensional
+array into the set of flat records suitable for call <a href="class-SmartFactory.RecordsetManager.html#saveRecord">\SmartFactory\RecordsetManager::saveRecord()</a>.</p>
+  </div>
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$subarray</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The current subarray ro be processed.</p>
+      </div>
+      
+  
+      <h3>$key_fields</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of the key fields. These are the fields that are used
+to uniquely identify a record.</p>
+      </div>
+      
+  
+      <h3>$parent_values</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of the values of the foreign keys
+in the form "field_name" => "value".</p>
+      </div>
+      
+  
+      <h3>$record</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array where the resulting flat record is built.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the subarray has been processed successfully, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#135">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="saveRecord">
+  
+  <h1>Method: saveRecord</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>saveRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string &amp;<span class="php-var">$identity_field</span> = <span class="php-keyword1">null</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Saves a record from an array in the form "field_name" => "value" into the table.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$record</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The source array with the data to be saved.</p>
+      </div>
+      
+  
+      <h3>$identity_field</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the identity field if exists. If the identity field is specified
+and the record does not exist yet in the table, the source array is extended
+with a pair "identity field" => "identity value" issued by the database by this
+insert operation.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the record has been successfully saved, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#saveRecord">\SmartFactory\Interfaces\IRecordsetManager::saveRecord()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#363">SmartFactory\RecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RecordsetManager.html#loadRecord">\SmartFactory\RecordsetManager::loadRecord()</a><br>
+  
+  <a href="class-SmartFactory.RecordsetManager.html#saveRecordSet">\SmartFactory\RecordsetManager::saveRecordSet()</a><br>
+  
+  </div>
+  
+
+  
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  </div>
+  
+
+  
+  
+  
+  <hr id="saveRecordSet">
+  
+  <h1>Method: saveRecordSet</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>saveRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span> = <span class="php-keyword1">array</span>()) : boolean</div>
+
+  
+  <div class="short-description">
+  Saves records from an array in the form
+$records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$records</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The source array with the data to be saved.</p>
+      </div>
+      
+  
+      <h3>$parent_values</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>If this recordset is a child subset of data to be saved, you can set the values of the foreign keys
+in the form "field_name" => "value".</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the records have been successfully saved, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#saveRecordSet">\SmartFactory\Interfaces\IRecordsetManager::saveRecordSet()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#524">SmartFactory\RecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RecordsetManager.html#loadRecordSet">\SmartFactory\RecordsetManager::loadRecordSet()</a><br>
+  
+  <a href="class-SmartFactory.RecordsetManager.html#saveRecord">\SmartFactory\RecordsetManager::saveRecord()</a><br>
+  
+  </div>
+  
+
+  
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  </div>
+  
+
+  
+  
+  
+  <hr id="setDBWorker">
+  
+  <h1>Method: setDBWorker</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>setDBWorker</b>(\SmartFactory\DatabaseWorkers\DBWorker &amp;<span class="php-var">$dbworker</span>) : void</div>
+
+  
+  <div class="short-description">
+  Sets the dbworker to be used for working with the database.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$dbworker</h3>
+      <span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>
+      
+      <div class="param-description">
+      <p>The dbworker to be used for working with the database.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#setDBWorker">\SmartFactory\Interfaces\IRecordsetManager::setDBWorker()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#175">SmartFactory\RecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RecordsetManager.html#getDBWorker">\SmartFactory\RecordsetManager::getDBWorker()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-11-15 01:27
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+

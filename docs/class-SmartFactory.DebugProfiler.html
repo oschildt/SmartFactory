@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: DebugProfiler - Framework SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">DebugProfiler</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: DebugProfiler</h1>
+
+
+
+
+<div class="short-description">
+Class for debugging, tracing and profiling.
+</div>
+
+
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.IDebugProfiler.html">\SmartFactory\Interfaces\IDebugProfiler</a><br>
+
+</div>
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-System.html">System</a>
+
+
+<h2>Source code</h2>
+<a href="source-SmartFactory.DebugProfiler.html#17">SmartFactory\DebugProfiler.php</a>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$log_path">$log_path</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the log path.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$profile_time">$profile_time</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the time by profiling.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#clearLogFile">clearLogFile</a>
+          </td>
+          <td class="description_column">
+              Clears the specified log file.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#clearLogFiles">clearLogFiles</a>
+          </td>
+          <td class="description_column">
+              Clears all log files.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#debugMessage">debugMessage</a>
+          </td>
+          <td class="description_column">
+              Logs a message to a standard debug output (logs/debug.log).
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#fixProfilePoint">fixProfilePoint</a>
+          </td>
+          <td class="description_column">
+              Logs a message to a standard profiling output (logs/profile.log) and shows
+the time elapsed since the last call startProfilePoint or
+fixProfilePoint.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#init">init</a>
+          </td>
+          <td class="description_column">
+              Initializes the debug profiler with parameters.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#logMessageToFile">logMessageToFile</a>
+          </td>
+          <td class="description_column">
+              Logs a message to a specified log file.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#startProfilePoint">startProfilePoint</a>
+          </td>
+          <td class="description_column">
+              Logs a message to a standard profiling output (logs/profile.log)
+and stores the current time.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+
+
+  
+  <hr id="$log_path">
+  
+  <h1>Property: $log_path</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$log_path</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the log path.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#26">SmartFactory\DebugProfiler.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$profile_time">
+  
+  <h1>Property: $profile_time</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">static</span> <b>$profile_time</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the time by profiling.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#38">SmartFactory\DebugProfiler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DebugProfiler.html#startProfilePoint">\SmartFactory\DebugProfiler::startProfilePoint()</a><br>
+  
+  <a href="class-SmartFactory.DebugProfiler.html#fixProfilePoint">\SmartFactory\DebugProfiler::fixProfilePoint()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="clearLogFile">
+  
+  <h1>Method: clearLogFile</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>clearLogFile</b>(string &amp;<span class="php-var">$file_name</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Clears the specified log file.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$file_name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The target file name.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the file has been successfully deleted, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFile">\SmartFactory\Interfaces\IDebugProfiler::clearLogFile()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#165">SmartFactory\DebugProfiler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="clearLogFiles">
+  
+  <h1>Method: clearLogFiles</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>clearLogFiles</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Clears all log files.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the files have been successfully deleted, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFiles">\SmartFactory\Interfaces\IDebugProfiler::clearLogFiles()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#185">SmartFactory\DebugProfiler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="debugMessage">
+  
+  <h1>Method: debugMessage</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>debugMessage</b>(string &amp;<span class="php-var">$message</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Logs a message to a standard debug output (logs/debug.log).
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$message</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Message to be logged.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the logging was successful, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#debugMessage">\SmartFactory\Interfaces\IDebugProfiler::debugMessage()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#97">SmartFactory\DebugProfiler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="fixProfilePoint">
+  
+  <h1>Method: fixProfilePoint</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>fixProfilePoint</b>(string &amp;<span class="php-var">$message</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Logs a message to a standard profiling output (logs/profile.log) and shows
+the time elapsed since the last call startProfilePoint or
+fixProfilePoint.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$message</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Message to be logged.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the logging was successful, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#fixProfilePoint">\SmartFactory\Interfaces\IDebugProfiler::fixProfilePoint()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#140">SmartFactory\DebugProfiler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DebugProfiler.html#startProfilePoint">\SmartFactory\DebugProfiler::startProfilePoint()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="init">
+  
+  <h1>Method: init</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>init</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Initializes the debug profiler with parameters.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$parameters</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>Settings for logging as an associative array in the form key => value:</p>
+<ul>
+<li>$parameters["log_path"] - the target file path where the logs should be stored.</li>
+</ul>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true upon successful initialization, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#init">\SmartFactory\Interfaces\IDebugProfiler::init()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#53">SmartFactory\DebugProfiler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="logMessageToFile">
+  
+  <h1>Method: logMessageToFile</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>logMessageToFile</b>(string &amp;<span class="php-var">$message</span>, string &amp;<span class="php-var">$file_name</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Logs a message to a specified log file.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$message</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Message to be logged.</p>
+      </div>
+      
+  
+      <h3>$file_name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The target file name.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the logging was successful, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#logMessageToFile">\SmartFactory\Interfaces\IDebugProfiler::logMessageToFile()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#74">SmartFactory\DebugProfiler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="startProfilePoint">
+  
+  <h1>Method: startProfilePoint</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>startProfilePoint</b>(string &amp;<span class="php-var">$message</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Logs a message to a standard profiling output (logs/profile.log)
+and stores the current time.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$message</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Message to be logged.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the logging was successful, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#startProfilePoint">\SmartFactory\Interfaces\IDebugProfiler::startProfilePoint()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DebugProfiler.html#116">SmartFactory\DebugProfiler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DebugProfiler.html#fixProfilePoint">\SmartFactory\DebugProfiler::fixProfilePoint()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-11-15 01:27
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+

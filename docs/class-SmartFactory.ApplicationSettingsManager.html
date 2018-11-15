@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: ApplicationSettingsManager - Framework SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">ApplicationSettingsManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: ApplicationSettingsManager</h1>
+
+
+
+
+<div class="short-description">
+Class for management of the application settings.
+</div>
+
+
+
+<div class="long-description">
+<h2>Details</h2>
+<p>This settings manager supports the multistep wizard like processing. That means
+that you do not have to put all settings in one big form and save them in one action.
+You can collect them over multiple steps (requests), go forward ad back, validate them
+on each step and finally save them after the final step.</p>
+<p>You do not need any preliminary special settings name definitions. When you introduce
+a new setting, just start saving and getting it. But you need provide a settings table
+with a column where the settings data will be saved.</p>
+</div>
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.ISettingsManager.html">\SmartFactory\Interfaces\ISettingsManager</a><br>
+
+</div>
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-System.html">System</a>
+
+
+<h2>Source code</h2>
+<a href="source-SmartFactory.ApplicationSettingsManager.html#32">SmartFactory\ApplicationSettingsManager.php</a>
+
+
+<h2>See also</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.ConfigSettingsManager.html">\SmartFactory\ConfigSettingsManager</a><br>
+
+<a href="class-SmartFactory.UserSettingsManager.html">\SmartFactory\UserSettingsManager</a><br>
+
+</div>
+
+
+
+<h2>Uses</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+
+</div>
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$context">$context</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the current context.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$dbworker">$dbworker</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the dbworker.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$settings">$settings</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the array of changed settings values.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$settings_column">$settings_column</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the target column.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$settings_table">$settings_table</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the target settings table name.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$temp_settings">$temp_settings</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the array of settings values.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$validator">$validator</a>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the validator.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#__construct">__construct</a>
+          </td>
+          <td class="description_column">
+              Constructor.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#basic_check">basic_check</a>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for checking that the settings
+manager is intialized correctly.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#getContext">getContext</a>
+          </td>
+          <td class="description_column">
+              Returns the current settings context.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#getParameter">getParameter</a>
+          </td>
+          <td class="description_column">
+              Returns the value of a settings parameter.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#getValidator">getValidator</a>
+          </td>
+          <td class="description_column">
+              Returns the validator for the settings.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#init">init</a>
+          </td>
+          <td class="description_column">
+              Initializes the settings manager parameters.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#isDirty">isDirty</a>
+          </td>
+          <td class="description_column">
+              Checks whether the settings data is dirty (not saved) within a context or globally.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#loadSettings">loadSettings</a>
+          </td>
+          <td class="description_column">
+              Loads the settings from the target table.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#loadXMLfromDB">loadXMLfromDB</a>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for loading the settings from the target table
+defined by the iniailization.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#saveSettings">saveSettings</a>
+          </td>
+          <td class="description_column">
+              Saves the settings from to the target table.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#saveXMLtoDB">saveXMLtoDB</a>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for converting the settings to XML and storing it
+to the target table defined by the iniailization.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#setContext">setContext</a>
+          </td>
+          <td class="description_column">
+              Sets the settings context.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#setParameter">setParameter</a>
+          </td>
+          <td class="description_column">
+              Sets a settings parameter.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#setValidator">setValidator</a>
+          </td>
+          <td class="description_column">
+              Sets the validator for the settings.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#validateSettings">validateSettings</a>
+          </td>
+          <td class="description_column">
+              Validates the current settings values.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+
+
+  
+  <hr id="$context">
+  
+  <h1>Property: $context</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$context</b> = <span class="php-quote">&quot;default&quot;</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the current context.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#71">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#getContext">\SmartFactory\ApplicationSettingsManager::getContext()</a><br>
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#setContext">\SmartFactory\ApplicationSettingsManager::setContext()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  <hr id="$dbworker">
+  
+  <h1>Property: $dbworker</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$dbworker</b></div>
+
+  <span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>
+  
+  
+  <div class="short-description">
+  Internal variable for storing the dbworker.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#41">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$settings">
+  
+  <h1>Property: $settings</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings</b></div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the array of changed settings values.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#104">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$settings_column">
+  
+  <h1>Property: $settings_column</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings_column</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the target column.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#59">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$settings_table">
+  
+  <h1>Property: $settings_table</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings_table</b></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the target settings table name.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#50">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$temp_settings">
+  
+  <h1>Property: $temp_settings</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$temp_settings</b></div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the array of settings values.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#92">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$validator">
+  
+  <h1>Property: $validator</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$validator</b> = <span class="php-keyword1">null</span></div>
+
+  <span class="type_label">Type:</span> <a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a>
+  
+  
+  <div class="short-description">
+  Internal variable for storing the validator.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#83">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#getValidator">\SmartFactory\ApplicationSettingsManager::getValidator()</a><br>
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#setValidator">\SmartFactory\ApplicationSettingsManager::setValidator()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="__construct">
+  
+  <h1>Constructor</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>__construct</b>()</div>
+
+  
+  <div class="short-description">
+  Constructor.
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#250">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="basic_check">
+  
+  <h1>Method: basic_check</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>basic_check</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for checking that the settings
+manager is intialized correctly.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the settings manager is intialized correctly, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#115">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="getContext">
+  
+  <h1>Method: getContext</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getContext</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the current settings context.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>Settings might be edited not in one dialog,
+There can be several masks for different type of settings,
+or the settings can be configured in a wizard.
+In this case, only a subset of settings has to be
+saved and validated.
+To be able to write a flexible validator for the subsets,
+the $context is used. It can be - step1, step1, server_settings,
+db_connection_settings etc.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the current settings context.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getContext">\SmartFactory\Interfaces\ISettingsManager::getContext()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#361">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#setContext">\SmartFactory\ApplicationSettingsManager::setContext()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="getParameter">
+  
+  <h1>Method: getParameter</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getParameter</b>(string &amp;<span class="php-var">$name</span>,
+                    boolean &amp;<span class="php-var">$get_dirty</span> = <span class="php-keyword1">false</span>,
+                    mixed &amp;<span class="php-var">$default</span> = <span class="php-keyword1">null</span>
+                   ) : mixed</div>
+
+  
+  <div class="short-description">
+  Returns the value of a settings parameter.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the settings parameter.</p>
+      </div>
+      
+  
+      <h3>$get_dirty</h3>
+      <span class="type_label">Type:</span> boolean
+      
+      <div class="param-description">
+      <p>If settings are not saved yet, the unsaved new value
+of the parameter is returned if $get_dirty is true.</p>
+      </div>
+      
+  
+      <h3>$default</h3>
+      <span class="type_label">Type:</span> mixed
+      
+      <div class="param-description">
+      <p>The default value of the settings parameter if it is not set yet.
+The parameter is a confortable way to pre-set a parameter
+to a default value if its value is not set yet.
+However, if the status of the data is dirty and the unsaved
+last entered value is requested, then always the actual
+last entered value is returned and this paramter is ignored.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> mixed
+  
+  <div class="param-description">
+  <p>Returns the value of the settings parameter.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter">\SmartFactory\Interfaces\ISettingsManager::getParameter()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#432">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#setParameter">\SmartFactory\ApplicationSettingsManager::setParameter()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="getValidator">
+  
+  <h1>Method: getValidator</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getValidator</b>() : \SmartFactory\Interfaces\ISettingsValidator|<span class="php-keyword1">null</span></div>
+
+  
+  <div class="short-description">
+  Returns the validator for the settings.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> <a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a>|null
+  
+  <div class="param-description">
+  <p>Returns the validator for the settings or null if none is defined.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getValidator">\SmartFactory\Interfaces\ISettingsManager::getValidator()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#311">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#setValidator">\SmartFactory\ApplicationSettingsManager::setValidator()</a><br>
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#validateSettings">\SmartFactory\ApplicationSettingsManager::validateSettings()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="init">
+  
+  <h1>Method: init</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>init</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Initializes the settings manager parameters.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$parameters</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>Settings for saving and loading as an associative array in the form key => value:</p>
+<ul>
+<li>
+<p>$parameters["dbworker"] - the dbworker to used for loading and storing settings.</p>
+</li>
+<li>
+<p>$parameters["settings_table"] - the name of the table for the storing of the settings.</p>
+</li>
+<li>
+<p>$parameters["settings_column"] - the name of the column for the storing of the settings.</p>
+</li>
+</ul>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true upon successful initialization, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#init">\SmartFactory\Interfaces\ISettingsManager::init()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#273">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="isDirty">
+  
+  <h1>Method: isDirty</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>isDirty</b>(boolean &amp;<span class="php-var">$global</span> = <span class="php-keyword1">false</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Checks whether the settings data is dirty (not saved) within a context or globally.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$global</h3>
+      <span class="type_label">Type:</span> boolean
+      
+      <div class="param-description">
+      <p>If $global is false, the dirty state is checked only within the current context.
+If $global is true, the dirty state is checked globally.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returs true if the settings data is dirty, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#isDirty">\SmartFactory\Interfaces\ISettingsManager::isDirty()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#378">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="loadSettings">
+  
+  <h1>Method: loadSettings</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadSettings</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Loads the settings from the target table.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the settings have been successfully loaded, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#loadSettings">\SmartFactory\Interfaces\ISettingsManager::loadSettings()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#480">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#saveSettings">\SmartFactory\ApplicationSettingsManager::saveSettings()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="loadXMLfromDB">
+  
+  <h1>Method: loadXMLfromDB</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>loadXMLfromDB</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for loading the settings from the target table
+defined by the iniailization.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$data</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The target array with the settings values to be loaded.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the data has been successfully loaded, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#216">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#saveXMLtoDB">\SmartFactory\ApplicationSettingsManager::saveXMLtoDB()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="saveSettings">
+  
+  <h1>Method: saveSettings</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>saveSettings</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Saves the settings from to the target table.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the settings have been successfully saved, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#saveSettings">\SmartFactory\Interfaces\ISettingsManager::saveSettings()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#505">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#loadSettings">\SmartFactory\ApplicationSettingsManager::loadSettings()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="saveXMLtoDB">
+  
+  <h1>Method: saveXMLtoDB</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>saveXMLtoDB</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for converting the settings to XML and storing it
+to the target table defined by the iniailization.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$data</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array with the settings values to be saved.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the data has been successfully saved, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#152">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#loadXMLfromDB">\SmartFactory\ApplicationSettingsManager::loadXMLfromDB()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="setContext">
+  
+  <h1>Method: setContext</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>setContext</b>(string &amp;<span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : void</div>
+
+  
+  <div class="short-description">
+  Sets the settings context.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>Settings might be edited not in one dialog,
+There can be several masks for different type of settings,
+or the settings can be configured in a wizard.
+In this case, only a subset of settings has to be
+saved and validated.
+To be able to write a flexible validator for the subsets,
+the $context is used. It can be - step1, step1, server_settings,
+db_connection_settings etc.</p>
+  </div>
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$context</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The settings context.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setContext">\SmartFactory\Interfaces\ISettingsManager::setContext()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#337">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#getContext">\SmartFactory\ApplicationSettingsManager::getContext()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="setParameter">
+  
+  <h1>Method: setParameter</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>setParameter</b>(string &amp;<span class="php-var">$name</span>, mixed &amp;<span class="php-var">$value</span>) : void</div>
+
+  
+  <div class="short-description">
+  Sets a settings parameter.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the settings parameter.</p>
+      </div>
+      
+  
+      <h3>$value</h3>
+      <span class="type_label">Type:</span> mixed
+      
+      <div class="param-description">
+      <p>The value of the settings parameter.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter">\SmartFactory\Interfaces\ISettingsManager::setParameter()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#400">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#getParameter">\SmartFactory\ApplicationSettingsManager::getParameter()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="setValidator">
+  
+  <h1>Method: setValidator</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>setValidator</b>(\SmartFactory\Interfaces\ISettingsValidator &amp;<span class="php-var">$validator</span>) : void</div>
+
+  
+  <div class="short-description">
+  Sets the validator for the settings.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$validator</h3>
+      <span class="type_label">Type:</span> <a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a>
+      
+      <div class="param-description">
+      <p>The settings validator.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setValidator">\SmartFactory\Interfaces\ISettingsManager::setValidator()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#295">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#getValidator">\SmartFactory\ApplicationSettingsManager::getValidator()</a><br>
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#validateSettings">\SmartFactory\ApplicationSettingsManager::validateSettings()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="validateSettings">
+  
+  <h1>Method: validateSettings</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>validateSettings</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Validates the current settings values.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It should be called after settings the new values of the parameters
+and before their saving.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if there is no validator defined, otherwise lets
+the validator validate the settings.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings">\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ApplicationSettingsManager.html#463">SmartFactory\ApplicationSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#getValidator">\SmartFactory\ApplicationSettingsManager::getValidator()</a><br>
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#setValidator">\SmartFactory\ApplicationSettingsManager::setValidator()</a><br>
+  
+  </div>
+  
+
+  
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a><br>
+  
+  </div>
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-11-15 01:27
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+
