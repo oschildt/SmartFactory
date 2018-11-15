@@ -19,7 +19,7 @@ For more details see [Presentation](https://docs.google.com/presentation/d/1CcVX
 - View and study the API documentation in the folder docs.
 - Study the core code of the framework SmartFactory.
 
-### To start writing own application
+### To start writing own application using SmartFactory
 
 1. Put the clean directory structure of the framework SmartFactory into the root directory of your web application.
 Use namespace for your application, e.g. MyApplication.
