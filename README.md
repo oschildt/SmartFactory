@@ -14,14 +14,14 @@ For more details see [Presentation](https://docs.google.com/presentation/d/1CcVX
 
 ### To get familiar with the SmartFactory do the following
 
-- Git-clone the demo application.
+- Git-clone the demo application [SmartFactoryDemo](https://github.com/oschildt/SmartFactoryDemo).
 - Use the script database/restore_database.cmd (restore_database_mssql.cmd) to create a demo database necessary for some examples.
 - View and study the API documentation in the folder docs or here [API documentation](http://php-smart-factory.org/docs/).
 - Study the core code of the library SmartFactory.
 
 ### To start writing own application using SmartFactory
 
-1. Git-clone the demo application.
+1. Git-clone the demo application [SmartFactoryDemo](https://github.com/oschildt/SmartFactoryDemo).
 
 2. Study the directory structure of the demo application and the code.
 
