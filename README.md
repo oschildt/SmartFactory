@@ -5,7 +5,7 @@
 - Without overhead
 - Designed based on IoC 
 
-For more details see [Presentation](https://docs.google.com/presentation/d/1CcVX_bQQirFG0fq0CSQ2O7YTONQywyDtVJkai1GQhOM) and
+For more details see [Presentation](http://php-smart-factory.org/smartfactory_presentation.pdf) and
 [API documentation](http://php-smart-factory.org/docs/).
 
 ### Requirements
