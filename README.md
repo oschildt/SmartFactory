@@ -18,7 +18,7 @@ For more details see [Presentation](https://docs.google.com/presentation/d/1CcVX
 composer require smartfactory/smartfactory"
 ```
 
-** composer.json **
+**composer.json**
  
 ```
 {
