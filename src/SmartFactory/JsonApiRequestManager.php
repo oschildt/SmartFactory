@@ -138,7 +138,7 @@ class JsonApiRequestManager
     
     if(!empty($this->handler_table[$api_request])) 
     {
-      trigger_error("A handler for the API request '$api_request' was already registered!", E_USER_ERROR);
+      trigger_error("The API request '$api_request' has already the handler '" . $this->handler_table[$api_request] . "'!", E_USER_ERROR);
       return false;
     }
     
