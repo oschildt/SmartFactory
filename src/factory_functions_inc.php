@@ -172,7 +172,7 @@ function dbworker($parameters = null)
   // try to connect only if first time
   // if сonnection alredy tried and failed
   // do not try again within one request
-  if($dbworker->get_last_error_id() != "") return false;
+  if($dbworker->get_last_error_id() != "") return null;
 
   $dbworker->init($parameters);
 
@@ -198,6 +198,6 @@ function dbworker($parameters = null)
                             );
   }
   
-  return false;
+  return null;
 } // instance
 
