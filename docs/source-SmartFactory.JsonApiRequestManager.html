@@ -220,7 +220,7 @@
 <span class="line" id="138">138: </span>    
 <span class="line" id="139">139: </span>    <span class="php-keyword1">if</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>])) 
 <span class="line" id="140">140: </span>    {
-<span class="line" id="141">141: </span>      <span class="php-keyword2">trigger_error</span>(<span class="php-quote">&quot;A handler for the API request '</span><span class="php-var">$api_request</span><span class="php-quote">' was already registered!&quot;</span>, E_USER_ERROR);
+<span class="line" id="141">141: </span>      <span class="php-keyword2">trigger_error</span>(<span class="php-quote">&quot;The API request '</span><span class="php-var">$api_request</span><span class="php-quote">' has already the handler '&quot;</span> . <span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>] . <span class="php-quote">&quot;'!&quot;</span>, E_USER_ERROR);
 <span class="line" id="142">142: </span>      <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="143">143: </span>    }
 <span class="line" id="144">144: </span>    
@@ -430,7 +430,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-15 10:27
+                        Generated on 2018-11-23 14:05
                     </div>                    
                 </div>
             </div>

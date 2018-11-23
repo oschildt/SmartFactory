@@ -94,6 +94,8 @@ function instance($interface_or_class)
  * - $parameters["autoconnect"] - should true if the connection should be established automatically
  *                 upon creation.
  *
+ * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
+ *
  * Example:
  * ```php
  * $dbw = dbworker(["db_type" => "MySQL",

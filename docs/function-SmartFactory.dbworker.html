@@ -159,6 +159,9 @@ If the user passes the parameters explicitly, a new instance of the DBWorker is 
 <p>$parameters["autoconnect"] - should true if the connection should be established automatically
 upon creation.</p>
 </li>
+<li>
+<p>$parameters["read_only"] - this paramter sets the connection to the read only mode.</p>
+</li>
 </ul>
 <p>Example:</p>
 <pre><code class="language-php"><span class="php-var">$dbw</span> = dbworker([<span class="php-quote">&quot;db_type&quot;</span> =&gt; <span class="php-quote">&quot;MySQL&quot;</span>,
@@ -196,7 +199,7 @@ Oleg Schildt
 
 
 <h2>Source code</h2>
-<a href="source-factory_functions_inc.html#110">factory_functions_inc.php</a>
+<a href="source-factory_functions_inc.html#112">factory_functions_inc.php</a>
 
 
 
@@ -206,7 +209,7 @@ Oleg Schildt
 
                     
                     <div id="footer">
-                        Generated on 2018-11-15 10:27
+                        Generated on 2018-11-23 14:05
                     </div>                    
                 </div>
             </div>
