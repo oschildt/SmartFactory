@@ -15,6 +15,7 @@ use SmartFactory\Interfaces\IMessageManager;
 use SmartFactory\Interfaces\ISessionManager;
 use SmartFactory\Interfaces\IDebugProfiler;
 use SmartFactory\Interfaces\IEventManager;
+use SmartFactory\Interfaces\IShardManager;
 
 /**
  * Short function that provides the text translation for 
@@ -38,6 +39,8 @@ use SmartFactory\Interfaces\IEventManager;
  * @return string
  * Returns the translation text or the $text_id if no translation
  * is found.
+ *
+ * @author Oleg Schildt
  */
 function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
 {
@@ -49,6 +52,8 @@ function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
  *
  * @return IMessageManager
  * Returns the instance of the IMessageManager.
+ *
+ * @author Oleg Schildt
  */
 function messenger()
 {
@@ -60,6 +65,8 @@ function messenger()
  *
  * @return ISessionManager
  * Returns the instance of the ISessionManager.
+ *
+ * @author Oleg Schildt
  */
 function session()
 {
@@ -71,6 +78,8 @@ function session()
  *
  * @return IDebugProfiler
  * Returns the instance of the IDebugProfiler.
+ *
+ * @author Oleg Schildt
  */
 function debugger()
 {
@@ -85,6 +94,8 @@ function debugger()
  *
  * @return boolean
  * Returns true if the message has been successfully logged, otherwise false.
+ *
+ * @author Oleg Schildt
  */
 function debug_message($msg)
 {
@@ -96,6 +107,8 @@ function debug_message($msg)
  *
  * @return IEventManager
  * Returns the instance of the IEventManager.
+ *
+ * @author Oleg Schildt
  */
 function event()
 {
@@ -107,6 +120,8 @@ function event()
  *
  * @return ConfigSettingsManager
  * Returns the instance of the ConfigSettingsManager.
+ *
+ * @author Oleg Schildt
  */
 function config_settings()
 {
@@ -118,6 +133,8 @@ function config_settings()
  *
  * @return ApplicationSettingsManager
  * Returns the instance of the ApplicationSettingsManager.
+ *
+ * @author Oleg Schildt
  */
 function application_settings()
 {
@@ -129,6 +146,8 @@ function application_settings()
  *
  * @return UserSettingsManager
  * Returns the instance of the UserSettingsManager.
+ *
+ * @author Oleg Schildt
  */
 function user_settings()
 {
@@ -159,6 +178,8 @@ function user_settings()
  *    ...
  * }
  * ```
+ *
+ * @author Oleg Schildt
  */
 function sql_error($dbw)
 {
@@ -168,3 +189,19 @@ function sql_error($dbw)
                        );
   return false;
 } // sql_error
+
+/**
+ * Short function for requesting the dbworker connected to the specified shard.
+ *
+ * @param string $shard_name
+ * The name of the shard.
+ *
+ * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+ * returns DBWorker object or null if the object could not be created.
+ *
+ * @author Oleg Schildt
+ */
+function dbshard($shard_name)
+{
+  return singleton(IShardManager::class)->dbshard($shard_name);
+} // dbshard

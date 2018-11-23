@@ -16,9 +16,11 @@ use SmartFactory\Interfaces\IErrorHandler;
 use SmartFactory\Interfaces\IDebugProfiler;
 use SmartFactory\Interfaces\IEventManager;
 use SmartFactory\Interfaces\IRecordsetManager;
+use SmartFactory\Interfaces\IShardManager;
 
 use SmartFactory\DatabaseWorkers\MySQL_DBWorker;
 use SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
+use SmartFactory\DatabaseWorkers\ShardManager;
 
 //-------------------------------------------------------------------
 // Class binding
@@ -36,6 +38,8 @@ FactoryBuilder::bindClass(JsonApiRequestManager::class, JsonApiRequestManager::c
 FactoryBuilder::bindClass(MySQL_DBWorker::class, MySQL_DBWorker::class);
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(MSSQL_DBWorker::class, MSSQL_DBWorker::class);
+//-------------------------------------------------------------------
+FactoryBuilder::bindClass(IShardManager::class, ShardManager::class);
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(IRecordsetManager::class, RecordsetManager::class, function($instance) {
   $instance->setDBWorker(dbworker());

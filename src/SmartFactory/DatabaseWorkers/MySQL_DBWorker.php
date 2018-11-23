@@ -27,6 +27,15 @@ namespace SmartFactory\DatabaseWorkers;
 class MySQL_DBWorker extends DBWorker
 {
   /**
+   * Flag for setting the connection to read only.
+   *
+   * @var boolean $read_only
+   *
+   * @author Oleg Schildt
+   */
+  protected $read_only = false;
+
+  /**
    * Internal MySQLi object.
    *
    * @var \MySQLi
@@ -104,6 +113,7 @@ class MySQL_DBWorker extends DBWorker
     $cln->db_name = $this->db_name;
     $cln->db_user = $this->db_user;
     $cln->db_password = $this->db_password;
+    $cln->read_only = $this->read_only;
     $cln->mysqli = $this->mysqli;
 
     return $cln;
@@ -145,6 +155,8 @@ class MySQL_DBWorker extends DBWorker
    *
    * - $parameters["db_password"] - user password.
    *
+   * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
+   *
    * @return boolean
    * Returns true upon successful initialization, otherwise false.
    *
@@ -156,6 +168,7 @@ class MySQL_DBWorker extends DBWorker
     if(!empty($parameters["db_name"])) $this->db_name = $parameters["db_name"];
     if(!empty($parameters["db_user"])) $this->db_user = $parameters["db_user"];
     if(!empty($parameters["db_password"])) $this->db_password = $parameters["db_password"];
+    if(!empty($parameters["read_only"])) $this->read_only = $parameters["read_only"];
 
     return true;
   } // init
@@ -270,6 +283,12 @@ class MySQL_DBWorker extends DBWorker
     }
 
     @$this->mysqli->query("set charset utf8");
+  
+    if(!empty($this->read_only))
+    {
+      @$this->mysqli->query("set transaction read only");
+      @$this->mysqli->query("start transaction");
+    }
 
     return true;
   } // connect
