@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Interface: IShardManager - Library SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="active">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-info">Interface</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.Interfaces.html">Interfaces</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">IShardManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Interface: IShardManager</h1>
+
+
+<div class="short-description">
+Interface for managing connections to the DB shards.
+</div>
+
+
+
+
+
+
+
+<h2>Known implementations</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.DatabaseWorkers.ShardManager.html">\SmartFactory\DatabaseWorkers\ShardManager</a><br>
+
+</div>
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-Database.html">Database</a>
+
+
+<h2>Source code</h2>
+<a href="source-SmartFactory.Interfaces.IShardManager.html#14">SmartFactory\Interfaces\IShardManager.php</a>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#dbshard">dbshard</a>
+          </td>
+          <td class="description_column">
+              The method dbshard provides the DBWorker object for working with the shard.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#registerShard">registerShard</a>
+          </td>
+          <td class="description_column">
+              Registers a new shard.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+
+
+  
+  <hr id="dbshard">
+  
+  <h1>Method: dbshard</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>dbshard</b>(string &amp;<span class="php-var">$shard_name</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span></div>
+
+  
+  <div class="short-description">
+  The method dbshard provides the DBWorker object for working with the shard.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>If the parameters are omitted, the system takes the parameters from the configuration
+settings and reuses the single instance of the DBWorker for all requests.
+If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.</p>
+<p>Currently supported: MySQL und MS SQL.</p>
+  </div>
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$shard_name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the shard.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>|null
+  
+  <div class="param-description">
+  <p>returns DBWorker object or null if the object could not be created.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.Interfaces.IShardManager.html#64">SmartFactory\Interfaces\IShardManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="registerShard">
+  
+  <h1>Method: registerShard</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>registerShard</b>(string &amp;<span class="php-var">$shard_name</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Registers a new shard.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$shard_name</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Unique shard name.</p>
+      </div>
+      
+  
+      <h3>$parameters</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The connection parameters to the shard as an associative array in the form key => value:</p>
+<ul>
+<li>
+<p>$parameters["db_type"] - type of the database (MySQL or MSSQL)</p>
+</li>
+<li>
+<p>$parameters["db_server"] - server address</p>
+</li>
+<li>
+<p>$parameters["db_name"] - database name</p>
+</li>
+<li>
+<p>$parameters["db_user"] - user name</p>
+</li>
+<li>
+<p>$parameters["db_password"] - user password</p>
+</li>
+<li>
+<p>$parameters["autoconnect"] - should true if the connection should be established automatically
+upon creation.</p>
+</li>
+<li>
+<p>$parameters["read_only"] - this paramter sets the connection to the read only mode.</p>
+</li>
+</ul>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the registering was successful, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.Interfaces.IShardManager.html#45">SmartFactory\Interfaces\IShardManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-11-23 14:05
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+
