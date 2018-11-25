@@ -86,9 +86,9 @@
 </span><span class="line" id="4"> 4: </span><span class="php-comment"> *
 </span><span class="line" id="5"> 5: </span><span class="php-comment"> * @package System
 </span><span class="line" id="6"> 6: </span><span class="php-comment"> *
-</span><span class="line" id="7"> 7: </span><span class="php-comment"> * @author Oleg Schildt 
+</span><span class="line" id="7"> 7: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="8"> 8: </span><span class="php-comment"> */</span>
-<span class="line" id="9"> 9: </span> 
+<span class="line" id="9"> 9: </span>
 <span class="line" id="10">10: </span><span class="php-keyword1">namespace</span> SmartFactory\Interfaces;
 <span class="line" id="11">11: </span>
 <span class="line" id="12">12: </span><span class="php-keyword1">use</span> SmartFactory\XmlApiRequestManager;
@@ -100,28 +100,28 @@
 </span><span class="line" id="18">18: </span><span class="php-comment"> *
 </span><span class="line" id="19">19: </span><span class="php-comment"> * @used_by XmlApiRequestManager
 </span><span class="line" id="20">20: </span><span class="php-comment"> *
-</span><span class="line" id="21">21: </span><span class="php-comment"> * @author Oleg Schildt 
+</span><span class="line" id="21">21: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="22">22: </span><span class="php-comment"> */</span>
 <span class="line" id="23">23: </span><span class="php-keyword1">interface</span> IXmlApiRequestHandler
 <span class="line" id="24">24: </span>{
-<span class="line" id="25">25: </span>  <span class="php-comment">/**
-</span><span class="line" id="26">26: </span><span class="php-comment">   * Method that is called to handle the request.
-</span><span class="line" id="27">27: </span><span class="php-comment">   *
-</span><span class="line" id="28">28: </span><span class="php-comment">   * @param XmlApiRequestManager $rmanager
-</span><span class="line" id="29">29: </span><span class="php-comment">   * The reference to the manager.
-</span><span class="line" id="30">30: </span><span class="php-comment">   *
-</span><span class="line" id="31">31: </span><span class="php-comment">   * @param string $api_request
-</span><span class="line" id="32">32: </span><span class="php-comment">   * The name of the API request.
-</span><span class="line" id="33">33: </span><span class="php-comment">   *
-</span><span class="line" id="34">34: </span><span class="php-comment">   * @param \DOMDocument $xmldoc
-</span><span class="line" id="35">35: </span><span class="php-comment">   * The input XML DOM object.
-</span><span class="line" id="36">36: </span><span class="php-comment">   *
-</span><span class="line" id="37">37: </span><span class="php-comment">   * @return boolean
-</span><span class="line" id="38">38: </span><span class="php-comment">   * The method should return true upon successful handling, otherwise false.   
-</span><span class="line" id="39">39: </span><span class="php-comment">   *
-</span><span class="line" id="40">40: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="41">41: </span><span class="php-comment">   */</span>
-<span class="line" id="42">42: </span>  <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handle(<span class="php-var">$rmanager</span>, <span class="php-var">$api_request</span>, <span class="php-var">$xmldoc</span>);
+<span class="line" id="25">25: </span>    <span class="php-comment">/**
+</span><span class="line" id="26">26: </span><span class="php-comment">     * Method that is called to handle the request.
+</span><span class="line" id="27">27: </span><span class="php-comment">     *
+</span><span class="line" id="28">28: </span><span class="php-comment">     * @param XmlApiRequestManager $rmanager
+</span><span class="line" id="29">29: </span><span class="php-comment">     * The reference to the manager.
+</span><span class="line" id="30">30: </span><span class="php-comment">     *
+</span><span class="line" id="31">31: </span><span class="php-comment">     * @param string $api_request
+</span><span class="line" id="32">32: </span><span class="php-comment">     * The name of the API request.
+</span><span class="line" id="33">33: </span><span class="php-comment">     *
+</span><span class="line" id="34">34: </span><span class="php-comment">     * @param \DOMDocument $xmldoc
+</span><span class="line" id="35">35: </span><span class="php-comment">     * The input XML DOM object.
+</span><span class="line" id="36">36: </span><span class="php-comment">     *
+</span><span class="line" id="37">37: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="38">38: </span><span class="php-comment">     * The method should return true upon successful handling, otherwise false.
+</span><span class="line" id="39">39: </span><span class="php-comment">     *
+</span><span class="line" id="40">40: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="41">41: </span><span class="php-comment">     */</span>
+<span class="line" id="42">42: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handle(<span class="php-var">$rmanager</span>, <span class="php-var">$api_request</span>, <span class="php-var">$xmldoc</span>);
 <span class="line" id="43">43: </span>} <span class="php-comment">// IXmlApiRequestHandler</span>
 <span class="line" id="44">44: </span>
 </code>
@@ -129,7 +129,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-23 14:05
+                        Generated on 2018-11-25 15:27
                     </div>                    
                 </div>
             </div>

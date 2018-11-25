@@ -98,62 +98,62 @@
 </span><span class="line" id="16">16: </span><span class="php-comment"> */</span>
 <span class="line" id="17">17: </span><span class="php-keyword1">interface</span> IShardManager
 <span class="line" id="18">18: </span>{
-<span class="line" id="19">19: </span>  <span class="php-comment">/**
-</span><span class="line" id="20">20: </span><span class="php-comment">   * Registers a new shard.
-</span><span class="line" id="21">21: </span><span class="php-comment">   *
-</span><span class="line" id="22">22: </span><span class="php-comment">   * @param string $shard_name
-</span><span class="line" id="23">23: </span><span class="php-comment">   * Unique shard name.
-</span><span class="line" id="24">24: </span><span class="php-comment">   *
-</span><span class="line" id="25">25: </span><span class="php-comment">   * @param array $parameters
-</span><span class="line" id="26">26: </span><span class="php-comment">   * The connection parameters to the shard as an associative array in the form key =&gt; value:
-</span><span class="line" id="27">27: </span><span class="php-comment">   *
-</span><span class="line" id="28">28: </span><span class="php-comment">   * - $parameters[&quot;db_type&quot;] - type of the database (MySQL or MSSQL)
-</span><span class="line" id="29">29: </span><span class="php-comment">   *
-</span><span class="line" id="30">30: </span><span class="php-comment">   * - $parameters[&quot;db_server&quot;] - server address
-</span><span class="line" id="31">31: </span><span class="php-comment">   *
-</span><span class="line" id="32">32: </span><span class="php-comment">   * - $parameters[&quot;db_name&quot;] - database name
-</span><span class="line" id="33">33: </span><span class="php-comment">   *
-</span><span class="line" id="34">34: </span><span class="php-comment">   * - $parameters[&quot;db_user&quot;] - user name
-</span><span class="line" id="35">35: </span><span class="php-comment">   *
-</span><span class="line" id="36">36: </span><span class="php-comment">   * - $parameters[&quot;db_password&quot;] - user password
-</span><span class="line" id="37">37: </span><span class="php-comment">   *
-</span><span class="line" id="38">38: </span><span class="php-comment">   * - $parameters[&quot;autoconnect&quot;] - should true if the connection should be established automatically
-</span><span class="line" id="39">39: </span><span class="php-comment">   *                 upon creation.
-</span><span class="line" id="40">40: </span><span class="php-comment">   *
-</span><span class="line" id="41">41: </span><span class="php-comment">   * - $parameters[&quot;read_only&quot;] - this paramter sets the connection to the read only mode.
-</span><span class="line" id="42">42: </span><span class="php-comment">   *
-</span><span class="line" id="43">43: </span><span class="php-comment">   * @return boolean
-</span><span class="line" id="44">44: </span><span class="php-comment">   * It should return true if the registering was successful, otherwise false.
-</span><span class="line" id="45">45: </span><span class="php-comment">   *
-</span><span class="line" id="46">46: </span><span class="php-comment">   * @author Oleg Schildt
-</span><span class="line" id="47">47: </span><span class="php-comment">   */</span>
-<span class="line" id="48">48: </span>  <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerShard(<span class="php-var">$shard_name</span>, <span class="php-var">$parameters</span>);
-<span class="line" id="49">49: </span>  
-<span class="line" id="50">50: </span>  <span class="php-comment">/**
-</span><span class="line" id="51">51: </span><span class="php-comment">   * The method dbshard provides the DBWorker object for working with the shard.
-</span><span class="line" id="52">52: </span><span class="php-comment">   *
-</span><span class="line" id="53">53: </span><span class="php-comment">   * If the parameters are omitted, the system takes the parameters from the configuration
-</span><span class="line" id="54">54: </span><span class="php-comment">   * settings and reuses the single instance of the DBWorker for all requests.
-</span><span class="line" id="55">55: </span><span class="php-comment">   * If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.
-</span><span class="line" id="56">56: </span><span class="php-comment">   *
-</span><span class="line" id="57">57: </span><span class="php-comment">   * Currently supported: MySQL und MS SQL.
-</span><span class="line" id="58">58: </span><span class="php-comment">   *
-</span><span class="line" id="59">59: </span><span class="php-comment">   * @param string $shard_name
-</span><span class="line" id="60">60: </span><span class="php-comment">   * The name of the shard.
-</span><span class="line" id="61">61: </span><span class="php-comment">   *
-</span><span class="line" id="62">62: </span><span class="php-comment">   * @return \SmartFactory\DatabaseWorkers\DBWorker|null
-</span><span class="line" id="63">63: </span><span class="php-comment">   * returns DBWorker object or null if the object could not be created.
-</span><span class="line" id="64">64: </span><span class="php-comment">   *
-</span><span class="line" id="65">65: </span><span class="php-comment">   * @author Oleg Schildt
-</span><span class="line" id="66">66: </span><span class="php-comment">   */</span>
-<span class="line" id="67">67: </span>  <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> dbshard(<span class="php-var">$shard_name</span>);
+<span class="line" id="19">19: </span>    <span class="php-comment">/**
+</span><span class="line" id="20">20: </span><span class="php-comment">     * Registers a new shard.
+</span><span class="line" id="21">21: </span><span class="php-comment">     *
+</span><span class="line" id="22">22: </span><span class="php-comment">     * @param string $shard_name
+</span><span class="line" id="23">23: </span><span class="php-comment">     * Unique shard name.
+</span><span class="line" id="24">24: </span><span class="php-comment">     *
+</span><span class="line" id="25">25: </span><span class="php-comment">     * @param array $parameters
+</span><span class="line" id="26">26: </span><span class="php-comment">     * The connection parameters to the shard as an associative array in the form key =&gt; value:
+</span><span class="line" id="27">27: </span><span class="php-comment">     *
+</span><span class="line" id="28">28: </span><span class="php-comment">     * - $parameters[&quot;db_type&quot;] - type of the database (MySQL or MSSQL)
+</span><span class="line" id="29">29: </span><span class="php-comment">     *
+</span><span class="line" id="30">30: </span><span class="php-comment">     * - $parameters[&quot;db_server&quot;] - server address
+</span><span class="line" id="31">31: </span><span class="php-comment">     *
+</span><span class="line" id="32">32: </span><span class="php-comment">     * - $parameters[&quot;db_name&quot;] - database name
+</span><span class="line" id="33">33: </span><span class="php-comment">     *
+</span><span class="line" id="34">34: </span><span class="php-comment">     * - $parameters[&quot;db_user&quot;] - user name
+</span><span class="line" id="35">35: </span><span class="php-comment">     *
+</span><span class="line" id="36">36: </span><span class="php-comment">     * - $parameters[&quot;db_password&quot;] - user password
+</span><span class="line" id="37">37: </span><span class="php-comment">     *
+</span><span class="line" id="38">38: </span><span class="php-comment">     * - $parameters[&quot;autoconnect&quot;] - should true if the connection should be established automatically
+</span><span class="line" id="39">39: </span><span class="php-comment">     *                 upon creation.
+</span><span class="line" id="40">40: </span><span class="php-comment">     *
+</span><span class="line" id="41">41: </span><span class="php-comment">     * - $parameters[&quot;read_only&quot;] - this paramter sets the connection to the read only mode.
+</span><span class="line" id="42">42: </span><span class="php-comment">     *
+</span><span class="line" id="43">43: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="44">44: </span><span class="php-comment">     * It should return true if the registering was successful, otherwise false.
+</span><span class="line" id="45">45: </span><span class="php-comment">     *
+</span><span class="line" id="46">46: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="47">47: </span><span class="php-comment">     */</span>
+<span class="line" id="48">48: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerShard(<span class="php-var">$shard_name</span>, <span class="php-var">$parameters</span>);
+<span class="line" id="49">49: </span>    
+<span class="line" id="50">50: </span>    <span class="php-comment">/**
+</span><span class="line" id="51">51: </span><span class="php-comment">     * The method dbshard provides the DBWorker object for working with the shard.
+</span><span class="line" id="52">52: </span><span class="php-comment">     *
+</span><span class="line" id="53">53: </span><span class="php-comment">     * If the parameters are omitted, the system takes the parameters from the configuration
+</span><span class="line" id="54">54: </span><span class="php-comment">     * settings and reuses the single instance of the DBWorker for all requests.
+</span><span class="line" id="55">55: </span><span class="php-comment">     * If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.
+</span><span class="line" id="56">56: </span><span class="php-comment">     *
+</span><span class="line" id="57">57: </span><span class="php-comment">     * Currently supported: MySQL und MS SQL.
+</span><span class="line" id="58">58: </span><span class="php-comment">     *
+</span><span class="line" id="59">59: </span><span class="php-comment">     * @param string $shard_name
+</span><span class="line" id="60">60: </span><span class="php-comment">     * The name of the shard.
+</span><span class="line" id="61">61: </span><span class="php-comment">     *
+</span><span class="line" id="62">62: </span><span class="php-comment">     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+</span><span class="line" id="63">63: </span><span class="php-comment">     * returns DBWorker object or null if the object could not be created.
+</span><span class="line" id="64">64: </span><span class="php-comment">     *
+</span><span class="line" id="65">65: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="66">66: </span><span class="php-comment">     */</span>
+<span class="line" id="67">67: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> dbshard(<span class="php-var">$shard_name</span>);
 <span class="line" id="68">68: </span>} <span class="php-comment">// IShardManager</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-23 14:05
+                        Generated on 2018-11-25 15:27
                     </div>                    
                 </div>
             </div>

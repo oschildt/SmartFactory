@@ -5,9 +5,9 @@
  *
  * @package System
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
- 
+
 namespace SmartFactory;
 
 use SmartFactory\Interfaces\ILanguageManager;
@@ -18,22 +18,22 @@ use SmartFactory\Interfaces\IEventManager;
 use SmartFactory\Interfaces\IShardManager;
 
 /**
- * Short function that provides the text translation for 
+ * Short function that provides the text translation for
  * the text ID for the given langauge.
  *
- * @param string $text_id 
+ * @param string $text_id
  * Text ID
  *
- * @param string $lng 
+ * @param string $lng
  * The langauge. If it is not specified,
  * the default langauge is used.
  *
- * @param boolean $warn_missing 
- * If it is set to true, 
+ * @param boolean $warn_missing
+ * If it is set to true,
  * the E_USER_NOTICE is triggered in the case of missing
  * translations.
  *
- * @param string $default_text 
+ * @param string $default_text
  * The default text to be used if there is no translation.
  *
  * @return string
@@ -44,7 +44,7 @@ use SmartFactory\Interfaces\IShardManager;
  */
 function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
 {
-  return singleton(ILanguageManager::class)->text($text_id, $lng, $warn_missing, $default_text);
+    return singleton(ILanguageManager::class)->text($text_id, $lng, $warn_missing, $default_text);
 } // text
 
 /**
@@ -57,7 +57,7 @@ function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
  */
 function messenger()
 {
-  return singleton(IMessageManager::class);  
+    return singleton(IMessageManager::class);
 } // messenger
 
 /**
@@ -70,7 +70,7 @@ function messenger()
  */
 function session()
 {
-  return singleton(ISessionManager::class);  
+    return singleton(ISessionManager::class);
 } // session
 
 /**
@@ -83,13 +83,13 @@ function session()
  */
 function debugger()
 {
-  return singleton(IDebugProfiler::class);
+    return singleton(IDebugProfiler::class);
 } // debugger
 
 /**
  * Short function for writing debug messages to the log.
  *
- * @param string $msg 
+ * @param string $msg
  * The message to be logged.
  *
  * @return boolean
@@ -99,7 +99,7 @@ function debugger()
  */
 function debug_message($msg)
 {
-  return singleton(IDebugProfiler::class)->debugMessage($msg);
+    return singleton(IDebugProfiler::class)->debugMessage($msg);
 } // debug_message
 
 /**
@@ -112,7 +112,7 @@ function debug_message($msg)
  */
 function event()
 {
-  return singleton(IEventManager::class);
+    return singleton(IEventManager::class);
 } // event
 
 /**
@@ -125,7 +125,7 @@ function event()
  */
 function config_settings()
 {
-  return singleton(ConfigSettingsManager::class);
+    return singleton(ConfigSettingsManager::class);
 } // config_settings
 
 /**
@@ -138,7 +138,7 @@ function config_settings()
  */
 function application_settings()
 {
-  return singleton(ApplicationSettingsManager::class);
+    return singleton(ApplicationSettingsManager::class);
 } // application_settings
 
 /**
@@ -151,7 +151,7 @@ function application_settings()
  */
 function user_settings()
 {
-  return singleton(UserSettingsManager::class);
+    return singleton(UserSettingsManager::class);
 } // user_settings
 
 /**
@@ -183,11 +183,11 @@ function user_settings()
  */
 function sql_error($dbw)
 {
-  messenger()->setError(text("ErrQueryFailed", "", false, "SQL query error!"),
-                        $dbw->get_last_error() . "\n\n" .
-                        $dbw->get_last_query()
-                       );
-  return false;
+    messenger()->setError(text("ErrQueryFailed", "", false, "SQL query error!"),
+      $dbw->get_last_error() . "\n\n" .
+      $dbw->get_last_query()
+    );
+    return false;
 } // sql_error
 
 /**
@@ -203,5 +203,5 @@ function sql_error($dbw)
  */
 function dbshard($shard_name)
 {
-  return singleton(IShardManager::class)->dbshard($shard_name);
+    return singleton(IShardManager::class)->dbshard($shard_name);
 } // dbshard

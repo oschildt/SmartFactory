@@ -84,12 +84,12 @@
 <span class="line" id="2">  2: </span><span class="php-comment">/**
 </span><span class="line" id="3">  3: </span><span class="php-comment"> * This file contains the declaration of the abstract base class DBWorker
 </span><span class="line" id="4">  4: </span><span class="php-comment"> * for all dbworkers for different databases.
-</span><span class="line" id="5">  5: </span><span class="php-comment"> * 
+</span><span class="line" id="5">  5: </span><span class="php-comment"> *
 </span><span class="line" id="6">  6: </span><span class="php-comment"> * @package Database
-</span><span class="line" id="7">  7: </span><span class="php-comment"> * 
-</span><span class="line" id="8">  8: </span><span class="php-comment"> * @author Oleg Schildt 
+</span><span class="line" id="7">  7: </span><span class="php-comment"> *
+</span><span class="line" id="8">  8: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="9">  9: </span><span class="php-comment"> */</span>
-<span class="line" id="10"> 10: </span> 
+<span class="line" id="10"> 10: </span>
 <span class="line" id="11"> 11: </span><span class="php-keyword1">namespace</span> SmartFactory\DatabaseWorkers;
 <span class="line" id="12"> 12: </span>
 <span class="line" id="13"> 13: </span><span class="php-keyword1">use</span> SmartFactory\Interfaces\IInitable;
@@ -97,695 +97,695 @@
 <span class="line" id="15"> 15: </span><span class="php-comment">/**
 </span><span class="line" id="16"> 16: </span><span class="php-comment"> * This is the abstract base class for all dbworkers for different databases.
 </span><span class="line" id="17"> 17: </span><span class="php-comment"> *
-</span><span class="line" id="18"> 18: </span><span class="php-comment"> * This is a wrapper around the database connectivity. It offers an universal 
-</span><span class="line" id="19"> 19: </span><span class="php-comment"> * common way for working with databases of different types. Currently, MySQL and 
-</span><span class="line" id="20"> 20: </span><span class="php-comment"> * MS SQL are supported. If in the future, there will be a better solution, or 
-</span><span class="line" id="21"> 21: </span><span class="php-comment"> * the current solution turns out to be inefficient in a new version of PHP, 
-</span><span class="line" id="22"> 22: </span><span class="php-comment"> * we can easily reimplement the DB wrapper without touching the business logic code. 
+</span><span class="line" id="18"> 18: </span><span class="php-comment"> * This is a wrapper around the database connectivity. It offers an universal
+</span><span class="line" id="19"> 19: </span><span class="php-comment"> * common way for working with databases of different types. Currently, MySQL and
+</span><span class="line" id="20"> 20: </span><span class="php-comment"> * MS SQL are supported. If in the future, there will be a better solution, or
+</span><span class="line" id="21"> 21: </span><span class="php-comment"> * the current solution turns out to be inefficient in a new version of PHP,
+</span><span class="line" id="22"> 22: </span><span class="php-comment"> * we can easily reimplement the DB wrapper without touching the business logic code.
 </span><span class="line" id="23"> 23: </span><span class="php-comment"> * Adding support for new database types is also much easier with this wrapping approach.
 </span><span class="line" id="24"> 24: </span><span class="php-comment"> *
-</span><span class="line" id="25"> 25: </span><span class="php-comment"> * @author Oleg Schildt 
+</span><span class="line" id="25"> 25: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="26"> 26: </span><span class="php-comment"> */</span>
 <span class="line" id="27"> 27: </span><span class="php-keyword1">abstract</span> <span class="php-keyword1">class</span> DBWorker <span class="php-keyword1">implements</span> IInitable
 <span class="line" id="28"> 28: </span>{
-<span class="line" id="29"> 29: </span>  <span class="php-comment">/**
-</span><span class="line" id="30"> 30: </span><span class="php-comment">   * The constant for the number type.
-</span><span class="line" id="31"> 31: </span><span class="php-comment">   *
-</span><span class="line" id="32"> 32: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="33"> 33: </span><span class="php-comment">   */</span>
-<span class="line" id="34"> 34: </span>  <span class="php-keyword1">const</span> db_number = <span class="php-num">1</span>;
-<span class="line" id="35"> 35: </span>  <span class="php-comment">/**
-</span><span class="line" id="36"> 36: </span><span class="php-comment">   * The constant for the string type.
-</span><span class="line" id="37"> 37: </span><span class="php-comment">   *
-</span><span class="line" id="38"> 38: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="39"> 39: </span><span class="php-comment">   */</span>
-<span class="line" id="40"> 40: </span>  <span class="php-keyword1">const</span> db_string = <span class="php-num">2</span>;
-<span class="line" id="41"> 41: </span>  <span class="php-comment">/**
-</span><span class="line" id="42"> 42: </span><span class="php-comment">   * The constant for the date type.
-</span><span class="line" id="43"> 43: </span><span class="php-comment">   *
-</span><span class="line" id="44"> 44: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="45"> 45: </span><span class="php-comment">   */</span>
-<span class="line" id="46"> 46: </span>  <span class="php-keyword1">const</span> db_date = <span class="php-num">3</span>;
-<span class="line" id="47"> 47: </span>  <span class="php-comment">/**
-</span><span class="line" id="48"> 48: </span><span class="php-comment">   * The constant for the date/time type.
-</span><span class="line" id="49"> 49: </span><span class="php-comment">   *
-</span><span class="line" id="50"> 50: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="51"> 51: </span><span class="php-comment">   */</span>
-<span class="line" id="52"> 52: </span>  <span class="php-keyword1">const</span> db_datetime = <span class="php-num">4</span>;
-<span class="line" id="53"> 53: </span>
-<span class="line" id="54"> 54: </span>  <span class="php-comment">/**
-</span><span class="line" id="55"> 55: </span><span class="php-comment">   * Name or IP address of the server.
-</span><span class="line" id="56"> 56: </span><span class="php-comment">   *
-</span><span class="line" id="57"> 57: </span><span class="php-comment">   * @var string $db_server
-</span><span class="line" id="58"> 58: </span><span class="php-comment">   *
-</span><span class="line" id="59"> 59: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="60"> 60: </span><span class="php-comment">   */</span>
-<span class="line" id="61"> 61: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$db_server</span>;
-<span class="line" id="62"> 62: </span>  
-<span class="line" id="63"> 63: </span>  <span class="php-comment">/**
-</span><span class="line" id="64"> 64: </span><span class="php-comment">   * Name of the database.
-</span><span class="line" id="65"> 65: </span><span class="php-comment">   *
-</span><span class="line" id="66"> 66: </span><span class="php-comment">   * @var string $db_name
-</span><span class="line" id="67"> 67: </span><span class="php-comment">   *
-</span><span class="line" id="68"> 68: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="69"> 69: </span><span class="php-comment">   */</span>
-<span class="line" id="70"> 70: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$db_name</span>;
-<span class="line" id="71"> 71: </span>  
-<span class="line" id="72"> 72: </span>  <span class="php-comment">/**
-</span><span class="line" id="73"> 73: </span><span class="php-comment">   * Name of the database user.
-</span><span class="line" id="74"> 74: </span><span class="php-comment">   *
-</span><span class="line" id="75"> 75: </span><span class="php-comment">   * @var string $db_user
-</span><span class="line" id="76"> 76: </span><span class="php-comment">   *
-</span><span class="line" id="77"> 77: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="78"> 78: </span><span class="php-comment">   */</span>
-<span class="line" id="79"> 79: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$db_user</span>;
-<span class="line" id="80"> 80: </span>  
-<span class="line" id="81"> 81: </span>  <span class="php-comment">/**
-</span><span class="line" id="82"> 82: </span><span class="php-comment">   * Password of the database user.
-</span><span class="line" id="83"> 83: </span><span class="php-comment">   *
-</span><span class="line" id="84"> 84: </span><span class="php-comment">   * @var string $db_password
-</span><span class="line" id="85"> 85: </span><span class="php-comment">   *
-</span><span class="line" id="86"> 86: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="87"> 87: </span><span class="php-comment">   */</span>
-<span class="line" id="88"> 88: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$db_password</span>;
-<span class="line" id="89"> 89: </span>
-<span class="line" id="90"> 90: </span>  <span class="php-comment">/**
-</span><span class="line" id="91"> 91: </span><span class="php-comment">   * This variable stores the last occured error.
-</span><span class="line" id="92"> 92: </span><span class="php-comment">   *
-</span><span class="line" id="93"> 93: </span><span class="php-comment">   * @var string $last_error
-</span><span class="line" id="94"> 94: </span><span class="php-comment">   *
-</span><span class="line" id="95"> 95: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="96"> 96: </span><span class="php-comment">   */</span>
-<span class="line" id="97"> 97: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$last_error</span> = <span class="php-keyword1">NULL</span>;
-<span class="line" id="98"> 98: </span>
-<span class="line" id="99"> 99: </span>  <span class="php-comment">/**
-</span><span class="line" id="100">100: </span><span class="php-comment">   * This variable stores the ID of the last occured error.
-</span><span class="line" id="101">101: </span><span class="php-comment">   *
-</span><span class="line" id="102">102: </span><span class="php-comment">   * @var string $last_error_id
-</span><span class="line" id="103">103: </span><span class="php-comment">   *
-</span><span class="line" id="104">104: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="105">105: </span><span class="php-comment">   */</span>
-<span class="line" id="106">106: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$last_error_id</span> = <span class="php-keyword1">NULL</span>;
-<span class="line" id="107">107: </span>
-<span class="line" id="108">108: </span>  <span class="php-comment">/**
-</span><span class="line" id="109">109: </span><span class="php-comment">   * This variable stores the last executed query.
-</span><span class="line" id="110">110: </span><span class="php-comment">   *
-</span><span class="line" id="111">111: </span><span class="php-comment">   * @var string $last_query
-</span><span class="line" id="112">112: </span><span class="php-comment">   *
-</span><span class="line" id="113">113: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="114">114: </span><span class="php-comment">   */</span>
-<span class="line" id="115">115: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$last_query</span> = <span class="php-keyword1">NULL</span>;
-<span class="line" id="116">116: </span>
-<span class="line" id="117">117: </span>  <span class="php-comment">/**
-</span><span class="line" id="118">118: </span><span class="php-comment">   * Flag property for storing the state whether it is clone or not.
-</span><span class="line" id="119">119: </span><span class="php-comment">   *
-</span><span class="line" id="120">120: </span><span class="php-comment">   * @var boolean $is_clone
-</span><span class="line" id="121">121: </span><span class="php-comment">   *
-</span><span class="line" id="122">122: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="123">123: </span><span class="php-comment">   */</span>
-<span class="line" id="124">124: </span>  <span class="php-keyword1">protected</span> <span class="php-var">$is_clone</span> = <span class="php-keyword1">false</span>;
-<span class="line" id="125">125: </span>
-<span class="line" id="126">126: </span>  <span class="php-comment">/**
-</span><span class="line" id="127">127: </span><span class="php-comment">   * Initializes the dbworker with connection paramters.
-</span><span class="line" id="128">128: </span><span class="php-comment">   * 
-</span><span class="line" id="129">129: </span><span class="php-comment">   * @param array $parameters 
-</span><span class="line" id="130">130: </span><span class="php-comment">   * The parameters may vary for each database.
-</span><span class="line" id="131">131: </span><span class="php-comment">   *
-</span><span class="line" id="132">132: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="133">133: </span><span class="php-comment">   * The method should return true upon successful initialization, otherwise false.   
-</span><span class="line" id="134">134: </span><span class="php-comment">   *
-</span><span class="line" id="135">135: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="136">136: </span><span class="php-comment">   */</span>
-<span class="line" id="137">137: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-var">$parameters</span>);
-<span class="line" id="138">138: </span>  
-<span class="line" id="139">139: </span>  <span class="php-comment">/**
-</span><span class="line" id="140">140: </span><span class="php-comment">   * Checks whether the extension is installed which is required for work with 
-</span><span class="line" id="141">141: </span><span class="php-comment">   * the corresponding database.
-</span><span class="line" id="142">142: </span><span class="php-comment">   * 
-</span><span class="line" id="143">143: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="144">144: </span><span class="php-comment">   * The method should return true if the extension is installed, otherwise false.   
-</span><span class="line" id="145">145: </span><span class="php-comment">   *
-</span><span class="line" id="146">146: </span><span class="php-comment">   * @see get_extension_name()
-</span><span class="line" id="147">147: </span><span class="php-comment">   *
-</span><span class="line" id="148">148: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="149">149: </span><span class="php-comment">   */</span>
-<span class="line" id="150">150: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_extension_installed();
-<span class="line" id="151">151: </span>  
-<span class="line" id="152">152: </span>  <span class="php-comment">/**
-</span><span class="line" id="153">153: </span><span class="php-comment">   * Returns the name of the required PHP extension.
-</span><span class="line" id="154">154: </span><span class="php-comment">   * 
-</span><span class="line" id="155">155: </span><span class="php-comment">   * @return string 
-</span><span class="line" id="156">156: </span><span class="php-comment">   * Returns the name of the required PHP extension.
-</span><span class="line" id="157">157: </span><span class="php-comment">   *
-</span><span class="line" id="158">158: </span><span class="php-comment">   * @see is_extension_installed()
-</span><span class="line" id="159">159: </span><span class="php-comment">   *
-</span><span class="line" id="160">160: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="161">161: </span><span class="php-comment">   */</span>
-<span class="line" id="162">162: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name();
-<span class="line" id="163">163: </span>  
-<span class="line" id="164">164: </span>  <span class="php-comment">/**
-</span><span class="line" id="165">165: </span><span class="php-comment">   * Returns the name of the supported database.
-</span><span class="line" id="166">166: </span><span class="php-comment">   * 
-</span><span class="line" id="167">167: </span><span class="php-comment">   * @return string 
-</span><span class="line" id="168">168: </span><span class="php-comment">   * Returns the name of the supported database.
-</span><span class="line" id="169">169: </span><span class="php-comment">   *
-</span><span class="line" id="170">170: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="171">171: </span><span class="php-comment">   */</span>
-<span class="line" id="172">172: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name();
-<span class="line" id="173">173: </span>  
-<span class="line" id="174">174: </span>  <span class="php-comment">/**
-</span><span class="line" id="175">175: </span><span class="php-comment">   * Creates a clone of the dbworker that is using the same open
-</span><span class="line" id="176">176: </span><span class="php-comment">   * connection.
-</span><span class="line" id="177">177: </span><span class="php-comment">   *
-</span><span class="line" id="178">178: </span><span class="php-comment">   * This might be useful if you want to execute some additional
-</span><span class="line" id="179">179: </span><span class="php-comment">   * queries while iteration through the active results of a select query.
-</span><span class="line" id="180">180: </span><span class="php-comment">   * 
-</span><span class="line" id="181">181: </span><span class="php-comment">   * @return DBWorker 
-</span><span class="line" id="182">182: </span><span class="php-comment">   * Returns the clone of this dbworker.
-</span><span class="line" id="183">183: </span><span class="php-comment">   *
-</span><span class="line" id="184">184: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="185">185: </span><span class="php-comment">   */</span>
-<span class="line" id="186">186: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone();
-<span class="line" id="187">187: </span>  
-<span class="line" id="188">188: </span>  <span class="php-comment">/**
-</span><span class="line" id="189">189: </span><span class="php-comment">   * Returns the connection state.
-</span><span class="line" id="190">190: </span><span class="php-comment">   * 
-</span><span class="line" id="191">191: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="192">192: </span><span class="php-comment">   * Returns true if the connection is open, otherwise false.
-</span><span class="line" id="193">193: </span><span class="php-comment">   *
-</span><span class="line" id="194">194: </span><span class="php-comment">   * @see connect()
-</span><span class="line" id="195">195: </span><span class="php-comment">   * @see close_connection()
-</span><span class="line" id="196">196: </span><span class="php-comment">   *
-</span><span class="line" id="197">197: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="198">198: </span><span class="php-comment">   */</span>
-<span class="line" id="199">199: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected();
-<span class="line" id="200">200: </span>  
-<span class="line" id="201">201: </span>  <span class="php-comment">/**
-</span><span class="line" id="202">202: </span><span class="php-comment">   * Establishes the connection to the database using the connection
-</span><span class="line" id="203">203: </span><span class="php-comment">   * settings parameters specified by the initialization.
-</span><span class="line" id="204">204: </span><span class="php-comment">   * 
-</span><span class="line" id="205">205: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="206">206: </span><span class="php-comment">   * Returns true if the connection has been successfully established, otherwise false.
-</span><span class="line" id="207">207: </span><span class="php-comment">   *
-</span><span class="line" id="208">208: </span><span class="php-comment">   * @see is_connected()
-</span><span class="line" id="209">209: </span><span class="php-comment">   * @see close_connection()
-</span><span class="line" id="210">210: </span><span class="php-comment">   *
-</span><span class="line" id="211">211: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="212">212: </span><span class="php-comment">   */</span>
-<span class="line" id="213">213: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect();
-<span class="line" id="214">214: </span>  
-<span class="line" id="215">215: </span>  <span class="php-comment">/**
-</span><span class="line" id="216">216: </span><span class="php-comment">   * Sets the a database as working database.
-</span><span class="line" id="217">217: </span><span class="php-comment">   * 
-</span><span class="line" id="218">218: </span><span class="php-comment">   * @param string $db_name 
-</span><span class="line" id="219">219: </span><span class="php-comment">   * The name of the database to be set as working database.
-</span><span class="line" id="220">220: </span><span class="php-comment">   *
-</span><span class="line" id="221">221: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="222">222: </span><span class="php-comment">   * Returns true if the database has been successfully set as working database, otherwise false.
-</span><span class="line" id="223">223: </span><span class="php-comment">   *
-</span><span class="line" id="224">224: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="225">225: </span><span class="php-comment">   */</span>
-<span class="line" id="226">226: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(<span class="php-var">$db_name</span>);
-<span class="line" id="227">227: </span>  
-<span class="line" id="228">228: </span>  <span class="php-comment">/**
-</span><span class="line" id="229">229: </span><span class="php-comment">   * Returns the name of the database schema if applicable.
-</span><span class="line" id="230">230: </span><span class="php-comment">   * 
-</span><span class="line" id="231">231: </span><span class="php-comment">   * @return string 
-</span><span class="line" id="232">232: </span><span class="php-comment">   * Returns the name of the database schema if applicable, or an empty string.
-</span><span class="line" id="233">233: </span><span class="php-comment">   *
-</span><span class="line" id="234">234: </span><span class="php-comment">   * @see qualify_name_with_schema()
-</span><span class="line" id="235">235: </span><span class="php-comment">   *
-</span><span class="line" id="236">236: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="237">237: </span><span class="php-comment">   */</span>
-<span class="line" id="238">238: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_schema();
-<span class="line" id="239">239: </span>  
-<span class="line" id="240">240: </span>  <span class="php-comment">/**
-</span><span class="line" id="241">241: </span><span class="php-comment">   * Completes the name of a database object with the schema name if applicable.
-</span><span class="line" id="242">242: </span><span class="php-comment">   * 
-</span><span class="line" id="243">243: </span><span class="php-comment">   * @param string $name 
-</span><span class="line" id="244">244: </span><span class="php-comment">   * The name of the database object to be completed with the schema name.
-</span><span class="line" id="245">245: </span><span class="php-comment">   *
-</span><span class="line" id="246">246: </span><span class="php-comment">   * @return string 
-</span><span class="line" id="247">247: </span><span class="php-comment">   * Returns the name of the database object with the schema name if applicable,
-</span><span class="line" id="248">248: </span><span class="php-comment">   * otherwise the name of the database object remains unchanged.
-</span><span class="line" id="249">249: </span><span class="php-comment">   *
-</span><span class="line" id="250">250: </span><span class="php-comment">   * @see get_schema()
-</span><span class="line" id="251">251: </span><span class="php-comment">   *
-</span><span class="line" id="252">252: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="253">253: </span><span class="php-comment">   */</span>
-<span class="line" id="254">254: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> qualify_name_with_schema(<span class="php-var">$name</span>);
-<span class="line" id="255">255: </span>  
-<span class="line" id="256">256: </span>  <span class="php-comment">/**
-</span><span class="line" id="257">257: </span><span class="php-comment">   * Executes the SQL query.
-</span><span class="line" id="258">258: </span><span class="php-comment">   * 
-</span><span class="line" id="259">259: </span><span class="php-comment">   * @param string $query_string 
-</span><span class="line" id="260">260: </span><span class="php-comment">   * The SQL query to be executed.
-</span><span class="line" id="261">261: </span><span class="php-comment">   *
-</span><span class="line" id="262">262: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="263">263: </span><span class="php-comment">   * Returns true if the query has been successfully executed, otherwise false.
-</span><span class="line" id="264">264: </span><span class="php-comment">   *
-</span><span class="line" id="265">265: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="266">266: </span><span class="php-comment">   */</span>
-<span class="line" id="267">267: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_query(<span class="php-var">$query_string</span>);
-<span class="line" id="268">268: </span>  
-<span class="line" id="269">269: </span>  <span class="php-comment">/**
-</span><span class="line" id="270">270: </span><span class="php-comment">   * Executes the SQL stored procedure.
-</span><span class="line" id="271">271: </span><span class="php-comment">   * 
-</span><span class="line" id="272">272: </span><span class="php-comment">   * @param string $procedure 
-</span><span class="line" id="273">273: </span><span class="php-comment">   * The name of the SQL stored procedure.
-</span><span class="line" id="274">274: </span><span class="php-comment">   *
-</span><span class="line" id="275">275: </span><span class="php-comment">   * All subsequent parameters are the paramteres of the SQL stored procedure.
-</span><span class="line" id="276">276: </span><span class="php-comment">   *
-</span><span class="line" id="277">277: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="278">278: </span><span class="php-comment">   * Returns true if the stored procedure has been successfully executed, otherwise false.
-</span><span class="line" id="279">279: </span><span class="php-comment">   *
-</span><span class="line" id="280">280: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="281">281: </span><span class="php-comment">   */</span>
-<span class="line" id="282">282: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_procedure(<span class="php-var">$procedure</span> <span class="php-comment">/* arg list */</span>);
-<span class="line" id="283">283: </span>  
-<span class="line" id="284">284: </span>  <span class="php-comment">/**
-</span><span class="line" id="285">285: </span><span class="php-comment">   * Executes the prepared SQL query.
-</span><span class="line" id="286">286: </span><span class="php-comment">   * 
-</span><span class="line" id="287">287: </span><span class="php-comment">   * @param string $query_string 
-</span><span class="line" id="288">288: </span><span class="php-comment">   * The SQL query to be executed.
-</span><span class="line" id="289">289: </span><span class="php-comment">   *
-</span><span class="line" id="290">290: </span><span class="php-comment">   * All subsequent parameters are the paramteres of the prepared SQL query
-</span><span class="line" id="291">291: </span><span class="php-comment">   *
-</span><span class="line" id="292">292: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="293">293: </span><span class="php-comment">   * Returns true if the prepared SQL query has been successfully executed, otherwise false.
-</span><span class="line" id="294">294: </span><span class="php-comment">   *
-</span><span class="line" id="295">295: </span><span class="php-comment">   * @see prepare_query()
-</span><span class="line" id="296">296: </span><span class="php-comment">   * @see free_prepared_query()
-</span><span class="line" id="297">297: </span><span class="php-comment">   *
-</span><span class="line" id="298">298: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="299">299: </span><span class="php-comment">   */</span>
-<span class="line" id="300">300: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_prepared_query(<span class="php-var">$query_string</span> <span class="php-comment">/* arg list */</span>);
-<span class="line" id="301">301: </span>  
-<span class="line" id="302">302: </span>  <span class="php-comment">/**
-</span><span class="line" id="303">303: </span><span class="php-comment">   * Prepares the SQL query with bindable variables.
-</span><span class="line" id="304">304: </span><span class="php-comment">   * 
-</span><span class="line" id="305">305: </span><span class="php-comment">   * @param string $query_string 
-</span><span class="line" id="306">306: </span><span class="php-comment">   * The SQL query to be prepared.
-</span><span class="line" id="307">307: </span><span class="php-comment">   *
-</span><span class="line" id="308">308: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="309">309: </span><span class="php-comment">   * Returns true if the SQL query has been successfully prepared, otherwise false.
-</span><span class="line" id="310">310: </span><span class="php-comment">   *
-</span><span class="line" id="311">311: </span><span class="php-comment">   * @see execute_prepared_query()
-</span><span class="line" id="312">312: </span><span class="php-comment">   * @see free_prepared_query()
-</span><span class="line" id="313">313: </span><span class="php-comment">   *
-</span><span class="line" id="314">314: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="315">315: </span><span class="php-comment">   */</span>
-<span class="line" id="316">316: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> prepare_query(<span class="php-var">$query_string</span>);
-<span class="line" id="317">317: </span>  
-<span class="line" id="318">318: </span>  <span class="php-comment">/**
-</span><span class="line" id="319">319: </span><span class="php-comment">   * Stores long data from a stream.
-</span><span class="line" id="320">320: </span><span class="php-comment">   * 
-</span><span class="line" id="321">321: </span><span class="php-comment">   * @param string $query_string 
-</span><span class="line" id="322">322: </span><span class="php-comment">   * The SQL query to be used for stroing the long data.
-</span><span class="line" id="323">323: </span><span class="php-comment">   *
-</span><span class="line" id="324">324: </span><span class="php-comment">   * @param resource $stream 
-</span><span class="line" id="325">325: </span><span class="php-comment">   * The opened valid stream for reding the long data.
-</span><span class="line" id="326">326: </span><span class="php-comment">   *
-</span><span class="line" id="327">327: </span><span class="php-comment">   * Example:
-</span><span class="line" id="328">328: </span><span class="php-comment">   * ```php
-</span><span class="line" id="329">329: </span><span class="php-comment">   * $stream = fopen(&quot;.../large_binary.jpg&quot;, &quot;rb&quot;);
-</span><span class="line" id="330">330: </span><span class="php-comment">   *
-</span><span class="line" id="331">331: </span><span class="php-comment">   * if(!$dbw-&gt;stream_long_data(&quot;UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1&quot;, $stream))
-</span><span class="line" id="332">332: </span><span class="php-comment">   * {
-</span><span class="line" id="333">333: </span><span class="php-comment">   *   return sql_error($dbw);
-</span><span class="line" id="334">334: </span><span class="php-comment">   * }
-</span><span class="line" id="335">335: </span><span class="php-comment">   * ```
-</span><span class="line" id="336">336: </span><span class="php-comment">   *
-</span><span class="line" id="337">337: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="338">338: </span><span class="php-comment">   * Returns true if the long data has been successfully stored, otherwise false.
-</span><span class="line" id="339">339: </span><span class="php-comment">   *
-</span><span class="line" id="340">340: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="341">341: </span><span class="php-comment">   */</span>
-<span class="line" id="342">342: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> stream_long_data(<span class="php-var">$query_string</span>, &amp;<span class="php-var">$stream</span>);
-<span class="line" id="343">343: </span>  
-<span class="line" id="344">344: </span>  <span class="php-comment">/**
-</span><span class="line" id="345">345: </span><span class="php-comment">   * Closes the currently opened connection.
-</span><span class="line" id="346">346: </span><span class="php-comment">   * 
-</span><span class="line" id="347">347: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="348">348: </span><span class="php-comment">   * Returns true if the connection has been successfully closed, otherwise false.
-</span><span class="line" id="349">349: </span><span class="php-comment">   *
-</span><span class="line" id="350">350: </span><span class="php-comment">   * @see is_connected()
-</span><span class="line" id="351">351: </span><span class="php-comment">   * @see connect()
-</span><span class="line" id="352">352: </span><span class="php-comment">   *
-</span><span class="line" id="353">353: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="354">354: </span><span class="php-comment">   */</span>
-<span class="line" id="355">355: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> close_connection();
-<span class="line" id="356">356: </span>
-<span class="line" id="357">357: </span>  <span class="php-comment">/**
-</span><span class="line" id="358">358: </span><span class="php-comment">   * Starts the transation.
-</span><span class="line" id="359">359: </span><span class="php-comment">   * 
-</span><span class="line" id="360">360: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="361">361: </span><span class="php-comment">   * Returns true if the transaction has been successfully started, otherwise false.
-</span><span class="line" id="362">362: </span><span class="php-comment">   *
-</span><span class="line" id="363">363: </span><span class="php-comment">   * @see commit_transaction()
-</span><span class="line" id="364">364: </span><span class="php-comment">   * @see rollback_transaction()
-</span><span class="line" id="365">365: </span><span class="php-comment">   *
-</span><span class="line" id="366">366: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="367">367: </span><span class="php-comment">   */</span>
-<span class="line" id="368">368: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction();
-<span class="line" id="369">369: </span>
-<span class="line" id="370">370: </span>  <span class="php-comment">/**
-</span><span class="line" id="371">371: </span><span class="php-comment">   * Commits the transation.
-</span><span class="line" id="372">372: </span><span class="php-comment">   * 
-</span><span class="line" id="373">373: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="374">374: </span><span class="php-comment">   * Returns true if the transaction has been successfully committed, otherwise false.
-</span><span class="line" id="375">375: </span><span class="php-comment">   *
-</span><span class="line" id="376">376: </span><span class="php-comment">   * @see start_transaction()
-</span><span class="line" id="377">377: </span><span class="php-comment">   * @see rollback_transaction()
-</span><span class="line" id="378">378: </span><span class="php-comment">   *
-</span><span class="line" id="379">379: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="380">380: </span><span class="php-comment">   */</span>
-<span class="line" id="381">381: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction();
-<span class="line" id="382">382: </span>
-<span class="line" id="383">383: </span>  <span class="php-comment">/**
-</span><span class="line" id="384">384: </span><span class="php-comment">   * Rolls back the transation.
-</span><span class="line" id="385">385: </span><span class="php-comment">   * 
-</span><span class="line" id="386">386: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="387">387: </span><span class="php-comment">   * Returns true if the transaction has been successfully rolled back, otherwise false.
-</span><span class="line" id="388">388: </span><span class="php-comment">   *
-</span><span class="line" id="389">389: </span><span class="php-comment">   * @see start_transaction()
-</span><span class="line" id="390">390: </span><span class="php-comment">   * @see commit_transaction()
-</span><span class="line" id="391">391: </span><span class="php-comment">   *
-</span><span class="line" id="392">392: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="393">393: </span><span class="php-comment">   */</span>
-<span class="line" id="394">394: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction();
-<span class="line" id="395">395: </span>
-<span class="line" id="396">396: </span>  <span class="php-comment">/**
-</span><span class="line" id="397">397: </span><span class="php-comment">   * Frees the result of the previously executed retrieving query.
-</span><span class="line" id="398">398: </span><span class="php-comment">   * 
-</span><span class="line" id="399">399: </span><span class="php-comment">   * It should be called only for the retrieving queries.
-</span><span class="line" id="400">400: </span><span class="php-comment">   * 
-</span><span class="line" id="401">401: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="402">402: </span><span class="php-comment">   * Returns true if the result has been successfully freed, otherwise false.
-</span><span class="line" id="403">403: </span><span class="php-comment">   *
-</span><span class="line" id="404">404: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="405">405: </span><span class="php-comment">   */</span>
-<span class="line" id="406">406: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_result();
-<span class="line" id="407">407: </span>
-<span class="line" id="408">408: </span>  <span class="php-comment">/**
-</span><span class="line" id="409">409: </span><span class="php-comment">   * Frees the prepared query.
-</span><span class="line" id="410">410: </span><span class="php-comment">   * 
-</span><span class="line" id="411">411: </span><span class="php-comment">   * It should be called after all executions of the prepared query.
-</span><span class="line" id="412">412: </span><span class="php-comment">   * 
-</span><span class="line" id="413">413: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="414">414: </span><span class="php-comment">   * Returns true if the prepared query has been successfully freed, otherwise false.
-</span><span class="line" id="415">415: </span><span class="php-comment">   *
-</span><span class="line" id="416">416: </span><span class="php-comment">   * @see prepare_query()
-</span><span class="line" id="417">417: </span><span class="php-comment">   * @see execute_prepared_query()
-</span><span class="line" id="418">418: </span><span class="php-comment">   *
-</span><span class="line" id="419">419: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="420">420: </span><span class="php-comment">   */</span>
-<span class="line" id="421">421: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_prepared_query();
-<span class="line" id="422">422: </span>  
-<span class="line" id="423">423: </span>  <span class="php-comment">/**
-</span><span class="line" id="424">424: </span><span class="php-comment">   * Fetches the next row of data from the result of the execution of the retrieving query.
-</span><span class="line" id="425">425: </span><span class="php-comment">   * 
-</span><span class="line" id="426">426: </span><span class="php-comment">   * @return boolean 
-</span><span class="line" id="427">427: </span><span class="php-comment">   * Returns true if the next row exists and has been successfully fetched, otherwise false.
-</span><span class="line" id="428">428: </span><span class="php-comment">   *
-</span><span class="line" id="429">429: </span><span class="php-comment">   * Example:
-</span><span class="line" id="430">430: </span><span class="php-comment">   * ```php
-</span><span class="line" id="431">431: </span><span class="php-comment">   * if(!$dbw-&gt;execute_query(&quot;SELECT FIRST_NAME, LAST_NAME FROM USERS&quot;))
-</span><span class="line" id="432">432: </span><span class="php-comment">   * {
-</span><span class="line" id="433">433: </span><span class="php-comment">   *   return sql_error($dbw);
-</span><span class="line" id="434">434: </span><span class="php-comment">   * }
-</span><span class="line" id="435">435: </span><span class="php-comment">   *
-</span><span class="line" id="436">436: </span><span class="php-comment">   * while($dbw-&gt;fetch_row())
-</span><span class="line" id="437">437: </span><span class="php-comment">   * {
-</span><span class="line" id="438">438: </span><span class="php-comment">   *   echo $dbw-&gt;field_by_name(&quot;FIRST_NAME&quot;) . &quot; &quot; . $dbw-&gt;field_by_name(&quot;LAST_NAME&quot;) . &quot;&lt;br&gt;&quot;;
-</span><span class="line" id="439">439: </span><span class="php-comment">   * }
-</span><span class="line" id="440">440: </span><span class="php-comment">   * 
-</span><span class="line" id="441">441: </span><span class="php-comment">   * $dbw-&gt;free_result();
-</span><span class="line" id="442">442: </span><span class="php-comment">   * ```
-</span><span class="line" id="443">443: </span><span class="php-comment">   *
-</span><span class="line" id="444">444: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="445">445: </span><span class="php-comment">   */</span>
-<span class="line" id="446">446: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_row();
-<span class="line" id="447">447: </span>
-<span class="line" id="448">448: </span>  <span class="php-comment">/**
-</span><span class="line" id="449">449: </span><span class="php-comment">   * Fetches all rows from the result into an array.
-</span><span class="line" id="450">450: </span><span class="php-comment">   * 
-</span><span class="line" id="451">451: </span><span class="php-comment">   * @param array $rows
-</span><span class="line" id="452">452: </span><span class="php-comment">   * Target array for loading the results.
-</span><span class="line" id="453">453: </span><span class="php-comment">   *
-</span><span class="line" id="454">454: </span><span class="php-comment">   * @param array $dimension_keys
-</span><span class="line" id="455">455: </span><span class="php-comment">   * Array of the column names that should be used as dimensions.
-</span><span class="line" id="456">456: </span><span class="php-comment">   *
-</span><span class="line" id="457">457: </span><span class="php-comment">   * Per default, the rows are fetched as two dimensional array.
-</span><span class="line" id="458">458: </span><span class="php-comment">   *
-</span><span class="line" id="459">459: </span><span class="php-comment">   * Example:
-</span><span class="line" id="460">460: </span><span class="php-comment">   * ```php
-</span><span class="line" id="461">461: </span><span class="php-comment">   * $rows = [];
-</span><span class="line" id="462">462: </span><span class="php-comment">   * $dbw-&gt;fetch_array($rows);
-</span><span class="line" id="463">463: </span><span class="php-comment">   *
-</span><span class="line" id="464">464: </span><span class="php-comment">   * rows[n] = [&quot;col1&quot; =&gt; &quot;val1&quot;, &quot;col2&quot; =&gt; &quot;val2&quot;, , &quot;col3&quot; =&gt; &quot;val3&quot;, ...]
-</span><span class="line" id="465">465: </span><span class="php-comment">   * ```
-</span><span class="line" id="466">466: </span><span class="php-comment">   * If the dimension columns are specified, their values are used for the dimensions.
-</span><span class="line" id="467">467: </span><span class="php-comment">   *
-</span><span class="line" id="468">468: </span><span class="php-comment">   * Example:
-</span><span class="line" id="469">469: </span><span class="php-comment">   * ```php
-</span><span class="line" id="470">470: </span><span class="php-comment">   * $rows = [];
-</span><span class="line" id="471">471: </span><span class="php-comment">   * $dbw-&gt;fetch_array($rows, [&quot;col1&quot;, &quot;col2&quot;]);
-</span><span class="line" id="472">472: </span><span class="php-comment">   *
-</span><span class="line" id="473">473: </span><span class="php-comment">   * rows[&quot;val1&quot;][&quot;val2&quot;] = [&quot;col3&quot; =&gt; &quot;val3&quot;, ...]
-</span><span class="line" id="474">474: </span><span class="php-comment">   * ```
-</span><span class="line" id="475">475: </span><span class="php-comment">   *
-</span><span class="line" id="476">476: </span><span class="php-comment">   * @return int|false
-</span><span class="line" id="477">477: </span><span class="php-comment">   * Returns the number of the fetched rows. It might be also 0. In the case of
-</span><span class="line" id="478">478: </span><span class="php-comment">   * any error returns false.
-</span><span class="line" id="479">479: </span><span class="php-comment">   *
-</span><span class="line" id="480">480: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="481">481: </span><span class="php-comment">   */</span>
-<span class="line" id="482">482: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_array(&amp;<span class="php-var">$rows</span>, <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>);
-<span class="line" id="483">483: </span>  
-<span class="line" id="484">484: </span>  <span class="php-comment">/**
-</span><span class="line" id="485">485: </span><span class="php-comment">   * Returns the number of the rows fetched by the last retrieving query.
-</span><span class="line" id="486">486: </span><span class="php-comment">   * 
-</span><span class="line" id="487">487: </span><span class="php-comment">   * @return int|false 
-</span><span class="line" id="488">488: </span><span class="php-comment">   * Returns the number of the rows fetched by the last retrieving query. In the case
-</span><span class="line" id="489">489: </span><span class="php-comment">   * of any error returns false.
-</span><span class="line" id="490">490: </span><span class="php-comment">   *
-</span><span class="line" id="491">491: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="492">492: </span><span class="php-comment">   */</span>
-<span class="line" id="493">493: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetched_count();
-<span class="line" id="494">494: </span>  
-<span class="line" id="495">495: </span>  <span class="php-comment">/**
-</span><span class="line" id="496">496: </span><span class="php-comment">   * Returns the number of the rows affected by the last modification query.
-</span><span class="line" id="497">497: </span><span class="php-comment">   * 
-</span><span class="line" id="498">498: </span><span class="php-comment">   * @return int|false 
-</span><span class="line" id="499">499: </span><span class="php-comment">   * Returns the number of the rows affected by the last modification query. In the case
-</span><span class="line" id="500">500: </span><span class="php-comment">   * of any error returns false.
-</span><span class="line" id="501">501: </span><span class="php-comment">   *
-</span><span class="line" id="502">502: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="503">503: </span><span class="php-comment">   */</span>
-<span class="line" id="504">504: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> affected_count();
-<span class="line" id="505">505: </span>  
-<span class="line" id="506">506: </span>  <span class="php-comment">/**
-</span><span class="line" id="507">507: </span><span class="php-comment">   * Returns the number of the fields in the result of the last retrieving query.
-</span><span class="line" id="508">508: </span><span class="php-comment">   * 
-</span><span class="line" id="509">509: </span><span class="php-comment">   * @return int|false 
-</span><span class="line" id="510">510: </span><span class="php-comment">   * Returns the number of the fields in the result of the last retrieving query. In the case
-</span><span class="line" id="511">511: </span><span class="php-comment">   * of any error returns false.
-</span><span class="line" id="512">512: </span><span class="php-comment">   *
-</span><span class="line" id="513">513: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="514">514: </span><span class="php-comment">   */</span>
-<span class="line" id="515">515: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_count();
-<span class="line" id="516">516: </span>
-<span class="line" id="517">517: </span>  <span class="php-comment">/**
-</span><span class="line" id="518">518: </span><span class="php-comment">   * Returns the value of the auto increment field by the last insertion.
-</span><span class="line" id="519">519: </span><span class="php-comment">   * 
-</span><span class="line" id="520">520: </span><span class="php-comment">   * @return int|false 
-</span><span class="line" id="521">521: </span><span class="php-comment">   * Returns the value of the auto increment field by the last insertion. In the case
-</span><span class="line" id="522">522: </span><span class="php-comment">   * of any error returns false.
-</span><span class="line" id="523">523: </span><span class="php-comment">   *
-</span><span class="line" id="524">524: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="525">525: </span><span class="php-comment">   */</span>
-<span class="line" id="526">526: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> insert_id();
-<span class="line" id="527">527: </span>
-<span class="line" id="528">528: </span>  <span class="php-comment">/**
-</span><span class="line" id="529">529: </span><span class="php-comment">   * Returns the value of a field specified by name.
-</span><span class="line" id="530">530: </span><span class="php-comment">   * 
-</span><span class="line" id="531">531: </span><span class="php-comment">   * @param string $name
-</span><span class="line" id="532">532: </span><span class="php-comment">   * The name of the field.
-</span><span class="line" id="533">533: </span><span class="php-comment">   *
-</span><span class="line" id="534">534: </span><span class="php-comment">   * @return mixed|null
-</span><span class="line" id="535">535: </span><span class="php-comment">   * Returns the value of a field specified by name. In the case
-</span><span class="line" id="536">536: </span><span class="php-comment">   * of any error returns null.
-</span><span class="line" id="537">537: </span><span class="php-comment">   *
-</span><span class="line" id="538">538: </span><span class="php-comment">   * @see field_by_num()
-</span><span class="line" id="539">539: </span><span class="php-comment">   * @see field_name()
-</span><span class="line" id="540">540: </span><span class="php-comment">   *
-</span><span class="line" id="541">541: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="542">542: </span><span class="php-comment">   */</span>
-<span class="line" id="543">543: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(<span class="php-var">$name</span>);
-<span class="line" id="544">544: </span>
-<span class="line" id="545">545: </span>  <span class="php-comment">/**
-</span><span class="line" id="546">546: </span><span class="php-comment">   * Returns the value of a field specified by number.
-</span><span class="line" id="547">547: </span><span class="php-comment">   * 
-</span><span class="line" id="548">548: </span><span class="php-comment">   * @param int $num
-</span><span class="line" id="549">549: </span><span class="php-comment">   * The number of the field.
-</span><span class="line" id="550">550: </span><span class="php-comment">   *
-</span><span class="line" id="551">551: </span><span class="php-comment">   * @return mixed|null
-</span><span class="line" id="552">552: </span><span class="php-comment">   * Returns the value of a field specified by number. In the case
-</span><span class="line" id="553">553: </span><span class="php-comment">   * of any error returns null.
-</span><span class="line" id="554">554: </span><span class="php-comment">   *
-</span><span class="line" id="555">555: </span><span class="php-comment">   * @see field_by_name()
-</span><span class="line" id="556">556: </span><span class="php-comment">   * @see field_info_by_num()
-</span><span class="line" id="557">557: </span><span class="php-comment">   * @see field_name()
-</span><span class="line" id="558">558: </span><span class="php-comment">   *
-</span><span class="line" id="559">559: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="560">560: </span><span class="php-comment">   */</span>
-<span class="line" id="561">561: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(<span class="php-var">$num</span>);
-<span class="line" id="562">562: </span>
-<span class="line" id="563">563: </span>  <span class="php-comment">/**
-</span><span class="line" id="564">564: </span><span class="php-comment">   * Returns the meta information about the field as an object with properties.
-</span><span class="line" id="565">565: </span><span class="php-comment">   * 
-</span><span class="line" id="566">566: </span><span class="php-comment">   * @param int $num
-</span><span class="line" id="567">567: </span><span class="php-comment">   * The number of the field.
-</span><span class="line" id="568">568: </span><span class="php-comment">   *
-</span><span class="line" id="569">569: </span><span class="php-comment">   * @return array
-</span><span class="line" id="570">570: </span><span class="php-comment">   * Returns the associative array with properties. In the case
-</span><span class="line" id="571">571: </span><span class="php-comment">   * of any error returns null.
-</span><span class="line" id="572">572: </span><span class="php-comment">   *
-</span><span class="line" id="573">573: </span><span class="php-comment">   * $info[&quot;name&quot;] - name of the field.
-</span><span class="line" id="574">574: </span><span class="php-comment">   *
-</span><span class="line" id="575">575: </span><span class="php-comment">   * $info[&quot;type&quot;] - type of the field.
-</span><span class="line" id="576">576: </span><span class="php-comment">   *
-</span><span class="line" id="577">577: </span><span class="php-comment">   * $info[&quot;size&quot;] - size of the field.
-</span><span class="line" id="578">578: </span><span class="php-comment">   *
-</span><span class="line" id="579">579: </span><span class="php-comment">   * $info[&quot;binary&quot;] - whether the filed is binary.
-</span><span class="line" id="580">580: </span><span class="php-comment">   *
-</span><span class="line" id="581">581: </span><span class="php-comment">   * $info[&quot;numeric&quot;] - whether the filed is numeric.
-</span><span class="line" id="582">582: </span><span class="php-comment">   *
-</span><span class="line" id="583">583: </span><span class="php-comment">   * @see field_by_num()
-</span><span class="line" id="584">584: </span><span class="php-comment">   * @see field_name()
-</span><span class="line" id="585">585: </span><span class="php-comment">   *
-</span><span class="line" id="586">586: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="587">587: </span><span class="php-comment">   */</span>
-<span class="line" id="588">588: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(<span class="php-var">$num</span>);
-<span class="line" id="589">589: </span>
-<span class="line" id="590">590: </span>  <span class="php-comment">/**
-</span><span class="line" id="591">591: </span><span class="php-comment">   * Returns the name of the field by number.
-</span><span class="line" id="592">592: </span><span class="php-comment">   * 
-</span><span class="line" id="593">593: </span><span class="php-comment">   * @param int $num
-</span><span class="line" id="594">594: </span><span class="php-comment">   * The number of the field.
-</span><span class="line" id="595">595: </span><span class="php-comment">   *
-</span><span class="line" id="596">596: </span><span class="php-comment">   * @return object|null
-</span><span class="line" id="597">597: </span><span class="php-comment">   * Returns the value of a field specified by number as an object with properties. In the case
-</span><span class="line" id="598">598: </span><span class="php-comment">   * of any error returns null.
-</span><span class="line" id="599">599: </span><span class="php-comment">   *
-</span><span class="line" id="600">600: </span><span class="php-comment">   * @see field_by_num()
-</span><span class="line" id="601">601: </span><span class="php-comment">   * @see field_info_by_num()
-</span><span class="line" id="602">602: </span><span class="php-comment">   *
-</span><span class="line" id="603">603: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="604">604: </span><span class="php-comment">   */</span>
-<span class="line" id="605">605: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(<span class="php-var">$num</span>);
-<span class="line" id="606">606: </span>
-<span class="line" id="607">607: </span>  <span class="php-comment">/**
-</span><span class="line" id="608">608: </span><span class="php-comment">   * Escapes the string so that it can be used in the query without causing an error.
-</span><span class="line" id="609">609: </span><span class="php-comment">   * 
-</span><span class="line" id="610">610: </span><span class="php-comment">   * @param string $str
-</span><span class="line" id="611">611: </span><span class="php-comment">   * The string to be escaped.
-</span><span class="line" id="612">612: </span><span class="php-comment">   *
-</span><span class="line" id="613">613: </span><span class="php-comment">   * @return string
-</span><span class="line" id="614">614: </span><span class="php-comment">   * Returns the escaped string.
-</span><span class="line" id="615">615: </span><span class="php-comment">   *
-</span><span class="line" id="616">616: </span><span class="php-comment">   * @see format_date()
-</span><span class="line" id="617">617: </span><span class="php-comment">   * @see format_datetime()
-</span><span class="line" id="618">618: </span><span class="php-comment">   *
-</span><span class="line" id="619">619: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="620">620: </span><span class="php-comment">   */</span>
-<span class="line" id="621">621: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(<span class="php-var">$str</span>);
-<span class="line" id="622">622: </span>
-<span class="line" id="623">623: </span>  <span class="php-comment">/**
-</span><span class="line" id="624">624: </span><span class="php-comment">   * Formats the date to a string compatible for the corresponding database.
-</span><span class="line" id="625">625: </span><span class="php-comment">   * 
-</span><span class="line" id="626">626: </span><span class="php-comment">   * @param int $date
-</span><span class="line" id="627">627: </span><span class="php-comment">   * The date value as timestamp.
-</span><span class="line" id="628">628: </span><span class="php-comment">   *
-</span><span class="line" id="629">629: </span><span class="php-comment">   * @return string
-</span><span class="line" id="630">630: </span><span class="php-comment">   * Returns the string representation of the date compatible for the corresponding database.
-</span><span class="line" id="631">631: </span><span class="php-comment">   *
-</span><span class="line" id="632">632: </span><span class="php-comment">   * @see escape()
-</span><span class="line" id="633">633: </span><span class="php-comment">   * @see format_datetime()
-</span><span class="line" id="634">634: </span><span class="php-comment">   *
-</span><span class="line" id="635">635: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="636">636: </span><span class="php-comment">   */</span>
-<span class="line" id="637">637: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(<span class="php-var">$date</span>);
-<span class="line" id="638">638: </span>
-<span class="line" id="639">639: </span>  <span class="php-comment">/**
-</span><span class="line" id="640">640: </span><span class="php-comment">   * Formats the date/time to a string compatible for the corresponding database.
-</span><span class="line" id="641">641: </span><span class="php-comment">   * 
-</span><span class="line" id="642">642: </span><span class="php-comment">   * @param int $datetime
-</span><span class="line" id="643">643: </span><span class="php-comment">   * The date/time value as timestamp.
-</span><span class="line" id="644">644: </span><span class="php-comment">   *
-</span><span class="line" id="645">645: </span><span class="php-comment">   * @return string
-</span><span class="line" id="646">646: </span><span class="php-comment">   * Returns the string representation of the date/time compatible for the corresponding database.
-</span><span class="line" id="647">647: </span><span class="php-comment">   *
-</span><span class="line" id="648">648: </span><span class="php-comment">   * @see escape()
-</span><span class="line" id="649">649: </span><span class="php-comment">   * @see format_date()
-</span><span class="line" id="650">650: </span><span class="php-comment">   *
-</span><span class="line" id="651">651: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="652">652: </span><span class="php-comment">   */</span>
-<span class="line" id="653">653: </span>  <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(<span class="php-var">$datetime</span>);
-<span class="line" id="654">654: </span>
-<span class="line" id="655">655: </span>  <span class="php-comment">/**
-</span><span class="line" id="656">656: </span><span class="php-comment">   * Returns the last occured error.
-</span><span class="line" id="657">657: </span><span class="php-comment">   * 
-</span><span class="line" id="658">658: </span><span class="php-comment">   * @return string 
-</span><span class="line" id="659">659: </span><span class="php-comment">   * Returns the last occured error.
-</span><span class="line" id="660">660: </span><span class="php-comment">   *
-</span><span class="line" id="661">661: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="662">662: </span><span class="php-comment">   */</span>
-<span class="line" id="663">663: </span>  <span class="php-keyword1">function</span> get_last_error()
-<span class="line" id="664">664: </span>  {
-<span class="line" id="665">665: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$this</span>-&gt;last_error);
-<span class="line" id="666">666: </span>  } <span class="php-comment">// get_last_error</span>
-<span class="line" id="667">667: </span>
-<span class="line" id="668">668: </span>  <span class="php-comment">/**
-</span><span class="line" id="669">669: </span><span class="php-comment">   * Returns the last occured error ID.
-</span><span class="line" id="670">670: </span><span class="php-comment">   * 
-</span><span class="line" id="671">671: </span><span class="php-comment">   * @return string 
-</span><span class="line" id="672">672: </span><span class="php-comment">   * Returns the last occured error ID.
-</span><span class="line" id="673">673: </span><span class="php-comment">   *
-</span><span class="line" id="674">674: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="675">675: </span><span class="php-comment">   */</span>
-<span class="line" id="676">676: </span>  <span class="php-keyword1">function</span> get_last_error_id()
-<span class="line" id="677">677: </span>  {
-<span class="line" id="678">678: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$this</span>-&gt;last_error_id);
-<span class="line" id="679">679: </span>  } <span class="php-comment">// get_last_error_id</span>
-<span class="line" id="680">680: </span>
-<span class="line" id="681">681: </span>  <span class="php-comment">/**
-</span><span class="line" id="682">682: </span><span class="php-comment">   * Returns the last executed query.
-</span><span class="line" id="683">683: </span><span class="php-comment">   * 
-</span><span class="line" id="684">684: </span><span class="php-comment">   * @return string 
-</span><span class="line" id="685">685: </span><span class="php-comment">   * Returns the last executed query.
-</span><span class="line" id="686">686: </span><span class="php-comment">   *
-</span><span class="line" id="687">687: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="688">688: </span><span class="php-comment">   */</span>
-<span class="line" id="689">689: </span>  <span class="php-keyword1">function</span> get_last_query()
-<span class="line" id="690">690: </span>  {
-<span class="line" id="691">691: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$this</span>-&gt;last_query);
-<span class="line" id="692">692: </span>  } <span class="php-comment">// get_last_query</span>
-<span class="line" id="693">693: </span>
-<span class="line" id="694">694: </span>  <span class="php-comment">/**
-</span><span class="line" id="695">695: </span><span class="php-comment">   * Clears the last stored occured error, its ID and the last executed query.
-</span><span class="line" id="696">696: </span><span class="php-comment">   * 
-</span><span class="line" id="697">697: </span><span class="php-comment">   * @return void 
-</span><span class="line" id="698">698: </span><span class="php-comment">   *
-</span><span class="line" id="699">699: </span><span class="php-comment">   * @author Oleg Schildt 
-</span><span class="line" id="700">700: </span><span class="php-comment">   */</span>
-<span class="line" id="701">701: </span>  <span class="php-keyword1">function</span> clear_messages()
-<span class="line" id="702">702: </span>  {
-<span class="line" id="703">703: </span>    <span class="php-var">$this</span>-&gt;last_error = <span class="php-keyword1">NULL</span>;
-<span class="line" id="704">704: </span>    <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-keyword1">NULL</span>;
-<span class="line" id="705">705: </span>    <span class="php-var">$this</span>-&gt;last_query = <span class="php-keyword1">NULL</span>;
-<span class="line" id="706">706: </span>  } <span class="php-comment">// clear_messages</span>
+<span class="line" id="29"> 29: </span>    <span class="php-comment">/**
+</span><span class="line" id="30"> 30: </span><span class="php-comment">     * The constant for the number type.
+</span><span class="line" id="31"> 31: </span><span class="php-comment">     *
+</span><span class="line" id="32"> 32: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="33"> 33: </span><span class="php-comment">     */</span>
+<span class="line" id="34"> 34: </span>    <span class="php-keyword1">const</span> DB_NUMBER = <span class="php-num">1</span>;
+<span class="line" id="35"> 35: </span>    <span class="php-comment">/**
+</span><span class="line" id="36"> 36: </span><span class="php-comment">     * The constant for the string type.
+</span><span class="line" id="37"> 37: </span><span class="php-comment">     *
+</span><span class="line" id="38"> 38: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="39"> 39: </span><span class="php-comment">     */</span>
+<span class="line" id="40"> 40: </span>    <span class="php-keyword1">const</span> DB_STRING = <span class="php-num">2</span>;
+<span class="line" id="41"> 41: </span>    <span class="php-comment">/**
+</span><span class="line" id="42"> 42: </span><span class="php-comment">     * The constant for the date type.
+</span><span class="line" id="43"> 43: </span><span class="php-comment">     *
+</span><span class="line" id="44"> 44: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="45"> 45: </span><span class="php-comment">     */</span>
+<span class="line" id="46"> 46: </span>    <span class="php-keyword1">const</span> DB_DATE = <span class="php-num">3</span>;
+<span class="line" id="47"> 47: </span>    <span class="php-comment">/**
+</span><span class="line" id="48"> 48: </span><span class="php-comment">     * The constant for the date/time type.
+</span><span class="line" id="49"> 49: </span><span class="php-comment">     *
+</span><span class="line" id="50"> 50: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="51"> 51: </span><span class="php-comment">     */</span>
+<span class="line" id="52"> 52: </span>    <span class="php-keyword1">const</span> DB_DATETIME = <span class="php-num">4</span>;
+<span class="line" id="53"> 53: </span>    
+<span class="line" id="54"> 54: </span>    <span class="php-comment">/**
+</span><span class="line" id="55"> 55: </span><span class="php-comment">     * Name or IP address of the server.
+</span><span class="line" id="56"> 56: </span><span class="php-comment">     *
+</span><span class="line" id="57"> 57: </span><span class="php-comment">     * @var string $db_server
+</span><span class="line" id="58"> 58: </span><span class="php-comment">     *
+</span><span class="line" id="59"> 59: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="60"> 60: </span><span class="php-comment">     */</span>
+<span class="line" id="61"> 61: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$db_server</span>;
+<span class="line" id="62"> 62: </span>    
+<span class="line" id="63"> 63: </span>    <span class="php-comment">/**
+</span><span class="line" id="64"> 64: </span><span class="php-comment">     * Name of the database.
+</span><span class="line" id="65"> 65: </span><span class="php-comment">     *
+</span><span class="line" id="66"> 66: </span><span class="php-comment">     * @var string $db_name
+</span><span class="line" id="67"> 67: </span><span class="php-comment">     *
+</span><span class="line" id="68"> 68: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="69"> 69: </span><span class="php-comment">     */</span>
+<span class="line" id="70"> 70: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$db_name</span>;
+<span class="line" id="71"> 71: </span>    
+<span class="line" id="72"> 72: </span>    <span class="php-comment">/**
+</span><span class="line" id="73"> 73: </span><span class="php-comment">     * Name of the database user.
+</span><span class="line" id="74"> 74: </span><span class="php-comment">     *
+</span><span class="line" id="75"> 75: </span><span class="php-comment">     * @var string $db_user
+</span><span class="line" id="76"> 76: </span><span class="php-comment">     *
+</span><span class="line" id="77"> 77: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="78"> 78: </span><span class="php-comment">     */</span>
+<span class="line" id="79"> 79: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$db_user</span>;
+<span class="line" id="80"> 80: </span>    
+<span class="line" id="81"> 81: </span>    <span class="php-comment">/**
+</span><span class="line" id="82"> 82: </span><span class="php-comment">     * Password of the database user.
+</span><span class="line" id="83"> 83: </span><span class="php-comment">     *
+</span><span class="line" id="84"> 84: </span><span class="php-comment">     * @var string $db_password
+</span><span class="line" id="85"> 85: </span><span class="php-comment">     *
+</span><span class="line" id="86"> 86: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="87"> 87: </span><span class="php-comment">     */</span>
+<span class="line" id="88"> 88: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$db_password</span>;
+<span class="line" id="89"> 89: </span>    
+<span class="line" id="90"> 90: </span>    <span class="php-comment">/**
+</span><span class="line" id="91"> 91: </span><span class="php-comment">     * This variable stores the last occured error.
+</span><span class="line" id="92"> 92: </span><span class="php-comment">     *
+</span><span class="line" id="93"> 93: </span><span class="php-comment">     * @var string $last_error
+</span><span class="line" id="94"> 94: </span><span class="php-comment">     *
+</span><span class="line" id="95"> 95: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="96"> 96: </span><span class="php-comment">     */</span>
+<span class="line" id="97"> 97: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$last_error</span> = <span class="php-keyword1">null</span>;
+<span class="line" id="98"> 98: </span>    
+<span class="line" id="99"> 99: </span>    <span class="php-comment">/**
+</span><span class="line" id="100">100: </span><span class="php-comment">     * This variable stores the ID of the last occured error.
+</span><span class="line" id="101">101: </span><span class="php-comment">     *
+</span><span class="line" id="102">102: </span><span class="php-comment">     * @var string $last_error_id
+</span><span class="line" id="103">103: </span><span class="php-comment">     *
+</span><span class="line" id="104">104: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="105">105: </span><span class="php-comment">     */</span>
+<span class="line" id="106">106: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$last_error_id</span> = <span class="php-keyword1">null</span>;
+<span class="line" id="107">107: </span>    
+<span class="line" id="108">108: </span>    <span class="php-comment">/**
+</span><span class="line" id="109">109: </span><span class="php-comment">     * This variable stores the last executed query.
+</span><span class="line" id="110">110: </span><span class="php-comment">     *
+</span><span class="line" id="111">111: </span><span class="php-comment">     * @var string $last_query
+</span><span class="line" id="112">112: </span><span class="php-comment">     *
+</span><span class="line" id="113">113: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="114">114: </span><span class="php-comment">     */</span>
+<span class="line" id="115">115: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$last_query</span> = <span class="php-keyword1">null</span>;
+<span class="line" id="116">116: </span>    
+<span class="line" id="117">117: </span>    <span class="php-comment">/**
+</span><span class="line" id="118">118: </span><span class="php-comment">     * Flag property for storing the state whether it is clone or not.
+</span><span class="line" id="119">119: </span><span class="php-comment">     *
+</span><span class="line" id="120">120: </span><span class="php-comment">     * @var boolean $is_clone
+</span><span class="line" id="121">121: </span><span class="php-comment">     *
+</span><span class="line" id="122">122: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="123">123: </span><span class="php-comment">     */</span>
+<span class="line" id="124">124: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$is_clone</span> = <span class="php-keyword1">false</span>;
+<span class="line" id="125">125: </span>    
+<span class="line" id="126">126: </span>    <span class="php-comment">/**
+</span><span class="line" id="127">127: </span><span class="php-comment">     * Initializes the dbworker with connection paramters.
+</span><span class="line" id="128">128: </span><span class="php-comment">     *
+</span><span class="line" id="129">129: </span><span class="php-comment">     * @param array $parameters
+</span><span class="line" id="130">130: </span><span class="php-comment">     * The parameters may vary for each database.
+</span><span class="line" id="131">131: </span><span class="php-comment">     *
+</span><span class="line" id="132">132: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="133">133: </span><span class="php-comment">     * The method should return true upon successful initialization, otherwise false.
+</span><span class="line" id="134">134: </span><span class="php-comment">     *
+</span><span class="line" id="135">135: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="136">136: </span><span class="php-comment">     */</span>
+<span class="line" id="137">137: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-var">$parameters</span>);
+<span class="line" id="138">138: </span>    
+<span class="line" id="139">139: </span>    <span class="php-comment">/**
+</span><span class="line" id="140">140: </span><span class="php-comment">     * Checks whether the extension is installed which is required for work with
+</span><span class="line" id="141">141: </span><span class="php-comment">     * the corresponding database.
+</span><span class="line" id="142">142: </span><span class="php-comment">     *
+</span><span class="line" id="143">143: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="144">144: </span><span class="php-comment">     * The method should return true if the extension is installed, otherwise false.
+</span><span class="line" id="145">145: </span><span class="php-comment">     *
+</span><span class="line" id="146">146: </span><span class="php-comment">     * @see get_extension_name()
+</span><span class="line" id="147">147: </span><span class="php-comment">     *
+</span><span class="line" id="148">148: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="149">149: </span><span class="php-comment">     */</span>
+<span class="line" id="150">150: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_extension_installed();
+<span class="line" id="151">151: </span>    
+<span class="line" id="152">152: </span>    <span class="php-comment">/**
+</span><span class="line" id="153">153: </span><span class="php-comment">     * Returns the name of the required PHP extension.
+</span><span class="line" id="154">154: </span><span class="php-comment">     *
+</span><span class="line" id="155">155: </span><span class="php-comment">     * @return string
+</span><span class="line" id="156">156: </span><span class="php-comment">     * Returns the name of the required PHP extension.
+</span><span class="line" id="157">157: </span><span class="php-comment">     *
+</span><span class="line" id="158">158: </span><span class="php-comment">     * @see is_extension_installed()
+</span><span class="line" id="159">159: </span><span class="php-comment">     *
+</span><span class="line" id="160">160: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="161">161: </span><span class="php-comment">     */</span>
+<span class="line" id="162">162: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name();
+<span class="line" id="163">163: </span>    
+<span class="line" id="164">164: </span>    <span class="php-comment">/**
+</span><span class="line" id="165">165: </span><span class="php-comment">     * Returns the name of the supported database.
+</span><span class="line" id="166">166: </span><span class="php-comment">     *
+</span><span class="line" id="167">167: </span><span class="php-comment">     * @return string
+</span><span class="line" id="168">168: </span><span class="php-comment">     * Returns the name of the supported database.
+</span><span class="line" id="169">169: </span><span class="php-comment">     *
+</span><span class="line" id="170">170: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="171">171: </span><span class="php-comment">     */</span>
+<span class="line" id="172">172: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name();
+<span class="line" id="173">173: </span>    
+<span class="line" id="174">174: </span>    <span class="php-comment">/**
+</span><span class="line" id="175">175: </span><span class="php-comment">     * Creates a clone of the dbworker that is using the same open
+</span><span class="line" id="176">176: </span><span class="php-comment">     * connection.
+</span><span class="line" id="177">177: </span><span class="php-comment">     *
+</span><span class="line" id="178">178: </span><span class="php-comment">     * This might be useful if you want to execute some additional
+</span><span class="line" id="179">179: </span><span class="php-comment">     * queries while iteration through the active results of a select query.
+</span><span class="line" id="180">180: </span><span class="php-comment">     *
+</span><span class="line" id="181">181: </span><span class="php-comment">     * @return DBWorker
+</span><span class="line" id="182">182: </span><span class="php-comment">     * Returns the clone of this dbworker.
+</span><span class="line" id="183">183: </span><span class="php-comment">     *
+</span><span class="line" id="184">184: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="185">185: </span><span class="php-comment">     */</span>
+<span class="line" id="186">186: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone();
+<span class="line" id="187">187: </span>    
+<span class="line" id="188">188: </span>    <span class="php-comment">/**
+</span><span class="line" id="189">189: </span><span class="php-comment">     * Returns the connection state.
+</span><span class="line" id="190">190: </span><span class="php-comment">     *
+</span><span class="line" id="191">191: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="192">192: </span><span class="php-comment">     * Returns true if the connection is open, otherwise false.
+</span><span class="line" id="193">193: </span><span class="php-comment">     *
+</span><span class="line" id="194">194: </span><span class="php-comment">     * @see connect()
+</span><span class="line" id="195">195: </span><span class="php-comment">     * @see close_connection()
+</span><span class="line" id="196">196: </span><span class="php-comment">     *
+</span><span class="line" id="197">197: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="198">198: </span><span class="php-comment">     */</span>
+<span class="line" id="199">199: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected();
+<span class="line" id="200">200: </span>    
+<span class="line" id="201">201: </span>    <span class="php-comment">/**
+</span><span class="line" id="202">202: </span><span class="php-comment">     * Establishes the connection to the database using the connection
+</span><span class="line" id="203">203: </span><span class="php-comment">     * settings parameters specified by the initialization.
+</span><span class="line" id="204">204: </span><span class="php-comment">     *
+</span><span class="line" id="205">205: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="206">206: </span><span class="php-comment">     * Returns true if the connection has been successfully established, otherwise false.
+</span><span class="line" id="207">207: </span><span class="php-comment">     *
+</span><span class="line" id="208">208: </span><span class="php-comment">     * @see is_connected()
+</span><span class="line" id="209">209: </span><span class="php-comment">     * @see close_connection()
+</span><span class="line" id="210">210: </span><span class="php-comment">     *
+</span><span class="line" id="211">211: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="212">212: </span><span class="php-comment">     */</span>
+<span class="line" id="213">213: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect();
+<span class="line" id="214">214: </span>    
+<span class="line" id="215">215: </span>    <span class="php-comment">/**
+</span><span class="line" id="216">216: </span><span class="php-comment">     * Sets the a database as working database.
+</span><span class="line" id="217">217: </span><span class="php-comment">     *
+</span><span class="line" id="218">218: </span><span class="php-comment">     * @param string $db_name
+</span><span class="line" id="219">219: </span><span class="php-comment">     * The name of the database to be set as working database.
+</span><span class="line" id="220">220: </span><span class="php-comment">     *
+</span><span class="line" id="221">221: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="222">222: </span><span class="php-comment">     * Returns true if the database has been successfully set as working database, otherwise false.
+</span><span class="line" id="223">223: </span><span class="php-comment">     *
+</span><span class="line" id="224">224: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="225">225: </span><span class="php-comment">     */</span>
+<span class="line" id="226">226: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(<span class="php-var">$db_name</span>);
+<span class="line" id="227">227: </span>    
+<span class="line" id="228">228: </span>    <span class="php-comment">/**
+</span><span class="line" id="229">229: </span><span class="php-comment">     * Returns the name of the database schema if applicable.
+</span><span class="line" id="230">230: </span><span class="php-comment">     *
+</span><span class="line" id="231">231: </span><span class="php-comment">     * @return string
+</span><span class="line" id="232">232: </span><span class="php-comment">     * Returns the name of the database schema if applicable, or an empty string.
+</span><span class="line" id="233">233: </span><span class="php-comment">     *
+</span><span class="line" id="234">234: </span><span class="php-comment">     * @see qualify_name_with_schema()
+</span><span class="line" id="235">235: </span><span class="php-comment">     *
+</span><span class="line" id="236">236: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="237">237: </span><span class="php-comment">     */</span>
+<span class="line" id="238">238: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_schema();
+<span class="line" id="239">239: </span>    
+<span class="line" id="240">240: </span>    <span class="php-comment">/**
+</span><span class="line" id="241">241: </span><span class="php-comment">     * Completes the name of a database object with the schema name if applicable.
+</span><span class="line" id="242">242: </span><span class="php-comment">     *
+</span><span class="line" id="243">243: </span><span class="php-comment">     * @param string $name
+</span><span class="line" id="244">244: </span><span class="php-comment">     * The name of the database object to be completed with the schema name.
+</span><span class="line" id="245">245: </span><span class="php-comment">     *
+</span><span class="line" id="246">246: </span><span class="php-comment">     * @return string
+</span><span class="line" id="247">247: </span><span class="php-comment">     * Returns the name of the database object with the schema name if applicable,
+</span><span class="line" id="248">248: </span><span class="php-comment">     * otherwise the name of the database object remains unchanged.
+</span><span class="line" id="249">249: </span><span class="php-comment">     *
+</span><span class="line" id="250">250: </span><span class="php-comment">     * @see get_schema()
+</span><span class="line" id="251">251: </span><span class="php-comment">     *
+</span><span class="line" id="252">252: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="253">253: </span><span class="php-comment">     */</span>
+<span class="line" id="254">254: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> qualify_name_with_schema(<span class="php-var">$name</span>);
+<span class="line" id="255">255: </span>    
+<span class="line" id="256">256: </span>    <span class="php-comment">/**
+</span><span class="line" id="257">257: </span><span class="php-comment">     * Executes the SQL query.
+</span><span class="line" id="258">258: </span><span class="php-comment">     *
+</span><span class="line" id="259">259: </span><span class="php-comment">     * @param string $query_string
+</span><span class="line" id="260">260: </span><span class="php-comment">     * The SQL query to be executed.
+</span><span class="line" id="261">261: </span><span class="php-comment">     *
+</span><span class="line" id="262">262: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="263">263: </span><span class="php-comment">     * Returns true if the query has been successfully executed, otherwise false.
+</span><span class="line" id="264">264: </span><span class="php-comment">     *
+</span><span class="line" id="265">265: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="266">266: </span><span class="php-comment">     */</span>
+<span class="line" id="267">267: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_query(<span class="php-var">$query_string</span>);
+<span class="line" id="268">268: </span>    
+<span class="line" id="269">269: </span>    <span class="php-comment">/**
+</span><span class="line" id="270">270: </span><span class="php-comment">     * Executes the SQL stored procedure.
+</span><span class="line" id="271">271: </span><span class="php-comment">     *
+</span><span class="line" id="272">272: </span><span class="php-comment">     * @param string $procedure
+</span><span class="line" id="273">273: </span><span class="php-comment">     * The name of the SQL stored procedure.
+</span><span class="line" id="274">274: </span><span class="php-comment">     *
+</span><span class="line" id="275">275: </span><span class="php-comment">     * All subsequent parameters are the paramteres of the SQL stored procedure.
+</span><span class="line" id="276">276: </span><span class="php-comment">     *
+</span><span class="line" id="277">277: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="278">278: </span><span class="php-comment">     * Returns true if the stored procedure has been successfully executed, otherwise false.
+</span><span class="line" id="279">279: </span><span class="php-comment">     *
+</span><span class="line" id="280">280: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="281">281: </span><span class="php-comment">     */</span>
+<span class="line" id="282">282: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_procedure(<span class="php-var">$procedure</span> <span class="php-comment">/* arg list */</span>);
+<span class="line" id="283">283: </span>    
+<span class="line" id="284">284: </span>    <span class="php-comment">/**
+</span><span class="line" id="285">285: </span><span class="php-comment">     * Executes the prepared SQL query.
+</span><span class="line" id="286">286: </span><span class="php-comment">     *
+</span><span class="line" id="287">287: </span><span class="php-comment">     * @param string $query_string
+</span><span class="line" id="288">288: </span><span class="php-comment">     * The SQL query to be executed.
+</span><span class="line" id="289">289: </span><span class="php-comment">     *
+</span><span class="line" id="290">290: </span><span class="php-comment">     * All subsequent parameters are the paramteres of the prepared SQL query
+</span><span class="line" id="291">291: </span><span class="php-comment">     *
+</span><span class="line" id="292">292: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="293">293: </span><span class="php-comment">     * Returns true if the prepared SQL query has been successfully executed, otherwise false.
+</span><span class="line" id="294">294: </span><span class="php-comment">     *
+</span><span class="line" id="295">295: </span><span class="php-comment">     * @see prepare_query()
+</span><span class="line" id="296">296: </span><span class="php-comment">     * @see free_prepared_query()
+</span><span class="line" id="297">297: </span><span class="php-comment">     *
+</span><span class="line" id="298">298: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="299">299: </span><span class="php-comment">     */</span>
+<span class="line" id="300">300: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_prepared_query(<span class="php-var">$query_string</span> <span class="php-comment">/* arg list */</span>);
+<span class="line" id="301">301: </span>    
+<span class="line" id="302">302: </span>    <span class="php-comment">/**
+</span><span class="line" id="303">303: </span><span class="php-comment">     * Prepares the SQL query with bindable variables.
+</span><span class="line" id="304">304: </span><span class="php-comment">     *
+</span><span class="line" id="305">305: </span><span class="php-comment">     * @param string $query_string
+</span><span class="line" id="306">306: </span><span class="php-comment">     * The SQL query to be prepared.
+</span><span class="line" id="307">307: </span><span class="php-comment">     *
+</span><span class="line" id="308">308: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="309">309: </span><span class="php-comment">     * Returns true if the SQL query has been successfully prepared, otherwise false.
+</span><span class="line" id="310">310: </span><span class="php-comment">     *
+</span><span class="line" id="311">311: </span><span class="php-comment">     * @see execute_prepared_query()
+</span><span class="line" id="312">312: </span><span class="php-comment">     * @see free_prepared_query()
+</span><span class="line" id="313">313: </span><span class="php-comment">     *
+</span><span class="line" id="314">314: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="315">315: </span><span class="php-comment">     */</span>
+<span class="line" id="316">316: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> prepare_query(<span class="php-var">$query_string</span>);
+<span class="line" id="317">317: </span>    
+<span class="line" id="318">318: </span>    <span class="php-comment">/**
+</span><span class="line" id="319">319: </span><span class="php-comment">     * Stores long data from a stream.
+</span><span class="line" id="320">320: </span><span class="php-comment">     *
+</span><span class="line" id="321">321: </span><span class="php-comment">     * @param string $query_string
+</span><span class="line" id="322">322: </span><span class="php-comment">     * The SQL query to be used for stroing the long data.
+</span><span class="line" id="323">323: </span><span class="php-comment">     *
+</span><span class="line" id="324">324: </span><span class="php-comment">     * @param resource $stream
+</span><span class="line" id="325">325: </span><span class="php-comment">     * The opened valid stream for reding the long data.
+</span><span class="line" id="326">326: </span><span class="php-comment">     *
+</span><span class="line" id="327">327: </span><span class="php-comment">     * Example:
+</span><span class="line" id="328">328: </span><span class="php-comment">     * ```php
+</span><span class="line" id="329">329: </span><span class="php-comment">     * $stream = fopen(&quot;.../large_binary.jpg&quot;, &quot;rb&quot;);
+</span><span class="line" id="330">330: </span><span class="php-comment">     *
+</span><span class="line" id="331">331: </span><span class="php-comment">     * if(!$dbw-&gt;stream_long_data(&quot;UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1&quot;, $stream))
+</span><span class="line" id="332">332: </span><span class="php-comment">     * {
+</span><span class="line" id="333">333: </span><span class="php-comment">     *   return sql_error($dbw);
+</span><span class="line" id="334">334: </span><span class="php-comment">     * }
+</span><span class="line" id="335">335: </span><span class="php-comment">     * ```
+</span><span class="line" id="336">336: </span><span class="php-comment">     *
+</span><span class="line" id="337">337: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="338">338: </span><span class="php-comment">     * Returns true if the long data has been successfully stored, otherwise false.
+</span><span class="line" id="339">339: </span><span class="php-comment">     *
+</span><span class="line" id="340">340: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="341">341: </span><span class="php-comment">     */</span>
+<span class="line" id="342">342: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> stream_long_data(<span class="php-var">$query_string</span>, &amp;<span class="php-var">$stream</span>);
+<span class="line" id="343">343: </span>    
+<span class="line" id="344">344: </span>    <span class="php-comment">/**
+</span><span class="line" id="345">345: </span><span class="php-comment">     * Closes the currently opened connection.
+</span><span class="line" id="346">346: </span><span class="php-comment">     *
+</span><span class="line" id="347">347: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="348">348: </span><span class="php-comment">     * Returns true if the connection has been successfully closed, otherwise false.
+</span><span class="line" id="349">349: </span><span class="php-comment">     *
+</span><span class="line" id="350">350: </span><span class="php-comment">     * @see is_connected()
+</span><span class="line" id="351">351: </span><span class="php-comment">     * @see connect()
+</span><span class="line" id="352">352: </span><span class="php-comment">     *
+</span><span class="line" id="353">353: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="354">354: </span><span class="php-comment">     */</span>
+<span class="line" id="355">355: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> close_connection();
+<span class="line" id="356">356: </span>    
+<span class="line" id="357">357: </span>    <span class="php-comment">/**
+</span><span class="line" id="358">358: </span><span class="php-comment">     * Starts the transation.
+</span><span class="line" id="359">359: </span><span class="php-comment">     *
+</span><span class="line" id="360">360: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="361">361: </span><span class="php-comment">     * Returns true if the transaction has been successfully started, otherwise false.
+</span><span class="line" id="362">362: </span><span class="php-comment">     *
+</span><span class="line" id="363">363: </span><span class="php-comment">     * @see commit_transaction()
+</span><span class="line" id="364">364: </span><span class="php-comment">     * @see rollback_transaction()
+</span><span class="line" id="365">365: </span><span class="php-comment">     *
+</span><span class="line" id="366">366: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="367">367: </span><span class="php-comment">     */</span>
+<span class="line" id="368">368: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction();
+<span class="line" id="369">369: </span>    
+<span class="line" id="370">370: </span>    <span class="php-comment">/**
+</span><span class="line" id="371">371: </span><span class="php-comment">     * Commits the transation.
+</span><span class="line" id="372">372: </span><span class="php-comment">     *
+</span><span class="line" id="373">373: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="374">374: </span><span class="php-comment">     * Returns true if the transaction has been successfully committed, otherwise false.
+</span><span class="line" id="375">375: </span><span class="php-comment">     *
+</span><span class="line" id="376">376: </span><span class="php-comment">     * @see start_transaction()
+</span><span class="line" id="377">377: </span><span class="php-comment">     * @see rollback_transaction()
+</span><span class="line" id="378">378: </span><span class="php-comment">     *
+</span><span class="line" id="379">379: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="380">380: </span><span class="php-comment">     */</span>
+<span class="line" id="381">381: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction();
+<span class="line" id="382">382: </span>    
+<span class="line" id="383">383: </span>    <span class="php-comment">/**
+</span><span class="line" id="384">384: </span><span class="php-comment">     * Rolls back the transation.
+</span><span class="line" id="385">385: </span><span class="php-comment">     *
+</span><span class="line" id="386">386: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="387">387: </span><span class="php-comment">     * Returns true if the transaction has been successfully rolled back, otherwise false.
+</span><span class="line" id="388">388: </span><span class="php-comment">     *
+</span><span class="line" id="389">389: </span><span class="php-comment">     * @see start_transaction()
+</span><span class="line" id="390">390: </span><span class="php-comment">     * @see commit_transaction()
+</span><span class="line" id="391">391: </span><span class="php-comment">     *
+</span><span class="line" id="392">392: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="393">393: </span><span class="php-comment">     */</span>
+<span class="line" id="394">394: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction();
+<span class="line" id="395">395: </span>    
+<span class="line" id="396">396: </span>    <span class="php-comment">/**
+</span><span class="line" id="397">397: </span><span class="php-comment">     * Frees the result of the previously executed retrieving query.
+</span><span class="line" id="398">398: </span><span class="php-comment">     *
+</span><span class="line" id="399">399: </span><span class="php-comment">     * It should be called only for the retrieving queries.
+</span><span class="line" id="400">400: </span><span class="php-comment">     *
+</span><span class="line" id="401">401: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="402">402: </span><span class="php-comment">     * Returns true if the result has been successfully freed, otherwise false.
+</span><span class="line" id="403">403: </span><span class="php-comment">     *
+</span><span class="line" id="404">404: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="405">405: </span><span class="php-comment">     */</span>
+<span class="line" id="406">406: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_result();
+<span class="line" id="407">407: </span>    
+<span class="line" id="408">408: </span>    <span class="php-comment">/**
+</span><span class="line" id="409">409: </span><span class="php-comment">     * Frees the prepared query.
+</span><span class="line" id="410">410: </span><span class="php-comment">     *
+</span><span class="line" id="411">411: </span><span class="php-comment">     * It should be called after all executions of the prepared query.
+</span><span class="line" id="412">412: </span><span class="php-comment">     *
+</span><span class="line" id="413">413: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="414">414: </span><span class="php-comment">     * Returns true if the prepared query has been successfully freed, otherwise false.
+</span><span class="line" id="415">415: </span><span class="php-comment">     *
+</span><span class="line" id="416">416: </span><span class="php-comment">     * @see prepare_query()
+</span><span class="line" id="417">417: </span><span class="php-comment">     * @see execute_prepared_query()
+</span><span class="line" id="418">418: </span><span class="php-comment">     *
+</span><span class="line" id="419">419: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="420">420: </span><span class="php-comment">     */</span>
+<span class="line" id="421">421: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_prepared_query();
+<span class="line" id="422">422: </span>    
+<span class="line" id="423">423: </span>    <span class="php-comment">/**
+</span><span class="line" id="424">424: </span><span class="php-comment">     * Fetches the next row of data from the result of the execution of the retrieving query.
+</span><span class="line" id="425">425: </span><span class="php-comment">     *
+</span><span class="line" id="426">426: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="427">427: </span><span class="php-comment">     * Returns true if the next row exists and has been successfully fetched, otherwise false.
+</span><span class="line" id="428">428: </span><span class="php-comment">     *
+</span><span class="line" id="429">429: </span><span class="php-comment">     * Example:
+</span><span class="line" id="430">430: </span><span class="php-comment">     * ```php
+</span><span class="line" id="431">431: </span><span class="php-comment">     * if(!$dbw-&gt;execute_query(&quot;SELECT FIRST_NAME, LAST_NAME FROM USERS&quot;))
+</span><span class="line" id="432">432: </span><span class="php-comment">     * {
+</span><span class="line" id="433">433: </span><span class="php-comment">     *   return sql_error($dbw);
+</span><span class="line" id="434">434: </span><span class="php-comment">     * }
+</span><span class="line" id="435">435: </span><span class="php-comment">     *
+</span><span class="line" id="436">436: </span><span class="php-comment">     * while($dbw-&gt;fetch_row())
+</span><span class="line" id="437">437: </span><span class="php-comment">     * {
+</span><span class="line" id="438">438: </span><span class="php-comment">     *   echo $dbw-&gt;field_by_name(&quot;FIRST_NAME&quot;) . &quot; &quot; . $dbw-&gt;field_by_name(&quot;LAST_NAME&quot;) . &quot;&lt;br&gt;&quot;;
+</span><span class="line" id="439">439: </span><span class="php-comment">     * }
+</span><span class="line" id="440">440: </span><span class="php-comment">     *
+</span><span class="line" id="441">441: </span><span class="php-comment">     * $dbw-&gt;free_result();
+</span><span class="line" id="442">442: </span><span class="php-comment">     * ```
+</span><span class="line" id="443">443: </span><span class="php-comment">     *
+</span><span class="line" id="444">444: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="445">445: </span><span class="php-comment">     */</span>
+<span class="line" id="446">446: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_row();
+<span class="line" id="447">447: </span>    
+<span class="line" id="448">448: </span>    <span class="php-comment">/**
+</span><span class="line" id="449">449: </span><span class="php-comment">     * Fetches all rows from the result into an array.
+</span><span class="line" id="450">450: </span><span class="php-comment">     *
+</span><span class="line" id="451">451: </span><span class="php-comment">     * @param array $rows
+</span><span class="line" id="452">452: </span><span class="php-comment">     * Target array for loading the results.
+</span><span class="line" id="453">453: </span><span class="php-comment">     *
+</span><span class="line" id="454">454: </span><span class="php-comment">     * @param array $dimension_keys
+</span><span class="line" id="455">455: </span><span class="php-comment">     * Array of the column names that should be used as dimensions.
+</span><span class="line" id="456">456: </span><span class="php-comment">     *
+</span><span class="line" id="457">457: </span><span class="php-comment">     * Per default, the rows are fetched as two dimensional array.
+</span><span class="line" id="458">458: </span><span class="php-comment">     *
+</span><span class="line" id="459">459: </span><span class="php-comment">     * Example:
+</span><span class="line" id="460">460: </span><span class="php-comment">     * ```php
+</span><span class="line" id="461">461: </span><span class="php-comment">     * $rows = [];
+</span><span class="line" id="462">462: </span><span class="php-comment">     * $dbw-&gt;fetch_array($rows);
+</span><span class="line" id="463">463: </span><span class="php-comment">     *
+</span><span class="line" id="464">464: </span><span class="php-comment">     * rows[n] = [&quot;col1&quot; =&gt; &quot;val1&quot;, &quot;col2&quot; =&gt; &quot;val2&quot;, , &quot;col3&quot; =&gt; &quot;val3&quot;, ...]
+</span><span class="line" id="465">465: </span><span class="php-comment">     * ```
+</span><span class="line" id="466">466: </span><span class="php-comment">     * If the dimension columns are specified, their values are used for the dimensions.
+</span><span class="line" id="467">467: </span><span class="php-comment">     *
+</span><span class="line" id="468">468: </span><span class="php-comment">     * Example:
+</span><span class="line" id="469">469: </span><span class="php-comment">     * ```php
+</span><span class="line" id="470">470: </span><span class="php-comment">     * $rows = [];
+</span><span class="line" id="471">471: </span><span class="php-comment">     * $dbw-&gt;fetch_array($rows, [&quot;col1&quot;, &quot;col2&quot;]);
+</span><span class="line" id="472">472: </span><span class="php-comment">     *
+</span><span class="line" id="473">473: </span><span class="php-comment">     * rows[&quot;val1&quot;][&quot;val2&quot;] = [&quot;col3&quot; =&gt; &quot;val3&quot;, ...]
+</span><span class="line" id="474">474: </span><span class="php-comment">     * ```
+</span><span class="line" id="475">475: </span><span class="php-comment">     *
+</span><span class="line" id="476">476: </span><span class="php-comment">     * @return int|false
+</span><span class="line" id="477">477: </span><span class="php-comment">     * Returns the number of the fetched rows. It might be also 0. In the case of
+</span><span class="line" id="478">478: </span><span class="php-comment">     * any error returns false.
+</span><span class="line" id="479">479: </span><span class="php-comment">     *
+</span><span class="line" id="480">480: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="481">481: </span><span class="php-comment">     */</span>
+<span class="line" id="482">482: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_array(&amp;<span class="php-var">$rows</span>, <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>);
+<span class="line" id="483">483: </span>    
+<span class="line" id="484">484: </span>    <span class="php-comment">/**
+</span><span class="line" id="485">485: </span><span class="php-comment">     * Returns the number of the rows fetched by the last retrieving query.
+</span><span class="line" id="486">486: </span><span class="php-comment">     *
+</span><span class="line" id="487">487: </span><span class="php-comment">     * @return int|false
+</span><span class="line" id="488">488: </span><span class="php-comment">     * Returns the number of the rows fetched by the last retrieving query. In the case
+</span><span class="line" id="489">489: </span><span class="php-comment">     * of any error returns false.
+</span><span class="line" id="490">490: </span><span class="php-comment">     *
+</span><span class="line" id="491">491: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="492">492: </span><span class="php-comment">     */</span>
+<span class="line" id="493">493: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetched_count();
+<span class="line" id="494">494: </span>    
+<span class="line" id="495">495: </span>    <span class="php-comment">/**
+</span><span class="line" id="496">496: </span><span class="php-comment">     * Returns the number of the rows affected by the last modification query.
+</span><span class="line" id="497">497: </span><span class="php-comment">     *
+</span><span class="line" id="498">498: </span><span class="php-comment">     * @return int|false
+</span><span class="line" id="499">499: </span><span class="php-comment">     * Returns the number of the rows affected by the last modification query. In the case
+</span><span class="line" id="500">500: </span><span class="php-comment">     * of any error returns false.
+</span><span class="line" id="501">501: </span><span class="php-comment">     *
+</span><span class="line" id="502">502: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="503">503: </span><span class="php-comment">     */</span>
+<span class="line" id="504">504: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> affected_count();
+<span class="line" id="505">505: </span>    
+<span class="line" id="506">506: </span>    <span class="php-comment">/**
+</span><span class="line" id="507">507: </span><span class="php-comment">     * Returns the number of the fields in the result of the last retrieving query.
+</span><span class="line" id="508">508: </span><span class="php-comment">     *
+</span><span class="line" id="509">509: </span><span class="php-comment">     * @return int|false
+</span><span class="line" id="510">510: </span><span class="php-comment">     * Returns the number of the fields in the result of the last retrieving query. In the case
+</span><span class="line" id="511">511: </span><span class="php-comment">     * of any error returns false.
+</span><span class="line" id="512">512: </span><span class="php-comment">     *
+</span><span class="line" id="513">513: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="514">514: </span><span class="php-comment">     */</span>
+<span class="line" id="515">515: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_count();
+<span class="line" id="516">516: </span>    
+<span class="line" id="517">517: </span>    <span class="php-comment">/**
+</span><span class="line" id="518">518: </span><span class="php-comment">     * Returns the value of the auto increment field by the last insertion.
+</span><span class="line" id="519">519: </span><span class="php-comment">     *
+</span><span class="line" id="520">520: </span><span class="php-comment">     * @return int|false
+</span><span class="line" id="521">521: </span><span class="php-comment">     * Returns the value of the auto increment field by the last insertion. In the case
+</span><span class="line" id="522">522: </span><span class="php-comment">     * of any error returns false.
+</span><span class="line" id="523">523: </span><span class="php-comment">     *
+</span><span class="line" id="524">524: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="525">525: </span><span class="php-comment">     */</span>
+<span class="line" id="526">526: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> insert_id();
+<span class="line" id="527">527: </span>    
+<span class="line" id="528">528: </span>    <span class="php-comment">/**
+</span><span class="line" id="529">529: </span><span class="php-comment">     * Returns the value of a field specified by name.
+</span><span class="line" id="530">530: </span><span class="php-comment">     *
+</span><span class="line" id="531">531: </span><span class="php-comment">     * @param string $name
+</span><span class="line" id="532">532: </span><span class="php-comment">     * The name of the field.
+</span><span class="line" id="533">533: </span><span class="php-comment">     *
+</span><span class="line" id="534">534: </span><span class="php-comment">     * @return mixed|null
+</span><span class="line" id="535">535: </span><span class="php-comment">     * Returns the value of a field specified by name. In the case
+</span><span class="line" id="536">536: </span><span class="php-comment">     * of any error returns null.
+</span><span class="line" id="537">537: </span><span class="php-comment">     *
+</span><span class="line" id="538">538: </span><span class="php-comment">     * @see field_by_num()
+</span><span class="line" id="539">539: </span><span class="php-comment">     * @see field_name()
+</span><span class="line" id="540">540: </span><span class="php-comment">     *
+</span><span class="line" id="541">541: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="542">542: </span><span class="php-comment">     */</span>
+<span class="line" id="543">543: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(<span class="php-var">$name</span>);
+<span class="line" id="544">544: </span>    
+<span class="line" id="545">545: </span>    <span class="php-comment">/**
+</span><span class="line" id="546">546: </span><span class="php-comment">     * Returns the value of a field specified by number.
+</span><span class="line" id="547">547: </span><span class="php-comment">     *
+</span><span class="line" id="548">548: </span><span class="php-comment">     * @param int $num
+</span><span class="line" id="549">549: </span><span class="php-comment">     * The number of the field.
+</span><span class="line" id="550">550: </span><span class="php-comment">     *
+</span><span class="line" id="551">551: </span><span class="php-comment">     * @return mixed|null
+</span><span class="line" id="552">552: </span><span class="php-comment">     * Returns the value of a field specified by number. In the case
+</span><span class="line" id="553">553: </span><span class="php-comment">     * of any error returns null.
+</span><span class="line" id="554">554: </span><span class="php-comment">     *
+</span><span class="line" id="555">555: </span><span class="php-comment">     * @see field_by_name()
+</span><span class="line" id="556">556: </span><span class="php-comment">     * @see field_info_by_num()
+</span><span class="line" id="557">557: </span><span class="php-comment">     * @see field_name()
+</span><span class="line" id="558">558: </span><span class="php-comment">     *
+</span><span class="line" id="559">559: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="560">560: </span><span class="php-comment">     */</span>
+<span class="line" id="561">561: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(<span class="php-var">$num</span>);
+<span class="line" id="562">562: </span>    
+<span class="line" id="563">563: </span>    <span class="php-comment">/**
+</span><span class="line" id="564">564: </span><span class="php-comment">     * Returns the meta information about the field as an object with properties.
+</span><span class="line" id="565">565: </span><span class="php-comment">     *
+</span><span class="line" id="566">566: </span><span class="php-comment">     * @param int $num
+</span><span class="line" id="567">567: </span><span class="php-comment">     * The number of the field.
+</span><span class="line" id="568">568: </span><span class="php-comment">     *
+</span><span class="line" id="569">569: </span><span class="php-comment">     * @return array
+</span><span class="line" id="570">570: </span><span class="php-comment">     * Returns the associative array with properties. In the case
+</span><span class="line" id="571">571: </span><span class="php-comment">     * of any error returns null.
+</span><span class="line" id="572">572: </span><span class="php-comment">     *
+</span><span class="line" id="573">573: </span><span class="php-comment">     * $info[&quot;name&quot;] - name of the field.
+</span><span class="line" id="574">574: </span><span class="php-comment">     *
+</span><span class="line" id="575">575: </span><span class="php-comment">     * $info[&quot;type&quot;] - type of the field.
+</span><span class="line" id="576">576: </span><span class="php-comment">     *
+</span><span class="line" id="577">577: </span><span class="php-comment">     * $info[&quot;size&quot;] - size of the field.
+</span><span class="line" id="578">578: </span><span class="php-comment">     *
+</span><span class="line" id="579">579: </span><span class="php-comment">     * $info[&quot;binary&quot;] - whether the filed is binary.
+</span><span class="line" id="580">580: </span><span class="php-comment">     *
+</span><span class="line" id="581">581: </span><span class="php-comment">     * $info[&quot;numeric&quot;] - whether the filed is numeric.
+</span><span class="line" id="582">582: </span><span class="php-comment">     *
+</span><span class="line" id="583">583: </span><span class="php-comment">     * @see field_by_num()
+</span><span class="line" id="584">584: </span><span class="php-comment">     * @see field_name()
+</span><span class="line" id="585">585: </span><span class="php-comment">     *
+</span><span class="line" id="586">586: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="587">587: </span><span class="php-comment">     */</span>
+<span class="line" id="588">588: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(<span class="php-var">$num</span>);
+<span class="line" id="589">589: </span>    
+<span class="line" id="590">590: </span>    <span class="php-comment">/**
+</span><span class="line" id="591">591: </span><span class="php-comment">     * Returns the name of the field by number.
+</span><span class="line" id="592">592: </span><span class="php-comment">     *
+</span><span class="line" id="593">593: </span><span class="php-comment">     * @param int $num
+</span><span class="line" id="594">594: </span><span class="php-comment">     * The number of the field.
+</span><span class="line" id="595">595: </span><span class="php-comment">     *
+</span><span class="line" id="596">596: </span><span class="php-comment">     * @return object|null
+</span><span class="line" id="597">597: </span><span class="php-comment">     * Returns the value of a field specified by number as an object with properties. In the case
+</span><span class="line" id="598">598: </span><span class="php-comment">     * of any error returns null.
+</span><span class="line" id="599">599: </span><span class="php-comment">     *
+</span><span class="line" id="600">600: </span><span class="php-comment">     * @see field_by_num()
+</span><span class="line" id="601">601: </span><span class="php-comment">     * @see field_info_by_num()
+</span><span class="line" id="602">602: </span><span class="php-comment">     *
+</span><span class="line" id="603">603: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="604">604: </span><span class="php-comment">     */</span>
+<span class="line" id="605">605: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(<span class="php-var">$num</span>);
+<span class="line" id="606">606: </span>    
+<span class="line" id="607">607: </span>    <span class="php-comment">/**
+</span><span class="line" id="608">608: </span><span class="php-comment">     * Escapes the string so that it can be used in the query without causing an error.
+</span><span class="line" id="609">609: </span><span class="php-comment">     *
+</span><span class="line" id="610">610: </span><span class="php-comment">     * @param string $str
+</span><span class="line" id="611">611: </span><span class="php-comment">     * The string to be escaped.
+</span><span class="line" id="612">612: </span><span class="php-comment">     *
+</span><span class="line" id="613">613: </span><span class="php-comment">     * @return string
+</span><span class="line" id="614">614: </span><span class="php-comment">     * Returns the escaped string.
+</span><span class="line" id="615">615: </span><span class="php-comment">     *
+</span><span class="line" id="616">616: </span><span class="php-comment">     * @see format_date()
+</span><span class="line" id="617">617: </span><span class="php-comment">     * @see format_datetime()
+</span><span class="line" id="618">618: </span><span class="php-comment">     *
+</span><span class="line" id="619">619: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="620">620: </span><span class="php-comment">     */</span>
+<span class="line" id="621">621: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(<span class="php-var">$str</span>);
+<span class="line" id="622">622: </span>    
+<span class="line" id="623">623: </span>    <span class="php-comment">/**
+</span><span class="line" id="624">624: </span><span class="php-comment">     * Formats the date to a string compatible for the corresponding database.
+</span><span class="line" id="625">625: </span><span class="php-comment">     *
+</span><span class="line" id="626">626: </span><span class="php-comment">     * @param int $date
+</span><span class="line" id="627">627: </span><span class="php-comment">     * The date value as timestamp.
+</span><span class="line" id="628">628: </span><span class="php-comment">     *
+</span><span class="line" id="629">629: </span><span class="php-comment">     * @return string
+</span><span class="line" id="630">630: </span><span class="php-comment">     * Returns the string representation of the date compatible for the corresponding database.
+</span><span class="line" id="631">631: </span><span class="php-comment">     *
+</span><span class="line" id="632">632: </span><span class="php-comment">     * @see escape()
+</span><span class="line" id="633">633: </span><span class="php-comment">     * @see format_datetime()
+</span><span class="line" id="634">634: </span><span class="php-comment">     *
+</span><span class="line" id="635">635: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="636">636: </span><span class="php-comment">     */</span>
+<span class="line" id="637">637: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(<span class="php-var">$date</span>);
+<span class="line" id="638">638: </span>    
+<span class="line" id="639">639: </span>    <span class="php-comment">/**
+</span><span class="line" id="640">640: </span><span class="php-comment">     * Formats the date/time to a string compatible for the corresponding database.
+</span><span class="line" id="641">641: </span><span class="php-comment">     *
+</span><span class="line" id="642">642: </span><span class="php-comment">     * @param int $datetime
+</span><span class="line" id="643">643: </span><span class="php-comment">     * The date/time value as timestamp.
+</span><span class="line" id="644">644: </span><span class="php-comment">     *
+</span><span class="line" id="645">645: </span><span class="php-comment">     * @return string
+</span><span class="line" id="646">646: </span><span class="php-comment">     * Returns the string representation of the date/time compatible for the corresponding database.
+</span><span class="line" id="647">647: </span><span class="php-comment">     *
+</span><span class="line" id="648">648: </span><span class="php-comment">     * @see escape()
+</span><span class="line" id="649">649: </span><span class="php-comment">     * @see format_date()
+</span><span class="line" id="650">650: </span><span class="php-comment">     *
+</span><span class="line" id="651">651: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="652">652: </span><span class="php-comment">     */</span>
+<span class="line" id="653">653: </span>    <span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(<span class="php-var">$datetime</span>);
+<span class="line" id="654">654: </span>    
+<span class="line" id="655">655: </span>    <span class="php-comment">/**
+</span><span class="line" id="656">656: </span><span class="php-comment">     * Returns the last occured error.
+</span><span class="line" id="657">657: </span><span class="php-comment">     *
+</span><span class="line" id="658">658: </span><span class="php-comment">     * @return string
+</span><span class="line" id="659">659: </span><span class="php-comment">     * Returns the last occured error.
+</span><span class="line" id="660">660: </span><span class="php-comment">     *
+</span><span class="line" id="661">661: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="662">662: </span><span class="php-comment">     */</span>
+<span class="line" id="663">663: </span>    <span class="php-keyword1">function</span> get_last_error()
+<span class="line" id="664">664: </span>    {
+<span class="line" id="665">665: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$this</span>-&gt;last_error);
+<span class="line" id="666">666: </span>    } <span class="php-comment">// get_last_error</span>
+<span class="line" id="667">667: </span>    
+<span class="line" id="668">668: </span>    <span class="php-comment">/**
+</span><span class="line" id="669">669: </span><span class="php-comment">     * Returns the last occured error ID.
+</span><span class="line" id="670">670: </span><span class="php-comment">     *
+</span><span class="line" id="671">671: </span><span class="php-comment">     * @return string
+</span><span class="line" id="672">672: </span><span class="php-comment">     * Returns the last occured error ID.
+</span><span class="line" id="673">673: </span><span class="php-comment">     *
+</span><span class="line" id="674">674: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="675">675: </span><span class="php-comment">     */</span>
+<span class="line" id="676">676: </span>    <span class="php-keyword1">function</span> get_last_error_id()
+<span class="line" id="677">677: </span>    {
+<span class="line" id="678">678: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$this</span>-&gt;last_error_id);
+<span class="line" id="679">679: </span>    } <span class="php-comment">// get_last_error_id</span>
+<span class="line" id="680">680: </span>    
+<span class="line" id="681">681: </span>    <span class="php-comment">/**
+</span><span class="line" id="682">682: </span><span class="php-comment">     * Returns the last executed query.
+</span><span class="line" id="683">683: </span><span class="php-comment">     *
+</span><span class="line" id="684">684: </span><span class="php-comment">     * @return string
+</span><span class="line" id="685">685: </span><span class="php-comment">     * Returns the last executed query.
+</span><span class="line" id="686">686: </span><span class="php-comment">     *
+</span><span class="line" id="687">687: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="688">688: </span><span class="php-comment">     */</span>
+<span class="line" id="689">689: </span>    <span class="php-keyword1">function</span> get_last_query()
+<span class="line" id="690">690: </span>    {
+<span class="line" id="691">691: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$this</span>-&gt;last_query);
+<span class="line" id="692">692: </span>    } <span class="php-comment">// get_last_query</span>
+<span class="line" id="693">693: </span>    
+<span class="line" id="694">694: </span>    <span class="php-comment">/**
+</span><span class="line" id="695">695: </span><span class="php-comment">     * Clears the last stored occured error, its ID and the last executed query.
+</span><span class="line" id="696">696: </span><span class="php-comment">     *
+</span><span class="line" id="697">697: </span><span class="php-comment">     * @return void
+</span><span class="line" id="698">698: </span><span class="php-comment">     *
+</span><span class="line" id="699">699: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="700">700: </span><span class="php-comment">     */</span>
+<span class="line" id="701">701: </span>    <span class="php-keyword1">function</span> clear_messages()
+<span class="line" id="702">702: </span>    {
+<span class="line" id="703">703: </span>        <span class="php-var">$this</span>-&gt;last_error = <span class="php-keyword1">null</span>;
+<span class="line" id="704">704: </span>        <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-keyword1">null</span>;
+<span class="line" id="705">705: </span>        <span class="php-var">$this</span>-&gt;last_query = <span class="php-keyword1">null</span>;
+<span class="line" id="706">706: </span>    } <span class="php-comment">// clear_messages</span>
 <span class="line" id="707">707: </span>} <span class="php-comment">// class DBWorker</span>
 <span class="line" id="708">708: </span>
 </code>
@@ -793,7 +793,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-23 14:05
+                        Generated on 2018-11-25 15:27
                     </div>                    
                 </div>
             </div>

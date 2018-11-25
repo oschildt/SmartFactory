@@ -4,8 +4,9 @@
  *
  * @package System
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
+
 namespace SmartFactory;
 
 use Smartfactory\Interfaces\ISessionManager;

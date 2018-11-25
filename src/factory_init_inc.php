@@ -29,8 +29,8 @@ FactoryBuilder::bindClass(ISessionManager::class, SessionManager::class);
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(IEventManager::class, EventManager::class);
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(IMessageManager::class, MessageManager::class, function($instance) {
-  $instance->init(["auto_hide_time" => 3]);
+FactoryBuilder::bindClass(IMessageManager::class, MessageManager::class, function ($instance) {
+    $instance->init(["auto_hide_time" => 3]);
 });
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(JsonApiRequestManager::class, JsonApiRequestManager::class);
@@ -41,7 +41,7 @@ FactoryBuilder::bindClass(MSSQL_DBWorker::class, MSSQL_DBWorker::class);
 //-------------------------------------------------------------------
 FactoryBuilder::bindClass(IShardManager::class, ShardManager::class);
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(IRecordsetManager::class, RecordsetManager::class, function($instance) {
-  $instance->setDBWorker(dbworker());
+FactoryBuilder::bindClass(IRecordsetManager::class, RecordsetManager::class, function ($instance) {
+    $instance->setDBWorker(dbworker());
 });
 //-------------------------------------------------------------------

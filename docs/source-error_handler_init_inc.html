@@ -90,7 +90,7 @@
 </span><span class="line" id="8"> 8: </span><span class="php-comment"> *
 </span><span class="line" id="9"> 9: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="10">10: </span><span class="php-comment"> */</span>
-<span class="line" id="11">11: </span> 
+<span class="line" id="11">11: </span>
 <span class="line" id="12">12: </span><span class="php-keyword1">namespace</span> SmartFactory;
 <span class="line" id="13">13: </span>
 <span class="line" id="14">14: </span><span class="php-keyword1">use</span> SmartFactory\Interfaces\IErrorHandler;
@@ -99,14 +99,14 @@
 <span class="line" id="17">17: </span>
 <span class="line" id="18">18: </span><span class="php-comment">//------------------------------------------------------------------------------</span>
 <span class="line" id="19">19: </span><span class="php-keyword2">set_error_handler</span>(<span class="php-keyword1">function</span> (<span class="php-var">$errno</span>, <span class="php-var">$errstr</span>, <span class="php-var">$errfile</span>, <span class="php-var">$errline</span>) {
-<span class="line" id="20">20: </span>  singleton(IErrorHandler::<span class="php-keyword1">class</span>)-&gt;handleError(<span class="php-var">$errno</span>, <span class="php-var">$errstr</span>, <span class="php-var">$errfile</span>, <span class="php-var">$errline</span>);
+<span class="line" id="20">20: </span>    singleton(IErrorHandler::<span class="php-keyword1">class</span>)-&gt;handleError(<span class="php-var">$errno</span>, <span class="php-var">$errstr</span>, <span class="php-var">$errfile</span>, <span class="php-var">$errline</span>);
 <span class="line" id="21">21: </span>});
 <span class="line" id="22">22: </span>
-<span class="line" id="23">23: </span>singleton(IEventManager::<span class="php-keyword1">class</span>)-&gt;addHandler(<span class="php-quote">&quot;php_error&quot;</span>, <span class="php-keyword1">function</span>(<span class="php-var">$event</span>, <span class="php-var">$params</span>)
-<span class="line" id="24">24: </span>{
-<span class="line" id="25">25: </span>  singleton(IMessageManager::<span class="php-keyword1">class</span>)-&gt;setProgWarning(<span class="php-var">$params</span>[<span class="php-quote">&quot;etype&quot;</span>] . <span class="php-quote">&quot;: &quot;</span> . <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;&lt;br/&gt;&quot;</span>, <span class="php-quote">&quot;\n&quot;</span>, <span class="php-keyword2">trim</span>(<span class="php-var">$params</span>[<span class="php-quote">&quot;errstr&quot;</span>])) . <span class="php-quote">&quot;\n\n&quot;</span> .
-<span class="line" id="26">26: </span>                                                    <span class="php-var">$params</span>[<span class="php-quote">&quot;errfile&quot;</span>] . <span class="php-quote">&quot;\n&quot;</span> .
-<span class="line" id="27">27: </span>                                                    <span class="php-quote">&quot;line &quot;</span> . <span class="php-var">$params</span>[<span class="php-quote">&quot;errline&quot;</span>]);
+<span class="line" id="23">23: </span>singleton(IEventManager::<span class="php-keyword1">class</span>)-&gt;addHandler(<span class="php-quote">&quot;php_error&quot;</span>, <span class="php-keyword1">function</span> (<span class="php-var">$event</span>, <span class="php-var">$params</span>) {
+<span class="line" id="24">24: </span>    singleton(IMessageManager::<span class="php-keyword1">class</span>)-&gt;setProgWarning(<span class="php-var">$params</span>[<span class="php-quote">&quot;etype&quot;</span>] . <span class="php-quote">&quot;: &quot;</span> .
+<span class="line" id="25">25: </span>      <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;&lt;br/&gt;&quot;</span>, <span class="php-quote">&quot;\n&quot;</span>,
+<span class="line" id="26">26: </span>        <span class="php-keyword2">trim</span>(<span class="php-var">$params</span>[<span class="php-quote">&quot;errstr&quot;</span>])) . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$params</span>[<span class="php-quote">&quot;errfile&quot;</span>] . <span class="php-quote">&quot;\n&quot;</span> . <span class="php-quote">&quot;line &quot;</span> . <span class="php-var">$params</span>[<span class="php-quote">&quot;errline&quot;</span>]
+<span class="line" id="27">27: </span>    );
 <span class="line" id="28">28: </span>});
 <span class="line" id="29">29: </span><span class="php-comment">//------------------------------------------------------------------------------</span>
 <span class="line" id="30">30: </span>
@@ -115,7 +115,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-23 14:05
+                        Generated on 2018-11-25 15:27
                     </div>                    
                 </div>
             </div>

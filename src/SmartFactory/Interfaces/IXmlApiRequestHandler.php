@@ -4,9 +4,9 @@
  *
  * @package System
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
- 
+
 namespace SmartFactory\Interfaces;
 
 use SmartFactory\XmlApiRequestManager;
@@ -18,26 +18,26 @@ use SmartFactory\XmlApiRequestManager;
  *
  * @used_by XmlApiRequestManager
  *
- * @author Oleg Schildt 
+ * @author Oleg Schildt
  */
 interface IXmlApiRequestHandler
 {
-  /**
-   * Method that is called to handle the request.
-   *
-   * @param XmlApiRequestManager $rmanager
-   * The reference to the manager.
-   *
-   * @param string $api_request
-   * The name of the API request.
-   *
-   * @param \DOMDocument $xmldoc
-   * The input XML DOM object.
-   *
-   * @return boolean
-   * The method should return true upon successful handling, otherwise false.   
-   *
-   * @author Oleg Schildt 
-   */
-  public function handle($rmanager, $api_request, $xmldoc);
+    /**
+     * Method that is called to handle the request.
+     *
+     * @param XmlApiRequestManager $rmanager
+     * The reference to the manager.
+     *
+     * @param string $api_request
+     * The name of the API request.
+     *
+     * @param \DOMDocument $xmldoc
+     * The input XML DOM object.
+     *
+     * @return boolean
+     * The method should return true upon successful handling, otherwise false.
+     *
+     * @author Oleg Schildt
+     */
+    public function handle($rmanager, $api_request, $xmldoc);
 } // IXmlApiRequestHandler
