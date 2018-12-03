@@ -46,7 +46,7 @@ composer require smartfactory/smartfactory"
 
 2. Study the directory structure of the demo application and the code.
 
-3. Implement your classes and functions. Use the script tests/classtester.php to check your classes for correct syntax.
+3. Implement your classes and functions. 
 
 4. Bind you classes to the interfaces in the file factory_init_inc.php to be able to use the IoC approach for creating objects offered by the library SmartFactory.
 
@@ -54,7 +54,7 @@ composer require smartfactory/smartfactory"
 
 7. Implement the API request handles for JSON or XML if necessary.
 
-8. Add translation texts for your application over the localization/edit.php or directly into the XML file localization/texts.xml.  Use the script tests/langtester.php to check your translations for duplicates and missing translations.
+8. Add translation texts for your application over the localization/edit.php or directly into the XML file localization/texts.xml.  Use the script localization/check.php to check your translations for duplicates and missing translations.
 
 ## Directory Structure 
 
