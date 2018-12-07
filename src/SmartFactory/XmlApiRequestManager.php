@@ -167,10 +167,10 @@ abstract class XmlApiRequestManager
         
         if (empty($api_request)) {
             $response_data["errors"] = [
-              [
-                "error_code" => "api_request_empy",
-                "error_text" => "Wrong implementation of the method parseXML: the API request is undefined (empty)!"
-              ]
+                [
+                    "error_code" => "api_request_empy",
+                    "error_text" => "Wrong implementation of the method parseXML: the API request is undefined (empty)!"
+                ]
             ];
             
             $this->reportErrors($response_data);
@@ -180,10 +180,10 @@ abstract class XmlApiRequestManager
         
         if (empty($xmldoc)) {
             $response_data["errors"] = [
-              [
-                "error_code" => "no_xml_doc",
-                "error_text" => "Wrong implementation of the method parseXML: no valid XML DOMDocument provided!"
-              ]
+                [
+                    "error_code" => "no_xml_doc",
+                    "error_text" => "Wrong implementation of the method parseXML: no valid XML DOMDocument provided!"
+                ]
             ];
             
             $this->reportErrors($response_data);
@@ -193,10 +193,10 @@ abstract class XmlApiRequestManager
         
         if (empty(self::$handler_table[$api_request])) {
             $response_data["errors"] = [
-              [
-                "error_code" => "api_request_no_handler",
-                "error_text" => sprintf("No handler is defined for the XML API request '%s'!", $api_request)
-              ]
+                [
+                    "error_code" => "api_request_no_handler",
+                    "error_text" => sprintf("No handler is defined for the XML API request '%s'!", $api_request)
+                ]
             ];
             
             $this->reportErrors($response_data);
@@ -208,10 +208,10 @@ abstract class XmlApiRequestManager
             $response_data["result"] = "error";
             
             $response_data["errors"] = [
-              [
-                "error_code" => "api_request_class_not_found",
-                "error_text" => sprintf("The handler class '%s' does not exist!", self::$handler_table[$api_request])
-              ]
+                [
+                    "error_code" => "api_request_class_not_found",
+                    "error_text" => sprintf("The handler class '%s' does not exist!", self::$handler_table[$api_request])
+                ]
             ];
             
             $this->reportErrors($response_data);
@@ -225,11 +225,10 @@ abstract class XmlApiRequestManager
             $response_data["result"] = "error";
             
             $response_data["errors"] = [
-              [
-                "error_code" => "api_request_wrong_class",
-                "error_text" => sprintf("The handler class '%s' does not implement the interface '%s'!",
-                  self::$handler_table[$api_request], "IXmlApiRequestHandler")
-              ]
+                [
+                    "error_code" => "api_request_wrong_class",
+                    "error_text" => sprintf("The handler class '%s' does not implement the interface '%s'!", self::$handler_table[$api_request], "IXmlApiRequestHandler")
+                ]
             ];
             
             $this->reportErrors($response_data);

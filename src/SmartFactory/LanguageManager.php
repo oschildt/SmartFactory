@@ -133,8 +133,7 @@ class LanguageManager implements ILanguageManager
         $xmldoc = new \DOMDocument();
         
         if (!$xmldoc->load($this->localization_path . "texts.xml")) {
-            trigger_error("Translation file '" . $this->localization_path . "texts.xml" . "' cannot be loaded!",
-              E_USER_ERROR);
+            trigger_error("Translation file '" . $this->localization_path . "texts.xml" . "' cannot be loaded!", E_USER_ERROR);
             return false;
         }
         
@@ -266,23 +265,17 @@ class LanguageManager implements ILanguageManager
         }
         
         // 3) last language in the cookie
-        if (!empty($_COOKIE[self::$context . "_language"]) &&
-          !empty(self::$supported_languages[$_COOKIE[self::$context . "_language"]])
-        ) {
+        if (!empty($_COOKIE[self::$context . "_language"]) && !empty(self::$supported_languages[$_COOKIE[self::$context . "_language"]])) {
             $language = $_COOKIE[self::$context . "_language"];
         }
         
         // 2) last language in the session
-        if (!empty(session()->vars()[self::$context . "_language"]) &&
-          !empty(self::$supported_languages[session()->vars()[self::$context . "_language"]])
-        ) {
+        if (!empty(session()->vars()[self::$context . "_language"]) && !empty(self::$supported_languages[session()->vars()[self::$context . "_language"]])) {
             $language = $_COOKIE[self::$context . "_language"];
         }
         
         // 1) explicitly set by request parameter language
-        if (!empty($_REQUEST["language"]) &&
-          !empty(self::$supported_languages[$_REQUEST["language"]])
-        ) {
+        if (!empty($_REQUEST["language"]) && !empty(self::$supported_languages[$_REQUEST["language"]])) {
             $language = $_REQUEST["language"];
         }
         

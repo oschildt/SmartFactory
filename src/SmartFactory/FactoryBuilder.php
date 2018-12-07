@@ -119,8 +119,7 @@ class FactoryBuilder
         
         if ($c != $ic) {
             if (!$c->isSubclassOf($ic)) {
-                throw new \Exception(sprintf("The class '%s' does not implement the interface '%s'!", $c->getName(),
-                  $ic->getName()));
+                throw new \Exception(sprintf("The class '%s' does not implement the interface '%s'!", $c->getName(), $ic->getName()));
             }
         }
         

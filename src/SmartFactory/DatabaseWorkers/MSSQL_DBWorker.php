@@ -326,11 +326,11 @@ class MSSQL_DBWorker extends DBWorker
             */
             
             $config = [
-              "UID" => $this->db_user,
-              "PWD" => $this->db_password,
+                "UID" => $this->db_user,
+                "PWD" => $this->db_password,
                 //"CharacterSet" => "UTF-8",
-              "ReturnDatesAsStrings" => true,
-              "MultipleActiveResultSets" => false
+                "ReturnDatesAsStrings" => true,
+                "MultipleActiveResultSets" => false
             ];
             
             $this->connection = @sqlsrv_connect($this->db_server, $config);
@@ -704,8 +704,7 @@ class MSSQL_DBWorker extends DBWorker
             } else {
                 $this->query_parameters[$counter] = $argval;
                 
-                $this->last_query = preg_replace("/\\?/",
-                  \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
+                $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
             }
             
             $counter++;

@@ -183,10 +183,7 @@ function user_settings()
  */
 function sql_error($dbw)
 {
-    messenger()->setError(text("ErrQueryFailed", "", false, "SQL query error!"),
-      $dbw->get_last_error() . "\n\n" .
-      $dbw->get_last_query()
-    );
+    messenger()->setError(text("ErrQueryFailed", "", false, "SQL query error!"), $dbw->get_last_error() . "\n\n" . $dbw->get_last_query());
     return false;
 } // sql_error
 

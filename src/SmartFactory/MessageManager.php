@@ -89,9 +89,7 @@ class MessageManager implements IMessageManager, IInitable
                 $message_entry["auto_hide"] = $this->getAutoHideTime();
             }
             
-            if (!empty($current["details"]) &&
-              config_settings()->getParameter("show_message_details", false, 1)
-            ) {
+            if (!empty($current["details"]) && config_settings()->getParameter("show_message_details", false, 1)) {
                 $message_entry["details"] = $current["details"];
             }
             
@@ -715,9 +713,9 @@ class MessageManager implements IMessageManager, IInitable
         // otherwise some messages may be lost
         // because of redirection
         self::$session_vars["infos"][$message] = [
-          "message" => $message,
-          "details" => $details,
-          "auto_hide" => $auto_hide
+            "message" => $message,
+            "details" => $details,
+            "auto_hide" => $auto_hide
         ];
     } // setInfo
     
@@ -894,8 +892,7 @@ class MessageManager implements IMessageManager, IInitable
      */
     public function progWarningsActive()
     {
-        return empty(self::$prog_warnings_disabled) &&
-          config_settings()->getParameter("show_prog_warning", false, 0) == 1;
+        return empty(self::$prog_warnings_disabled) && config_settings()->getParameter("show_prog_warning", false, 0) == 1;
     } // progWarningsActive
     
     /**

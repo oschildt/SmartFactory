@@ -591,8 +591,7 @@ class MySQL_DBWorker extends DBWorker
                 $parameters[0] .= "s";
                 $parameters[$counter] = &$argval;
                 
-                $this->last_query = preg_replace("/\\?/",
-                  \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
+                $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
             }
             
             $counter++;

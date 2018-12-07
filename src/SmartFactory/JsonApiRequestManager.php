@@ -140,8 +140,7 @@ class JsonApiRequestManager
         }
         
         if (!empty($this->handler_table[$api_request])) {
-            trigger_error("The API request '$api_request' has already the handler '" . $this->handler_table[$api_request] . "'!",
-              E_USER_ERROR);
+            trigger_error("The API request '$api_request' has already the handler '" . $this->handler_table[$api_request] . "'!", E_USER_ERROR);
             return false;
         }
         
@@ -260,7 +259,7 @@ class JsonApiRequestManager
             $response_data["result"] = "error";
             
             $response_data["errors"] = [
-              ["error_code" => "api_request_empy", "error_text" => "The API request is undefined (empty)!"]
+                ["error_code" => "api_request_empy", "error_text" => "The API request is undefined (empty)!"]
             ];
             
             $this->sendJsonResponse($response_data, $additional_headers);
@@ -279,10 +278,10 @@ class JsonApiRequestManager
                 $response_data["result"] = "error";
                 
                 $response_data["errors"] = [
-                  [
-                    "error_code" => "api_request_no_handler",
-                    "error_text" => sprintf("No handler is defined for the API request '%s'!", $api_request)
-                  ]
+                    [
+                        "error_code" => "api_request_no_handler",
+                        "error_text" => sprintf("No handler is defined for the API request '%s'!", $api_request)
+                    ]
                 ];
                 
                 $this->sendJsonResponse($response_data, $additional_headers);
@@ -304,11 +303,10 @@ class JsonApiRequestManager
                 $response_data["result"] = "error";
                 
                 $response_data["errors"] = [
-                  [
-                    "error_code" => "api_request_class_not_found",
-                    "error_text" => sprintf("The handler class '%s', defined for the request '%s', does not exist!",
-                      $handler_class_name, $handler_key)
-                  ]
+                    [
+                        "error_code" => "api_request_class_not_found",
+                        "error_text" => sprintf("The handler class '%s', defined for the request '%s', does not exist!", $handler_class_name, $handler_key)
+                    ]
                 ];
                 
                 $this->sendJsonResponse($response_data, $additional_headers);
@@ -322,11 +320,10 @@ class JsonApiRequestManager
                 $response_data["result"] = "error";
                 
                 $response_data["errors"] = [
-                  [
-                    "error_code" => "api_request_wrong_class",
-                    "error_text" => sprintf("The handler class '%s', defined for the request '%s', does not implement the interface '%s'!",
-                      $handler_class_name, $handler_key, "IJsonApiRequestHandler")
-                  ]
+                    [
+                        "error_code" => "api_request_wrong_class",
+                        "error_text" => sprintf("The handler class '%s', defined for the request '%s', does not implement the interface '%s'!", $handler_class_name, $handler_key, "IJsonApiRequestHandler")
+                    ]
                 ];
                 
                 $this->sendJsonResponse($response_data, $additional_headers);

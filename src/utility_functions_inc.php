@@ -197,10 +197,7 @@ function dom_to_array(&$node, &$array)
         
         // has a single text node
         
-        if ($child->hasChildNodes() &&
-          $child->childNodes->length == 1 &&
-          $child->childNodes->item(0)->nodeType == XML_TEXT_NODE
-        ) {
+        if ($child->hasChildNodes() && $child->childNodes->length == 1 && $child->childNodes->item(0)->nodeType == XML_TEXT_NODE) {
             $array[$name] = $child->childNodes->item(0)->nodeValue;
             continue;
         }
@@ -414,9 +411,7 @@ function timestamp($time_string, $format)
     
     $err_status = "error";
     
-    $pattern = preg_replace(array("/Y/", "/m/", "/d/", "/H/", "/i/", "/s/"),
-      array("([0-9]{4})", "([0-9]{1,2})", "([0-9]{1,2})", "([0-9]{1,2})", "([0-9]{1,2})", "([0-9]{1,2})"),
-      preg_quote($format));
+    $pattern = preg_replace(array("/Y/", "/m/", "/d/", "/H/", "/i/", "/s/"), array("([0-9]{4})", "([0-9]{1,2})", "([0-9]{1,2})", "([0-9]{1,2})", "([0-9]{1,2})", "([0-9]{1,2})"), preg_quote($format));
     
     $units = array();
     
