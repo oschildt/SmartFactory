@@ -166,20 +166,19 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#$do_standard_handling">$do_standard_handling</a>
+              <a href="#$handler_table">$handler_table</a>
           </td>
           <td class="description_column">
-              Internal flag for storing the state whether to do the standard handling
-if the preprocess handling is defined.
+              Internal array for storing the handler mappings.
           </td>
       </tr>
       
       <tr>
           <td>
-              <a href="#$handler_table">$handler_table</a>
+              <a href="#$stop_handling">$stop_handling</a>
           </td>
           <td class="description_column">
-              Internal array for storing the handler mappings.
+              Internal flag for storing the state whether to do the handling should be stopped.
           </td>
       </tr>
       
@@ -257,6 +256,15 @@ format.
           </td>
       </tr>
       
+      <tr>
+          <td>
+              <a href="#stopHandlng">stopHandlng</a>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for stopping the handling by subsequent handlers.
+          </td>
+      </tr>
+      
       
   </table>
 
@@ -264,48 +272,6 @@ format.
 
 
 
-  
-  <hr id="$do_standard_handling">
-  
-  <h1>Property: $do_standard_handling</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$do_standard_handling</b> = <span class="php-keyword1">true</span></div>
-
-  <span class="type_label">Type:</span> boolean
-  
-  
-  <div class="short-description">
-  Internal flag for storing the state whether to do the standard handling
-if the preprocess handling is defined.
-  </div>
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#42">SmartFactory\JsonApiRequestManager.php</a>
-
-  
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href="class-SmartFactory.JsonApiRequestManager.html#registerPreProcessHandler">\SmartFactory\JsonApiRequestManager::registerPreProcessHandler()</a><br>
-  
-  </div>
-  
-
-  
-
-  
   
   <hr id="$handler_table">
   
@@ -340,6 +306,47 @@ if the preprocess handling is defined.
   <div class="item_list">
   
   <a href="class-SmartFactory.JsonApiRequestManager.html#registerApiRequestHandler">\SmartFactory\JsonApiRequestManager::registerApiRequestHandler()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  <hr id="$stop_handling">
+  
+  <h1>Property: $stop_handling</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$stop_handling</b> = <span class="php-keyword1">false</span></div>
+
+  <span class="type_label">Type:</span> boolean
+  
+  
+  <div class="short-description">
+  Internal flag for storing the state whether to do the handling should be stopped.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#41">SmartFactory\JsonApiRequestManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.JsonApiRequestManager.html#stopHandlng">\SmartFactory\JsonApiRequestManager::stopHandlng()</a><br>
   
   </div>
   
@@ -392,7 +399,7 @@ if the preprocess handling is defined.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#83">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#95">SmartFactory\JsonApiRequestManager.php</a>
 
   
 
@@ -438,7 +445,7 @@ for this API request.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#249">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#255">SmartFactory\JsonApiRequestManager.php</a>
 
   
 
@@ -518,7 +525,7 @@ comes.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#132">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#144">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -594,7 +601,7 @@ comes.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#234">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#240">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -670,7 +677,7 @@ comes.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#207">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#213">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -694,7 +701,7 @@ comes.</p>
   
   <h1>Method: registerPreProcessHandler</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>registerPreProcessHandler</b>(string &amp;<span class="php-var">$handler_class_name</span>, boolean &amp;<span class="php-var">$do_standard_handling</span> = <span class="php-keyword1">true</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>registerPreProcessHandler</b>(string &amp;<span class="php-var">$handler_class_name</span>) : boolean</div>
 
   
   <div class="short-description">
@@ -717,14 +724,6 @@ nor the class object. It is done to prevent situation that a wrong registration
 of a handler breaks the handling of all requests.</p>
 <p>The class instantiating and class loading occurs only if this API request
 comes.</p>
-      </div>
-      
-  
-      <h3>$do_standard_handling</h3>
-      <span class="type_label">Type:</span> boolean
-      
-      <div class="param-description">
-      <p>This flag defines  whether to do the standard handling.</p>
 <p>This is usefult for turning on the maintenance mode. The handler may check a
 a setting value and return the maintenance json for all requests.</p>
       </div>
@@ -756,7 +755,7 @@ a setting value and return the maintenance json for all requests.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#178">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#186">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -834,7 +833,52 @@ and need not be listed explicitly.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#60">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#72">SmartFactory\JsonApiRequestManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="stopHandlng">
+  
+  <h1>Method: stopHandlng</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>stopHandlng</b>() : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for stopping the handling by subsequent handlers.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#51">SmartFactory\JsonApiRequestManager.php</a>
 
   
 
@@ -848,7 +892,7 @@ and need not be listed explicitly.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-11-25 15:27
+                        Generated on 2018-12-12 13:22
                     </div>                    
                 </div>
             </div>

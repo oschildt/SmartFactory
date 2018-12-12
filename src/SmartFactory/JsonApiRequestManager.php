@@ -33,16 +33,28 @@ class JsonApiRequestManager
     protected $handler_table = [];
     
     /**
-     * Internal flag for storing the state whether to do the standard handling
-     * if the preprocess handling is defined.
+     * Internal flag for storing the state whether to do the handling should be stopped.
      *
      * @var boolean
      *
-     * @see registerPreProcessHandler()
+     * @see stopHandlng()
      *
      * @author Oleg Schildt
      */
-    protected $do_standard_handling = true;
+    protected $stop_handling = false;
+    
+    
+    /**
+     * This is an auxiliary function for stopping the handling by subsequent handlers.
+     *
+     * @return void
+     *
+     * @author Oleg Schildt
+     */
+    public function stopHandlng()
+    {
+        $this->stop_handling = true;
+    }
     
     /**
      * This is an auxiliary function for sending the response in JSON
@@ -162,9 +174,6 @@ class JsonApiRequestManager
      * The class instantiating and class loading occurs only if this API request
      * comes.
      *
-     * @param boolean $do_standard_handling
-     * This flag defines  whether to do the standard handling.
-     *
      * This is usefult for turning on the maintenance mode. The handler may check a
      * a setting value and return the maintenance json for all requests.
      *
@@ -177,10 +186,8 @@ class JsonApiRequestManager
      *
      * @author Oleg Schildt
      */
-    public function registerPreProcessHandler($handler_class_name, $do_standard_handling = true)
+    public function registerPreProcessHandler($handler_class_name)
     {
-        $this->do_standard_handling = $do_standard_handling;
-        
         return $this->registerApiRequestHandler("#pre_process#", $handler_class_name);
     } // registerPreProcessHandler
     
@@ -335,7 +342,7 @@ class JsonApiRequestManager
             
             $handler->handle($this, $api_request, $response_data, $additional_headers);
             
-            if ($handler_key == "#pre_process#" && !$this->do_standard_handling) {
+            if ($this->stop_handling) {
                 break;
             }
         } // foreach

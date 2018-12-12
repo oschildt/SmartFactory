@@ -265,35 +265,32 @@
 </span><span class="line" id="183">183: </span><span class="php-comment"> */</span>
 <span class="line" id="184">184: </span><span class="php-keyword1">function</span> sql_error(<span class="php-var">$dbw</span>)
 <span class="line" id="185">185: </span>{
-<span class="line" id="186">186: </span>    messenger()-&gt;setError(text(<span class="php-quote">&quot;ErrQueryFailed&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;SQL query error!&quot;</span>),
-<span class="line" id="187">187: </span>      <span class="php-var">$dbw</span>-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> .
-<span class="line" id="188">188: </span>      <span class="php-var">$dbw</span>-&gt;get_last_query()
-<span class="line" id="189">189: </span>    );
-<span class="line" id="190">190: </span>    <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="191">191: </span>} <span class="php-comment">// sql_error</span>
-<span class="line" id="192">192: </span>
-<span class="line" id="193">193: </span><span class="php-comment">/**
-</span><span class="line" id="194">194: </span><span class="php-comment"> * Short function for requesting the dbworker connected to the specified shard.
+<span class="line" id="186">186: </span>    messenger()-&gt;setError(text(<span class="php-quote">&quot;ErrQueryFailed&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">false</span>, <span class="php-quote">&quot;SQL query error!&quot;</span>), <span class="php-var">$dbw</span>-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$dbw</span>-&gt;get_last_query());
+<span class="line" id="187">187: </span>    <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="188">188: </span>} <span class="php-comment">// sql_error</span>
+<span class="line" id="189">189: </span>
+<span class="line" id="190">190: </span><span class="php-comment">/**
+</span><span class="line" id="191">191: </span><span class="php-comment"> * Short function for requesting the dbworker connected to the specified shard.
+</span><span class="line" id="192">192: </span><span class="php-comment"> *
+</span><span class="line" id="193">193: </span><span class="php-comment"> * @param string $shard_name
+</span><span class="line" id="194">194: </span><span class="php-comment"> * The name of the shard.
 </span><span class="line" id="195">195: </span><span class="php-comment"> *
-</span><span class="line" id="196">196: </span><span class="php-comment"> * @param string $shard_name
-</span><span class="line" id="197">197: </span><span class="php-comment"> * The name of the shard.
+</span><span class="line" id="196">196: </span><span class="php-comment"> * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+</span><span class="line" id="197">197: </span><span class="php-comment"> * returns DBWorker object or null if the object could not be created.
 </span><span class="line" id="198">198: </span><span class="php-comment"> *
-</span><span class="line" id="199">199: </span><span class="php-comment"> * @return \SmartFactory\DatabaseWorkers\DBWorker|null
-</span><span class="line" id="200">200: </span><span class="php-comment"> * returns DBWorker object or null if the object could not be created.
-</span><span class="line" id="201">201: </span><span class="php-comment"> *
-</span><span class="line" id="202">202: </span><span class="php-comment"> * @author Oleg Schildt
-</span><span class="line" id="203">203: </span><span class="php-comment"> */</span>
-<span class="line" id="204">204: </span><span class="php-keyword1">function</span> dbshard(<span class="php-var">$shard_name</span>)
-<span class="line" id="205">205: </span>{
-<span class="line" id="206">206: </span>    <span class="php-keyword1">return</span> singleton(IShardManager::<span class="php-keyword1">class</span>)-&gt;dbshard(<span class="php-var">$shard_name</span>);
-<span class="line" id="207">207: </span>} <span class="php-comment">// dbshard</span>
-<span class="line" id="208">208: </span>
+</span><span class="line" id="199">199: </span><span class="php-comment"> * @author Oleg Schildt
+</span><span class="line" id="200">200: </span><span class="php-comment"> */</span>
+<span class="line" id="201">201: </span><span class="php-keyword1">function</span> dbshard(<span class="php-var">$shard_name</span>)
+<span class="line" id="202">202: </span>{
+<span class="line" id="203">203: </span>    <span class="php-keyword1">return</span> singleton(IShardManager::<span class="php-keyword1">class</span>)-&gt;dbshard(<span class="php-var">$shard_name</span>);
+<span class="line" id="204">204: </span>} <span class="php-comment">// dbshard</span>
+<span class="line" id="205">205: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-11-25 15:27
+                        Generated on 2018-12-12 13:22
                     </div>                    
                 </div>
             </div>
