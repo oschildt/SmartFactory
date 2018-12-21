@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: SmartException - Library SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">SmartException</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: SmartException</h1>
+
+
+
+
+<div class="short-description">
+Class for the exception with the string error code. The system Exception supports
+only the number error codes.
+</div>
+
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+\Exception<br>
+
+</div>
+
+
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-System.html">System</a>
+
+
+<h2>Source code</h2>
+<a href="source-SmartFactory.SmartException.html#17">SmartFactory\SmartException.php</a>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$error_code">$error_code</a>
+          </td>
+          <td class="description_column">
+              Internal property for storing the string error code. Predefined codes are:
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#__construct">__construct</a>
+          </td>
+          <td class="description_column">
+              Constructor for creation of the exception with message and string error code.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#getErrorCode">getErrorCode</a>
+          </td>
+          <td class="description_column">
+              Function for getting the string error code of the exception.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+
+
+  
+  <hr id="$error_code">
+  
+  <h1>Property: $error_code</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$error_code</b> = <span class="php-keyword1">null</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal property for storing the string error code. Predefined codes are:
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <ul>
+<li>system_error</li>
+<li>missing_data_error</li>
+<li>invalid_data_error</li>
+</ul>
+  </div>
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#30">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="__construct">
+  
+  <h1>Constructor</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>__construct</b>(string &amp;<span class="php-var">$message</span>, string &amp;<span class="php-var">$error_code</span> = <span class="php-keyword1">null</span>)</div>
+
+  
+  <div class="short-description">
+  Constructor for creation of the exception with message and string error code.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$message</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The message of the exception.</p>
+      </div>
+      
+  
+      <h3>$error_code</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The error code of the exception.</p>
+      </div>
+      
+  
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#43">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="getErrorCode">
+  
+  <h1>Method: getErrorCode</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getErrorCode</b>() : string</div>
+
+  
+  <div class="short-description">
+  Function for getting the string error code of the exception.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the string error code of the exception.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#58">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2018-12-21 08:31
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+
