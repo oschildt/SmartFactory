@@ -10,7 +10,6 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IInitable;
 use SmartFactory\Interfaces\IMessageManager;
 
 /**
@@ -18,7 +17,7 @@ use SmartFactory\Interfaces\IMessageManager;
  *
  * @author Oleg Schildt
  */
-class MessageManager implements IMessageManager, IInitable
+class MessageManager implements IMessageManager
 {
     /**
      * Internal variable for storing the auto hide time

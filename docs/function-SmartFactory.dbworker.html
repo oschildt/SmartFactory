@@ -113,7 +113,7 @@
                 <div class="col-md-12">
                     <h1>Function: dbworker</h1>
 
-<div class="definition"><b>dbworker</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span> = <span class="php-keyword1">null</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span></div>
+<div class="definition"><b>dbworker</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span> = <span class="php-keyword1">null</span>, boolean &amp;<span class="php-var">$singleton</span> = <span class="php-keyword1">true</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span></div>
 
 
 <div class="short-description">
@@ -124,9 +124,6 @@ The method dbworker provides the DBWorker object for working with the database.
 
 <div class="long-description">
 <h2>Details</h2>
-<p>If the parameters are omitted, the system takes the parameters from the configuration
-settings and reuses the single instance of the DBWorker for all requests.
-If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.</p>
 <p>Currently supported: MySQL und MS SQL.</p>
 </div>
 
@@ -174,6 +171,14 @@ upon creation.</p>
     </div>
     
 
+    <h3>$singleton</h3>
+    <span class="type_label">Type:</span> boolean
+    
+    <div class="param-description">
+    <p>If the parameter is true, it ensures that only one instance of this object exists.</p>
+    </div>
+    
+
 
 
 
@@ -187,6 +192,26 @@ upon creation.</p>
 
 
 
+<h2>Throws</h2>
+<div class="item_list">
+
+    <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+    
+    
+    <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>invalid_data_error - if the interface or class does not exist.</li>
+<li>system_error - if the check of the classes and interfaces fails.</li>
+<li>system_error - if the php extension is not installed.</li>
+<li>db_missing_type_error - if the database type is not specified.</li>
+<li>db_conn_data_error - if the connection parameters are incomplete.</li>
+<li>db_server_conn_error - if the database server cannot be connected.</li>
+<li>db_not_exists_error - if database does not exists od inaccesible to the user.</li>
+</ul><br>
+    
+
+</div>
+
 
 
 <h2>Author</h2>
@@ -199,7 +224,7 @@ Oleg Schildt
 
 
 <h2>Source code</h2>
-<a href="source-factory_functions_inc.html#112">factory_functions_inc.php</a>
+<a href="source-factory_functions_inc.html#126">factory_functions_inc.php</a>
 
 
 
@@ -209,7 +234,7 @@ Oleg Schildt
 
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>

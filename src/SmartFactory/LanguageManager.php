@@ -122,6 +122,11 @@ class LanguageManager implements ILanguageManager
      * @return boolean
      * It should return true if the dictoinary has been successfully loaded, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - invalid_data_error - if the translation file is invalid.
+     *
      * @author Oleg Schildt
      */
     public function loadDictionary()
@@ -133,8 +138,7 @@ class LanguageManager implements ILanguageManager
         $xmldoc = new \DOMDocument();
         
         if (!$xmldoc->load($this->localization_path . "texts.xml")) {
-            trigger_error("Translation file '" . $this->localization_path . "texts.xml" . "' cannot be loaded!", E_USER_ERROR);
-            return false;
+            throw new SmartException("Translation file '" . $this->localization_path . "texts.xml" . "' cannot be loaded!", "invalid_data_error");
         }
         
         $xsdpath = new \DOMXPath($xmldoc);

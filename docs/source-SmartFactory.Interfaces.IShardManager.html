@@ -125,35 +125,41 @@
 </span><span class="line" id="43">43: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="44">44: </span><span class="php-comment">     * It should return true if the registering was successful, otherwise false.
 </span><span class="line" id="45">45: </span><span class="php-comment">     *
-</span><span class="line" id="46">46: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="47">47: </span><span class="php-comment">     */</span>
-<span class="line" id="48">48: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerShard(<span class="php-var">$shard_name</span>, <span class="php-var">$parameters</span>);
-<span class="line" id="49">49: </span>    
-<span class="line" id="50">50: </span>    <span class="php-comment">/**
-</span><span class="line" id="51">51: </span><span class="php-comment">     * The method dbshard provides the DBWorker object for working with the shard.
-</span><span class="line" id="52">52: </span><span class="php-comment">     *
-</span><span class="line" id="53">53: </span><span class="php-comment">     * If the parameters are omitted, the system takes the parameters from the configuration
-</span><span class="line" id="54">54: </span><span class="php-comment">     * settings and reuses the single instance of the DBWorker for all requests.
-</span><span class="line" id="55">55: </span><span class="php-comment">     * If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.
-</span><span class="line" id="56">56: </span><span class="php-comment">     *
-</span><span class="line" id="57">57: </span><span class="php-comment">     * Currently supported: MySQL und MS SQL.
-</span><span class="line" id="58">58: </span><span class="php-comment">     *
-</span><span class="line" id="59">59: </span><span class="php-comment">     * @param string $shard_name
-</span><span class="line" id="60">60: </span><span class="php-comment">     * The name of the shard.
+</span><span class="line" id="46">46: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="47">47: </span><span class="php-comment">     * It might throw an exception in the case of any errors.
+</span><span class="line" id="48">48: </span><span class="php-comment">     *
+</span><span class="line" id="49">49: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="50">50: </span><span class="php-comment">     */</span>
+<span class="line" id="51">51: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerShard(<span class="php-var">$shard_name</span>, <span class="php-var">$parameters</span>);
+<span class="line" id="52">52: </span>    
+<span class="line" id="53">53: </span>    <span class="php-comment">/**
+</span><span class="line" id="54">54: </span><span class="php-comment">     * The method dbshard provides the DBWorker object for working with the shard.
+</span><span class="line" id="55">55: </span><span class="php-comment">     *
+</span><span class="line" id="56">56: </span><span class="php-comment">     * If the parameters are omitted, the system takes the parameters from the configuration
+</span><span class="line" id="57">57: </span><span class="php-comment">     * settings and reuses the single instance of the DBWorker for all requests.
+</span><span class="line" id="58">58: </span><span class="php-comment">     * If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.
+</span><span class="line" id="59">59: </span><span class="php-comment">     *
+</span><span class="line" id="60">60: </span><span class="php-comment">     * Currently supported: MySQL und MS SQL.
 </span><span class="line" id="61">61: </span><span class="php-comment">     *
-</span><span class="line" id="62">62: </span><span class="php-comment">     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
-</span><span class="line" id="63">63: </span><span class="php-comment">     * returns DBWorker object or null if the object could not be created.
+</span><span class="line" id="62">62: </span><span class="php-comment">     * @param string $shard_name
+</span><span class="line" id="63">63: </span><span class="php-comment">     * The name of the shard.
 </span><span class="line" id="64">64: </span><span class="php-comment">     *
-</span><span class="line" id="65">65: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="66">66: </span><span class="php-comment">     */</span>
-<span class="line" id="67">67: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> dbshard(<span class="php-var">$shard_name</span>);
-<span class="line" id="68">68: </span>} <span class="php-comment">// IShardManager</span>
+</span><span class="line" id="65">65: </span><span class="php-comment">     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+</span><span class="line" id="66">66: </span><span class="php-comment">     * returns DBWorker object or null if the object could not be created.
+</span><span class="line" id="67">67: </span><span class="php-comment">     *
+</span><span class="line" id="68">68: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="69">69: </span><span class="php-comment">     * It might throw an exception in the case of any errors.
+</span><span class="line" id="70">70: </span><span class="php-comment">     *
+</span><span class="line" id="71">71: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="72">72: </span><span class="php-comment">     */</span>
+<span class="line" id="73">73: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> dbshard(<span class="php-var">$shard_name</span>);
+<span class="line" id="74">74: </span>} <span class="php-comment">// IShardManager</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>

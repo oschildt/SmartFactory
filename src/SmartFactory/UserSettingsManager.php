@@ -130,42 +130,47 @@ class UserSettingsManager implements ISettingsManager
      * @return boolean
      * It should return true if the settings manager is intialized correctly, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - invalid_data_error - if some parameters are not of the proper type.
+     *
      * @author Oleg Schildt
      */
-    protected function basic_check()
+    protected function validateParameters()
     {
         if (empty($this->dbworker)) {
-            trigger_error("DBWorker is not defined!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The 'dbworker' is not specified!", "missing_data_error");
         }
-        
+    
+        if (!$this->dbworker instanceof DBWorker) {
+            throw new SmartException(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class), "invalid_data_error");
+        }
+
         if (empty($this->user_table)) {
-            trigger_error("User table is not defined!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The 'user_table' is not defined!", "missing_data_error");
         }
         
         if (empty($this->settings_fields)) {
-            trigger_error("Settings fields are not defined!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The 'settings_fields' are not defined!", "missing_data_error");
+        }
+    
+        if (empty($this->user_id_field)) {
+            throw new SmartException("The 'user_id_field' is not defined!", "missing_data_error");
+        }
+    
+        if (empty($this->user_id_getter)) {
+            throw new SmartException("The function 'user_id_getter' or user id retrieval is not defined!", "missing_data_error");
         }
         
         if (!is_array($this->settings_fields)) {
-            trigger_error("Settings fields definition must be an array - field => type!", E_USER_ERROR);
-            return false;
-        }
-        
-        if (empty($this->user_id_field)) {
-            trigger_error("User id field is not defined!", E_USER_ERROR);
-            return false;
-        }
-        
-        if (empty($this->user_id_getter)) {
-            trigger_error("Function for user id retrieval is not defined!", E_USER_ERROR);
-            return false;
+            throw new SmartException("Settings fields 'settings_fields' must be an array - field => type!", "invalid_data_error");
         }
         
         return true;
-    } // basic_check
+    } // validateParameters
     
     /**
      * This is internal auxiliary function for getting where clause for getting and updating
@@ -214,6 +219,11 @@ class UserSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the data has been successfully saved, otherwise false.
      *
+     * @throws SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - db_query_error - if the query fails if some object names are invalid.
+     *
      * @see loadSettingsData()
      *
      * @author Oleg Schildt
@@ -254,7 +264,7 @@ class UserSettingsManager implements ISettingsManager
         $query .= $this->getWhereClause();
         
         if (!$this->dbworker->execute_query($query)) {
-            return sql_error($this->dbworker);
+            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
         }
         
         return true;
@@ -269,6 +279,11 @@ class UserSettingsManager implements ISettingsManager
      *
      * @return boolean
      * Returns true if the data has been successfully loaded, otherwise false.
+     *
+     * @throws SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - db_query_error - if the query fails if some object names are invalid.
      *
      * @see saveSettingsData()
      *
@@ -285,7 +300,7 @@ class UserSettingsManager implements ISettingsManager
         $query .= $this->getWhereClause();
         
         if (!$this->dbworker->execute_query($query)) {
-            return sql_error($this->dbworker);
+            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
         }
         
         if ($this->dbworker->fetch_row()) {
@@ -582,15 +597,21 @@ class UserSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the settings have been successfully loaded, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - invalid_data_error - if some parameters are not of the proper type.
+     * - db_query_error - if the query fails if some object names are invalid.
+     *
      * @see saveSettings()
      *
      * @author Oleg Schildt
      */
     public function loadSettings()
     {
-        if (!$this->basic_check()) {
-            return false;
-        }
+        $this->validateParameters();
         
         // user settings are loaded once per session and
         // maintained in the session.
@@ -618,15 +639,21 @@ class UserSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the settings have been successfully saved, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - invalid_data_error - if some parameters are not of the proper type.
+     * - db_query_error - if the query fails if some object names are invalid.
+     *
      * @see loadSettings()
      *
      * @author Oleg Schildt
      */
     public function saveSettings()
     {
-        if (!$this->basic_check()) {
-            return false;
-        }
+        $this->validateParameters();
         
         $old_dirty_state = $this->temp_settings["__dirty"];
         unset($this->temp_settings["__dirty"]);

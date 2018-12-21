@@ -269,7 +269,7 @@ class MySQL_DBWorker extends DBWorker
         if (!$this->mysqli) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
                 $this->last_error = "No connection data available";
-                $this->last_error_id = "conn_data_err";
+                $this->last_error_id = "db_conn_data_error";
                 return false;
             }
             
@@ -278,7 +278,7 @@ class MySQL_DBWorker extends DBWorker
         
         if ($this->mysqli->connect_error) {
             $this->last_error = $this->mysqli->connect_error;
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             $this->mysqli = null;
             return false;
         }
@@ -312,7 +312,7 @@ class MySQL_DBWorker extends DBWorker
     public function use_database($db_name)
     {
         if (!$this->mysqli) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -320,7 +320,7 @@ class MySQL_DBWorker extends DBWorker
         
         if (!@$this->mysqli->select_db($this->db_name)) {
             $this->last_error = $this->mysqli->error;
-            $this->last_error_id = "db_err";
+            $this->last_error_id = "db_not_exists_error";
             trigger_error($this->last_error, E_USER_ERROR);
             return false;
         }
@@ -378,14 +378,14 @@ class MySQL_DBWorker extends DBWorker
         $this->last_query = $query_string;
         
         if (!$this->mysqli) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
         $this->mysqli_result = @$this->mysqli->query($query_string);
         if (!$this->mysqli_result) {
             $this->last_error = $this->mysqli->error;
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
             
             return false;
@@ -411,7 +411,7 @@ class MySQL_DBWorker extends DBWorker
     public function prepare_query($query_string)
     {
         if (!$this->mysqli) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -426,7 +426,7 @@ class MySQL_DBWorker extends DBWorker
         $this->statement = $this->mysqli->prepare($query_string);
         if (!$this->statement) {
             $this->last_error = $this->mysqli->error;
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
             
             return false;
@@ -450,7 +450,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
      * {
-     *   return sql_error($dbw);
+     *   error reporting ...;
      * }
      * ```
      *
@@ -469,7 +469,7 @@ class MySQL_DBWorker extends DBWorker
         }
         
         if (!$this->mysqli) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             
             fclose($stream);
             
@@ -487,7 +487,7 @@ class MySQL_DBWorker extends DBWorker
         $this->statement = $this->mysqli->prepare($query_string);
         if (!$this->statement) {
             $this->last_error = $this->mysqli->error;
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
             
             fclose($stream);
@@ -501,7 +501,7 @@ class MySQL_DBWorker extends DBWorker
         while (!feof($stream)) {
             if ($this->statement->send_long_data(0, fread($stream, 8192)) === false) {
                 $this->last_error = $this->mysqli->error;
-                $this->last_error_id = "query_err";
+                $this->last_error_id = "db_query_error";
                 trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
                 
                 $this->statement->close();
@@ -516,7 +516,7 @@ class MySQL_DBWorker extends DBWorker
         
         if (!$this->statement->execute()) {
             $this->last_error = $this->statement->error;
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
             $this->statement->close();
@@ -550,13 +550,13 @@ class MySQL_DBWorker extends DBWorker
     public function execute_prepared_query($query_string /* arg list */)
     {
         if (!$this->mysqli) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
         if (empty($this->prepared_query) || empty($this->statement)) {
             $this->last_error = "no prepared query defined";
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             return false;
         }
         
@@ -599,7 +599,7 @@ class MySQL_DBWorker extends DBWorker
         
         if (!call_user_func_array([$this->statement, 'bind_param'], $parameters)) {
             $this->last_error = "Number of elements in type definition string doesn't match number of bind variables.";
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
             return false;
@@ -607,7 +607,7 @@ class MySQL_DBWorker extends DBWorker
         
         if (!$this->statement->execute()) {
             $this->last_error = $this->statement->error;
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
             return false;
@@ -615,7 +615,7 @@ class MySQL_DBWorker extends DBWorker
         
         if (!$this->statement->store_result()) {
             $this->last_error = $this->statement->error;
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
             return false;
@@ -644,7 +644,7 @@ class MySQL_DBWorker extends DBWorker
     public function execute_procedure($procedure /* arg list */)
     {
         if (!$this->mysqli) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -838,7 +838,7 @@ class MySQL_DBWorker extends DBWorker
     public function insert_id()
     {
         if (!$this->mysqli) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -855,7 +855,7 @@ class MySQL_DBWorker extends DBWorker
      * ```php
      * if(!$dbw->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
      * {
-     *   return sql_error($dbw);
+     *   error reporting ...;
      * }
      *
      * while($dbw->fetch_row())
@@ -894,7 +894,7 @@ class MySQL_DBWorker extends DBWorker
                 
                 if (!call_user_func_array([$this->statement, 'bind_result'], $params)) {
                     $this->last_error = $this->statement->error;
-                    $this->last_error_id = "query_err";
+                    $this->last_error_id = "db_query_error";
                     trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
                     
                     return false;
@@ -912,7 +912,7 @@ class MySQL_DBWorker extends DBWorker
         } // prepared query
         
         if (!$this->mysqli_result) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
@@ -998,7 +998,7 @@ class MySQL_DBWorker extends DBWorker
             
             if (!call_user_func_array([$this->statement, 'bind_result'], $params)) {
                 $this->last_error = $this->statement->error;
-                $this->last_error_id = "query_err";
+                $this->last_error_id = "db_query_error";
                 trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
                 
                 return false;
@@ -1042,7 +1042,7 @@ class MySQL_DBWorker extends DBWorker
         } // prepared query
         
         if (!$this->mysqli_result) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
@@ -1093,7 +1093,7 @@ class MySQL_DBWorker extends DBWorker
         }
         
         if (!$this->mysqli_result) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
@@ -1120,7 +1120,7 @@ class MySQL_DBWorker extends DBWorker
     public function affected_count()
     {
         if (!$this->mysqli_result) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
@@ -1261,14 +1261,14 @@ class MySQL_DBWorker extends DBWorker
     public function field_info_by_num($num)
     {
         if (!$this->mysqli_result) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return null;
         }
         
         $res = @$this->mysqli_result->fetch_field_direct($num);
         if (!$res) {
             $this->last_error = $this->mysqli->error;
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             
             trigger_error($this->last_error, E_USER_ERROR);
             return null;

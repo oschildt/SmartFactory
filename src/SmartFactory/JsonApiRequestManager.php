@@ -88,6 +88,32 @@ class JsonApiRequestManager
     } // sendJsonResponse
     
     /**
+     * This is an auxiliary function for sending the response in JSON
+     * format by an exception.
+     *
+     * @param SmartException $ex
+     * The thrown exception.
+     *
+     * @return void
+     *
+     * @author Oleg Schildt
+     */
+    public function exitWithException($ex)
+    {
+        $response_data = [];
+    
+        $response_data["result"] = "error";
+    
+        $response_data["errors"] = [
+            ["error_code" => $ex->getErrorCode(), "error_text" => $ex->getMessage()]
+        ];
+    
+        $this->sendJsonResponse($response_data);
+        
+        exit;
+    } // exitWithException
+    
+    /**
      * Defines the current API request name.
      *
      * @return string
@@ -138,6 +164,12 @@ class JsonApiRequestManager
      * @return boolean
      * Returns true if the registration was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the request name is not specified.
+     * - system_error - if the request already has a handler.
+     *
      * @see registerPreProcessHandler()
      * @see registerPostProcessHandler()
      * @see registerDefaultHandler()
@@ -147,13 +179,11 @@ class JsonApiRequestManager
     public function registerApiRequestHandler($api_request, $handler_class_name)
     {
         if (empty($api_request)) {
-            trigger_error("The API request is undefined (empty)!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The API request is undefined (empty)!", "missing_data_error");
         }
         
         if (!empty($this->handler_table[$api_request])) {
-            trigger_error("The API request '$api_request' has already the handler '" . $this->handler_table[$api_request] . "'!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The API request '$api_request' has already the handler '" . $this->handler_table[$api_request] . "'!", "system_error");
         }
         
         $this->handler_table[$api_request] = $handler_class_name;
@@ -179,6 +209,11 @@ class JsonApiRequestManager
      *
      * @return boolean
      * Returns true if the registration was successfull, otherwise false.
+     *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - invalid_data_error - if the request already has a handler.
      *
      * @see registerApiRequestHandler()
      * @see registerPostProcessHandler()
@@ -207,6 +242,11 @@ class JsonApiRequestManager
      * @return boolean
      * Returns true if the registration was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - invalid_data_error - if the request already has a handler.
+     *
      * @see registerApiRequestHandler()
      * @see registerPreProcessHandler()
      * @see registerDefaultHandler()
@@ -234,6 +274,11 @@ class JsonApiRequestManager
      * @return boolean
      * Returns true if the registration was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - invalid_data_error - if the request already has a handler.
+     *
      * @see registerApiRequestHandler()
      * @see registerPreProcessHandler()
      * @see registerPostProcessHandler()
@@ -250,6 +295,11 @@ class JsonApiRequestManager
      * for this API request.
      *
      * @return void.
+     *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - system_error - if the creation of the handler fails.
      *
      * @uses IJsonApiRequestHandler
      *
@@ -321,7 +371,11 @@ class JsonApiRequestManager
                 return;
             }
             
-            $handler_class = new \ReflectionClass($handler_class_name);
+            try {
+                $handler_class = new \ReflectionClass($handler_class_name);
+            } catch (\Exception $ex) {
+                throw new SmartException($ex->getMessage(), "system_error");
+            }
             
             if (!$handler_class->isSubclassOf("SmartFactory\Interfaces\IJsonApiRequestHandler")) {
                 $response_data["result"] = "error";
@@ -338,7 +392,11 @@ class JsonApiRequestManager
                 return;
             }
             
-            $handler = $handler_class->newInstance();
+            try {
+                $handler = $handler_class->newInstance();
+            } catch (\Exception $ex) {
+                throw new SmartException($ex->getMessage(), "system_error");
+            }
             
             $handler->handle($this, $api_request, $response_data, $additional_headers);
             

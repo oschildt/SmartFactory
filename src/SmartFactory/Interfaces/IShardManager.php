@@ -43,6 +43,9 @@ interface IShardManager
      * @return boolean
      * It should return true if the registering was successful, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function registerShard($shard_name, $parameters);
@@ -61,6 +64,9 @@ interface IShardManager
      *
      * @return \SmartFactory\DatabaseWorkers\DBWorker|null
      * returns DBWorker object or null if the object could not be created.
+     *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */

@@ -29,10 +29,12 @@ use SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
  * @return object
  * Returns object of the class bound to the interfase.
  *
- * @throws \Exception
- * - If the interface or class is not specified.
- * - If the interface or class does not exist.
- * - If the interface or class has no bound class.
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
  *
  * @see \SmartFactory\instance()
  *
@@ -55,10 +57,12 @@ function singleton($interface_or_class)
  * @return object
  * Returns object of the class bound to the interface.
  *
- * @throws \Exception
- * - If the interface or class is not specified.
- * - If the interface or class does not exist.
- * - If the interface or class has no bound class.
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
  *
  * @see \SmartFactory\singleton()
  *
@@ -71,10 +75,6 @@ function instance($interface_or_class)
 
 /**
  * The method dbworker provides the DBWorker object for working with the database.
- *
- * If the parameters are omitted, the system takes the parameters from the configuration
- * settings and reuses the single instance of the DBWorker for all requests.
- * If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.
  *
  * Currently supported: MySQL und MS SQL.
  *
@@ -107,47 +107,37 @@ function instance($interface_or_class)
  *                 ]);
  * ```
  *
+ * @param boolean $singleton
+ * If the parameter is true, it ensures that only one instance of this object exists.
+ *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
+ * - system_error - if the php extension is not installed.
+ * - db_missing_type_error - if the database type is not specified.
+ * - db_conn_data_error - if the connection parameters are incomplete.
+ * - db_server_conn_error - if the database server cannot be connected.
+ * - db_not_exists_error - if database does not exists od inaccesible to the user.
+ *
  * @return DatabaseWorkers\DBWorker|null
  * returns DBWorker object or null if the object could not be created.
  *
  * @author Oleg Schildt
  */
-function dbworker($parameters = null)
+function dbworker($parameters = null, $singleton = true)
 {
-    $msgmanager = singleton(IMessageManager::class);
-    $lngmanager = singleton(ILanguageManager::class);
-    
-    $from_settings = false;
-    
-    if (empty($parameters)) {
-        $parameters["db_type"] = config_settings()->getParameter("db_type");
-        $parameters["db_server"] = config_settings()->getParameter("db_server");
-        $parameters["db_name"] = config_settings()->getParameter("db_name");
-        $parameters["db_user"] = config_settings()->getParameter("db_user");
-        $parameters["db_password"] = config_settings()->getParameter("db_password");
-        $parameters["autoconnect"] = true;
-        
-        $from_settings = true;
-    }
-    
     if (empty($parameters["db_type"])) {
-        $msgmanager->setError($lngmanager->text("ErrDatabaseTypeEmpty", "", false, "Database type is not specified!"));
-        return null;
+        throw new SmartException("Database type is not specified!", "db_missing_type_error");
     }
     
     $class_name = "SmartFactory\\DatabaseWorkers\\" . $parameters["db_type"] . "_DBWorker";
     
-    if ($from_settings) {
-        // if the dbworker is requested from the conenction settings, it should be a singleton.
-        $dbworker = FactoryBuilder::getInstance($class_name, true);
-    } else {
-        // if the user passes the connection settings manually, create new instance each time.
-        $dbworker = FactoryBuilder::getInstance($class_name, false);
-    }
+    $dbworker = FactoryBuilder::getInstance($class_name, $singleton);
     
     if (!$dbworker->is_extension_installed()) {
-        $msgmanager->setError(sprintf($lngmanager->text("ErrDbExtenstionNotInstalled", "", false, "PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!"), $dbworker->get_extension_name(), $dbworker->get_rdbms_name()));
-        return null;
+        throw new SmartException(sprintf("PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!", $dbworker->get_extension_name(), $dbworker->get_rdbms_name()), "system_error");
     }
     
     // do not connect, only object required
@@ -176,12 +166,12 @@ function dbworker($parameters = null)
         return $dbworker;
     }
     
-    if ($dbworker->get_last_error_id() == "conn_data_err") {
-        $msgmanager->setError($lngmanager->text("ErrNoDBConnectionData", "", false, "No database connection information is available ot it is incomplete!"));
-    } elseif ($dbworker->get_last_error_id() == "conn_err") {
-        $msgmanager->setError($lngmanager->text("ErrDbInaccessible", "", false, "The database cannot be connected!"), sprintf($lngmanager->text("ErrDbConnNoAccess", "", false, "The server '%s' is unreachable or the user login '%s' or password are invalid!"), checkempty($parameters["db_server"]), checkempty($parameters["db_user"])));
-    } elseif ($dbworker->get_last_error_id() == "db_err") {
-        $msgmanager->setError($lngmanager->text("ErrDbInaccessible", "", false, "The database cannot be connected!"), sprintf($lngmanager->text("ErrDbConnNoDB", "", false, "The database '%s' does not exist or is not accessible for this database user '%s'!"), checkempty($parameters["db_name"]), checkempty($parameters["db_user"])));
+    if ($dbworker->get_last_error_id() == "db_conn_data_error") {
+        throw new SmartException("No database connection information is available ot it is incomplete!", "db_conn_data_error");
+    } elseif ($dbworker->get_last_error_id() == "db_server_conn_error") {
+        throw new SmartException("The database server cannot be connected!", "db_server_conn_error");
+    } elseif ($dbworker->get_last_error_id() == "db_not_exists_error") {
+        throw new SmartException("The database does not exists!", "db_not_exists_error");
     }
     
     return null;

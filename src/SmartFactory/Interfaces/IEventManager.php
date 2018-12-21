@@ -37,6 +37,9 @@ interface IEventManager
      * @return boolean
      * Should return true if the adding was successfull, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @see deleteHandler()
      * @see deleteHandlers()
      * @see deleteAllHandlers()
@@ -57,6 +60,9 @@ interface IEventManager
      * @return boolean
      * Should return true if the deletion was successfull, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @see addHandler()
      * @see deleteHandlers()
      * @see deleteAllHandlers()
@@ -73,6 +79,9 @@ interface IEventManager
      *
      * @return boolean
      * Should return true if the deletion was successfull, otherwise false.
+     *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
      *
      * @see addHandler()
      * @see deleteHandler()
@@ -107,6 +116,9 @@ interface IEventManager
      * @return boolean
      * Should return true if the suspesion was successfull, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @see resumeEvent()
      * @see resumeAllEvents()
      *
@@ -122,6 +134,9 @@ interface IEventManager
      *
      * @return boolean
      * Should return true if the suspesion was successfull, otherwise false.
+     *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
      *
      * @see suspendEvent()
      * @see resumeAllEvents()
@@ -154,6 +169,9 @@ interface IEventManager
      *
      * @return int
      * Should return number of the handlers called for this event.
+     *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */

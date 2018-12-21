@@ -41,6 +41,9 @@ interface IDebugProfiler extends IInitable
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function logMessageToFile($message, $file_name);
@@ -54,6 +57,9 @@ interface IDebugProfiler extends IInitable
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function debugMessage($message);
@@ -66,6 +72,9 @@ interface IDebugProfiler extends IInitable
      *
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
+     *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
      *
      * @see fixProfilePoint()
      *
@@ -83,6 +92,9 @@ interface IDebugProfiler extends IInitable
      *
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
+     *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
      *
      * @see startProfilePoint()
      *

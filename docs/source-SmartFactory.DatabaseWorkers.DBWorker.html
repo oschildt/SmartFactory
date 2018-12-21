@@ -412,7 +412,7 @@
 </span><span class="line" id="330">330: </span><span class="php-comment">     *
 </span><span class="line" id="331">331: </span><span class="php-comment">     * if(!$dbw-&gt;stream_long_data(&quot;UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1&quot;, $stream))
 </span><span class="line" id="332">332: </span><span class="php-comment">     * {
-</span><span class="line" id="333">333: </span><span class="php-comment">     *   return sql_error($dbw);
+</span><span class="line" id="333">333: </span><span class="php-comment">     *   error reporting ...;
 </span><span class="line" id="334">334: </span><span class="php-comment">     * }
 </span><span class="line" id="335">335: </span><span class="php-comment">     * ```
 </span><span class="line" id="336">336: </span><span class="php-comment">     *
@@ -512,7 +512,7 @@
 </span><span class="line" id="430">430: </span><span class="php-comment">     * ```php
 </span><span class="line" id="431">431: </span><span class="php-comment">     * if(!$dbw-&gt;execute_query(&quot;SELECT FIRST_NAME, LAST_NAME FROM USERS&quot;))
 </span><span class="line" id="432">432: </span><span class="php-comment">     * {
-</span><span class="line" id="433">433: </span><span class="php-comment">     *   return sql_error($dbw);
+</span><span class="line" id="433">433: </span><span class="php-comment">     *   error reporting ...;
 </span><span class="line" id="434">434: </span><span class="php-comment">     * }
 </span><span class="line" id="435">435: </span><span class="php-comment">     *
 </span><span class="line" id="436">436: </span><span class="php-comment">     * while($dbw-&gt;fetch_row())
@@ -793,7 +793,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>

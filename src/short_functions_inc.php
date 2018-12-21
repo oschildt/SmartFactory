@@ -40,6 +40,13 @@ use SmartFactory\Interfaces\IShardManager;
  * Returns the translation text or the $text_id if no translation
  * is found.
  *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
+ *
  * @author Oleg Schildt
  */
 function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
@@ -52,6 +59,13 @@ function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
  *
  * @return IMessageManager
  * Returns the instance of the IMessageManager.
+ *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -66,6 +80,13 @@ function messenger()
  * @return ISessionManager
  * Returns the instance of the ISessionManager.
  *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
+ *
  * @author Oleg Schildt
  */
 function session()
@@ -78,6 +99,13 @@ function session()
  *
  * @return IDebugProfiler
  * Returns the instance of the IDebugProfiler.
+ *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -95,6 +123,14 @@ function debugger()
  * @return boolean
  * Returns true if the message has been successfully logged, otherwise false.
  *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
+ * - system_error - if the debug file is not writable.
+ *
  * @author Oleg Schildt
  */
 function debug_message($msg)
@@ -107,6 +143,13 @@ function debug_message($msg)
  *
  * @return IEventManager
  * Returns the instance of the IEventManager.
+ *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -121,6 +164,13 @@ function event()
  * @return ConfigSettingsManager
  * Returns the instance of the ConfigSettingsManager.
  *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
+ *
  * @author Oleg Schildt
  */
 function config_settings()
@@ -133,6 +183,13 @@ function config_settings()
  *
  * @return ApplicationSettingsManager
  * Returns the instance of the ApplicationSettingsManager.
+ *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -147,45 +204,19 @@ function application_settings()
  * @return UserSettingsManager
  * Returns the instance of the UserSettingsManager.
  *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - missing_data_error - if the interface or class is not specified.
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the check of the classes and interfaces fails.
+ *
  * @author Oleg Schildt
  */
 function user_settings()
 {
     return singleton(UserSettingsManager::class);
 } // user_settings
-
-/**
- * Short function for reporting the SQL error.
- *
- * It should be called if a SQL query failed.
- *
- * @param DatabaseWorkers\DBWorker $dbw
- * The dbworker used to perform the SQL query.
- *
- * @return false
- * Returns always false.
- *
- * Example:
- *
- * ```php
- * function some_function()
- * {
- *    ...
- *    if(!dbworker()->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
- *    {
- *      return sql_error(dbworker());
- *    }
- *    ...
- * }
- * ```
- *
- * @author Oleg Schildt
- */
-function sql_error($dbw)
-{
-    messenger()->setError(text("ErrQueryFailed", "", false, "SQL query error!"), $dbw->get_last_error() . "\n\n" . $dbw->get_last_query());
-    return false;
-} // sql_error
 
 /**
  * Short function for requesting the dbworker connected to the specified shard.
@@ -195,6 +226,18 @@ function sql_error($dbw)
  *
  * @return \SmartFactory\DatabaseWorkers\DBWorker|null
  * returns DBWorker object or null if the object could not be created.
+ *
+ * @throws SmartException
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - invalid_data_error - if the interface or class does not exist.
+ * - system_error - if the shard was not found.
+ * - system_error - if the check of the classes and interfaces fails.
+ * - system_error - if the php extension is not installed.
+ * - db_missing_type_error - if the database type is not specified.
+ * - db_conn_data_error - if the connection parameters are incomplete.
+ * - db_server_conn_error - if the database server cannot be connected.
+ * - db_not_exists_error - if database does not exists od inaccesible to the user.
  *
  * @author Oleg Schildt
  */

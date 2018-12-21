@@ -369,7 +369,7 @@
 <span class="line" id="287"> 287: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;connection) || !<span class="php-var">$this</span>-&gt;connection) {
 <span class="line" id="288"> 288: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;db_server) || <span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;db_user) || <span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;db_password)) {
 <span class="line" id="289"> 289: </span>                <span class="php-var">$this</span>-&gt;last_error = <span class="php-quote">&quot;No connection data available&quot;</span>;
-<span class="line" id="290"> 290: </span>                <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_data_err&quot;</span>;
+<span class="line" id="290"> 290: </span>                <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_conn_data_error&quot;</span>;
 <span class="line" id="291"> 291: </span>                <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="292"> 292: </span>            }
 <span class="line" id="293"> 293: </span>            
@@ -426,7 +426,7 @@
 <span class="line" id="344"> 344: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
 <span class="line" id="345"> 345: </span>            <span class="php-var">$this</span>-&gt;connection = <span class="php-keyword1">null</span>;
 <span class="line" id="346"> 346: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="347"> 347: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="347"> 347: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="348"> 348: </span>            
 <span class="line" id="349"> 349: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error, E_USER_ERROR);
 <span class="line" id="350"> 350: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
@@ -449,7 +449,7 @@
 <span class="line" id="367"> 367: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(<span class="php-var">$db_name</span>)
 <span class="line" id="368"> 368: </span>    {
 <span class="line" id="369"> 369: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="370"> 370: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="370"> 370: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="371"> 371: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="372"> 372: </span>        }
 <span class="line" id="373"> 373: </span>        
@@ -459,7 +459,7 @@
 <span class="line" id="377"> 377: </span>        
 <span class="line" id="378"> 378: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;execute_query(<span class="php-quote">&quot;USE &quot;</span> . <span class="php-var">$db_name</span>)) {
 <span class="line" id="379"> 379: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="380"> 380: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_err&quot;</span>;
+<span class="line" id="380"> 380: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_not_exists_error&quot;</span>;
 <span class="line" id="381"> 381: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="382"> 382: </span>        }
 <span class="line" id="383"> 383: </span>        
@@ -522,7 +522,7 @@
 <span class="line" id="440"> 440: </span>        <span class="php-var">$this</span>-&gt;last_query = <span class="php-var">$query_string</span>;
 <span class="line" id="441"> 441: </span>        
 <span class="line" id="442"> 442: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="443"> 443: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="443"> 443: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="444"> 444: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="445"> 445: </span>        }
 <span class="line" id="446"> 446: </span>        
@@ -549,7 +549,7 @@
 <span class="line" id="467"> 467: </span>        <span class="php-var">$this</span>-&gt;statement = @sqlsrv_query(<span class="php-var">$this</span>-&gt;connection, <span class="php-var">$query_string</span>, [], <span class="php-var">$options</span>);
 <span class="line" id="468"> 468: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
 <span class="line" id="469"> 469: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="470"> 470: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="470"> 470: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="471"> 471: </span>            
 <span class="line" id="472"> 472: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
 <span class="line" id="473"> 473: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
@@ -575,7 +575,7 @@
 <span class="line" id="493"> 493: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> prepare_query(<span class="php-var">$query_string</span>)
 <span class="line" id="494"> 494: </span>    {
 <span class="line" id="495"> 495: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="496"> 496: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="496"> 496: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="497"> 497: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="498"> 498: </span>        }
 <span class="line" id="499"> 499: </span>        
@@ -631,7 +631,7 @@
 <span class="line" id="549"> 549: </span>        <span class="php-var">$this</span>-&gt;statement = @sqlsrv_prepare(<span class="php-var">$this</span>-&gt;connection, <span class="php-var">$query_string</span> . <span class="php-var">$query_appendix</span>, <span class="php-var">$params</span>, <span class="php-var">$options</span>);
 <span class="line" id="550"> 550: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
 <span class="line" id="551"> 551: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="552"> 552: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="552"> 552: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="553"> 553: </span>            
 <span class="line" id="554"> 554: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
 <span class="line" id="555"> 555: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
@@ -655,7 +655,7 @@
 </span><span class="line" id="573"> 573: </span><span class="php-comment">     *
 </span><span class="line" id="574"> 574: </span><span class="php-comment">     * if(!$dbw-&gt;stream_long_data(&quot;UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1&quot;, $stream))
 </span><span class="line" id="575"> 575: </span><span class="php-comment">     * {
-</span><span class="line" id="576"> 576: </span><span class="php-comment">     *   return sql_error($dbw);
+</span><span class="line" id="576"> 576: </span><span class="php-comment">     *   error reporting ...;
 </span><span class="line" id="577"> 577: </span><span class="php-comment">     * }
 </span><span class="line" id="578"> 578: </span><span class="php-comment">     * ```
 </span><span class="line" id="579"> 579: </span><span class="php-comment">     *
@@ -673,7 +673,7 @@
 <span class="line" id="591"> 591: </span>        }
 <span class="line" id="592"> 592: </span>        
 <span class="line" id="593"> 593: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="594"> 594: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="594"> 594: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="595"> 595: </span>            <span class="php-keyword2">fclose</span>(<span class="php-var">$stream</span>);
 <span class="line" id="596"> 596: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="597"> 597: </span>        }
@@ -694,7 +694,7 @@
 <span class="line" id="612"> 612: </span>        <span class="php-var">$this</span>-&gt;statement = @sqlsrv_prepare(<span class="php-var">$this</span>-&gt;connection, <span class="php-var">$query_string</span>, <span class="php-var">$params</span>, <span class="php-var">$options</span>);
 <span class="line" id="613"> 613: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
 <span class="line" id="614"> 614: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="615"> 615: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="615"> 615: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="616"> 616: </span>            
 <span class="line" id="617"> 617: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
 <span class="line" id="618"> 618: </span>            
@@ -705,7 +705,7 @@
 <span class="line" id="623"> 623: </span>        
 <span class="line" id="624"> 624: </span>        <span class="php-keyword1">if</span> (!@sqlsrv_execute(<span class="php-var">$this</span>-&gt;statement)) {
 <span class="line" id="625"> 625: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="626"> 626: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="626"> 626: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="627"> 627: </span>            
 <span class="line" id="628"> 628: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
 <span class="line" id="629"> 629: </span>            
@@ -752,13 +752,13 @@
 <span class="line" id="670"> 670: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_prepared_query(<span class="php-var">$query_string</span> <span class="php-comment">/* arg list */</span>)
 <span class="line" id="671"> 671: </span>    {
 <span class="line" id="672"> 672: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="673"> 673: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="673"> 673: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="674"> 674: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="675"> 675: </span>        }
 <span class="line" id="676"> 676: </span>        
 <span class="line" id="677"> 677: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;prepared_query) || <span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;statement)) {
 <span class="line" id="678"> 678: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-quote">&quot;no prepared query defined&quot;</span>;
-<span class="line" id="679"> 679: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="679"> 679: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="680"> 680: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="681"> 681: </span>        }
 <span class="line" id="682"> 682: </span>        
@@ -794,7 +794,7 @@
 <span class="line" id="712"> 712: </span>        
 <span class="line" id="713"> 713: </span>        <span class="php-keyword1">if</span> (!@sqlsrv_execute(<span class="php-var">$this</span>-&gt;statement)) {
 <span class="line" id="714"> 714: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="715"> 715: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="715"> 715: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="716"> 716: </span>            
 <span class="line" id="717"> 717: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
 <span class="line" id="718"> 718: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
@@ -819,7 +819,7 @@
 <span class="line" id="737"> 737: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_procedure(<span class="php-var">$procedure</span> <span class="php-comment">/* arg list */</span>)
 <span class="line" id="738"> 738: </span>    {
 <span class="line" id="739"> 739: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="740"> 740: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="740"> 740: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="741"> 741: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="742"> 742: </span>        }
 <span class="line" id="743"> 743: </span>        
@@ -926,7 +926,7 @@
 <span class="line" id="844"> 844: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction()
 <span class="line" id="845"> 845: </span>    {
 <span class="line" id="846"> 846: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="847"> 847: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="847"> 847: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="848"> 848: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="849"> 849: </span>        }
 <span class="line" id="850"> 850: </span>        
@@ -947,7 +947,7 @@
 <span class="line" id="865"> 865: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction()
 <span class="line" id="866"> 866: </span>    {
 <span class="line" id="867"> 867: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="868"> 868: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="868"> 868: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="869"> 869: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="870"> 870: </span>        }
 <span class="line" id="871"> 871: </span>        
@@ -968,7 +968,7 @@
 <span class="line" id="886"> 886: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction()
 <span class="line" id="887"> 887: </span>    {
 <span class="line" id="888"> 888: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="889"> 889: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="889"> 889: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="890"> 890: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="891"> 891: </span>        }
 <span class="line" id="892"> 892: </span>        
@@ -1040,7 +1040,7 @@
 </span><span class="line" id="958"> 958: </span><span class="php-comment">     * ```php
 </span><span class="line" id="959"> 959: </span><span class="php-comment">     * if(!$dbw-&gt;execute_query(&quot;SELECT FIRST_NAME, LAST_NAME FROM USERS&quot;))
 </span><span class="line" id="960"> 960: </span><span class="php-comment">     * {
-</span><span class="line" id="961"> 961: </span><span class="php-comment">     *   return sql_error($dbw);
+</span><span class="line" id="961"> 961: </span><span class="php-comment">     *   error reporting ...;
 </span><span class="line" id="962"> 962: </span><span class="php-comment">     * }
 </span><span class="line" id="963"> 963: </span><span class="php-comment">     *
 </span><span class="line" id="964"> 964: </span><span class="php-comment">     * while($dbw-&gt;fetch_row())
@@ -1056,7 +1056,7 @@
 <span class="line" id="974"> 974: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_row()
 <span class="line" id="975"> 975: </span>    {
 <span class="line" id="976"> 976: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
-<span class="line" id="977"> 977: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;result_err&quot;</span>;
+<span class="line" id="977"> 977: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_result_error&quot;</span>;
 <span class="line" id="978"> 978: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="979"> 979: </span>        }
 <span class="line" id="980"> 980: </span>        
@@ -1113,7 +1113,7 @@
 <span class="line" id="1031">1031: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_array(&amp;<span class="php-var">$rows</span>, <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>)
 <span class="line" id="1032">1032: </span>    {
 <span class="line" id="1033">1033: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
-<span class="line" id="1034">1034: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;result_err&quot;</span>;
+<span class="line" id="1034">1034: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_result_error&quot;</span>;
 <span class="line" id="1035">1035: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="1036">1036: </span>        }
 <span class="line" id="1037">1037: </span>        
@@ -1171,7 +1171,7 @@
 <span class="line" id="1089">1089: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetched_count()
 <span class="line" id="1090">1090: </span>    {
 <span class="line" id="1091">1091: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
-<span class="line" id="1092">1092: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;result_err&quot;</span>;
+<span class="line" id="1092">1092: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_result_error&quot;</span>;
 <span class="line" id="1093">1093: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="1094">1094: </span>        }
 <span class="line" id="1095">1095: </span>        
@@ -1244,7 +1244,7 @@
 <span class="line" id="1162">1162: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> insert_id()
 <span class="line" id="1163">1163: </span>    {
 <span class="line" id="1164">1164: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;connection) {
-<span class="line" id="1165">1165: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;conn_err&quot;</span>;
+<span class="line" id="1165">1165: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_server_conn_error&quot;</span>;
 <span class="line" id="1166">1166: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="1167">1167: </span>        }
 <span class="line" id="1168">1168: </span>        
@@ -1255,7 +1255,7 @@
 <span class="line" id="1173">1173: </span>            
 <span class="line" id="1174">1174: </span>            <span class="php-keyword1">if</span> (!sqlsrv_next_result(<span class="php-var">$this</span>-&gt;statement)) {
 <span class="line" id="1175">1175: </span>                <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="1176">1176: </span>                <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="1176">1176: </span>                <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="1177">1177: </span>                
 <span class="line" id="1178">1178: </span>                <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error, E_USER_ERROR);
 <span class="line" id="1179">1179: </span>                <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
@@ -1273,14 +1273,14 @@
 <span class="line" id="1191">1191: </span>        <span class="php-var">$this</span>-&gt;statement = @sqlsrv_query(<span class="php-var">$this</span>-&gt;connection, <span class="php-quote">&quot;SELECT SCOPE_IDENTITY() AS IID&quot;</span>);
 <span class="line" id="1192">1192: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
 <span class="line" id="1193">1193: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="1194">1194: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="1194">1194: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="1195">1195: </span>            
 <span class="line" id="1196">1196: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error, E_USER_ERROR);
 <span class="line" id="1197">1197: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="1198">1198: </span>        }
 <span class="line" id="1199">1199: </span>        
 <span class="line" id="1200">1200: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;fetch_row()) {
-<span class="line" id="1201">1201: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;query_err&quot;</span>;
+<span class="line" id="1201">1201: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_query_error&quot;</span>;
 <span class="line" id="1202">1202: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="1203">1203: </span>        }
 <span class="line" id="1204">1204: </span>        
@@ -1378,14 +1378,14 @@
 <span class="line" id="1296">1296: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(<span class="php-var">$num</span>)
 <span class="line" id="1297">1297: </span>    {
 <span class="line" id="1298">1298: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
-<span class="line" id="1299">1299: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;result_err&quot;</span>;
+<span class="line" id="1299">1299: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_result_error&quot;</span>;
 <span class="line" id="1300">1300: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
 <span class="line" id="1301">1301: </span>        }
 <span class="line" id="1302">1302: </span>        
 <span class="line" id="1303">1303: </span>        <span class="php-var">$info</span> = @sqlsrv_field_metadata(<span class="php-var">$this</span>-&gt;statement);
 <span class="line" id="1304">1304: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$info</span>) {
 <span class="line" id="1305">1305: </span>            <span class="php-var">$this</span>-&gt;last_error = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="1306">1306: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;result_err&quot;</span>;
+<span class="line" id="1306">1306: </span>            <span class="php-var">$this</span>-&gt;last_error_id = <span class="php-quote">&quot;db_result_error&quot;</span>;
 <span class="line" id="1307">1307: </span>            
 <span class="line" id="1308">1308: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$this</span>-&gt;last_error, E_USER_ERROR);
 <span class="line" id="1309">1309: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
@@ -1541,7 +1541,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>
