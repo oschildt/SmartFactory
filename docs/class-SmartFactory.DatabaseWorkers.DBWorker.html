@@ -1772,7 +1772,7 @@ any error returns false.</p>
 <p>Example:</p>
 <pre><code class="language-php"><span class="php-keyword1">if</span>(!<span class="php-var">$dbw</span>-&gt;execute_query(<span class="php-quote">&quot;SELECT FIRST_NAME, LAST_NAME FROM USERS&quot;</span>))
 {
-  <span class="php-keyword1">return</span> sql_error(<span class="php-var">$dbw</span>);
+  error reporting ...;
 }
 
 <span class="php-keyword1">while</span>(<span class="php-var">$dbw</span>-&gt;fetch_row())
@@ -3274,7 +3274,7 @@ otherwise the name of the database object remains unchanged.</p>
 
 <span class="php-keyword1">if</span>(!<span class="php-var">$dbw</span>-&gt;stream_long_data(<span class="php-quote">&quot;UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1&quot;</span>, <span class="php-var">$stream</span>))
 {
-  <span class="php-keyword1">return</span> sql_error(<span class="php-var">$dbw</span>);
+  error reporting ...;
 }</code></pre>
       </div>
       
@@ -3379,7 +3379,7 @@ otherwise the name of the database object remains unchanged.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>

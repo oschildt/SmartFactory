@@ -6,7 +6,7 @@
 - Designed based on IoC 
 
 For more details see [Presentation](http://php-smart-factory.org/smartfactory_presentation.pdf) and
-[API documentation](http://php-smart-factory.org/docs/).
+[API documentation](http://php-smart-factory.org/smartfactory/).
 
 ### Requirements
 
@@ -26,14 +26,14 @@ composer require smartfactory/smartfactory"
 
   "require": {
     "php": ">=7.2",
-    "smartfactory/smartfactory": ">=1.1.9"
+    "smartfactory/smartfactory": ">=2.0.0"
   }
   
   ...
 }
 ```
 
-### To get familiar with the SmartFactory do the following
+### To get familiar with the SmartFactory do the following:
 
 - Git-clone the demo application [SmartFactoryDemo](https://github.com/oschildt/SmartFactoryDemo) and run 'composer update'.
 - Use the script database/create_database_mysql.sql (create_database_mssql.sql) to create a demo database necessary for some examples.
@@ -52,7 +52,7 @@ composer require smartfactory/smartfactory"
 
 5. Implement you business logic in the root directory or any subdirectory. 
 
-7. Implement the API request handles for JSON or XML if necessary.
+7. Implement the API request handlers for JSON or XML requests if necessary.
 
 8. Add translation texts for your application over the localization/edit.php or directly into the XML file localization/texts.xml.  Use the script localization/check.php to check your translations for duplicates and missing translations.
 
@@ -72,7 +72,7 @@ src
 This directory contains the documentation about classes, interfaces and functions of the library SmartFactory.
 
 ### src
-This is the root directory for all classes and interfaces. The class loader is implemented based on PSR4 approach. You have no need to add additional class loader function for your classes.
+This is the root directory for all classes and interfaces. The class loader is implemented based on PSR4 approach. You have no need to add additional class loader function.
 
 ### src/SmartFactory
 This directory contains the core classes and interfaces of the library SmartFactory.

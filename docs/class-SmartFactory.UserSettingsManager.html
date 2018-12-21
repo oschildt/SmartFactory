@@ -290,16 +290,6 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#basic_check">basic_check</a>
-          </td>
-          <td class="description_column">
-              This is internal auxiliary function for checking that the settings
-manager is intialized correctly.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="#getContext">getContext</a>
           </td>
           <td class="description_column">
@@ -415,6 +405,16 @@ to the target user table defined by the iniailization.
           </td>
           <td class="description_column">
               Sets the validator for the settings.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#validateParameters">validateParameters</a>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for checking that the settings
+manager is intialized correctly.
           </td>
       </tr>
       
@@ -801,57 +801,7 @@ written to the storage by saving.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#308">SmartFactory\UserSettingsManager.php</a>
-
-  
-
-  
-
-  
-  
-  
-  <hr id="basic_check">
-  
-  <h1>Method: basic_check</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>basic_check</b>() : boolean</div>
-
-  
-  <div class="short-description">
-  This is internal auxiliary function for checking that the settings
-manager is intialized correctly.
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
-  
-  <div class="param-description">
-  <p>It should return true if the settings manager is intialized correctly, otherwise false.</p>
-  </div>
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#132">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#323">SmartFactory\UserSettingsManager.php</a>
 
   
 
@@ -915,7 +865,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#460">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#475">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1010,7 +960,7 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#533">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#548">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1069,7 +1019,7 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#410">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#425">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1128,7 +1078,7 @@ the user record.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#176">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#181">SmartFactory\UserSettingsManager.php</a>
 
   
 
@@ -1223,7 +1173,7 @@ the user record.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#354">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#369">SmartFactory\UserSettingsManager.php</a>
 
   
 
@@ -1287,7 +1237,7 @@ If $global is true, the dirty state is checked globally.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#477">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#492">SmartFactory\UserSettingsManager.php</a>
 
   
 
@@ -1323,6 +1273,23 @@ If $global is true, the dirty state is checked globally.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -1339,7 +1306,7 @@ If $global is true, the dirty state is checked globally.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#586">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#609">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1394,6 +1361,20 @@ defined by the iniailization.
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -1407,7 +1388,7 @@ defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#274">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#289">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1450,6 +1431,23 @@ defined by the iniailization.
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -1466,7 +1464,7 @@ defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#622">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#651">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1521,6 +1519,20 @@ to the target user table defined by the iniailization.
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -1534,7 +1546,7 @@ to the target user table defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#218">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#228">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1612,7 +1624,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#436">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#451">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1686,7 +1698,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#501">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#516">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1752,7 +1764,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#394">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#409">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1763,6 +1775,72 @@ db_connection_settings etc.</p>
   <a href="class-SmartFactory.UserSettingsManager.html#validateSettings">\SmartFactory\UserSettingsManager::validateSettings()</a><br>
   
   </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="validateParameters">
+  
+  <h1>Method: validateParameters</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>validateParameters</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for checking that the settings
+manager is intialized correctly.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the settings manager is intialized correctly, otherwise false.</p>
+  </div>
+  
+  
+
+  
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+</ul><br>
+      
+  
+  </div>
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.UserSettingsManager.html#139">SmartFactory\UserSettingsManager.php</a>
+
   
 
   
@@ -1820,7 +1898,7 @@ the validator validate the settings.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#567">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#582">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1850,7 +1928,7 @@ the validator validate the settings.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>

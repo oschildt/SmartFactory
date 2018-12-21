@@ -219,16 +219,6 @@ to uniquely identify a record.
       
       <tr>
           <td>
-              <a href="#basic_check">basic_check</a>
-          </td>
-          <td class="description_column">
-              This is internal auxiliary function for checking that the recordset manager
-is intialized correctly.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="#defineTableMapping">defineTableMapping</a>
           </td>
           <td class="description_column">
@@ -299,6 +289,16 @@ $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into 
           </td>
           <td class="description_column">
               Sets the dbworker to be used for working with the database.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#validateParameters">validateParameters</a>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for checking that the recordset manager
+is intialized correctly.
           </td>
       </tr>
       
@@ -451,56 +451,6 @@ to uniquely identify a record.
 
 
   
-  <hr id="basic_check">
-  
-  <h1>Method: basic_check</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>basic_check</b>() : boolean</div>
-
-  
-  <div class="short-description">
-  This is internal auxiliary function for checking that the recordset manager
-is intialized correctly.
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
-  
-  <div class="param-description">
-  <p>It should return true if the recordset manager is intialized correctly, otherwise false.</p>
-  </div>
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#68">SmartFactory\RecordsetManager.php</a>
-
-  
-
-  
-
-  
-  
-  
   <hr id="defineTableMapping">
   
   <h1>Method: defineTableMapping</h1>
@@ -555,6 +505,22 @@ to uniquely identify a record.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -571,7 +537,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#205">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#225">SmartFactory\RecordsetManager.php</a>
 
   
 
@@ -623,7 +589,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#183">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#196">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -685,6 +651,23 @@ to uniquely identify a record.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -701,7 +684,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#236">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#266">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -773,6 +756,23 @@ to uniquely identify a record.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -789,7 +789,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#289">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#325">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -889,6 +889,23 @@ in the form "field_name" => "value".</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -902,7 +919,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#129">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#142">SmartFactory\RecordsetManager.php</a>
 
   
 
@@ -960,6 +977,23 @@ insert operation.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -976,7 +1010,7 @@ insert operation.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#368">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#410">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1049,6 +1083,23 @@ in the form "field_name" => "value".</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+<li>db_query_error - if the query fails if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -1065,7 +1116,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#519">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#567">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1140,7 +1191,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#168">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#181">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1156,12 +1207,78 @@ in the form "field_name" => "value".</p>
   
   
   
+  <hr id="validateParameters">
+  
+  <h1>Method: validateParameters</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>validateParameters</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for checking that the recordset manager
+is intialized correctly.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should return true if the recordset manager is intialized correctly, otherwise false.</p>
+  </div>
+  
+  
+
+  
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if some parameters are missing.</li>
+<li>invalid_data_error - if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>invalid_data_error - if some parameters are not of the proper type.</li>
+</ul><br>
+      
+  
+  </div>
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#75">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  
 
 
 
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>

@@ -330,7 +330,7 @@ abstract class DBWorker implements IInitable
      *
      * if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
      * {
-     *   return sql_error($dbw);
+     *   error reporting ...;
      * }
      * ```
      *
@@ -430,7 +430,7 @@ abstract class DBWorker implements IInitable
      * ```php
      * if(!$dbw->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
      * {
-     *   return sql_error($dbw);
+     *   error reporting ...;
      * }
      *
      * while($dbw->fetch_row())

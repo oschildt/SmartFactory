@@ -14,8 +14,21 @@ namespace SmartFactory\Interfaces;
  *
  * @author Oleg Schildt
  */
-interface IMessageManager
+interface IMessageManager extends IInitable
 {
+    /**
+     * Initializes the message manager with parameters.
+     *
+     * @param array $parameters
+     * The parameters may vary for each message manager.
+     *
+     * @return boolean
+     * The method should return true upon successful initialization, otherwise false.
+     *
+     * @author Oleg Schildt
+     */
+    public function init($parameters);
+
     /**
      * Sets the element to be focused.
      *

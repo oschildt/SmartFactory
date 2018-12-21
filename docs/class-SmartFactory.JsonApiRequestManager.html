@@ -193,6 +193,16 @@ Oleg Schildt
       
       <tr>
           <td>
+              <a href="#exitWithException">exitWithException</a>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for sending the response in JSON
+format by an exception.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#getApiRequest">getApiRequest</a>
           </td>
           <td class="description_column">
@@ -359,6 +369,63 @@ format.
 
 
   
+  <hr id="exitWithException">
+  
+  <h1>Method: exitWithException</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>exitWithException</b>(\SmartFactory\SmartException &amp;<span class="php-var">$ex</span>) : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for sending the response in JSON
+format by an exception.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$ex</h3>
+      <span class="type_label">Type:</span> <a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a>
+      
+      <div class="param-description">
+      <p>The thrown exception.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#98">SmartFactory\JsonApiRequestManager.php</a>
+
+  
+
+  
+
+  
+  
+  
   <hr id="getApiRequest">
   
   <h1>Method: getApiRequest</h1>
@@ -399,7 +466,7 @@ format.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#95">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#121">SmartFactory\JsonApiRequestManager.php</a>
 
   
 
@@ -432,6 +499,20 @@ for this API request.
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>system_error - if the creation of the handler fails.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -445,7 +526,7 @@ for this API request.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#255">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#305">SmartFactory\JsonApiRequestManager.php</a>
 
   
 
@@ -512,6 +593,21 @@ comes.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>missing_data_error - if the request name is not specified.</li>
+<li>system_error - if the request already has a handler.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -525,7 +621,7 @@ comes.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#144">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#176">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -588,6 +684,20 @@ comes.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>invalid_data_error - if the request already has a handler.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -601,7 +711,7 @@ comes.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#240">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#285">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -664,6 +774,20 @@ comes.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>invalid_data_error - if the request already has a handler.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -677,7 +801,7 @@ comes.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#213">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#253">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -742,6 +866,20 @@ a setting value and return the maintenance json for all requests.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>invalid_data_error - if the request already has a handler.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
@@ -755,7 +893,7 @@ a setting value and return the maintenance json for all requests.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.JsonApiRequestManager.html#186">SmartFactory\JsonApiRequestManager.php</a>
+  <a href="source-SmartFactory.JsonApiRequestManager.html#221">SmartFactory\JsonApiRequestManager.php</a>
 
   
   <h2>See also</h2>
@@ -892,7 +1030,7 @@ and need not be listed explicitly.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-12 20:10
+                        Generated on 2018-12-21 08:31
                     </div>                    
                 </div>
             </div>

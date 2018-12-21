@@ -67,6 +67,13 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the adding was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the event name is not specified.
+     * - invalid_data_error - if the event handler is not valid.
+     * - system_error - if the creation of the handler fails.
+     *
      * @see deleteHandler()
      * @see deleteHandlers()
      * @see deleteAllHandlers()
@@ -76,14 +83,18 @@ class EventManager implements IEventManager
     public function addHandler($event, $handler)
     {
         if (empty($event)) {
-            return false;
+            throw new SmartException("Event is not specified!", "missing_data_error");
         }
         
-        if (!is_callable($handler)) {
-            return false;
+        if (!is_callable($handler, true)) {
+            throw new SmartException("Event handler is not valid!", "invalid_data_error");
         }
         
-        $f = new \ReflectionFunction($handler);
+        try {
+            $f = new \ReflectionFunction($handler);
+        } catch (\Exception $ex) {
+            throw new SmartException($ex->getMessage(), "system_error");
+        }
         
         self::$event_table[$event][$f->__toString()] = $f;
         
@@ -102,6 +113,13 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the deletion was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the event name is not specified.
+     * - invalid_data_error - if the event handler is not valid.
+     * - system_error - if the creation of the handler fails.
+     *
      * @see addHandler()
      * @see deleteHandlers()
      * @see deleteAllHandlers()
@@ -111,14 +129,18 @@ class EventManager implements IEventManager
     public function deleteHandler($event, $handler)
     {
         if (empty($event)) {
-            return false;
+            throw new SmartException("Event is not specified!", "missing_data_error");
         }
         
         if (!is_callable($handler)) {
-            return false;
+            throw new SmartException("Event handler is not valid!", "invalid_data_error");
         }
         
-        $f = new \ReflectionFunction($handler);
+        try {
+            $f = new \ReflectionFunction($handler);
+        } catch (\Exception $ex) {
+            throw new SmartException($ex->getMessage(), "system_error");
+        }
         
         if (isset(self::$event_table[$event][$f->__toString()])) {
             unset(self::$event_table[$event][$f->__toString()]);
@@ -136,6 +158,11 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the deletion was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the event name is not specified.
+     *
      * @see addHandler()
      * @see deleteHandler()
      * @see deleteAllHandlers()
@@ -145,7 +172,7 @@ class EventManager implements IEventManager
     public function deleteHandlers($event)
     {
         if (empty($event)) {
-            return false;
+            throw new SmartException("Event is not specified!", "missing_data_error");
         }
         
         if (isset(self::$event_table[$event])) {
@@ -185,6 +212,11 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the suspesion was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the event name is not specified.
+     *
      * @see resumeEvent()
      * @see resumeAllEvents()
      *
@@ -193,7 +225,7 @@ class EventManager implements IEventManager
     public function suspendEvent($event)
     {
         if (empty($event)) {
-            return false;
+            throw new SmartException("Event is not specified!", "missing_data_error");
         }
         
         self::$suspended_events[$event] = $event;
@@ -210,6 +242,11 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the suspesion was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the event name is not specified.
+     *
      * @see suspendEvent()
      * @see resumeAllEvents()
      *
@@ -218,7 +255,7 @@ class EventManager implements IEventManager
     public function resumeEvent($event)
     {
         if (empty($event)) {
-            return false;
+            throw new SmartException("Event is not specified!", "missing_data_error");
         }
         
         if (isset(self::$suspended_events[$event])) {
@@ -258,12 +295,18 @@ class EventManager implements IEventManager
      * @return int
      * Returns number of the handlers called for this event.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the event name is not specified.
+     * - system_error - if the creation of the handler fails.
+     *
      * @author Oleg Schildt
      */
     public function fireEvent($event, $parameters)
     {
         if (empty($event)) {
-            return false;
+            throw new SmartException("Event is not specified!", "missing_data_error");
         }
         
         if (!empty(self::$suspended_events[$event])) {
@@ -276,9 +319,13 @@ class EventManager implements IEventManager
         
         $cnt = 0;
         
-        foreach (self::$event_table[$event] as $f) {
-            $cnt++;
-            $f->invoke($event, $parameters);
+        try {
+            foreach (self::$event_table[$event] as $f) {
+                $cnt++;
+                $f->invoke($event, $parameters);
+            }
+        } catch (\Exception $ex) {
+            throw new SmartException($ex->getMessage(), "system_error");
         }
         
         return $cnt;

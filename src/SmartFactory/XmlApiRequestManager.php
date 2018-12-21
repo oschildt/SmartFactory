@@ -29,7 +29,7 @@ abstract class XmlApiRequestManager
      *
      * @author Oleg Schildt
      */
-    protected static $handler_table = [];
+    protected $handler_table = [];
     
     /**
      * Parses the incoming XML data of the API request.
@@ -125,21 +125,25 @@ abstract class XmlApiRequestManager
      * @return boolean
      * Returns true if the registration was successfull, otherwise false.
      *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - missing_data_error - if the request name is not specified.
+     * - system_error - if the request already has a handler.
+     *
      * @author Oleg Schildt
      */
     public function registerApiRequestHandler($api_request, $handler_class_name)
     {
         if (empty($api_request)) {
-            trigger_error("The API request is undefined (empty)!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The API request is undefined (empty)!", "missing_data_error");
         }
         
-        if (!empty(self::$handler_table[$api_request])) {
-            trigger_error("A handler for the API request '$api_request' was already registered!", E_USER_ERROR);
-            return false;
+        if (!empty($this->handler_table[$api_request])) {
+            throw new SmartException("The API request '$api_request' has already the handler '" . $this->handler_table[$api_request] . "'!", "system_error");
         }
         
-        self::$handler_table[$api_request] = $handler_class_name;
+        $this->handler_table[$api_request] = $handler_class_name;
         
         return true;
     } // registerApiRequestHandler
@@ -150,6 +154,11 @@ abstract class XmlApiRequestManager
      *
      * @return boolean
      * Returns true if the handling was successfull, otherwise false.
+     *
+     * @throws SmartException
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - system_error - if the creation of the handler fails.
      *
      * @uses IXmlApiRequestHandler
      *
@@ -191,7 +200,7 @@ abstract class XmlApiRequestManager
             return false;
         }
         
-        if (empty(self::$handler_table[$api_request])) {
+        if (empty($this->handler_table[$api_request])) {
             $response_data["errors"] = [
                 [
                     "error_code" => "api_request_no_handler",
@@ -204,13 +213,13 @@ abstract class XmlApiRequestManager
             return false;
         }
         
-        if (!class_exists(self::$handler_table[$api_request])) {
+        if (!class_exists($this->handler_table[$api_request])) {
             $response_data["result"] = "error";
             
             $response_data["errors"] = [
                 [
                     "error_code" => "api_request_class_not_found",
-                    "error_text" => sprintf("The handler class '%s' does not exist!", self::$handler_table[$api_request])
+                    "error_text" => sprintf("The handler class '%s' does not exist!", $this->handler_table[$api_request])
                 ]
             ];
             
@@ -219,7 +228,11 @@ abstract class XmlApiRequestManager
             return false;
         }
         
-        $handler_class = new \ReflectionClass(self::$handler_table[$api_request]);
+        try {
+            $handler_class = new \ReflectionClass($this->handler_table[$api_request]);
+        } catch (\Exception $ex) {
+            throw new SmartException($ex->getMessage(), "system_error");
+        }
         
         if (!$handler_class->isSubclassOf("SmartFactory\Interfaces\IXmlApiRequestHandler")) {
             $response_data["result"] = "error";
@@ -227,7 +240,7 @@ abstract class XmlApiRequestManager
             $response_data["errors"] = [
                 [
                     "error_code" => "api_request_wrong_class",
-                    "error_text" => sprintf("The handler class '%s' does not implement the interface '%s'!", self::$handler_table[$api_request], "IXmlApiRequestHandler")
+                    "error_text" => sprintf("The handler class '%s' does not implement the interface '%s'!", $this->handler_table[$api_request], "IXmlApiRequestHandler")
                 ]
             ];
             
@@ -236,7 +249,11 @@ abstract class XmlApiRequestManager
             return false;
         }
         
-        $handler = $handler_class->newInstance();
+        try {
+            $handler = $handler_class->newInstance();
+        } catch (\Exception $ex) {
+            throw new SmartException($ex->getMessage(), "system_error");
+        }
         
         return $handler->handle($this, $api_request, $xmldoc);
     } // handleApiRequest

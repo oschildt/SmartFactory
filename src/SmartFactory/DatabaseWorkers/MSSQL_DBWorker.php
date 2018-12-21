@@ -287,7 +287,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!isset($this->connection) || !$this->connection) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
                 $this->last_error = "No connection data available";
-                $this->last_error_id = "conn_data_err";
+                $this->last_error_id = "db_conn_data_error";
                 return false;
             }
             
@@ -344,7 +344,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->connection) {
             $this->connection = null;
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             
             trigger_error($this->last_error, E_USER_ERROR);
             return false;
@@ -367,7 +367,7 @@ class MSSQL_DBWorker extends DBWorker
     public function use_database($db_name)
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -377,7 +377,7 @@ class MSSQL_DBWorker extends DBWorker
         
         if (!$this->execute_query("USE " . $db_name)) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_err";
+            $this->last_error_id = "db_not_exists_error";
             return false;
         }
         
@@ -440,7 +440,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->last_query = $query_string;
         
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -467,7 +467,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_query($this->connection, $query_string, [], $options);
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             return false;
@@ -493,7 +493,7 @@ class MSSQL_DBWorker extends DBWorker
     public function prepare_query($query_string)
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -549,7 +549,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_prepare($this->connection, $query_string . $query_appendix, $params, $options);
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             return false;
@@ -573,7 +573,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
      * {
-     *   return sql_error($dbw);
+     *   error reporting ...;
      * }
      * ```
      *
@@ -591,7 +591,7 @@ class MSSQL_DBWorker extends DBWorker
         }
         
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             fclose($stream);
             return false;
         }
@@ -612,7 +612,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_prepare($this->connection, $query_string, $params, $options);
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
@@ -623,7 +623,7 @@ class MSSQL_DBWorker extends DBWorker
         
         if (!@sqlsrv_execute($this->statement)) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
@@ -670,13 +670,13 @@ class MSSQL_DBWorker extends DBWorker
     public function execute_prepared_query($query_string /* arg list */)
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
         if (empty($this->prepared_query) || empty($this->statement)) {
             $this->last_error = "no prepared query defined";
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             return false;
         }
         
@@ -712,7 +712,7 @@ class MSSQL_DBWorker extends DBWorker
         
         if (!@sqlsrv_execute($this->statement)) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             return false;
@@ -737,7 +737,7 @@ class MSSQL_DBWorker extends DBWorker
     public function execute_procedure($procedure /* arg list */)
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -844,7 +844,7 @@ class MSSQL_DBWorker extends DBWorker
     public function start_transaction()
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -865,7 +865,7 @@ class MSSQL_DBWorker extends DBWorker
     public function commit_transaction()
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -886,7 +886,7 @@ class MSSQL_DBWorker extends DBWorker
     public function rollback_transaction()
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -958,7 +958,7 @@ class MSSQL_DBWorker extends DBWorker
      * ```php
      * if(!$dbw->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
      * {
-     *   return sql_error($dbw);
+     *   error reporting ...;
      * }
      *
      * while($dbw->fetch_row())
@@ -974,7 +974,7 @@ class MSSQL_DBWorker extends DBWorker
     public function fetch_row()
     {
         if (!$this->statement) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
@@ -1031,7 +1031,7 @@ class MSSQL_DBWorker extends DBWorker
     public function fetch_array(&$rows, $dimension_keys = null)
     {
         if (!$this->statement) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
@@ -1089,7 +1089,7 @@ class MSSQL_DBWorker extends DBWorker
     public function fetched_count()
     {
         if (!$this->statement) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
@@ -1162,7 +1162,7 @@ class MSSQL_DBWorker extends DBWorker
     public function insert_id()
     {
         if (!$this->connection) {
-            $this->last_error_id = "conn_err";
+            $this->last_error_id = "db_server_conn_error";
             return false;
         }
         
@@ -1173,7 +1173,7 @@ class MSSQL_DBWorker extends DBWorker
             
             if (!sqlsrv_next_result($this->statement)) {
                 $this->last_error = $this->sys_get_errors();
-                $this->last_error_id = "query_err";
+                $this->last_error_id = "db_query_error";
                 
                 trigger_error($this->last_error, E_USER_ERROR);
                 return false;
@@ -1191,14 +1191,14 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_query($this->connection, "SELECT SCOPE_IDENTITY() AS IID");
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             
             trigger_error($this->last_error, E_USER_ERROR);
             return false;
         }
         
         if (!$this->fetch_row()) {
-            $this->last_error_id = "query_err";
+            $this->last_error_id = "db_query_error";
             return false;
         }
         
@@ -1296,14 +1296,14 @@ class MSSQL_DBWorker extends DBWorker
     public function field_info_by_num($num)
     {
         if (!$this->statement) {
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             return false;
         }
         
         $info = @sqlsrv_field_metadata($this->statement);
         if (!$info) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "result_err";
+            $this->last_error_id = "db_result_error";
             
             trigger_error($this->last_error, E_USER_ERROR);
             return false;

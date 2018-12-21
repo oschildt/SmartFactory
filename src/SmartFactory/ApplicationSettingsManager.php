@@ -12,6 +12,7 @@
 namespace SmartFactory;
 
 use SmartFactory\Interfaces\ISettingsManager;
+use SmartFactory\DatabaseWorkers\DBWorker;
 
 /**
  * Class for management of the application settings.
@@ -113,27 +114,34 @@ class ApplicationSettingsManager implements ISettingsManager
      * @return boolean
      * It should return true if the settings manager is intialized correctly, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     *
      * @author Oleg Schildt
      */
-    protected function basic_check()
+    protected function validateParameters()
     {
         if (empty($this->dbworker)) {
-            trigger_error("DBWorker is not defined!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The 'dbworker' is not specified!", "missing_data_error");
+        }
+    
+        if (!$this->dbworker instanceof DBWorker) {
+            throw new SmartException(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class), "invalid_data_error");
         }
         
         if (empty($this->settings_table)) {
-            trigger_error("Settings table is not defined!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The 'settings_table' is not specified!", "missing_data_error");
         }
         
         if (empty($this->settings_column)) {
-            trigger_error("Settings column is not defined!", E_USER_ERROR);
-            return false;
+            throw new SmartException("The 'settings_column' is not specified!", "missing_data_error");
         }
         
         return true;
-    } // basic_check
+    } // validateParameters
     
     /**
      * This is internal auxiliary function for converting the settings to XML and storing it
@@ -145,12 +153,21 @@ class ApplicationSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the data has been successfully saved, otherwise false.
      *
+     * @throws SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - db_query_error - if the query fails if some object names are invalid.
+     *
      * @see loadXMLfromDB()
      *
      * @author Oleg Schildt
      */
     protected function saveXMLtoDB(&$data)
     {
+        $this->validateParameters();
+
         $xmldoc = new \DOMDocument("1.0", "UTF-8");
         $xmldoc->formatOutput = true;
         
@@ -166,7 +183,7 @@ class ApplicationSettingsManager implements ISettingsManager
         $query = "SELECT 1 FROM " . $this->settings_table;
         
         if (!$this->dbworker->execute_query($query)) {
-            return sql_error($this->dbworker);
+            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
         }
         
         $must_insert = true;
@@ -187,7 +204,7 @@ class ApplicationSettingsManager implements ISettingsManager
         }
         
         if (!$this->dbworker->execute_query($query)) {
-            return sql_error($this->dbworker);
+            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
         }
         
         return true;
@@ -203,16 +220,25 @@ class ApplicationSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the data has been successfully loaded, otherwise false.
      *
+     * @throws SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - db_query_error - if the query fails if some object names are invalid.
+     *
      * @see saveXMLtoDB()
      *
      * @author Oleg Schildt
      */
     protected function loadXMLfromDB(&$data)
     {
+        $this->validateParameters();
+
         $query = "SELECT " . $this->settings_column . " FROM " . $this->settings_table;
         
         if (!$this->dbworker->execute_query($query)) {
-            return sql_error($this->dbworker);
+            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
         }
         
         $xml = "";
@@ -264,6 +290,12 @@ class ApplicationSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true upon successful initialization, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     *
      * @author Oleg Schildt
      */
     public function init($parameters)
@@ -271,14 +303,16 @@ class ApplicationSettingsManager implements ISettingsManager
         if (!empty($parameters["dbworker"])) {
             $this->dbworker = $parameters["dbworker"];
         }
+        
         if (!empty($parameters["settings_table"])) {
             $this->settings_table = $parameters["settings_table"];
         }
+        
         if (!empty($parameters["settings_column"])) {
             $this->settings_column = $parameters["settings_column"];
         }
         
-        return true;
+        return $this->validateParameters();
     } // init
     
     /**
@@ -482,16 +516,19 @@ class ApplicationSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the settings have been successfully loaded, otherwise false.
      *
+     * @throws SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - db_query_error - if the query fails if some object names are invalid.
+     *
      * @see saveSettings()
      *
      * @author Oleg Schildt
      */
     public function loadSettings()
     {
-        if (!$this->basic_check()) {
-            return false;
-        }
-        
         if ($this->isDirty(true)) {
             return true;
         }
@@ -513,16 +550,19 @@ class ApplicationSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the settings have been successfully saved, otherwise false.
      *
+     * @throws SmartException
+     * It might throw an exception in the case of any errors:
+     *
+     * - missing_data_error - if some parameters are missing.
+     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - db_query_error - if the query fails if some object names are invalid.
+     *
      * @see loadSettings()
      *
      * @author Oleg Schildt
      */
     public function saveSettings()
     {
-        if (!$this->basic_check()) {
-            return false;
-        }
-        
         $old_dirty_state = $this->temp_settings["__dirty"];
         unset($this->temp_settings["__dirty"]);
         

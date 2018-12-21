@@ -25,6 +25,9 @@ interface ISettingsManager extends IInitable
      * @return boolean
      * The method should return true upon successful initialization, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function init($parameters);
@@ -184,6 +187,9 @@ interface ISettingsManager extends IInitable
      * @return boolean
      * Returns true if the settings have been successfully loaded, otherwise false.
      *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @see saveSettings()
      *
      * @author Oleg Schildt
@@ -195,6 +201,9 @@ interface ISettingsManager extends IInitable
      *
      * @return boolean
      * Returns true if the settings have been successfully saved, otherwise false.
+     *
+     * @throws \SmartFactory\SmartException
+     * It might throw an exception in the case of any errors.
      *
      * @see loadSettings()
      *
