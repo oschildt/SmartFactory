@@ -231,12 +231,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Properties</th></tr>
+      <tr><th colspan="3">Properties</th></tr>
       
       
       <tr>
           <td>
               <a href="#$connection">$connection</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Stores the resource handle of the opened connection.
@@ -247,6 +250,9 @@ Oleg Schildt
           <td>
               <a href="#$db_name">$db_name</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Name of the database.
           </td>
@@ -255,6 +261,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$db_password">$db_password</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Password of the database user.
@@ -265,6 +274,9 @@ Oleg Schildt
           <td>
               <a href="#$db_server">$db_server</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Name or IP address of the server.
           </td>
@@ -274,6 +286,9 @@ Oleg Schildt
           <td>
               <a href="#$db_user">$db_user</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Name of the database user.
           </td>
@@ -282,6 +297,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$field_names">$field_names</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing of the column names
@@ -293,6 +311,9 @@ from the result of the last retrieving query.
           <td>
               <a href="#$is_clone">$is_clone</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Flag property for storing the state whether it is clone or not.
           </td>
@@ -301,6 +322,9 @@ from the result of the last retrieving query.
       <tr>
           <td>
               <a href="#$last_error">$last_error</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This variable stores the last occured error.
@@ -311,6 +335,9 @@ from the result of the last retrieving query.
           <td>
               <a href="#$last_error_id">$last_error_id</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               This variable stores the ID of the last occured error.
           </td>
@@ -319,6 +346,9 @@ from the result of the last retrieving query.
       <tr>
           <td>
               <a href="#$last_query">$last_query</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This variable stores the last executed query.
@@ -329,6 +359,9 @@ from the result of the last retrieving query.
           <td>
               <a href="#$last_query_is_insert">$last_query_is_insert</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Stores the state whether the last query was an insert or not.
           </td>
@@ -338,6 +371,9 @@ from the result of the last retrieving query.
           <td>
               <a href="#$prepared_query">$prepared_query</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing of the last prepared query.
           </td>
@@ -346,6 +382,9 @@ from the result of the last retrieving query.
       <tr>
           <td>
               <a href="#$query_parameters">$query_parameters</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing of the parameters
@@ -357,6 +396,9 @@ of the last prepared query.
           <td>
               <a href="#$row">$row</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing of the current fetched row
 from the result of the last retrieving query.
@@ -366,6 +408,9 @@ from the result of the last retrieving query.
       <tr>
           <td>
               <a href="#$statement">$statement</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Stores the resource handle of the statement
@@ -379,12 +424,15 @@ of the last executed query.
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Methods</th></tr>
+      <tr><th colspan="3">Methods</th></tr>
       
       
       <tr>
           <td>
               <a href="#__construct">__construct</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Constructor.
@@ -395,6 +443,9 @@ of the last executed query.
           <td>
               <a href="#__destruct">__destruct</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Destructor.
           </td>
@@ -403,6 +454,9 @@ of the last executed query.
       <tr>
           <td>
               <a href="#affected_count">affected_count</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the number of the rows affected by the last modification query.
@@ -413,6 +467,9 @@ of the last executed query.
           <td>
               <a href="#clear_messages">clear_messages</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Clears the last stored occured error, its ID and the last executed query.
           </td>
@@ -421,6 +478,9 @@ of the last executed query.
       <tr>
           <td>
               <a href="#close_connection">close_connection</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Closes the currently opened connection.
@@ -431,6 +491,9 @@ of the last executed query.
           <td>
               <a href="#commit_transaction">commit_transaction</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Commits the transation.
           </td>
@@ -439,6 +502,9 @@ of the last executed query.
       <tr>
           <td>
               <a href="#connect">connect</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Establishes the connection to the database using the connection
@@ -450,6 +516,9 @@ settings parameters specified by the initialization.
           <td>
               <a href="#create_clone">create_clone</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Creates a clone of the dbworker that is using the same open
 connection.
@@ -460,6 +529,9 @@ connection.
           <td>
               <a href="#escape">escape</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Escapes the string so that it can be used in the query without causing an error.
           </td>
@@ -468,6 +540,9 @@ connection.
       <tr>
           <td>
               <a href="#execute_prepared_query">execute_prepared_query</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Executes the prepared SQL query.
@@ -478,6 +553,9 @@ connection.
           <td>
               <a href="#execute_procedure">execute_procedure</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Executes the SQL stored procedure.
           </td>
@@ -486,6 +564,9 @@ connection.
       <tr>
           <td>
               <a href="#execute_query">execute_query</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Executes the SQL query.
@@ -496,6 +577,9 @@ connection.
           <td>
               <a href="#fetch_array">fetch_array</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Fetches all rows from the result into an array.
           </td>
@@ -504,6 +588,9 @@ connection.
       <tr>
           <td>
               <a href="#fetch_row">fetch_row</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Fetches the next row of data from the result of the execution of the retrieving query.
@@ -514,6 +601,9 @@ connection.
           <td>
               <a href="#fetched_count">fetched_count</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the number of the rows fetched by the last retrieving query.
           </td>
@@ -522,6 +612,9 @@ connection.
       <tr>
           <td>
               <a href="#field_by_name">field_by_name</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the value of a field specified by name.
@@ -532,6 +625,9 @@ connection.
           <td>
               <a href="#field_by_num">field_by_num</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the value of a field specified by number.
           </td>
@@ -540,6 +636,9 @@ connection.
       <tr>
           <td>
               <a href="#field_count">field_count</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the number of the fields in the result of the last retrieving query.
@@ -550,6 +649,9 @@ connection.
           <td>
               <a href="#field_info_by_num">field_info_by_num</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the meta information about the field as an object with properties.
           </td>
@@ -558,6 +660,9 @@ connection.
       <tr>
           <td>
               <a href="#field_name">field_name</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the name of the field by number.
@@ -568,6 +673,9 @@ connection.
           <td>
               <a href="#format_date">format_date</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Formats the date to a string compatible for the corresponding database.
           </td>
@@ -576,6 +684,9 @@ connection.
       <tr>
           <td>
               <a href="#format_datetime">format_datetime</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Formats the date/time to a string compatible for the corresponding database.
@@ -586,6 +697,9 @@ connection.
           <td>
               <a href="#free_prepared_query">free_prepared_query</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Frees the prepared query.
           </td>
@@ -594,6 +708,9 @@ connection.
       <tr>
           <td>
               <a href="#free_result">free_result</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Frees the result of the previously executed retrieving query.
@@ -604,6 +721,9 @@ connection.
           <td>
               <a href="#get_extension_name">get_extension_name</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the name of the required PHP extension - "sqlsrv".
           </td>
@@ -612,6 +732,9 @@ connection.
       <tr>
           <td>
               <a href="#get_last_error">get_last_error</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the last occured error.
@@ -622,6 +745,9 @@ connection.
           <td>
               <a href="#get_last_error_id">get_last_error_id</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the last occured error ID.
           </td>
@@ -630,6 +756,9 @@ connection.
       <tr>
           <td>
               <a href="#get_last_query">get_last_query</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the last executed query.
@@ -640,6 +769,9 @@ connection.
           <td>
               <a href="#get_rdbms_name">get_rdbms_name</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the name of the supported database - "Microsoft SQL Server".
           </td>
@@ -648,6 +780,9 @@ connection.
       <tr>
           <td>
               <a href="#get_schema">get_schema</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the name of the database schema if applicable.
@@ -658,6 +793,9 @@ connection.
           <td>
               <a href="#init">init</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Initializes the dbworker with connection paramters.
           </td>
@@ -666,6 +804,9 @@ connection.
       <tr>
           <td>
               <a href="#insert_id">insert_id</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the value of the auto increment field by the last insertion.
@@ -676,6 +817,9 @@ connection.
           <td>
               <a href="#is_connected">is_connected</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the connection state.
           </td>
@@ -684,6 +828,9 @@ connection.
       <tr>
           <td>
               <a href="#is_extension_installed">is_extension_installed</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Checks whether the extension (sqlsrv) is installed which is required for work with
@@ -695,6 +842,9 @@ the MySQL database.
           <td>
               <a href="#prepare_query">prepare_query</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Prepares the SQL query with bindable variables.
           </td>
@@ -703,6 +853,9 @@ the MySQL database.
       <tr>
           <td>
               <a href="#qualify_name_with_schema">qualify_name_with_schema</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Completes the name of a database object with the schema name if applicable.
@@ -713,6 +866,9 @@ the MySQL database.
           <td>
               <a href="#rollback_transaction">rollback_transaction</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Rolls back the transation.
           </td>
@@ -721,6 +877,9 @@ the MySQL database.
       <tr>
           <td>
               <a href="#start_transaction">start_transaction</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Starts the transation.
@@ -731,6 +890,9 @@ the MySQL database.
           <td>
               <a href="#stream_long_data">stream_long_data</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Stores long data from a stream.
           </td>
@@ -740,6 +902,9 @@ the MySQL database.
           <td>
               <a href="#sys_get_errors">sys_get_errors</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Retrieves the last errors ocurend while execution of the query.
           </td>
@@ -748,6 +913,9 @@ the MySQL database.
       <tr>
           <td>
               <a href="#use_database">use_database</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Sets the a database as working database.
@@ -4004,7 +4172,7 @@ otherwise the name of the database object remains unchanged.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

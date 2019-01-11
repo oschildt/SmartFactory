@@ -161,12 +161,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Properties</th></tr>
+      <tr><th colspan="3">Properties</th></tr>
       
       
       <tr>
           <td>
               <a href="#$app_root">$app_root</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the application root.
@@ -177,6 +180,9 @@ Oleg Schildt
           <td>
               <a href="#$last_error">$last_error</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing the last error.
           </td>
@@ -186,6 +192,9 @@ Oleg Schildt
           <td>
               <a href="#$log_path">$log_path</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing the log path.
           </td>
@@ -194,6 +203,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$trace_disabled">$trace_disabled</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the state of tracing - active or not.
@@ -206,12 +218,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Methods</th></tr>
+      <tr><th colspan="3">Methods</th></tr>
       
       
       <tr>
           <td>
               <a href="#deep_implode">deep_implode</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This is an auxiliary function for generation of the detailed string from the
@@ -223,6 +238,9 @@ function arguments from the standard PHP backtrace (debug_backtrace).
           <td>
               <a href="#disableTrace">disableTrace</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Disables the trace.
           </td>
@@ -231,6 +249,9 @@ function arguments from the standard PHP backtrace (debug_backtrace).
       <tr>
           <td>
               <a href="#enableTrace">enableTrace</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Enables the trace.
@@ -241,6 +262,9 @@ function arguments from the standard PHP backtrace (debug_backtrace).
           <td>
               <a href="#extract_call_stack">extract_call_stack</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Extracts the call stack from the standard PHP backtrace (debug_backtrace).
           </td>
@@ -249,6 +273,9 @@ function arguments from the standard PHP backtrace (debug_backtrace).
       <tr>
           <td>
               <a href="#format_backtrace">format_backtrace</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Formats the standard PHP backtrace (debug_backtrace).
@@ -259,6 +286,9 @@ function arguments from the standard PHP backtrace (debug_backtrace).
           <td>
               <a href="#getLastError">getLastError</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the last error.
           </td>
@@ -267,6 +297,9 @@ function arguments from the standard PHP backtrace (debug_backtrace).
       <tr>
           <td>
               <a href="#handleError">handleError</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               This is the function for handling of the PHP errors. It is set a the
@@ -278,6 +311,9 @@ error handler.
           <td>
               <a href="#init">init</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Initializes the error handler with parameters.
           </td>
@@ -286,6 +322,9 @@ error handler.
       <tr>
           <td>
               <a href="#make_arg_list">make_arg_list</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Generates the detailed string from the function arguments from the
@@ -297,6 +336,9 @@ standard PHP backtrace (debug_backtrace).
           <td>
               <a href="#setLastError">setLastError</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Stores the last error.
           </td>
@@ -306,6 +348,9 @@ standard PHP backtrace (debug_backtrace).
           <td>
               <a href="#trace_message">trace_message</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Traces an error to the standard trace file (logs/trace.log).
           </td>
@@ -314,6 +359,9 @@ standard PHP backtrace (debug_backtrace).
       <tr>
           <td>
               <a href="#traceActive">traceActive</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the state whether the trace is active or not.
@@ -1298,7 +1346,7 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

@@ -165,12 +165,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Properties</th></tr>
+      <tr><th colspan="3">Properties</th></tr>
       
       
       <tr>
           <td>
               <a href="#$handler_table">$handler_table</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal array for storing the handler mappings.
@@ -183,12 +186,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Methods</th></tr>
+      <tr><th colspan="3">Methods</th></tr>
       
       
       <tr>
           <td>
               <a href="#getApiRequest">getApiRequest</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Not implemented in this class since the API call name is defined
@@ -200,6 +206,9 @@ not based on the URL but on a tag name in the incoming XML data.
           <td>
               <a href="#handleApiRequest">handleApiRequest</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Handles an API request call trying to call the handler registered
 for this API request.
@@ -210,6 +219,9 @@ for this API request.
           <td>
               <a href="#parseXML">parseXML</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Parses the incoming XML data of the API request.
           </td>
@@ -218,6 +230,9 @@ for this API request.
       <tr>
           <td>
               <a href="#registerApiRequestHandler">registerApiRequestHandler</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Registers a handler function for an API request call.
@@ -228,6 +243,9 @@ for this API request.
           <td>
               <a href="#reportErrors">reportErrors</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Reports an errors in the response in XML format.
           </td>
@@ -236,6 +254,9 @@ for this API request.
       <tr>
           <td>
               <a href="#sendXMLResponse">sendXMLResponse</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               This is an auxiliary function for sending the response in XML
@@ -719,7 +740,7 @@ format.
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

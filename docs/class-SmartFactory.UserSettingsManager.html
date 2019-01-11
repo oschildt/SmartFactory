@@ -186,12 +186,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Properties</th></tr>
+      <tr><th colspan="3">Properties</th></tr>
       
       
       <tr>
           <td>
               <a href="#$context">$context</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the current context.
@@ -202,6 +205,9 @@ Oleg Schildt
           <td>
               <a href="#$dbworker">$dbworker</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing the dbworker.
           </td>
@@ -210,6 +216,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$settings">$settings</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the array of changed settings values.
@@ -220,6 +229,9 @@ Oleg Schildt
           <td>
               <a href="#$settings_fields">$settings_fields</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal array for storing the target colums for each settings.
           </td>
@@ -228,6 +240,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$temp_settings">$temp_settings</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the array of settings values.
@@ -238,6 +253,9 @@ Oleg Schildt
           <td>
               <a href="#$user_id_field">$user_id_field</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing the field name that identifies the user record.
           </td>
@@ -246,6 +264,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$user_id_getter">$user_id_getter</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the function for getting the ID value of the current user.
@@ -256,6 +277,9 @@ Oleg Schildt
           <td>
               <a href="#$user_table">$user_table</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing the target user table name.
           </td>
@@ -264,6 +288,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$validator">$validator</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the validator.
@@ -276,12 +303,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Methods</th></tr>
+      <tr><th colspan="3">Methods</th></tr>
       
       
       <tr>
           <td>
               <a href="#__construct">__construct</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Constructor.
@@ -292,6 +322,9 @@ Oleg Schildt
           <td>
               <a href="#getContext">getContext</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the current settings context.
           </td>
@@ -300,6 +333,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#getParameter">getParameter</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Returns the value of a settings parameter.
@@ -310,6 +346,9 @@ Oleg Schildt
           <td>
               <a href="#getValidator">getValidator</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the validator for the settings.
           </td>
@@ -318,6 +357,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#getWhereClause">getWhereClause</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This is internal auxiliary function for getting where clause for getting and updating
@@ -329,6 +371,9 @@ the user record.
           <td>
               <a href="#init">init</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Initializes the settings manager parameters.
           </td>
@@ -337,6 +382,9 @@ the user record.
       <tr>
           <td>
               <a href="#isDirty">isDirty</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Checks whether the settings data is dirty (not saved) within a context or globally.
@@ -347,6 +395,9 @@ the user record.
           <td>
               <a href="#loadSettings">loadSettings</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Loads the settings from the target user table.
           </td>
@@ -355,6 +406,9 @@ the user record.
       <tr>
           <td>
               <a href="#loadSettingsData">loadSettingsData</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This is internal auxiliary function for loading the settings from the target user table
@@ -366,6 +420,9 @@ defined by the iniailization.
           <td>
               <a href="#saveSettings">saveSettings</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Saves the settings from to the target user table.
           </td>
@@ -374,6 +431,9 @@ defined by the iniailization.
       <tr>
           <td>
               <a href="#saveSettingsData">saveSettingsData</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This is internal auxiliary function for storing the settings
@@ -385,6 +445,9 @@ to the target user table defined by the iniailization.
           <td>
               <a href="#setContext">setContext</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Sets the settings context.
           </td>
@@ -393,6 +456,9 @@ to the target user table defined by the iniailization.
       <tr>
           <td>
               <a href="#setParameter">setParameter</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Sets a settings parameter.
@@ -403,6 +469,9 @@ to the target user table defined by the iniailization.
           <td>
               <a href="#setValidator">setValidator</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Sets the validator for the settings.
           </td>
@@ -411,6 +480,9 @@ to the target user table defined by the iniailization.
       <tr>
           <td>
               <a href="#validateParameters">validateParameters</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This is internal auxiliary function for checking that the settings
@@ -421,6 +493,9 @@ manager is intialized correctly.
       <tr>
           <td>
               <a href="#validateSettings">validateSettings</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Validates the current settings values.
@@ -1928,7 +2003,7 @@ the validator validate the settings.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

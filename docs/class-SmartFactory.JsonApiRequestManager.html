@@ -161,12 +161,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Properties</th></tr>
+      <tr><th colspan="3">Properties</th></tr>
       
       
       <tr>
           <td>
               <a href="#$handler_table">$handler_table</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal array for storing the handler mappings.
@@ -176,6 +179,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$stop_handling">$stop_handling</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal flag for storing the state whether to do the handling should be stopped.
@@ -188,12 +194,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Methods</th></tr>
+      <tr><th colspan="3">Methods</th></tr>
       
       
       <tr>
           <td>
               <a href="#exitWithException">exitWithException</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               This is an auxiliary function for sending the response in JSON
@@ -205,6 +214,9 @@ format by an exception.
           <td>
               <a href="#getApiRequest">getApiRequest</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Defines the current API request name.
           </td>
@@ -213,6 +225,9 @@ format by an exception.
       <tr>
           <td>
               <a href="#handleApiRequest">handleApiRequest</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Handles an API request call trying to call the handler registered
@@ -224,6 +239,9 @@ for this API request.
           <td>
               <a href="#registerApiRequestHandler">registerApiRequestHandler</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Registers a handler action for an API request call.
           </td>
@@ -232,6 +250,9 @@ for this API request.
       <tr>
           <td>
               <a href="#registerDefaultHandler">registerDefaultHandler</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Registers a handler action that will be executed if no handler is specified for this API request.
@@ -242,6 +263,9 @@ for this API request.
           <td>
               <a href="#registerPostProcessHandler">registerPostProcessHandler</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Registers a handler action that will be executed after the standard handling.
           </td>
@@ -250,6 +274,9 @@ for this API request.
       <tr>
           <td>
               <a href="#registerPreProcessHandler">registerPreProcessHandler</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Registers a handler action that will be executed before any other handlers.
@@ -260,6 +287,9 @@ for this API request.
           <td>
               <a href="#sendJsonResponse">sendJsonResponse</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               This is an auxiliary function for sending the response in JSON
 format.
@@ -269,6 +299,9 @@ format.
       <tr>
           <td>
               <a href="#stopHandling">stopHandling</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               This is an auxiliary function for stopping the handling by subsequent handlers.
@@ -1030,7 +1063,7 @@ and need not be listed explicitly.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

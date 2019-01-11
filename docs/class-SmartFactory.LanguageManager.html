@@ -161,12 +161,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Properties</th></tr>
+      <tr><th colspan="3">Properties</th></tr>
       
       
       <tr>
           <td>
               <a href="#$context">$context</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the current context.
@@ -177,6 +180,9 @@ Oleg Schildt
           <td>
               <a href="#$countries">$countries</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal array for storing the list of country name translations.
           </td>
@@ -185,6 +191,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$current_language">$current_language</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the current language.
@@ -195,6 +204,9 @@ Oleg Schildt
           <td>
               <a href="#$dictionary_loaded">$dictionary_loaded</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing the state whether the dictionary is loaded or not.
           </td>
@@ -203,6 +215,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$languages">$languages</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal array for storing the list of language name translations.
@@ -213,6 +228,9 @@ Oleg Schildt
           <td>
               <a href="#$localization_path">$localization_path</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal variable for storing the path with the localization files.
           </td>
@@ -222,6 +240,9 @@ Oleg Schildt
           <td>
               <a href="#$supported_languages">$supported_languages</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal array for storing the list of supported languages.
           </td>
@@ -230,6 +251,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$texts">$texts</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal array for storing the list of text translations.
@@ -242,12 +266,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Methods</th></tr>
+      <tr><th colspan="3">Methods</th></tr>
       
       
       <tr>
           <td>
               <a href="#detectLanguage">detectLanguage</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               This function should detect the current language based on cookies, browser languages etc.
@@ -258,6 +285,9 @@ Oleg Schildt
           <td>
               <a href="#getContext">getContext</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the current context.
           </td>
@@ -266,6 +296,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#getCountryCode">getCountryCode</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Tries to find the country code by the given name.
@@ -276,6 +309,9 @@ Oleg Schildt
           <td>
               <a href="#getCountryList">getCountryList</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Provides the list of countries for the given language in the form "code" => "translation".
           </td>
@@ -284,6 +320,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#getCountryName">getCountryName</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Provides the text translation for the country name by the code
@@ -295,6 +334,9 @@ for the given langauge.
           <td>
               <a href="#getCurrentLanguage">getCurrentLanguage</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the current language.
           </td>
@@ -303,6 +345,9 @@ for the given langauge.
       <tr>
           <td>
               <a href="#getLanguageCode">getLanguageCode</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Tries to find the language code by the given name.
@@ -313,6 +358,9 @@ for the given langauge.
           <td>
               <a href="#getLanguageList">getLanguageList</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Provides the list of languages for the given language in the form "code" => "translation".
           </td>
@@ -321,6 +369,9 @@ for the given langauge.
       <tr>
           <td>
               <a href="#getLanguageName">getLanguageName</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Provides the text translation for the language name by the code
@@ -332,6 +383,9 @@ for the given langauge.
           <td>
               <a href="#getSupportedLanguages">getSupportedLanguages</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the list of supported languages.
           </td>
@@ -340,6 +394,9 @@ for the given langauge.
       <tr>
           <td>
               <a href="#hasTranslation">hasTranslation</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Checks whether the text translation for the text ID for the given langauge exists.
@@ -350,6 +407,9 @@ for the given langauge.
           <td>
               <a href="#init">init</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Initializes the language manager with parameters.
           </td>
@@ -358,6 +418,9 @@ for the given langauge.
       <tr>
           <td>
               <a href="#loadDictionary">loadDictionary</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               This is internal auxiliary function for loading the translations from the source
@@ -369,6 +432,9 @@ XML file.
           <td>
               <a href="#setCurrentLanguage">setCurrentLanguage</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Sets the current language.
           </td>
@@ -377,6 +443,9 @@ XML file.
       <tr>
           <td>
               <a href="#text">text</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Provides the text translation for the text ID for the given langauge.
@@ -387,6 +456,9 @@ XML file.
           <td>
               <a href="#validateCountryCode">validateCountryCode</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Checks whether the country code is valid (has translation).
           </td>
@@ -395,6 +467,9 @@ XML file.
       <tr>
           <td>
               <a href="#validateLanguageCode">validateLanguageCode</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Checks whether the language code is valid (has translation).
@@ -2015,7 +2090,7 @@ the default langauge is used.</p>
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

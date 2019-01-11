@@ -208,7 +208,7 @@ return the original value without changes.</p>
 
 <span class="php-var">$formatter</span> = <span class="php-keyword1">function</span> (<span class="php-var">$rownum</span>, <span class="php-var">$colnum</span>, <span class="php-var">$colname</span>, <span class="php-var">$val</span>) {
   <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;time_estimation&quot;</span>) <span class="php-keyword1">return</span> format_number(<span class="php-var">$val</span>, <span class="php-num">2</span>);
-  <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;deadline&quot;</span>) <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(text(<span class="php-quote">&quot;DateTimeFormat&quot;</span>), <span class="php-var">$val</span>);
+  <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;deadline&quot;</span>) <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(<span class="php-quote">&quot;Y-m-d H:i&quot;</span>, <span class="php-var">$val</span>);
   <span class="php-keyword1">return</span> <span class="php-var">$val</span>;
 };
 
@@ -269,7 +269,7 @@ Oleg Schildt
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

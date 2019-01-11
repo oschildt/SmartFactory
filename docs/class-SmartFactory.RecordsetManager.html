@@ -168,12 +168,15 @@ Oleg Schildt
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Properties</th></tr>
+      <tr><th colspan="3">Properties</th></tr>
       
       
       <tr>
           <td>
               <a href="#$dbworker">$dbworker</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the dbworker.
@@ -184,6 +187,9 @@ Oleg Schildt
           <td>
               <a href="#$fields">$fields</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               Internal array for storing the target fields.
           </td>
@@ -192,6 +198,9 @@ Oleg Schildt
       <tr>
           <td>
               <a href="#$key_fields">$key_fields</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal array for storing the key fields. These are the fields that are used
@@ -202,6 +211,9 @@ to uniquely identify a record.
       <tr>
           <td>
               <a href="#$table">$table</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               Internal variable for storing the target table name.
@@ -214,12 +226,15 @@ to uniquely identify a record.
 
 
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="2">Methods</th></tr>
+      <tr><th colspan="3">Methods</th></tr>
       
       
       <tr>
           <td>
               <a href="#defineTableMapping">defineTableMapping</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Defines the mappings for working with record sets.
@@ -230,6 +245,9 @@ to uniquely identify a record.
           <td>
               <a href="#getDBWorker">getDBWorker</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Returns the dbworker to be used for working with the database.
           </td>
@@ -239,6 +257,9 @@ to uniquely identify a record.
           <td>
               <a href="#loadRecord">loadRecord</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Loads a record into an array in the form "field_name" => "value".
           </td>
@@ -247,6 +268,9 @@ to uniquely identify a record.
       <tr>
           <td>
               <a href="#loadRecordSet">loadRecordSet</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Loads records into an array in the form $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] =
@@ -258,6 +282,9 @@ to uniquely identify a record.
           <td>
               <a href="#process_subarray">process_subarray</a>
           </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
           <td class="description_column">
               This is internal auxiliary function for saving a record set from an array
 with key field values as array dimensions.
@@ -268,6 +295,9 @@ with key field values as array dimensions.
           <td>
               <a href="#saveRecord">saveRecord</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Saves a record from an array in the form "field_name" => "value" into the table.
           </td>
@@ -276,6 +306,9 @@ with key field values as array dimensions.
       <tr>
           <td>
               <a href="#saveRecordSet">saveRecordSet</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
           </td>
           <td class="description_column">
               Saves records from an array in the form
@@ -287,6 +320,9 @@ $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into 
           <td>
               <a href="#setDBWorker">setDBWorker</a>
           </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
           <td class="description_column">
               Sets the dbworker to be used for working with the database.
           </td>
@@ -295,6 +331,9 @@ $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into 
       <tr>
           <td>
               <a href="#validateParameters">validateParameters</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
               This is internal auxiliary function for checking that the recordset manager
@@ -1278,7 +1317,7 @@ is intialized correctly.
 
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>

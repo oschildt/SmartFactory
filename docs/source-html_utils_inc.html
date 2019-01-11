@@ -928,7 +928,7 @@
 </span><span class="line" id="846">846: </span><span class="php-comment"> *
 </span><span class="line" id="847">847: </span><span class="php-comment"> * $formatter = function ($rownum, $colnum, $colname, $val) { 
 </span><span class="line" id="848">848: </span><span class="php-comment"> *   if($colname == &quot;time_estimation&quot;) return format_number($val, 2);
-</span><span class="line" id="849">849: </span><span class="php-comment"> *   if($colname == &quot;deadline&quot;) return date(text(&quot;DateTimeFormat&quot;), $val);
+</span><span class="line" id="849">849: </span><span class="php-comment"> *   if($colname == &quot;deadline&quot;) return date(&quot;Y-m-d H:i&quot;, $val);
 </span><span class="line" id="850">850: </span><span class="php-comment"> *   return $val;
 </span><span class="line" id="851">851: </span><span class="php-comment"> * };
 </span><span class="line" id="852">852: </span><span class="php-comment"> *
@@ -1044,7 +1044,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2018-12-21 08:31
+                        Generated on 2019-01-11 06:39
                     </div>                    
                 </div>
             </div>
