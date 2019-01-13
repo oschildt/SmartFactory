@@ -142,22 +142,22 @@
 </span><span class="line" id="60"> 60: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="61"> 61: </span><span class="php-comment">     * It should return true if the registering was successful, otherwise false.
 </span><span class="line" id="62"> 62: </span><span class="php-comment">     *
-</span><span class="line" id="63"> 63: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="63"> 63: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="64"> 64: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="65"> 65: </span><span class="php-comment">     *
-</span><span class="line" id="66"> 66: </span><span class="php-comment">     * - missing_data_error - if the shard name is not specified.
-</span><span class="line" id="67"> 67: </span><span class="php-comment">     * - system_error - if the shard name has been already registered.
+</span><span class="line" id="66"> 66: </span><span class="php-comment">     * - if the shard name is not specified.
+</span><span class="line" id="67"> 67: </span><span class="php-comment">     * - if the shard name has been already registered.
 </span><span class="line" id="68"> 68: </span><span class="php-comment">     *
 </span><span class="line" id="69"> 69: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="70"> 70: </span><span class="php-comment">     */</span>
 <span class="line" id="71"> 71: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerShard(<span class="php-var">$shard_name</span>, <span class="php-var">$parameters</span>)
 <span class="line" id="72"> 72: </span>    {
 <span class="line" id="73"> 73: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$shard_name</span>)) {
-<span class="line" id="74"> 74: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \SmartFactory\SmartException(<span class="php-quote">&quot;The shard name is not specified!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="74"> 74: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The shard name is not specified!&quot;</span>);
 <span class="line" id="75"> 75: </span>        }
 <span class="line" id="76"> 76: </span>        
 <span class="line" id="77"> 77: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>])) {
-<span class="line" id="78"> 78: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \SmartFactory\SmartException(<span class="php-quote">&quot;The shard '</span><span class="php-var">$shard_name</span><span class="php-quote">' has been already registered!&quot;</span>, <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="78"> 78: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The shard '</span><span class="php-var">$shard_name</span><span class="php-quote">' has been already registered!&quot;</span>);
 <span class="line" id="79"> 79: </span>        }
 <span class="line" id="80"> 80: </span>        
 <span class="line" id="81"> 81: </span>        <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;parameters&quot;</span>] = <span class="php-var">$parameters</span>;
@@ -180,13 +180,13 @@
 </span><span class="line" id="98"> 98: </span><span class="php-comment">     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
 </span><span class="line" id="99"> 99: </span><span class="php-comment">     * returns DBWorker object or null if the object could not be created.
 </span><span class="line" id="100">100: </span><span class="php-comment">     *
-</span><span class="line" id="101">101: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="101">101: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="102">102: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="103">103: </span><span class="php-comment">     *
-</span><span class="line" id="104">104: </span><span class="php-comment">     * - invalid_data_error - if the interface or class does not exist.
-</span><span class="line" id="105">105: </span><span class="php-comment">     * - system_error - if the shard was not found.
-</span><span class="line" id="106">106: </span><span class="php-comment">     * - system_error - if the check of the classes and interfaces fails.
-</span><span class="line" id="107">107: </span><span class="php-comment">     * - system_error - if the php extension is not installed.
+</span><span class="line" id="104">104: </span><span class="php-comment">     * - if the interface or class does not exist.
+</span><span class="line" id="105">105: </span><span class="php-comment">     * - if the shard was not found.
+</span><span class="line" id="106">106: </span><span class="php-comment">     * - if the check of the classes and interfaces fails.
+</span><span class="line" id="107">107: </span><span class="php-comment">     * - if the php extension is not installed.
 </span><span class="line" id="108">108: </span><span class="php-comment">     * - db_missing_type_error - if the database type is not specified.
 </span><span class="line" id="109">109: </span><span class="php-comment">     * - db_conn_data_error - if the connection parameters are incomplete.
 </span><span class="line" id="110">110: </span><span class="php-comment">     * - db_server_conn_error - if the database server cannot be connected.
@@ -197,7 +197,7 @@
 <span class="line" id="115">115: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> dbshard(<span class="php-var">$shard_name</span>)
 <span class="line" id="116">116: </span>    {
 <span class="line" id="117">117: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$shard_name</span>) || <span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>])) {
-<span class="line" id="118">118: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \SmartFactory\SmartException(<span class="php-quote">&quot;The shard '</span><span class="php-var">$shard_name</span><span class="php-quote">' was not found!&quot;</span>, <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="118">118: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The shard '</span><span class="php-var">$shard_name</span><span class="php-quote">' was not found!&quot;</span>);
 <span class="line" id="119">119: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
 <span class="line" id="120">120: </span>        }
 <span class="line" id="121">121: </span>        
@@ -213,7 +213,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-01-11 06:39
+                        Generated on 2019-01-13 20:28
                     </div>                    
                 </div>
             </div>

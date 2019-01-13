@@ -29,12 +29,12 @@ use SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
  * @return object
  * Returns object of the class bound to the interfase.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @see \SmartFactory\instance()
  *
@@ -57,12 +57,12 @@ function singleton($interface_or_class)
  * @return object
  * Returns object of the class bound to the interface.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @see \SmartFactory\singleton()
  *
@@ -110,12 +110,12 @@ function instance($interface_or_class)
  * @param boolean $singleton
  * If the parameter is true, it ensures that only one instance of this object exists.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
- * - system_error - if the php extension is not installed.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
+ * - if the php extension is not installed.
  * - db_missing_type_error - if the database type is not specified.
  * - db_conn_data_error - if the connection parameters are incomplete.
  * - db_server_conn_error - if the database server cannot be connected.
@@ -129,7 +129,7 @@ function instance($interface_or_class)
 function dbworker($parameters = null, $singleton = true)
 {
     if (empty($parameters["db_type"])) {
-        throw new SmartException("Database type is not specified!", "db_missing_type_error");
+        throw new \Exception("Database type is not specified!", "db_missing_type_error");
     }
     
     $class_name = "SmartFactory\\DatabaseWorkers\\" . $parameters["db_type"] . "_DBWorker";
@@ -137,7 +137,7 @@ function dbworker($parameters = null, $singleton = true)
     $dbworker = FactoryBuilder::getInstance($class_name, $singleton);
     
     if (!$dbworker->is_extension_installed()) {
-        throw new SmartException(sprintf("PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!", $dbworker->get_extension_name(), $dbworker->get_rdbms_name()), "system_error");
+        throw new \Exception(sprintf("PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!", $dbworker->get_extension_name(), $dbworker->get_rdbms_name()));
     }
     
     // do not connect, only object required
@@ -167,11 +167,11 @@ function dbworker($parameters = null, $singleton = true)
     }
     
     if ($dbworker->get_last_error_id() == "db_conn_data_error") {
-        throw new SmartException("No database connection information is available ot it is incomplete!", "db_conn_data_error");
+        throw new \Exception("No database connection information is available ot it is incomplete!", "db_conn_data_error");
     } elseif ($dbworker->get_last_error_id() == "db_server_conn_error") {
-        throw new SmartException("The database server cannot be connected!", "db_server_conn_error");
+        throw new \Exception("The database server cannot be connected!", "db_server_conn_error");
     } elseif ($dbworker->get_last_error_id() == "db_not_exists_error") {
-        throw new SmartException("The database does not exists!", "db_not_exists_error");
+        throw new \Exception("The database does not exists!", "db_not_exists_error");
     }
     
     return null;

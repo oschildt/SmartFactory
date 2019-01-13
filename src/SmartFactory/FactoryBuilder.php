@@ -82,63 +82,63 @@ class FactoryBuilder
      *
      * @return void
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the interface or bound class is not specified.
-     * - invalid_data_error - if the interface or class does not exist.
-     * - invalid_data_error - if the bound class is empty.
-     * - invalid_data_error - if the bound class does not implement the corresponding interface.
-     * - invalid_data_error - if the bound class is not instantiable.
-     * - system_error - if the check of the classes and interfaces fails.
+     * - if the interface or bound class is not specified.
+     * - if the interface or class does not exist.
+     * - if the bound class is empty.
+     * - if the bound class does not implement the corresponding interface.
+     * - if the bound class is not instantiable.
+     * - if the check of the classes and interfaces fails.
      *
      * @author Oleg Schildt
      */
     static public function bindClass($interface_or_class, $class, $init_function = null)
     {
         if (empty($class)) {
-            throw new SmartException("Bound class is empty!", "missing_data_error");
+            throw new \Exception("Bound class is empty!");
         }
         
         if (empty($interface_or_class)) {
-            throw new SmartException("Bound interface or class is empty!", "missing_data_error");
+            throw new \Exception("Bound interface or class is empty!");
         }
         
         if (!interface_exists($interface_or_class) && !class_exists($interface_or_class)) {
-            throw new SmartException(sprintf("The interface or class '%s' does not exist!", $interface_or_class), "invalid_data_error");
+            throw new \Exception(sprintf("The interface or class '%s' does not exist!", $interface_or_class));
         }
         
         if (!class_exists($class)) {
-            throw new SmartException(sprintf("The class '%s' does not exist!", $class), "invalid_data_error");
+            throw new \Exception(sprintf("The class '%s' does not exist!", $class));
         }
         
         try {
             $ic = new \ReflectionClass($interface_or_class);
             $c = new \ReflectionClass($class);
         } catch (\Exception $ex) {
-            throw new SmartException($ex->getMessage(), "system_error");
+            throw new \Exception($ex->getMessage());
         }
         
         if (!$c->isInstantiable()) {
-            throw new SmartException(sprintf("The class '%s' is not instantiable!", $c->getName()), "invalid_data_error");
+            throw new \Exception(sprintf("The class '%s' is not instantiable!", $c->getName()));
         }
         
         if ($c != $ic) {
             if (!$c->isSubclassOf($ic)) {
-                throw new SmartException(sprintf("The class '%s' does not implement the interface '%s'!", $c->getName(), $ic->getName()), "invalid_data_error");
+                throw new \Exception(sprintf("The class '%s' does not implement the interface '%s'!", $c->getName(), $ic->getName()));
             }
         }
         
         $f = null;
         if ($init_function !== null) {
             if (!is_callable($init_function)) {
-                throw new SmartException(sprintf("'%s' is not a function!", $init_function), "invalid_data_error");
+                throw new \Exception(sprintf("'%s' is not a function!", $init_function));
             }
             
             try {
                 $f = new \ReflectionFunction($init_function);
             } catch (\Exception $ex) {
-                throw new SmartException($ex->getMessage(), "system_error");
+                throw new \Exception($ex->getMessage());
             }
         }
         
@@ -163,12 +163,12 @@ class FactoryBuilder
      * @return object
      * Returns object of the class bound to the interface.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the interface or class is not specified.
-     * - invalid_data_error - if the interface or class does not exist.
-     * - system_error - if the check of the classes and interfaces fails.
+     * - if the interface or class is not specified.
+     * - if the interface or class does not exist.
+     * - if the check of the classes and interfaces fails.
      *
      * @used_by \SmartFactory\instance()
      * @used_by \SmartFactory\singleton()
@@ -178,23 +178,23 @@ class FactoryBuilder
     static public function getInstance($interface_or_class, $singleton)
     {
         if (empty($interface_or_class)) {
-            throw new SmartException("Class or interface is not specified!", "missing_data_error");
+            throw new \Exception("Class or interface is not specified!");
         }
         
         if (!interface_exists($interface_or_class) && !class_exists($interface_or_class)) {
-            throw new SmartException(sprintf("The interface or class '%s' does not exist!", $interface_or_class), "invalid_data_error");
+            throw new \Exception(sprintf("The interface or class '%s' does not exist!", $interface_or_class));
         }
         
         try {
             $class = new \ReflectionClass($interface_or_class);
         } catch (\Exception $ex) {
-            throw new SmartException($ex->getMessage(), "system_error");
+            throw new \Exception($ex->getMessage());
         }
         
         $class_name = $class->getName();
         
         if (empty(self::$itable[$class_name])) {
-            throw new SmartException(sprintf("The interface or class '%s' has no bound class!", $class_name), "invalid_data_error");
+            throw new \Exception(sprintf("The interface or class '%s' has no bound class!", $class_name));
         }
         
         try {
@@ -218,7 +218,7 @@ class FactoryBuilder
                 }
             }
         } catch (\Exception $ex) {
-            throw new SmartException($ex->getMessage(), "system_error");
+            throw new \Exception($ex->getMessage());
         }
         
         return self::$singletons[$class_name];

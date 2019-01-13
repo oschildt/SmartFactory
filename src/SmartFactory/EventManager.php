@@ -67,12 +67,12 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the adding was successfull, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the event name is not specified.
-     * - invalid_data_error - if the event handler is not valid.
-     * - system_error - if the creation of the handler fails.
+     * - if the event name is not specified.
+     * - if the event handler is not valid.
+     * - if the creation of the handler fails.
      *
      * @see deleteHandler()
      * @see deleteHandlers()
@@ -83,17 +83,17 @@ class EventManager implements IEventManager
     public function addHandler($event, $handler)
     {
         if (empty($event)) {
-            throw new SmartException("Event is not specified!", "missing_data_error");
+            throw new \Exception("Event is not specified!");
         }
         
         if (!is_callable($handler, true)) {
-            throw new SmartException("Event handler is not valid!", "invalid_data_error");
+            throw new \Exception("Event handler is not valid!");
         }
         
         try {
             $f = new \ReflectionFunction($handler);
         } catch (\Exception $ex) {
-            throw new SmartException($ex->getMessage(), "system_error");
+            throw new \Exception($ex->getMessage());
         }
         
         self::$event_table[$event][$f->__toString()] = $f;
@@ -113,12 +113,12 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the deletion was successfull, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the event name is not specified.
-     * - invalid_data_error - if the event handler is not valid.
-     * - system_error - if the creation of the handler fails.
+     * - if the event name is not specified.
+     * - if the event handler is not valid.
+     * - if the creation of the handler fails.
      *
      * @see addHandler()
      * @see deleteHandlers()
@@ -129,17 +129,17 @@ class EventManager implements IEventManager
     public function deleteHandler($event, $handler)
     {
         if (empty($event)) {
-            throw new SmartException("Event is not specified!", "missing_data_error");
+            throw new \Exception("Event is not specified!");
         }
         
         if (!is_callable($handler)) {
-            throw new SmartException("Event handler is not valid!", "invalid_data_error");
+            throw new \Exception("Event handler is not valid!");
         }
         
         try {
             $f = new \ReflectionFunction($handler);
         } catch (\Exception $ex) {
-            throw new SmartException($ex->getMessage(), "system_error");
+            throw new \Exception($ex->getMessage());
         }
         
         if (isset(self::$event_table[$event][$f->__toString()])) {
@@ -158,10 +158,10 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the deletion was successfull, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the event name is not specified.
+     * - if the event name is not specified.
      *
      * @see addHandler()
      * @see deleteHandler()
@@ -172,7 +172,7 @@ class EventManager implements IEventManager
     public function deleteHandlers($event)
     {
         if (empty($event)) {
-            throw new SmartException("Event is not specified!", "missing_data_error");
+            throw new \Exception("Event is not specified!");
         }
         
         if (isset(self::$event_table[$event])) {
@@ -212,10 +212,10 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the suspesion was successfull, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the event name is not specified.
+     * - if the event name is not specified.
      *
      * @see resumeEvent()
      * @see resumeAllEvents()
@@ -225,7 +225,7 @@ class EventManager implements IEventManager
     public function suspendEvent($event)
     {
         if (empty($event)) {
-            throw new SmartException("Event is not specified!", "missing_data_error");
+            throw new \Exception("Event is not specified!");
         }
         
         self::$suspended_events[$event] = $event;
@@ -242,10 +242,10 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the suspesion was successfull, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the event name is not specified.
+     * - if the event name is not specified.
      *
      * @see suspendEvent()
      * @see resumeAllEvents()
@@ -255,7 +255,7 @@ class EventManager implements IEventManager
     public function resumeEvent($event)
     {
         if (empty($event)) {
-            throw new SmartException("Event is not specified!", "missing_data_error");
+            throw new \Exception("Event is not specified!");
         }
         
         if (isset(self::$suspended_events[$event])) {
@@ -295,18 +295,18 @@ class EventManager implements IEventManager
      * @return int
      * Returns number of the handlers called for this event.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
      *
-     * - missing_data_error - if the event name is not specified.
-     * - system_error - if the creation of the handler fails.
+     * - if the event name is not specified.
+     * - if the creation of the handler fails.
      *
      * @author Oleg Schildt
      */
     public function fireEvent($event, $parameters)
     {
         if (empty($event)) {
-            throw new SmartException("Event is not specified!", "missing_data_error");
+            throw new \Exception("Event is not specified!");
         }
         
         if (!empty(self::$suspended_events[$event])) {
@@ -325,7 +325,7 @@ class EventManager implements IEventManager
                 $f->invoke($event, $parameters);
             }
         } catch (\Exception $ex) {
-            throw new SmartException($ex->getMessage(), "system_error");
+            throw new \Exception($ex->getMessage());
         }
         
         return $cnt;

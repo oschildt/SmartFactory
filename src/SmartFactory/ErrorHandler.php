@@ -75,11 +75,11 @@ class ErrorHandler implements IErrorHandler
      * @return boolean
      * Returns true upon successful initialization, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the log path is not specified.
-     * - system_error - if the trace file is not writable.
+     * - if the log path is not specified.
+     * - if the trace file is not writable.
      *
      * @author Oleg Schildt
      */
@@ -90,7 +90,7 @@ class ErrorHandler implements IErrorHandler
         }
         
         if (empty($parameters["log_path"])) {
-            throw new SmartException("Log path is not specified!", "missing_data_error");
+            throw new \Exception("Log path is not specified!");
         }
         
         $this->log_path = $parameters["log_path"];
@@ -98,7 +98,7 @@ class ErrorHandler implements IErrorHandler
         $file = $this->log_path . "trace.log";
         
         if (!file_exists($this->log_path) || !is_writable($this->log_path) || (file_exists($file) && !is_writable($file))) {
-            throw new SmartException(sprintf("The trace file '%s' is not writable!", $file), "system_error");
+            throw new \Exception(sprintf("The trace file '%s' is not writable!", $file));
         }
         
         return true;
@@ -272,10 +272,10 @@ class ErrorHandler implements IErrorHandler
      * @return boolean
      * Returns true if the message has been successfully trace, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - system_error - if the trace file is not writable.
+     * - if the trace file is not writable.
      *
      * @author Oleg Schildt
      */
@@ -294,7 +294,7 @@ class ErrorHandler implements IErrorHandler
                 "----------------------------------------------------------\r\n" .
                 "\r\n\r\n", 3, $file);
         } else {
-            throw new SmartException(sprintf("The trace file '%s' is not writable!", $file), "system_error");
+            throw new \Exception(sprintf("The trace file '%s' is not writable!", $file));
         }
     } // trace_message
     

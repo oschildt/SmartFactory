@@ -26,7 +26,7 @@ composer require smartfactory/smartfactory"
 
   "require": {
     "php": ">=7.2",
-    "smartfactory/smartfactory": ">=2.0.2"
+    "smartfactory/smartfactory": ">=2.0.3"
   }
   
   ...

@@ -40,12 +40,12 @@ use SmartFactory\Interfaces\IShardManager;
  * Returns the translation text or the $text_id if no translation
  * is found.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -60,12 +60,12 @@ function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
  * @return IMessageManager
  * Returns the instance of the IMessageManager.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -80,12 +80,12 @@ function messenger()
  * @return ISessionManager
  * Returns the instance of the ISessionManager.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -100,12 +100,12 @@ function session()
  * @return IDebugProfiler
  * Returns the instance of the IDebugProfiler.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -123,13 +123,13 @@ function debugger()
  * @return boolean
  * Returns true if the message has been successfully logged, otherwise false.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
- * - system_error - if the debug file is not writable.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
+ * - if the debug file is not writable.
  *
  * @author Oleg Schildt
  */
@@ -144,12 +144,12 @@ function debug_message($msg)
  * @return IEventManager
  * Returns the instance of the IEventManager.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -164,12 +164,12 @@ function event()
  * @return ConfigSettingsManager
  * Returns the instance of the ConfigSettingsManager.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -184,12 +184,12 @@ function config_settings()
  * @return ApplicationSettingsManager
  * Returns the instance of the ApplicationSettingsManager.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -204,12 +204,12 @@ function application_settings()
  * @return UserSettingsManager
  * Returns the instance of the UserSettingsManager.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - missing_data_error - if the interface or class is not specified.
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the check of the classes and interfaces fails.
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
  *
  * @author Oleg Schildt
  */
@@ -227,13 +227,13 @@ function user_settings()
  * @return \SmartFactory\DatabaseWorkers\DBWorker|null
  * returns DBWorker object or null if the object could not be created.
  *
- * @throws SmartException
+ * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
- * - invalid_data_error - if the interface or class does not exist.
- * - system_error - if the shard was not found.
- * - system_error - if the check of the classes and interfaces fails.
- * - system_error - if the php extension is not installed.
+ * - if the interface or class does not exist.
+ * - if the shard was not found.
+ * - if the check of the classes and interfaces fails.
+ * - if the php extension is not installed.
  * - db_missing_type_error - if the database type is not specified.
  * - db_conn_data_error - if the connection parameters are incomplete.
  * - db_server_conn_error - if the database server cannot be connected.

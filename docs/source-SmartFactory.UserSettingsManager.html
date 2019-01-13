@@ -212,43 +212,43 @@
 </span><span class="line" id="130">130: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="131">131: </span><span class="php-comment">     * It should return true if the settings manager is intialized correctly, otherwise false.
 </span><span class="line" id="132">132: </span><span class="php-comment">     *
-</span><span class="line" id="133">133: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="133">133: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="134">134: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="135">135: </span><span class="php-comment">     *
-</span><span class="line" id="136">136: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="137">137: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="138">138: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
+</span><span class="line" id="136">136: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="137">137: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="138">138: </span><span class="php-comment">     * - if some parameters are not of the proper type.
 </span><span class="line" id="139">139: </span><span class="php-comment">     *
 </span><span class="line" id="140">140: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="141">141: </span><span class="php-comment">     */</span>
 <span class="line" id="142">142: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters()
 <span class="line" id="143">143: </span>    {
 <span class="line" id="144">144: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;dbworker)) {
-<span class="line" id="145">145: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The 'dbworker' is not specified!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="145">145: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The 'dbworker' is not specified!&quot;</span>);
 <span class="line" id="146">146: </span>        }
 <span class="line" id="147">147: </span>    
 <span class="line" id="148">148: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker <span class="php-keyword1">instanceof</span> DBWorker) {
-<span class="line" id="149">149: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The 'dbworker' does not extends the class '%s'!&quot;</span>, DBWorker::<span class="php-keyword1">class</span>), <span class="php-quote">&quot;invalid_data_error&quot;</span>);
+<span class="line" id="149">149: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The 'dbworker' does not extends the class '%s'!&quot;</span>, DBWorker::<span class="php-keyword1">class</span>));
 <span class="line" id="150">150: </span>        }
 <span class="line" id="151">151: </span>
 <span class="line" id="152">152: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;user_table)) {
-<span class="line" id="153">153: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The 'user_table' is not defined!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="153">153: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The 'user_table' is not defined!&quot;</span>);
 <span class="line" id="154">154: </span>        }
 <span class="line" id="155">155: </span>        
 <span class="line" id="156">156: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;settings_fields)) {
-<span class="line" id="157">157: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The 'settings_fields' are not defined!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="157">157: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The 'settings_fields' are not defined!&quot;</span>);
 <span class="line" id="158">158: </span>        }
 <span class="line" id="159">159: </span>    
 <span class="line" id="160">160: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;user_id_field)) {
-<span class="line" id="161">161: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The 'user_id_field' is not defined!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="161">161: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The 'user_id_field' is not defined!&quot;</span>);
 <span class="line" id="162">162: </span>        }
 <span class="line" id="163">163: </span>    
 <span class="line" id="164">164: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;user_id_getter)) {
-<span class="line" id="165">165: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The function 'user_id_getter' or user id retrieval is not defined!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="165">165: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The function 'user_id_getter' or user id retrieval is not defined!&quot;</span>);
 <span class="line" id="166">166: </span>        }
 <span class="line" id="167">167: </span>        
 <span class="line" id="168">168: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">is_array</span>(<span class="php-var">$this</span>-&gt;settings_fields)) {
-<span class="line" id="169">169: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;Settings fields 'settings_fields' must be an array - field =&gt; type!&quot;</span>, <span class="php-quote">&quot;invalid_data_error&quot;</span>);
+<span class="line" id="169">169: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;Settings fields 'settings_fields' must be an array - field =&gt; type!&quot;</span>);
 <span class="line" id="170">170: </span>        }
 <span class="line" id="171">171: </span>        
 <span class="line" id="172">172: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
@@ -301,10 +301,10 @@
 </span><span class="line" id="219">219: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="220">220: </span><span class="php-comment">     * Returns true if the data has been successfully saved, otherwise false.
 </span><span class="line" id="221">221: </span><span class="php-comment">     *
-</span><span class="line" id="222">222: </span><span class="php-comment">     * @throws SmartException
+</span><span class="line" id="222">222: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="223">223: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="224">224: </span><span class="php-comment">     *
-</span><span class="line" id="225">225: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="225">225: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="226">226: </span><span class="php-comment">     *
 </span><span class="line" id="227">227: </span><span class="php-comment">     * @see loadSettingsData()
 </span><span class="line" id="228">228: </span><span class="php-comment">     *
@@ -346,7 +346,7 @@
 <span class="line" id="264">264: </span>        <span class="php-var">$query</span> .= <span class="php-var">$this</span>-&gt;getWhereClause();
 <span class="line" id="265">265: </span>        
 <span class="line" id="266">266: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="267">267: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;db_query_error&quot;</span>);
+<span class="line" id="267">267: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
 <span class="line" id="268">268: </span>        }
 <span class="line" id="269">269: </span>        
 <span class="line" id="270">270: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
@@ -362,10 +362,10 @@
 </span><span class="line" id="280">280: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="281">281: </span><span class="php-comment">     * Returns true if the data has been successfully loaded, otherwise false.
 </span><span class="line" id="282">282: </span><span class="php-comment">     *
-</span><span class="line" id="283">283: </span><span class="php-comment">     * @throws SmartException
+</span><span class="line" id="283">283: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="284">284: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="285">285: </span><span class="php-comment">     *
-</span><span class="line" id="286">286: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="286">286: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="287">287: </span><span class="php-comment">     *
 </span><span class="line" id="288">288: </span><span class="php-comment">     * @see saveSettingsData()
 </span><span class="line" id="289">289: </span><span class="php-comment">     *
@@ -382,7 +382,7 @@
 <span class="line" id="300">300: </span>        <span class="php-var">$query</span> .= <span class="php-var">$this</span>-&gt;getWhereClause();
 <span class="line" id="301">301: </span>        
 <span class="line" id="302">302: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="303">303: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;db_query_error&quot;</span>);
+<span class="line" id="303">303: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
 <span class="line" id="304">304: </span>        }
 <span class="line" id="305">305: </span>        
 <span class="line" id="306">306: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;dbworker-&gt;fetch_row()) {
@@ -679,13 +679,13 @@
 </span><span class="line" id="597">597: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="598">598: </span><span class="php-comment">     * Returns true if the settings have been successfully loaded, otherwise false.
 </span><span class="line" id="599">599: </span><span class="php-comment">     *
-</span><span class="line" id="600">600: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="600">600: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="601">601: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="602">602: </span><span class="php-comment">     *
-</span><span class="line" id="603">603: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="604">604: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="605">605: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
-</span><span class="line" id="606">606: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="603">603: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="604">604: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="605">605: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="606">606: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="607">607: </span><span class="php-comment">     *
 </span><span class="line" id="608">608: </span><span class="php-comment">     * @see saveSettings()
 </span><span class="line" id="609">609: </span><span class="php-comment">     *
@@ -721,13 +721,13 @@
 </span><span class="line" id="639">639: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="640">640: </span><span class="php-comment">     * Returns true if the settings have been successfully saved, otherwise false.
 </span><span class="line" id="641">641: </span><span class="php-comment">     *
-</span><span class="line" id="642">642: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="642">642: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="643">643: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="644">644: </span><span class="php-comment">     *
-</span><span class="line" id="645">645: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="646">646: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="647">647: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
-</span><span class="line" id="648">648: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="645">645: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="646">646: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="647">647: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="648">648: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="649">649: </span><span class="php-comment">     *
 </span><span class="line" id="650">650: </span><span class="php-comment">     * @see loadSettings()
 </span><span class="line" id="651">651: </span><span class="php-comment">     *
@@ -756,7 +756,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-01-11 06:39
+                        Generated on 2019-01-13 20:28
                     </div>                    
                 </div>
             </div>

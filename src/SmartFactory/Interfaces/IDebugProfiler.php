@@ -41,7 +41,7 @@ interface IDebugProfiler extends IInitable
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -57,7 +57,7 @@ interface IDebugProfiler extends IInitable
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -73,7 +73,7 @@ interface IDebugProfiler extends IInitable
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
      * @see fixProfilePoint()
@@ -93,7 +93,7 @@ interface IDebugProfiler extends IInitable
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
      * @see startProfilePoint()

@@ -66,43 +66,43 @@ class RecordsetManager implements IRecordsetManager
      * @return boolean
      * It should return true if the recordset manager is intialized correctly, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if some parameters are missing.
-     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - invalid_data_error - if some parameters are not of the proper type.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
      *
      * @author Oleg Schildt
      */
     protected function validateParameters()
     {
         if (empty($this->dbworker)) {
-            throw new SmartException("The 'dbworker' is not specified!", "missing_data_error");
+            throw new \Exception("The 'dbworker' is not specified!");
         }
     
         if (!$this->dbworker instanceof DBWorker) {
-            throw new SmartException(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class), "invalid_data_error");
+            throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
         }
     
         if (empty($this->table)) {
-            throw new SmartException("The target table is not specified!", "missing_data_error");
+            throw new \Exception("The target table is not specified!");
         }
         
         if (empty($this->fields)) {
-            throw new SmartException("The target fields are not specified!", "missing_data_error");
+            throw new \Exception("The target fields are not specified!");
         }
     
         if (empty($this->key_fields)) {
-            throw new SmartException("Key fields are not defined!", "missing_data_error");
+            throw new \Exception("Key fields are not defined!");
         }
     
         if (!is_array($this->fields)) {
-            throw new SmartException("Field definition must be an array - field => type!", "invalid_data_error");
+            throw new \Exception("Field definition must be an array - field => type!");
         }
         
         if (!is_array($this->key_fields)) {
-            throw new SmartException("Key field definition must be an array!", "invalid_data_error");
+            throw new \Exception("Key field definition must be an array!");
         }
         
         return true;
@@ -132,13 +132,13 @@ class RecordsetManager implements IRecordsetManager
      * @return boolean
      * Returns true if the subarray has been processed successfully, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if some parameters are missing.
-     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - invalid_data_error - if some parameters are not of the proper type.
-     * - db_query_error - if the query fails if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
      *
      * @author Oleg Schildt
      */
@@ -216,12 +216,12 @@ class RecordsetManager implements IRecordsetManager
      *
      * @return void
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if some parameters are missing.
-     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - db_query_error - if the query fails if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if the query fails or if some object names are invalid.
      *
      * @author Oleg Schildt
      */
@@ -251,13 +251,13 @@ class RecordsetManager implements IRecordsetManager
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if some parameters are missing.
-     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - invalid_data_error - if some parameters are not of the proper type.
-     * - db_query_error - if the query fails if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
      *
      * @see  saveRecord()
      * @see  loadRecordSet()
@@ -279,7 +279,7 @@ class RecordsetManager implements IRecordsetManager
         $query .= $where_clause;
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
         }
         
         if ($this->dbworker->fetch_row()) {
@@ -310,13 +310,13 @@ class RecordsetManager implements IRecordsetManager
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if some parameters are missing.
-     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - invalid_data_error - if some parameters are not of the proper type.
-     * - db_query_error - if the query fails if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
      *
      * @see  loadRecord()
      * @see  saveRecordSet()
@@ -340,7 +340,7 @@ class RecordsetManager implements IRecordsetManager
         }
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
         }
         
         while ($this->dbworker->fetch_row()) {
@@ -395,13 +395,13 @@ class RecordsetManager implements IRecordsetManager
      * @return boolean
      * Returns true if the record has been successfully saved, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if some parameters are missing.
-     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - invalid_data_error - if some parameters are not of the proper type.
-     * - db_query_error - if the query fails if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
      *
      * @see  loadRecord()
      * @see  saveRecordSet()
@@ -460,7 +460,7 @@ class RecordsetManager implements IRecordsetManager
             $query .= $where;
             
             if (!$this->dbworker->execute_query($query)) {
-                throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
+                throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
             }
             
             if (!$this->dbworker->fetch_row()) {
@@ -528,7 +528,7 @@ class RecordsetManager implements IRecordsetManager
         }
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new SmartException($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "db_query_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
         }
         
         if (!empty($identity_field) && $must_insert) {
@@ -552,13 +552,13 @@ class RecordsetManager implements IRecordsetManager
      * @return boolean
      * Returns true if the records have been successfully saved, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if some parameters are missing.
-     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - invalid_data_error - if some parameters are not of the proper type.
-     * - db_query_error - if the query fails if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
      *
      * @see  loadRecordSet()
      * @see  saveRecord()

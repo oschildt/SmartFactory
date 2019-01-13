@@ -111,12 +111,12 @@
 </span><span class="line" id="29"> 29: </span><span class="php-comment"> * @return object
 </span><span class="line" id="30"> 30: </span><span class="php-comment"> * Returns object of the class bound to the interfase.
 </span><span class="line" id="31"> 31: </span><span class="php-comment"> *
-</span><span class="line" id="32"> 32: </span><span class="php-comment"> * @throws SmartException
+</span><span class="line" id="32"> 32: </span><span class="php-comment"> * @throws \Exception
 </span><span class="line" id="33"> 33: </span><span class="php-comment"> * It might throw the following exceptions in the case of any errors:
 </span><span class="line" id="34"> 34: </span><span class="php-comment"> *
-</span><span class="line" id="35"> 35: </span><span class="php-comment"> * - missing_data_error - if the interface or class is not specified.
-</span><span class="line" id="36"> 36: </span><span class="php-comment"> * - invalid_data_error - if the interface or class does not exist.
-</span><span class="line" id="37"> 37: </span><span class="php-comment"> * - system_error - if the check of the classes and interfaces fails.
+</span><span class="line" id="35"> 35: </span><span class="php-comment"> * - if the interface or class is not specified.
+</span><span class="line" id="36"> 36: </span><span class="php-comment"> * - if the interface or class does not exist.
+</span><span class="line" id="37"> 37: </span><span class="php-comment"> * - if the check of the classes and interfaces fails.
 </span><span class="line" id="38"> 38: </span><span class="php-comment"> *
 </span><span class="line" id="39"> 39: </span><span class="php-comment"> * @see \SmartFactory\instance()
 </span><span class="line" id="40"> 40: </span><span class="php-comment"> *
@@ -139,12 +139,12 @@
 </span><span class="line" id="57"> 57: </span><span class="php-comment"> * @return object
 </span><span class="line" id="58"> 58: </span><span class="php-comment"> * Returns object of the class bound to the interface.
 </span><span class="line" id="59"> 59: </span><span class="php-comment"> *
-</span><span class="line" id="60"> 60: </span><span class="php-comment"> * @throws SmartException
+</span><span class="line" id="60"> 60: </span><span class="php-comment"> * @throws \Exception
 </span><span class="line" id="61"> 61: </span><span class="php-comment"> * It might throw the following exceptions in the case of any errors:
 </span><span class="line" id="62"> 62: </span><span class="php-comment"> *
-</span><span class="line" id="63"> 63: </span><span class="php-comment"> * - missing_data_error - if the interface or class is not specified.
-</span><span class="line" id="64"> 64: </span><span class="php-comment"> * - invalid_data_error - if the interface or class does not exist.
-</span><span class="line" id="65"> 65: </span><span class="php-comment"> * - system_error - if the check of the classes and interfaces fails.
+</span><span class="line" id="63"> 63: </span><span class="php-comment"> * - if the interface or class is not specified.
+</span><span class="line" id="64"> 64: </span><span class="php-comment"> * - if the interface or class does not exist.
+</span><span class="line" id="65"> 65: </span><span class="php-comment"> * - if the check of the classes and interfaces fails.
 </span><span class="line" id="66"> 66: </span><span class="php-comment"> *
 </span><span class="line" id="67"> 67: </span><span class="php-comment"> * @see \SmartFactory\singleton()
 </span><span class="line" id="68"> 68: </span><span class="php-comment"> *
@@ -192,12 +192,12 @@
 </span><span class="line" id="110">110: </span><span class="php-comment"> * @param boolean $singleton
 </span><span class="line" id="111">111: </span><span class="php-comment"> * If the parameter is true, it ensures that only one instance of this object exists.
 </span><span class="line" id="112">112: </span><span class="php-comment"> *
-</span><span class="line" id="113">113: </span><span class="php-comment"> * @throws SmartException
+</span><span class="line" id="113">113: </span><span class="php-comment"> * @throws \Exception
 </span><span class="line" id="114">114: </span><span class="php-comment"> * It might throw the following exceptions in the case of any errors:
 </span><span class="line" id="115">115: </span><span class="php-comment"> *
-</span><span class="line" id="116">116: </span><span class="php-comment"> * - invalid_data_error - if the interface or class does not exist.
-</span><span class="line" id="117">117: </span><span class="php-comment"> * - system_error - if the check of the classes and interfaces fails.
-</span><span class="line" id="118">118: </span><span class="php-comment"> * - system_error - if the php extension is not installed.
+</span><span class="line" id="116">116: </span><span class="php-comment"> * - if the interface or class does not exist.
+</span><span class="line" id="117">117: </span><span class="php-comment"> * - if the check of the classes and interfaces fails.
+</span><span class="line" id="118">118: </span><span class="php-comment"> * - if the php extension is not installed.
 </span><span class="line" id="119">119: </span><span class="php-comment"> * - db_missing_type_error - if the database type is not specified.
 </span><span class="line" id="120">120: </span><span class="php-comment"> * - db_conn_data_error - if the connection parameters are incomplete.
 </span><span class="line" id="121">121: </span><span class="php-comment"> * - db_server_conn_error - if the database server cannot be connected.
@@ -211,7 +211,7 @@
 <span class="line" id="129">129: </span><span class="php-keyword1">function</span> dbworker(<span class="php-var">$parameters</span> = <span class="php-keyword1">null</span>, <span class="php-var">$singleton</span> = <span class="php-keyword1">true</span>)
 <span class="line" id="130">130: </span>{
 <span class="line" id="131">131: </span>    <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_type&quot;</span>])) {
-<span class="line" id="132">132: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;Database type is not specified!&quot;</span>, <span class="php-quote">&quot;db_missing_type_error&quot;</span>);
+<span class="line" id="132">132: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;Database type is not specified!&quot;</span>, <span class="php-quote">&quot;db_missing_type_error&quot;</span>);
 <span class="line" id="133">133: </span>    }
 <span class="line" id="134">134: </span>    
 <span class="line" id="135">135: </span>    <span class="php-var">$class_name</span> = <span class="php-quote">&quot;SmartFactory\\DatabaseWorkers\\&quot;</span> . <span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_type&quot;</span>] . <span class="php-quote">&quot;_DBWorker&quot;</span>;
@@ -219,7 +219,7 @@
 <span class="line" id="137">137: </span>    <span class="php-var">$dbworker</span> = FactoryBuilder::getInstance(<span class="php-var">$class_name</span>, <span class="php-var">$singleton</span>);
 <span class="line" id="138">138: </span>    
 <span class="line" id="139">139: </span>    <span class="php-keyword1">if</span> (!<span class="php-var">$dbworker</span>-&gt;is_extension_installed()) {
-<span class="line" id="140">140: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!&quot;</span>, <span class="php-var">$dbworker</span>-&gt;get_extension_name(), <span class="php-var">$dbworker</span>-&gt;get_rdbms_name()), <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="140">140: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!&quot;</span>, <span class="php-var">$dbworker</span>-&gt;get_extension_name(), <span class="php-var">$dbworker</span>-&gt;get_rdbms_name()));
 <span class="line" id="141">141: </span>    }
 <span class="line" id="142">142: </span>    
 <span class="line" id="143">143: </span>    <span class="php-comment">// do not connect, only object required</span>
@@ -249,11 +249,11 @@
 <span class="line" id="167">167: </span>    }
 <span class="line" id="168">168: </span>    
 <span class="line" id="169">169: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == <span class="php-quote">&quot;db_conn_data_error&quot;</span>) {
-<span class="line" id="170">170: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;No database connection information is available ot it is incomplete!&quot;</span>, <span class="php-quote">&quot;db_conn_data_error&quot;</span>);
+<span class="line" id="170">170: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;No database connection information is available ot it is incomplete!&quot;</span>, <span class="php-quote">&quot;db_conn_data_error&quot;</span>);
 <span class="line" id="171">171: </span>    } <span class="php-keyword1">elseif</span> (<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == <span class="php-quote">&quot;db_server_conn_error&quot;</span>) {
-<span class="line" id="172">172: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The database server cannot be connected!&quot;</span>, <span class="php-quote">&quot;db_server_conn_error&quot;</span>);
+<span class="line" id="172">172: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The database server cannot be connected!&quot;</span>, <span class="php-quote">&quot;db_server_conn_error&quot;</span>);
 <span class="line" id="173">173: </span>    } <span class="php-keyword1">elseif</span> (<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == <span class="php-quote">&quot;db_not_exists_error&quot;</span>) {
-<span class="line" id="174">174: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The database does not exists!&quot;</span>, <span class="php-quote">&quot;db_not_exists_error&quot;</span>);
+<span class="line" id="174">174: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The database does not exists!&quot;</span>, <span class="php-quote">&quot;db_not_exists_error&quot;</span>);
 <span class="line" id="175">175: </span>    }
 <span class="line" id="176">176: </span>    
 <span class="line" id="177">177: </span>    <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
@@ -265,7 +265,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-01-11 06:39
+                        Generated on 2019-01-13 20:28
                     </div>                    
                 </div>
             </div>

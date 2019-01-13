@@ -43,7 +43,7 @@ interface IShardManager
      * @return boolean
      * It should return true if the registering was successful, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -65,7 +65,7 @@ interface IShardManager
      * @return \SmartFactory\DatabaseWorkers\DBWorker|null
      * returns DBWorker object or null if the object could not be created.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt

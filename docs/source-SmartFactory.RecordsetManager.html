@@ -148,43 +148,43 @@
 </span><span class="line" id="66"> 66: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="67"> 67: </span><span class="php-comment">     * It should return true if the recordset manager is intialized correctly, otherwise false.
 </span><span class="line" id="68"> 68: </span><span class="php-comment">     *
-</span><span class="line" id="69"> 69: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="69"> 69: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="70"> 70: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="71"> 71: </span><span class="php-comment">     *
-</span><span class="line" id="72"> 72: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="73"> 73: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="74"> 74: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
+</span><span class="line" id="72"> 72: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="73"> 73: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="74"> 74: </span><span class="php-comment">     * - if some parameters are not of the proper type.
 </span><span class="line" id="75"> 75: </span><span class="php-comment">     *
 </span><span class="line" id="76"> 76: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="77"> 77: </span><span class="php-comment">     */</span>
 <span class="line" id="78"> 78: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters()
 <span class="line" id="79"> 79: </span>    {
 <span class="line" id="80"> 80: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;dbworker)) {
-<span class="line" id="81"> 81: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The 'dbworker' is not specified!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="81"> 81: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The 'dbworker' is not specified!&quot;</span>);
 <span class="line" id="82"> 82: </span>        }
 <span class="line" id="83"> 83: </span>    
 <span class="line" id="84"> 84: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker <span class="php-keyword1">instanceof</span> DBWorker) {
-<span class="line" id="85"> 85: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The 'dbworker' does not extends the class '%s'!&quot;</span>, DBWorker::<span class="php-keyword1">class</span>), <span class="php-quote">&quot;invalid_data_error&quot;</span>);
+<span class="line" id="85"> 85: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The 'dbworker' does not extends the class '%s'!&quot;</span>, DBWorker::<span class="php-keyword1">class</span>));
 <span class="line" id="86"> 86: </span>        }
 <span class="line" id="87"> 87: </span>    
 <span class="line" id="88"> 88: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;table)) {
-<span class="line" id="89"> 89: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The target table is not specified!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="89"> 89: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The target table is not specified!&quot;</span>);
 <span class="line" id="90"> 90: </span>        }
 <span class="line" id="91"> 91: </span>        
 <span class="line" id="92"> 92: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;fields)) {
-<span class="line" id="93"> 93: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;The target fields are not specified!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="93"> 93: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The target fields are not specified!&quot;</span>);
 <span class="line" id="94"> 94: </span>        }
 <span class="line" id="95"> 95: </span>    
 <span class="line" id="96"> 96: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;key_fields)) {
-<span class="line" id="97"> 97: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;Key fields are not defined!&quot;</span>, <span class="php-quote">&quot;missing_data_error&quot;</span>);
+<span class="line" id="97"> 97: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;Key fields are not defined!&quot;</span>);
 <span class="line" id="98"> 98: </span>        }
 <span class="line" id="99"> 99: </span>    
 <span class="line" id="100">100: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">is_array</span>(<span class="php-var">$this</span>-&gt;fields)) {
-<span class="line" id="101">101: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;Field definition must be an array - field =&gt; type!&quot;</span>, <span class="php-quote">&quot;invalid_data_error&quot;</span>);
+<span class="line" id="101">101: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;Field definition must be an array - field =&gt; type!&quot;</span>);
 <span class="line" id="102">102: </span>        }
 <span class="line" id="103">103: </span>        
 <span class="line" id="104">104: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">is_array</span>(<span class="php-var">$this</span>-&gt;key_fields)) {
-<span class="line" id="105">105: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;Key field definition must be an array!&quot;</span>, <span class="php-quote">&quot;invalid_data_error&quot;</span>);
+<span class="line" id="105">105: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;Key field definition must be an array!&quot;</span>);
 <span class="line" id="106">106: </span>        }
 <span class="line" id="107">107: </span>        
 <span class="line" id="108">108: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
@@ -214,13 +214,13 @@
 </span><span class="line" id="132">132: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="133">133: </span><span class="php-comment">     * Returns true if the subarray has been processed successfully, otherwise false.
 </span><span class="line" id="134">134: </span><span class="php-comment">     *
-</span><span class="line" id="135">135: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="135">135: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="136">136: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="137">137: </span><span class="php-comment">     *
-</span><span class="line" id="138">138: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="139">139: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="140">140: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
-</span><span class="line" id="141">141: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="138">138: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="139">139: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="140">140: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="141">141: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="142">142: </span><span class="php-comment">     *
 </span><span class="line" id="143">143: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="144">144: </span><span class="php-comment">     */</span>
@@ -298,12 +298,12 @@
 </span><span class="line" id="216">216: </span><span class="php-comment">     *
 </span><span class="line" id="217">217: </span><span class="php-comment">     * @return void
 </span><span class="line" id="218">218: </span><span class="php-comment">     *
-</span><span class="line" id="219">219: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="219">219: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="220">220: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="221">221: </span><span class="php-comment">     *
-</span><span class="line" id="222">222: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="223">223: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="224">224: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="222">222: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="223">223: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="224">224: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="225">225: </span><span class="php-comment">     *
 </span><span class="line" id="226">226: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="227">227: </span><span class="php-comment">     */</span>
@@ -333,13 +333,13 @@
 </span><span class="line" id="251">251: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="252">252: </span><span class="php-comment">     * Returns true if the record has been successfully loaded, otherwise false.
 </span><span class="line" id="253">253: </span><span class="php-comment">     *
-</span><span class="line" id="254">254: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="254">254: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="255">255: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="256">256: </span><span class="php-comment">     *
-</span><span class="line" id="257">257: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="258">258: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="259">259: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
-</span><span class="line" id="260">260: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="257">257: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="258">258: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="259">259: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="260">260: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="261">261: </span><span class="php-comment">     *
 </span><span class="line" id="262">262: </span><span class="php-comment">     * @see  saveRecord()
 </span><span class="line" id="263">263: </span><span class="php-comment">     * @see  loadRecordSet()
@@ -361,7 +361,7 @@
 <span class="line" id="279">279: </span>        <span class="php-var">$query</span> .= <span class="php-var">$where_clause</span>;
 <span class="line" id="280">280: </span>        
 <span class="line" id="281">281: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="282">282: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;db_query_error&quot;</span>);
+<span class="line" id="282">282: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
 <span class="line" id="283">283: </span>        }
 <span class="line" id="284">284: </span>        
 <span class="line" id="285">285: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;dbworker-&gt;fetch_row()) {
@@ -392,13 +392,13 @@
 </span><span class="line" id="310">310: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="311">311: </span><span class="php-comment">     * Returns true if the record has been successfully loaded, otherwise false.
 </span><span class="line" id="312">312: </span><span class="php-comment">     *
-</span><span class="line" id="313">313: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="313">313: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="314">314: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="315">315: </span><span class="php-comment">     *
-</span><span class="line" id="316">316: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="317">317: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="318">318: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
-</span><span class="line" id="319">319: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="316">316: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="317">317: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="318">318: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="319">319: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="320">320: </span><span class="php-comment">     *
 </span><span class="line" id="321">321: </span><span class="php-comment">     * @see  loadRecord()
 </span><span class="line" id="322">322: </span><span class="php-comment">     * @see  saveRecordSet()
@@ -422,7 +422,7 @@
 <span class="line" id="340">340: </span>        }
 <span class="line" id="341">341: </span>        
 <span class="line" id="342">342: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="343">343: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;db_query_error&quot;</span>);
+<span class="line" id="343">343: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
 <span class="line" id="344">344: </span>        }
 <span class="line" id="345">345: </span>        
 <span class="line" id="346">346: </span>        <span class="php-keyword1">while</span> (<span class="php-var">$this</span>-&gt;dbworker-&gt;fetch_row()) {
@@ -477,13 +477,13 @@
 </span><span class="line" id="395">395: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="396">396: </span><span class="php-comment">     * Returns true if the record has been successfully saved, otherwise false.
 </span><span class="line" id="397">397: </span><span class="php-comment">     *
-</span><span class="line" id="398">398: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="398">398: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="399">399: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="400">400: </span><span class="php-comment">     *
-</span><span class="line" id="401">401: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="402">402: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="403">403: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
-</span><span class="line" id="404">404: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="401">401: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="402">402: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="403">403: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="404">404: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="405">405: </span><span class="php-comment">     *
 </span><span class="line" id="406">406: </span><span class="php-comment">     * @see  loadRecord()
 </span><span class="line" id="407">407: </span><span class="php-comment">     * @see  saveRecordSet()
@@ -542,7 +542,7 @@
 <span class="line" id="460">460: </span>            <span class="php-var">$query</span> .= <span class="php-var">$where</span>;
 <span class="line" id="461">461: </span>            
 <span class="line" id="462">462: </span>            <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="463">463: </span>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;db_query_error&quot;</span>);
+<span class="line" id="463">463: </span>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
 <span class="line" id="464">464: </span>            }
 <span class="line" id="465">465: </span>            
 <span class="line" id="466">466: </span>            <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;fetch_row()) {
@@ -610,7 +610,7 @@
 <span class="line" id="528">528: </span>        }
 <span class="line" id="529">529: </span>        
 <span class="line" id="530">530: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="531">531: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;db_query_error&quot;</span>);
+<span class="line" id="531">531: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
 <span class="line" id="532">532: </span>        }
 <span class="line" id="533">533: </span>        
 <span class="line" id="534">534: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$identity_field</span>) &amp;&amp; <span class="php-var">$must_insert</span>) {
@@ -634,13 +634,13 @@
 </span><span class="line" id="552">552: </span><span class="php-comment">     * @return boolean
 </span><span class="line" id="553">553: </span><span class="php-comment">     * Returns true if the records have been successfully saved, otherwise false.
 </span><span class="line" id="554">554: </span><span class="php-comment">     *
-</span><span class="line" id="555">555: </span><span class="php-comment">     * @throws \SmartFactory\SmartException
+</span><span class="line" id="555">555: </span><span class="php-comment">     * @throws \Exception
 </span><span class="line" id="556">556: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
 </span><span class="line" id="557">557: </span><span class="php-comment">     *
-</span><span class="line" id="558">558: </span><span class="php-comment">     * - missing_data_error - if some parameters are missing.
-</span><span class="line" id="559">559: </span><span class="php-comment">     * - invalid_data_error - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="560">560: </span><span class="php-comment">     * - invalid_data_error - if some parameters are not of the proper type.
-</span><span class="line" id="561">561: </span><span class="php-comment">     * - db_query_error - if the query fails if some object names are invalid.
+</span><span class="line" id="558">558: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="559">559: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="560">560: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="561">561: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
 </span><span class="line" id="562">562: </span><span class="php-comment">     *
 </span><span class="line" id="563">563: </span><span class="php-comment">     * @see  loadRecordSet()
 </span><span class="line" id="564">564: </span><span class="php-comment">     * @see  saveRecord()
@@ -678,7 +678,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-01-11 06:39
+                        Generated on 2019-01-13 20:28
                     </div>                    
                 </div>
             </div>

@@ -124,11 +124,11 @@ class ConfigSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the data has been successfully saved, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the save path is not specified.
-     * - system_error - if the config file is not writable.
+     * - if the save path is not specified.
+     * - if the config file is not writable.
      *
      * @see loadXML()
      *
@@ -153,7 +153,7 @@ class ConfigSettingsManager implements ISettingsManager
         }
         
         if (file_put_contents($this->save_path, $xml) === false) {
-            throw new SmartException(sprintf("The config file '%s' cannot be written!", $this->save_path), "system_error");
+            throw new \Exception(sprintf("The config file '%s' cannot be written!", $this->save_path));
         }
         
         return true;
@@ -169,13 +169,13 @@ class ConfigSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the data has been successfully loaded, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the save path is not specified.
-     * - system_error - if the config file is not writable.
-     * - system_error - if the config file is not readable.
-     * - system_error - if the config file is invalid.
+     * - if the save path is not specified.
+     * - if the config file is not writable.
+     * - if the config file is not readable.
+     * - if the config file is invalid.
      *
      * @see saveXML()
      *
@@ -190,12 +190,12 @@ class ConfigSettingsManager implements ISettingsManager
         }
         
         if (!file_exists($this->save_path) || !is_readable($this->save_path)) {
-            throw new SmartException(sprintf("The config file '%s' cannot be read!", $this->save_path), "system_error");
+            throw new \Exception(sprintf("The config file '%s' cannot be read!", $this->save_path));
         }
         
         $xml = file_get_contents($this->save_path);
         if ($xml === false) {
-            throw new SmartException(sprintf("The config file '%s' cannot be read!", $this->save_path), "system_error");
+            throw new \Exception(sprintf("The config file '%s' cannot be read!", $this->save_path));
         }
         
         if (!empty($this->save_encrypted)) {
@@ -205,7 +205,7 @@ class ConfigSettingsManager implements ISettingsManager
         $xmldoc = new \DOMDocument();
         
         if (!@$xmldoc->loadXML($xml)) {
-            throw new SmartException(sprintf("The config file '%s' is invalid!", $this->save_path), "system_error");
+            throw new \Exception(sprintf("The config file '%s' is invalid!", $this->save_path));
         }
         
         dom_to_array($xmldoc->documentElement, $data);
@@ -220,22 +220,22 @@ class ConfigSettingsManager implements ISettingsManager
      * @return boolean
      * It should return true if the settings manager is intialized correctly, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the save path is not specified.
-     * - system_error - if the config file is not writable.
+     * - if the save path is not specified.
+     * - if the config file is not writable.
      *
      * @author Oleg Schildt
      */
     protected function validateParameters()
     {
         if (empty($this->save_path)) {
-            throw new SmartException("The 'save_path' is not specified!", "missing_data_error");
+            throw new \Exception("The 'save_path' is not specified!");
         }
         
         if (!is_writable(dirname($this->save_path)) || (file_exists($this->save_path) && !is_writable($this->save_path))) {
-            throw new SmartException(sprintf("The config file '%s' is not writable!", $this->save_path), "system_error");
+            throw new \Exception(sprintf("The config file '%s' is not writable!", $this->save_path));
         }
         
         return true;
@@ -270,11 +270,11 @@ class ConfigSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true upon successful initialization, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the save path is not specified.
-     * - system_error - if the config file is not writable.
+     * - if the save path is not specified.
+     * - if the config file is not writable.
      *
      * @author Oleg Schildt
      */
@@ -500,13 +500,13 @@ class ConfigSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the settings have been successfully loaded, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the save path is not specified.
-     * - system_error - if the config file is not writable.
-     * - system_error - if the config file is not readable.
-     * - system_error - if the config file is invalid.
+     * - if the save path is not specified.
+     * - if the config file is not writable.
+     * - if the config file is not readable.
+     * - if the config file is invalid.
      *
      * @see saveSettings()
      *
@@ -533,11 +533,11 @@ class ConfigSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the settings have been successfully saved, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the save path is not specified.
-     * - system_error - if the config file is not writable.
+     * - if the save path is not specified.
+     * - if the config file is not writable.
      *
      * @see loadSettings()
      *
@@ -552,9 +552,9 @@ class ConfigSettingsManager implements ISettingsManager
             $this->saveXML($this->temp_settings);
             $this->settings = $this->temp_settings;
             return true;
-        } catch (SmartException $ex) {
+        } catch (\Exception $ex) {
             $this->temp_settings["__dirty"] = $old_dirty_state;
-            throw new SmartException($ex->getMessage(), $ex->getErrorCode());
+            throw new \Exception($ex->getMessage(), $ex->getErrorCode());
         }
     } // saveSettings
 } // ConfigSettingsManager

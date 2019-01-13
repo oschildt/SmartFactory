@@ -60,22 +60,22 @@ class ShardManager implements IShardManager
      * @return boolean
      * It should return true if the registering was successful, otherwise false.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the shard name is not specified.
-     * - system_error - if the shard name has been already registered.
+     * - if the shard name is not specified.
+     * - if the shard name has been already registered.
      *
      * @author Oleg Schildt
      */
     public function registerShard($shard_name, $parameters)
     {
         if (empty($shard_name)) {
-            throw new \SmartFactory\SmartException("The shard name is not specified!", "missing_data_error");
+            throw new \Exception("The shard name is not specified!");
         }
         
         if (!empty($this->shard_table[$shard_name])) {
-            throw new \SmartFactory\SmartException("The shard '$shard_name' has been already registered!", "system_error");
+            throw new \Exception("The shard '$shard_name' has been already registered!");
         }
         
         $this->shard_table[$shard_name]["parameters"] = $parameters;
@@ -98,13 +98,13 @@ class ShardManager implements IShardManager
      * @return \SmartFactory\DatabaseWorkers\DBWorker|null
      * returns DBWorker object or null if the object could not be created.
      *
-     * @throws \SmartFactory\SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - invalid_data_error - if the interface or class does not exist.
-     * - system_error - if the shard was not found.
-     * - system_error - if the check of the classes and interfaces fails.
-     * - system_error - if the php extension is not installed.
+     * - if the interface or class does not exist.
+     * - if the shard was not found.
+     * - if the check of the classes and interfaces fails.
+     * - if the php extension is not installed.
      * - db_missing_type_error - if the database type is not specified.
      * - db_conn_data_error - if the connection parameters are incomplete.
      * - db_server_conn_error - if the database server cannot be connected.
@@ -115,7 +115,7 @@ class ShardManager implements IShardManager
     public function dbshard($shard_name)
     {
         if (empty($shard_name) || empty($this->shard_table[$shard_name])) {
-            throw new \SmartFactory\SmartException("The shard '$shard_name' was not found!", "system_error");
+            throw new \Exception("The shard '$shard_name' was not found!");
             return null;
         }
         

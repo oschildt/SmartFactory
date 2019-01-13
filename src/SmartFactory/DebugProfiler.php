@@ -51,24 +51,24 @@ class DebugProfiler implements IDebugProfiler
      * @return boolean
      * Returns true upon successful initialization, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - missing_data_error - if the log path is not specified.
-     * - system_error - if the trace file is not writable.
+     * - if the log path is not specified.
+     * - if the trace file is not writable.
      *
      * @author Oleg Schildt
      */
     public function init($parameters)
     {
         if (empty($parameters["log_path"])) {
-            throw new SmartException("Log path is not specified!", "missing_data_error");
+            throw new \Exception("Log path is not specified!");
         }
         
         $this->log_path = $parameters["log_path"];
         
         if (!file_exists($this->log_path) || !is_writable($this->log_path)) {
-            throw new SmartException(sprintf("The log path '%s' is not writable!", $this->log_path), "system_error");
+            throw new \Exception(sprintf("The log path '%s' is not writable!", $this->log_path));
         }
         
         return true;
@@ -86,10 +86,10 @@ class DebugProfiler implements IDebugProfiler
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - system_error - if the log file is not writable.
+     * - if the log file is not writable.
      *
      * @author Oleg Schildt
      */
@@ -100,7 +100,7 @@ class DebugProfiler implements IDebugProfiler
         if ((!file_exists($file) && is_writable($this->log_path)) || is_writable($file)) {
             return error_log($message . "\r\n", 3, $file);
         } else {
-            throw new SmartException(sprintf("The log file '%s' is not writable!", $file), "system_error");
+            throw new \Exception(sprintf("The log file '%s' is not writable!", $file));
         }
     } // logMessageToFile
     
@@ -113,10 +113,10 @@ class DebugProfiler implements IDebugProfiler
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - system_error - if the debug file is not writable.
+     * - if the debug file is not writable.
      *
      * @author Oleg Schildt
      */
@@ -135,10 +135,10 @@ class DebugProfiler implements IDebugProfiler
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - system_error - if the profile file is not writable.
+     * - if the profile file is not writable.
      *
      * @see fixProfilePoint()
      *
@@ -164,10 +164,10 @@ class DebugProfiler implements IDebugProfiler
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
      *
-     * @throws SmartException
+     * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - system_error - if the profile file is not writable.
+     * - if the profile file is not writable.
      *
      * @see startProfilePoint()
      *
