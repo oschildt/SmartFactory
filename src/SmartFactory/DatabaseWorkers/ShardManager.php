@@ -25,6 +25,15 @@ use function SmartFactory\dbworker;
 class ShardManager implements IShardManager
 {
     /**
+     * Internal array for storing the load balancing groups and its shards.
+     *
+     * @var array
+     *
+     * @author Oleg Schildt
+     */
+    protected $load_balancing_groups = [];
+    
+    /**
      * Internal array for storing the mapping betwen shard names and connection parameters.
      *
      * @var array
@@ -57,6 +66,9 @@ class ShardManager implements IShardManager
      *
      * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
      *
+     * @param string $load_balancing_group
+     * The name of the load balancing group, if the shard should be part of it, {@see ShardManager::randomDBShard()}.
+     *
      * @return boolean
      * It should return true if the registering was successful, otherwise false.
      *
@@ -68,7 +80,7 @@ class ShardManager implements IShardManager
      *
      * @author Oleg Schildt
      */
-    public function registerShard($shard_name, $parameters)
+    public function registerShard($shard_name, $parameters, $load_balancing_group = "")
     {
         if (empty($shard_name)) {
             throw new \Exception("The shard name is not specified!");
@@ -80,11 +92,15 @@ class ShardManager implements IShardManager
         
         $this->shard_table[$shard_name]["parameters"] = $parameters;
         
+        if (!empty($load_balancing_group)) {
+            $this->load_balancing_groups[$load_balancing_group][] = $shard_name;
+        }
+        
         return true;
     } // registerShard
     
     /**
-     * The method dbshard provides the DBWorker object for working with the shard.
+     * The method provides the DBWorker object for working with the shard.
      *
      * If the parameters are omitted, the system takes the parameters from the configuration
      * settings and reuses the single instance of the DBWorker for all requests.
@@ -125,4 +141,34 @@ class ShardManager implements IShardManager
         
         return $this->shard_table[$shard_name]["dbworker"];
     } // dbshard
+    
+    /**
+     * The method provides the DBWorker object for working with the shard, that is chosen randomly
+     * for load balancing reason.
+     *
+     * @param string $load_balancing_group
+     * The name of the load balancing group, from which the shard should be randomly picked.
+     *
+     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+     * returns DBWorker object or null if the object could not be created.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if the load balancing group was not found.
+     * - db_server_conn_error - if the database server cannot be connected.
+     * - db_not_exists_error - if database does not exists od inaccesible to the user.
+     *
+     * @author Oleg Schildt
+     */
+    public function randomDBShard($load_balancing_group)
+    {
+        if (empty($this->load_balancing_groups[$load_balancing_group])) {
+            throw new \Exception("The group '$load_balancing_group' was not found!");
+        }
+        
+        $pos = rand(0, count($this->load_balancing_groups[$load_balancing_group]) - 1);
+        
+        return $this->dbshard($this->load_balancing_groups[$load_balancing_group][$pos]);
+    } // randomDBShard
 } // ShardManager

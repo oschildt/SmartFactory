@@ -40,6 +40,9 @@ interface IShardManager
      *
      * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
      *
+     * @param string $load_balancing_group
+     * The name of the load balancing group, if the shard should be part of it.
+     *
      * @return boolean
      * It should return true if the registering was successful, otherwise false.
      *
@@ -48,10 +51,10 @@ interface IShardManager
      *
      * @author Oleg Schildt
      */
-    public function registerShard($shard_name, $parameters);
+    public function registerShard($shard_name, $parameters, $load_balancing_group = "");
     
     /**
-     * The method dbshard provides the DBWorker object for working with the shard.
+     * The method provides the DBWorker object for working with the shard.
      *
      * If the parameters are omitted, the system takes the parameters from the configuration
      * settings and reuses the single instance of the DBWorker for all requests.
@@ -71,4 +74,21 @@ interface IShardManager
      * @author Oleg Schildt
      */
     public function dbshard($shard_name);
+    
+    /**
+     * The method provides the DBWorker object for working with the shard, that is chosen randomly
+     * for load balancing reason.
+     *
+     * @param string $load_balancing_group
+     * The name of the load balancing group, from which the shard should be randomly picked.
+     *
+     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+     * returns DBWorker object or null if the object could not be created.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
+     * @author Oleg Schildt
+     */
+    public function randomDBShard($load_balancing_group);
 } // IShardManager

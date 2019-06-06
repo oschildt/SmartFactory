@@ -245,3 +245,27 @@ function dbshard($shard_name)
 {
     return singleton(IShardManager::class)->dbshard($shard_name);
 } // dbshard
+
+/**
+ * Short function for requesting the dbworker connected to the specified shard,
+ * that is chosen randomly for load balancing reason.
+ *
+ * @param string $load_balancing_group
+ * The name of the shard.
+ *
+ * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+ * returns DBWorker object or null if the object could not be created.
+ *
+ * @throws \Exception
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - if the load balancing group was not found.
+ * - db_server_conn_error - if the database server cannot be connected.
+ * - db_not_exists_error - if database does not exists od inaccesible to the user.
+ *
+ * @author Oleg Schildt
+ */
+function randomDBShard($load_balancing_group)
+{
+    return singleton(IShardManager::class)->randomDBShard($load_balancing_group);
+} // randomDBShard

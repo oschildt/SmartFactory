@@ -189,6 +189,18 @@ Oleg Schildt
       
       <tr>
           <td>
+              <a href="#$load_balancing_groups">$load_balancing_groups</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal array for storing the load balancing groups and its shards.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#$shard_table">$shard_table</a>
           </td>
           <td>
@@ -216,7 +228,20 @@ Oleg Schildt
               <span class='public'>public</span>
           </td>
           <td class="description_column">
-              The method dbshard provides the DBWorker object for working with the shard.
+              The method provides the DBWorker object for working with the shard.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#randomDBShard">randomDBShard</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              The method provides the DBWorker object for working with the shard, that is chosen randomly
+for load balancing reason.
           </td>
       </tr>
       
@@ -239,6 +264,40 @@ Oleg Schildt
 
 
 
+  
+  <hr id="$load_balancing_groups">
+  
+  <h1>Property: $load_balancing_groups</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$load_balancing_groups</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal array for storing the load balancing groups and its shards.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#31">SmartFactory\DatabaseWorkers\ShardManager.php</a>
+
+  
+
+  
+
+  
   
   <hr id="$shard_table">
   
@@ -266,7 +325,7 @@ Oleg Schildt
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#31">SmartFactory\DatabaseWorkers\ShardManager.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#40">SmartFactory\DatabaseWorkers\ShardManager.php</a>
 
   
 
@@ -286,7 +345,7 @@ Oleg Schildt
 
   
   <div class="short-description">
-  The method dbshard provides the DBWorker object for working with the shard.
+  The method provides the DBWorker object for working with the shard.
   </div>
   
 
@@ -361,7 +420,87 @@ If the user passes the parameters explicitly, a new instance of the DBWorker is 
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#112">SmartFactory\DatabaseWorkers\ShardManager.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#128">SmartFactory\DatabaseWorkers\ShardManager.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="randomDBShard">
+  
+  <h1>Method: randomDBShard</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>randomDBShard</b>(string &amp;<span class="php-var">$load_balancing_group</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span></div>
+
+  
+  <div class="short-description">
+  The method provides the DBWorker object for working with the shard, that is chosen randomly
+for load balancing reason.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$load_balancing_group</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the load balancing group, from which the shard should be randomly picked.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>|null
+  
+  <div class="param-description">
+  <p>returns DBWorker object or null if the object could not be created.</p>
+  </div>
+  
+  
+
+  
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b>\Exception</b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if the load balancing group was not found.</li>
+<li>db_server_conn_error - if the database server cannot be connected.</li>
+<li>db_not_exists_error - if database does not exists od inaccesible to the user.</li>
+</ul><br>
+      
+  
+  </div>
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IShardManager.html#randomDBShard">\SmartFactory\Interfaces\IShardManager::randomDBShard()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#161">SmartFactory\DatabaseWorkers\ShardManager.php</a>
 
   
 
@@ -374,7 +513,10 @@ If the user passes the parameters explicitly, a new instance of the DBWorker is 
   
   <h1>Method: registerShard</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>registerShard</b>(string &amp;<span class="php-var">$shard_name</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>registerShard</b>(string &amp;<span class="php-var">$shard_name</span>,
+                     <span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>,
+                     string &amp;<span class="php-var">$load_balancing_group</span> = <span class="php-quote">&quot;&quot;</span>
+                    ) : boolean</div>
 
   
   <div class="short-description">
@@ -427,6 +569,14 @@ upon creation.</p>
       </div>
       
   
+      <h3>$load_balancing_group</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the load balancing group, if the shard should be part of it, ShardManager::randomDBShard().</p>
+      </div>
+      
+  
   
 
   
@@ -471,7 +621,7 @@ upon creation.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#68">SmartFactory\DatabaseWorkers\ShardManager.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.ShardManager.html#80">SmartFactory\DatabaseWorkers\ShardManager.php</a>
 
   
 
@@ -485,7 +635,7 @@ upon creation.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-01-13 20:28
+                        Generated on 2019-06-06 13:33
                     </div>                    
                 </div>
             </div>

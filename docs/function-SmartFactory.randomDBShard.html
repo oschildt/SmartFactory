@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: echo_html - Library SmartFactory
+            Function: randomDBShard - Library SmartFactory
         </title>
     </head>
 
@@ -99,7 +99,7 @@
                         
  
 
-                        <li class="active">echo_html()</li>
+                        <li class="active">randomDBShard()</li>
                 </ol>
                 
             </div>
@@ -111,13 +111,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: echo_html</h1>
+                    <h1>Function: randomDBShard</h1>
 
-<div class="definition"><b>echo_html</b>(string &amp;<span class="php-var">$text</span>) : void</div>
+<div class="definition"><b>randomDBShard</b>(string &amp;<span class="php-var">$load_balancing_group</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span></div>
 
 
 <div class="short-description">
-Echoes the text with escaping of HTML special characters.
+Short function for requesting the dbworker connected to the specified shard,
+that is chosen randomly for load balancing reason.
 </div>
 
 
@@ -126,11 +127,11 @@ Echoes the text with escaping of HTML special characters.
 
 <h2>Parameters</h2>
 
-    <h3>$text</h3>
+    <h3>$load_balancing_group</h3>
     <span class="type_label">Type:</span> string
     
     <div class="param-description">
-    <p>The text to be escaped.</p>
+    <p>The name of the shard.</p>
     </div>
     
 
@@ -138,10 +139,30 @@ Echoes the text with escaping of HTML special characters.
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> void
+<span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>|null
+
+<div class="param-description">
+<p>returns DBWorker object or null if the object could not be created.</p>
+</div>
 
 
 
+
+<h2>Throws</h2>
+<div class="item_list">
+
+    <b>\Exception</b><br>
+    
+    
+    <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>if the load balancing group was not found.</li>
+<li>db_server_conn_error - if the database server cannot be connected.</li>
+<li>db_not_exists_error - if database does not exists od inaccesible to the user.</li>
+</ul><br>
+    
+
+</div>
 
 
 
@@ -151,30 +172,14 @@ Oleg Schildt
 
 
 <h2>Package</h2>
-<a href="package-Utility_Functions.html">Utility Functions</a>
+<a href="package-System.html">System</a>
 
 
 <h2>Source code</h2>
-<a href="source-utility_functions_inc.html#231">utility_functions_inc.php</a>
-
-
-<h2>See also</h2>
-<div class="item_list">
-
-<a href="function-SmartFactory.escape_js.html">\SmartFactory\escape_js()</a><br>
-
-<a href="function-SmartFactory.escape_html.html">\SmartFactory\escape_html()</a><br>
-
-</div>
+<a href="source-short_functions_inc.html#265">short_functions_inc.php</a>
 
 
 
-<h2>Uses</h2>
-<div class="item_list">
-
-<a href="function-SmartFactory.escape_html.html">\SmartFactory\escape_html()</a><br>
-
-</div>
 
 
 
