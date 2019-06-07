@@ -18,7 +18,7 @@ namespace SmartFactory;
  *
  * This function checks wether the request variable exists and
  * returns its value. If the request variable does not exist,
- * and empty value is returned.
+ * an empty value is returned.
  *
  * @param string $name
  * Name of the request variable how it is written in the form fields.
