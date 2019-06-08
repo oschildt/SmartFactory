@@ -178,6 +178,7 @@ abstract class XmlApiRequestManager
             $response_data["errors"] = [
                 [
                     "error_code" => "system_error",
+                    "error_type" => "programming_error",
                     "error_text" => "Wrong implementation of the method parseXML: the API request is undefined (empty)!"
                 ]
             ];
@@ -191,6 +192,7 @@ abstract class XmlApiRequestManager
             $response_data["errors"] = [
                 [
                     "error_code" => "system_error",
+                    "error_type" => "programming_error",
                     "error_text" => "Wrong implementation of the method parseXML: no valid XML DOMDocument provided!"
                 ]
             ];
@@ -204,6 +206,7 @@ abstract class XmlApiRequestManager
             $response_data["errors"] = [
                 [
                     "error_code" => "system_error",
+                    "error_type" => "programming_error",
                     "error_text" => sprintf("No handler is defined for the XML API request '%s'!", $api_request)
                 ]
             ];
@@ -219,6 +222,7 @@ abstract class XmlApiRequestManager
             $response_data["errors"] = [
                 [
                     "error_code" => "system_error",
+                    "error_type" => "programming_error",
                     "error_text" => sprintf("The handler class '%s' does not exist!", $this->handler_table[$api_request])
                 ]
             ];
@@ -240,6 +244,7 @@ abstract class XmlApiRequestManager
             $response_data["errors"] = [
                 [
                     "error_code" => "system_error",
+                    "error_type" => "programming_error",
                     "error_text" => sprintf("The handler class '%s' does not implement the interface '%s'!", $this->handler_table[$api_request], "IXmlApiRequestHandler")
                 ]
             ];

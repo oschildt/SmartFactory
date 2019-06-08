@@ -105,7 +105,7 @@ class JsonApiRequestManager
         $response_data["result"] = "error";
     
         $response_data["errors"] = [
-            ["error_code" => "system_error", "error_text" => $ex->getMessage()]
+            ["error_code" => "system_error", "error_type" => "programming_error", "error_text" => $ex->getMessage()]
         ];
     
         $this->sendJsonResponse($response_data);
