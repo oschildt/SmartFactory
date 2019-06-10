@@ -145,6 +145,8 @@ function array_to_dom(&$node, &$array)
 {
     $xmldoc = $node->ownerDocument;
     
+    $node->setAttribute("array", 1);
+    
     foreach ($array as $key => &$val) {
         $child = $xmldoc->createElement("item");
         $child->setAttribute("name", $key);
@@ -204,7 +206,7 @@ function dom_to_array(&$node, &$array)
         
         // has a collection
         
-        if ($child->hasChildNodes()) {
+        if ($child->hasChildNodes() || $child->getAttribute("array") == "1") {
             if (!isset($array[$name])) {
                 $array[$name] = array();
             }
