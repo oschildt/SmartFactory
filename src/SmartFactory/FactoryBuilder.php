@@ -192,7 +192,7 @@ class FactoryBuilder
         }
         
         $class_name = $class->getName();
-        
+    
         if (empty(self::$itable[$class_name])) {
             throw new \Exception(sprintf("The interface or class '%s' has no bound class!", $class_name));
         }

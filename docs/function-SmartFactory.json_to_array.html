@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: application_settings - Library SmartFactory
+            Function: json_to_array - Library SmartFactory
         </title>
     </head>
 
@@ -99,7 +99,7 @@
                         
  
 
-                        <li class="active">application_settings()</li>
+                        <li class="active">json_to_array()</li>
                 </ol>
                 
             </div>
@@ -111,27 +111,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: application_settings</h1>
+                    <h1>Function: json_to_array</h1>
 
-<div class="definition"><b>application_settings</b>() : \SmartFactory\ApplicationSettingsManager</div>
+<div class="definition"><b>json_to_array</b>(string &amp;<span class="php-var">$json</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>) : void</div>
 
 
 <div class="short-description">
-Short function for getting the instance of the ApplicationSettingsManager.
+Converts the JSON string to an array.
 </div>
 
 
 
-
-
-
-
-<h2>Returns</h2>
-<span class="type_label">Type:</span> <a href="class-SmartFactory.ApplicationSettingsManager.html">\SmartFactory\ApplicationSettingsManager</a>
-
-<div class="param-description">
-<p>Returns the instance of the ApplicationSettingsManager.</p>
+<div class="long-description">
+<h2>Details</h2>
+<p>It is a wrapper over the system function json_decode. It
+is introduced to give the ability to overwrite the system
+function if necessary.</p>
 </div>
+
+
+
+<h2>Parameters</h2>
+
+    <h3>$json</h3>
+    <span class="type_label">Type:</span> string
+    
+    <div class="param-description">
+    <p>Input JSON string.</p>
+    </div>
+    
+
+    <h3>$array</h3>
+    <span class="type_label">Type:</span> array
+    
+    <div class="param-description">
+    <p>target array.</p>
+    </div>
+    
+
+
 
 
 
@@ -142,12 +160,7 @@ Short function for getting the instance of the ApplicationSettingsManager.
     <b>\Exception</b><br>
     
     
-    <p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul><br>
+    <p>It might throw the exception if the JSON cannot be parsed.</p><br>
     
 
 </div>
@@ -160,11 +173,11 @@ Oleg Schildt
 
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<a href="package-Utility_Functions.html">Utility Functions</a>
 
 
 <h2>Source code</h2>
-<a href="source-short_functions_inc.html#193">short_functions_inc.php</a>
+<a href="source-utility_functions_inc.html#49">utility_functions_inc.php</a>
 
 
 
@@ -174,7 +187,7 @@ Oleg Schildt
 
                     
                     <div id="footer">
-                        Generated on 2019-06-06 13:33
+                        Generated on 2019-06-14 22:18
                     </div>                    
                 </div>
             </div>

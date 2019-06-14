@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Class: ApplicationSettingsManager - Library SmartFactory
+            Class: RuntimeSettingsManager - Library SmartFactory
         </title>
     </head>
 
@@ -99,7 +99,7 @@
                         
  
 
-                        <li class="active">ApplicationSettingsManager</li>
+                        <li class="active">RuntimeSettingsManager</li>
                 </ol>
                 
             </div>
@@ -111,7 +111,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Class: ApplicationSettingsManager</h1>
+                    <h1>Class: RuntimeSettingsManager</h1>
 
 
 
@@ -158,7 +158,7 @@ Oleg Schildt
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.ApplicationSettingsManager.html#33">SmartFactory\ApplicationSettingsManager.php</a>
+<a href="source-SmartFactory.RuntimeSettingsManager.html#33">SmartFactory\RuntimeSettingsManager.php</a>
 
 
 <h2>See also</h2>
@@ -223,7 +223,7 @@ Oleg Schildt
               <span class='protected'>protected</span>
           </td>
           <td class="description_column">
-              Internal variable for storing the array of changed settings values.
+              Internal variable for storing the array of the settings values.
           </td>
       </tr>
       
@@ -253,18 +253,6 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#$temp_settings">$temp_settings</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
-          </td>
-          <td class="description_column">
-              Internal variable for storing the array of settings values.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="#$validator">$validator</a>
           </td>
           <td>
@@ -283,18 +271,6 @@ Oleg Schildt
   <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="3">Methods</th></tr>
       
-      
-      <tr>
-          <td>
-              <a href="#__construct">__construct</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Constructor.
-          </td>
-      </tr>
       
       <tr>
           <td>
@@ -346,13 +322,14 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#isDirty">isDirty</a>
+              <a href="#loadJSON">loadJSON</a>
           </td>
           <td>
-              <span class='public'>public</span>
+              <span class='protected'>protected</span>
           </td>
           <td class="description_column">
-              Checks whether the settings data is dirty (not saved) within a context or globally.
+              This is internal auxiliary function for loading the settings from the target table
+defined by the iniailization.
           </td>
       </tr>
       
@@ -370,14 +347,14 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#loadXMLfromDB">loadXMLfromDB</a>
+              <a href="#saveJSON">saveJSON</a>
           </td>
           <td>
               <span class='protected'>protected</span>
           </td>
           <td class="description_column">
-              This is internal auxiliary function for loading the settings from the target table
-defined by the iniailization.
+              This is internal auxiliary function for converting the settings to JSON and storing it
+to the target table defined by the iniailization.
           </td>
       </tr>
       
@@ -390,19 +367,6 @@ defined by the iniailization.
           </td>
           <td class="description_column">
               Saves the settings from to the target table.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#saveXMLtoDB">saveXMLtoDB</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
-          </td>
-          <td class="description_column">
-              This is internal auxiliary function for converting the settings to XML and storing it
-to the target table defined by the iniailization.
           </td>
       </tr>
       
@@ -501,15 +465,15 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#72">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#72">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#getContext">\SmartFactory\ApplicationSettingsManager::getContext()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#getContext">\SmartFactory\RuntimeSettingsManager::getContext()</a><br>
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#setContext">\SmartFactory\ApplicationSettingsManager::setContext()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setContext">\SmartFactory\RuntimeSettingsManager::setContext()</a><br>
   
   </div>
   
@@ -544,7 +508,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#42">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#42">SmartFactory\RuntimeSettingsManager.php</a>
 
   
 
@@ -556,13 +520,13 @@ manager is intialized correctly.
   
   <h1>Property: $settings</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings</b></div>
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings</b> = <span class="php-keyword1">array</span>()</div>
 
   <span class="type_label">Type:</span> array
   
   
   <div class="short-description">
-  Internal variable for storing the array of changed settings values.
+  Internal variable for storing the array of the settings values.
   </div>
   
 
@@ -578,7 +542,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#105">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#96">SmartFactory\RuntimeSettingsManager.php</a>
 
   
 
@@ -612,7 +576,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#60">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#60">SmartFactory\RuntimeSettingsManager.php</a>
 
   
 
@@ -646,41 +610,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#51">SmartFactory\ApplicationSettingsManager.php</a>
-
-  
-
-  
-
-  
-  
-  <hr id="$temp_settings">
-  
-  <h1>Property: $temp_settings</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$temp_settings</b></div>
-
-  <span class="type_label">Type:</span> array
-  
-  
-  <div class="short-description">
-  Internal variable for storing the array of settings values.
-  </div>
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#93">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#51">SmartFactory\RuntimeSettingsManager.php</a>
 
   
 
@@ -714,15 +644,15 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#84">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#84">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#getValidator">\SmartFactory\ApplicationSettingsManager::getValidator()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#getValidator">\SmartFactory\RuntimeSettingsManager::getValidator()</a><br>
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#setValidator">\SmartFactory\ApplicationSettingsManager::setValidator()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setValidator">\SmartFactory\RuntimeSettingsManager::setValidator()</a><br>
   
   </div>
   
@@ -734,47 +664,6 @@ manager is intialized correctly.
 
 
 
-  
-  <hr id="__construct">
-  
-  <h1>Constructor</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>__construct</b>()</div>
-
-  
-  <div class="short-description">
-  Constructor.
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#269">SmartFactory\ApplicationSettingsManager.php</a>
-
-  
-
-  
-
-  
-  
   
   <hr id="getContext">
   
@@ -831,13 +720,13 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#394">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#365">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#setContext">\SmartFactory\ApplicationSettingsManager::setContext()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setContext">\SmartFactory\RuntimeSettingsManager::setContext()</a><br>
   
   </div>
   
@@ -851,10 +740,7 @@ db_connection_settings etc.</p>
   
   <h1>Method: getParameter</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>getParameter</b>(string &amp;<span class="php-var">$name</span>,
-                    boolean &amp;<span class="php-var">$get_dirty</span> = <span class="php-keyword1">false</span>,
-                    mixed &amp;<span class="php-var">$default</span> = <span class="php-keyword1">null</span>
-                   ) : mixed</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>getParameter</b>(string &amp;<span class="php-var">$name</span>, mixed &amp;<span class="php-var">$default</span> = <span class="php-quote">&quot;&quot;</span>) : mixed</div>
 
   
   <div class="short-description">
@@ -875,25 +761,13 @@ db_connection_settings etc.</p>
       </div>
       
   
-      <h3>$get_dirty</h3>
-      <span class="type_label">Type:</span> boolean
-      
-      <div class="param-description">
-      <p>If settings are not saved yet, the unsaved new value
-of the parameter is returned if $get_dirty is true.</p>
-      </div>
-      
-  
       <h3>$default</h3>
       <span class="type_label">Type:</span> mixed
       
       <div class="param-description">
       <p>The default value of the settings parameter if it is not set yet.
 The parameter is a confortable way to pre-set a parameter
-to a default value if its value is not set yet.
-However, if the status of the data is dirty and the unsaved
-last entered value is requested, then always the actual
-last entered value is returned and this paramter is ignored.</p>
+to a default value if its value is not set yet.</p>
       </div>
       
   
@@ -926,13 +800,13 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#467">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#408">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#setParameter">\SmartFactory\ApplicationSettingsManager::setParameter()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setParameter">\SmartFactory\RuntimeSettingsManager::setParameter()</a><br>
   
   </div>
   
@@ -985,15 +859,15 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#344">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#315">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#setValidator">\SmartFactory\ApplicationSettingsManager::setValidator()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setValidator">\SmartFactory\RuntimeSettingsManager::setValidator()</a><br>
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#validateSettings">\SmartFactory\ApplicationSettingsManager::validateSettings()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#validateSettings">\SmartFactory\RuntimeSettingsManager::validateSettings()</a><br>
   
   </div>
   
@@ -1083,7 +957,7 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#298">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#269">SmartFactory\RuntimeSettingsManager.php</a>
 
   
 
@@ -1092,15 +966,16 @@ last entered value is returned and this paramter is ignored.</p>
   
   
   
-  <hr id="isDirty">
+  <hr id="loadJSON">
   
-  <h1>Method: isDirty</h1>
+  <h1>Method: loadJSON</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>isDirty</b>(boolean &amp;<span class="php-var">$global</span> = <span class="php-keyword1">false</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <b>loadJSON</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : boolean</div>
 
   
   <div class="short-description">
-  Checks whether the settings data is dirty (not saved) within a context or globally.
+  This is internal auxiliary function for loading the settings from the target table
+defined by the iniailization.
   </div>
   
 
@@ -1109,12 +984,11 @@ last entered value is returned and this paramter is ignored.</p>
   
   <h2>Parameters</h2>
   
-      <h3>$global</h3>
-      <span class="type_label">Type:</span> boolean
+      <h3>$data</h3>
+      <span class="type_label">Type:</span> array
       
       <div class="param-description">
-      <p>If $global is false, the dirty state is checked only within the current context.
-If $global is true, the dirty state is checked globally.</p>
+      <p>The target array with the settings values to be loaded.</p>
       </div>
       
   
@@ -1125,20 +999,34 @@ If $global is true, the dirty state is checked globally.</p>
   <span class="type_label">Type:</span> boolean
   
   <div class="param-description">
-  <p>Returs true if the settings data is dirty, otherwise false.</p>
+  <p>Returns true if the data has been successfully loaded, otherwise false.</p>
   </div>
   
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b>\Exception</b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if the query fails or if some object names are invalid.</li>
+<li>if the json is invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
 
   
   
   
   
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#isDirty">\SmartFactory\Interfaces\ISettingsManager::isDirty()</a><br>
   
   
   
@@ -1147,8 +1035,15 @@ If $global is true, the dirty state is checked globally.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#411">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#215">SmartFactory\RuntimeSettingsManager.php</a>
 
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#saveJSON">\SmartFactory\RuntimeSettingsManager::saveJSON()</a><br>
+  
+  </div>
   
 
   
@@ -1215,13 +1110,13 @@ If $global is true, the dirty state is checked globally.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#527">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#460">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#saveSettings">\SmartFactory\ApplicationSettingsManager::saveSettings()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#saveSettings">\SmartFactory\RuntimeSettingsManager::saveSettings()</a><br>
   
   </div>
   
@@ -1231,16 +1126,16 @@ If $global is true, the dirty state is checked globally.</p>
   
   
   
-  <hr id="loadXMLfromDB">
+  <hr id="saveJSON">
   
-  <h1>Method: loadXMLfromDB</h1>
+  <h1>Method: saveJSON</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>loadXMLfromDB</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <b>saveJSON</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : boolean</div>
 
   
   <div class="short-description">
-  This is internal auxiliary function for loading the settings from the target table
-defined by the iniailization.
+  This is internal auxiliary function for converting the settings to JSON and storing it
+to the target table defined by the iniailization.
   </div>
   
 
@@ -1253,7 +1148,7 @@ defined by the iniailization.
       <span class="type_label">Type:</span> array
       
       <div class="param-description">
-      <p>The target array with the settings values to be loaded.</p>
+      <p>The array with the settings values to be saved.</p>
       </div>
       
   
@@ -1264,7 +1159,7 @@ defined by the iniailization.
   <span class="type_label">Type:</span> boolean
   
   <div class="param-description">
-  <p>Returns true if the data has been successfully loaded, otherwise false.</p>
+  <p>Returns true if the data has been successfully saved, otherwise false.</p>
   </div>
   
   
@@ -1299,13 +1194,13 @@ defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#231">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#155">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#saveXMLtoDB">\SmartFactory\ApplicationSettingsManager::saveXMLtoDB()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#loadJSON">\SmartFactory\RuntimeSettingsManager::loadJSON()</a><br>
   
   </div>
   
@@ -1374,97 +1269,13 @@ defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#561">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#482">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#loadSettings">\SmartFactory\ApplicationSettingsManager::loadSettings()</a><br>
-  
-  </div>
-  
-
-  
-
-  
-  
-  
-  <hr id="saveXMLtoDB">
-  
-  <h1>Method: saveXMLtoDB</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>saveXMLtoDB</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : boolean</div>
-
-  
-  <div class="short-description">
-  This is internal auxiliary function for converting the settings to XML and storing it
-to the target table defined by the iniailization.
-  </div>
-  
-
-  
-
-  
-  <h2>Parameters</h2>
-  
-      <h3>$data</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The array with the settings values to be saved.</p>
-      </div>
-      
-  
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
-  
-  <div class="param-description">
-  <p>Returns true if the data has been successfully saved, otherwise false.</p>
-  </div>
-  
-  
-
-  
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw an exception in the case of any errors:</p>
-<ul>
-<li>if some parameters are missing.</li>
-<li>if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
-<li>if the query fails or if some object names are invalid.</li>
-</ul><br>
-      
-  
-  </div>
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#164">SmartFactory\ApplicationSettingsManager.php</a>
-
-  
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#loadXMLfromDB">\SmartFactory\ApplicationSettingsManager::loadXMLfromDB()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#loadSettings">\SmartFactory\RuntimeSettingsManager::loadSettings()</a><br>
   
   </div>
   
@@ -1536,13 +1347,13 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#370">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#341">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#getContext">\SmartFactory\ApplicationSettingsManager::getContext()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#getContext">\SmartFactory\RuntimeSettingsManager::getContext()</a><br>
   
   </div>
   
@@ -1610,13 +1421,13 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#435">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#385">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#getParameter">\SmartFactory\ApplicationSettingsManager::getParameter()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#getParameter">\SmartFactory\RuntimeSettingsManager::getParameter()</a><br>
   
   </div>
   
@@ -1676,15 +1487,15 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#328">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#299">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#getValidator">\SmartFactory\ApplicationSettingsManager::getValidator()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#getValidator">\SmartFactory\RuntimeSettingsManager::getValidator()</a><br>
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#validateSettings">\SmartFactory\ApplicationSettingsManager::validateSettings()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#validateSettings">\SmartFactory\RuntimeSettingsManager::validateSettings()</a><br>
   
   </div>
   
@@ -1750,7 +1561,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#122">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#113">SmartFactory\RuntimeSettingsManager.php</a>
 
   
 
@@ -1809,15 +1620,15 @@ the validator validate the settings.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ApplicationSettingsManager.html#501">SmartFactory\ApplicationSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#434">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#getValidator">\SmartFactory\ApplicationSettingsManager::getValidator()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#getValidator">\SmartFactory\RuntimeSettingsManager::getValidator()</a><br>
   
-  <a href="class-SmartFactory.ApplicationSettingsManager.html#setValidator">\SmartFactory\ApplicationSettingsManager::setValidator()</a><br>
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setValidator">\SmartFactory\RuntimeSettingsManager::setValidator()</a><br>
   
   </div>
   
@@ -1839,7 +1650,7 @@ the validator validate the settings.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-06-06 13:33
+                        Generated on 2019-06-14 22:18
                     </div>                    
                 </div>
             </div>

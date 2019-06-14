@@ -1,7 +1,7 @@
 <?php
 /**
  * This file contains the implementation of the interface ISettingsManager
- * in the class ApplicationSettingsManager for management of the
+ * in the class RuntimeSettingsManager for management of the
  * application settings.
  *
  * @package System
@@ -33,7 +33,7 @@ use SmartFactory\DatabaseWorkers\DBWorker;
  *
  * @author Oleg Schildt
  */
-class ApplicationSettingsManager implements ISettingsManager
+class RuntimeSettingsManager implements ISettingsManager
 {
     /**
      * Internal variable for storing the dbworker.
@@ -87,16 +87,7 @@ class ApplicationSettingsManager implements ISettingsManager
     protected $validator = null;
     
     /**
-     * Internal variable for storing the array of settings values.
-     *
-     * @var array
-     *
-     * @author Oleg Schildt
-     */
-    protected $temp_settings;
-    
-    /**
-     * Internal variable for storing the array of changed settings values.
+     * Internal variable for storing the array of the settings values.
      *
      * @var array
      *
@@ -105,7 +96,7 @@ class ApplicationSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $settings;
+    protected $settings = [];
     
     /**
      * This is internal auxiliary function for checking that the settings
@@ -127,7 +118,7 @@ class ApplicationSettingsManager implements ISettingsManager
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
         }
-    
+        
         if (!$this->dbworker instanceof DBWorker) {
             throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
         }
@@ -144,7 +135,7 @@ class ApplicationSettingsManager implements ISettingsManager
     } // validateParameters
     
     /**
-     * This is internal auxiliary function for converting the settings to XML and storing it
+     * This is internal auxiliary function for converting the settings to JSON and storing it
      * to the target table defined by the iniailization.
      *
      * @param array $data
@@ -160,23 +151,15 @@ class ApplicationSettingsManager implements ISettingsManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
      *
-     * @see loadXMLfromDB()
+     * @see loadJSON()
      *
      * @author Oleg Schildt
      */
-    protected function saveXMLtoDB(&$data)
+    protected function saveJSON(&$data)
     {
         $this->validateParameters();
-
-        $xmldoc = new \DOMDocument("1.0", "UTF-8");
-        $xmldoc->formatOutput = true;
-        
-        $root = $xmldoc->createElement("array");
-        $root = $xmldoc->appendChild($root);
-        
-        array_to_dom($root, $data);
-        
-        $xml = $xmldoc->saveXML();
+    
+        $json = array_to_json($data);
         
         // check existance
         
@@ -194,13 +177,13 @@ class ApplicationSettingsManager implements ISettingsManager
         
         $this->dbworker->free_result();
         
-        $xml = $this->dbworker->escape($xml);
+        $json = $this->dbworker->escape($json);
         
         if ($must_insert) {
             $query = "INSERT INTO " . $this->settings_table . "(" . $this->settings_column . ")\n";
-            $query .= "VALUES ('$xml')";
+            $query .= "VALUES ('$json')";
         } else {
-            $query = "UPDATE " . $this->settings_table . " SET " . $this->settings_column . " = '$xml'";
+            $query = "UPDATE " . $this->settings_table . " SET " . $this->settings_column . " = '$json'";
         }
         
         if (!$this->dbworker->execute_query($query)) {
@@ -208,7 +191,7 @@ class ApplicationSettingsManager implements ISettingsManager
         }
         
         return true;
-    } // saveXMLtoDB
+    } // saveJSON
     
     /**
      * This is internal auxiliary function for loading the settings from the target table
@@ -226,54 +209,42 @@ class ApplicationSettingsManager implements ISettingsManager
      * - if some parameters are missing.
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
+     * - if the json is invalid.
      *
-     * @see saveXMLtoDB()
+     * @see saveJSON()
      *
      * @author Oleg Schildt
      */
-    protected function loadXMLfromDB(&$data)
+    protected function loadJSON(&$data)
     {
         $this->validateParameters();
-
+        
         $query = "SELECT " . $this->settings_column . " FROM " . $this->settings_table;
         
         if (!$this->dbworker->execute_query($query)) {
             throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
         }
         
-        $xml = "";
+        $json = "";
         
         if ($this->dbworker->fetch_row()) {
-            $xml = $this->dbworker->field_by_name($this->settings_column);
+            $json = $this->dbworker->field_by_name($this->settings_column);
         }
         
         $this->dbworker->free_result();
         
-        if (empty($xml)) {
+        if (empty($json)) {
             return true;
         }
-        
-        $xmldoc = new \DOMDocument();
-        
-        if (!@$xmldoc->loadXML($xml)) {
-            return false;
+    
+        try {
+            json_to_array($json, $data);
+        } catch (\Exception $ex) {
+            throw new \Exception("JSON parse error: " . $ex->getMessage());
         }
         
-        dom_to_array($xmldoc->documentElement, $data);
-        
         return true;
-    } // loadXMLfromDB
-    
-    /**
-     * Constructor.
-     *
-     * @author Oleg Schildt
-     */
-    public function __construct()
-    {
-        $this->settings = &session()->vars()["__application_settings"];
-        $this->temp_settings = &session()->vars()["__temp_application_settings"];
-    } // __construct
+    } // loadJSON
     
     /**
      * Initializes the settings manager parameters.
@@ -400,27 +371,6 @@ class ApplicationSettingsManager implements ISettingsManager
     } // getContext
     
     /**
-     * Checks whether the settings data is dirty (not saved) within a context or globally.
-     *
-     * @param boolean $global
-     * If $global is false, the dirty state is checked only within the current context.
-     * If $global is true, the dirty state is checked globally.
-     *
-     * @return boolean
-     * Returs true if the settings data is dirty, otherwise false.
-     *
-     * @author Oleg Schildt
-     */
-    public function isDirty($global = false)
-    {
-        if ($global) {
-            return !empty($this->temp_settings["__dirty"]);
-        }
-        
-        return !empty($this->temp_settings["__dirty"][$this->context]);
-    } // isDirty
-    
-    /**
      * Sets a settings parameter.
      *
      * @param string $name
@@ -437,9 +387,7 @@ class ApplicationSettingsManager implements ISettingsManager
      */
     public function setParameter($name, $value)
     {
-        $this->temp_settings[$name] = $value;
-        
-        $this->temp_settings["__dirty"][$this->context] = true;
+        $this->settings[$name] = $value;
     } // setParameter
     
     /**
@@ -448,17 +396,10 @@ class ApplicationSettingsManager implements ISettingsManager
      * @param string $name
      * The name of the settings parameter.
      *
-     * @param boolean $get_dirty
-     * If settings are not saved yet, the unsaved new value
-     * of the parameter is returned if $get_dirty is true.
-     *
      * @param mixed $default
      * The default value of the settings parameter if it is not set yet.
      * The parameter is a confortable way to pre-set a parameter
      * to a default value if its value is not set yet.
-     * However, if the status of the data is dirty and the unsaved
-     * last entered value is requested, then always the actual
-     * last entered value is returned and this paramter is ignored.
      *
      * @return mixed
      * Returns the value of the settings parameter.
@@ -467,16 +408,8 @@ class ApplicationSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $get_dirty = false, $default = null)
+    public function getParameter($name, $default = "")
     {
-        if ($get_dirty && $this->isDirty()) {
-            if (empty($this->temp_settings[$name])) {
-                return null;
-            }
-            
-            return $this->temp_settings[$name];
-        }
-        
         if (!isset($this->settings[$name])) {
             return $default;
         }
@@ -529,19 +462,7 @@ class ApplicationSettingsManager implements ISettingsManager
      */
     public function loadSettings()
     {
-        if ($this->isDirty(true)) {
-            return true;
-        }
-        
-        if (!$this->loadXMLfromDB($this->settings)) {
-            return false;
-        }
-        
-        $this->temp_settings = $this->settings;
-        
-        unset($this->temp_settings["__dirty"]);
-        
-        return true;
+        return $this->loadJSON($this->settings);
     } // loadSettings
     
     /**
@@ -563,16 +484,6 @@ class ApplicationSettingsManager implements ISettingsManager
      */
     public function saveSettings()
     {
-        $old_dirty_state = $this->temp_settings["__dirty"];
-        unset($this->temp_settings["__dirty"]);
-        
-        if ($this->saveXMLtoDB($this->temp_settings)) {
-            $this->settings = $this->temp_settings;
-            return true;
-        }
-        
-        $this->temp_settings["__dirty"] = $old_dirty_state;
-        
-        return false;
+        return $this->saveJSON($this->settings);
     } // saveSettings
-} // ApplicationSettingsManager
+} // RuntimeSettingsManager

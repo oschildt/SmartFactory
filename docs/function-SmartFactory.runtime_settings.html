@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: array_to_json - Library SmartFactory
+            Function: runtime_settings - Library SmartFactory
         </title>
     </head>
 
@@ -99,7 +99,7 @@
                         
  
 
-                        <li class="active">array_to_json()</li>
+                        <li class="active">runtime_settings()</li>
                 </ol>
                 
             </div>
@@ -111,48 +111,46 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: array_to_json</h1>
+                    <h1>Function: runtime_settings</h1>
 
-<div class="definition"><b>array_to_json</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>) : string</div>
+<div class="definition"><b>runtime_settings</b>() : \SmartFactory\RuntimeSettingsManager</div>
 
 
 <div class="short-description">
-Converts the array to JSON string.
+Short function for getting the instance of the RuntimeSettingsManager.
 </div>
 
 
 
-<div class="long-description">
-<h2>Details</h2>
-<p>It is a wrapper over the system function json_encode. It
-is introduced to give the ability to overwrite the system
-function if necessary.</p>
-</div>
-
-
-
-<h2>Parameters</h2>
-
-    <h3>$array</h3>
-    <span class="type_label">Type:</span> array
-    
-    <div class="param-description">
-    <p>Array to be converted.</p>
-    </div>
-    
 
 
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> string
+<span class="type_label">Type:</span> <a href="class-SmartFactory.RuntimeSettingsManager.html">\SmartFactory\RuntimeSettingsManager</a>
 
 <div class="param-description">
-<p>Returns the JSON string of the array.</p>
+<p>Returns the instance of the RuntimeSettingsManager.</p>
 </div>
 
 
 
+
+<h2>Throws</h2>
+<div class="item_list">
+
+    <b>\Exception</b><br>
+    
+    
+    <p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>if the interface or class is not specified.</li>
+<li>if the interface or class does not exist.</li>
+<li>if the check of the classes and interfaces fails.</li>
+</ul><br>
+    
+
+</div>
 
 
 
@@ -162,11 +160,11 @@ Oleg Schildt
 
 
 <h2>Package</h2>
-<a href="package-Utility_Functions.html">Utility Functions</a>
+<a href="package-System.html">System</a>
 
 
 <h2>Source code</h2>
-<a href="source-utility_functions_inc.html#78">utility_functions_inc.php</a>
+<a href="source-short_functions_inc.html#193">short_functions_inc.php</a>
 
 
 

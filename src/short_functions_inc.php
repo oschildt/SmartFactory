@@ -179,10 +179,10 @@ function config_settings()
 } // config_settings
 
 /**
- * Short function for getting the instance of the ApplicationSettingsManager.
+ * Short function for getting the instance of the RuntimeSettingsManager.
  *
- * @return ApplicationSettingsManager
- * Returns the instance of the ApplicationSettingsManager.
+ * @return RuntimeSettingsManager
+ * Returns the instance of the RuntimeSettingsManager.
  *
  * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
@@ -193,10 +193,10 @@ function config_settings()
  *
  * @author Oleg Schildt
  */
-function application_settings()
+function runtime_settings()
 {
-    return singleton(ApplicationSettingsManager::class);
-} // application_settings
+    return singleton(RuntimeSettingsManager::class);
+} // runtime_settings
 
 /**
  * Short function for getting the instance of the UserSettingsManager.

@@ -260,6 +260,18 @@ Oleg Schildt
           </td>
       </tr>
       
+      <tr>
+          <td>
+              <a href="#$use_apcu">$use_apcu</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the state whether the acpu should be used.
+          </td>
+      </tr>
+      
       
   </table>
 
@@ -423,8 +435,7 @@ for the given langauge.
               <span class='public'>public</span>
           </td>
           <td class="description_column">
-              This is internal auxiliary function for loading the translations from the source
-XML file.
+              This is internal auxiliary function for loading the translations from the source JSON file.
           </td>
       </tr>
       
@@ -551,7 +562,7 @@ XML file.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#82">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#91">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -599,7 +610,7 @@ XML file.
 
   <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$dictionary_loaded</b> = <span class="php-keyword1">false</span></div>
 
-  <span class="type_label">Type:</span> string
+  <span class="type_label">Type:</span> boolean
   
   
   <div class="short-description">
@@ -653,7 +664,7 @@ XML file.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#73">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#82">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -721,7 +732,7 @@ XML file.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#64">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#73">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -755,7 +766,41 @@ XML file.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#91">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#100">SmartFactory\LanguageManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$use_apcu">
+  
+  <h1>Property: $use_apcu</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$use_apcu</b> = <span class="php-keyword1">false</span></div>
+
+  <span class="type_label">Type:</span> boolean
+  
+  
+  <div class="short-description">
+  Internal variable for storing the state whether the acpu should be used.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.LanguageManager.html#64">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -840,7 +885,7 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#229">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#278">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -906,7 +951,7 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#307">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#356">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -969,7 +1014,7 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#638">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#687">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1054,7 +1099,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#704">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#753">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1154,7 +1199,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#606">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#655">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1219,7 +1264,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#363">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#412">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1289,7 +1334,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#496">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#545">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1374,7 +1419,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#562">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#611">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1474,7 +1519,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#464">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#513">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1539,7 +1584,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#320">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#369">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -1611,7 +1656,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#428">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#477">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -1643,7 +1688,12 @@ the default langauge is used.</p>
       <div class="param-description">
       <p>Settings for logging as an associative array in the form key => value:</p>
 <ul>
-<li>$parameters["localization_path"] - the path where the localization files are stored.</li>
+<li>
+<p>$parameters["localization_path"] - the path where the localization files are stored.</p>
+</li>
+<li>
+<p>$parameters["use_apcu"] - if installed, apcu can be used to cache the translations in the memory.</p>
+</li>
 </ul>
       </div>
       
@@ -1677,7 +1727,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#106">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#117">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -1694,8 +1744,7 @@ the default langauge is used.</p>
 
   
   <div class="short-description">
-  This is internal auxiliary function for loading the translations from the source
-XML file.
+  This is internal auxiliary function for loading the translations from the source JSON file.
   </div>
   
 
@@ -1741,7 +1790,7 @@ XML file.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#129">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#143">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -1804,7 +1853,7 @@ XML file.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#338">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#387">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1906,7 +1955,7 @@ is found.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#392">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#441">SmartFactory\LanguageManager.php</a>
 
   
 
@@ -1978,7 +2027,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#675">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#724">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2063,7 +2112,7 @@ the default langauge is used.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.LanguageManager.html#533">SmartFactory\LanguageManager.php</a>
+  <a href="source-SmartFactory.LanguageManager.html#582">SmartFactory\LanguageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2090,7 +2139,7 @@ the default langauge is used.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-06-06 13:33
+                        Generated on 2019-06-14 22:18
                     </div>                    
                 </div>
             </div>

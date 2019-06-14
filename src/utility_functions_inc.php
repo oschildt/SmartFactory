@@ -31,6 +31,37 @@ function is_associative(&$array)
     return array_keys($keys) !== $keys;
 } // is_associative
 
+/**
+ * Converts the JSON string to an array.
+ *
+ * It is a wrapper over the system function json_decode. It
+ * is introduced to give the ability to overwrite the system
+ * function if necessary.
+ *
+ * @param string $json
+ * Input JSON string.
+ *
+ * @param array $array
+ * target array.
+ *
+ * @throws \Exception
+ * It might throw the exception if the JSON cannot be parsed.
+ *
+ * @author Oleg Schildt
+ */
+function json_to_array(&$json, &$array)
+{
+    $result = json_decode($json, true);
+    if ($result === null) {
+        throw new \Exception(json_last_error_msg());
+    }
+    
+    if (empty($array)) {
+        $array = [];
+    }
+    
+    $array = array_merge($array, $result);
+} // json_to_array
 
 /**
  * Converts the array to JSON string.
@@ -49,7 +80,7 @@ function is_associative(&$array)
  */
 function array_to_json(&$array)
 {
-    return json_encode($array, JSON_PRETTY_PRINT);
+    return json_encode($array, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
     
     // PHP json_encode escapes forward slash and the ExtJS says JSON parse error
     
@@ -385,6 +416,8 @@ function preg_r_escape($pattern)
  */
 function &checkempty(&$var)
 {
+    if($var === null) return "";
+    
     return $var;
 } // checkempty
 

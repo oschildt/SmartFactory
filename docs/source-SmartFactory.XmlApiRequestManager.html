@@ -260,92 +260,97 @@
 <span class="line" id="178">178: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
 <span class="line" id="179">179: </span>                [
 <span class="line" id="180">180: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
-<span class="line" id="181">181: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-quote">&quot;Wrong implementation of the method parseXML: the API request is undefined (empty)!&quot;</span>
-<span class="line" id="182">182: </span>                ]
-<span class="line" id="183">183: </span>            ];
-<span class="line" id="184">184: </span>            
-<span class="line" id="185">185: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
-<span class="line" id="186">186: </span>            
-<span class="line" id="187">187: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="188">188: </span>        }
-<span class="line" id="189">189: </span>        
-<span class="line" id="190">190: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$xmldoc</span>)) {
-<span class="line" id="191">191: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
-<span class="line" id="192">192: </span>                [
-<span class="line" id="193">193: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
-<span class="line" id="194">194: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-quote">&quot;Wrong implementation of the method parseXML: no valid XML DOMDocument provided!&quot;</span>
-<span class="line" id="195">195: </span>                ]
-<span class="line" id="196">196: </span>            ];
-<span class="line" id="197">197: </span>            
-<span class="line" id="198">198: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
+<span class="line" id="181">181: </span>                    <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
+<span class="line" id="182">182: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-quote">&quot;Wrong implementation of the method parseXML: the API request is undefined (empty)!&quot;</span>
+<span class="line" id="183">183: </span>                ]
+<span class="line" id="184">184: </span>            ];
+<span class="line" id="185">185: </span>            
+<span class="line" id="186">186: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
+<span class="line" id="187">187: </span>            
+<span class="line" id="188">188: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="189">189: </span>        }
+<span class="line" id="190">190: </span>        
+<span class="line" id="191">191: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$xmldoc</span>)) {
+<span class="line" id="192">192: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
+<span class="line" id="193">193: </span>                [
+<span class="line" id="194">194: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
+<span class="line" id="195">195: </span>                    <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
+<span class="line" id="196">196: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-quote">&quot;Wrong implementation of the method parseXML: no valid XML DOMDocument provided!&quot;</span>
+<span class="line" id="197">197: </span>                ]
+<span class="line" id="198">198: </span>            ];
 <span class="line" id="199">199: </span>            
-<span class="line" id="200">200: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="201">201: </span>        }
-<span class="line" id="202">202: </span>        
-<span class="line" id="203">203: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>])) {
-<span class="line" id="204">204: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
-<span class="line" id="205">205: </span>                [
-<span class="line" id="206">206: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
-<span class="line" id="207">207: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;No handler is defined for the XML API request '%s'!&quot;</span>, <span class="php-var">$api_request</span>)
-<span class="line" id="208">208: </span>                ]
-<span class="line" id="209">209: </span>            ];
-<span class="line" id="210">210: </span>            
-<span class="line" id="211">211: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
-<span class="line" id="212">212: </span>            
-<span class="line" id="213">213: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="214">214: </span>        }
-<span class="line" id="215">215: </span>        
-<span class="line" id="216">216: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">class_exists</span>(<span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>])) {
-<span class="line" id="217">217: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;result&quot;</span>] = <span class="php-quote">&quot;error&quot;</span>;
-<span class="line" id="218">218: </span>            
-<span class="line" id="219">219: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
-<span class="line" id="220">220: </span>                [
-<span class="line" id="221">221: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
-<span class="line" id="222">222: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The handler class '%s' does not exist!&quot;</span>, <span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>])
-<span class="line" id="223">223: </span>                ]
-<span class="line" id="224">224: </span>            ];
-<span class="line" id="225">225: </span>            
-<span class="line" id="226">226: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
-<span class="line" id="227">227: </span>            
-<span class="line" id="228">228: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="229">229: </span>        }
-<span class="line" id="230">230: </span>        
-<span class="line" id="231">231: </span>        <span class="php-keyword1">try</span> {
-<span class="line" id="232">232: </span>            <span class="php-var">$handler_class</span> = <span class="php-keyword1">new</span> \ReflectionClass(<span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>]);
-<span class="line" id="233">233: </span>        } <span class="php-keyword1">catch</span> (\Exception <span class="php-var">$ex</span>) {
-<span class="line" id="234">234: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$ex</span>-&gt;getMessage());
-<span class="line" id="235">235: </span>        }
-<span class="line" id="236">236: </span>        
-<span class="line" id="237">237: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$handler_class</span>-&gt;isSubclassOf(<span class="php-quote">&quot;SmartFactory\Interfaces\IXmlApiRequestHandler&quot;</span>)) {
-<span class="line" id="238">238: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;result&quot;</span>] = <span class="php-quote">&quot;error&quot;</span>;
-<span class="line" id="239">239: </span>            
-<span class="line" id="240">240: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
-<span class="line" id="241">241: </span>                [
-<span class="line" id="242">242: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
-<span class="line" id="243">243: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The handler class '%s' does not implement the interface '%s'!&quot;</span>, <span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>], <span class="php-quote">&quot;IXmlApiRequestHandler&quot;</span>)
-<span class="line" id="244">244: </span>                ]
-<span class="line" id="245">245: </span>            ];
-<span class="line" id="246">246: </span>            
-<span class="line" id="247">247: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
-<span class="line" id="248">248: </span>            
-<span class="line" id="249">249: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="250">250: </span>        }
-<span class="line" id="251">251: </span>        
-<span class="line" id="252">252: </span>        <span class="php-keyword1">try</span> {
-<span class="line" id="253">253: </span>            <span class="php-var">$handler</span> = <span class="php-var">$handler_class</span>-&gt;newInstance();
-<span class="line" id="254">254: </span>        } <span class="php-keyword1">catch</span> (\Exception <span class="php-var">$ex</span>) {
-<span class="line" id="255">255: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$ex</span>-&gt;getMessage());
-<span class="line" id="256">256: </span>        }
-<span class="line" id="257">257: </span>        
-<span class="line" id="258">258: </span>        <span class="php-keyword1">return</span> <span class="php-var">$handler</span>-&gt;handle(<span class="php-var">$this</span>, <span class="php-var">$api_request</span>, <span class="php-var">$xmldoc</span>);
-<span class="line" id="259">259: </span>    } <span class="php-comment">// handleApiRequest</span>
-<span class="line" id="260">260: </span>} <span class="php-comment">// XmlApiRequestManager</span>
+<span class="line" id="200">200: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
+<span class="line" id="201">201: </span>            
+<span class="line" id="202">202: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="203">203: </span>        }
+<span class="line" id="204">204: </span>        
+<span class="line" id="205">205: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>])) {
+<span class="line" id="206">206: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
+<span class="line" id="207">207: </span>                [
+<span class="line" id="208">208: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
+<span class="line" id="209">209: </span>                    <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
+<span class="line" id="210">210: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;No handler is defined for the XML API request '%s'!&quot;</span>, <span class="php-var">$api_request</span>)
+<span class="line" id="211">211: </span>                ]
+<span class="line" id="212">212: </span>            ];
+<span class="line" id="213">213: </span>            
+<span class="line" id="214">214: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
+<span class="line" id="215">215: </span>            
+<span class="line" id="216">216: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="217">217: </span>        }
+<span class="line" id="218">218: </span>        
+<span class="line" id="219">219: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">class_exists</span>(<span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>])) {
+<span class="line" id="220">220: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;result&quot;</span>] = <span class="php-quote">&quot;error&quot;</span>;
+<span class="line" id="221">221: </span>            
+<span class="line" id="222">222: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
+<span class="line" id="223">223: </span>                [
+<span class="line" id="224">224: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
+<span class="line" id="225">225: </span>                    <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
+<span class="line" id="226">226: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The handler class '%s' does not exist!&quot;</span>, <span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>])
+<span class="line" id="227">227: </span>                ]
+<span class="line" id="228">228: </span>            ];
+<span class="line" id="229">229: </span>            
+<span class="line" id="230">230: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
+<span class="line" id="231">231: </span>            
+<span class="line" id="232">232: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="233">233: </span>        }
+<span class="line" id="234">234: </span>        
+<span class="line" id="235">235: </span>        <span class="php-keyword1">try</span> {
+<span class="line" id="236">236: </span>            <span class="php-var">$handler_class</span> = <span class="php-keyword1">new</span> \ReflectionClass(<span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>]);
+<span class="line" id="237">237: </span>        } <span class="php-keyword1">catch</span> (\Exception <span class="php-var">$ex</span>) {
+<span class="line" id="238">238: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$ex</span>-&gt;getMessage());
+<span class="line" id="239">239: </span>        }
+<span class="line" id="240">240: </span>        
+<span class="line" id="241">241: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$handler_class</span>-&gt;isSubclassOf(<span class="php-quote">&quot;SmartFactory\Interfaces\IXmlApiRequestHandler&quot;</span>)) {
+<span class="line" id="242">242: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;result&quot;</span>] = <span class="php-quote">&quot;error&quot;</span>;
+<span class="line" id="243">243: </span>            
+<span class="line" id="244">244: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
+<span class="line" id="245">245: </span>                [
+<span class="line" id="246">246: </span>                    <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
+<span class="line" id="247">247: </span>                    <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
+<span class="line" id="248">248: </span>                    <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The handler class '%s' does not implement the interface '%s'!&quot;</span>, <span class="php-var">$this</span>-&gt;handler_table[<span class="php-var">$api_request</span>], <span class="php-quote">&quot;IXmlApiRequestHandler&quot;</span>)
+<span class="line" id="249">249: </span>                ]
+<span class="line" id="250">250: </span>            ];
+<span class="line" id="251">251: </span>            
+<span class="line" id="252">252: </span>            <span class="php-var">$this</span>-&gt;reportErrors(<span class="php-var">$response_data</span>);
+<span class="line" id="253">253: </span>            
+<span class="line" id="254">254: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="255">255: </span>        }
+<span class="line" id="256">256: </span>        
+<span class="line" id="257">257: </span>        <span class="php-keyword1">try</span> {
+<span class="line" id="258">258: </span>            <span class="php-var">$handler</span> = <span class="php-var">$handler_class</span>-&gt;newInstance();
+<span class="line" id="259">259: </span>        } <span class="php-keyword1">catch</span> (\Exception <span class="php-var">$ex</span>) {
+<span class="line" id="260">260: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$ex</span>-&gt;getMessage());
+<span class="line" id="261">261: </span>        }
+<span class="line" id="262">262: </span>        
+<span class="line" id="263">263: </span>        <span class="php-keyword1">return</span> <span class="php-var">$handler</span>-&gt;handle(<span class="php-var">$this</span>, <span class="php-var">$api_request</span>, <span class="php-var">$xmldoc</span>);
+<span class="line" id="264">264: </span>    } <span class="php-comment">// handleApiRequest</span>
+<span class="line" id="265">265: </span>} <span class="php-comment">// XmlApiRequestManager</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-06-06 13:33
+                        Generated on 2019-06-14 22:18
                     </div>                    
                 </div>
             </div>

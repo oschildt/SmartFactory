@@ -33,20 +33,6 @@ interface ISettingsManager extends IInitable
     public function init($parameters);
     
     /**
-     * Checks whether the settings data is dirty (not saved) within a context or globally.
-     *
-     * @param boolean $global
-     * If $global is false, the dirty state is checked only within the current context.
-     * If $global is true, the dirty state is checked globally.
-     *
-     * @return boolean
-     * Returs true if the settings data is dirty, otherwise false.
-     *
-     * @author Oleg Schildt
-     */
-    public function isDirty($global = false);
-    
-    /**
      * Sets the validator for the settings.
      *
      * @param ISettingsValidator $validator
@@ -97,10 +83,6 @@ interface ISettingsManager extends IInitable
      * @param string $name
      * The name of the settings parameter.
      *
-     * @param boolean $get_dirty
-     * If settings are not saved yet, the unsaved new value
-     * of the parameter is returned if $get_dirty is true.
-     *
      * @param mixed $default
      * The default value of the settings parameter if it is not set yet.
      * The parameter is a confortable way to pre-set a parameter
@@ -116,7 +98,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $get_dirty = false, $default = null);
+    public function getParameter($name, $default = "");
     
     /**
      * Sets the settings context.

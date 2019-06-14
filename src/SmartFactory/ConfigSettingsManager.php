@@ -14,7 +14,7 @@ namespace SmartFactory;
 use SmartFactory\Interfaces\ISettingsManager;
 
 /**
- * Class for management of the config settings stored in a config XML dile.
+ * Class for management of the config settings stored in a config JSON file.
  *
  * This settings manager supports the multistep wizard like processing. That means
  * that you do not have to put all settings in one big form and save them in one action.
@@ -24,7 +24,7 @@ use SmartFactory\Interfaces\ISettingsManager;
  * You do not need any preliminary special settings name definitions. When you introduce
  * a new setting, just start saving and getting it.
  *
- * @see ApplicationSettingsManager
+ * @see RuntimeSettingsManager
  * @see UserSettingsManager
  *
  * @author Oleg Schildt
@@ -41,10 +41,10 @@ class ConfigSettingsManager implements ISettingsManager
     protected $save_path = null;
     
     /**
-     * Internal variable for storing the state whether the data should be encrypted.
+     * Internal variable for storing the state whether the data should be encrypted
      * before saving.
      *
-     * @var string
+     * @var boolean
      *
      * @author Oleg Schildt
      */
@@ -62,13 +62,21 @@ class ConfigSettingsManager implements ISettingsManager
     
     /**
      * Internal variable for storing the state whether the config file must exist.
-     * before saving.
      *
-     * @var string
+     * @var boolean
      *
      * @author Oleg Schildt
      */
     protected $config_file_must_exist = false;
+    
+    /**
+     * Internal variable for storing the state whether the acpu should be used.
+     *
+     * @var boolean
+     *
+     * @author Oleg Schildt
+     */
+    protected $use_acpu = false;
     
     /**
      * Internal variable for storing the current context.
@@ -95,27 +103,16 @@ class ConfigSettingsManager implements ISettingsManager
     protected $validator = null;
     
     /**
-     * Internal variable for storing the array of settings values.
+     * Internal variable for storing the array of the settings values.
      *
      * @var array
      *
      * @author Oleg Schildt
      */
-    protected $temp_settings;
+    protected $settings = [];
     
     /**
-     * The changes are set to the temp_settings and are persisted and
-     * written to the storage by saving.
-     *
-     * @var array
-     * Internal variable for storing the array of changed settings values.
-     *
-     * @author Oleg Schildt
-     */
-    protected $settings;
-    
-    /**
-     * This is internal auxiliary function for converting the settings to XML and storing it
+     * This is internal auxiliary function for converting the settings to JSON and storing it
      * to the target file defined by the iniailization.
      *
      * @param array $data
@@ -130,34 +127,30 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the save path is not specified.
      * - if the config file is not writable.
      *
-     * @see loadXML()
+     * @see loadJSON()
      *
      * @author Oleg Schildt
      */
-    protected function saveXML(&$data)
+    protected function saveJSON(&$data)
     {
         $this->validateParameters();
         
-        $xmldoc = new \DOMDocument("1.0", "UTF-8");
-        $xmldoc->formatOutput = true;
-        
-        $root = $xmldoc->createElement("array");
-        $root = $xmldoc->appendChild($root);
-        
-        array_to_dom($root, $data);
-        
-        $xml = $xmldoc->saveXML();
+        $json = array_to_json($data);
         
         if (!empty($this->save_encrypted)) {
-            $xml = aes_256_encrypt($xml, $this->salt_key);
+            $json = aes_256_encrypt($json, $this->salt_key);
         }
         
-        if (file_put_contents($this->save_path, $xml) === false) {
+        if (file_put_contents($this->save_path, $json) === false) {
             throw new \Exception(sprintf("The config file '%s' cannot be written!", $this->save_path));
         }
         
+        if ($this->use_acpu) {
+            apcu_delete("config_settings");
+        }
+        
         return true;
-    } // saveXML
+    } // saveJSON
     
     /**
      * This is internal auxiliary function for loading the settings from the target file
@@ -177,12 +170,19 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the config file is not readable.
      * - if the config file is invalid.
      *
-     * @see saveXML()
+     * @see saveJSON()
      *
      * @author Oleg Schildt
      */
-    protected function loadXML(&$data)
+    protected function loadJSON(&$data)
     {
+        if ($this->use_acpu && apcu_exists("config_settings")) {
+            $data = apcu_fetch("config_settings");
+            if (!empty($data)) {
+                return true;
+            }
+        }
+        
         $this->validateParameters();
         
         if (!file_exists($this->save_path) && empty($this->config_file_must_exist)) {
@@ -193,25 +193,27 @@ class ConfigSettingsManager implements ISettingsManager
             throw new \Exception(sprintf("The config file '%s' cannot be read!", $this->save_path));
         }
         
-        $xml = file_get_contents($this->save_path);
-        if ($xml === false) {
+        $json = file_get_contents($this->save_path);
+        if ($json === false) {
             throw new \Exception(sprintf("The config file '%s' cannot be read!", $this->save_path));
         }
         
         if (!empty($this->save_encrypted)) {
-            $xml = aes_256_decrypt($xml, $this->salt_key);
+            $json = aes_256_decrypt($json, $this->salt_key);
         }
         
-        $xmldoc = new \DOMDocument();
-        
-        if (!@$xmldoc->loadXML($xml)) {
-            throw new \Exception(sprintf("The config file '%s' is invalid!", $this->save_path));
+        try {
+            json_to_array($json, $data);
+        } catch (\Exception $ex) {
+            throw new \Exception("JSON parse error: " . $ex->getMessage());
         }
-        
-        dom_to_array($xmldoc->documentElement, $data);
+    
+        if ($this->use_acpu) {
+            apcu_store("config_settings", $data);
+        }
         
         return true;
-    } // loadXML
+    } // loadJSON
     
     /**
      * This is internal auxiliary function for checking that the settings
@@ -242,17 +244,6 @@ class ConfigSettingsManager implements ISettingsManager
     } // validateParameters
     
     /**
-     * Constructor.
-     *
-     * @author Oleg Schildt
-     */
-    public function __construct()
-    {
-        $this->settings = &session()->vars()["__config_settings"];
-        $this->temp_settings = &session()->vars()["__temp_config_settings"];
-    } // __construct
-    
-    /**
      * Initializes the settings manager parameters.
      *
      * @param array $parameters
@@ -266,6 +257,8 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * - $parameters["config_file_must_exist"] - if this paremeter is true and the config file does not exist,
      * the loading function will fail.
+     *
+     * - $parameters["use_apcu"] - if installed, apcu can be used to cache the settings in the memory.
      *
      * @return boolean
      * Returns true upon successful initialization, otherwise false.
@@ -294,6 +287,10 @@ class ConfigSettingsManager implements ISettingsManager
         
         if (!empty($parameters["config_file_must_exist"])) {
             $this->config_file_must_exist = $parameters["config_file_must_exist"];
+        }
+        
+        if (!empty($parameters["use_acpu"])) {
+            $this->use_acpu = $parameters["use_acpu"];
         }
         
         return $this->validateParameters();
@@ -384,27 +381,6 @@ class ConfigSettingsManager implements ISettingsManager
     } // getContext
     
     /**
-     * Checks whether the settings data is dirty (not saved) within a context or globally.
-     *
-     * @param boolean $global
-     * If $global is false, the dirty state is checked only within the current context.
-     * If $global is true, the dirty state is checked globally.
-     *
-     * @return boolean
-     * Returs true if the settings data is dirty, otherwise false.
-     *
-     * @author Oleg Schildt
-     */
-    public function isDirty($global = false)
-    {
-        if ($global) {
-            return !empty($this->temp_settings["__dirty"]);
-        }
-        
-        return !empty($this->temp_settings["__dirty"][$this->context]);
-    } // isDirty
-    
-    /**
      * Sets a settings parameter.
      *
      * @param string $name
@@ -421,9 +397,7 @@ class ConfigSettingsManager implements ISettingsManager
      */
     public function setParameter($name, $value)
     {
-        $this->temp_settings[$name] = $value;
-        
-        $this->temp_settings["__dirty"][$this->context] = true;
+        $this->settings[$name] = $value;
     } // setParameter
     
     /**
@@ -432,17 +406,10 @@ class ConfigSettingsManager implements ISettingsManager
      * @param string $name
      * The name of the settings parameter.
      *
-     * @param boolean $get_dirty
-     * If settings are not saved yet, the unsaved new value
-     * of the parameter is returned if $get_dirty is true.
-     *
      * @param mixed $default
      * The default value of the settings parameter if it is not set yet.
      * The parameter is a confortable way to pre-set a parameter
      * to a default value if its value is not set yet.
-     * However, if the status of the data is dirty and the unsaved
-     * last entered value is requested, then always the actual
-     * last entered value is returned and this paramter is ignored.
      *
      * @return mixed
      * Returns the value of the settings parameter.
@@ -451,16 +418,8 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $get_dirty = false, $default = null)
+    public function getParameter($name, $default = "")
     {
-        if ($get_dirty && $this->isDirty()) {
-            if (empty($this->temp_settings[$name])) {
-                return null;
-            }
-            
-            return $this->temp_settings[$name];
-        }
-        
         if (!isset($this->settings[$name])) {
             return $default;
         }
@@ -514,17 +473,7 @@ class ConfigSettingsManager implements ISettingsManager
      */
     public function loadSettings()
     {
-        if ($this->isDirty(true)) {
-            return true;
-        }
-        
-        $this->loadXML($this->settings);
-        
-        $this->temp_settings = $this->settings;
-        
-        unset($this->temp_settings["__dirty"]);
-        
-        return true;
+        return $this->loadJSON($this->settings);
     } // loadSettings
     
     /**
@@ -545,16 +494,6 @@ class ConfigSettingsManager implements ISettingsManager
      */
     public function saveSettings()
     {
-        $old_dirty_state = $this->temp_settings["__dirty"];
-        unset($this->temp_settings["__dirty"]);
-        
-        try {
-            $this->saveXML($this->temp_settings);
-            $this->settings = $this->temp_settings;
-            return true;
-        } catch (\Exception $ex) {
-            $this->temp_settings["__dirty"] = $old_dirty_state;
-            throw new \Exception($ex->getMessage(), $ex->getErrorCode());
-        }
+        return $this->saveJSON($this->settings);
     } // saveSettings
 } // ConfigSettingsManager

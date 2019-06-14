@@ -51,11 +51,20 @@ class LanguageManager implements ILanguageManager
     /**
      * Internal variable for storing the state whether the dictionary is loaded or not.
      *
-     * @var string
+     * @var boolean
      *
      * @author Oleg Schildt
      */
     static protected $dictionary_loaded = false;
+    
+    /**
+     * Internal variable for storing the state whether the acpu should be used.
+     *
+     * @var boolean
+     *
+     * @author Oleg Schildt
+     */
+    protected $use_apcu = false;
     
     /**
      * Internal array for storing the list of supported languages.
@@ -101,6 +110,8 @@ class LanguageManager implements ILanguageManager
      *
      * - $parameters["localization_path"] - the path where the localization files are stored.
      *
+     * - $parameters["use_apcu"] - if installed, apcu can be used to cache the translations in the memory.
+     *
      * @return boolean
      * Returns true upon successful initialization, otherwise false.
      *
@@ -112,12 +123,15 @@ class LanguageManager implements ILanguageManager
             $this->localization_path = $parameters["localization_path"];
         }
         
+        if (!empty($parameters["use_apcu"])) {
+            $this->use_apcu = $parameters["use_apcu"];
+        }
+        
         return true;
     }
     
     /**
-     * This is internal auxiliary function for loading the translations from the source
-     * XML file.
+     * This is internal auxiliary function for loading the translations from the source JSON file.
      *
      * @return boolean
      * It should return true if the dictoinary has been successfully loaded, otherwise false.
@@ -135,55 +149,83 @@ class LanguageManager implements ILanguageManager
             return true;
         }
         
-        $xmldoc = new \DOMDocument();
-        
-        if (!$xmldoc->load($this->localization_path . "texts.xml")) {
-            throw new \Exception("Translation file '" . $this->localization_path . "texts.xml" . "' cannot be loaded!");
+        if ($this->use_apcu) {
+            do {
+                if (!apcu_exists("dictionary_supported_languages")) {
+                    break;
+                }
+                self::$supported_languages = apcu_fetch("dictionary_supported_languages");
+                if (empty(self::$supported_languages)) {
+                    break;
+                }
+                
+                if (!apcu_exists("dictionary_languages")) {
+                    break;
+                }
+                self::$languages = apcu_fetch("dictionary_languages");
+                if (empty(self::$languages)) {
+                    break;
+                }
+                
+                if (!apcu_exists("dictionary_countries")) {
+                    break;
+                }
+                self::$countries = apcu_fetch("dictionary_countries");
+                if (empty(self::$countries)) {
+                    break;
+                }
+                
+                if (!apcu_exists("dictionary_texts")) {
+                    break;
+                }
+                self::$texts = apcu_fetch("dictionary_texts");
+                if (empty(self::$texts)) {
+                    break;
+                }
+                
+                return true;
+            } while (false);
         }
         
-        $xsdpath = new \DOMXPath($xmldoc);
+        $json = file_get_contents($this->localization_path . "texts.json");
+        if ($json === false) {
+            throw new \Exception("Translation file '" . $this->localization_path . "texts.json" . "' cannot be loaded or does not exist!");
+        }
         
-        $nodes = $xsdpath->evaluate("/document/interface_languages/language");
-        foreach ($nodes as $node) {
-            $lang_code = $node->getAttribute("id");
-            if (!empty($lang_code)) {
+        $json_array = [];
+        try {
+            json_to_array($json, $json_array);
+        } catch (\Exception $ex) {
+            throw new \Exception("Translation file '" . $this->localization_path . "texts.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
+        }
+        
+        if (!empty($json_array["interface_languages"])) {
+            foreach ($json_array["interface_languages"] as $lang_code) {
                 self::$supported_languages[$lang_code] = $lang_code;
             }
         }
         
-        $nodes = $xsdpath->evaluate("/document/languages/language/*");
-        foreach ($nodes as $node) {
-            $pnode = $node->parentNode;
-            
-            $lang_code = $node->nodeName;
-            $text_id = $pnode->getAttribute("id");
-            
-            if (!empty($lang_code) && !empty($text_id) && !empty($node->nodeValue)) {
-                self::$languages[$lang_code][$text_id] = $node->nodeValue;
+        if (!empty($json_array["languages"])) {
+            foreach ($json_array["languages"] as $text_id => &$translations) {
+                foreach ($translations as $lang_code => $translation) {
+                    self::$languages[$lang_code][$text_id] = $translation;
+                }
             }
         }
         
-        $nodes = $xsdpath->evaluate("/document/countries/country/*");
-        foreach ($nodes as $node) {
-            $pnode = $node->parentNode;
-            
-            $lang_code = $node->nodeName;
-            $text_id = $pnode->getAttribute("id");
-            
-            if (!empty($lang_code) && !empty($text_id) && !empty($node->nodeValue)) {
-                self::$countries[$lang_code][$text_id] = $node->nodeValue;
+        if (!empty($json_array["countries"])) {
+            foreach ($json_array["countries"] as $text_id => &$translations) {
+                foreach ($translations as $lang_code => $translation) {
+                    self::$countries[$lang_code][$text_id] = $translation;
+                }
             }
         }
         
-        $nodes = $xsdpath->evaluate("/document/texts/text/*");
-        foreach ($nodes as $node) {
-            $pnode = $node->parentNode;
-            
-            $lang_code = $node->nodeName;
-            $text_id = $pnode->getAttribute("id");
-            
-            if (!empty($lang_code) && !empty($text_id) && !empty($node->nodeValue)) {
-                self::$texts[$lang_code][$text_id] = $node->nodeValue;
+        if (!empty($json_array["texts"])) {
+            foreach ($json_array["texts"] as $text_id => &$translations) {
+                foreach ($translations as $lang_code => $translation) {
+                    self::$texts[$lang_code][$text_id] = $translation;
+                }
             }
         }
         
@@ -192,6 +234,13 @@ class LanguageManager implements ILanguageManager
         foreach (self::$supported_languages as $lng) {
             self::$current_language = $lng;
             break;
+        }
+        
+        if ($this->use_apcu) {
+            apcu_store("dictionary_supported_languages", self::$supported_languages);
+            apcu_store("dictionary_languages", self::$languages);
+            apcu_store("dictionary_countries", self::$countries);
+            apcu_store("dictionary_texts", self::$texts);
         }
         
         return true;

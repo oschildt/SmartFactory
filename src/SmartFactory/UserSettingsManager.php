@@ -25,7 +25,7 @@ use SmartFactory\DatabaseWorkers\DBWorker;
  * requested, it is taken from the session, not from the database.
  *
  * @see  ConfigSettingsManager
- * @see  ApplicationSettingsManager
+ * @see  RuntimeSettingsManager
  *
  * @uses DatabaseWorkers\DBWorker
  *
@@ -103,15 +103,6 @@ class UserSettingsManager implements ISettingsManager
     protected $validator = null;
     
     /**
-     * Internal variable for storing the array of settings values.
-     *
-     * @var array
-     *
-     * @author Oleg Schildt
-     */
-    protected $temp_settings;
-    
-    /**
      * Internal variable for storing the array of changed settings values.
      *
      * The changes are set to the temp_settings and are persisted and
@@ -144,11 +135,11 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
         }
-    
+        
         if (!$this->dbworker instanceof DBWorker) {
             throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
         }
-
+        
         if (empty($this->user_table)) {
             throw new \Exception("The 'user_table' is not defined!");
         }
@@ -156,11 +147,11 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->settings_fields)) {
             throw new \Exception("The 'settings_fields' are not defined!");
         }
-    
+        
         if (empty($this->user_id_field)) {
             throw new \Exception("The 'user_id_field' is not defined!");
         }
-    
+        
         if (empty($this->user_id_getter)) {
             throw new \Exception("The function 'user_id_getter' or user id retrieval is not defined!");
         }
@@ -223,6 +214,10 @@ class UserSettingsManager implements ISettingsManager
      * It might throw an exception in the case of any errors:
      *
      * - if the query fails or if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
      *
      * @see loadSettingsData()
      *
@@ -230,6 +225,8 @@ class UserSettingsManager implements ISettingsManager
      */
     protected function saveSettingsData(&$data)
     {
+        $this->validateParameters();
+        
         $update_string = "";
         
         foreach ($this->settings_fields as $field => $type) {
@@ -284,6 +281,10 @@ class UserSettingsManager implements ISettingsManager
      * It might throw an exception in the case of any errors:
      *
      * - if the query fails or if some object names are invalid.
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
      *
      * @see saveSettingsData()
      *
@@ -291,6 +292,8 @@ class UserSettingsManager implements ISettingsManager
      */
     protected function loadSettingsData(&$data)
     {
+        $this->validateParameters();
+        
         $query = "SELECT\n";
         
         $query .= implode(", ", array_keys($this->settings_fields)) . "\n";
@@ -319,17 +322,6 @@ class UserSettingsManager implements ISettingsManager
     } // loadSettingsData
     
     /**
-     * Constructor.
-     *
-     * @author Oleg Schildt
-     */
-    public function __construct()
-    {
-        $this->settings = &session()->vars()["__user_settings"];
-        $this->temp_settings = &session()->vars()["__temp_user_settings"];
-    } // __construct
-    
-    /**
      * Initializes the settings manager parameters.
      *
      * @param array $parameters
@@ -349,19 +341,19 @@ class UserSettingsManager implements ISettingsManager
      *
      * ```php
      *   $usmanager->init(["dbworker" => dbworker(),
-     * "user_table" => "USERS",
-     * "settings_fields" => [
-     * "ID" => DBWorker::DB_NUMBER,
-     * "SIGNATURE" => DBWorker::DB_STRING,
-     * "STATUS" => DBWorker::DB_STRING,
-     * "HIDE_PICTURES" => DBWorker::DB_NUMBER,
-     * "HIDE_SIGNATURES" => DBWorker::DB_NUMBER,
-     * "LANGUAGE" => DBWorker::DB_STRING,
-     * "TIME_ZONE" => DBWorker::DB_STRING
-     * ],
-     * "user_id_field" => "ID",
-     * "user_id_getter" => function() { return 1; }
-     * ]);
+     *                     "user_table" => "USERS",
+     *                     "settings_fields" => [
+     *                     "ID" => DBWorker::DB_NUMBER,
+     *                     "SIGNATURE" => DBWorker::DB_STRING,
+     *                     "STATUS" => DBWorker::DB_STRING,
+     *                     "HIDE_PICTURES" => DBWorker::DB_NUMBER,
+     *                     "HIDE_SIGNATURES" => DBWorker::DB_NUMBER,
+     *                     "LANGUAGE" => DBWorker::DB_STRING,
+     *                     "TIME_ZONE" => DBWorker::DB_STRING
+     *                    ],
+     *                    "user_id_field" => "ID",
+     *                    "user_id_getter" => function() { return 1; }
+     *                   ]);
      * ```
      *
      * @return boolean
@@ -481,27 +473,6 @@ class UserSettingsManager implements ISettingsManager
     } // getContext
     
     /**
-     * Checks whether the settings data is dirty (not saved) within a context or globally.
-     *
-     * @param boolean $global
-     * If $global is false, the dirty state is checked only within the current context.
-     * If $global is true, the dirty state is checked globally.
-     *
-     * @return boolean
-     * Returs true if the settings data is dirty, otherwise false.
-     *
-     * @author Oleg Schildt
-     */
-    public function isDirty($global = false)
-    {
-        if ($global) {
-            return !empty($this->temp_settings["__dirty"]);
-        }
-        
-        return !empty($this->temp_settings["__dirty"][$this->context]);
-    } // isDirty
-    
-    /**
      * Sets a settings parameter.
      *
      * @param string $name
@@ -518,9 +489,7 @@ class UserSettingsManager implements ISettingsManager
      */
     public function setParameter($name, $value)
     {
-        $this->temp_settings[$name] = $value;
-        
-        $this->temp_settings["__dirty"][$this->context] = true;
+        $this->settings[$name] = $value;
     } // setParameter
     
     /**
@@ -529,17 +498,10 @@ class UserSettingsManager implements ISettingsManager
      * @param string $name
      * The name of the settings parameter.
      *
-     * @param boolean $get_dirty
-     * If settings are not saved yet, the unsaved new value
-     * of the parameter is returned if $get_dirty is true.
-     *
      * @param mixed $default
      * The default value of the settings parameter if it is not set yet.
      * The parameter is a confortable way to pre-set a parameter
      * to a default value if its value is not set yet.
-     * However, if the status of the data is dirty and the unsaved
-     * last entered value is requested, then always the actual
-     * last entered value is returned and this paramter is ignored.
      *
      * @return mixed
      * Returns the value of the settings parameter.
@@ -548,16 +510,8 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $get_dirty = false, $default = null)
+    public function getParameter($name, $default = "")
     {
-        if ($get_dirty && $this->isDirty()) {
-            if (empty($this->temp_settings[$name])) {
-                return null;
-            }
-            
-            return $this->temp_settings[$name];
-        }
-        
         if (!isset($this->settings[$name])) {
             return $default;
         }
@@ -611,26 +565,7 @@ class UserSettingsManager implements ISettingsManager
      */
     public function loadSettings()
     {
-        $this->validateParameters();
-        
-        // user settings are loaded once per session and
-        // maintained in the session.
-        
-        if (!empty($this->temp_settings["__loaded"])) {
-            return true;
-        }
-        
-        if (!$this->loadSettingsData($this->settings)) {
-            return false;
-        }
-        
-        $this->temp_settings = $this->settings;
-        
-        unset($this->temp_settings["__dirty"]);
-        
-        $this->temp_settings["__loaded"] = true;
-        
-        return true;
+        return $this->loadSettingsData($this->settings);
     } // loadSettings
     
     /**
@@ -653,18 +588,6 @@ class UserSettingsManager implements ISettingsManager
      */
     public function saveSettings()
     {
-        $this->validateParameters();
-        
-        $old_dirty_state = $this->temp_settings["__dirty"];
-        unset($this->temp_settings["__dirty"]);
-        
-        if ($this->saveSettingsData($this->temp_settings)) {
-            $this->settings = $this->temp_settings;
-            return true;
-        }
-        
-        $this->temp_settings["__dirty"] = $old_dirty_state;
-        
-        return false;
+        return $this->saveSettingsData($this->settings);
     } // saveSettings
 } // UserSettingsManager
