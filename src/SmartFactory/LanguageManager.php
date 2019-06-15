@@ -58,7 +58,7 @@ class LanguageManager implements ILanguageManager
     static protected $dictionary_loaded = false;
     
     /**
-     * Internal variable for storing the state whether the acpu should be used.
+     * Internal variable for storing the state whether the APCu should be used.
      *
      * @var boolean
      *

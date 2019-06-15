@@ -101,13 +101,13 @@ class JsonApiRequestManager
     public function exitWithException($ex)
     {
         $response_data = [];
-    
+        
         $response_data["result"] = "error";
-    
+        
         $response_data["errors"] = [
             ["error_code" => "system_error", "error_type" => "programming_error", "error_text" => $ex->getMessage()]
         ];
-    
+        
         $this->sendJsonResponse($response_data);
         
         exit;
@@ -371,11 +371,7 @@ class JsonApiRequestManager
                 return;
             }
             
-            try {
-                $handler_class = new \ReflectionClass($handler_class_name);
-            } catch (\Exception $ex) {
-                throw new \Exception($ex->getMessage());
-            }
+            $handler_class = new \ReflectionClass($handler_class_name);
             
             if (!$handler_class->isSubclassOf("SmartFactory\Interfaces\IJsonApiRequestHandler")) {
                 $response_data["result"] = "error";
@@ -392,11 +388,7 @@ class JsonApiRequestManager
                 return;
             }
             
-            try {
-                $handler = $handler_class->newInstance();
-            } catch (\Exception $ex) {
-                throw new \Exception($ex->getMessage());
-            }
+            $handler = $handler_class->newInstance();
             
             $handler->handle($this, $api_request, $response_data, $additional_headers);
             

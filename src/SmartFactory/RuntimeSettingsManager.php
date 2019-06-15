@@ -158,7 +158,7 @@ class RuntimeSettingsManager implements ISettingsManager
     protected function saveJSON(&$data)
     {
         $this->validateParameters();
-    
+        
         $json = array_to_json($data);
         
         // check existance
@@ -166,7 +166,7 @@ class RuntimeSettingsManager implements ISettingsManager
         $query = "SELECT 1 FROM " . $this->settings_table;
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
         
         $must_insert = true;
@@ -187,7 +187,7 @@ class RuntimeSettingsManager implements ISettingsManager
         }
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
         
         return true;
@@ -222,7 +222,7 @@ class RuntimeSettingsManager implements ISettingsManager
         $query = "SELECT " . $this->settings_column . " FROM " . $this->settings_table;
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
         
         $json = "";
@@ -236,7 +236,7 @@ class RuntimeSettingsManager implements ISettingsManager
         if (empty($json)) {
             return true;
         }
-    
+        
         try {
             json_to_array($json, $data);
         } catch (\Exception $ex) {

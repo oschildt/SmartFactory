@@ -286,8 +286,8 @@ class MSSQL_DBWorker extends DBWorker
         
         if (!isset($this->connection) || !$this->connection) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                $this->last_error = "No connection data available";
-                $this->last_error_id = "db_conn_data_error";
+                $this->last_error = "Connection data is incomplete";
+                $this->last_error_id = DBWorker::ERR_CONNECTION_DATA_INCOMPLETE;
                 return false;
             }
             
@@ -344,7 +344,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->connection) {
             $this->connection = null;
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             
             trigger_error($this->last_error, E_USER_ERROR);
             return false;
@@ -367,7 +367,7 @@ class MSSQL_DBWorker extends DBWorker
     public function use_database($db_name)
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -377,7 +377,7 @@ class MSSQL_DBWorker extends DBWorker
         
         if (!$this->execute_query("USE " . $db_name)) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_not_exists_error";
+            $this->last_error_id = DBWorker::ERR_DATABASE_NOT_FOUND;
             return false;
         }
         
@@ -440,7 +440,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->last_query = $query_string;
         
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -467,7 +467,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_query($this->connection, $query_string, [], $options);
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             return false;
@@ -493,7 +493,7 @@ class MSSQL_DBWorker extends DBWorker
     public function prepare_query($query_string)
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -549,7 +549,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_prepare($this->connection, $query_string . $query_appendix, $params, $options);
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             return false;
@@ -591,7 +591,7 @@ class MSSQL_DBWorker extends DBWorker
         }
         
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             fclose($stream);
             return false;
         }
@@ -612,7 +612,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_prepare($this->connection, $query_string, $params, $options);
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
@@ -623,7 +623,7 @@ class MSSQL_DBWorker extends DBWorker
         
         if (!@sqlsrv_execute($this->statement)) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             
@@ -670,13 +670,13 @@ class MSSQL_DBWorker extends DBWorker
     public function execute_prepared_query($query_string /* arg list */)
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
         if (empty($this->prepared_query) || empty($this->statement)) {
             $this->last_error = "no prepared query defined";
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             return false;
         }
         
@@ -712,7 +712,7 @@ class MSSQL_DBWorker extends DBWorker
         
         if (!@sqlsrv_execute($this->statement)) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             
             trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
             return false;
@@ -737,7 +737,7 @@ class MSSQL_DBWorker extends DBWorker
     public function execute_procedure($procedure /* arg list */)
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -844,7 +844,7 @@ class MSSQL_DBWorker extends DBWorker
     public function start_transaction()
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -865,7 +865,7 @@ class MSSQL_DBWorker extends DBWorker
     public function commit_transaction()
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -886,7 +886,7 @@ class MSSQL_DBWorker extends DBWorker
     public function rollback_transaction()
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -1162,7 +1162,7 @@ class MSSQL_DBWorker extends DBWorker
     public function insert_id()
     {
         if (!$this->connection) {
-            $this->last_error_id = "db_server_conn_error";
+            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
             return false;
         }
         
@@ -1173,7 +1173,7 @@ class MSSQL_DBWorker extends DBWorker
             
             if (!sqlsrv_next_result($this->statement)) {
                 $this->last_error = $this->sys_get_errors();
-                $this->last_error_id = "db_query_error";
+                $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
                 
                 trigger_error($this->last_error, E_USER_ERROR);
                 return false;
@@ -1191,14 +1191,14 @@ class MSSQL_DBWorker extends DBWorker
         $this->statement = @sqlsrv_query($this->connection, "SELECT SCOPE_IDENTITY() AS IID");
         if (!$this->statement) {
             $this->last_error = $this->sys_get_errors();
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             
             trigger_error($this->last_error, E_USER_ERROR);
             return false;
         }
         
         if (!$this->fetch_row()) {
-            $this->last_error_id = "db_query_error";
+            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
             return false;
         }
         

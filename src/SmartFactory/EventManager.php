@@ -90,11 +90,7 @@ class EventManager implements IEventManager
             throw new \Exception("Event handler is not valid!");
         }
         
-        try {
-            $f = new \ReflectionFunction($handler);
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
-        }
+        $f = new \ReflectionFunction($handler);
         
         self::$event_table[$event][$f->__toString()] = $f;
         
@@ -136,11 +132,7 @@ class EventManager implements IEventManager
             throw new \Exception("Event handler is not valid!");
         }
         
-        try {
-            $f = new \ReflectionFunction($handler);
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
-        }
+        $f = new \ReflectionFunction($handler);
         
         if (isset(self::$event_table[$event][$f->__toString()])) {
             unset(self::$event_table[$event][$f->__toString()]);
@@ -319,13 +311,9 @@ class EventManager implements IEventManager
         
         $cnt = 0;
         
-        try {
-            foreach (self::$event_table[$event] as $f) {
-                $cnt++;
-                $f->invoke($event, $parameters);
-            }
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
+        foreach (self::$event_table[$event] as $f) {
+            $cnt++;
+            $f->invoke($event, $parameters);
         }
         
         return $cnt;

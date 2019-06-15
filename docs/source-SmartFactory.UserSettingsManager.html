@@ -343,7 +343,7 @@
 <span class="line" id="261">261: </span>        <span class="php-var">$query</span> .= <span class="php-var">$this</span>-&gt;getWhereClause();
 <span class="line" id="262">262: </span>        
 <span class="line" id="263">263: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="264">264: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="264">264: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), DBWorker::ERR_QUERY_FAILED);
 <span class="line" id="265">265: </span>        }
 <span class="line" id="266">266: </span>        
 <span class="line" id="267">267: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
@@ -385,7 +385,7 @@
 <span class="line" id="303">303: </span>        <span class="php-var">$query</span> .= <span class="php-var">$this</span>-&gt;getWhereClause();
 <span class="line" id="304">304: </span>        
 <span class="line" id="305">305: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="306">306: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="306">306: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), DBWorker::ERR_QUERY_FAILED);
 <span class="line" id="307">307: </span>        }
 <span class="line" id="308">308: </span>        
 <span class="line" id="309">309: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;dbworker-&gt;fetch_row()) {
@@ -679,7 +679,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-06-14 22:18
+                        Generated on 2019-06-15 11:07
                     </div>                    
                 </div>
             </div>

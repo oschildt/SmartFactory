@@ -27,6 +27,34 @@ use SmartFactory\Interfaces\IInitable;
 abstract class DBWorker implements IInitable
 {
     /**
+     * The constant for the error: connection data is incomplete.
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_CONNECTION_DATA_INCOMPLETE = 1;
+    
+    /**
+     * The constant for the error: connection to the server failed.
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_CONNECTION_FAILED = 2;
+    
+    /**
+     * The constant for the error: database not found.
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_DATABASE_NOT_FOUND = 3;
+    
+    /**
+     * The constant for the error: query failed.
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_QUERY_FAILED = 4;
+
+    /**
      * The constant for the number type.
      *
      * @author Oleg Schildt
@@ -675,7 +703,7 @@ abstract class DBWorker implements IInitable
      */
     function get_last_error_id()
     {
-        return trim($this->last_error_id);
+        return $this->last_error_id;
     } // get_last_error_id
     
     /**

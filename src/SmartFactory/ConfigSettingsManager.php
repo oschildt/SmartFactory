@@ -70,13 +70,13 @@ class ConfigSettingsManager implements ISettingsManager
     protected $config_file_must_exist = false;
     
     /**
-     * Internal variable for storing the state whether the acpu should be used.
+     * Internal variable for storing the state whether the APCu should be used.
      *
      * @var boolean
      *
      * @author Oleg Schildt
      */
-    protected $use_acpu = false;
+    protected $use_apcu = false;
     
     /**
      * Internal variable for storing the current context.
@@ -145,7 +145,7 @@ class ConfigSettingsManager implements ISettingsManager
             throw new \Exception(sprintf("The config file '%s' cannot be written!", $this->save_path));
         }
         
-        if ($this->use_acpu) {
+        if ($this->use_apcu) {
             apcu_delete("config_settings");
         }
         
@@ -176,7 +176,7 @@ class ConfigSettingsManager implements ISettingsManager
      */
     protected function loadJSON(&$data)
     {
-        if ($this->use_acpu && apcu_exists("config_settings")) {
+        if ($this->use_apcu && apcu_exists("config_settings")) {
             $data = apcu_fetch("config_settings");
             if (!empty($data)) {
                 return true;
@@ -207,8 +207,8 @@ class ConfigSettingsManager implements ISettingsManager
         } catch (\Exception $ex) {
             throw new \Exception("JSON parse error: " . $ex->getMessage());
         }
-    
-        if ($this->use_acpu) {
+        
+        if ($this->use_apcu) {
             apcu_store("config_settings", $data);
         }
         
@@ -289,8 +289,8 @@ class ConfigSettingsManager implements ISettingsManager
             $this->config_file_must_exist = $parameters["config_file_must_exist"];
         }
         
-        if (!empty($parameters["use_acpu"])) {
-            $this->use_acpu = $parameters["use_acpu"];
+        if (!empty($parameters["use_apcu"])) {
+            $this->use_apcu = $parameters["use_apcu"];
         }
         
         return $this->validateParameters();

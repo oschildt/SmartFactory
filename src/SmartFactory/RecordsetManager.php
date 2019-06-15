@@ -80,11 +80,11 @@ class RecordsetManager implements IRecordsetManager
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
         }
-    
+        
         if (!$this->dbworker instanceof DBWorker) {
             throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
         }
-    
+        
         if (empty($this->table)) {
             throw new \Exception("The target table is not specified!");
         }
@@ -92,11 +92,11 @@ class RecordsetManager implements IRecordsetManager
         if (empty($this->fields)) {
             throw new \Exception("The target fields are not specified!");
         }
-    
+        
         if (empty($this->key_fields)) {
             throw new \Exception("Key fields are not defined!");
         }
-    
+        
         if (!is_array($this->fields)) {
             throw new \Exception("Field definition must be an array - field => type!");
         }
@@ -279,7 +279,7 @@ class RecordsetManager implements IRecordsetManager
         $query .= $where_clause;
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
         
         if ($this->dbworker->fetch_row()) {
@@ -340,7 +340,7 @@ class RecordsetManager implements IRecordsetManager
         }
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
         
         while ($this->dbworker->fetch_row()) {
@@ -460,7 +460,7 @@ class RecordsetManager implements IRecordsetManager
             $query .= $where;
             
             if (!$this->dbworker->execute_query($query)) {
-                throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
+                throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             }
             
             if (!$this->dbworker->fetch_row()) {
@@ -528,7 +528,7 @@ class RecordsetManager implements IRecordsetManager
         }
         
         if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), "system_error");
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
         
         if (!empty($identity_field) && $must_insert) {

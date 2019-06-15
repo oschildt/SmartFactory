@@ -28,7 +28,7 @@ interface IMessageManager extends IInitable
      * @author Oleg Schildt
      */
     public function init($parameters);
-
+    
     /**
      * Sets the element to be focused.
      *

@@ -9,11 +9,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IMessageManager;
-use SmartFactory\Interfaces\ILanguageManager;
-
-use SmartFactory\DatabaseWorkers\MySQL_DBWorker;
-use SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
+use SmartFactory\DatabaseWorkers\DBWorker;
 
 /**
  * The method singleton creates an object that support the specified interface and ensures
@@ -110,6 +106,9 @@ function instance($interface_or_class)
  * @param boolean $singleton
  * If the parameter is true, it ensures that only one instance of this object exists.
  *
+ * @return DatabaseWorkers\DBWorker|null
+ * returns DBWorker object or null if the object could not be created.
+ *
  * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
  *
@@ -121,15 +120,12 @@ function instance($interface_or_class)
  * - db_server_conn_error - if the database server cannot be connected.
  * - db_not_exists_error - if database does not exists od inaccesible to the user.
  *
- * @return DatabaseWorkers\DBWorker|null
- * returns DBWorker object or null if the object could not be created.
- *
  * @author Oleg Schildt
  */
 function dbworker($parameters = null, $singleton = true)
 {
     if (empty($parameters["db_type"])) {
-        throw new \Exception("Database type is not specified!", "db_missing_type_error");
+        throw new \Exception("Database type is not specified!");
     }
     
     $class_name = "SmartFactory\\DatabaseWorkers\\" . $parameters["db_type"] . "_DBWorker";
@@ -153,10 +149,10 @@ function dbworker($parameters = null, $singleton = true)
         return $dbworker;
     }
     
-    // try to connect only if first time
+    // try to connect only first time
     // if сonnection alredy tried and failed
     // do not try again within one request
-    if ($dbworker->get_last_error_id() != "") {
+    if ($dbworker->get_last_error_id()) {
         return null;
     }
     
@@ -166,12 +162,12 @@ function dbworker($parameters = null, $singleton = true)
         return $dbworker;
     }
     
-    if ($dbworker->get_last_error_id() == "db_conn_data_error") {
-        throw new \Exception("No database connection information is available ot it is incomplete!", "db_conn_data_error");
-    } elseif ($dbworker->get_last_error_id() == "db_server_conn_error") {
-        throw new \Exception("The database server cannot be connected!", "db_server_conn_error");
-    } elseif ($dbworker->get_last_error_id() == "db_not_exists_error") {
-        throw new \Exception("The database does not exists!", "db_not_exists_error");
+    if ($dbworker->get_last_error_id() == DBWorker::ERR_CONNECTION_DATA_INCOMPLETE) {
+        throw new \Exception("No database connection information is available ot it is incomplete!", $dbworker->get_last_error_id());
+    } elseif ($dbworker->get_last_error_id() == DBWorker::ERR_CONNECTION_FAILED) {
+        throw new \Exception("The database server cannot be connected!", $dbworker->get_last_error_id());
+    } elseif ($dbworker->get_last_error_id() == DBWorker::ERR_DATABASE_NOT_FOUND) {
+        throw new \Exception("The database does not exists!", $dbworker->get_last_error_id());
     }
     
     return null;

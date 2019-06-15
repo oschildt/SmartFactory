@@ -240,7 +240,7 @@
 <span class="line" id="158">158: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveJSON(&amp;<span class="php-var">$data</span>)
 <span class="line" id="159">159: </span>    {
 <span class="line" id="160">160: </span>        <span class="php-var">$this</span>-&gt;validateParameters();
-<span class="line" id="161">161: </span>    
+<span class="line" id="161">161: </span>        
 <span class="line" id="162">162: </span>        <span class="php-var">$json</span> = array_to_json(<span class="php-var">$data</span>);
 <span class="line" id="163">163: </span>        
 <span class="line" id="164">164: </span>        <span class="php-comment">// check existance</span>
@@ -248,7 +248,7 @@
 <span class="line" id="166">166: </span>        <span class="php-var">$query</span> = <span class="php-quote">&quot;SELECT 1 FROM &quot;</span> . <span class="php-var">$this</span>-&gt;settings_table;
 <span class="line" id="167">167: </span>        
 <span class="line" id="168">168: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="169">169: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="169">169: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), DBWorker::ERR_QUERY_FAILED);
 <span class="line" id="170">170: </span>        }
 <span class="line" id="171">171: </span>        
 <span class="line" id="172">172: </span>        <span class="php-var">$must_insert</span> = <span class="php-keyword1">true</span>;
@@ -269,7 +269,7 @@
 <span class="line" id="187">187: </span>        }
 <span class="line" id="188">188: </span>        
 <span class="line" id="189">189: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="190">190: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="190">190: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), DBWorker::ERR_QUERY_FAILED);
 <span class="line" id="191">191: </span>        }
 <span class="line" id="192">192: </span>        
 <span class="line" id="193">193: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
@@ -304,7 +304,7 @@
 <span class="line" id="222">222: </span>        <span class="php-var">$query</span> = <span class="php-quote">&quot;SELECT &quot;</span> . <span class="php-var">$this</span>-&gt;settings_column . <span class="php-quote">&quot; FROM &quot;</span> . <span class="php-var">$this</span>-&gt;settings_table;
 <span class="line" id="223">223: </span>        
 <span class="line" id="224">224: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>)) {
-<span class="line" id="225">225: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), <span class="php-quote">&quot;system_error&quot;</span>);
+<span class="line" id="225">225: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_error() . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;dbworker-&gt;get_last_query(), DBWorker::ERR_QUERY_FAILED);
 <span class="line" id="226">226: </span>        }
 <span class="line" id="227">227: </span>        
 <span class="line" id="228">228: </span>        <span class="php-var">$json</span> = <span class="php-quote">&quot;&quot;</span>;
@@ -318,7 +318,7 @@
 <span class="line" id="236">236: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$json</span>)) {
 <span class="line" id="237">237: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
 <span class="line" id="238">238: </span>        }
-<span class="line" id="239">239: </span>    
+<span class="line" id="239">239: </span>        
 <span class="line" id="240">240: </span>        <span class="php-keyword1">try</span> {
 <span class="line" id="241">241: </span>            json_to_array(<span class="php-var">$json</span>, <span class="php-var">$data</span>);
 <span class="line" id="242">242: </span>        } <span class="php-keyword1">catch</span> (\Exception <span class="php-var">$ex</span>) {
@@ -575,7 +575,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-06-14 22:18
+                        Generated on 2019-06-15 11:07
                     </div>                    
                 </div>
             </div>

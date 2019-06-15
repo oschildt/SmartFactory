@@ -416,7 +416,9 @@ function preg_r_escape($pattern)
  */
 function &checkempty(&$var)
 {
-    if($var === null) return "";
+    if ($var === null) {
+        $var = "";
+    }
     
     return $var;
 } // checkempty

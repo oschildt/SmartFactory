@@ -112,12 +112,8 @@ class FactoryBuilder
             throw new \Exception(sprintf("The class '%s' does not exist!", $class));
         }
         
-        try {
-            $ic = new \ReflectionClass($interface_or_class);
-            $c = new \ReflectionClass($class);
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
-        }
+        $ic = new \ReflectionClass($interface_or_class);
+        $c = new \ReflectionClass($class);
         
         if (!$c->isInstantiable()) {
             throw new \Exception(sprintf("The class '%s' is not instantiable!", $c->getName()));
@@ -135,11 +131,7 @@ class FactoryBuilder
                 throw new \Exception(sprintf("'%s' is not a function!", $init_function));
             }
             
-            try {
-                $f = new \ReflectionFunction($init_function);
-            } catch (\Exception $ex) {
-                throw new \Exception($ex->getMessage());
-            }
+            $f = new \ReflectionFunction($init_function);
         }
         
         self::$itable[$ic->getName()] = ["class" => $c, "init_function" => $f];
@@ -185,40 +177,32 @@ class FactoryBuilder
             throw new \Exception(sprintf("The interface or class '%s' does not exist!", $interface_or_class));
         }
         
-        try {
-            $class = new \ReflectionClass($interface_or_class);
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
-        }
+        $class = new \ReflectionClass($interface_or_class);
         
         $class_name = $class->getName();
-    
+        
         if (empty(self::$itable[$class_name])) {
             throw new \Exception(sprintf("The interface or class '%s' has no bound class!", $class_name));
         }
         
-        try {
-            // if not singleton, we create a new instance every time it is requested
-            if (!$singleton) {
-                $instance = self::$itable[$class_name]["class"]->newInstance();
-                
-                if (!empty(self::$itable[$class_name]["init_function"])) {
-                    self::$itable[$class_name]["init_function"]->invoke($instance);
-                }
-                
-                return $instance;
+        // if not singleton, we create a new instance every time it is requested
+        if (!$singleton) {
+            $instance = self::$itable[$class_name]["class"]->newInstance();
+            
+            if (!empty(self::$itable[$class_name]["init_function"])) {
+                self::$itable[$class_name]["init_function"]->invoke($instance);
             }
             
-            // if singleton, we create an instance only if it does not exist yet
-            if (empty(self::$singletons[$class_name])) {
-                self::$singletons[$class_name] = self::$itable[$class_name]["class"]->newInstance();
-                
-                if (!empty(self::$itable[$class_name]["init_function"])) {
-                    self::$itable[$class_name]["init_function"]->invoke(self::$singletons[$class_name]);
-                }
+            return $instance;
+        }
+        
+        // if singleton, we create an instance only if it does not exist yet
+        if (empty(self::$singletons[$class_name])) {
+            self::$singletons[$class_name] = self::$itable[$class_name]["class"]->newInstance();
+            
+            if (!empty(self::$itable[$class_name]["init_function"])) {
+                self::$itable[$class_name]["init_function"]->invoke(self::$singletons[$class_name]);
             }
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
         }
         
         return self::$singletons[$class_name];

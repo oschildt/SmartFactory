@@ -232,11 +232,7 @@ abstract class XmlApiRequestManager
             return false;
         }
         
-        try {
-            $handler_class = new \ReflectionClass($this->handler_table[$api_request]);
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
-        }
+        $handler_class = new \ReflectionClass($this->handler_table[$api_request]);
         
         if (!$handler_class->isSubclassOf("SmartFactory\Interfaces\IXmlApiRequestHandler")) {
             $response_data["result"] = "error";
@@ -254,11 +250,7 @@ abstract class XmlApiRequestManager
             return false;
         }
         
-        try {
-            $handler = $handler_class->newInstance();
-        } catch (\Exception $ex) {
-            throw new \Exception($ex->getMessage());
-        }
+        $handler = $handler_class->newInstance();
         
         return $handler->handle($this, $api_request, $xmldoc);
     } // handleApiRequest

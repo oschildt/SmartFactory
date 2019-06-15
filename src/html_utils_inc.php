@@ -844,7 +844,7 @@ function radiobutton($parameters, $echo = true)
  *   "comments" => "Conmments"
  * ];
  *
- * $formatter = function ($rownum, $colnum, $colname, $val) { 
+ * $formatter = function ($rownum, $colnum, $colname, $val) {
  *   if($colname == "time_estimation") return format_number($val, 2);
  *   if($colname == "deadline") return date("Y-m-d H:i", $val);
  *   return $val;

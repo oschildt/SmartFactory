@@ -152,13 +152,13 @@
 <span class="line" id="70"> 70: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$config_file_must_exist</span> = <span class="php-keyword1">false</span>;
 <span class="line" id="71"> 71: </span>    
 <span class="line" id="72"> 72: </span>    <span class="php-comment">/**
-</span><span class="line" id="73"> 73: </span><span class="php-comment">     * Internal variable for storing the state whether the acpu should be used.
+</span><span class="line" id="73"> 73: </span><span class="php-comment">     * Internal variable for storing the state whether the APCu should be used.
 </span><span class="line" id="74"> 74: </span><span class="php-comment">     *
 </span><span class="line" id="75"> 75: </span><span class="php-comment">     * @var boolean
 </span><span class="line" id="76"> 76: </span><span class="php-comment">     *
 </span><span class="line" id="77"> 77: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="78"> 78: </span><span class="php-comment">     */</span>
-<span class="line" id="79"> 79: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$use_acpu</span> = <span class="php-keyword1">false</span>;
+<span class="line" id="79"> 79: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$use_apcu</span> = <span class="php-keyword1">false</span>;
 <span class="line" id="80"> 80: </span>    
 <span class="line" id="81"> 81: </span>    <span class="php-comment">/**
 </span><span class="line" id="82"> 82: </span><span class="php-comment">     * Internal variable for storing the current context.
@@ -227,7 +227,7 @@
 <span class="line" id="145">145: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The config file '%s' cannot be written!&quot;</span>, <span class="php-var">$this</span>-&gt;save_path));
 <span class="line" id="146">146: </span>        }
 <span class="line" id="147">147: </span>        
-<span class="line" id="148">148: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;use_acpu) {
+<span class="line" id="148">148: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;use_apcu) {
 <span class="line" id="149">149: </span>            apcu_delete(<span class="php-quote">&quot;config_settings&quot;</span>);
 <span class="line" id="150">150: </span>        }
 <span class="line" id="151">151: </span>        
@@ -258,7 +258,7 @@
 </span><span class="line" id="176">176: </span><span class="php-comment">     */</span>
 <span class="line" id="177">177: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadJSON(&amp;<span class="php-var">$data</span>)
 <span class="line" id="178">178: </span>    {
-<span class="line" id="179">179: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;use_acpu &amp;&amp; apcu_exists(<span class="php-quote">&quot;config_settings&quot;</span>)) {
+<span class="line" id="179">179: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;use_apcu &amp;&amp; apcu_exists(<span class="php-quote">&quot;config_settings&quot;</span>)) {
 <span class="line" id="180">180: </span>            <span class="php-var">$data</span> = apcu_fetch(<span class="php-quote">&quot;config_settings&quot;</span>);
 <span class="line" id="181">181: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$data</span>)) {
 <span class="line" id="182">182: </span>                <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
@@ -289,8 +289,8 @@
 <span class="line" id="207">207: </span>        } <span class="php-keyword1">catch</span> (\Exception <span class="php-var">$ex</span>) {
 <span class="line" id="208">208: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;JSON parse error: &quot;</span> . <span class="php-var">$ex</span>-&gt;getMessage());
 <span class="line" id="209">209: </span>        }
-<span class="line" id="210">210: </span>    
-<span class="line" id="211">211: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;use_acpu) {
+<span class="line" id="210">210: </span>        
+<span class="line" id="211">211: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;use_apcu) {
 <span class="line" id="212">212: </span>            apcu_store(<span class="php-quote">&quot;config_settings&quot;</span>, <span class="php-var">$data</span>);
 <span class="line" id="213">213: </span>        }
 <span class="line" id="214">214: </span>        
@@ -371,8 +371,8 @@
 <span class="line" id="289">289: </span>            <span class="php-var">$this</span>-&gt;config_file_must_exist = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;config_file_must_exist&quot;</span>];
 <span class="line" id="290">290: </span>        }
 <span class="line" id="291">291: </span>        
-<span class="line" id="292">292: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;use_acpu&quot;</span>])) {
-<span class="line" id="293">293: </span>            <span class="php-var">$this</span>-&gt;use_acpu = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;use_acpu&quot;</span>];
+<span class="line" id="292">292: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;use_apcu&quot;</span>])) {
+<span class="line" id="293">293: </span>            <span class="php-var">$this</span>-&gt;use_apcu = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;use_apcu&quot;</span>];
 <span class="line" id="294">294: </span>        }
 <span class="line" id="295">295: </span>        
 <span class="line" id="296">296: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;validateParameters();
@@ -585,7 +585,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-06-14 22:18
+                        Generated on 2019-06-15 11:07
                     </div>                    
                 </div>
             </div>
