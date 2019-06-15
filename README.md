@@ -26,7 +26,7 @@ composer require smartfactory/smartfactory"
 
   "require": {
     "php": ">=7.2",
-    "smartfactory/smartfactory": ">=2.0.8"
+    "smartfactory/smartfactory": ">=2.0.9"
   }
   
   ...
@@ -36,7 +36,7 @@ composer require smartfactory/smartfactory"
 ### To get familiar with the SmartFactory do the following:
 
 - Git-clone the demo application [SmartFactoryDemo](https://github.com/oschildt/SmartFactoryDemo) and run 'composer update'.
-- Use the script database/create_database_mysql.sql (create_database_mssql.sql) to create a demo database necessary for some examples.
+- Use the script *database/create_database_mysql.sql* (*create_database_mssql.sql*) to create a demo database necessary for some examples.
 - View and study the API documentation in the folder docs or here [API documentation](http://php-smart-factory.org/smartfactory/).
 - Study the core code of the library SmartFactory.
 
@@ -48,13 +48,13 @@ composer require smartfactory/smartfactory"
 
 3. Implement your classes and functions. 
 
-4. Bind you classes to the interfaces in the file factory_init_inc.php to be able to use the IoC approach for creating objects offered by the library SmartFactory.
+4. Bind you classes to the interfaces in the file *initialization_inc.php* to be able to use the IoC approach for creating objects offered by the library SmartFactory.
 
 5. Implement you business logic in the root directory or any subdirectory. 
 
 7. Implement the API request handlers for JSON or XML requests if necessary.
 
-8. Add translation texts for your application over the localization/edit.php or directly into the XML file localization/texts.xml.  Use the script localization/check.php to check your translations for duplicates and missing translations.
+8. Add translation texts for your application over the *localization/edit.php* or directly into the JSON file *localization/texts.json*. Use the script *localization/check.php* to check your translations for missing translations.
 
 ## Directory Structure 
 
