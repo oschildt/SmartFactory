@@ -245,8 +245,9 @@ class RecordsetManager implements IRecordsetManager
      * @param array $record
      * The target array where the data should be loaded.
      *
-     * @param string $where_clause
-     * The where clause that should restrict the result to one record.
+     * @param string|array $where_clause
+     * The where clause that should restrict the result to one record. If an array of keys is passed,
+     * the where clause is build autonatically based on it.
      *
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
@@ -269,6 +270,34 @@ class RecordsetManager implements IRecordsetManager
     public function loadRecord(&$record, $where_clause)
     {
         $this->validateParameters();
+        
+        if(is_array($where_clause)) {
+            $tmp = "";
+            foreach ($where_clause as $key_field => $value) {
+                if (!empty($tmp)) {
+                    $tmp .= " AND ";
+                }
+                
+                switch (checkempty($this->fields[$key_field])) {
+                    case DBWorker::DB_NUMBER:
+                        $tmp .= $key_field . " = " . $value;
+                        break;
+        
+                    case DBWorker::DB_DATETIME:
+                        $tmp .= $key_field . " = '" . $this->dbworker->format_datetime($value) . "'";
+                        break;
+        
+                    case DBWorker::DB_DATE:
+                        $tmp .= $key_field . " = '" . $this->dbworker->format_date($value) . "'";
+                        break;
+        
+                    default:
+                        $tmp .= $key_field . " = '" . $value . "'";
+                }
+            }
+    
+            $where_clause = "WHERE " . $tmp;
+        }
         
         $query = "SELECT\n";
         
@@ -304,8 +333,9 @@ class RecordsetManager implements IRecordsetManager
      * @param array $records
      * The target array where the data should be loaded.
      *
-     * @param string $where_clause
-     * The where clause that should restrict the result.
+     * @param string|array $where_clause
+     * The where clause that should restrict the result. If an array of keys is passed,
+     * the where clause is build autonatically based on it.
      *
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
@@ -328,6 +358,34 @@ class RecordsetManager implements IRecordsetManager
     public function loadRecordSet(&$records, $where_clause)
     {
         $this->validateParameters();
+    
+        if(is_array($where_clause)) {
+            $tmp = "";
+            foreach ($where_clause as $key_field => $value) {
+                if (!empty($tmp)) {
+                    $tmp .= " AND ";
+                }
+            
+                switch (checkempty($this->fields[$key_field])) {
+                    case DBWorker::DB_NUMBER:
+                        $tmp .= $key_field . " = " . $value;
+                        break;
+                
+                    case DBWorker::DB_DATETIME:
+                        $tmp .= $key_field . " = '" . $this->dbworker->format_datetime($value) . "'";
+                        break;
+                
+                    case DBWorker::DB_DATE:
+                        $tmp .= $key_field . " = '" . $this->dbworker->format_date($value) . "'";
+                        break;
+                
+                    default:
+                        $tmp .= $key_field . " = '" . $value . "'";
+                }
+            }
+        
+            $where_clause = "WHERE " . $tmp;
+        }
         
         $query = "SELECT\n";
         

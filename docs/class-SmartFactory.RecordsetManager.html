@@ -494,9 +494,9 @@ to uniquely identify a record.
   
   <h1>Method: defineTableMapping</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>defineTableMapping</b>(string &amp;<span class="php-var">$table</span>,
-                          <span class="php-keyword1">array</span> &amp;<span class="php-var">$fields</span>,
-                          <span class="php-keyword1">array</span> &amp;<span class="php-var">$key_fields</span>
+  <div class="definition"><span class="php-keyword1">public</span> <b>defineTableMapping</b>(string <span class="php-var">$table</span>,
+                          <span class="php-keyword1">array</span> <span class="php-var">$fields</span>,
+                          <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>
                          ) : void</div>
 
   
@@ -648,7 +648,7 @@ to uniquely identify a record.</p>
   
   <h1>Method: loadRecord</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string &amp;<span class="php-var">$where_clause</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : boolean</div>
 
   
   <div class="short-description">
@@ -670,10 +670,11 @@ to uniquely identify a record.</p>
       
   
       <h3>$where_clause</h3>
-      <span class="type_label">Type:</span> string
+      <span class="type_label">Type:</span> string|array
       
       <div class="param-description">
-      <p>The where clause that should restrict the result to one record.</p>
+      <p>The where clause that should restrict the result to one record. If an array of keys is passed,
+the where clause is build autonatically based on it.</p>
       </div>
       
   
@@ -723,7 +724,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#266">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#267">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -752,7 +753,7 @@ to uniquely identify a record.</p>
   
   <h1>Method: loadRecordSet</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string &amp;<span class="php-var">$where_clause</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : boolean</div>
 
   
   <div class="short-description">
@@ -775,10 +776,11 @@ to uniquely identify a record.</p>
       
   
       <h3>$where_clause</h3>
-      <span class="type_label">Type:</span> string
+      <span class="type_label">Type:</span> string|array
       
       <div class="param-description">
-      <p>The where clause that should restrict the result.</p>
+      <p>The where clause that should restrict the result. If an array of keys is passed,
+the where clause is build autonatically based on it.</p>
       </div>
       
   
@@ -828,7 +830,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#325">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#355">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -858,7 +860,7 @@ to uniquely identify a record.</p>
   <h1>Method: process_subarray</h1>
 
   <div class="definition"><span class="php-keyword1">protected</span> <b>process_subarray</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$subarray</span>,
-                           <span class="php-keyword1">array</span> &amp;<span class="php-var">$key_fields</span>,
+                           <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>,
                            <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span>,
                            <span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>
                           ) : boolean</div>
@@ -971,7 +973,7 @@ in the form "field_name" => "value".</p>
   
   <h1>Method: saveRecord</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>saveRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string &amp;<span class="php-var">$identity_field</span> = <span class="php-keyword1">null</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>saveRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string <span class="php-var">$identity_field</span> = <span class="php-keyword1">null</span>) : boolean</div>
 
   
   <div class="short-description">
@@ -1049,7 +1051,7 @@ insert operation.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#410">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#468">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1078,7 +1080,7 @@ insert operation.</p>
   
   <h1>Method: saveRecordSet</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>saveRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span> = <span class="php-keyword1">array</span>()) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>saveRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, <span class="php-keyword1">array</span> <span class="php-var">$parent_values</span> = <span class="php-keyword1">array</span>()) : boolean</div>
 
   
   <div class="short-description">
@@ -1155,7 +1157,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#567">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#625">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1184,7 +1186,7 @@ in the form "field_name" => "value".</p>
   
   <h1>Method: setDBWorker</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setDBWorker</b>(\SmartFactory\DatabaseWorkers\DBWorker &amp;<span class="php-var">$dbworker</span>) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>setDBWorker</b>(\SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>) : void</div>
 
   
   <div class="short-description">
@@ -1317,7 +1319,7 @@ is intialized correctly.
 
                     
                     <div id="footer">
-                        Generated on 2019-06-15 11:07
+                        Generated on 2019-08-01 08:54
                     </div>                    
                 </div>
             </div>
