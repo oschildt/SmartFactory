@@ -136,7 +136,7 @@ class ShardManager implements IShardManager
         }
         
         if (empty($this->shard_table[$shard_name]["dbworker"])) {
-            $this->shard_table[$shard_name]["dbworker"] = dbworker($this->shard_table[$shard_name]["parameters"], true);
+            $this->shard_table[$shard_name]["dbworker"] = dbworker($this->shard_table[$shard_name]["parameters"], false /* not singleton */);
         }
         
         return $this->shard_table[$shard_name]["dbworker"];

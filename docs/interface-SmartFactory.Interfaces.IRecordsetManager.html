@@ -183,6 +183,15 @@ Oleg Schildt
       
       <tr>
           <td>
+              <a href="#deleteRecords">deleteRecords</a>
+          </td>
+          <td class="description_column">
+              Deletes records by a given where clause.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#getDBWorker">getDBWorker</a>
           </td>
           <td class="description_column">
@@ -319,6 +328,79 @@ to uniquely identify a record.</p>
   
   
   
+  <hr id="deleteRecords">
+  
+  <h1>Method: deleteRecords</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>deleteRecords</b>(string <span class="php-var">$where_clause</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Deletes records by a given where clause.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$where_clause</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The where clause for the records to be deleted. If an array of keys is passed,
+the where clause is build automatically based on it.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the records have been successfully deleted, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#99">SmartFactory\Interfaces\IRecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#saveRecord">\SmartFactory\Interfaces\IRecordsetManager::saveRecord()</a><br>
+  
+  </div>
+  
+
+  
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  </div>
+  
+
+  
+  
+  
   <hr id="getDBWorker">
   
   <h1>Method: getDBWorker</h1>
@@ -377,7 +459,7 @@ to uniquely identify a record.</p>
   
   <h1>Method: loadRecord</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string <span class="php-var">$where_clause</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecord</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : boolean</div>
 
   
   <div class="short-description">
@@ -399,10 +481,11 @@ to uniquely identify a record.</p>
       
   
       <h3>$where_clause</h3>
-      <span class="type_label">Type:</span> string
+      <span class="type_label">Type:</span> string|array
       
       <div class="param-description">
-      <p>The where clause that should restrict the result to one record.</p>
+      <p>The where clause that should restrict the result. If an array of keys is passed,
+the where clause is build automatically based on it.</p>
       </div>
       
   
@@ -430,7 +513,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#80">SmartFactory\Interfaces\IRecordsetManager.php</a>
+  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#81">SmartFactory\Interfaces\IRecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -459,7 +542,10 @@ to uniquely identify a record.</p>
   
   <h1>Method: loadRecordSet</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string <span class="php-var">$where_clause</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>,
+                     string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>,
+                     string <span class="php-var">$order_clause</span> = <span class="php-quote">&quot;&quot;</span>
+                    ) : boolean</div>
 
   
   <div class="short-description">
@@ -482,10 +568,19 @@ to uniquely identify a record.</p>
       
   
       <h3>$where_clause</h3>
+      <span class="type_label">Type:</span> string|array
+      
+      <div class="param-description">
+      <p>The where clause that should restrict the result. If an array of keys is passed,
+the where clause is build automatically based on it.</p>
+      </div>
+      
+  
+      <h3>$order_clause</h3>
       <span class="type_label">Type:</span> string
       
       <div class="param-description">
-      <p>The where clause that should restrict the result.</p>
+      <p>The order clause to sort the results.</p>
       </div>
       
   
@@ -513,7 +608,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#126">SmartFactory\Interfaces\IRecordsetManager.php</a>
+  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#150">SmartFactory\Interfaces\IRecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -598,7 +693,7 @@ insert operation.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#104">SmartFactory\Interfaces\IRecordsetManager.php</a>
+  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#124">SmartFactory\Interfaces\IRecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -607,6 +702,8 @@ insert operation.</p>
   <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#loadRecord">\SmartFactory\Interfaces\IRecordsetManager::loadRecord()</a><br>
   
   <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#saveRecordSet">\SmartFactory\Interfaces\IRecordsetManager::saveRecordSet()</a><br>
+  
+  \SmartFactory\Interfaces\deleteRecord()<br>
   
   </div>
   
@@ -682,7 +779,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#149">SmartFactory\Interfaces\IRecordsetManager.php</a>
+  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#173">SmartFactory\Interfaces\IRecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -773,7 +870,7 @@ in the form "field_name" => "value".</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-08-01 08:54
+                        Generated on 2019-08-02 16:06
                     </div>                    
                 </div>
             </div>

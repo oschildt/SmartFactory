@@ -165,9 +165,7 @@ class RuntimeSettingsManager implements ISettingsManager
         
         $query = "SELECT 1 FROM " . $this->settings_table;
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         $must_insert = true;
         
@@ -186,9 +184,7 @@ class RuntimeSettingsManager implements ISettingsManager
             $query = "UPDATE " . $this->settings_table . " SET " . $this->settings_column . " = '$json'";
         }
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         return true;
     } // saveJSON
@@ -221,9 +217,7 @@ class RuntimeSettingsManager implements ISettingsManager
         
         $query = "SELECT " . $this->settings_column . " FROM " . $this->settings_table;
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         $json = "";
         

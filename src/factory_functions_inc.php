@@ -136,40 +136,21 @@ function dbworker($parameters = null, $singleton = true)
         throw new \Exception(sprintf("PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!", $dbworker->get_extension_name(), $dbworker->get_rdbms_name()));
     }
     
-    // do not connect, only object required
-    // user will do connect by itself
-    if (empty($parameters["autoconnect"])) {
-        $dbworker->clear_messages();
-        return $dbworker;
-    }
-    
     // instance already connected
     if ($dbworker->is_connected()) {
-        $dbworker->clear_messages();
         return $dbworker;
-    }
-    
-    // try to connect only first time
-    // if сonnection alredy tried and failed
-    // do not try again within one request
-    if ($dbworker->get_last_error_id()) {
-        return null;
     }
     
     $dbworker->init($parameters);
-    
-    if ($dbworker->connect()) {
+
+    // do not connect, only object required
+    // user will do connect by itself
+    if (empty($parameters["autoconnect"])) {
         return $dbworker;
     }
     
-    if ($dbworker->get_last_error_id() == DBWorker::ERR_CONNECTION_DATA_INCOMPLETE) {
-        throw new \Exception("No database connection information is available ot it is incomplete!", $dbworker->get_last_error_id());
-    } elseif ($dbworker->get_last_error_id() == DBWorker::ERR_CONNECTION_FAILED) {
-        throw new \Exception("The database server cannot be connected!", $dbworker->get_last_error_id());
-    } elseif ($dbworker->get_last_error_id() == DBWorker::ERR_DATABASE_NOT_FOUND) {
-        throw new \Exception("The database does not exists!", $dbworker->get_last_error_id());
-    }
+    $dbworker->connect();
     
-    return null;
-} // instance
+    return $dbworker;
+} // dbworker
 

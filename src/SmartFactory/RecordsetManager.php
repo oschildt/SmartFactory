@@ -109,6 +109,53 @@ class RecordsetManager implements IRecordsetManager
     } // validateParameters
     
     /**
+     * This is internal auxiliary function for converting an array to a where clause.
+     *
+     * @param string|array $where_clause
+     * The where clause that should be checked. If an array of keys is passed,
+     * the where clause is build based on it.
+     *
+     * @return boolean
+     * It should returns true if the conversion is successful, otherwise false.
+     *
+     * @author Oleg Schildt
+     */
+    protected function checkWhereClause(&$where_clause)
+    {
+        if (!is_array($where_clause)) {
+            return true;
+        }
+        
+        $tmp = "";
+        foreach ($where_clause as $key_field => $value) {
+            if (!empty($tmp)) {
+                $tmp .= " AND ";
+            }
+        
+            switch (checkempty($this->fields[$key_field])) {
+                case DBWorker::DB_NUMBER:
+                    $tmp .= $key_field . " = " . $value;
+                    break;
+            
+                case DBWorker::DB_DATETIME:
+                    $tmp .= $key_field . " = '" . $this->dbworker->format_datetime($value) . "'";
+                    break;
+            
+                case DBWorker::DB_DATE:
+                    $tmp .= $key_field . " = '" . $this->dbworker->format_date($value) . "'";
+                    break;
+            
+                default:
+                    $tmp .= $key_field . " = '" . $value . "'";
+            }
+        }
+    
+        $where_clause = "WHERE " . $tmp;
+        
+        return true;
+    } // checkWhereClause
+    
+    /**
      * This is internal auxiliary function for saving a record set from an array
      * with key field values as array dimensions.
      *
@@ -240,6 +287,47 @@ class RecordsetManager implements IRecordsetManager
     } // defineTableMapping
     
     /**
+     * Deletes records by a given where clause.
+     *
+     * @param string $where_clause
+     * The where clause for the records to be deleted. If an array of keys is passed,
+     * the where clause is build automatically based on it.
+     *
+     * @return boolean
+     * Returns true if the records have been successfully deleted, otherwise false.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
+     *
+     * @see  saveRecord()
+     *
+     * @uses \SmartFactory\DatabaseWorkers\DBWorker
+     *
+     * @author Oleg Schildt
+     */
+    public function deleteRecords($where_clause)
+    {
+        $this->validateParameters();
+    
+        $this->checkWhereClause($where_clause);
+        
+        $query = "DELETE FROM " . $this->table . "\n";
+    
+        $query .= $where_clause;
+        
+        if (!$this->dbworker->execute_query($query)) {
+            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+        }
+        
+        return true;
+    } // deleteRecords
+    
+    /**
      * Loads a record into an array in the form "field_name" => "value".
      *
      * @param array $record
@@ -247,7 +335,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @param string|array $where_clause
      * The where clause that should restrict the result to one record. If an array of keys is passed,
-     * the where clause is build autonatically based on it.
+     * the where clause is build automatically based on it.
      *
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
@@ -271,33 +359,7 @@ class RecordsetManager implements IRecordsetManager
     {
         $this->validateParameters();
         
-        if(is_array($where_clause)) {
-            $tmp = "";
-            foreach ($where_clause as $key_field => $value) {
-                if (!empty($tmp)) {
-                    $tmp .= " AND ";
-                }
-                
-                switch (checkempty($this->fields[$key_field])) {
-                    case DBWorker::DB_NUMBER:
-                        $tmp .= $key_field . " = " . $value;
-                        break;
-        
-                    case DBWorker::DB_DATETIME:
-                        $tmp .= $key_field . " = '" . $this->dbworker->format_datetime($value) . "'";
-                        break;
-        
-                    case DBWorker::DB_DATE:
-                        $tmp .= $key_field . " = '" . $this->dbworker->format_date($value) . "'";
-                        break;
-        
-                    default:
-                        $tmp .= $key_field . " = '" . $value . "'";
-                }
-            }
-    
-            $where_clause = "WHERE " . $tmp;
-        }
+        $this->checkWhereClause($where_clause);
         
         $query = "SELECT\n";
         
@@ -335,7 +397,10 @@ class RecordsetManager implements IRecordsetManager
      *
      * @param string|array $where_clause
      * The where clause that should restrict the result. If an array of keys is passed,
-     * the where clause is build autonatically based on it.
+     * the where clause is build automatically based on it.
+     *
+     * @param string $order_clause
+     * The order clause to sort the results.
      *
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
@@ -355,37 +420,11 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecordSet(&$records, $where_clause)
+    public function loadRecordSet(&$records, $where_clause, $order_clause = "")
     {
         $this->validateParameters();
     
-        if(is_array($where_clause)) {
-            $tmp = "";
-            foreach ($where_clause as $key_field => $value) {
-                if (!empty($tmp)) {
-                    $tmp .= " AND ";
-                }
-            
-                switch (checkempty($this->fields[$key_field])) {
-                    case DBWorker::DB_NUMBER:
-                        $tmp .= $key_field . " = " . $value;
-                        break;
-                
-                    case DBWorker::DB_DATETIME:
-                        $tmp .= $key_field . " = '" . $this->dbworker->format_datetime($value) . "'";
-                        break;
-                
-                    case DBWorker::DB_DATE:
-                        $tmp .= $key_field . " = '" . $this->dbworker->format_date($value) . "'";
-                        break;
-                
-                    default:
-                        $tmp .= $key_field . " = '" . $value . "'";
-                }
-            }
-        
-            $where_clause = "WHERE " . $tmp;
-        }
+        $this->checkWhereClause($where_clause);
         
         $query = "SELECT\n";
         
@@ -396,10 +435,10 @@ class RecordsetManager implements IRecordsetManager
         if (!empty($where_clause)) {
             $query .= $where_clause;
         }
+    
+        $query .= $order_clause;
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         while ($this->dbworker->fetch_row()) {
             $dimensions = [];
@@ -517,9 +556,7 @@ class RecordsetManager implements IRecordsetManager
             
             $query .= $where;
             
-            if (!$this->dbworker->execute_query($query)) {
-                throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            }
+            $this->dbworker->execute_query($query);
             
             if (!$this->dbworker->fetch_row()) {
                 $must_insert = true;
@@ -585,9 +622,7 @@ class RecordsetManager implements IRecordsetManager
             $query .= $where;
         }
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         if (!empty($identity_field) && $must_insert) {
             $record[$identity_field] = $this->dbworker->insert_id();

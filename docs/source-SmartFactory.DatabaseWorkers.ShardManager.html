@@ -218,7 +218,7 @@
 <span class="line" id="136">136: </span>        }
 <span class="line" id="137">137: </span>        
 <span class="line" id="138">138: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>])) {
-<span class="line" id="139">139: </span>            <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>] = dbworker(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;parameters&quot;</span>], <span class="php-keyword1">true</span>);
+<span class="line" id="139">139: </span>            <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>] = dbworker(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;parameters&quot;</span>], <span class="php-keyword1">false</span> <span class="php-comment">/* not singleton */</span>);
 <span class="line" id="140">140: </span>        }
 <span class="line" id="141">141: </span>        
 <span class="line" id="142">142: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>];
@@ -259,7 +259,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-01 08:54
+                        Generated on 2019-08-02 16:06
                     </div>                    
                 </div>
             </div>

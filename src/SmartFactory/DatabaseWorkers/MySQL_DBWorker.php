@@ -255,6 +255,9 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the connection has been successfully established, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see is_connected()
      * @see close_connection()
      *
@@ -262,37 +265,41 @@ class MySQL_DBWorker extends DBWorker
      */
     public function connect()
     {
-        $this->last_error = null;
-        $this->last_error_id = null;
-        $this->last_query = null;
-        
         if (!$this->mysqli) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                $this->last_error = "Connection data is incomplete";
-                $this->last_error_id = DBWorker::ERR_CONNECTION_DATA_INCOMPLETE;
-                return false;
+                throw new \Exception("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
             }
             
             $this->mysqli = @new \MySQLi($this->db_server, $this->db_user, $this->db_password);
         }
         
         if ($this->mysqli->connect_error) {
-            $this->last_error = $this->mysqli->connect_error;
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
+            $err = $this->mysqli->connect_error;
             $this->mysqli = null;
-            return false;
+    
+            trigger_error($err, E_USER_ERROR);
+            throw new \Exception($err, DBWorker::ERR_CONNECTION_FAILED);
         }
         
-        if (!empty($this->db_name) && !$this->use_database($this->db_name)) {
-            $this->mysqli = null;
-            return false;
+        if (!empty($this->db_name)) {
+            try {
+                $this->use_database($this->db_name);
+            } catch (\Exception $ex) {
+                $this->mysqli = null;
+                throw $ex;
+            }
         }
         
-        @$this->mysqli->query("set charset utf8");
-        
-        if (!empty($this->read_only)) {
-            @$this->mysqli->query("set transaction read only");
-            @$this->mysqli->query("start transaction");
+        try {
+            $this->execute_query("set charset utf8");
+            
+            if (!empty($this->read_only)) {
+                $this->execute_query("set transaction read only");
+                $this->execute_query("start transaction");
+            }
+        } catch (\Exception $ex) {
+            $this->mysqli = null;
+            throw $ex;
         }
         
         return true;
@@ -307,22 +314,22 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the database has been successfully set as working database, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function use_database($db_name)
     {
-        if (!$this->mysqli) {
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
-            return false;
+        if (!$this->is_connected()) {
+            $this->connect();
         }
         
         $this->db_name = $db_name;
         
         if (!@$this->mysqli->select_db($this->db_name)) {
-            $this->last_error = $this->mysqli->error;
-            $this->last_error_id = DBWorker::ERR_DATABASE_NOT_FOUND;
-            trigger_error($this->last_error, E_USER_ERROR);
-            return false;
+            trigger_error($this->mysqli->error, E_USER_ERROR);
+            throw new \Exception($this->mysqli->error, DBWorker::ERR_DATABASE_NOT_FOUND);
         }
         
         return true;
@@ -371,24 +378,23 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the query has been successfully executed, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function execute_query($query_string)
     {
-        $this->last_query = $query_string;
-        
-        if (!$this->mysqli) {
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
-            return false;
+        if (!$this->is_connected()) {
+            $this->connect();
         }
+        
+        $this->last_query = $query_string;
         
         $this->mysqli_result = @$this->mysqli->query($query_string);
         if (!$this->mysqli_result) {
-            $this->last_error = $this->mysqli->error;
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
-            
-            return false;
+            trigger_error($this->mysqli->error . "\n\n" . $query_string, E_USER_ERROR);
+            throw new \Exception($this->mysqli->error . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         }
         
         return true;
@@ -403,6 +409,9 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the SQL query has been successfully prepared, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see execute_prepared_query()
      * @see free_prepared_query()
      *
@@ -410,9 +419,8 @@ class MySQL_DBWorker extends DBWorker
      */
     public function prepare_query($query_string)
     {
-        if (!$this->mysqli) {
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
-            return false;
+        if (!$this->is_connected()) {
+            $this->connect();
         }
         
         if ($this->statement) {
@@ -425,11 +433,9 @@ class MySQL_DBWorker extends DBWorker
         
         $this->statement = $this->mysqli->prepare($query_string);
         if (!$this->statement) {
-            $this->last_error = $this->mysqli->error;
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
-            
-            return false;
+            $this->statement = null;
+            trigger_error($this->mysqli->error . "\n\n" . $query_string, E_USER_ERROR);
+            throw new \Exception($this->mysqli->error . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         }
         
         return true;
@@ -457,23 +463,26 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the long data has been successfully stored, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function stream_long_data($query_string, &$stream)
     {
-        if (!is_resource($stream)) {
-            $this->last_error_id = "stream_err";
-            fclose($stream);
-            
-            return false;
+        if (!$this->is_connected()) {
+            try {
+                $this->connect();
+            } catch (\Exception $ex) {
+                fclose($stream);
+                throw $ex;
+            }
         }
         
-        if (!$this->mysqli) {
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
-            
+        if (!is_resource($stream)) {
             fclose($stream);
             
-            return false;
+            throw new \Exception("Stream is invalid", DBWorker::ERR_STREAM_ERROR);
         }
         
         if ($this->statement) {
@@ -486,13 +495,10 @@ class MySQL_DBWorker extends DBWorker
         
         $this->statement = $this->mysqli->prepare($query_string);
         if (!$this->statement) {
-            $this->last_error = $this->mysqli->error;
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
-            
             fclose($stream);
-            
-            return false;
+
+            trigger_error($this->mysqli->error . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($this->mysqli->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         $null = null;
@@ -500,29 +506,27 @@ class MySQL_DBWorker extends DBWorker
         
         while (!feof($stream)) {
             if ($this->statement->send_long_data(0, fread($stream, 8192)) === false) {
-                $this->last_error = $this->mysqli->error;
-                $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-                trigger_error($this->last_error . "\n\n" . $query_string, E_USER_ERROR);
+                $err = $this->statement->error;
                 
                 $this->statement->close();
                 $this->statement = null;
                 fclose($stream);
-                
-                return false;
+    
+                trigger_error($err . "\n\n" . $query_string, E_USER_ERROR);
+                throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
             }
         }
         
         fclose($stream);
         
         if (!$this->statement->execute()) {
-            $this->last_error = $this->statement->error;
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
-            
+            $err = $this->statement->error;
+
             $this->statement->close();
             $this->statement = null;
-            
-            return false;
+    
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         $this->statement->close();
@@ -542,6 +546,9 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the prepared SQL query has been successfully executed, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see prepare_query()
      * @see free_prepared_query()
      *
@@ -549,15 +556,12 @@ class MySQL_DBWorker extends DBWorker
      */
     public function execute_prepared_query($query_string /* arg list */)
     {
-        if (!$this->mysqli) {
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
-            return false;
+        if (!$this->is_connected()) {
+            $this->connect();
         }
         
         if (empty($this->prepared_query) || empty($this->statement)) {
-            $this->last_error = "no prepared query defined";
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            return false;
+            throw new \Exception("no prepared query defined", DBWorker::ERR_QUERY_FAILED);
         }
         
         $args = func_get_args();
@@ -598,27 +602,19 @@ class MySQL_DBWorker extends DBWorker
         }
         
         if (!call_user_func_array([$this->statement, 'bind_param'], $parameters)) {
-            $this->last_error = "Number of elements in type definition string doesn't match number of bind variables.";
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
-            
-            return false;
+           $err = "Number of elements in type definition string doesn't match number of bind variables.";
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         if (!$this->statement->execute()) {
-            $this->last_error = $this->statement->error;
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
-            
-            return false;
+            trigger_error($this->statement->error . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($this->statement->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         if (!$this->statement->store_result()) {
-            $this->last_error = $this->statement->error;
-            $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-            trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
-            
-            return false;
+            trigger_error($this->statement->error . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($this->statement->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         if ($this->statement->num_rows) {
@@ -639,13 +635,15 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the stored procedure has been successfully executed, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function execute_procedure($procedure /* arg list */)
     {
-        if (!$this->mysqli) {
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
-            return false;
+        if (!$this->is_connected()) {
+            $this->connect();
         }
         
         $args = func_get_args();
@@ -693,6 +691,9 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the prepared query has been successfully freed, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see prepare_query()
      * @see execute_prepared_query()
      *
@@ -724,8 +725,6 @@ class MySQL_DBWorker extends DBWorker
      */
     public function close_connection()
     {
-        $this->last_error = null;
-        $this->last_error_id = null;
         $this->last_query = null;
         $this->prepared_query = null;
         $this->row = null;
@@ -738,12 +737,10 @@ class MySQL_DBWorker extends DBWorker
         if ($this->statement) {
             @$this->statement->close();
         }
-        
+    
+        $this->statement = null;
         $this->mysqli = null;
         $this->mysqli_result = null;
-        $this->statement = null;
-        $this->last_error = null;
-        $this->last_error_id = null;
         
         return true;
     } // close_connection
@@ -753,6 +750,9 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return boolean
      * Returns true if the transaction has been successfully started, otherwise false.
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @see commit_transaction()
      * @see rollback_transaction()
@@ -770,6 +770,9 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the transaction has been successfully committed, otherwise false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see start_transaction()
      * @see rollback_transaction()
      *
@@ -785,6 +788,9 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return boolean
      * Returns true if the transaction has been successfully rolled back, otherwise false.
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @see start_transaction()
      * @see commit_transaction()
@@ -818,7 +824,6 @@ class MySQL_DBWorker extends DBWorker
             $this->statement->free_result();
         }
         
-        $this->last_error = null;
         $this->row = null;
         $this->field_names = null;
         $this->last_query = null;
@@ -829,17 +834,18 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @return int|false
-     * Returns the value of the auto increment field by the last insertion. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the value of the auto increment field by the last insertion.
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
     public function insert_id()
     {
-        if (!$this->mysqli) {
-            $this->last_error_id = DBWorker::ERR_CONNECTION_FAILED;
-            return false;
+        if (!$this->is_connected()) {
+            $this->connect();
         }
         
         return $this->mysqli->insert_id;
@@ -865,6 +871,9 @@ class MySQL_DBWorker extends DBWorker
      *
      * $dbw->free_result();
      * ```
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -893,11 +902,8 @@ class MySQL_DBWorker extends DBWorker
                 }
                 
                 if (!call_user_func_array([$this->statement, 'bind_result'], $params)) {
-                    $this->last_error = $this->statement->error;
-                    $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-                    trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
-                    
-                    return false;
+                    trigger_error($this->statement->error . "\n\n" . $this->last_query, E_USER_ERROR);
+                    throw new \Exception($this->statement->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
                 }
                 
                 unset($params);
@@ -912,8 +918,9 @@ class MySQL_DBWorker extends DBWorker
         } // prepared query
         
         if (!$this->mysqli_result) {
-            $this->last_error_id = "db_result_error";
-            return false;
+            $err = "Result fetch error";
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         $this->row = @$this->mysqli_result->fetch_assoc();
@@ -957,9 +964,11 @@ class MySQL_DBWorker extends DBWorker
      * rows["val1"]["val2"] = ["col3" => "val3", ...]
      * ```
      *
-     * @return int|false
-     * Returns the number of the fetched rows. It might be also 0. In the case of
-     * any error returns false.
+     * @return int
+     * Returns the number of the fetched rows. It might be also 0.
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -997,11 +1006,8 @@ class MySQL_DBWorker extends DBWorker
             }
             
             if (!call_user_func_array([$this->statement, 'bind_result'], $params)) {
-                $this->last_error = $this->statement->error;
-                $this->last_error_id = DBWorker::ERR_QUERY_FAILED;
-                trigger_error($this->last_error . "\n\n" . $this->last_query, E_USER_ERROR);
-                
-                return false;
+                trigger_error($this->statement->error . "\n\n" . $this->last_query, E_USER_ERROR);
+                throw new \Exception($this->statement->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
             }
             
             unset($params);
@@ -1042,8 +1048,9 @@ class MySQL_DBWorker extends DBWorker
         } // prepared query
         
         if (!$this->mysqli_result) {
-            $this->last_error_id = "db_result_error";
-            return false;
+            $err = "Result fetch error";
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         while ($row = @$this->mysqli_result->fetch_assoc()) {
@@ -1081,8 +1088,10 @@ class MySQL_DBWorker extends DBWorker
      * Returns the number of the rows fetched by the last retrieving query.
      *
      * @return int|false
-     * Returns the number of the rows fetched by the last retrieving query. In the case
-     * of any error returns false.
+     * Returns the number of the rows fetched by the last retrieving query.
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -1092,17 +1101,10 @@ class MySQL_DBWorker extends DBWorker
             return $this->statement->num_rows;
         }
         
-        if (!$this->mysqli_result) {
-            $this->last_error_id = "db_result_error";
-            return false;
-        }
-        
-        // by update, insert, delete it is not an object
-        // by select it is an object
-        // crazy!
-        
-        if (!is_object($this->mysqli_result)) {
-            return false;
+        if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
+            $err = "Result fetch error";
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         return $this->mysqli_result->num_rows;
@@ -1111,17 +1113,20 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Returns the number of the rows affected by the last modification query.
      *
-     * @return int|false
-     * Returns the number of the rows affected by the last modification query. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the number of the rows affected by the last modification query.
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
     public function affected_count()
     {
         if (!$this->mysqli_result) {
-            $this->last_error_id = "db_result_error";
-            return false;
+            $err = "Result fetch error";
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         return $this->mysqli->affected_rows;
@@ -1134,6 +1139,9 @@ class MySQL_DBWorker extends DBWorker
      * Returns the number of the fields in the result of the last retrieving query. In the case
      * of any error returns false.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function field_count()
@@ -1143,7 +1151,9 @@ class MySQL_DBWorker extends DBWorker
         }
         
         if (!$this->mysqli_result) {
-            return false;
+            $err = "Result fetch error";
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         return $this->mysqli_result->field_count;
@@ -1218,6 +1228,9 @@ class MySQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number as an object with properties. In the case
      * of any error returns null.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see field_by_num()
      * @see field_info_by_num()
      *
@@ -1243,6 +1256,9 @@ class MySQL_DBWorker extends DBWorker
      * Returns the associative array with properties. In the case
      * of any error returns null.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * $info["name"] - name of the field.
      *
      * $info["type"] - type of the field.
@@ -1261,17 +1277,15 @@ class MySQL_DBWorker extends DBWorker
     public function field_info_by_num($num)
     {
         if (!$this->mysqli_result) {
-            $this->last_error_id = "db_result_error";
-            return null;
+            $err = "Result fetch error";
+            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         $res = @$this->mysqli_result->fetch_field_direct($num);
         if (!$res) {
-            $this->last_error = $this->mysqli->error;
-            $this->last_error_id = "db_result_error";
-            
-            trigger_error($this->last_error, E_USER_ERROR);
-            return null;
+            trigger_error($this->mysqli->error . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new \Exception($this->mysqli->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
         
         // some corrections for compatible formats

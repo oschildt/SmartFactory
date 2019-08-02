@@ -53,7 +53,14 @@ abstract class DBWorker implements IInitable
      * @author Oleg Schildt
      */
     const ERR_QUERY_FAILED = 4;
-
+    
+    /**
+     * The constant for the error: stream invalid.
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_STREAM_ERROR = 5;
+    
     /**
      * The constant for the number type.
      *
@@ -114,24 +121,6 @@ abstract class DBWorker implements IInitable
      * @author Oleg Schildt
      */
     protected $db_password;
-    
-    /**
-     * This variable stores the last occured error.
-     *
-     * @var string $last_error
-     *
-     * @author Oleg Schildt
-     */
-    protected $last_error = null;
-    
-    /**
-     * This variable stores the ID of the last occured error.
-     *
-     * @var string $last_error_id
-     *
-     * @author Oleg Schildt
-     */
-    protected $last_error_id = null;
     
     /**
      * This variable stores the last executed query.
@@ -233,6 +222,10 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the connection has been successfully established, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
+     * - if some parameters are missing.
      * @see is_connected()
      * @see close_connection()
      *
@@ -248,6 +241,9 @@ abstract class DBWorker implements IInitable
      *
      * @return boolean
      * Returns true if the database has been successfully set as working database, otherwise false.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -290,6 +286,9 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the query has been successfully executed, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     abstract public function execute_query($query_string);
@@ -304,6 +303,9 @@ abstract class DBWorker implements IInitable
      *
      * @return boolean
      * Returns true if the stored procedure has been successfully executed, otherwise false.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -320,6 +322,9 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the prepared SQL query has been successfully executed, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
      * @see prepare_query()
      * @see free_prepared_query()
      *
@@ -335,6 +340,9 @@ abstract class DBWorker implements IInitable
      *
      * @return boolean
      * Returns true if the SQL query has been successfully prepared, otherwise false.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @see execute_prepared_query()
      * @see free_prepared_query()
@@ -365,6 +373,9 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the long data has been successfully stored, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     abstract public function stream_long_data($query_string, &$stream);
@@ -388,6 +399,9 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the transaction has been successfully started, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
      * @see commit_transaction()
      * @see rollback_transaction()
      *
@@ -401,6 +415,9 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the transaction has been successfully committed, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
      * @see start_transaction()
      * @see rollback_transaction()
      *
@@ -413,6 +430,9 @@ abstract class DBWorker implements IInitable
      *
      * @return boolean
      * Returns true if the transaction has been successfully rolled back, otherwise false.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @see start_transaction()
      * @see commit_transaction()
@@ -429,6 +449,9 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the result has been successfully freed, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     abstract public function free_result();
@@ -440,6 +463,9 @@ abstract class DBWorker implements IInitable
      *
      * @return boolean
      * Returns true if the prepared query has been successfully freed, otherwise false.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @see prepare_query()
      * @see execute_prepared_query()
@@ -468,6 +494,9 @@ abstract class DBWorker implements IInitable
      *
      * $dbw->free_result();
      * ```
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -505,6 +534,9 @@ abstract class DBWorker implements IInitable
      * Returns the number of the fetched rows. It might be also 0. In the case of
      * any error returns false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     abstract public function fetch_array(&$rows, $dimension_keys = null);
@@ -512,9 +544,11 @@ abstract class DBWorker implements IInitable
     /**
      * Returns the number of the rows fetched by the last retrieving query.
      *
-     * @return int|false
-     * Returns the number of the rows fetched by the last retrieving query. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the number of the rows fetched by the last retrieving query.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -523,9 +557,11 @@ abstract class DBWorker implements IInitable
     /**
      * Returns the number of the rows affected by the last modification query.
      *
-     * @return int|false
-     * Returns the number of the rows affected by the last modification query. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the number of the rows affected by the last modification query.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -534,9 +570,11 @@ abstract class DBWorker implements IInitable
     /**
      * Returns the number of the fields in the result of the last retrieving query.
      *
-     * @return int|false
-     * Returns the number of the fields in the result of the last retrieving query. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the number of the fields in the result of the last retrieving query.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -545,9 +583,11 @@ abstract class DBWorker implements IInitable
     /**
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @return int|false
-     * Returns the value of the auto increment field by the last insertion. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the value of the auto increment field by the last insertion.
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -681,32 +721,6 @@ abstract class DBWorker implements IInitable
     abstract public function format_datetime($datetime);
     
     /**
-     * Returns the last occured error.
-     *
-     * @return string
-     * Returns the last occured error.
-     *
-     * @author Oleg Schildt
-     */
-    function get_last_error()
-    {
-        return trim($this->last_error);
-    } // get_last_error
-    
-    /**
-     * Returns the last occured error ID.
-     *
-     * @return string
-     * Returns the last occured error ID.
-     *
-     * @author Oleg Schildt
-     */
-    function get_last_error_id()
-    {
-        return $this->last_error_id;
-    } // get_last_error_id
-    
-    /**
      * Returns the last executed query.
      *
      * @return string
@@ -718,18 +732,4 @@ abstract class DBWorker implements IInitable
     {
         return trim($this->last_query);
     } // get_last_query
-    
-    /**
-     * Clears the last stored occured error, its ID and the last executed query.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    function clear_messages()
-    {
-        $this->last_error = null;
-        $this->last_error_id = null;
-        $this->last_query = null;
-    } // clear_messages
 } // class DBWorker

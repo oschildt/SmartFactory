@@ -260,9 +260,7 @@ class UserSettingsManager implements ISettingsManager
         $query .= trim($update_string, ",\n") . "\n";
         $query .= $this->getWhereClause();
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         return true;
     } // saveSettingsData
@@ -302,9 +300,7 @@ class UserSettingsManager implements ISettingsManager
         
         $query .= $this->getWhereClause();
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         if ($this->dbworker->fetch_row()) {
             foreach ($this->settings_fields as $field => $type) {

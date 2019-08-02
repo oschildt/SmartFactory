@@ -231,6 +231,18 @@ to uniquely identify a record.
       
       <tr>
           <td>
+              <a href="#checkWhereClause">checkWhereClause</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This is internal auxiliary function for converting an array to a where clause.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#defineTableMapping">defineTableMapping</a>
           </td>
           <td>
@@ -238,6 +250,18 @@ to uniquely identify a record.
           </td>
           <td class="description_column">
               Defines the mappings for working with record sets.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#deleteRecords">deleteRecords</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Deletes records by a given where clause.
           </td>
       </tr>
       
@@ -490,6 +514,67 @@ to uniquely identify a record.
 
 
   
+  <hr id="checkWhereClause">
+  
+  <h1>Method: checkWhereClause</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>checkWhereClause</b>(string|<span class="php-keyword1">array</span> &amp;<span class="php-var">$where_clause</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  This is internal auxiliary function for converting an array to a where clause.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$where_clause</h3>
+      <span class="type_label">Type:</span> string|array
+      
+      <div class="param-description">
+      <p>The where clause that should be checked. If an array of keys is passed,
+the where clause is build based on it.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>It should returns true if the conversion is successful, otherwise false.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#120">SmartFactory\RecordsetManager.php</a>
+
+  
+
+  
+
+  
+  
+  
   <hr id="defineTableMapping">
   
   <h1>Method: defineTableMapping</h1>
@@ -576,10 +661,105 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#225">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#272">SmartFactory\RecordsetManager.php</a>
 
   
 
+  
+
+  
+  
+  
+  <hr id="deleteRecords">
+  
+  <h1>Method: deleteRecords</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>deleteRecords</b>(string <span class="php-var">$where_clause</span>) : boolean</div>
+
+  
+  <div class="short-description">
+  Deletes records by a given where clause.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$where_clause</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The where clause for the records to be deleted. If an array of keys is passed,
+the where clause is build automatically based on it.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns true if the records have been successfully deleted, otherwise false.</p>
+  </div>
+  
+  
+
+  
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b>\Exception</b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if some parameters are not of the proper type.</li>
+<li>if the query fails or if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#deleteRecords">\SmartFactory\Interfaces\IRecordsetManager::deleteRecords()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#310">SmartFactory\RecordsetManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RecordsetManager.html#saveRecord">\SmartFactory\RecordsetManager::saveRecord()</a><br>
+  
+  </div>
+  
+
+  
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  </div>
   
 
   
@@ -628,7 +808,7 @@ to uniquely identify a record.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#196">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#243">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -674,7 +854,7 @@ to uniquely identify a record.</p>
       
       <div class="param-description">
       <p>The where clause that should restrict the result to one record. If an array of keys is passed,
-the where clause is build autonatically based on it.</p>
+the where clause is build automatically based on it.</p>
       </div>
       
   
@@ -724,7 +904,7 @@ the where clause is build autonatically based on it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#267">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#355">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -753,7 +933,10 @@ the where clause is build autonatically based on it.</p>
   
   <h1>Method: loadRecordSet</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>loadRecordSet</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>,
+                     string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>,
+                     string <span class="php-var">$order_clause</span> = <span class="php-quote">&quot;&quot;</span>
+                    ) : boolean</div>
 
   
   <div class="short-description">
@@ -780,7 +963,15 @@ the where clause is build autonatically based on it.</p>
       
       <div class="param-description">
       <p>The where clause that should restrict the result. If an array of keys is passed,
-the where clause is build autonatically based on it.</p>
+the where clause is build automatically based on it.</p>
+      </div>
+      
+  
+      <h3>$order_clause</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The order clause to sort the results.</p>
       </div>
       
   
@@ -830,7 +1021,7 @@ the where clause is build autonatically based on it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#355">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#420">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -960,7 +1151,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#142">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#189">SmartFactory\RecordsetManager.php</a>
 
   
 
@@ -1051,7 +1242,7 @@ insert operation.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#468">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#507">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1157,7 +1348,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#625">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#660">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1232,7 +1423,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#181">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#228">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1319,7 +1510,7 @@ is intialized correctly.
 
                     
                     <div id="footer">
-                        Generated on 2019-08-01 08:54
+                        Generated on 2019-08-02 16:06
                     </div>                    
                 </div>
             </div>

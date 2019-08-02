@@ -218,50 +218,31 @@
 <span class="line" id="136">136: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!&quot;</span>, <span class="php-var">$dbworker</span>-&gt;get_extension_name(), <span class="php-var">$dbworker</span>-&gt;get_rdbms_name()));
 <span class="line" id="137">137: </span>    }
 <span class="line" id="138">138: </span>    
-<span class="line" id="139">139: </span>    <span class="php-comment">// do not connect, only object required</span>
-<span class="line" id="140">140: </span>    <span class="php-comment">// user will do connect by itself</span>
-<span class="line" id="141">141: </span>    <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;autoconnect&quot;</span>])) {
-<span class="line" id="142">142: </span>        <span class="php-var">$dbworker</span>-&gt;clear_messages();
-<span class="line" id="143">143: </span>        <span class="php-keyword1">return</span> <span class="php-var">$dbworker</span>;
-<span class="line" id="144">144: </span>    }
-<span class="line" id="145">145: </span>    
-<span class="line" id="146">146: </span>    <span class="php-comment">// instance already connected</span>
-<span class="line" id="147">147: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$dbworker</span>-&gt;is_connected()) {
-<span class="line" id="148">148: </span>        <span class="php-var">$dbworker</span>-&gt;clear_messages();
+<span class="line" id="139">139: </span>    <span class="php-comment">// instance already connected</span>
+<span class="line" id="140">140: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$dbworker</span>-&gt;is_connected()) {
+<span class="line" id="141">141: </span>        <span class="php-keyword1">return</span> <span class="php-var">$dbworker</span>;
+<span class="line" id="142">142: </span>    }
+<span class="line" id="143">143: </span>    
+<span class="line" id="144">144: </span>    <span class="php-var">$dbworker</span>-&gt;init(<span class="php-var">$parameters</span>);
+<span class="line" id="145">145: </span>
+<span class="line" id="146">146: </span>    <span class="php-comment">// do not connect, only object required</span>
+<span class="line" id="147">147: </span>    <span class="php-comment">// user will do connect by itself</span>
+<span class="line" id="148">148: </span>    <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;autoconnect&quot;</span>])) {
 <span class="line" id="149">149: </span>        <span class="php-keyword1">return</span> <span class="php-var">$dbworker</span>;
 <span class="line" id="150">150: </span>    }
 <span class="line" id="151">151: </span>    
-<span class="line" id="152">152: </span>    <span class="php-comment">// try to connect only first time</span>
-<span class="line" id="153">153: </span>    <span class="php-comment">// if сonnection alredy tried and failed</span>
-<span class="line" id="154">154: </span>    <span class="php-comment">// do not try again within one request</span>
-<span class="line" id="155">155: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$dbworker</span>-&gt;get_last_error_id()) {
-<span class="line" id="156">156: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
-<span class="line" id="157">157: </span>    }
-<span class="line" id="158">158: </span>    
-<span class="line" id="159">159: </span>    <span class="php-var">$dbworker</span>-&gt;init(<span class="php-var">$parameters</span>);
-<span class="line" id="160">160: </span>    
-<span class="line" id="161">161: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$dbworker</span>-&gt;connect()) {
-<span class="line" id="162">162: </span>        <span class="php-keyword1">return</span> <span class="php-var">$dbworker</span>;
-<span class="line" id="163">163: </span>    }
-<span class="line" id="164">164: </span>    
-<span class="line" id="165">165: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == DBWorker::ERR_CONNECTION_DATA_INCOMPLETE) {
-<span class="line" id="166">166: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;No database connection information is available ot it is incomplete!&quot;</span>, <span class="php-var">$dbworker</span>-&gt;get_last_error_id());
-<span class="line" id="167">167: </span>    } <span class="php-keyword1">elseif</span> (<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == DBWorker::ERR_CONNECTION_FAILED) {
-<span class="line" id="168">168: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The database server cannot be connected!&quot;</span>, <span class="php-var">$dbworker</span>-&gt;get_last_error_id());
-<span class="line" id="169">169: </span>    } <span class="php-keyword1">elseif</span> (<span class="php-var">$dbworker</span>-&gt;get_last_error_id() == DBWorker::ERR_DATABASE_NOT_FOUND) {
-<span class="line" id="170">170: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The database does not exists!&quot;</span>, <span class="php-var">$dbworker</span>-&gt;get_last_error_id());
-<span class="line" id="171">171: </span>    }
-<span class="line" id="172">172: </span>    
-<span class="line" id="173">173: </span>    <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
-<span class="line" id="174">174: </span>} <span class="php-comment">// instance</span>
-<span class="line" id="175">175: </span>
-<span class="line" id="176">176: </span>
+<span class="line" id="152">152: </span>    <span class="php-var">$dbworker</span>-&gt;connect();
+<span class="line" id="153">153: </span>    
+<span class="line" id="154">154: </span>    <span class="php-keyword1">return</span> <span class="php-var">$dbworker</span>;
+<span class="line" id="155">155: </span>} <span class="php-comment">// dbworker</span>
+<span class="line" id="156">156: </span>
+<span class="line" id="157">157: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-01 08:54
+                        Generated on 2019-08-02 16:06
                     </div>                    
                 </div>
             </div>
