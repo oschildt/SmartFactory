@@ -243,18 +243,6 @@ to uniquely identify a record.
       
       <tr>
           <td>
-              <a href="#defineTableMapping">defineTableMapping</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Defines the mappings for working with record sets.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="#deleteRecords">deleteRecords</a>
           </td>
           <td>
@@ -262,6 +250,18 @@ to uniquely identify a record.
           </td>
           <td class="description_column">
               Deletes records by a given where clause.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#describeTableFields">describeTableFields</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Describes the table fields for working with record sets.
           </td>
       </tr>
       
@@ -304,7 +304,7 @@ to uniquely identify a record.
       
       <tr>
           <td>
-              <a href="#process_subarray">process_subarray</a>
+              <a href="#processSubarray">processSubarray</a>
           </td>
           <td>
               <span class='protected'>protected</span>
@@ -553,6 +553,18 @@ the where clause is build based on it.</p>
   
 
   
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b>\Exception</b><br>
+      
+      
+      <p>It might throw an exception in the case if a field for the clause wad not described
+by the initialization.</p><br>
+      
+  
+  </div>
+  
 
   
   
@@ -567,101 +579,6 @@ the where clause is build based on it.</p>
 
   <h2>Source code</h2>
   <a href="source-SmartFactory.RecordsetManager.html#120">SmartFactory\RecordsetManager.php</a>
-
-  
-
-  
-
-  
-  
-  
-  <hr id="defineTableMapping">
-  
-  <h1>Method: defineTableMapping</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>defineTableMapping</b>(string <span class="php-var">$table</span>,
-                          <span class="php-keyword1">array</span> <span class="php-var">$fields</span>,
-                          <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>
-                         ) : void</div>
-
-  
-  <div class="short-description">
-  Defines the mappings for working with record sets.
-  </div>
-  
-
-  
-
-  
-  <h2>Parameters</h2>
-  
-      <h3>$table</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The name of the table.</p>
-      </div>
-      
-  
-      <h3>$fields</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The array of fields in the form "field name" => "field type".</p>
-      </div>
-      
-  
-      <h3>$key_fields</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The array of key fields. These are the fields that are used
-to uniquely identify a record.</p>
-      </div>
-      
-  
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw an exception in the case of any errors:</p>
-<ul>
-<li>if some parameters are missing.</li>
-<li>if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
-<li>if the query fails or if some object names are invalid.</li>
-</ul><br>
-      
-  
-  </div>
-  
-
-  
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#defineTableMapping">\SmartFactory\Interfaces\IRecordsetManager::defineTableMapping()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#272">SmartFactory\RecordsetManager.php</a>
 
   
 
@@ -742,7 +659,7 @@ the where clause is build automatically based on it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#310">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#314">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -760,6 +677,101 @@ the where clause is build automatically based on it.</p>
   <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
   
   </div>
+  
+
+  
+  
+  
+  <hr id="describeTableFields">
+  
+  <h1>Method: describeTableFields</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>describeTableFields</b>(string <span class="php-var">$table</span>,
+                           <span class="php-keyword1">array</span> <span class="php-var">$fields</span>,
+                           <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>
+                          ) : void</div>
+
+  
+  <div class="short-description">
+  Describes the table fields for working with record sets.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$table</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the table.</p>
+      </div>
+      
+  
+      <h3>$fields</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of fields in the form "field name" => "field type".</p>
+      </div>
+      
+  
+      <h3>$key_fields</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of key fields. These are the fields that are used
+to uniquely identify a record.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b>\Exception</b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if the query fails or if some object names are invalid.</li>
+</ul><br>
+      
+  
+  </div>
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html#describeTableFields">\SmartFactory\Interfaces\IRecordsetManager::describeTableFields()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RecordsetManager.html#276">SmartFactory\RecordsetManager.php</a>
+
+  
+
   
 
   
@@ -808,7 +820,7 @@ the where clause is build automatically based on it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#243">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#247">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -904,7 +916,7 @@ the where clause is build automatically based on it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#355">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#359">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1021,7 +1033,7 @@ the where clause is build automatically based on it.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#420">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#424">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1046,15 +1058,15 @@ the where clause is build automatically based on it.</p>
   
   
   
-  <hr id="process_subarray">
+  <hr id="processSubarray">
   
-  <h1>Method: process_subarray</h1>
+  <h1>Method: processSubarray</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>process_subarray</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$subarray</span>,
-                           <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>,
-                           <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span>,
-                           <span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>
-                          ) : boolean</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <b>processSubarray</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$subarray</span>,
+                          <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>,
+                          <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span>,
+                          <span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>
+                         ) : boolean</div>
 
   
   <div class="short-description">
@@ -1151,7 +1163,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#189">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#193">SmartFactory\RecordsetManager.php</a>
 
   
 
@@ -1242,7 +1254,7 @@ insert operation.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#507">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#511">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1348,7 +1360,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#660">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#667">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1423,7 +1435,7 @@ in the form "field_name" => "value".</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RecordsetManager.html#228">SmartFactory\RecordsetManager.php</a>
+  <a href="source-SmartFactory.RecordsetManager.html#232">SmartFactory\RecordsetManager.php</a>
 
   
   <h2>See also</h2>
@@ -1510,7 +1522,7 @@ is intialized correctly.
 
                     
                     <div id="footer">
-                        Generated on 2019-08-02 16:06
+                        Generated on 2019-08-03 13:47
                     </div>                    
                 </div>
             </div>

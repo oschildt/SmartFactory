@@ -59,7 +59,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function defineTableMapping($table, $fields, $key_fields);
+    public function describeTableFields($table, $fields, $key_fields);
     
     /**
      * Loads a record into an array in the form "field_name" => "value".

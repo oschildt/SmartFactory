@@ -174,19 +174,19 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#defineTableMapping">defineTableMapping</a>
+              <a href="#deleteRecords">deleteRecords</a>
           </td>
           <td class="description_column">
-              Defines the mappings for working with record sets.
+              Deletes records by a given where clause.
           </td>
       </tr>
       
       <tr>
           <td>
-              <a href="#deleteRecords">deleteRecords</a>
+              <a href="#describeTableFields">describeTableFields</a>
           </td>
           <td class="description_column">
-              Deletes records by a given where clause.
+              Defines the mappings for working with record sets.
           </td>
       </tr>
       
@@ -253,80 +253,6 @@ $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into 
 
 
 
-  
-  <hr id="defineTableMapping">
-  
-  <h1>Method: defineTableMapping</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>defineTableMapping</b>(string <span class="php-var">$table</span>,
-                          <span class="php-keyword1">array</span> <span class="php-var">$fields</span>,
-                          <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>
-                         ) : void</div>
-
-  
-  <div class="short-description">
-  Defines the mappings for working with record sets.
-  </div>
-  
-
-  
-
-  
-  <h2>Parameters</h2>
-  
-      <h3>$table</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The name of the table.</p>
-      </div>
-      
-  
-      <h3>$fields</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The array of fields in the form "field name" => "field type".</p>
-      </div>
-      
-  
-      <h3>$key_fields</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The array of key fields. These are the fields that are used
-to uniquely identify a record.</p>
-      </div>
-      
-  
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#59">SmartFactory\Interfaces\IRecordsetManager.php</a>
-
-  
-
-  
-
-  
-  
   
   <hr id="deleteRecords">
   
@@ -396,6 +322,80 @@ the where clause is build automatically based on it.</p>
   <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
   
   </div>
+  
+
+  
+  
+  
+  <hr id="describeTableFields">
+  
+  <h1>Method: describeTableFields</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>describeTableFields</b>(string <span class="php-var">$table</span>,
+                           <span class="php-keyword1">array</span> <span class="php-var">$fields</span>,
+                           <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>
+                          ) : void</div>
+
+  
+  <div class="short-description">
+  Defines the mappings for working with record sets.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$table</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The name of the table.</p>
+      </div>
+      
+  
+      <h3>$fields</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of fields in the form "field name" => "field type".</p>
+      </div>
+      
+  
+      <h3>$key_fields</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>The array of key fields. These are the fields that are used
+to uniquely identify a record.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.Interfaces.IRecordsetManager.html#59">SmartFactory\Interfaces\IRecordsetManager.php</a>
+
+  
+
   
 
   
@@ -870,7 +870,7 @@ in the form "field_name" => "value".</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-08-02 16:06
+                        Generated on 2019-08-03 13:47
                     </div>                    
                 </div>
             </div>

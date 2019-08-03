@@ -114,6 +114,10 @@ class RecordsetManager implements IRecordsetManager
      * @return boolean
      * It should returns true if the conversion is successful, otherwise false.
      *
+     * @throws \Exception
+     * It might throw an exception in the case if a field for the clause wad not described
+     * by the initialization.
+     *
      * @author Oleg Schildt
      */
     protected function checkWhereClause(&$where_clause)
@@ -124,11 +128,15 @@ class RecordsetManager implements IRecordsetManager
         
         $tmp = "";
         foreach ($where_clause as $key_field => $value) {
+            if (empty($this->fields[$key_field])) {
+                throw new \Exception(sprintf("The field '%s' is not described!", $key_field));
+            }
+            
             if (!empty($tmp)) {
                 $tmp .= " AND ";
             }
         
-            switch (checkempty($this->fields[$key_field])) {
+            switch ($this->fields[$key_field]) {
                 case DBWorker::DB_NUMBER:
                     $tmp .= $key_field . " = " . $value;
                     break;
@@ -185,7 +193,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected function process_subarray(&$subarray, $key_fields, &$parent_values, &$record)
+    protected function processSubarray(&$subarray, $key_fields, &$parent_values, &$record)
     {
         $current_key = array_shift($key_fields);
         
@@ -197,7 +205,7 @@ class RecordsetManager implements IRecordsetManager
                     $record[$current_key] = $parent_values[$current_key];
                 }
                 
-                if (!$this->process_subarray($value, $key_fields, $parent_values, $record)) {
+                if (!$this->processSubarray($value, $key_fields, $parent_values, $record)) {
                     return false;
                 }
             } else {
@@ -210,7 +218,7 @@ class RecordsetManager implements IRecordsetManager
         }
         
         return true;
-    } // process_subarray
+    } // processSubarray
     
     /**
      * Sets the dbworker to be used for working with the database.
@@ -245,7 +253,7 @@ class RecordsetManager implements IRecordsetManager
     } // getDBWorker
     
     /**
-     * Defines the mappings for working with record sets.
+     * Describes the table fields for working with record sets.
      *
      * @param string $table
      * The name of the table.
@@ -268,7 +276,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function defineTableMapping($table, $fields, $key_fields)
+    public function describeTableFields($table, $fields, $key_fields)
     {
         $this->table = $table;
         $this->fields = $fields;
@@ -280,7 +288,7 @@ class RecordsetManager implements IRecordsetManager
         }
         
         $this->validateParameters();
-    } // defineTableMapping
+    } // describeTableFields
     
     /**
      * Deletes records by a given where clause.
@@ -674,7 +682,7 @@ class RecordsetManager implements IRecordsetManager
                 $record[$current_key] = $parent_values[$current_key];
             }
             
-            if (!$this->process_subarray($value, $key_fields, $parent_values, $record)) {
+            if (!$this->processSubarray($value, $key_fields, $parent_values, $record)) {
                 return false;
             }
         }

@@ -70,7 +70,7 @@ class ConfigSettingsManager implements ISettingsManager
     protected $config_file_must_exist = false;
     
     /**
-     * Internal variable for storing the state whether the APCu should be used.
+     * Internal variable for storing the state whether the APCU should be used.
      *
      * @var boolean
      *

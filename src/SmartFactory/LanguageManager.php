@@ -58,7 +58,7 @@ class LanguageManager implements ILanguageManager
     static protected $dictionary_loaded = false;
     
     /**
-     * Internal variable for storing the state whether the APCu should be used.
+     * Internal variable for storing the state whether the APCU should be used.
      *
      * @var boolean
      *
@@ -154,6 +154,7 @@ class LanguageManager implements ILanguageManager
                 if (!apcu_exists("dictionary_supported_languages")) {
                     break;
                 }
+                
                 self::$supported_languages = apcu_fetch("dictionary_supported_languages");
                 if (empty(self::$supported_languages)) {
                     break;
