@@ -93,15 +93,11 @@ class RecordsetManager implements IRecordsetManager
             throw new \Exception("The target fields are not specified!");
         }
         
-        if (empty($this->key_fields)) {
-            throw new \Exception("Key fields are not defined!");
-        }
-        
         if (!is_array($this->fields)) {
             throw new \Exception("Field definition must be an array - field => type!");
         }
         
-        if (!is_array($this->key_fields)) {
+        if (!empty($this->key_fields) && !is_array($this->key_fields)) {
             throw new \Exception("Key field definition must be an array!");
         }
         
@@ -280,7 +276,7 @@ class RecordsetManager implements IRecordsetManager
         if (is_array($key_fields)) {
             $this->key_fields = $key_fields;
         } else {
-            $this->key_fields = null;
+            $this->key_fields = [];
         }
         
         $this->validateParameters();
@@ -514,7 +510,9 @@ class RecordsetManager implements IRecordsetManager
         $where = "";
         $must_insert = false;
         
-        if (!empty($identity_field) && empty($record[$identity_field])) {
+        // key_fields not specified - always insert
+        // identity firld exists but its value is not specified - always insert
+        if (empty($this->key_fields) || (!empty($identity_field) && empty($record[$identity_field]))) {
             $must_insert = true;
         } else {
             // check existence
@@ -524,8 +522,6 @@ class RecordsetManager implements IRecordsetManager
             $query .= "1\n";
             
             $query .= "FROM " . $this->table . "\n";
-            
-            $query .= "WHERE\n";
             
             foreach ($this->key_fields as $key_field) {
                 if (!empty($where)) {
@@ -552,6 +548,10 @@ class RecordsetManager implements IRecordsetManager
                     default:
                         $where .= $key_field . " = '" . $value . "'";
                 }
+            }
+            
+            if (!empty($where)) {
+                $where = "WHERE " . $where;
             }
             
             $query .= $where;
@@ -618,7 +618,6 @@ class RecordsetManager implements IRecordsetManager
         } else {
             $query = "UPDATE " . $this->table . " SET\n";
             $query .= trim($update_string, ",\n") . "\n";
-            $query .= "WHERE\n";
             $query .= $where;
         }
         
