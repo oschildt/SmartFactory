@@ -116,14 +116,11 @@ class UserSettingsManager implements ISettingsManager
     /**
      * Internal variable for storing the array of changed settings values.
      *
-     * The changes are set to the temp_settings and are persisted and
-     * written to the storage by saving.
-     *
      * @var array
      *
      * @author Oleg Schildt
      */
-    protected $settings;
+    protected $settings = [];
     
     /**
      * This is internal auxiliary function for checking that the settings
@@ -473,12 +470,24 @@ class UserSettingsManager implements ISettingsManager
      *
      * @return void
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
+     *
      * @see getParameter()
      *
      * @author Oleg Schildt
      */
     public function setParameter($name, $value)
     {
+        if (empty($this->settings)) {
+            $this->loadSettings();
+        }
+
         $this->settings[$name] = $value;
     } // setParameter
     
@@ -496,12 +505,24 @@ class UserSettingsManager implements ISettingsManager
      * @return mixed
      * Returns the value of the settings parameter.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
+     *
      * @see setParameter()
      *
      * @author Oleg Schildt
      */
     public function getParameter($name, $default = "")
     {
+        if (empty($this->settings)) {
+            $this->loadSettings();
+        }
+
         if (!isset($this->settings[$name])) {
             return $default;
         }
@@ -580,6 +601,10 @@ class UserSettingsManager implements ISettingsManager
      */
     public function saveSettings()
     {
+        if (empty($this->settings)) {
+            $this->loadSettings();
+        }
+        
         return $this->saveSettingsData($this->settings);
     } // saveSettings
     
