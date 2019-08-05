@@ -398,7 +398,7 @@
 <span class="line" id="316">316: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;result&quot;</span>] = <span class="php-quote">&quot;error&quot;</span>;
 <span class="line" id="317">317: </span>            
 <span class="line" id="318">318: </span>            <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
-<span class="line" id="319">319: </span>                [<span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>, <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-quote">&quot;The API request is undefined (empty)!&quot;</span>]
+<span class="line" id="319">319: </span>                [<span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>, <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>, <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-quote">&quot;The API request is undefined (empty)!&quot;</span>]
 <span class="line" id="320">320: </span>            ];
 <span class="line" id="321">321: </span>            
 <span class="line" id="322">322: </span>            <span class="php-var">$this</span>-&gt;sendJsonResponse(<span class="php-var">$response_data</span>, <span class="php-var">$additional_headers</span>);
@@ -418,7 +418,7 @@
 <span class="line" id="336">336: </span>                
 <span class="line" id="337">337: </span>                <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
 <span class="line" id="338">338: </span>                    [
-<span class="line" id="339">339: </span>                        <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
+<span class="line" id="339">339: </span>                        <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>, <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
 <span class="line" id="340">340: </span>                        <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;No handler is defined for the API request '%s'!&quot;</span>, <span class="php-var">$api_request</span>)
 <span class="line" id="341">341: </span>                    ]
 <span class="line" id="342">342: </span>                ];
@@ -443,7 +443,7 @@
 <span class="line" id="361">361: </span>                
 <span class="line" id="362">362: </span>                <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
 <span class="line" id="363">363: </span>                    [
-<span class="line" id="364">364: </span>                        <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
+<span class="line" id="364">364: </span>                        <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>, <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
 <span class="line" id="365">365: </span>                        <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The handler class '%s', defined for the request '%s', does not exist!&quot;</span>, <span class="php-var">$handler_class_name</span>, <span class="php-var">$handler_key</span>)
 <span class="line" id="366">366: </span>                    ]
 <span class="line" id="367">367: </span>                ];
@@ -460,7 +460,7 @@
 <span class="line" id="378">378: </span>                
 <span class="line" id="379">379: </span>                <span class="php-var">$response_data</span>[<span class="php-quote">&quot;errors&quot;</span>] = [
 <span class="line" id="380">380: </span>                    [
-<span class="line" id="381">381: </span>                        <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>,
+<span class="line" id="381">381: </span>                        <span class="php-quote">&quot;error_code&quot;</span> =&gt; <span class="php-quote">&quot;system_error&quot;</span>, <span class="php-quote">&quot;error_type&quot;</span> =&gt; <span class="php-quote">&quot;programming_error&quot;</span>,
 <span class="line" id="382">382: </span>                        <span class="php-quote">&quot;error_text&quot;</span> =&gt; <span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The handler class '%s', defined for the request '%s', does not implement the interface '%s'!&quot;</span>, <span class="php-var">$handler_class_name</span>, <span class="php-var">$handler_key</span>, <span class="php-quote">&quot;IJsonApiRequestHandler&quot;</span>)
 <span class="line" id="383">383: </span>                    ]
 <span class="line" id="384">384: </span>                ];
@@ -488,7 +488,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-03 13:47
+                        Generated on 2019-08-05 16:26
                     </div>                    
                 </div>
             </div>

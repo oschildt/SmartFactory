@@ -34,6 +34,17 @@ use SmartFactory\DatabaseWorkers\DBWorker;
 class UserSettingsManager implements ISettingsManager
 {
     /**
+     * Internal variable for storing the user id.
+     *
+     * @var string
+     *
+     * @see setUserID()
+     *
+     * @author Oleg Schildt
+     */
+    protected $user_id = "";
+    
+    /**
      * Internal variable for storing the dbworker.
      *
      * @var DatabaseWorkers\DBWorker
@@ -152,10 +163,6 @@ class UserSettingsManager implements ISettingsManager
             throw new \Exception("The 'user_id_field' is not defined!");
         }
         
-        if (empty($this->user_id_getter)) {
-            throw new \Exception("The function 'user_id_getter' or user id retrieval is not defined!");
-        }
-        
         if (!is_array($this->settings_fields)) {
             throw new \Exception("Settings fields 'settings_fields' must be an array - field => type!");
         }
@@ -176,25 +183,23 @@ class UserSettingsManager implements ISettingsManager
     {
         $where = "WHERE\n";
         
-        $value = $this->user_id_getter->invoke();
-        
-        if (empty($value) && (string)$value != "0") {
+        if (empty($this->user_id) && (string)$this->user_id != "0") {
             $where .= $this->user_id_field . " IS NULL";
         } else switch (checkempty($this->settings_fields[$this->user_id_field])) {
             case DBWorker::DB_NUMBER:
-                $where .= $this->user_id_field . " = " . $value;
+                $where .= $this->user_id_field . " = " . $this->dbworker->escape($this->user_id);
                 break;
             
             case DBWorker::DB_DATETIME:
-                $where .= $this->user_id_field . " = '" . $this->dbworker->format_datetime($value) . "'";
+                $where .= $this->user_id_field . " = '" . $this->dbworker->format_datetime($this->user_id) . "'";
                 break;
             
             case DBWorker::DB_DATE:
-                $where .= $this->user_id_field . " = '" . $this->dbworker->format_date($value) . "'";
+                $where .= $this->user_id_field . " = '" . $this->dbworker->format_date($this->user_id) . "'";
                 break;
             
             default:
-                $where .= $this->user_id_field . " = '" . $value . "'";
+                $where .= $this->user_id_field . " = '" . $this->dbworker->escape($this->user_id) . "'";
         }
         
         return $where;
@@ -331,8 +336,6 @@ class UserSettingsManager implements ISettingsManager
      *
      * - $parameters["user_id_field"] - the name of the user ID field for identifzing the user record.
      *
-     * - $parameters["user_id_getter"] - the function for getting the ID of the current user.
-     *
      * Example:
      *
      * ```php
@@ -347,8 +350,7 @@ class UserSettingsManager implements ISettingsManager
      *                     "LANGUAGE" => DBWorker::DB_STRING,
      *                     "TIME_ZONE" => DBWorker::DB_STRING
      *                    ],
-     *                    "user_id_field" => "ID",
-     *                    "user_id_getter" => function() { return 1; }
+     *                    "user_id_field" => "ID"
      *                   ]);
      * ```
      *
@@ -371,14 +373,6 @@ class UserSettingsManager implements ISettingsManager
         }
         if (!empty($parameters["user_id_field"])) {
             $this->user_id_field = $parameters["user_id_field"];
-        }
-        
-        if (!empty($parameters["user_id_getter"])) {
-            if (!is_callable($parameters["user_id_getter"])) {
-                throw new \Exception(sprintf("'%s' is not a function!", $parameters["user_id_getter"]));
-            }
-            
-            $this->user_id_getter = new \ReflectionFunction($parameters["user_id_getter"]);
         }
         
         return true;
@@ -544,6 +538,8 @@ class UserSettingsManager implements ISettingsManager
     /**
      * Loads the settings from the target user table.
      *
+     * The user ID must be set before loading settings, see {@see \SmartFactory\UserSettingsManager::setUserID()}.
+     *
      * @return boolean
      * Returns true if the settings have been successfully loaded, otherwise false.
      *
@@ -586,4 +582,21 @@ class UserSettingsManager implements ISettingsManager
     {
         return $this->saveSettingsData($this->settings);
     } // saveSettings
+    
+    /**
+     * Sets the user id to be used for loading settings.
+     *
+     * The user ID must be set before loading settings, see {@see \SmartFactory\UserSettingsManager::loadSettings()}.
+     *
+     * @param string $user_id
+     * The user ID.
+     *
+     * @see loadSettings()
+     *
+     * @author Oleg Schildt
+     */
+    public function setUserID($user_id)
+    {
+        $this->user_id = $user_id;
+    } // setUserID
 } // UserSettingsManager
