@@ -316,7 +316,7 @@ class JsonApiRequestManager
             $response_data["result"] = "error";
             
             $response_data["errors"] = [
-                ["error_code" => "system_error", "error_text" => "The API request is undefined (empty)!"]
+                ["error_code" => "system_error", "error_type" => "programming_error", "error_text" => "The API request is undefined (empty)!"]
             ];
             
             $this->sendJsonResponse($response_data, $additional_headers);
@@ -336,7 +336,7 @@ class JsonApiRequestManager
                 
                 $response_data["errors"] = [
                     [
-                        "error_code" => "system_error",
+                        "error_code" => "system_error", "error_type" => "programming_error",
                         "error_text" => sprintf("No handler is defined for the API request '%s'!", $api_request)
                     ]
                 ];
@@ -361,7 +361,7 @@ class JsonApiRequestManager
                 
                 $response_data["errors"] = [
                     [
-                        "error_code" => "system_error",
+                        "error_code" => "system_error", "error_type" => "programming_error",
                         "error_text" => sprintf("The handler class '%s', defined for the request '%s', does not exist!", $handler_class_name, $handler_key)
                     ]
                 ];
@@ -378,7 +378,7 @@ class JsonApiRequestManager
                 
                 $response_data["errors"] = [
                     [
-                        "error_code" => "system_error",
+                        "error_code" => "system_error", "error_type" => "programming_error",
                         "error_text" => sprintf("The handler class '%s', defined for the request '%s', does not implement the interface '%s'!", $handler_class_name, $handler_key, "IJsonApiRequestHandler")
                     ]
                 ];
