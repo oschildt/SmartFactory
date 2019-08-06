@@ -616,10 +616,8 @@ class MySQL_DBWorker extends DBWorker
             trigger_error($this->statement->error . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($this->statement->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
-        if ($this->statement->num_rows) {
-            $this->mysqli_result = $this->statement->result_metadata();
-        }
+    
+        $this->mysqli_result = $this->statement->result_metadata();
         
         return true;
     } // execute_prepared_query
@@ -916,13 +914,13 @@ class MySQL_DBWorker extends DBWorker
             
             return $result;
         } // prepared query
-        
+    
         if (!$this->mysqli_result) {
-            $err = "Result fetch error";
+            $err = "Result fetch error1";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+    
         $this->row = @$this->mysqli_result->fetch_assoc();
         
         if (!$this->row) {

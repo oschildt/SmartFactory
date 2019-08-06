@@ -448,7 +448,7 @@
 <span class="line" id="366">366: </span>            <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;fields <span class="php-keyword1">as</span> <span class="php-var">$field</span> =&gt; <span class="php-var">$type</span>) {
 <span class="line" id="367">367: </span>                <span class="php-var">$record</span>[<span class="php-var">$field</span>] = <span class="php-var">$this</span>-&gt;dbworker-&gt;field_by_name(<span class="php-var">$field</span>);
 <span class="line" id="368">368: </span>                
-<span class="line" id="369">369: </span>                <span class="php-keyword1">if</span> (<span class="php-var">$type</span> == DBWorker::DB_DATE || <span class="php-var">$type</span> == DBWorker::DB_DATETIME) {
+<span class="line" id="369">369: </span>                <span class="php-keyword1">if</span> ((<span class="php-var">$type</span> == DBWorker::DB_DATE || <span class="php-var">$type</span> == DBWorker::DB_DATETIME) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$record</span>[<span class="php-var">$field</span>])) {
 <span class="line" id="370">370: </span>                    <span class="php-var">$record</span>[<span class="php-var">$field</span>] = <span class="php-keyword2">strtotime</span>(<span class="php-var">$record</span>[<span class="php-var">$field</span>]);
 <span class="line" id="371">371: </span>                }
 <span class="line" id="372">372: </span>            }
@@ -518,7 +518,7 @@
 <span class="line" id="436">436: </span>            <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;fields <span class="php-keyword1">as</span> <span class="php-var">$field</span> =&gt; <span class="php-var">$type</span>) {
 <span class="line" id="437">437: </span>                <span class="php-var">$val</span> = <span class="php-var">$this</span>-&gt;dbworker-&gt;field_by_name(<span class="php-var">$field</span>);
 <span class="line" id="438">438: </span>                
-<span class="line" id="439">439: </span>                <span class="php-keyword1">if</span> (<span class="php-var">$type</span> == DBWorker::DB_DATE || <span class="php-var">$type</span> == DBWorker::DB_DATETIME) {
+<span class="line" id="439">439: </span>                <span class="php-keyword1">if</span> ((<span class="php-var">$type</span> == DBWorker::DB_DATE || <span class="php-var">$type</span> == DBWorker::DB_DATETIME) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$val</span>)) {
 <span class="line" id="440">440: </span>                    <span class="php-var">$val</span> = <span class="php-keyword2">strtotime</span>(<span class="php-var">$val</span>);
 <span class="line" id="441">441: </span>                }
 <span class="line" id="442">442: </span>                
@@ -725,7 +725,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-06 09:51
+                        Generated on 2019-08-06 16:02
                     </div>                    
                 </div>
             </div>
