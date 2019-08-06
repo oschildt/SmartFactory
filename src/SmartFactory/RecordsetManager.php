@@ -135,25 +135,10 @@ class RecordsetManager implements IRecordsetManager
             if (!empty($tmp)) {
                 $tmp .= " AND ";
             }
-        
-            switch ($this->fields[$key_field]) {
-                case DBWorker::DB_NUMBER:
-                    $tmp .= $key_field . " = " . $value;
-                    break;
             
-                case DBWorker::DB_DATETIME:
-                    $tmp .= $key_field . " = '" . $this->dbworker->format_datetime($value) . "'";
-                    break;
-            
-                case DBWorker::DB_DATE:
-                    $tmp .= $key_field . " = '" . $this->dbworker->format_date($value) . "'";
-                    break;
-            
-                default:
-                    $tmp .= $key_field . " = '" . $value . "'";
-            }
+            $tmp .= $key_field . " = " . $this->dbworker->prepare_for_query($value, $this->fields[$key_field]);
         }
-    
+        
         $where_clause = "WHERE " . $tmp;
         
         return true;
@@ -317,11 +302,11 @@ class RecordsetManager implements IRecordsetManager
     public function deleteRecords($where_clause)
     {
         $this->validateParameters();
-    
+        
         $this->checkWhereClause($where_clause);
         
         $query = "DELETE FROM " . $this->table . "\n";
-    
+        
         $query .= $where_clause;
         
         if (!$this->dbworker->execute_query($query)) {
@@ -427,7 +412,7 @@ class RecordsetManager implements IRecordsetManager
     public function loadRecordSet(&$records, $where_clause, $order_clause = "")
     {
         $this->validateParameters();
-    
+        
         $this->checkWhereClause($where_clause);
         
         $query = "SELECT\n";
@@ -439,7 +424,7 @@ class RecordsetManager implements IRecordsetManager
         if (!empty($where_clause)) {
             $query .= $where_clause;
         }
-    
+        
         $query .= $order_clause;
         
         $this->dbworker->execute_query($query);
@@ -536,25 +521,12 @@ class RecordsetManager implements IRecordsetManager
                     $where .= " AND ";
                 }
                 
-                $value = $this->dbworker->escape(checkempty($record[$key_field]));
+                $value = $this->dbworker->prepare_for_query(checkempty($record[$key_field]), checkempty($this->fields[$key_field]));
                 
-                if (empty($value) && (string)$value != "0") {
+                if ($value == "NULL") {
                     $where .= $key_field . " IS NULL";
-                } else switch (checkempty($this->fields[$key_field])) {
-                    case DBWorker::DB_NUMBER:
-                        $where .= $key_field . " = " . $value;
-                        break;
-                    
-                    case DBWorker::DB_DATETIME:
-                        $where .= $key_field . " = '" . $this->dbworker->format_datetime($value) . "'";
-                        break;
-                    
-                    case DBWorker::DB_DATE:
-                        $where .= $key_field . " = '" . $this->dbworker->format_date($value) . "'";
-                        break;
-                    
-                    default:
-                        $where .= $key_field . " = '" . $value . "'";
+                } else {
+                    $where .= $key_field . " = " . $value;
                 }
             }
             
@@ -588,36 +560,11 @@ class RecordsetManager implements IRecordsetManager
                 continue;
             }
             
-            $value = $this->dbworker->escape(checkempty($record[$field]));
+            $value = $this->dbworker->prepare_for_query(checkempty($record[$field]), checkempty($this->fields[$field]));
             
-            if (empty($value) && (string)$value != "0") {
-                $update_string .= $field . " = NULL,\n";
-                $insert_fields .= $field . ", ";
-                $insert_values .= "NULL, ";
-            } else switch ($type) {
-                case DBWorker::DB_NUMBER:
-                    $update_string .= $field . " = " . $value . ",\n";
-                    $insert_fields .= $field . ", ";
-                    $insert_values .= $value . ", ";
-                    break;
-                
-                case DBWorker::DB_DATETIME:
-                    $update_string .= $field . " = '" . $this->dbworker->format_datetime($value) . "',\n";
-                    $insert_fields .= $field . ", ";
-                    $insert_values .= "'" . $this->dbworker->format_datetime($value) . "', ";
-                    break;
-                
-                case DBWorker::DB_DATE:
-                    $update_string .= $field . " = '" . $this->dbworker->format_date($value) . "',\n";
-                    $insert_fields .= $field . ", ";
-                    $insert_values .= "'" . $this->dbworker->format_date($value) . "', ";
-                    break;
-                
-                default:
-                    $update_string .= $field . " = '" . $value . "',\n";
-                    $insert_fields .= $field . ", ";
-                    $insert_values .= "'" . $value . "', ";
-            }
+            $update_string .= $field . " = " . $value . ",\n";
+            $insert_fields .= $field . ", ";
+            $insert_values .= $value . ", ";
         }
         
         if ($must_insert) {

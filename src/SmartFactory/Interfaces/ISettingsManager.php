@@ -98,7 +98,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $default = "");
+    public function getParameter($name, $default = null);
     
     /**
      * Sets the settings context.

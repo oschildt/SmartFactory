@@ -391,12 +391,23 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @return void
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if the query fails or if some object names are invalid.
+     *
      * @see getParameter()
      *
      * @author Oleg Schildt
      */
     public function setParameter($name, $value)
     {
+        if (empty($this->settings)) {
+            $this->loadSettings();
+        }
+
         $this->settings[$name] = $value;
     } // setParameter
     
@@ -414,12 +425,22 @@ class ConfigSettingsManager implements ISettingsManager
      * @return mixed
      * Returns the value of the settings parameter.
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if the save path is not specified.
+     * - if the config file is not writable.
+     *
      * @see setParameter()
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $default = "")
+    public function getParameter($name, $default = null)
     {
+        if (empty($this->settings)) {
+            $this->loadSettings();
+        }
+
         if (!isset($this->settings[$name])) {
             return $default;
         }
@@ -494,6 +515,10 @@ class ConfigSettingsManager implements ISettingsManager
      */
     public function saveSettings()
     {
+        if (empty($this->settings)) {
+            $this->loadSettings();
+        }
+
         return $this->saveJSON($this->settings);
     } // saveSettings
 } // ConfigSettingsManager

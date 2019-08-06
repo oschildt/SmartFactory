@@ -825,6 +825,19 @@ the MySQL database.
       
       <tr>
           <td>
+              <a href="#prepare_for_query">prepare_for_query</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Prepares the value for putting to a query depending on its type. It does escaping, formatting
+and quotation if necessary.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#prepare_query">prepare_query</a>
           </td>
           <td>
@@ -3794,6 +3807,78 @@ the MySQL database.
   
   
   
+  <hr id="prepare_for_query">
+  
+  <h1>Method: prepare_for_query</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>prepare_for_query</b>(mixed <span class="php-var">$value</span>, integer <span class="php-var">$type</span>) : string</div>
+
+  
+  <div class="short-description">
+  Prepares the value for putting to a query depending on its type. It does escaping, formatting
+and quotation if necessary.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$value</h3>
+      <span class="type_label">Type:</span> mixed
+      
+      <div class="param-description">
+      <p>The value to be formatted.</p>
+      </div>
+      
+  
+      <h3>$type</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The type of the value.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the prepared value.</p>
+  </div>
+  
+  
+
+  
+
+  
+  <h2>Inherited from</h2>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_for_query">\SmartFactory\DatabaseWorkers\DBWorker::prepare_for_query()</a><br>
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#748">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+
+  
+
+  
+
+  
+  
+  
   <hr id="prepare_query">
   
   <h1>Method: prepare_query</h1>
@@ -4298,7 +4383,7 @@ otherwise the name of the database object remains unchanged.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-08-05 16:26
+                        Generated on 2019-08-06 09:51
                     </div>                    
                 </div>
             </div>

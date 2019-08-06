@@ -732,4 +732,38 @@ abstract class DBWorker implements IInitable
     {
         return trim($this->last_query);
     } // get_last_query
+    
+    /**
+     * Prepares the value for putting to a query depending on its type. It does escaping, formatting
+     * and quotation if necessary.
+     *
+     * @param mixed $value
+     * The value to be formatted.
+     *
+     * @param int $type
+     * The type of the value.
+     *
+     * @return string
+     * Returns the prepared value.
+     *
+     * @author Oleg Schildt
+     */
+    function prepare_for_query($value, $type)
+    {
+        if (empty($value) && (string)$value != "0") {
+            return "NULL";
+        } else switch ($type) {
+            case DBWorker::DB_NUMBER:
+                return $this->escape($value);
+        
+            case DBWorker::DB_DATETIME:
+                return "'" . $this->format_datetime($value) . "'";
+        
+            case DBWorker::DB_DATE:
+                return "'" . $this->format_date($value) . "'";
+        
+            default:
+                return "'" . $this->escape($value) . "'";
+        }
+    } // prepare_for_query
 } // class DBWorker
