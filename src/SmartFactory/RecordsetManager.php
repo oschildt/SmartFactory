@@ -570,13 +570,15 @@ class RecordsetManager implements IRecordsetManager
         if ($must_insert) {
             $query = "INSERT INTO " . $this->table . "(" . trim($insert_fields, ", ") . ")\n";
             $query .= "VALUES (" . trim($insert_values, ", ") . ")\n";
-        } else {
+
+            $this->dbworker->execute_query($query);
+        } elseif(!empty($update_string)) {
             $query = "UPDATE " . $this->table . " SET\n";
             $query .= trim($update_string, ",\n") . "\n";
             $query .= $where;
+
+            $this->dbworker->execute_query($query);
         }
-        
-        $this->dbworker->execute_query($query);
         
         if (!empty($identity_field) && $must_insert) {
             $record[$identity_field] = $this->dbworker->insert_id();

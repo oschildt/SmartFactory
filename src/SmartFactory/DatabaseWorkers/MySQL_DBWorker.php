@@ -255,7 +255,7 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the connection has been successfully established, otherwise false.
      *
-     * @throws \Exception
+     * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
      * @see is_connected()
@@ -284,7 +284,7 @@ class MySQL_DBWorker extends DBWorker
         if (!empty($this->db_name)) {
             try {
                 $this->use_database($this->db_name);
-            } catch (\Exception $ex) {
+            } catch (\Throwable $ex) {
                 $this->mysqli = null;
                 throw $ex;
             }
@@ -297,7 +297,7 @@ class MySQL_DBWorker extends DBWorker
                 $this->execute_query("set transaction read only");
                 $this->execute_query("start transaction");
             }
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             $this->mysqli = null;
             throw $ex;
         }
@@ -314,7 +314,7 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the database has been successfully set as working database, otherwise false.
      *
-     * @throws \Exception
+     * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -463,7 +463,7 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the long data has been successfully stored, otherwise false.
      *
-     * @throws \Exception
+     * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -473,7 +473,7 @@ class MySQL_DBWorker extends DBWorker
         if (!$this->is_connected()) {
             try {
                 $this->connect();
-            } catch (\Exception $ex) {
+            } catch (\Throwable $ex) {
                 fclose($stream);
                 throw $ex;
             }

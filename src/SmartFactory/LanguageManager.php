@@ -196,7 +196,7 @@ class LanguageManager implements ILanguageManager
         $json_array = [];
         try {
             json_to_array($json, $json_array);
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             throw new \Exception("Translation file '" . $this->localization_path . "texts.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
         }
         

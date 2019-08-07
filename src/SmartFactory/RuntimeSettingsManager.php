@@ -230,7 +230,7 @@ class RuntimeSettingsManager implements ISettingsManager
         
         try {
             json_to_array($json, $data);
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             throw new \Exception("JSON parse error: " . $ex->getMessage());
         }
         

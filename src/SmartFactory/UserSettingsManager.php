@@ -155,7 +155,7 @@ class UserSettingsManager implements ISettingsManager
      * @return boolean
      * Returns true if the data has been successfully saved, otherwise false.
      *
-     * @throws \Exception
+     * @throws \Throwable
      * It might throw an exception in the case of any errors:
      *
      * - if the query fails or if some object names are invalid.
@@ -292,7 +292,7 @@ class UserSettingsManager implements ISettingsManager
     
                 $this->dbworker->execute_query($query);
             }
-        } catch (\Exception $ex) {
+        } catch (\Throwable $ex) {
             $this->dbworker->rollback_transaction();
             throw $ex;
         }
