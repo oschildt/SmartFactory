@@ -215,25 +215,37 @@ Oleg Schildt
       
       <tr>
           <td>
+              <a href="#$multichoice_tables">$multichoice_tables</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal array for storing the auxiliary tables for storing the multichoce values.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#$settings">$settings</a>
           </td>
           <td>
               <span class='protected'>protected</span>
           </td>
           <td class="description_column">
-              Internal variable for storing the array of changed settings values.
+              Internal variable for storing the array of the settings values.
           </td>
       </tr>
       
       <tr>
           <td>
-              <a href="#$settings_fields">$settings_fields</a>
+              <a href="#$settings_tables">$settings_tables</a>
           </td>
           <td>
               <span class='protected'>protected</span>
           </td>
           <td class="description_column">
-              Internal array for storing the target colums for each settings.
+              Internal array for storing the settings tables.
           </td>
       </tr>
       
@@ -246,42 +258,6 @@ Oleg Schildt
           </td>
           <td class="description_column">
               Internal variable for storing the user id.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#$user_id_field">$user_id_field</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
-          </td>
-          <td class="description_column">
-              Internal variable for storing the field name that identifies the user record.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#$user_id_getter">$user_id_getter</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
-          </td>
-          <td class="description_column">
-              Internal variable for storing the function for getting the ID value of the current user.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#$user_table">$user_table</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
-          </td>
-          <td class="description_column">
-              Internal variable for storing the target user table name.
           </td>
       </tr>
       
@@ -511,7 +487,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#99">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#81">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -562,51 +538,17 @@ manager is intialized correctly.
 
   
   
-  <hr id="$settings">
+  <hr id="$multichoice_tables">
   
-  <h1>Property: $settings</h1>
+  <h1>Property: $multichoice_tables</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings</b> = <span class="php-keyword1">array</span>()</div>
-
-  <span class="type_label">Type:</span> array
-  
-  
-  <div class="short-description">
-  Internal variable for storing the array of changed settings values.
-  </div>
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#120">SmartFactory\UserSettingsManager.php</a>
-
-  
-
-  
-
-  
-  
-  <hr id="$settings_fields">
-  
-  <h1>Property: $settings_fields</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings_fields</b></div>
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$multichoice_tables</b></div>
 
   <span class="type_label">Type:</span> array
   
   
   <div class="short-description">
-  Internal array for storing the target colums for each settings.
+  Internal array for storing the auxiliary tables for storing the multichoce values.
   </div>
   
 
@@ -623,6 +565,74 @@ manager is intialized correctly.
 
   <h2>Source code</h2>
   <a href="source-SmartFactory.UserSettingsManager.html#69">SmartFactory\UserSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$settings">
+  
+  <h1>Property: $settings</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the array of the settings values.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.UserSettingsManager.html#102">SmartFactory\UserSettingsManager.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$settings_tables">
+  
+  <h1>Property: $settings_tables</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$settings_tables</b></div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal array for storing the settings tables.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.UserSettingsManager.html#60">SmartFactory\UserSettingsManager.php</a>
 
   
 
@@ -671,108 +681,6 @@ manager is intialized correctly.
 
   
   
-  <hr id="$user_id_field">
-  
-  <h1>Property: $user_id_field</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$user_id_field</b></div>
-
-  <span class="type_label">Type:</span> string
-  
-  
-  <div class="short-description">
-  Internal variable for storing the field name that identifies the user record.
-  </div>
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#78">SmartFactory\UserSettingsManager.php</a>
-
-  
-
-  
-
-  
-  
-  <hr id="$user_id_getter">
-  
-  <h1>Property: $user_id_getter</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$user_id_getter</b></div>
-
-  <span class="type_label">Type:</span> callable
-  
-  
-  <div class="short-description">
-  Internal variable for storing the function for getting the ID value of the current user.
-  </div>
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#87">SmartFactory\UserSettingsManager.php</a>
-
-  
-
-  
-
-  
-  
-  <hr id="$user_table">
-  
-  <h1>Property: $user_table</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$user_table</b></div>
-
-  <span class="type_label">Type:</span> string
-  
-  
-  <div class="short-description">
-  Internal variable for storing the target user table name.
-  </div>
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#60">SmartFactory\UserSettingsManager.php</a>
-
-  
-
-  
-
-  
-  
   <hr id="$validator">
   
   <h1>Property: $validator</h1>
@@ -799,7 +707,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#111">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#93">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -875,7 +783,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#530">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#559">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -972,7 +880,7 @@ to a default value if its value is not set yet.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#593">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#622">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1031,7 +939,7 @@ to a default value if its value is not set yet.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#480">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#509">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1076,29 +984,38 @@ to a default value if its value is not set yet.</p>
 <p>$parameters["dbworker"] - the dbworker to used for loading and storing settings.</p>
 </li>
 <li>
-<p>$parameters["user_table"] - the name of the user table for the storing of the settings.</p>
+<p>$parameters["settings_tables"] - the definitions of the settings tables.</p>
 </li>
 <li>
-<p>$parameters["settings_fields"] - the array of the fields for saving each setting.</p>
-</li>
-<li>
-<p>$parameters["user_id_field"] - the name of the user ID field for identifzing the user record.</p>
+<p>$parameters["multichoice_tables"] - the definitions of the auxiliary tables for the multichoice values.</p>
 </li>
 </ul>
 <p>Example:</p>
-<pre><code class="language-php">  <span class="php-var">$usmanager</span>-&gt;init([<span class="php-quote">&quot;dbworker&quot;</span> =&gt; dbworker(),
-                    <span class="php-quote">&quot;user_table&quot;</span> =&gt; <span class="php-quote">&quot;USERS&quot;</span>,
-                    <span class="php-quote">&quot;settings_fields&quot;</span> =&gt; [
-                    <span class="php-quote">&quot;ID&quot;</span> =&gt; DBWorker::DB_NUMBER,
-                    <span class="php-quote">&quot;SIGNATURE&quot;</span> =&gt; DBWorker::DB_STRING,
-                    <span class="php-quote">&quot;STATUS&quot;</span> =&gt; DBWorker::DB_STRING,
-                    <span class="php-quote">&quot;HIDE_PICTURES&quot;</span> =&gt; DBWorker::DB_NUMBER,
-                    <span class="php-quote">&quot;HIDE_SIGNATURES&quot;</span> =&gt; DBWorker::DB_NUMBER,
-                    <span class="php-quote">&quot;LANGUAGE&quot;</span> =&gt; DBWorker::DB_STRING,
-                    <span class="php-quote">&quot;TIME_ZONE&quot;</span> =&gt; DBWorker::DB_STRING
-                   ],
-                   <span class="php-quote">&quot;user_id_field&quot;</span> =&gt; <span class="php-quote">&quot;ID&quot;</span>
-                  ]);</code></pre>
+<pre><code class="language-php">  <span class="php-var">$instance</span>-&gt;init([
+          <span class="php-quote">&quot;dbworker&quot;</span> =&gt; app_dbworker(),
+
+          <span class="php-quote">&quot;settings_tables&quot;</span> =&gt; [
+               <span class="php-quote">&quot;USERS&quot;</span> =&gt; [
+                   <span class="php-quote">&quot;ID&quot;</span> =&gt; DBWorker::DB_NUMBER,
+                   <span class="php-quote">&quot;LANGUAGE&quot;</span> =&gt; DBWorker::DB_STRING,
+                   <span class="php-quote">&quot;TIME_ZONE&quot;</span> =&gt; DBWorker::DB_STRING
+                 ],
+               <span class="php-quote">&quot;USER_FORUM_SETTINGS&quot;</span> =&gt; [
+                   <span class="php-quote">&quot;USER_ID&quot;</span> =&gt; DBWorker::DB_NUMBER,
+                   <span class="php-quote">&quot;SIGNATURE&quot;</span> =&gt; DBWorker::DB_STRING,
+                   <span class="php-quote">&quot;STATUS&quot;</span> =&gt; DBWorker::DB_STRING,
+                   <span class="php-quote">&quot;HIDE_PICTURES&quot;</span> =&gt; DBWorker::DB_NUMBER,
+                   <span class="php-quote">&quot;HIDE_SIGNATURES&quot;</span> =&gt; DBWorker::DB_NUMBER
+                 ]
+          ],
+
+          <span class="php-quote">&quot;multichoice_tables&quot;</span> =&gt; [
+               <span class="php-quote">&quot;USER_COLORS&quot;</span> =&gt; [
+                   <span class="php-quote">&quot;USER_ID&quot;</span> =&gt; DBWorker::DB_NUMBER,
+                   <span class="php-quote">&quot;COLOR&quot;</span> =&gt; DBWorker::DB_STRING
+                 ]
+          ]
+  ]);</code></pre>
       </div>
       
   
@@ -1131,7 +1048,7 @@ to a default value if its value is not set yet.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#432">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#464">SmartFactory\UserSettingsManager.php</a>
 
   
 
@@ -1205,7 +1122,7 @@ to a default value if its value is not set yet.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#652">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#681">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1291,7 +1208,7 @@ defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#324">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#325">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1367,7 +1284,7 @@ defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#675">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#704">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1453,7 +1370,7 @@ to the target user table defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#190">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#168">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1531,7 +1448,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#506">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#535">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1622,7 +1539,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#558">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#587">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1686,7 +1603,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#696">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#725">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1752,7 +1669,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#464">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#493">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1827,7 +1744,7 @@ manager is intialized correctly.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#138">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#120">SmartFactory\UserSettingsManager.php</a>
 
   
 
@@ -1886,7 +1803,7 @@ the validator validate the settings.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.UserSettingsManager.html#623">SmartFactory\UserSettingsManager.php</a>
+  <a href="source-SmartFactory.UserSettingsManager.html#652">SmartFactory\UserSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1916,7 +1833,7 @@ the validator validate the settings.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-08-06 16:02
+                        Generated on 2019-08-07 12:20
                     </div>                    
                 </div>
             </div>
