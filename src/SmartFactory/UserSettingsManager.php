@@ -54,40 +54,22 @@ class UserSettingsManager implements ISettingsManager
     protected $dbworker;
     
     /**
-     * Internal variable for storing the target user table name.
-     *
-     * @var string
-     *
-     * @author Oleg Schildt
-     */
-    protected $user_table;
-    
-    /**
-     * Internal array for storing the target colums for each settings.
+     * Internal array for storing the settings tables.
      *
      * @var array
      *
      * @author Oleg Schildt
      */
-    protected $settings_fields;
+    protected $settings_tables;
     
     /**
-     * Internal variable for storing the field name that identifies the user record.
+     * Internal array for storing the auxiliary tables for storing the multichoce values.
      *
-     * @var string
+     * @var array
      *
      * @author Oleg Schildt
      */
-    protected $user_id_field;
-    
-    /**
-     * Internal variable for storing the function for getting the ID value of the current user.
-     *
-     * @var callable
-     *
-     * @author Oleg Schildt
-     */
-    protected $user_id_getter;
+    protected $multichoice_tables;
     
     /**
      * Internal variable for storing the current context.
@@ -114,7 +96,7 @@ class UserSettingsManager implements ISettingsManager
     protected $validator = null;
     
     /**
-     * Internal variable for storing the array of changed settings values.
+     * Internal variable for storing the array of the settings values.
      *
      * @var array
      *
@@ -148,20 +130,16 @@ class UserSettingsManager implements ISettingsManager
             throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
         }
         
-        if (empty($this->user_table)) {
-            throw new \Exception("The 'user_table' is not defined!");
+        if (empty($this->settings_tables)) {
+            throw new \Exception("The 'settings_tables' are not defined!");
         }
         
-        if (empty($this->settings_fields)) {
-            throw new \Exception("The 'settings_fields' are not defined!");
+        if (!is_array($this->settings_tables)) {
+            throw new \Exception("Settings tables 'settings_tables' must be an array!");
         }
         
-        if (empty($this->user_id_field)) {
-            throw new \Exception("The 'user_id_field' is not defined!");
-        }
-        
-        if (!is_array($this->settings_fields)) {
-            throw new \Exception("Settings fields 'settings_fields' must be an array - field => type!");
+        if (!empty($this->multichoice_tables) && !is_array($this->multichoice_tables)) {
+            throw new \Exception("Multichoice tables 'multichoice_tables' must be an array!");
         }
         
         return true;
@@ -194,51 +172,65 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->validateParameters();
         
-        $simple_fields = [];
-        $multichoice_fields = [];
-        
-        foreach ($this->settings_fields as $field => $type) {
-            if (is_array($type)) {
-                $multichoice_fields[$field] = $type;
-            } else {
-                $simple_fields[$field] = $type;
-            }
-        }
-        
-        $update_string = "";
-        
-        foreach ($simple_fields as $field => $type) {
-            if ($field == $this->user_id_field) {
-                continue;
-            }
-            
-            $value = $this->dbworker->prepare_for_query(checkempty($data[$field]), $type);
-            
-            $update_string .= $field . " = " . $value . ",\n";
-        }
-    
         $this->dbworker->start_transaction();
         
         try {
-            // update the main table
             
-            $query = "UPDATE " . $this->user_table . " SET\n";
-            $query .= trim($update_string, ",\n") . "\n";
-            
-            $user_id = $this->dbworker->prepare_for_query($this->user_id, checkempty($this->settings_fields[$this->user_id_field]));
-            $query .= "WHERE " . $this->user_id_field . " = " . $user_id;
-            
-            $this->dbworker->execute_query($query);
-    
-            // update the subtables
-
-            foreach ($multichoice_fields as $table => $tdata) {
-                // $tdata[0] - user id field
-                // $tdata[1] - value field
-                // $tdata[2] - value field type
+            foreach ($this->settings_tables as $table => $fields) {
+                // First field is the ID field
+                $uid_field = "";
+                $uid_field_type = "";
                 
-                if (empty($tdata[0]) || empty($tdata[1] || empty($tdata[2]))) {
-                    throw new \Exception(sprintf("The multichoice field '%s' is defined incorrectly! It must be an array ['name of user id column', 'name of the value column', type of the value column].", $table));
+                $update_string = "";
+                
+                $c = 0;
+                foreach ($fields as $field => $field_type) {
+                    $c++;
+                    
+                    if ($c == 1) {
+                        $uid_field = $field;
+                        $uid_field_type = $field_type;
+                        continue;
+                    }
+                    
+                    $value = $this->dbworker->prepare_for_query(checkempty($data[$field]), $field_type);
+                    
+                    $update_string .= $field . " = " . $value . ",\n";
+                }
+                
+                $query = "UPDATE " . $table . " SET\n";
+                $query .= trim($update_string, ",\n") . "\n";
+    
+                $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
+                $query .= "WHERE " . $uid_field . " = " . $user_id;
+    
+                $this->dbworker->execute_query($query);
+            }
+            
+            // update the subtables
+    
+            foreach ($this->multichoice_tables as $table => $fields) {
+                // First field is the ID field
+                $uid_field = "";
+                $uid_field_type = "";
+        
+                // Second field is the value field
+                $value_field = "";
+                $value_field_type = "";
+        
+                $c = 1;
+                foreach ($fields as $field => $field_type) {
+                    if ($c == 1) {
+                        $uid_field = $field;
+                        $uid_field_type = $field_type;
+                    } elseif ($c == 2) {
+                        $value_field = $field;
+                        $value_field_type = $field_type;
+                    } else {
+                        break;
+                    }
+            
+                    $c++;
                 }
                 
                 if (!empty($data[$table])) {
@@ -248,54 +240,63 @@ class UserSettingsManager implements ISettingsManager
                 }
                 
                 // insert the values that are in the list but not in the table
-                
+    
+                $user_id = "NULL";
                 $in_list = "";
+                
                 foreach ($value as $entry) {
                     if (empty($entry)) {
                         continue;
                     }
+    
+                    $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
+                    $entry = $this->dbworker->prepare_for_query($entry, $value_field_type);
                     
-                    $entry = $this->dbworker->prepare_for_query($entry, $tdata[2]);
-                    
-                    $query = "SELECT 1 FROM $table WHERE $tdata[0] = $user_id AND $tdata[1] = $entry";
+                    $query = "SELECT 1 FROM $table WHERE $uid_field = $user_id";
+    
+                    if ($value == "NULL") {
+                        $query .= " AND $value_field IS NULL";
+                    } else {
+                        $query .= " AND $value_field = $entry";
+                    }
                     
                     $this->dbworker->execute_query($query);
-                    
+        
                     $must_insert = true;
                     if ($this->dbworker->fetch_row()) {
                         $must_insert = false;
                     }
-                    
+        
                     $this->dbworker->free_result();
-                    
+        
                     if ($must_insert) {
-                        $query = "INSERT INTO $table ($tdata[0], $tdata[1]) VALUES ($user_id, $entry)";
-                        
+                        $query = "INSERT INTO $table ($uid_field, $value_field) VALUES ($user_id, $entry)";
+            
                         $this->dbworker->execute_query($query);
                     }
-                    
+        
                     $in_list .= $entry . ",\n";
                 }
-                
-                $where = "WHERE " . $tdata[0] . " = " . $user_id;
-                
+    
                 $in_list = trim($in_list, " ,\n\r");
-                
+
+                $where = "WHERE " . $uid_field . " = " . $user_id;
+    
                 // delete the values that are no more in the new list but still in the table.
-                
+    
                 if (empty($in_list)) {
                     $query = "DELETE FROM $table\n" . $where;
                 } else {
-                    $query = "DELETE FROM $table\n" . $where . " AND " . $tdata[1] . " NOT IN ($in_list)";
+                    $query = "DELETE FROM $table\n" . $where . " AND " . $value_field . " NOT IN ($in_list)";
                 }
-                
+    
                 $this->dbworker->execute_query($query);
             }
         } catch (\Exception $ex) {
             $this->dbworker->rollback_transaction();
             throw $ex;
         }
-
+        
         $this->dbworker->commit_transaction();
         
         return true;
@@ -328,61 +329,82 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->validateParameters();
         
-        $simple_fields = [];
-        $multichoice_fields = [];
-        
-        foreach ($this->settings_fields as $field => $type) {
-            if (is_array($type)) {
-                $multichoice_fields[$field] = $type;
-            } else {
-                $simple_fields[$field] = $type;
-            }
-        }
-        
-        $query = "SELECT\n";
-        
-        $query .= implode(", ", array_keys($simple_fields)) . "\n";
-        
-        $query .= "FROM " . $this->user_table . "\n";
-        
-        $user_id = $this->dbworker->prepare_for_query($this->user_id, checkempty($this->settings_fields[$this->user_id_field]));
-        $query .= "WHERE " . $this->user_id_field . " = " . $user_id;
-        
-        $this->dbworker->execute_query($query);
-        
-        if ($this->dbworker->fetch_row()) {
-            foreach ($simple_fields as $field => $type) {
-                $data[$field] = $this->dbworker->field_by_name($field);
-                
-                if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($data[$field])) {
-                    $data[$field] = strtotime($data[$field]);
-                }
-            }
-        }
-        
-        $this->dbworker->free_result();
-        
-        foreach ($multichoice_fields as $table => $tdata) {
-            // $tdata[0] - user id field
-            // $tdata[1] - value field
-            // $tdata[2] - value field type
+        foreach ($this->settings_tables as $table => $fields) {
+            // First field is the ID field
+            $uid_field = "";
+            $uid_field_type = "";
             
-            if (empty($tdata[0]) || empty($tdata[1] || empty($tdata[2]))) {
-                throw new \Exception(sprintf("The multichoice field '%s' is defined incorrectly! It must be an array ['name of user id column', 'name of the value column', type of the value column].", $table));
+            foreach ($fields as $field => $field_type) {
+                $uid_field = $field;
+                $uid_field_type = $field_type;
+                break;
             }
             
-            $query = "SELECT $tdata[1]\n";
+            $query = "SELECT\n";
+            
+            $query .= implode(", ", array_keys($fields)) . "\n";
             
             $query .= "FROM " . $table . "\n";
             
-            $query .= "WHERE " . $tdata[0] . " = " . $user_id;
+            $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
+            $query .= "WHERE " . $uid_field . " = " . $user_id;
+            
+            $this->dbworker->execute_query($query);
+            
+            if ($this->dbworker->fetch_row()) {
+                foreach ($fields as $field => $type) {
+                    $data[$field] = $this->dbworker->field_by_name($field);
+                    
+                    if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($data[$field])) {
+                        $data[$field] = strtotime($data[$field]);
+                    }
+                }
+            }
+            
+            $this->dbworker->free_result();
+        }
+        
+        if (empty($this->multichoice_tables)) {
+            return true;
+        }
+        
+        foreach ($this->multichoice_tables as $table => $fields) {
+            // First field is the ID field
+            $uid_field = "";
+            $uid_field_type = "";
+            
+            // Second field is the value field
+            $value_field = "";
+            $value_field_type = "";
+            
+            $c = 1;
+            foreach ($fields as $field => $field_type) {
+                if ($c == 1) {
+                    $uid_field = $field;
+                    $uid_field_type = $field_type;
+                } elseif ($c == 2) {
+                    $value_field = $field;
+                    $value_field_type = $field_type;
+                } else {
+                    break;
+                }
+                
+                $c++;
+            }
+            
+            $query = "SELECT " . $value_field . "\n";
+            
+            $query .= "FROM " . $table . "\n";
+            
+            $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
+            $query .= "WHERE " . $uid_field . " = " . $user_id;
             
             $this->dbworker->execute_query($query);
             
             while ($this->dbworker->fetch_row()) {
-                $val = $this->dbworker->field_by_name($tdata[1]);
+                $val = $this->dbworker->field_by_name($value_field);
                 
-                if (($tdata[2] == DBWorker::DB_DATE || $tdata[2] == DBWorker::DB_DATETIME) && !empty($val)) {
+                if (($value_field_type == DBWorker::DB_DATE || $value_field_type == DBWorker::DB_DATETIME) && !empty($val)) {
                     $val = strtotime($val);
                 }
                 
@@ -403,28 +425,38 @@ class UserSettingsManager implements ISettingsManager
      *
      * - $parameters["dbworker"] - the dbworker to used for loading and storing settings.
      *
-     * - $parameters["user_table"] - the name of the user table for the storing of the settings.
+     * - $parameters["settings_tables"] - the definitions of the settings tables.
      *
-     * - $parameters["settings_fields"] - the array of the fields for saving each setting.
-     *
-     * - $parameters["user_id_field"] - the name of the user ID field for identifzing the user record.
+     * - $parameters["multichoice_tables"] - the definitions of the auxiliary tables for the multichoice values.
      *
      * Example:
      *
      * ```php
-     *   $usmanager->init(["dbworker" => dbworker(),
-     *                     "user_table" => "USERS",
-     *                     "settings_fields" => [
-     *                     "ID" => DBWorker::DB_NUMBER,
-     *                     "SIGNATURE" => DBWorker::DB_STRING,
-     *                     "STATUS" => DBWorker::DB_STRING,
-     *                     "HIDE_PICTURES" => DBWorker::DB_NUMBER,
-     *                     "HIDE_SIGNATURES" => DBWorker::DB_NUMBER,
-     *                     "LANGUAGE" => DBWorker::DB_STRING,
-     *                     "TIME_ZONE" => DBWorker::DB_STRING
-     *                    ],
-     *                    "user_id_field" => "ID"
-     *                   ]);
+     *   $instance->init([
+     *           "dbworker" => app_dbworker(),
+     *
+     *           "settings_tables" => [
+     *                "USERS" => [
+     *                    "ID" => DBWorker::DB_NUMBER,
+     *                    "LANGUAGE" => DBWorker::DB_STRING,
+     *                    "TIME_ZONE" => DBWorker::DB_STRING
+     *                  ],
+     *                "USER_FORUM_SETTINGS" => [
+     *                    "USER_ID" => DBWorker::DB_NUMBER,
+     *                    "SIGNATURE" => DBWorker::DB_STRING,
+     *                    "STATUS" => DBWorker::DB_STRING,
+     *                    "HIDE_PICTURES" => DBWorker::DB_NUMBER,
+     *                    "HIDE_SIGNATURES" => DBWorker::DB_NUMBER
+     *                  ]
+     *           ],
+     *
+     *           "multichoice_tables" => [
+     *                "USER_COLORS" => [
+     *                    "USER_ID" => DBWorker::DB_NUMBER,
+     *                    "COLOR" => DBWorker::DB_STRING
+     *                  ]
+     *           ]
+     *   ]);
      * ```
      *
      * @return boolean
@@ -438,14 +470,11 @@ class UserSettingsManager implements ISettingsManager
             $this->dbworker = $parameters["dbworker"];
         }
         
-        if (!empty($parameters["user_table"])) {
-            $this->user_table = $parameters["user_table"];
+        if (!empty($parameters["settings_tables"])) {
+            $this->settings_tables = $parameters["settings_tables"];
         }
-        if (!empty($parameters["settings_fields"])) {
-            $this->settings_fields = $parameters["settings_fields"];
-        }
-        if (!empty($parameters["user_id_field"])) {
-            $this->user_id_field = $parameters["user_id_field"];
+        if (!empty($parameters["multichoice_tables"])) {
+            $this->multichoice_tables = $parameters["multichoice_tables"];
         }
         
         return true;

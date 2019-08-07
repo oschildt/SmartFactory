@@ -226,7 +226,6 @@ class ConfigSettingsManager implements ISettingsManager
      * It might throw an exception in the case of any errors:
      *
      * - if the save path is not specified.
-     * - if the config file is not writable.
      *
      * @author Oleg Schildt
      */
@@ -234,10 +233,6 @@ class ConfigSettingsManager implements ISettingsManager
     {
         if (empty($this->save_path)) {
             throw new \Exception("The 'save_path' is not specified!");
-        }
-        
-        if (!is_writable(dirname($this->save_path)) || (file_exists($this->save_path) && !is_writable($this->save_path))) {
-            throw new \Exception(sprintf("The config file '%s' is not writable!", $this->save_path));
         }
         
         return true;
@@ -267,7 +262,6 @@ class ConfigSettingsManager implements ISettingsManager
      * It might throw an exception in the case of any errors:
      *
      * - if the save path is not specified.
-     * - if the config file is not writable.
      *
      * @author Oleg Schildt
      */
@@ -397,6 +391,7 @@ class ConfigSettingsManager implements ISettingsManager
      * - if some parameters are missing.
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
+     * - if the config file is not readable.
      *
      * @see getParameter()
      *
@@ -429,7 +424,7 @@ class ConfigSettingsManager implements ISettingsManager
      * It might throw an exception in the case of any errors:
      *
      * - if the save path is not specified.
-     * - if the config file is not writable.
+     * - if the config file is not readable.
      *
      * @see setParameter()
      *
@@ -484,7 +479,6 @@ class ConfigSettingsManager implements ISettingsManager
      * It might throw an exception in the case of any errors:
      *
      * - if the save path is not specified.
-     * - if the config file is not writable.
      * - if the config file is not readable.
      * - if the config file is invalid.
      *
@@ -507,6 +501,7 @@ class ConfigSettingsManager implements ISettingsManager
      * It might throw an exception in the case of any errors:
      *
      * - if the save path is not specified.
+     * - if the config file is not readable.
      * - if the config file is not writable.
      *
      * @see loadSettings()
