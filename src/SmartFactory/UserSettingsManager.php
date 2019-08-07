@@ -459,6 +459,13 @@ class UserSettingsManager implements ISettingsManager
      *   ]);
      * ```
      *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     *
      * @return boolean
      * Returns true upon successful initialization, otherwise false.
      *
@@ -476,8 +483,8 @@ class UserSettingsManager implements ISettingsManager
         if (!empty($parameters["multichoice_tables"])) {
             $this->multichoice_tables = $parameters["multichoice_tables"];
         }
-        
-        return true;
+    
+        return $this->validateParameters();
     } // init
     
     /**
