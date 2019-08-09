@@ -241,15 +241,14 @@ class UserSettingsManager implements ISettingsManager
                 
                 // insert the values that are in the list but not in the table
     
-                $user_id = "NULL";
                 $in_list = "";
+                $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
                 
                 foreach ($value as $entry) {
                     if (empty($entry)) {
                         continue;
                     }
     
-                    $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
                     $entry = $this->dbworker->prepare_for_query($entry, $value_field_type);
                     
                     $query = "SELECT 1 FROM $table WHERE $uid_field = $user_id";
