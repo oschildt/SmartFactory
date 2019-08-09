@@ -399,6 +399,8 @@ class UserSettingsManager implements ISettingsManager
             $query .= "WHERE " . $uid_field . " = " . $user_id;
             
             $this->dbworker->execute_query($query);
+    
+            $data[$table] = [];
             
             while ($this->dbworker->fetch_row()) {
                 $val = $this->dbworker->field_by_name($value_field);
