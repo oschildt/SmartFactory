@@ -72,11 +72,31 @@ interface ISettingsManager extends IInitable
      * @return void
      *
      * @see getParameter()
+     * @see setParameters()
      *
      * @author Oleg Schildt
      */
     public function setParameter($name, $value);
     
+    /**
+     * Sets settings parameters from an array.
+     *
+     * @param array $parameters
+     * Array of parameters in the form key => value.
+     *
+     * @param boolean $force_sreation
+     * Flag which defines whether the parameter should be created
+     * if not exists. If false, only existing parameters are updated.
+     *
+     * @return void
+     *
+     * @see getParameter()
+     * @see setParameter()
+     *
+     * @author Oleg Schildt
+     */
+    public function setParameters(&$parameters, $force_sreation = false);
+
     /**
      * Returns the value of a settings parameter.
      *
@@ -95,6 +115,7 @@ interface ISettingsManager extends IInitable
      * Returns the value of the settings parameter.
      *
      * @see setParameter()
+     * @see setParameters()
      *
      * @author Oleg Schildt
      */

@@ -592,6 +592,7 @@ class UserSettingsManager implements ISettingsManager
      * - if the query fails or if some object names are invalid.
      *
      * @see getParameter()
+     * @see setParameters()
      *
      * @author Oleg Schildt
      */
@@ -603,6 +604,49 @@ class UserSettingsManager implements ISettingsManager
         
         $this->settings[$name] = $value;
     } // setParameter
+    
+    /**
+     * Sets settings parameters from an array.
+     *
+     * @param array $parameters
+     * Array of parameters in the form key => value.
+     *
+     * @param boolean $force_sreation
+     * Flag which defines whether the parameter should be created
+     * if not exists. If false, only existing parameters are updated.
+     * In the UserSettingsManager, this pflag is ignored, because
+     * the paramters are mapped to the database fields and cannot be created
+     * on the fly.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if the query fails or if some object names are invalid.
+     * - if the config file is not readable.
+     *
+     * @see getParameter()
+     * @see setParameter()
+     *
+     * @author Oleg Schildt
+     */
+    public function setParameters(&$parameters, $force_sreation = false)
+    {
+        if (empty($this->settings)) {
+            $this->loadSettings();
+        }
+        
+        foreach ($parameters as $key => $val) {
+            if (!array_key_exists($key, $this->settings)) {
+                continue;
+            }
+            
+            $this->settings[$key] = $val;
+        }
+    } // setParameters
     
     /**
      * Returns the value of a settings parameter.
@@ -627,6 +671,7 @@ class UserSettingsManager implements ISettingsManager
      * - if the query fails or if some object names are invalid.
      *
      * @see setParameter()
+     * @see setParameters()
      *
      * @author Oleg Schildt
      */
