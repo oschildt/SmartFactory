@@ -137,12 +137,7 @@ class JsonApiRequestManager
         
         $api_base = str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
         
-        $api_base = rtrim($api_base, "/");
-        
-        //echo $api_request . "<br>";
-        //echo $api_base . "<br>";
-        
-        return trim(str_replace($api_base, "", $api_request), "/");
+        return str_replace($api_base, "", $api_request);
     } // getApiRequest
     
     /**
