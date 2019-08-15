@@ -642,92 +642,98 @@
 <span class="line" id="560">560: </span>                <span class="php-keyword1">continue</span>;
 <span class="line" id="561">561: </span>            }
 <span class="line" id="562">562: </span>            
-<span class="line" id="563">563: </span>            <span class="php-var">$value</span> = <span class="php-var">$this</span>-&gt;dbworker-&gt;prepare_for_query(checkempty(<span class="php-var">$record</span>[<span class="php-var">$field</span>]), checkempty(<span class="php-var">$this</span>-&gt;fields[<span class="php-var">$field</span>]));
-<span class="line" id="564">564: </span>            
-<span class="line" id="565">565: </span>            <span class="php-var">$update_string</span> .= <span class="php-var">$field</span> . <span class="php-quote">&quot; = &quot;</span> . <span class="php-var">$value</span> . <span class="php-quote">&quot;,\n&quot;</span>;
-<span class="line" id="566">566: </span>            <span class="php-var">$insert_fields</span> .= <span class="php-var">$field</span> . <span class="php-quote">&quot;, &quot;</span>;
-<span class="line" id="567">567: </span>            <span class="php-var">$insert_values</span> .= <span class="php-var">$value</span> . <span class="php-quote">&quot;, &quot;</span>;
-<span class="line" id="568">568: </span>        }
-<span class="line" id="569">569: </span>        
-<span class="line" id="570">570: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$must_insert</span>) {
-<span class="line" id="571">571: </span>            <span class="php-var">$query</span> = <span class="php-quote">&quot;INSERT INTO &quot;</span> . <span class="php-var">$this</span>-&gt;table . <span class="php-quote">&quot;(&quot;</span> . <span class="php-keyword2">trim</span>(<span class="php-var">$insert_fields</span>, <span class="php-quote">&quot;, &quot;</span>) . <span class="php-quote">&quot;)\n&quot;</span>;
-<span class="line" id="572">572: </span>            <span class="php-var">$query</span> .= <span class="php-quote">&quot;VALUES (&quot;</span> . <span class="php-keyword2">trim</span>(<span class="php-var">$insert_values</span>, <span class="php-quote">&quot;, &quot;</span>) . <span class="php-quote">&quot;)\n&quot;</span>;
-<span class="line" id="573">573: </span>
-<span class="line" id="574">574: </span>            <span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>);
-<span class="line" id="575">575: </span>        } <span class="php-keyword1">elseif</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$update_string</span>)) {
-<span class="line" id="576">576: </span>            <span class="php-var">$query</span> = <span class="php-quote">&quot;UPDATE &quot;</span> . <span class="php-var">$this</span>-&gt;table . <span class="php-quote">&quot; SET\n&quot;</span>;
-<span class="line" id="577">577: </span>            <span class="php-var">$query</span> .= <span class="php-keyword2">trim</span>(<span class="php-var">$update_string</span>, <span class="php-quote">&quot;,\n&quot;</span>) . <span class="php-quote">&quot;\n&quot;</span>;
-<span class="line" id="578">578: </span>            <span class="php-var">$query</span> .= <span class="php-var">$where</span>;
+<span class="line" id="563">563: </span>            <span class="php-comment">// The value for the field is not passed in the record,</span>
+<span class="line" id="564">564: </span>            <span class="php-comment">// skip it</span>
+<span class="line" id="565">565: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword2">array_key_exists</span>(<span class="php-var">$field</span>, <span class="php-var">$record</span>)) {
+<span class="line" id="566">566: </span>                <span class="php-keyword1">continue</span>;
+<span class="line" id="567">567: </span>            }
+<span class="line" id="568">568: </span>            
+<span class="line" id="569">569: </span>            <span class="php-var">$value</span> = <span class="php-var">$this</span>-&gt;dbworker-&gt;prepare_for_query(checkempty(<span class="php-var">$record</span>[<span class="php-var">$field</span>]), checkempty(<span class="php-var">$this</span>-&gt;fields[<span class="php-var">$field</span>]));
+<span class="line" id="570">570: </span>            
+<span class="line" id="571">571: </span>            <span class="php-var">$update_string</span> .= <span class="php-var">$field</span> . <span class="php-quote">&quot; = &quot;</span> . <span class="php-var">$value</span> . <span class="php-quote">&quot;,\n&quot;</span>;
+<span class="line" id="572">572: </span>            <span class="php-var">$insert_fields</span> .= <span class="php-var">$field</span> . <span class="php-quote">&quot;, &quot;</span>;
+<span class="line" id="573">573: </span>            <span class="php-var">$insert_values</span> .= <span class="php-var">$value</span> . <span class="php-quote">&quot;, &quot;</span>;
+<span class="line" id="574">574: </span>        }
+<span class="line" id="575">575: </span>        
+<span class="line" id="576">576: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$must_insert</span>) {
+<span class="line" id="577">577: </span>            <span class="php-var">$query</span> = <span class="php-quote">&quot;INSERT INTO &quot;</span> . <span class="php-var">$this</span>-&gt;table . <span class="php-quote">&quot;(&quot;</span> . <span class="php-keyword2">trim</span>(<span class="php-var">$insert_fields</span>, <span class="php-quote">&quot;, &quot;</span>) . <span class="php-quote">&quot;)\n&quot;</span>;
+<span class="line" id="578">578: </span>            <span class="php-var">$query</span> .= <span class="php-quote">&quot;VALUES (&quot;</span> . <span class="php-keyword2">trim</span>(<span class="php-var">$insert_values</span>, <span class="php-quote">&quot;, &quot;</span>) . <span class="php-quote">&quot;)\n&quot;</span>;
 <span class="line" id="579">579: </span>
 <span class="line" id="580">580: </span>            <span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>);
-<span class="line" id="581">581: </span>        }
-<span class="line" id="582">582: </span>        
-<span class="line" id="583">583: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$identity_field</span>) &amp;&amp; <span class="php-var">$must_insert</span>) {
-<span class="line" id="584">584: </span>            <span class="php-var">$record</span>[<span class="php-var">$identity_field</span>] = <span class="php-var">$this</span>-&gt;dbworker-&gt;insert_id();
-<span class="line" id="585">585: </span>        }
-<span class="line" id="586">586: </span>        
-<span class="line" id="587">587: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
-<span class="line" id="588">588: </span>    } <span class="php-comment">// saveRecord</span>
-<span class="line" id="589">589: </span>    
-<span class="line" id="590">590: </span>    <span class="php-comment">/**
-</span><span class="line" id="591">591: </span><span class="php-comment">     * Saves records from an array in the form
-</span><span class="line" id="592">592: </span><span class="php-comment">     * $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot; into the table.
-</span><span class="line" id="593">593: </span><span class="php-comment">     *
-</span><span class="line" id="594">594: </span><span class="php-comment">     * @param array $records
-</span><span class="line" id="595">595: </span><span class="php-comment">     * The source array with the data to be saved.
-</span><span class="line" id="596">596: </span><span class="php-comment">     *
-</span><span class="line" id="597">597: </span><span class="php-comment">     * @param array $parent_values
-</span><span class="line" id="598">598: </span><span class="php-comment">     * If this recordset is a child subset of data to be saved, you can set the values of the foreign keys
-</span><span class="line" id="599">599: </span><span class="php-comment">     * in the form &quot;field_name&quot; =&gt; &quot;value&quot;.
-</span><span class="line" id="600">600: </span><span class="php-comment">     *
-</span><span class="line" id="601">601: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="602">602: </span><span class="php-comment">     * Returns true if the records have been successfully saved, otherwise false.
-</span><span class="line" id="603">603: </span><span class="php-comment">     *
-</span><span class="line" id="604">604: </span><span class="php-comment">     * @throws \Exception
-</span><span class="line" id="605">605: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
+<span class="line" id="581">581: </span>        } <span class="php-keyword1">elseif</span>(!<span class="php-keyword1">empty</span>(<span class="php-var">$update_string</span>)) {
+<span class="line" id="582">582: </span>            <span class="php-var">$query</span> = <span class="php-quote">&quot;UPDATE &quot;</span> . <span class="php-var">$this</span>-&gt;table . <span class="php-quote">&quot; SET\n&quot;</span>;
+<span class="line" id="583">583: </span>            <span class="php-var">$query</span> .= <span class="php-keyword2">trim</span>(<span class="php-var">$update_string</span>, <span class="php-quote">&quot;,\n&quot;</span>) . <span class="php-quote">&quot;\n&quot;</span>;
+<span class="line" id="584">584: </span>            <span class="php-var">$query</span> .= <span class="php-var">$where</span>;
+<span class="line" id="585">585: </span>
+<span class="line" id="586">586: </span>            <span class="php-var">$this</span>-&gt;dbworker-&gt;execute_query(<span class="php-var">$query</span>);
+<span class="line" id="587">587: </span>        }
+<span class="line" id="588">588: </span>        
+<span class="line" id="589">589: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$identity_field</span>) &amp;&amp; <span class="php-var">$must_insert</span>) {
+<span class="line" id="590">590: </span>            <span class="php-var">$record</span>[<span class="php-var">$identity_field</span>] = <span class="php-var">$this</span>-&gt;dbworker-&gt;insert_id();
+<span class="line" id="591">591: </span>        }
+<span class="line" id="592">592: </span>        
+<span class="line" id="593">593: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
+<span class="line" id="594">594: </span>    } <span class="php-comment">// saveRecord</span>
+<span class="line" id="595">595: </span>    
+<span class="line" id="596">596: </span>    <span class="php-comment">/**
+</span><span class="line" id="597">597: </span><span class="php-comment">     * Saves records from an array in the form
+</span><span class="line" id="598">598: </span><span class="php-comment">     * $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot; into the table.
+</span><span class="line" id="599">599: </span><span class="php-comment">     *
+</span><span class="line" id="600">600: </span><span class="php-comment">     * @param array $records
+</span><span class="line" id="601">601: </span><span class="php-comment">     * The source array with the data to be saved.
+</span><span class="line" id="602">602: </span><span class="php-comment">     *
+</span><span class="line" id="603">603: </span><span class="php-comment">     * @param array $parent_values
+</span><span class="line" id="604">604: </span><span class="php-comment">     * If this recordset is a child subset of data to be saved, you can set the values of the foreign keys
+</span><span class="line" id="605">605: </span><span class="php-comment">     * in the form &quot;field_name&quot; =&gt; &quot;value&quot;.
 </span><span class="line" id="606">606: </span><span class="php-comment">     *
-</span><span class="line" id="607">607: </span><span class="php-comment">     * - if some parameters are missing.
-</span><span class="line" id="608">608: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-</span><span class="line" id="609">609: </span><span class="php-comment">     * - if some parameters are not of the proper type.
-</span><span class="line" id="610">610: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
-</span><span class="line" id="611">611: </span><span class="php-comment">     *
-</span><span class="line" id="612">612: </span><span class="php-comment">     * @see  loadRecordSet()
-</span><span class="line" id="613">613: </span><span class="php-comment">     * @see  saveRecord()
-</span><span class="line" id="614">614: </span><span class="php-comment">     *
-</span><span class="line" id="615">615: </span><span class="php-comment">     * @uses DatabaseWorkers\DBWorker
-</span><span class="line" id="616">616: </span><span class="php-comment">     *
-</span><span class="line" id="617">617: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="618">618: </span><span class="php-comment">     */</span>
-<span class="line" id="619">619: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(&amp;<span class="php-var">$records</span>, <span class="php-var">$parent_values</span> = [])
-<span class="line" id="620">620: </span>    {
-<span class="line" id="621">621: </span>        <span class="php-var">$this</span>-&gt;validateParameters();
-<span class="line" id="622">622: </span>        
-<span class="line" id="623">623: </span>        <span class="php-var">$key_fields</span> = <span class="php-var">$this</span>-&gt;key_fields;
-<span class="line" id="624">624: </span>        <span class="php-var">$current_key</span> = <span class="php-keyword2">array_shift</span>(<span class="php-var">$key_fields</span>);
-<span class="line" id="625">625: </span>        
-<span class="line" id="626">626: </span>        <span class="php-keyword1">foreach</span> (<span class="php-var">$records</span> <span class="php-keyword1">As</span> <span class="php-var">$key</span> =&gt; <span class="php-var">$value</span>) {
-<span class="line" id="627">627: </span>            <span class="php-var">$record</span> = [];
-<span class="line" id="628">628: </span>            <span class="php-var">$record</span>[<span class="php-var">$current_key</span>] = <span class="php-var">$key</span>;
-<span class="line" id="629">629: </span>            
-<span class="line" id="630">630: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parent_values</span>[<span class="php-var">$current_key</span>])) {
-<span class="line" id="631">631: </span>                <span class="php-var">$record</span>[<span class="php-var">$current_key</span>] = <span class="php-var">$parent_values</span>[<span class="php-var">$current_key</span>];
-<span class="line" id="632">632: </span>            }
-<span class="line" id="633">633: </span>            
-<span class="line" id="634">634: </span>            <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;processSubarray(<span class="php-var">$value</span>, <span class="php-var">$key_fields</span>, <span class="php-var">$parent_values</span>, <span class="php-var">$record</span>)) {
-<span class="line" id="635">635: </span>                <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="636">636: </span>            }
-<span class="line" id="637">637: </span>        }
-<span class="line" id="638">638: </span>        
-<span class="line" id="639">639: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
-<span class="line" id="640">640: </span>    } <span class="php-comment">// saveRecordSet</span>
-<span class="line" id="641">641: </span>} <span class="php-comment">// RecordsetManager</span>
-<span class="line" id="642">642: </span>
+</span><span class="line" id="607">607: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="608">608: </span><span class="php-comment">     * Returns true if the records have been successfully saved, otherwise false.
+</span><span class="line" id="609">609: </span><span class="php-comment">     *
+</span><span class="line" id="610">610: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="611">611: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
+</span><span class="line" id="612">612: </span><span class="php-comment">     *
+</span><span class="line" id="613">613: </span><span class="php-comment">     * - if some parameters are missing.
+</span><span class="line" id="614">614: </span><span class="php-comment">     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+</span><span class="line" id="615">615: </span><span class="php-comment">     * - if some parameters are not of the proper type.
+</span><span class="line" id="616">616: </span><span class="php-comment">     * - if the query fails or if some object names are invalid.
+</span><span class="line" id="617">617: </span><span class="php-comment">     *
+</span><span class="line" id="618">618: </span><span class="php-comment">     * @see  loadRecordSet()
+</span><span class="line" id="619">619: </span><span class="php-comment">     * @see  saveRecord()
+</span><span class="line" id="620">620: </span><span class="php-comment">     *
+</span><span class="line" id="621">621: </span><span class="php-comment">     * @uses DatabaseWorkers\DBWorker
+</span><span class="line" id="622">622: </span><span class="php-comment">     *
+</span><span class="line" id="623">623: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="624">624: </span><span class="php-comment">     */</span>
+<span class="line" id="625">625: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(&amp;<span class="php-var">$records</span>, <span class="php-var">$parent_values</span> = [])
+<span class="line" id="626">626: </span>    {
+<span class="line" id="627">627: </span>        <span class="php-var">$this</span>-&gt;validateParameters();
+<span class="line" id="628">628: </span>        
+<span class="line" id="629">629: </span>        <span class="php-var">$key_fields</span> = <span class="php-var">$this</span>-&gt;key_fields;
+<span class="line" id="630">630: </span>        <span class="php-var">$current_key</span> = <span class="php-keyword2">array_shift</span>(<span class="php-var">$key_fields</span>);
+<span class="line" id="631">631: </span>        
+<span class="line" id="632">632: </span>        <span class="php-keyword1">foreach</span> (<span class="php-var">$records</span> <span class="php-keyword1">As</span> <span class="php-var">$key</span> =&gt; <span class="php-var">$value</span>) {
+<span class="line" id="633">633: </span>            <span class="php-var">$record</span> = [];
+<span class="line" id="634">634: </span>            <span class="php-var">$record</span>[<span class="php-var">$current_key</span>] = <span class="php-var">$key</span>;
+<span class="line" id="635">635: </span>            
+<span class="line" id="636">636: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parent_values</span>[<span class="php-var">$current_key</span>])) {
+<span class="line" id="637">637: </span>                <span class="php-var">$record</span>[<span class="php-var">$current_key</span>] = <span class="php-var">$parent_values</span>[<span class="php-var">$current_key</span>];
+<span class="line" id="638">638: </span>            }
+<span class="line" id="639">639: </span>            
+<span class="line" id="640">640: </span>            <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;processSubarray(<span class="php-var">$value</span>, <span class="php-var">$key_fields</span>, <span class="php-var">$parent_values</span>, <span class="php-var">$record</span>)) {
+<span class="line" id="641">641: </span>                <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="642">642: </span>            }
+<span class="line" id="643">643: </span>        }
+<span class="line" id="644">644: </span>        
+<span class="line" id="645">645: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
+<span class="line" id="646">646: </span>    } <span class="php-comment">// saveRecordSet</span>
+<span class="line" id="647">647: </span>} <span class="php-comment">// RecordsetManager</span>
+<span class="line" id="648">648: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-09 11:54
+                        Generated on 2019-08-15 13:16
                     </div>                    
                 </div>
             </div>

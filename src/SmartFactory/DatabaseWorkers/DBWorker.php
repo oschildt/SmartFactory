@@ -314,23 +314,19 @@ abstract class DBWorker implements IInitable
     /**
      * Executes the prepared SQL query.
      *
-     * @param string $query_string
-     * The SQL query to be executed.
-     *
-     * All subsequent parameters are the paramteres of the prepared SQL query
+     * @param mixed ...$args
+     * The number of parameters may vary and be zero. An array can also be passed.
+     * These are paremeters of the prepared query.
      *
      * @return boolean
      * Returns true if the prepared SQL query has been successfully executed, otherwise false.
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
      *
      * @see prepare_query()
      * @see free_prepared_query()
      *
      * @author Oleg Schildt
      */
-    abstract public function execute_prepared_query($query_string /* arg list */);
+    abstract public function execute_prepared_query(...$args);
     
     /**
      * Prepares the SQL query with bindable variables.

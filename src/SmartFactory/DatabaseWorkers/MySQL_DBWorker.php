@@ -409,7 +409,7 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the SQL query has been successfully prepared, otherwise false.
      *
-     * @throws \Exception
+     * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
      * @see execute_prepared_query()
@@ -538,15 +538,14 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Executes the prepared SQL query.
      *
-     * @param string $query_string
-     * The SQL query to be executed.
-     *
-     * All subsequent parameters are the paramteres of the prepared SQL query
+     * @param mixed ...$args
+     * The number of parameters may vary and be zero. An array can also be passed.
+     * These are paremeters of the prepared query.
      *
      * @return boolean
      * Returns true if the prepared SQL query has been successfully executed, otherwise false.
      *
-     * @throws \Exception
+     * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
      * @see prepare_query()
@@ -554,17 +553,16 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function execute_prepared_query($query_string /* arg list */)
+    public function execute_prepared_query(...$args)
     {
         if (!$this->is_connected()) {
             $this->connect();
         }
         
         if (empty($this->prepared_query) || empty($this->statement)) {
-            throw new \Exception("no prepared query defined", DBWorker::ERR_QUERY_FAILED);
+            throw new \Exception("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
         }
         
-        $args = func_get_args();
         if (count($args) == 1 && is_array($args[0])) {
             $args = $args[0];
         }
@@ -578,22 +576,22 @@ class MySQL_DBWorker extends DBWorker
         foreach ($args as $argval) {
             if ($argval === null) {
                 $parameters[0] .= "i";
-                $parameters[$counter] = &$argval;
+                $parameters[$counter] = $argval;
                 
                 $this->last_query = preg_replace("/\\?/", "null", $this->last_query, 1);
             } elseif (is_int($argval)) {
                 $parameters[0] .= "i";
-                $parameters[$counter] = &$argval;
+                $parameters[$counter] = $argval;
                 
                 $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
             } elseif (is_float($argval)) {
                 $parameters[0] .= "d";
-                $parameters[$counter] = &$argval;
+                $parameters[$counter] = $argval;
                 
                 $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
             } else {
                 $parameters[0] .= "s";
-                $parameters[$counter] = &$argval;
+                $parameters[$counter] = $argval;
                 
                 $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
             }
@@ -601,7 +599,7 @@ class MySQL_DBWorker extends DBWorker
             $counter++;
         }
         
-        if (!call_user_func_array([$this->statement, 'bind_param'], $parameters)) {
+        if (count($args) > 0 && !call_user_func_array([$this->statement, 'bind_param'], $parameters)) {
            $err = "Number of elements in type definition string doesn't match number of bind variables.";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
