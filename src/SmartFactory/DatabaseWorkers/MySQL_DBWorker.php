@@ -573,25 +573,25 @@ class MySQL_DBWorker extends DBWorker
         $parameters[0] = "";
         
         $counter = 1;
-        foreach ($args as $argval) {
+        foreach ($args as &$argval) {
             if ($argval === null) {
                 $parameters[0] .= "i";
-                $parameters[$counter] = $argval;
+                $parameters[$counter] = &$argval;
                 
                 $this->last_query = preg_replace("/\\?/", "null", $this->last_query, 1);
             } elseif (is_int($argval)) {
                 $parameters[0] .= "i";
-                $parameters[$counter] = $argval;
+                $parameters[$counter] = &$argval;
                 
                 $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
             } elseif (is_float($argval)) {
                 $parameters[0] .= "d";
-                $parameters[$counter] = $argval;
+                $parameters[$counter] = &$argval;
                 
                 $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
             } else {
                 $parameters[0] .= "s";
-                $parameters[$counter] = $argval;
+                $parameters[$counter] = &$argval;
                 
                 $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
             }
