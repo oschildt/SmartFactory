@@ -413,7 +413,7 @@ class ConfigSettingsManager implements ISettingsManager
      * @param array $parameters
      * Array of parameters in the form key => value.
      *
-     * @param boolean $force_sreation
+     * @param boolean $force_creation
      * Flag which defines whether the parameter should be created
      * if not exists. If false, only existing parameters are updated.
      *
@@ -432,14 +432,14 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setParameters(&$parameters, $force_sreation = false)
+    public function setParameters(&$parameters, $force_creation = false)
     {
         if (empty($this->settings)) {
             $this->loadSettings();
         }
 
         foreach ($parameters as $key => $val) {
-            if (!array_key_exists($key, $this->settings) && !$force_sreation) {
+            if (!array_key_exists($key, $this->settings) && !$force_creation) {
                 continue;
             }
     

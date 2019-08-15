@@ -262,6 +262,15 @@ Oleg Schildt
       
       <tr>
           <td>
+              <a href="#setParameters">setParameters</a>
+          </td>
+          <td class="description_column">
+              Sets settings parameters from an array.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#setValidator">setValidator</a>
           </td>
           <td class="description_column">
@@ -336,7 +345,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#142">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#163">SmartFactory\Interfaces\ISettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -414,13 +423,15 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#98">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#119">SmartFactory\Interfaces\ISettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
   <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter">\SmartFactory\Interfaces\ISettingsManager::setParameter()</a><br>
+  
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters">\SmartFactory\Interfaces\ISettingsManager::setParameters()</a><br>
   
   </div>
   
@@ -607,7 +618,7 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#176">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#197">SmartFactory\Interfaces\ISettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -672,7 +683,7 @@ last entered value is returned and this paramter is ignored.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#191">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#212">SmartFactory\Interfaces\ISettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -745,7 +756,7 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#121">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#142">SmartFactory\Interfaces\ISettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -814,13 +825,87 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#75">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#76">SmartFactory\Interfaces\ISettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
   <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter">\SmartFactory\Interfaces\ISettingsManager::getParameter()</a><br>
+  
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters">\SmartFactory\Interfaces\ISettingsManager::setParameters()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="setParameters">
+  
+  <h1>Method: setParameters</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>setParameters</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>, boolean <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>) : void</div>
+
+  
+  <div class="short-description">
+  Sets settings parameters from an array.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$parameters</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>Array of parameters in the form key => value.</p>
+      </div>
+      
+  
+      <h3>$force_creation</h3>
+      <span class="type_label">Type:</span> boolean
+      
+      <div class="param-description">
+      <p>Flag which defines whether the parameter should be created
+if not exists. If false, only existing parameters are updated.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#95">SmartFactory\Interfaces\ISettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter">\SmartFactory\Interfaces\ISettingsManager::getParameter()</a><br>
+  
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter">\SmartFactory\Interfaces\ISettingsManager::setParameter()</a><br>
   
   </div>
   
@@ -938,7 +1023,7 @@ the validator validate the settings.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#161">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#182">SmartFactory\Interfaces\ISettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -968,7 +1053,7 @@ the validator validate the settings.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-08-07 12:27
+                        Generated on 2019-08-09 11:54
                     </div>                    
                 </div>
             </div>

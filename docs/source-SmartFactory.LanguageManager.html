@@ -278,7 +278,7 @@
 <span class="line" id="196">196: </span>        <span class="php-var">$json_array</span> = [];
 <span class="line" id="197">197: </span>        <span class="php-keyword1">try</span> {
 <span class="line" id="198">198: </span>            json_to_array(<span class="php-var">$json</span>, <span class="php-var">$json_array</span>);
-<span class="line" id="199">199: </span>        } <span class="php-keyword1">catch</span> (\Exception <span class="php-var">$ex</span>) {
+<span class="line" id="199">199: </span>        } <span class="php-keyword1">catch</span> (\Throwable <span class="php-var">$ex</span>) {
 <span class="line" id="200">200: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;Translation file '&quot;</span> . <span class="php-var">$this</span>-&gt;localization_path . <span class="php-quote">&quot;texts.json&quot;</span> . <span class="php-quote">&quot;' is invalid!&quot;</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$ex</span>-&gt;getMessage());
 <span class="line" id="201">201: </span>        }
 <span class="line" id="202">202: </span>        
@@ -859,7 +859,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-07 12:27
+                        Generated on 2019-08-09 11:54
                     </div>                    
                 </div>
             </div>

@@ -396,6 +396,18 @@ to the target table defined by the iniailization.
       
       <tr>
           <td>
+              <a href="#setParameters">setParameters</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Sets settings parameters from an array.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#setValidator">setValidator</a>
           </td>
           <td>
@@ -816,13 +828,15 @@ to a default value if its value is not set yet.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RuntimeSettingsManager.html#417">SmartFactory\RuntimeSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#460">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
   <a href="class-SmartFactory.RuntimeSettingsManager.html#setParameter">\SmartFactory\RuntimeSettingsManager::setParameter()</a><br>
+  
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setParameters">\SmartFactory\RuntimeSettingsManager::setParameters()</a><br>
   
   </div>
   
@@ -1126,7 +1140,7 @@ defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RuntimeSettingsManager.html#473">SmartFactory\RuntimeSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#516">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1285,7 +1299,7 @@ to the target table defined by the iniailization.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RuntimeSettingsManager.html#495">SmartFactory\RuntimeSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#538">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1453,13 +1467,109 @@ db_connection_settings etc.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RuntimeSettingsManager.html#383">SmartFactory\RuntimeSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#384">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
   <div class="item_list">
   
   <a href="class-SmartFactory.RuntimeSettingsManager.html#getParameter">\SmartFactory\RuntimeSettingsManager::getParameter()</a><br>
+  
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setParameters">\SmartFactory\RuntimeSettingsManager::setParameters()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="setParameters">
+  
+  <h1>Method: setParameters</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>setParameters</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>, boolean <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>) : void</div>
+
+  
+  <div class="short-description">
+  Sets settings parameters from an array.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$parameters</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>Array of parameters in the form key => value.</p>
+      </div>
+      
+  
+      <h3>$force_creation</h3>
+      <span class="type_label">Type:</span> boolean
+      
+      <div class="param-description">
+      <p>Flag which defines whether the parameter should be created
+if not exists. If false, only existing parameters are updated.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b>\Exception</b><br>
+      
+      
+      <p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if the query fails or if some object names are invalid.</li>
+<li>if the config file is not readable.</li>
+</ul><br>
+      
+  
+  </div>
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters">\SmartFactory\Interfaces\ISettingsManager::setParameters()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#419">SmartFactory\RuntimeSettingsManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#getParameter">\SmartFactory\RuntimeSettingsManager::getParameter()</a><br>
+  
+  <a href="class-SmartFactory.RuntimeSettingsManager.html#setParameter">\SmartFactory\RuntimeSettingsManager::setParameter()</a><br>
   
   </div>
   
@@ -1652,7 +1762,7 @@ the validator validate the settings.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.RuntimeSettingsManager.html#447">SmartFactory\RuntimeSettingsManager.php</a>
+  <a href="source-SmartFactory.RuntimeSettingsManager.html#490">SmartFactory\RuntimeSettingsManager.php</a>
 
   
   <h2>See also</h2>
@@ -1682,7 +1792,7 @@ the validator validate the settings.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-08-07 12:27
+                        Generated on 2019-08-09 11:54
                     </div>                    
                 </div>
             </div>

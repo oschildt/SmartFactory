@@ -84,7 +84,7 @@ interface ISettingsManager extends IInitable
      * @param array $parameters
      * Array of parameters in the form key => value.
      *
-     * @param boolean $force_sreation
+     * @param boolean $force_creation
      * Flag which defines whether the parameter should be created
      * if not exists. If false, only existing parameters are updated.
      *
@@ -95,7 +95,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function setParameters(&$parameters, $force_sreation = false);
+    public function setParameters(&$parameters, $force_creation = false);
 
     /**
      * Returns the value of a settings parameter.
