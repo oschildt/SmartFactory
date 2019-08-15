@@ -560,7 +560,9 @@ class RecordsetManager implements IRecordsetManager
                 continue;
             }
             
-            if (!isset($record[$field])) {
+            // The value for the field is not passed in the record,
+            // skip it
+            if (!array_key_exists($field, $record)) {
                 continue;
             }
             
