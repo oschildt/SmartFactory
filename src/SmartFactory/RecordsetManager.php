@@ -560,6 +560,10 @@ class RecordsetManager implements IRecordsetManager
                 continue;
             }
             
+            if (!isset($record[$field])) {
+                continue;
+            }
+            
             $value = $this->dbworker->prepare_for_query(checkempty($record[$field]), checkempty($this->fields[$field]));
             
             $update_string .= $field . " = " . $value . ",\n";
