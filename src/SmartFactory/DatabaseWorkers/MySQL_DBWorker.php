@@ -1400,4 +1400,44 @@ class MySQL_DBWorker extends DBWorker
     {
         return date("Y-m-d H:i:s", $datetime);
     } // format_datetime
+
+    /**
+     * Prepares the value for putting to a query depending on its type. It does escaping, formatting
+     * and quotation if necessary.
+     *
+     * @param mixed $value
+     * The value to be formatted.
+     *
+     * @param int $type
+     * The type of the value.
+     *
+     * @return string
+     * Returns the prepared value.
+     *
+     * @author Oleg Schildt
+     */
+    function prepare_for_query($value, $type)
+    {
+        if (empty($value) && (string)$value != "0") {
+            return "NULL";
+        } else switch ($type) {
+            case DBWorker::DB_NUMBER:
+                return $this->escape($value);
+        
+            case DBWorker::DB_DATETIME:
+                return "'" . $this->format_datetime($value) . "'";
+        
+            case DBWorker::DB_DATE:
+                return "'" . $this->format_date($value) . "'";
+        
+            case DBWorker::DB_GEOMETRY:
+                return "ST_GeomFromText('" . $this->escape($value) . "')";
+        
+            case DBWorker::DB_GEOMETRY_4326:
+                return "ST_GeomFromText('" . $this->escape($value) . "', 4326, 'axis-order=lat-long')";
+
+            default:
+                return "'" . $this->escape($value) . "'";
+        }
+    } // prepare_for_query
 } // MySQL_DBWorker

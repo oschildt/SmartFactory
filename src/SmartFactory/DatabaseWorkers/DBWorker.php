@@ -67,24 +67,41 @@ abstract class DBWorker implements IInitable
      * @author Oleg Schildt
      */
     const DB_NUMBER = 1;
+
     /**
      * The constant for the string type.
      *
      * @author Oleg Schildt
      */
     const DB_STRING = 2;
+
     /**
      * The constant for the date type.
      *
      * @author Oleg Schildt
      */
     const DB_DATE = 3;
+
     /**
      * The constant for the date/time type.
      *
      * @author Oleg Schildt
      */
     const DB_DATETIME = 4;
+
+    /**
+     * The constant for the type geometry SRID 0.
+     *
+     * @author Oleg Schildt
+     */
+    const DB_GEOMETRY = 5;
+    
+    /**
+     * The constant for the type geometry SRID 4326 (latitude, longitude).
+     *
+     * @author Oleg Schildt
+     */
+    const DB_GEOMETRY_4326 = 6;
     
     /**
      * Name or IP address of the server.
@@ -717,19 +734,6 @@ abstract class DBWorker implements IInitable
     abstract public function format_datetime($datetime);
     
     /**
-     * Returns the last executed query.
-     *
-     * @return string
-     * Returns the last executed query.
-     *
-     * @author Oleg Schildt
-     */
-    function get_last_query()
-    {
-        return trim($this->last_query);
-    } // get_last_query
-    
-    /**
      * Prepares the value for putting to a query depending on its type. It does escaping, formatting
      * and quotation if necessary.
      *
@@ -744,22 +748,18 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    function prepare_for_query($value, $type)
+    abstract function prepare_for_query($value, $type);
+    
+    /**
+     * Returns the last executed query.
+     *
+     * @return string
+     * Returns the last executed query.
+     *
+     * @author Oleg Schildt
+     */
+    function get_last_query()
     {
-        if (empty($value) && (string)$value != "0") {
-            return "NULL";
-        } else switch ($type) {
-            case DBWorker::DB_NUMBER:
-                return $this->escape($value);
-        
-            case DBWorker::DB_DATETIME:
-                return "'" . $this->format_datetime($value) . "'";
-        
-            case DBWorker::DB_DATE:
-                return "'" . $this->format_date($value) . "'";
-        
-            default:
-                return "'" . $this->escape($value) . "'";
-        }
-    } // prepare_for_query
+        return trim($this->last_query);
+    } // get_last_query
 } // class DBWorker
