@@ -135,6 +135,19 @@ class ShardManager implements IShardManager
             return null;
         }
         
+        // Important!
+        //
+        // Many different databases may be connected within one request,
+        // therefore, we request the dbworker as not singleton. Otherwise,
+        // only one dbworker  connected to one database would be returned.
+        //
+        // But, as soon as, we got a shard connected to a required database,
+        // we keep it as singleton within one request, to avoid the unnecessary
+        // DB connections.
+        //
+        // In other words, many databases can be accessed from one request,
+        // but there is only one connection to each database.
+        
         if (empty($this->shard_table[$shard_name]["dbworker"])) {
             $this->shard_table[$shard_name]["dbworker"] = dbworker($this->shard_table[$shard_name]["parameters"], false /* not singleton */);
         }
