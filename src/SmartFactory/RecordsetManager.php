@@ -422,10 +422,12 @@ class RecordsetManager implements IRecordsetManager
         $query .= "FROM " . $this->table . "\n";
         
         if (!empty($where_clause)) {
-            $query .= $where_clause;
+            $query .= $where_clause . "\n";
         }
         
-        $query .= $order_clause;
+        if (!empty($where_clause)) {
+            $query .= $order_clause;
+        }
         
         $this->dbworker->execute_query($query);
         
