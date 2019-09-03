@@ -217,49 +217,62 @@
 <span class="line" id="135">135: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
 <span class="line" id="136">136: </span>        }
 <span class="line" id="137">137: </span>        
-<span class="line" id="138">138: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>])) {
-<span class="line" id="139">139: </span>            <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>] = dbworker(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;parameters&quot;</span>], <span class="php-keyword1">false</span> <span class="php-comment">/* not singleton */</span>);
-<span class="line" id="140">140: </span>        }
-<span class="line" id="141">141: </span>        
-<span class="line" id="142">142: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>];
-<span class="line" id="143">143: </span>    } <span class="php-comment">// dbshard</span>
-<span class="line" id="144">144: </span>    
-<span class="line" id="145">145: </span>    <span class="php-comment">/**
-</span><span class="line" id="146">146: </span><span class="php-comment">     * The method provides the DBWorker object for working with the shard, that is chosen randomly
-</span><span class="line" id="147">147: </span><span class="php-comment">     * for load balancing reason.
-</span><span class="line" id="148">148: </span><span class="php-comment">     *
-</span><span class="line" id="149">149: </span><span class="php-comment">     * @param string $load_balancing_group
-</span><span class="line" id="150">150: </span><span class="php-comment">     * The name of the load balancing group, from which the shard should be randomly picked.
-</span><span class="line" id="151">151: </span><span class="php-comment">     *
-</span><span class="line" id="152">152: </span><span class="php-comment">     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
-</span><span class="line" id="153">153: </span><span class="php-comment">     * returns DBWorker object or null if the object could not be created.
-</span><span class="line" id="154">154: </span><span class="php-comment">     *
-</span><span class="line" id="155">155: </span><span class="php-comment">     * @throws \Exception
-</span><span class="line" id="156">156: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
-</span><span class="line" id="157">157: </span><span class="php-comment">     *
-</span><span class="line" id="158">158: </span><span class="php-comment">     * - if the load balancing group was not found.
-</span><span class="line" id="159">159: </span><span class="php-comment">     * - db_server_conn_error - if the database server cannot be connected.
-</span><span class="line" id="160">160: </span><span class="php-comment">     * - db_not_exists_error - if database does not exists od inaccesible to the user.
+<span class="line" id="138">138: </span>        <span class="php-comment">// Important!</span>
+<span class="line" id="139">139: </span>        <span class="php-comment">//</span>
+<span class="line" id="140">140: </span>        <span class="php-comment">// Many different databases may be connected within one request,</span>
+<span class="line" id="141">141: </span>        <span class="php-comment">// therefore, we request the dbworker as not singleton. Otherwise,</span>
+<span class="line" id="142">142: </span>        <span class="php-comment">// only one dbworker  connected to one database would be returned.</span>
+<span class="line" id="143">143: </span>        <span class="php-comment">//</span>
+<span class="line" id="144">144: </span>        <span class="php-comment">// But, as soon as, we got a shard connected to a required database,</span>
+<span class="line" id="145">145: </span>        <span class="php-comment">// we keep it as singleton within one request, to avoid the unnecessary</span>
+<span class="line" id="146">146: </span>        <span class="php-comment">// DB connections.</span>
+<span class="line" id="147">147: </span>        <span class="php-comment">//</span>
+<span class="line" id="148">148: </span>        <span class="php-comment">// In other words, many databases can be accessed from one request,</span>
+<span class="line" id="149">149: </span>        <span class="php-comment">// but there is only one connection to each database.</span>
+<span class="line" id="150">150: </span>        
+<span class="line" id="151">151: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>])) {
+<span class="line" id="152">152: </span>            <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>] = dbworker(<span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;parameters&quot;</span>], <span class="php-keyword1">false</span> <span class="php-comment">/* not singleton */</span>);
+<span class="line" id="153">153: </span>        }
+<span class="line" id="154">154: </span>        
+<span class="line" id="155">155: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;shard_table[<span class="php-var">$shard_name</span>][<span class="php-quote">&quot;dbworker&quot;</span>];
+<span class="line" id="156">156: </span>    } <span class="php-comment">// dbshard</span>
+<span class="line" id="157">157: </span>    
+<span class="line" id="158">158: </span>    <span class="php-comment">/**
+</span><span class="line" id="159">159: </span><span class="php-comment">     * The method provides the DBWorker object for working with the shard, that is chosen randomly
+</span><span class="line" id="160">160: </span><span class="php-comment">     * for load balancing reason.
 </span><span class="line" id="161">161: </span><span class="php-comment">     *
-</span><span class="line" id="162">162: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="163">163: </span><span class="php-comment">     */</span>
-<span class="line" id="164">164: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> randomDBShard(<span class="php-var">$load_balancing_group</span>)
-<span class="line" id="165">165: </span>    {
-<span class="line" id="166">166: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;load_balancing_groups[<span class="php-var">$load_balancing_group</span>])) {
-<span class="line" id="167">167: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The group '</span><span class="php-var">$load_balancing_group</span><span class="php-quote">' was not found!&quot;</span>);
-<span class="line" id="168">168: </span>        }
-<span class="line" id="169">169: </span>        
-<span class="line" id="170">170: </span>        <span class="php-var">$pos</span> = <span class="php-keyword2">rand</span>(<span class="php-num">0</span>, <span class="php-keyword2">count</span>(<span class="php-var">$this</span>-&gt;load_balancing_groups[<span class="php-var">$load_balancing_group</span>]) - <span class="php-num">1</span>);
-<span class="line" id="171">171: </span>        
-<span class="line" id="172">172: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;dbshard(<span class="php-var">$this</span>-&gt;load_balancing_groups[<span class="php-var">$load_balancing_group</span>][<span class="php-var">$pos</span>]);
-<span class="line" id="173">173: </span>    } <span class="php-comment">// randomDBShard</span>
-<span class="line" id="174">174: </span>} <span class="php-comment">// ShardManager</span>
+</span><span class="line" id="162">162: </span><span class="php-comment">     * @param string $load_balancing_group
+</span><span class="line" id="163">163: </span><span class="php-comment">     * The name of the load balancing group, from which the shard should be randomly picked.
+</span><span class="line" id="164">164: </span><span class="php-comment">     *
+</span><span class="line" id="165">165: </span><span class="php-comment">     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+</span><span class="line" id="166">166: </span><span class="php-comment">     * returns DBWorker object or null if the object could not be created.
+</span><span class="line" id="167">167: </span><span class="php-comment">     *
+</span><span class="line" id="168">168: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="169">169: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
+</span><span class="line" id="170">170: </span><span class="php-comment">     *
+</span><span class="line" id="171">171: </span><span class="php-comment">     * - if the load balancing group was not found.
+</span><span class="line" id="172">172: </span><span class="php-comment">     * - db_server_conn_error - if the database server cannot be connected.
+</span><span class="line" id="173">173: </span><span class="php-comment">     * - db_not_exists_error - if database does not exists od inaccesible to the user.
+</span><span class="line" id="174">174: </span><span class="php-comment">     *
+</span><span class="line" id="175">175: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="176">176: </span><span class="php-comment">     */</span>
+<span class="line" id="177">177: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> randomDBShard(<span class="php-var">$load_balancing_group</span>)
+<span class="line" id="178">178: </span>    {
+<span class="line" id="179">179: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;load_balancing_groups[<span class="php-var">$load_balancing_group</span>])) {
+<span class="line" id="180">180: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;The group '</span><span class="php-var">$load_balancing_group</span><span class="php-quote">' was not found!&quot;</span>);
+<span class="line" id="181">181: </span>        }
+<span class="line" id="182">182: </span>        
+<span class="line" id="183">183: </span>        <span class="php-var">$pos</span> = <span class="php-keyword2">rand</span>(<span class="php-num">0</span>, <span class="php-keyword2">count</span>(<span class="php-var">$this</span>-&gt;load_balancing_groups[<span class="php-var">$load_balancing_group</span>]) - <span class="php-num">1</span>);
+<span class="line" id="184">184: </span>        
+<span class="line" id="185">185: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;dbshard(<span class="php-var">$this</span>-&gt;load_balancing_groups[<span class="php-var">$load_balancing_group</span>][<span class="php-var">$pos</span>]);
+<span class="line" id="186">186: </span>    } <span class="php-comment">// randomDBShard</span>
+<span class="line" id="187">187: </span>} <span class="php-comment">// ShardManager</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-19 17:31
+                        Generated on 2019-09-03 12:42
                     </div>                    
                 </div>
             </div>

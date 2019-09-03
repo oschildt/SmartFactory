@@ -352,11 +352,7 @@ class UserSettingsManager implements ISettingsManager
             
             if ($this->dbworker->fetch_row()) {
                 foreach ($fields as $field => $type) {
-                    $data[$field] = $this->dbworker->field_by_name($field);
-                    
-                    if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($data[$field])) {
-                        $data[$field] = strtotime($data[$field]);
-                    }
+                    $data[$field] = $this->dbworker->field_by_name($field, $type);
                 }
             }
             
@@ -403,13 +399,7 @@ class UserSettingsManager implements ISettingsManager
             $data[$table] = [];
             
             while ($this->dbworker->fetch_row()) {
-                $val = $this->dbworker->field_by_name($value_field);
-                
-                if (($value_field_type == DBWorker::DB_DATE || $value_field_type == DBWorker::DB_DATETIME) && !empty($val)) {
-                    $val = strtotime($val);
-                }
-                
-                $data[$table][] = $val;
+                $data[$table][] = $this->dbworker->field_by_name($value_field, $value_field_type);
             }
             
             $this->dbworker->free_result();

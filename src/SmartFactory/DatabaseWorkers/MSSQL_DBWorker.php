@@ -1249,6 +1249,9 @@ class MSSQL_DBWorker extends DBWorker
      * @param string $name
      * The name of the field.
      *
+     * @param int $type
+     * The type of the field.
+     *
      * @return mixed|null
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
@@ -1258,7 +1261,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_by_name($name)
+    public function field_by_name($name, $type = self::DB_STRING)
     {
         if (!$this->row) {
             return null;
@@ -1268,7 +1271,11 @@ class MSSQL_DBWorker extends DBWorker
             trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_ERROR);
             return null;
         }
-        
+    
+        if(($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$name])) {
+            return strtotime($this->row[$name]);
+        }
+
         return $this->row[$name];
     } // field_by_name
     
@@ -1277,6 +1284,9 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @param int $num
      * The number of the field.
+     *
+     * @param int $type
+     * The type of the field.
      *
      * @return mixed|null
      * Returns the value of a field specified by number. In the case
@@ -1288,7 +1298,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_by_num($num)
+    public function field_by_num($num, $type = self::DB_STRING)
     {
         if (!$this->row) {
             return null;
@@ -1298,7 +1308,11 @@ class MSSQL_DBWorker extends DBWorker
             trigger_error("Field with the index $num does not exist in the result set!", E_USER_ERROR);
             return null;
         }
-        
+    
+        if(($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$this->field_names[$num]])) {
+            return strtotime($this->row[$this->field_names[$num]]);
+        }
+
         return $this->row[$this->field_names[$num]];
     } // field_by_num
     
@@ -1307,6 +1321,9 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @param int $num
      * The number of the field.
+     *
+     * @param boolean $timestamp
+     * If set, the value is converted to the timestamp.
      *
      * @return array
      * Returns the associative array with properties.

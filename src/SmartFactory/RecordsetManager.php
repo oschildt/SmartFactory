@@ -364,11 +364,7 @@ class RecordsetManager implements IRecordsetManager
         
         if ($this->dbworker->fetch_row()) {
             foreach ($this->fields as $field => $type) {
-                $record[$field] = $this->dbworker->field_by_name($field);
-                
-                if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($record[$field])) {
-                    $record[$field] = strtotime($record[$field]);
-                }
+                $record[$field] = $this->dbworker->field_by_name($field, $type);
             }
         }
         
@@ -436,11 +432,7 @@ class RecordsetManager implements IRecordsetManager
             $row = [];
             
             foreach ($this->fields as $field => $type) {
-                $val = $this->dbworker->field_by_name($field);
-                
-                if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($val)) {
-                    $val = strtotime($val);
-                }
+                $val = $this->dbworker->field_by_name($field, $type);
                 
                 if (in_array($field, $this->key_fields)) {
                     $dimensions[$field] = $val;

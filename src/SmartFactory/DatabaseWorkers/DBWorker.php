@@ -612,6 +612,9 @@ abstract class DBWorker implements IInitable
      * @param string $name
      * The name of the field.
      *
+     * @param int $type
+     * The type of the field.
+     *
      * @return mixed|null
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
@@ -621,13 +624,16 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_by_name($name);
+    abstract public function field_by_name($name, $type = self::DB_STRING);
     
     /**
      * Returns the value of a field specified by number.
      *
      * @param int $num
      * The number of the field.
+     *
+     * @param int $type
+     * The type of the field.
      *
      * @return mixed|null
      * Returns the value of a field specified by number. In the case
@@ -639,7 +645,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_by_num($num);
+    abstract public function field_by_num($num, $type = self::DB_STRING);
     
     /**
      * Returns the meta information about the field as an object with properties.

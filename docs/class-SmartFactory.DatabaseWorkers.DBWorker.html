@@ -1757,7 +1757,7 @@ queries while iteration through the active results of a select query.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#699">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#705">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
   <h2>See also</h2>
@@ -2216,7 +2216,7 @@ any error returns false.</p>
   
   <h1>Method: field_by_name</h1>
 
-  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_by_name</b>(string <span class="php-var">$name</span>) : mixed|<span class="php-keyword1">null</span></div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_by_name</b>(string <span class="php-var">$name</span>, integer <span class="php-var">$type</span> = self::DB_STRING) : mixed|<span class="php-keyword1">null</span></div>
 
   
   <div class="short-description">
@@ -2234,6 +2234,14 @@ any error returns false.</p>
       
       <div class="param-description">
       <p>The name of the field.</p>
+      </div>
+      
+  
+      <h3>$type</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The type of the field.</p>
       </div>
       
   
@@ -2264,7 +2272,7 @@ of any error returns null.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#621">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#624">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
   <h2>See also</h2>
@@ -2286,7 +2294,7 @@ of any error returns null.</p>
   
   <h1>Method: field_by_num</h1>
 
-  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_by_num</b>(integer <span class="php-var">$num</span>) : mixed|<span class="php-keyword1">null</span></div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <b>field_by_num</b>(integer <span class="php-var">$num</span>, integer <span class="php-var">$type</span> = self::DB_STRING) : mixed|<span class="php-keyword1">null</span></div>
 
   
   <div class="short-description">
@@ -2304,6 +2312,14 @@ of any error returns null.</p>
       
       <div class="param-description">
       <p>The number of the field.</p>
+      </div>
+      
+  
+      <h3>$type</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>The type of the field.</p>
       </div>
       
   
@@ -2334,7 +2350,7 @@ of any error returns null.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#639">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#645">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
   <h2>See also</h2>
@@ -2471,7 +2487,7 @@ of any error returns null.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#666">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#672">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
   <h2>See also</h2>
@@ -2541,7 +2557,7 @@ of any error returns null.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#683">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#689">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
   <h2>See also</h2>
@@ -2610,7 +2626,7 @@ of any error returns null.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#715">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#721">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
   <h2>See also</h2>
@@ -2679,7 +2695,7 @@ of any error returns null.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#731">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#737">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
   <h2>See also</h2>
@@ -2932,7 +2948,7 @@ of any error returns null.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#758">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#764">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
 
@@ -3344,7 +3360,7 @@ and quotation if necessary.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#748">SmartFactory\DatabaseWorkers\DBWorker.php</a>
+  <a href="source-SmartFactory.DatabaseWorkers.DBWorker.html#754">SmartFactory\DatabaseWorkers\DBWorker.php</a>
 
   
 
@@ -3801,7 +3817,7 @@ otherwise the name of the database object remains unchanged.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-08-19 17:31
+                        Generated on 2019-09-03 12:42
                     </div>                    
                 </div>
             </div>

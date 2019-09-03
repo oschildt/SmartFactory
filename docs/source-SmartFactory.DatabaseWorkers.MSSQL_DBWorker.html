@@ -1331,296 +1331,313 @@
 </span><span class="line" id="1249">1249: </span><span class="php-comment">     * @param string $name
 </span><span class="line" id="1250">1250: </span><span class="php-comment">     * The name of the field.
 </span><span class="line" id="1251">1251: </span><span class="php-comment">     *
-</span><span class="line" id="1252">1252: </span><span class="php-comment">     * @return mixed|null
-</span><span class="line" id="1253">1253: </span><span class="php-comment">     * Returns the value of a field specified by name. In the case
-</span><span class="line" id="1254">1254: </span><span class="php-comment">     * of any error returns null.
-</span><span class="line" id="1255">1255: </span><span class="php-comment">     *
-</span><span class="line" id="1256">1256: </span><span class="php-comment">     * @see field_by_num()
-</span><span class="line" id="1257">1257: </span><span class="php-comment">     * @see field_name()
+</span><span class="line" id="1252">1252: </span><span class="php-comment">     * @param int $type
+</span><span class="line" id="1253">1253: </span><span class="php-comment">     * The type of the field.
+</span><span class="line" id="1254">1254: </span><span class="php-comment">     *
+</span><span class="line" id="1255">1255: </span><span class="php-comment">     * @return mixed|null
+</span><span class="line" id="1256">1256: </span><span class="php-comment">     * Returns the value of a field specified by name. In the case
+</span><span class="line" id="1257">1257: </span><span class="php-comment">     * of any error returns null.
 </span><span class="line" id="1258">1258: </span><span class="php-comment">     *
-</span><span class="line" id="1259">1259: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1260">1260: </span><span class="php-comment">     */</span>
-<span class="line" id="1261">1261: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(<span class="php-var">$name</span>)
-<span class="line" id="1262">1262: </span>    {
-<span class="line" id="1263">1263: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;row) {
-<span class="line" id="1264">1264: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
-<span class="line" id="1265">1265: </span>        }
-<span class="line" id="1266">1266: </span>        
-<span class="line" id="1267">1267: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">array_key_exists</span>(<span class="php-var">$name</span>, <span class="php-var">$this</span>-&gt;row)) {
-<span class="line" id="1268">1268: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-quote">&quot;Field with the name '</span><span class="php-var">$name</span><span class="php-quote">' does not exist in the result set!&quot;</span>, E_USER_ERROR);
-<span class="line" id="1269">1269: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
-<span class="line" id="1270">1270: </span>        }
-<span class="line" id="1271">1271: </span>        
-<span class="line" id="1272">1272: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;row[<span class="php-var">$name</span>];
-<span class="line" id="1273">1273: </span>    } <span class="php-comment">// field_by_name</span>
+</span><span class="line" id="1259">1259: </span><span class="php-comment">     * @see field_by_num()
+</span><span class="line" id="1260">1260: </span><span class="php-comment">     * @see field_name()
+</span><span class="line" id="1261">1261: </span><span class="php-comment">     *
+</span><span class="line" id="1262">1262: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1263">1263: </span><span class="php-comment">     */</span>
+<span class="line" id="1264">1264: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(<span class="php-var">$name</span>, <span class="php-var">$type</span> = self::DB_STRING)
+<span class="line" id="1265">1265: </span>    {
+<span class="line" id="1266">1266: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;row) {
+<span class="line" id="1267">1267: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
+<span class="line" id="1268">1268: </span>        }
+<span class="line" id="1269">1269: </span>        
+<span class="line" id="1270">1270: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">array_key_exists</span>(<span class="php-var">$name</span>, <span class="php-var">$this</span>-&gt;row)) {
+<span class="line" id="1271">1271: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-quote">&quot;Field with the name '</span><span class="php-var">$name</span><span class="php-quote">' does not exist in the result set!&quot;</span>, E_USER_ERROR);
+<span class="line" id="1272">1272: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
+<span class="line" id="1273">1273: </span>        }
 <span class="line" id="1274">1274: </span>    
-<span class="line" id="1275">1275: </span>    <span class="php-comment">/**
-</span><span class="line" id="1276">1276: </span><span class="php-comment">     * Returns the value of a field specified by number.
-</span><span class="line" id="1277">1277: </span><span class="php-comment">     *
-</span><span class="line" id="1278">1278: </span><span class="php-comment">     * @param int $num
-</span><span class="line" id="1279">1279: </span><span class="php-comment">     * The number of the field.
-</span><span class="line" id="1280">1280: </span><span class="php-comment">     *
-</span><span class="line" id="1281">1281: </span><span class="php-comment">     * @return mixed|null
-</span><span class="line" id="1282">1282: </span><span class="php-comment">     * Returns the value of a field specified by number. In the case
-</span><span class="line" id="1283">1283: </span><span class="php-comment">     * of any error returns null.
+<span class="line" id="1275">1275: </span>        <span class="php-keyword1">if</span>((<span class="php-var">$type</span> == DBWorker::DB_DATE || <span class="php-var">$type</span> == DBWorker::DB_DATETIME) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;row[<span class="php-var">$name</span>])) {
+<span class="line" id="1276">1276: </span>            <span class="php-keyword1">return</span> <span class="php-keyword2">strtotime</span>(<span class="php-var">$this</span>-&gt;row[<span class="php-var">$name</span>]);
+<span class="line" id="1277">1277: </span>        }
+<span class="line" id="1278">1278: </span>
+<span class="line" id="1279">1279: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;row[<span class="php-var">$name</span>];
+<span class="line" id="1280">1280: </span>    } <span class="php-comment">// field_by_name</span>
+<span class="line" id="1281">1281: </span>    
+<span class="line" id="1282">1282: </span>    <span class="php-comment">/**
+</span><span class="line" id="1283">1283: </span><span class="php-comment">     * Returns the value of a field specified by number.
 </span><span class="line" id="1284">1284: </span><span class="php-comment">     *
-</span><span class="line" id="1285">1285: </span><span class="php-comment">     * @see field_by_name()
-</span><span class="line" id="1286">1286: </span><span class="php-comment">     * @see field_info_by_num()
-</span><span class="line" id="1287">1287: </span><span class="php-comment">     * @see field_name()
-</span><span class="line" id="1288">1288: </span><span class="php-comment">     *
-</span><span class="line" id="1289">1289: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1290">1290: </span><span class="php-comment">     */</span>
-<span class="line" id="1291">1291: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(<span class="php-var">$num</span>)
-<span class="line" id="1292">1292: </span>    {
-<span class="line" id="1293">1293: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;row) {
-<span class="line" id="1294">1294: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
-<span class="line" id="1295">1295: </span>        }
-<span class="line" id="1296">1296: </span>        
-<span class="line" id="1297">1297: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">array_key_exists</span>(<span class="php-var">$num</span>, <span class="php-var">$this</span>-&gt;field_names)) {
-<span class="line" id="1298">1298: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-quote">&quot;Field with the index </span><span class="php-var">$num</span><span class="php-quote"> does not exist in the result set!&quot;</span>, E_USER_ERROR);
-<span class="line" id="1299">1299: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
-<span class="line" id="1300">1300: </span>        }
-<span class="line" id="1301">1301: </span>        
-<span class="line" id="1302">1302: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;row[<span class="php-var">$this</span>-&gt;field_names[<span class="php-var">$num</span>]];
-<span class="line" id="1303">1303: </span>    } <span class="php-comment">// field_by_num</span>
-<span class="line" id="1304">1304: </span>    
-<span class="line" id="1305">1305: </span>    <span class="php-comment">/**
-</span><span class="line" id="1306">1306: </span><span class="php-comment">     * Returns the meta information about the field as an object with properties.
-</span><span class="line" id="1307">1307: </span><span class="php-comment">     *
-</span><span class="line" id="1308">1308: </span><span class="php-comment">     * @param int $num
-</span><span class="line" id="1309">1309: </span><span class="php-comment">     * The number of the field.
-</span><span class="line" id="1310">1310: </span><span class="php-comment">     *
-</span><span class="line" id="1311">1311: </span><span class="php-comment">     * @return array
-</span><span class="line" id="1312">1312: </span><span class="php-comment">     * Returns the associative array with properties.
-</span><span class="line" id="1313">1313: </span><span class="php-comment">     *
-</span><span class="line" id="1314">1314: </span><span class="php-comment">     * $info[&quot;name&quot;] - name of the field.
-</span><span class="line" id="1315">1315: </span><span class="php-comment">     *
-</span><span class="line" id="1316">1316: </span><span class="php-comment">     * $info[&quot;type&quot;] - type of the field.
-</span><span class="line" id="1317">1317: </span><span class="php-comment">     *
-</span><span class="line" id="1318">1318: </span><span class="php-comment">     * $info[&quot;size&quot;] - size of the field.
-</span><span class="line" id="1319">1319: </span><span class="php-comment">     *
-</span><span class="line" id="1320">1320: </span><span class="php-comment">     * $info[&quot;binary&quot;] - whether the filed is binary.
+</span><span class="line" id="1285">1285: </span><span class="php-comment">     * @param int $num
+</span><span class="line" id="1286">1286: </span><span class="php-comment">     * The number of the field.
+</span><span class="line" id="1287">1287: </span><span class="php-comment">     *
+</span><span class="line" id="1288">1288: </span><span class="php-comment">     * @param int $type
+</span><span class="line" id="1289">1289: </span><span class="php-comment">     * The type of the field.
+</span><span class="line" id="1290">1290: </span><span class="php-comment">     *
+</span><span class="line" id="1291">1291: </span><span class="php-comment">     * @return mixed|null
+</span><span class="line" id="1292">1292: </span><span class="php-comment">     * Returns the value of a field specified by number. In the case
+</span><span class="line" id="1293">1293: </span><span class="php-comment">     * of any error returns null.
+</span><span class="line" id="1294">1294: </span><span class="php-comment">     *
+</span><span class="line" id="1295">1295: </span><span class="php-comment">     * @see field_by_name()
+</span><span class="line" id="1296">1296: </span><span class="php-comment">     * @see field_info_by_num()
+</span><span class="line" id="1297">1297: </span><span class="php-comment">     * @see field_name()
+</span><span class="line" id="1298">1298: </span><span class="php-comment">     *
+</span><span class="line" id="1299">1299: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1300">1300: </span><span class="php-comment">     */</span>
+<span class="line" id="1301">1301: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(<span class="php-var">$num</span>, <span class="php-var">$type</span> = self::DB_STRING)
+<span class="line" id="1302">1302: </span>    {
+<span class="line" id="1303">1303: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;row) {
+<span class="line" id="1304">1304: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
+<span class="line" id="1305">1305: </span>        }
+<span class="line" id="1306">1306: </span>        
+<span class="line" id="1307">1307: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">array_key_exists</span>(<span class="php-var">$num</span>, <span class="php-var">$this</span>-&gt;field_names)) {
+<span class="line" id="1308">1308: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-quote">&quot;Field with the index </span><span class="php-var">$num</span><span class="php-quote"> does not exist in the result set!&quot;</span>, E_USER_ERROR);
+<span class="line" id="1309">1309: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
+<span class="line" id="1310">1310: </span>        }
+<span class="line" id="1311">1311: </span>    
+<span class="line" id="1312">1312: </span>        <span class="php-keyword1">if</span>((<span class="php-var">$type</span> == DBWorker::DB_DATE || <span class="php-var">$type</span> == DBWorker::DB_DATETIME) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;row[<span class="php-var">$this</span>-&gt;field_names[<span class="php-var">$num</span>]])) {
+<span class="line" id="1313">1313: </span>            <span class="php-keyword1">return</span> <span class="php-keyword2">strtotime</span>(<span class="php-var">$this</span>-&gt;row[<span class="php-var">$this</span>-&gt;field_names[<span class="php-var">$num</span>]]);
+<span class="line" id="1314">1314: </span>        }
+<span class="line" id="1315">1315: </span>
+<span class="line" id="1316">1316: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;row[<span class="php-var">$this</span>-&gt;field_names[<span class="php-var">$num</span>]];
+<span class="line" id="1317">1317: </span>    } <span class="php-comment">// field_by_num</span>
+<span class="line" id="1318">1318: </span>    
+<span class="line" id="1319">1319: </span>    <span class="php-comment">/**
+</span><span class="line" id="1320">1320: </span><span class="php-comment">     * Returns the meta information about the field as an object with properties.
 </span><span class="line" id="1321">1321: </span><span class="php-comment">     *
-</span><span class="line" id="1322">1322: </span><span class="php-comment">     * $info[&quot;numeric&quot;] - whether the filed is numeric.
-</span><span class="line" id="1323">1323: </span><span class="php-comment">     *
-</span><span class="line" id="1324">1324: </span><span class="php-comment">     * @throws \Exception
-</span><span class="line" id="1325">1325: </span><span class="php-comment">     * It throws an exception in the case of any errors.
-</span><span class="line" id="1326">1326: </span><span class="php-comment">     *
-</span><span class="line" id="1327">1327: </span><span class="php-comment">     * @see field_by_num()
-</span><span class="line" id="1328">1328: </span><span class="php-comment">     * @see field_name()
-</span><span class="line" id="1329">1329: </span><span class="php-comment">     *
-</span><span class="line" id="1330">1330: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1331">1331: </span><span class="php-comment">     */</span>
-<span class="line" id="1332">1332: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(<span class="php-var">$num</span>)
-<span class="line" id="1333">1333: </span>    {
-<span class="line" id="1334">1334: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
-<span class="line" id="1335">1335: </span>            <span class="php-var">$err</span> = <span class="php-quote">&quot;Result fetch error&quot;</span>;
-<span class="line" id="1336">1336: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
-<span class="line" id="1337">1337: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, DBWorker::ERR_QUERY_FAILED);
-<span class="line" id="1338">1338: </span>        }
-<span class="line" id="1339">1339: </span>        
-<span class="line" id="1340">1340: </span>        <span class="php-var">$info</span> = @sqlsrv_field_metadata(<span class="php-var">$this</span>-&gt;statement);
-<span class="line" id="1341">1341: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$info</span>) {
-<span class="line" id="1342">1342: </span>            <span class="php-var">$err</span> = <span class="php-var">$this</span>-&gt;sys_get_errors();
-<span class="line" id="1343">1343: </span>
-<span class="line" id="1344">1344: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
-<span class="line" id="1345">1345: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, DBWorker::ERR_QUERY_FAILED);
-<span class="line" id="1346">1346: </span>        }
-<span class="line" id="1347">1347: </span>        
-<span class="line" id="1348">1348: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-var">$num</span>])) {
-<span class="line" id="1349">1349: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="1350">1350: </span>        }
-<span class="line" id="1351">1351: </span>        
-<span class="line" id="1352">1352: </span>        <span class="php-var">$sqlsrv_type</span> = [];
-<span class="line" id="1353">1353: </span>        
-<span class="line" id="1354">1354: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">5</span>] = <span class="php-quote">&quot;bigint&quot;</span>;
-<span class="line" id="1355">1355: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">2</span>] = <span class="php-quote">&quot;binary&quot;</span>;
-<span class="line" id="1356">1356: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">7</span>] = <span class="php-quote">&quot;bit&quot;</span>;
-<span class="line" id="1357">1357: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">1</span>] = <span class="php-quote">&quot;char&quot;</span>;
-<span class="line" id="1358">1358: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">91</span>] = <span class="php-quote">&quot;date&quot;</span>;
-<span class="line" id="1359">1359: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">93</span>] = <span class="php-quote">&quot;datetime&quot;</span>;
-<span class="line" id="1360">1360: </span>        
-<span class="line" id="1361">1361: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">155</span>] = <span class="php-quote">&quot;datetimeoffset&quot;</span>;
-<span class="line" id="1362">1362: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">3</span>] = <span class="php-quote">&quot;decimal&quot;</span>;
-<span class="line" id="1363">1363: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">6</span>] = <span class="php-quote">&quot;float&quot;</span>;
-<span class="line" id="1364">1364: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">4</span>] = <span class="php-quote">&quot;image&quot;</span>;
-<span class="line" id="1365">1365: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">4</span>] = <span class="php-quote">&quot;int&quot;</span>;
-<span class="line" id="1366">1366: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">8</span>] = <span class="php-quote">&quot;nchar&quot;</span>;
-<span class="line" id="1367">1367: </span>        
-<span class="line" id="1368">1368: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">10</span>] = <span class="php-quote">&quot;ntext&quot;</span>;
-<span class="line" id="1369">1369: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">2</span>] = <span class="php-quote">&quot;numeric&quot;</span>;
-<span class="line" id="1370">1370: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">9</span>] = <span class="php-quote">&quot;nvarchar&quot;</span>;
-<span class="line" id="1371">1371: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">7</span>] = <span class="php-quote">&quot;real&quot;</span>;
-<span class="line" id="1372">1372: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">5</span>] = <span class="php-quote">&quot;smallint&quot;</span>;
-<span class="line" id="1373">1373: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">1</span>] = <span class="php-quote">&quot;text&quot;</span>;
-<span class="line" id="1374">1374: </span>        
-<span class="line" id="1375">1375: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">154</span>] = <span class="php-quote">&quot;time&quot;</span>;
-<span class="line" id="1376">1376: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">6</span>] = <span class="php-quote">&quot;tinyint&quot;</span>;
-<span class="line" id="1377">1377: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">151</span>] = <span class="php-quote">&quot;udt&quot;</span>;
-<span class="line" id="1378">1378: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">11</span>] = <span class="php-quote">&quot;uniqueidentifier&quot;</span>;
-<span class="line" id="1379">1379: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">3</span>] = <span class="php-quote">&quot;varbinary&quot;</span>;
-<span class="line" id="1380">1380: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">12</span>] = <span class="php-quote">&quot;varchar&quot;</span>;
-<span class="line" id="1381">1381: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">152</span>] = <span class="php-quote">&quot;xml&quot;</span>;
-<span class="line" id="1382">1382: </span>        
-<span class="line" id="1383">1383: </span>        <span class="php-var">$field_info</span> = [];
+</span><span class="line" id="1322">1322: </span><span class="php-comment">     * @param int $num
+</span><span class="line" id="1323">1323: </span><span class="php-comment">     * The number of the field.
+</span><span class="line" id="1324">1324: </span><span class="php-comment">     *
+</span><span class="line" id="1325">1325: </span><span class="php-comment">     * @param boolean $timestamp
+</span><span class="line" id="1326">1326: </span><span class="php-comment">     * If set, the value is converted to the timestamp.
+</span><span class="line" id="1327">1327: </span><span class="php-comment">     *
+</span><span class="line" id="1328">1328: </span><span class="php-comment">     * @return array
+</span><span class="line" id="1329">1329: </span><span class="php-comment">     * Returns the associative array with properties.
+</span><span class="line" id="1330">1330: </span><span class="php-comment">     *
+</span><span class="line" id="1331">1331: </span><span class="php-comment">     * $info[&quot;name&quot;] - name of the field.
+</span><span class="line" id="1332">1332: </span><span class="php-comment">     *
+</span><span class="line" id="1333">1333: </span><span class="php-comment">     * $info[&quot;type&quot;] - type of the field.
+</span><span class="line" id="1334">1334: </span><span class="php-comment">     *
+</span><span class="line" id="1335">1335: </span><span class="php-comment">     * $info[&quot;size&quot;] - size of the field.
+</span><span class="line" id="1336">1336: </span><span class="php-comment">     *
+</span><span class="line" id="1337">1337: </span><span class="php-comment">     * $info[&quot;binary&quot;] - whether the filed is binary.
+</span><span class="line" id="1338">1338: </span><span class="php-comment">     *
+</span><span class="line" id="1339">1339: </span><span class="php-comment">     * $info[&quot;numeric&quot;] - whether the filed is numeric.
+</span><span class="line" id="1340">1340: </span><span class="php-comment">     *
+</span><span class="line" id="1341">1341: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="1342">1342: </span><span class="php-comment">     * It throws an exception in the case of any errors.
+</span><span class="line" id="1343">1343: </span><span class="php-comment">     *
+</span><span class="line" id="1344">1344: </span><span class="php-comment">     * @see field_by_num()
+</span><span class="line" id="1345">1345: </span><span class="php-comment">     * @see field_name()
+</span><span class="line" id="1346">1346: </span><span class="php-comment">     *
+</span><span class="line" id="1347">1347: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1348">1348: </span><span class="php-comment">     */</span>
+<span class="line" id="1349">1349: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(<span class="php-var">$num</span>)
+<span class="line" id="1350">1350: </span>    {
+<span class="line" id="1351">1351: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;statement) {
+<span class="line" id="1352">1352: </span>            <span class="php-var">$err</span> = <span class="php-quote">&quot;Result fetch error&quot;</span>;
+<span class="line" id="1353">1353: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
+<span class="line" id="1354">1354: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, DBWorker::ERR_QUERY_FAILED);
+<span class="line" id="1355">1355: </span>        }
+<span class="line" id="1356">1356: </span>        
+<span class="line" id="1357">1357: </span>        <span class="php-var">$info</span> = @sqlsrv_field_metadata(<span class="php-var">$this</span>-&gt;statement);
+<span class="line" id="1358">1358: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$info</span>) {
+<span class="line" id="1359">1359: </span>            <span class="php-var">$err</span> = <span class="php-var">$this</span>-&gt;sys_get_errors();
+<span class="line" id="1360">1360: </span>
+<span class="line" id="1361">1361: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, E_USER_ERROR);
+<span class="line" id="1362">1362: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-var">$err</span> . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$this</span>-&gt;last_query, DBWorker::ERR_QUERY_FAILED);
+<span class="line" id="1363">1363: </span>        }
+<span class="line" id="1364">1364: </span>        
+<span class="line" id="1365">1365: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$info</span>[<span class="php-var">$num</span>])) {
+<span class="line" id="1366">1366: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="1367">1367: </span>        }
+<span class="line" id="1368">1368: </span>        
+<span class="line" id="1369">1369: </span>        <span class="php-var">$sqlsrv_type</span> = [];
+<span class="line" id="1370">1370: </span>        
+<span class="line" id="1371">1371: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">5</span>] = <span class="php-quote">&quot;bigint&quot;</span>;
+<span class="line" id="1372">1372: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">2</span>] = <span class="php-quote">&quot;binary&quot;</span>;
+<span class="line" id="1373">1373: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">7</span>] = <span class="php-quote">&quot;bit&quot;</span>;
+<span class="line" id="1374">1374: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">1</span>] = <span class="php-quote">&quot;char&quot;</span>;
+<span class="line" id="1375">1375: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">91</span>] = <span class="php-quote">&quot;date&quot;</span>;
+<span class="line" id="1376">1376: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">93</span>] = <span class="php-quote">&quot;datetime&quot;</span>;
+<span class="line" id="1377">1377: </span>        
+<span class="line" id="1378">1378: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">155</span>] = <span class="php-quote">&quot;datetimeoffset&quot;</span>;
+<span class="line" id="1379">1379: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">3</span>] = <span class="php-quote">&quot;decimal&quot;</span>;
+<span class="line" id="1380">1380: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">6</span>] = <span class="php-quote">&quot;float&quot;</span>;
+<span class="line" id="1381">1381: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">4</span>] = <span class="php-quote">&quot;image&quot;</span>;
+<span class="line" id="1382">1382: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">4</span>] = <span class="php-quote">&quot;int&quot;</span>;
+<span class="line" id="1383">1383: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">8</span>] = <span class="php-quote">&quot;nchar&quot;</span>;
 <span class="line" id="1384">1384: </span>        
-<span class="line" id="1385">1385: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;name&quot;</span>] = <span class="php-var">$info</span>[<span class="php-var">$num</span>][<span class="php-quote">&quot;Name&quot;</span>];
-<span class="line" id="1386">1386: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>] = <span class="php-var">$info</span>[<span class="php-var">$num</span>][<span class="php-quote">&quot;Type&quot;</span>];
-<span class="line" id="1387">1387: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;size&quot;</span>] = <span class="php-var">$info</span>[<span class="php-var">$num</span>][<span class="php-quote">&quot;Size&quot;</span>];
-<span class="line" id="1388">1388: </span>        
-<span class="line" id="1389">1389: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;binary&quot;</span>] = <span class="php-num">0</span>;
-<span class="line" id="1390">1390: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;numeric&quot;</span>] = <span class="php-num">0</span>;
+<span class="line" id="1385">1385: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">10</span>] = <span class="php-quote">&quot;ntext&quot;</span>;
+<span class="line" id="1386">1386: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">2</span>] = <span class="php-quote">&quot;numeric&quot;</span>;
+<span class="line" id="1387">1387: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">9</span>] = <span class="php-quote">&quot;nvarchar&quot;</span>;
+<span class="line" id="1388">1388: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">7</span>] = <span class="php-quote">&quot;real&quot;</span>;
+<span class="line" id="1389">1389: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">5</span>] = <span class="php-quote">&quot;smallint&quot;</span>;
+<span class="line" id="1390">1390: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">1</span>] = <span class="php-quote">&quot;text&quot;</span>;
 <span class="line" id="1391">1391: </span>        
-<span class="line" id="1392">1392: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>])) {
-<span class="line" id="1393">1393: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword2">in_array</span>(<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>], [-<span class="php-num">5</span>, <span class="php-num">3</span>, <span class="php-num">6</span>, <span class="php-num">4</span>, <span class="php-num">2</span>, <span class="php-num">7</span>, <span class="php-num">5</span>, -<span class="php-num">6</span>])) {
-<span class="line" id="1394">1394: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;numeric&quot;</span>] = <span class="php-num">1</span>;
-<span class="line" id="1395">1395: </span>            }
-<span class="line" id="1396">1396: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword2">in_array</span>(<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>], [-<span class="php-num">2</span>, -<span class="php-num">4</span>, -<span class="php-num">3</span>])) {
-<span class="line" id="1397">1397: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;binary&quot;</span>] = <span class="php-num">1</span>;
-<span class="line" id="1398">1398: </span>            }
-<span class="line" id="1399">1399: </span>            
-<span class="line" id="1400">1400: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$sqlsrv_type</span>[<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>]])) {
-<span class="line" id="1401">1401: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>] = <span class="php-var">$sqlsrv_type</span>[<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>]];
-<span class="line" id="1402">1402: </span>            } <span class="php-keyword1">else</span> {
-<span class="line" id="1403">1403: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>] = <span class="php-quote">&quot;undefined&quot;</span>;
-<span class="line" id="1404">1404: </span>            }
-<span class="line" id="1405">1405: </span>        }
-<span class="line" id="1406">1406: </span>        
-<span class="line" id="1407">1407: </span>        <span class="php-keyword1">return</span> <span class="php-var">$field_info</span>;
-<span class="line" id="1408">1408: </span>    } <span class="php-comment">// field_info_by_num</span>
-<span class="line" id="1409">1409: </span>    
-<span class="line" id="1410">1410: </span>    <span class="php-comment">/**
-</span><span class="line" id="1411">1411: </span><span class="php-comment">     * Returns the name of the field by number.
-</span><span class="line" id="1412">1412: </span><span class="php-comment">     *
-</span><span class="line" id="1413">1413: </span><span class="php-comment">     * @param int $num
-</span><span class="line" id="1414">1414: </span><span class="php-comment">     * The number of the field.
-</span><span class="line" id="1415">1415: </span><span class="php-comment">     *
-</span><span class="line" id="1416">1416: </span><span class="php-comment">     * @return string|null
-</span><span class="line" id="1417">1417: </span><span class="php-comment">     * Returns the name of the field by number.
-</span><span class="line" id="1418">1418: </span><span class="php-comment">     *
-</span><span class="line" id="1419">1419: </span><span class="php-comment">     * @throws \Exception
-</span><span class="line" id="1420">1420: </span><span class="php-comment">     * It throws an exception in the case of any errors.
-</span><span class="line" id="1421">1421: </span><span class="php-comment">     *
-</span><span class="line" id="1422">1422: </span><span class="php-comment">     * @see field_by_num()
-</span><span class="line" id="1423">1423: </span><span class="php-comment">     * @see field_info_by_num()
-</span><span class="line" id="1424">1424: </span><span class="php-comment">     *
-</span><span class="line" id="1425">1425: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1426">1426: </span><span class="php-comment">     */</span>
-<span class="line" id="1427">1427: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(<span class="php-var">$num</span>)
-<span class="line" id="1428">1428: </span>    {
-<span class="line" id="1429">1429: </span>        <span class="php-var">$info</span> = <span class="php-var">$this</span>-&gt;field_info_by_num(<span class="php-var">$num</span>);
-<span class="line" id="1430">1430: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$info</span>) {
-<span class="line" id="1431">1431: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
-<span class="line" id="1432">1432: </span>        }
-<span class="line" id="1433">1433: </span>        
-<span class="line" id="1434">1434: </span>        <span class="php-keyword1">return</span> \SmartFactory\checkempty(<span class="php-var">$info</span>[<span class="php-quote">&quot;name&quot;</span>]);
-<span class="line" id="1435">1435: </span>    } <span class="php-comment">// field_name</span>
-<span class="line" id="1436">1436: </span>    
-<span class="line" id="1437">1437: </span>    <span class="php-comment">/**
-</span><span class="line" id="1438">1438: </span><span class="php-comment">     * Escapes the string so that it can be used in the query without causing an error.
-</span><span class="line" id="1439">1439: </span><span class="php-comment">     *
-</span><span class="line" id="1440">1440: </span><span class="php-comment">     * @param string $str
-</span><span class="line" id="1441">1441: </span><span class="php-comment">     * The string to be escaped.
-</span><span class="line" id="1442">1442: </span><span class="php-comment">     *
-</span><span class="line" id="1443">1443: </span><span class="php-comment">     * @return string
-</span><span class="line" id="1444">1444: </span><span class="php-comment">     * Returns the escaped string.
-</span><span class="line" id="1445">1445: </span><span class="php-comment">     *
-</span><span class="line" id="1446">1446: </span><span class="php-comment">     * @see format_date()
-</span><span class="line" id="1447">1447: </span><span class="php-comment">     * @see format_datetime()
-</span><span class="line" id="1448">1448: </span><span class="php-comment">     *
-</span><span class="line" id="1449">1449: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1450">1450: </span><span class="php-comment">     */</span>
-<span class="line" id="1451">1451: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(<span class="php-var">$str</span>)
-<span class="line" id="1452">1452: </span>    {
-<span class="line" id="1453">1453: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;'&quot;</span>, <span class="php-quote">&quot;''&quot;</span>, <span class="php-quote">&quot;</span><span class="php-var">$str</span><span class="php-quote">&quot;</span>);
-<span class="line" id="1454">1454: </span>    } <span class="php-comment">// escape</span>
-<span class="line" id="1455">1455: </span>    
-<span class="line" id="1456">1456: </span>    <span class="php-comment">/**
-</span><span class="line" id="1457">1457: </span><span class="php-comment">     * Formats the date to a string compatible for the corresponding database.
-</span><span class="line" id="1458">1458: </span><span class="php-comment">     *
-</span><span class="line" id="1459">1459: </span><span class="php-comment">     * @param int $date
-</span><span class="line" id="1460">1460: </span><span class="php-comment">     * The date value as timestamp.
-</span><span class="line" id="1461">1461: </span><span class="php-comment">     *
-</span><span class="line" id="1462">1462: </span><span class="php-comment">     * @return string
-</span><span class="line" id="1463">1463: </span><span class="php-comment">     * Returns the string representation of the date compatible for the corresponding database.
-</span><span class="line" id="1464">1464: </span><span class="php-comment">     *
-</span><span class="line" id="1465">1465: </span><span class="php-comment">     * @see escape()
-</span><span class="line" id="1466">1466: </span><span class="php-comment">     * @see format_datetime()
-</span><span class="line" id="1467">1467: </span><span class="php-comment">     *
-</span><span class="line" id="1468">1468: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1469">1469: </span><span class="php-comment">     */</span>
-<span class="line" id="1470">1470: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(<span class="php-var">$date</span>)
-<span class="line" id="1471">1471: </span>    {
-<span class="line" id="1472">1472: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(<span class="php-quote">&quot;Ymd&quot;</span>, <span class="php-var">$date</span>);
-<span class="line" id="1473">1473: </span>    } <span class="php-comment">// format_date</span>
-<span class="line" id="1474">1474: </span>    
-<span class="line" id="1475">1475: </span>    <span class="php-comment">/**
-</span><span class="line" id="1476">1476: </span><span class="php-comment">     * Formats the date/time to a string compatible for the corresponding database.
-</span><span class="line" id="1477">1477: </span><span class="php-comment">     *
-</span><span class="line" id="1478">1478: </span><span class="php-comment">     * @param int $datetime
-</span><span class="line" id="1479">1479: </span><span class="php-comment">     * The date/time value as timestamp.
-</span><span class="line" id="1480">1480: </span><span class="php-comment">     *
-</span><span class="line" id="1481">1481: </span><span class="php-comment">     * @return string
-</span><span class="line" id="1482">1482: </span><span class="php-comment">     * Returns the string representation of the date/time compatible for the corresponding database.
-</span><span class="line" id="1483">1483: </span><span class="php-comment">     *
-</span><span class="line" id="1484">1484: </span><span class="php-comment">     * @see escape()
-</span><span class="line" id="1485">1485: </span><span class="php-comment">     * @see format_date()
-</span><span class="line" id="1486">1486: </span><span class="php-comment">     *
-</span><span class="line" id="1487">1487: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1488">1488: </span><span class="php-comment">     */</span>
-<span class="line" id="1489">1489: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(<span class="php-var">$datetime</span>)
-<span class="line" id="1490">1490: </span>    {
-<span class="line" id="1491">1491: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(<span class="php-quote">&quot;Ymd H:i:s&quot;</span>, <span class="php-var">$datetime</span>);
-<span class="line" id="1492">1492: </span>    } <span class="php-comment">// format_datetime</span>
-<span class="line" id="1493">1493: </span>
-<span class="line" id="1494">1494: </span>    <span class="php-comment">/**
-</span><span class="line" id="1495">1495: </span><span class="php-comment">     * Prepares the value for putting to a query depending on its type. It does escaping, formatting
-</span><span class="line" id="1496">1496: </span><span class="php-comment">     * and quotation if necessary.
+<span class="line" id="1392">1392: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">154</span>] = <span class="php-quote">&quot;time&quot;</span>;
+<span class="line" id="1393">1393: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">6</span>] = <span class="php-quote">&quot;tinyint&quot;</span>;
+<span class="line" id="1394">1394: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">151</span>] = <span class="php-quote">&quot;udt&quot;</span>;
+<span class="line" id="1395">1395: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">11</span>] = <span class="php-quote">&quot;uniqueidentifier&quot;</span>;
+<span class="line" id="1396">1396: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">3</span>] = <span class="php-quote">&quot;varbinary&quot;</span>;
+<span class="line" id="1397">1397: </span>        <span class="php-var">$sqlsrv_type</span>[<span class="php-num">12</span>] = <span class="php-quote">&quot;varchar&quot;</span>;
+<span class="line" id="1398">1398: </span>        <span class="php-var">$sqlsrv_type</span>[-<span class="php-num">152</span>] = <span class="php-quote">&quot;xml&quot;</span>;
+<span class="line" id="1399">1399: </span>        
+<span class="line" id="1400">1400: </span>        <span class="php-var">$field_info</span> = [];
+<span class="line" id="1401">1401: </span>        
+<span class="line" id="1402">1402: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;name&quot;</span>] = <span class="php-var">$info</span>[<span class="php-var">$num</span>][<span class="php-quote">&quot;Name&quot;</span>];
+<span class="line" id="1403">1403: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>] = <span class="php-var">$info</span>[<span class="php-var">$num</span>][<span class="php-quote">&quot;Type&quot;</span>];
+<span class="line" id="1404">1404: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;size&quot;</span>] = <span class="php-var">$info</span>[<span class="php-var">$num</span>][<span class="php-quote">&quot;Size&quot;</span>];
+<span class="line" id="1405">1405: </span>        
+<span class="line" id="1406">1406: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;binary&quot;</span>] = <span class="php-num">0</span>;
+<span class="line" id="1407">1407: </span>        <span class="php-var">$field_info</span>[<span class="php-quote">&quot;numeric&quot;</span>] = <span class="php-num">0</span>;
+<span class="line" id="1408">1408: </span>        
+<span class="line" id="1409">1409: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>])) {
+<span class="line" id="1410">1410: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword2">in_array</span>(<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>], [-<span class="php-num">5</span>, <span class="php-num">3</span>, <span class="php-num">6</span>, <span class="php-num">4</span>, <span class="php-num">2</span>, <span class="php-num">7</span>, <span class="php-num">5</span>, -<span class="php-num">6</span>])) {
+<span class="line" id="1411">1411: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;numeric&quot;</span>] = <span class="php-num">1</span>;
+<span class="line" id="1412">1412: </span>            }
+<span class="line" id="1413">1413: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword2">in_array</span>(<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>], [-<span class="php-num">2</span>, -<span class="php-num">4</span>, -<span class="php-num">3</span>])) {
+<span class="line" id="1414">1414: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;binary&quot;</span>] = <span class="php-num">1</span>;
+<span class="line" id="1415">1415: </span>            }
+<span class="line" id="1416">1416: </span>            
+<span class="line" id="1417">1417: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$sqlsrv_type</span>[<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>]])) {
+<span class="line" id="1418">1418: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>] = <span class="php-var">$sqlsrv_type</span>[<span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>]];
+<span class="line" id="1419">1419: </span>            } <span class="php-keyword1">else</span> {
+<span class="line" id="1420">1420: </span>                <span class="php-var">$field_info</span>[<span class="php-quote">&quot;type&quot;</span>] = <span class="php-quote">&quot;undefined&quot;</span>;
+<span class="line" id="1421">1421: </span>            }
+<span class="line" id="1422">1422: </span>        }
+<span class="line" id="1423">1423: </span>        
+<span class="line" id="1424">1424: </span>        <span class="php-keyword1">return</span> <span class="php-var">$field_info</span>;
+<span class="line" id="1425">1425: </span>    } <span class="php-comment">// field_info_by_num</span>
+<span class="line" id="1426">1426: </span>    
+<span class="line" id="1427">1427: </span>    <span class="php-comment">/**
+</span><span class="line" id="1428">1428: </span><span class="php-comment">     * Returns the name of the field by number.
+</span><span class="line" id="1429">1429: </span><span class="php-comment">     *
+</span><span class="line" id="1430">1430: </span><span class="php-comment">     * @param int $num
+</span><span class="line" id="1431">1431: </span><span class="php-comment">     * The number of the field.
+</span><span class="line" id="1432">1432: </span><span class="php-comment">     *
+</span><span class="line" id="1433">1433: </span><span class="php-comment">     * @return string|null
+</span><span class="line" id="1434">1434: </span><span class="php-comment">     * Returns the name of the field by number.
+</span><span class="line" id="1435">1435: </span><span class="php-comment">     *
+</span><span class="line" id="1436">1436: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="1437">1437: </span><span class="php-comment">     * It throws an exception in the case of any errors.
+</span><span class="line" id="1438">1438: </span><span class="php-comment">     *
+</span><span class="line" id="1439">1439: </span><span class="php-comment">     * @see field_by_num()
+</span><span class="line" id="1440">1440: </span><span class="php-comment">     * @see field_info_by_num()
+</span><span class="line" id="1441">1441: </span><span class="php-comment">     *
+</span><span class="line" id="1442">1442: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1443">1443: </span><span class="php-comment">     */</span>
+<span class="line" id="1444">1444: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(<span class="php-var">$num</span>)
+<span class="line" id="1445">1445: </span>    {
+<span class="line" id="1446">1446: </span>        <span class="php-var">$info</span> = <span class="php-var">$this</span>-&gt;field_info_by_num(<span class="php-var">$num</span>);
+<span class="line" id="1447">1447: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$info</span>) {
+<span class="line" id="1448">1448: </span>            <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;
+<span class="line" id="1449">1449: </span>        }
+<span class="line" id="1450">1450: </span>        
+<span class="line" id="1451">1451: </span>        <span class="php-keyword1">return</span> \SmartFactory\checkempty(<span class="php-var">$info</span>[<span class="php-quote">&quot;name&quot;</span>]);
+<span class="line" id="1452">1452: </span>    } <span class="php-comment">// field_name</span>
+<span class="line" id="1453">1453: </span>    
+<span class="line" id="1454">1454: </span>    <span class="php-comment">/**
+</span><span class="line" id="1455">1455: </span><span class="php-comment">     * Escapes the string so that it can be used in the query without causing an error.
+</span><span class="line" id="1456">1456: </span><span class="php-comment">     *
+</span><span class="line" id="1457">1457: </span><span class="php-comment">     * @param string $str
+</span><span class="line" id="1458">1458: </span><span class="php-comment">     * The string to be escaped.
+</span><span class="line" id="1459">1459: </span><span class="php-comment">     *
+</span><span class="line" id="1460">1460: </span><span class="php-comment">     * @return string
+</span><span class="line" id="1461">1461: </span><span class="php-comment">     * Returns the escaped string.
+</span><span class="line" id="1462">1462: </span><span class="php-comment">     *
+</span><span class="line" id="1463">1463: </span><span class="php-comment">     * @see format_date()
+</span><span class="line" id="1464">1464: </span><span class="php-comment">     * @see format_datetime()
+</span><span class="line" id="1465">1465: </span><span class="php-comment">     *
+</span><span class="line" id="1466">1466: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1467">1467: </span><span class="php-comment">     */</span>
+<span class="line" id="1468">1468: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(<span class="php-var">$str</span>)
+<span class="line" id="1469">1469: </span>    {
+<span class="line" id="1470">1470: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;'&quot;</span>, <span class="php-quote">&quot;''&quot;</span>, <span class="php-quote">&quot;</span><span class="php-var">$str</span><span class="php-quote">&quot;</span>);
+<span class="line" id="1471">1471: </span>    } <span class="php-comment">// escape</span>
+<span class="line" id="1472">1472: </span>    
+<span class="line" id="1473">1473: </span>    <span class="php-comment">/**
+</span><span class="line" id="1474">1474: </span><span class="php-comment">     * Formats the date to a string compatible for the corresponding database.
+</span><span class="line" id="1475">1475: </span><span class="php-comment">     *
+</span><span class="line" id="1476">1476: </span><span class="php-comment">     * @param int $date
+</span><span class="line" id="1477">1477: </span><span class="php-comment">     * The date value as timestamp.
+</span><span class="line" id="1478">1478: </span><span class="php-comment">     *
+</span><span class="line" id="1479">1479: </span><span class="php-comment">     * @return string
+</span><span class="line" id="1480">1480: </span><span class="php-comment">     * Returns the string representation of the date compatible for the corresponding database.
+</span><span class="line" id="1481">1481: </span><span class="php-comment">     *
+</span><span class="line" id="1482">1482: </span><span class="php-comment">     * @see escape()
+</span><span class="line" id="1483">1483: </span><span class="php-comment">     * @see format_datetime()
+</span><span class="line" id="1484">1484: </span><span class="php-comment">     *
+</span><span class="line" id="1485">1485: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1486">1486: </span><span class="php-comment">     */</span>
+<span class="line" id="1487">1487: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(<span class="php-var">$date</span>)
+<span class="line" id="1488">1488: </span>    {
+<span class="line" id="1489">1489: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(<span class="php-quote">&quot;Ymd&quot;</span>, <span class="php-var">$date</span>);
+<span class="line" id="1490">1490: </span>    } <span class="php-comment">// format_date</span>
+<span class="line" id="1491">1491: </span>    
+<span class="line" id="1492">1492: </span>    <span class="php-comment">/**
+</span><span class="line" id="1493">1493: </span><span class="php-comment">     * Formats the date/time to a string compatible for the corresponding database.
+</span><span class="line" id="1494">1494: </span><span class="php-comment">     *
+</span><span class="line" id="1495">1495: </span><span class="php-comment">     * @param int $datetime
+</span><span class="line" id="1496">1496: </span><span class="php-comment">     * The date/time value as timestamp.
 </span><span class="line" id="1497">1497: </span><span class="php-comment">     *
-</span><span class="line" id="1498">1498: </span><span class="php-comment">     * @param mixed $value
-</span><span class="line" id="1499">1499: </span><span class="php-comment">     * The value to be formatted.
+</span><span class="line" id="1498">1498: </span><span class="php-comment">     * @return string
+</span><span class="line" id="1499">1499: </span><span class="php-comment">     * Returns the string representation of the date/time compatible for the corresponding database.
 </span><span class="line" id="1500">1500: </span><span class="php-comment">     *
-</span><span class="line" id="1501">1501: </span><span class="php-comment">     * @param int $type
-</span><span class="line" id="1502">1502: </span><span class="php-comment">     * The type of the value.
+</span><span class="line" id="1501">1501: </span><span class="php-comment">     * @see escape()
+</span><span class="line" id="1502">1502: </span><span class="php-comment">     * @see format_date()
 </span><span class="line" id="1503">1503: </span><span class="php-comment">     *
-</span><span class="line" id="1504">1504: </span><span class="php-comment">     * @return string
-</span><span class="line" id="1505">1505: </span><span class="php-comment">     * Returns the prepared value.
-</span><span class="line" id="1506">1506: </span><span class="php-comment">     *
-</span><span class="line" id="1507">1507: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="1508">1508: </span><span class="php-comment">     */</span>     
-<span class="line" id="1509">1509: </span>    <span class="php-keyword1">function</span> prepare_for_query(<span class="php-var">$value</span>, <span class="php-var">$type</span>)
-<span class="line" id="1510">1510: </span>    {
-<span class="line" id="1511">1511: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$value</span>) &amp;&amp; (string)<span class="php-var">$value</span> != <span class="php-quote">&quot;0&quot;</span>) {
-<span class="line" id="1512">1512: </span>            <span class="php-keyword1">return</span> <span class="php-quote">&quot;NULL&quot;</span>;
-<span class="line" id="1513">1513: </span>        } <span class="php-keyword1">else</span> <span class="php-keyword1">switch</span> (<span class="php-var">$type</span>) {
-<span class="line" id="1514">1514: </span>            <span class="php-keyword1">case</span> DBWorker::DB_NUMBER:
-<span class="line" id="1515">1515: </span>                <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>);
-<span class="line" id="1516">1516: </span>        
-<span class="line" id="1517">1517: </span>            <span class="php-keyword1">case</span> DBWorker::DB_DATETIME:
-<span class="line" id="1518">1518: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;format_datetime(<span class="php-var">$value</span>) . <span class="php-quote">&quot;'&quot;</span>;
-<span class="line" id="1519">1519: </span>        
-<span class="line" id="1520">1520: </span>            <span class="php-keyword1">case</span> DBWorker::DB_DATE:
-<span class="line" id="1521">1521: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;format_date(<span class="php-var">$value</span>) . <span class="php-quote">&quot;'&quot;</span>;
-<span class="line" id="1522">1522: </span>        
-<span class="line" id="1523">1523: </span>            <span class="php-keyword1">case</span> DBWorker::DB_GEOMETRY:
-<span class="line" id="1524">1524: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;ST_GeomFromText('&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>) . <span class="php-quote">&quot;')&quot;</span>;
-<span class="line" id="1525">1525: </span>        
-<span class="line" id="1526">1526: </span>            <span class="php-keyword1">case</span> DBWorker::DB_GEOMETRY_4326:
-<span class="line" id="1527">1527: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;ST_GeomFromText('&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>) . <span class="php-quote">&quot;', 4326)&quot;</span>;
-<span class="line" id="1528">1528: </span>
-<span class="line" id="1529">1529: </span>            <span class="php-keyword1">default</span>:
-<span class="line" id="1530">1530: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>) . <span class="php-quote">&quot;'&quot;</span>;
-<span class="line" id="1531">1531: </span>        }
-<span class="line" id="1532">1532: </span>    } <span class="php-comment">// prepare_for_query</span>
-<span class="line" id="1533">1533: </span>} <span class="php-comment">// MSSQL_DBWorker</span>
-<span class="line" id="1534">1534: </span><span class="php-comment">//----------------------------------------------------------------------</span>
-<span class="line" id="1535">1535: </span>
+</span><span class="line" id="1504">1504: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1505">1505: </span><span class="php-comment">     */</span>
+<span class="line" id="1506">1506: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(<span class="php-var">$datetime</span>)
+<span class="line" id="1507">1507: </span>    {
+<span class="line" id="1508">1508: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(<span class="php-quote">&quot;Ymd H:i:s&quot;</span>, <span class="php-var">$datetime</span>);
+<span class="line" id="1509">1509: </span>    } <span class="php-comment">// format_datetime</span>
+<span class="line" id="1510">1510: </span>
+<span class="line" id="1511">1511: </span>    <span class="php-comment">/**
+</span><span class="line" id="1512">1512: </span><span class="php-comment">     * Prepares the value for putting to a query depending on its type. It does escaping, formatting
+</span><span class="line" id="1513">1513: </span><span class="php-comment">     * and quotation if necessary.
+</span><span class="line" id="1514">1514: </span><span class="php-comment">     *
+</span><span class="line" id="1515">1515: </span><span class="php-comment">     * @param mixed $value
+</span><span class="line" id="1516">1516: </span><span class="php-comment">     * The value to be formatted.
+</span><span class="line" id="1517">1517: </span><span class="php-comment">     *
+</span><span class="line" id="1518">1518: </span><span class="php-comment">     * @param int $type
+</span><span class="line" id="1519">1519: </span><span class="php-comment">     * The type of the value.
+</span><span class="line" id="1520">1520: </span><span class="php-comment">     *
+</span><span class="line" id="1521">1521: </span><span class="php-comment">     * @return string
+</span><span class="line" id="1522">1522: </span><span class="php-comment">     * Returns the prepared value.
+</span><span class="line" id="1523">1523: </span><span class="php-comment">     *
+</span><span class="line" id="1524">1524: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="1525">1525: </span><span class="php-comment">     */</span>     
+<span class="line" id="1526">1526: </span>    <span class="php-keyword1">function</span> prepare_for_query(<span class="php-var">$value</span>, <span class="php-var">$type</span>)
+<span class="line" id="1527">1527: </span>    {
+<span class="line" id="1528">1528: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$value</span>) &amp;&amp; (string)<span class="php-var">$value</span> != <span class="php-quote">&quot;0&quot;</span>) {
+<span class="line" id="1529">1529: </span>            <span class="php-keyword1">return</span> <span class="php-quote">&quot;NULL&quot;</span>;
+<span class="line" id="1530">1530: </span>        } <span class="php-keyword1">else</span> <span class="php-keyword1">switch</span> (<span class="php-var">$type</span>) {
+<span class="line" id="1531">1531: </span>            <span class="php-keyword1">case</span> DBWorker::DB_NUMBER:
+<span class="line" id="1532">1532: </span>                <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>);
+<span class="line" id="1533">1533: </span>        
+<span class="line" id="1534">1534: </span>            <span class="php-keyword1">case</span> DBWorker::DB_DATETIME:
+<span class="line" id="1535">1535: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;format_datetime(<span class="php-var">$value</span>) . <span class="php-quote">&quot;'&quot;</span>;
+<span class="line" id="1536">1536: </span>        
+<span class="line" id="1537">1537: </span>            <span class="php-keyword1">case</span> DBWorker::DB_DATE:
+<span class="line" id="1538">1538: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;format_date(<span class="php-var">$value</span>) . <span class="php-quote">&quot;'&quot;</span>;
+<span class="line" id="1539">1539: </span>        
+<span class="line" id="1540">1540: </span>            <span class="php-keyword1">case</span> DBWorker::DB_GEOMETRY:
+<span class="line" id="1541">1541: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;ST_GeomFromText('&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>) . <span class="php-quote">&quot;')&quot;</span>;
+<span class="line" id="1542">1542: </span>        
+<span class="line" id="1543">1543: </span>            <span class="php-keyword1">case</span> DBWorker::DB_GEOMETRY_4326:
+<span class="line" id="1544">1544: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;ST_GeomFromText('&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>) . <span class="php-quote">&quot;', 4326)&quot;</span>;
+<span class="line" id="1545">1545: </span>
+<span class="line" id="1546">1546: </span>            <span class="php-keyword1">default</span>:
+<span class="line" id="1547">1547: </span>                <span class="php-keyword1">return</span> <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$value</span>) . <span class="php-quote">&quot;'&quot;</span>;
+<span class="line" id="1548">1548: </span>        }
+<span class="line" id="1549">1549: </span>    } <span class="php-comment">// prepare_for_query</span>
+<span class="line" id="1550">1550: </span>} <span class="php-comment">// MSSQL_DBWorker</span>
+<span class="line" id="1551">1551: </span><span class="php-comment">//----------------------------------------------------------------------</span>
+<span class="line" id="1552">1552: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-08-19 17:31
+                        Generated on 2019-09-03 12:42
                     </div>                    
                 </div>
             </div>
