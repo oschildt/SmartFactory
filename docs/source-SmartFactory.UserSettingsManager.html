@@ -846,22 +846,38 @@
 </span><span class="line" id="764">764: </span><span class="php-comment">     * @param string $user_id
 </span><span class="line" id="765">765: </span><span class="php-comment">     * The user ID.
 </span><span class="line" id="766">766: </span><span class="php-comment">     *
-</span><span class="line" id="767">767: </span><span class="php-comment">     * @see loadSettings()
-</span><span class="line" id="768">768: </span><span class="php-comment">     *
-</span><span class="line" id="769">769: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="770">770: </span><span class="php-comment">     */</span>
-<span class="line" id="771">771: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setUserID(<span class="php-var">$user_id</span>)
-<span class="line" id="772">772: </span>    {
-<span class="line" id="773">773: </span>        <span class="php-var">$this</span>-&gt;user_id = <span class="php-var">$user_id</span>;
-<span class="line" id="774">774: </span>    } <span class="php-comment">// setUserID</span>
-<span class="line" id="775">775: </span>} <span class="php-comment">// UserSettingsManager</span>
+</span><span class="line" id="767">767: </span><span class="php-comment">     * @see getUserID()
+</span><span class="line" id="768">768: </span><span class="php-comment">     * @see loadSettings()
+</span><span class="line" id="769">769: </span><span class="php-comment">     *
+</span><span class="line" id="770">770: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="771">771: </span><span class="php-comment">     */</span>
+<span class="line" id="772">772: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setUserID(<span class="php-var">$user_id</span>)
+<span class="line" id="773">773: </span>    {
+<span class="line" id="774">774: </span>        <span class="php-var">$this</span>-&gt;user_id = <span class="php-var">$user_id</span>;
+<span class="line" id="775">775: </span>    } <span class="php-comment">// setUserID</span>
 <span class="line" id="776">776: </span>
+<span class="line" id="777">777: </span>    <span class="php-comment">/**
+</span><span class="line" id="778">778: </span><span class="php-comment">     * Gets the user id to be used for loading settings.
+</span><span class="line" id="779">779: </span><span class="php-comment">     *
+</span><span class="line" id="780">780: </span><span class="php-comment">     * @return int|null
+</span><span class="line" id="781">781: </span><span class="php-comment">     * Returns the user id or null if not set.
+</span><span class="line" id="782">782: </span><span class="php-comment">     *
+</span><span class="line" id="783">783: </span><span class="php-comment">     * @see setUserID()
+</span><span class="line" id="784">784: </span><span class="php-comment">     *
+</span><span class="line" id="785">785: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="786">786: </span><span class="php-comment">     */</span>
+<span class="line" id="787">787: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getUserID()
+<span class="line" id="788">788: </span>    {
+<span class="line" id="789">789: </span>        <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;user_id;
+<span class="line" id="790">790: </span>    } <span class="php-comment">// getUserID</span>
+<span class="line" id="791">791: </span>} <span class="php-comment">// UserSettingsManager</span>
+<span class="line" id="792">792: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2019-09-03 12:42
+                        Generated on 2019-09-03 15:57
                     </div>                    
                 </div>
             </div>

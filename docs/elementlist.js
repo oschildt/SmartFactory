@@ -532,6 +532,7 @@ ApiGen.elements = [
 {"file":"class-SmartFactory.UserSettingsManager.html#$validator","label":"UserSettingsManager::$validator"},
 {"file":"class-SmartFactory.UserSettingsManager.html#getContext","label":"UserSettingsManager::getContext()"},
 {"file":"class-SmartFactory.UserSettingsManager.html#getParameter","label":"UserSettingsManager::getParameter()"},
+{"file":"class-SmartFactory.UserSettingsManager.html#getUserID","label":"UserSettingsManager::getUserID()"},
 {"file":"class-SmartFactory.UserSettingsManager.html#getValidator","label":"UserSettingsManager::getValidator()"},
 {"file":"class-SmartFactory.UserSettingsManager.html#init","label":"UserSettingsManager::init()"},
 {"file":"class-SmartFactory.UserSettingsManager.html#loadSettings","label":"UserSettingsManager::loadSettings()"},

@@ -764,6 +764,7 @@ class UserSettingsManager implements ISettingsManager
      * @param string $user_id
      * The user ID.
      *
+     * @see getUserID()
      * @see loadSettings()
      *
      * @author Oleg Schildt
@@ -772,4 +773,19 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->user_id = $user_id;
     } // setUserID
+
+    /**
+     * Gets the user id to be used for loading settings.
+     *
+     * @return int|null
+     * Returns the user id or null if not set.
+     *
+     * @see setUserID()
+     *
+     * @author Oleg Schildt
+     */
+    public function getUserID()
+    {
+        return $this->user_id;
+    } // getUserID
 } // UserSettingsManager
