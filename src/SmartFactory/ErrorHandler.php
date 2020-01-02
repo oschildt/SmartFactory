@@ -121,8 +121,6 @@ class ErrorHandler implements IErrorHandler
             return "backtrace empty";
         }
         
-        debug_message(print_r($btrace, true));
-        
         $trace = "";
         
         foreach ($btrace as $nr => &$btrace_entry) {
