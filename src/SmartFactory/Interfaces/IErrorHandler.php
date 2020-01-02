@@ -52,6 +52,29 @@ interface IErrorHandler extends IInitable
     public function handleError($errno, $errstr, $errfile, $errline);
     
     /**
+     * This is the function for handling of the PHP exceptions. It should
+     * be called in the catch block to trace detailed infromation
+     * if an exception is thrown.
+     *
+     * @param \Throwable $ex
+     * Thrown exception.
+     *
+     * @param string $errfuntion
+     * Funtion name where the exception has been catched.
+     *
+     * @param string $errfile
+     * Source file where the exception has been catched.
+     *
+     * @param int $errline
+     * Line number where the exception has been catched.
+     *
+     * @return void
+     *
+     * @author Oleg Schildt
+     */
+    public function handleException($ex, $errfuntion, $errfile, $errline);
+    
+    /**
      * Returns the last error.
      *
      * @return string

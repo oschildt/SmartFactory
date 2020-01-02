@@ -309,6 +309,20 @@ error handler.
       
       <tr>
           <td>
+              <a href="#handleException">handleException</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              This is the function for handling of the PHP exceptions. It should
+be called in the catch block to trace detailed infromation
+if an exception is thrown.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#init">init</a>
           </td>
           <td>
@@ -588,7 +602,7 @@ function arguments from the standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#217">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#219">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -649,7 +663,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#436">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#496">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -712,7 +726,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#418">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#478">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -781,7 +795,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#150">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#152">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -893,7 +907,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#357">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#417">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -981,7 +995,96 @@ error handler.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#318">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#320">SmartFactory\ErrorHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="handleException">
+  
+  <h1>Method: handleException</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>handleException</b>(\Throwable <span class="php-var">$ex</span>,
+                       string <span class="php-var">$errfuntion</span>,
+                       string <span class="php-var">$errfile</span>,
+                       integer <span class="php-var">$errline</span>
+                      ) : void</div>
+
+  
+  <div class="short-description">
+  This is the function for handling of the PHP exceptions. It should
+be called in the catch block to trace detailed infromation
+if an exception is thrown.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$ex</h3>
+      <span class="type_label">Type:</span> \Throwable
+      
+      <div class="param-description">
+      <p>Thrown exception.</p>
+      </div>
+      
+  
+      <h3>$errfuntion</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Funtion name where the exception has been catched.</p>
+      </div>
+      
+  
+      <h3>$errfile</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Source file where the exception has been catched.</p>
+      </div>
+      
+  
+      <h3>$errline</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>Line number where the exception has been catched.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#handleException">\SmartFactory\Interfaces\IErrorHandler::handleException()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ErrorHandler.html#372">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1128,7 +1231,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#246">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#248">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1187,7 +1290,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#376">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#436">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1261,7 +1364,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#279">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#281">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1323,7 +1426,7 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#400">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#460">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -1346,7 +1449,7 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-09-18 07:48
+                        Generated on 2020-01-02 15:15
                     </div>                    
                 </div>
             </div>

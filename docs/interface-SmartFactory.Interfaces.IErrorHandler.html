@@ -223,6 +223,17 @@ error handler.
       
       <tr>
           <td>
+              <a href="#handleException">handleException</a>
+          </td>
+          <td class="description_column">
+              This is the function for handling of the PHP exceptions. It should
+be called in the catch block to trace detailed infromation
+if an exception is thrown.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#init">init</a>
           </td>
           <td class="description_column">
@@ -296,7 +307,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#117">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#140">SmartFactory\Interfaces\IErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -354,7 +365,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#102">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#125">SmartFactory\Interfaces\IErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -410,7 +421,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#59">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#82">SmartFactory\Interfaces\IErrorHandler.php</a>
 
   
 
@@ -494,6 +505,90 @@ error handler.
 
   <h2>Source code</h2>
   <a href="source-SmartFactory.Interfaces.IErrorHandler.html#49">SmartFactory\Interfaces\IErrorHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="handleException">
+  
+  <h1>Method: handleException</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>handleException</b>(\Throwable <span class="php-var">$ex</span>,
+                       string <span class="php-var">$errfuntion</span>,
+                       string <span class="php-var">$errfile</span>,
+                       integer <span class="php-var">$errline</span>
+                      ) : void</div>
+
+  
+  <div class="short-description">
+  This is the function for handling of the PHP exceptions. It should
+be called in the catch block to trace detailed infromation
+if an exception is thrown.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$ex</h3>
+      <span class="type_label">Type:</span> \Throwable
+      
+      <div class="param-description">
+      <p>Thrown exception.</p>
+      </div>
+      
+  
+      <h3>$errfuntion</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Funtion name where the exception has been catched.</p>
+      </div>
+      
+  
+      <h3>$errfile</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Source file where the exception has been catched.</p>
+      </div>
+      
+  
+      <h3>$errline</h3>
+      <span class="type_label">Type:</span> integer
+      
+      <div class="param-description">
+      <p>Line number where the exception has been catched.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#72">SmartFactory\Interfaces\IErrorHandler.php</a>
 
   
 
@@ -608,7 +703,7 @@ error handler.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#71">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#94">SmartFactory\Interfaces\IErrorHandler.php</a>
 
   
 
@@ -661,7 +756,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#87">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#110">SmartFactory\Interfaces\IErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -684,7 +779,7 @@ the standard file.</p>
 
                     
                     <div id="footer">
-                        Generated on 2019-09-18 07:48
+                        Generated on 2020-01-02 15:15
                     </div>                    
                 </div>
             </div>

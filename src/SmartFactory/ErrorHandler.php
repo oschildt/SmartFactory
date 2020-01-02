@@ -121,6 +121,8 @@ class ErrorHandler implements IErrorHandler
             return "backtrace empty";
         }
         
+        debug_message(print_r($btrace, true));
+        
         $trace = "";
         
         foreach ($btrace as $nr => &$btrace_entry) {
@@ -348,6 +350,64 @@ class ErrorHandler implements IErrorHandler
         
         event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $errstr, "errfile" => $errfile, "errline" => $errline]);
     } // handleError
+    
+    /**
+     * This is the function for handling of the PHP exceptions. It should
+     * be called in the catch block to trace detailed infromation
+     * if an exception is thrown.
+     *
+     * @param \Throwable $ex
+     * Thrown exception.
+     *
+     * @param string $errfuntion
+     * Funtion name where the exception has been catched.
+     *
+     * @param string $errfile
+     * Source file where the exception has been catched.
+     *
+     * @param int $errline
+     * Line number where the exception has been catched.
+     *
+     * @return void
+     *
+     * @author Oleg Schildt
+     */
+    public function handleException($ex, $errfuntion, $errfile, $errline)
+    {
+        $this->setLastError($ex->getMessage());
+        
+        $errortype = [
+            E_ERROR => "Error",
+            E_WARNING => "Warning",
+            E_PARSE => "Parsing Error",
+            E_NOTICE => "Notice",
+            E_CORE_ERROR => "Core Error",
+            E_CORE_WARNING => "Core Warning",
+            E_COMPILE_ERROR => "Compile Error",
+            E_COMPILE_WARNING => "Compile Warning",
+            E_USER_ERROR => "User Error",
+            E_USER_WARNING => "User Warning",
+            E_USER_NOTICE => "User Notice",
+            E_STRICT => "Runtime Notice",
+            E_DEPRECATED => "Deprecated Notice"
+        ];
+        
+        $errno = $ex->getCode();
+        
+        if (empty($errortype[$errno])) {
+            $etype = $errno;
+        } else {
+            $etype = $errortype[$errno];
+        }
+        
+        $trace = $ex->getTrace();
+        $trace_entry["args"] = ["", $ex->getMessage(), $errfile, $errline];
+        array_unshift($trace, $trace_entry);
+        
+        $this->trace_message($this->format_backtrace($trace));
+        
+        event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $ex->getMessage(), "errfile" => $ex->getFile(), "errline" => $ex->getLine()]);
+    }
     
     /**
      * Returns the last error.
