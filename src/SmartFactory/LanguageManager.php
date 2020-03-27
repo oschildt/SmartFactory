@@ -602,6 +602,9 @@ class LanguageManager implements ILanguageManager
      * The langauge. If it is not specified,
      * the default langauge is used.
      *
+     * @param array $display_first
+     * List of the language codes to be displayed first in the order, they appear in the list.
+     *
      * @return boolean
      * Returns true if the langauge list is successfully retrieved, otherwise false.
      *
@@ -612,7 +615,7 @@ class LanguageManager implements ILanguageManager
      *
      * @author Oleg Schildt
      */
-    public function getLanguageList(&$language_list, $lng = "")
+    public function getLanguageList(&$language_list, $lng = "", $display_first = [])
     {
         if (empty($lng)) {
             $lng = $this->getCurrentLanguage();
@@ -621,11 +624,15 @@ class LanguageManager implements ILanguageManager
         if (empty(self::$languages[$lng])) {
             return false;
         }
-        
-        $language_list += self::$languages[$lng];
-        
-        asort($language_list, SORT_LOCALE_STRING);
-        
+    
+        $language_list = array_flip($display_first);
+    
+        asort(self::$languages[$lng], SORT_LOCALE_STRING);
+    
+        foreach(self::$languages[$lng] as $code => $name) {
+            $language_list[$code] = $name;
+        }
+
         return true;
     } // getLanguageList
     
@@ -744,6 +751,9 @@ class LanguageManager implements ILanguageManager
      * The langauge. If it is not specified,
      * the default langauge is used.
      *
+     * @param array $display_first
+     * List of the country codes to be displayed first in the order, they appear in the list.
+     *
      * @return boolean
      * Returns true if the country list is successfully retrieved, otherwise false.
      *
@@ -754,7 +764,7 @@ class LanguageManager implements ILanguageManager
      *
      * @author Oleg Schildt
      */
-    public function getCountryList(&$country_list, $lng = "")
+    public function getCountryList(&$country_list, $lng = "", $display_first = [])
     {
         if (empty($lng)) {
             $lng = $this->getCurrentLanguage();
@@ -763,10 +773,14 @@ class LanguageManager implements ILanguageManager
         if (empty(self::$countries[$lng])) {
             return false;
         }
+    
+        $country_list = array_flip($display_first);
+
+        asort(self::$countries[$lng], SORT_LOCALE_STRING);
         
-        $country_list += self::$countries[$lng];
-        
-        asort($country_list, SORT_LOCALE_STRING);
+        foreach(self::$countries[$lng] as $code => $name) {
+            $country_list[$code] = $name;
+        }
         
         return true;
     } // getCountryList

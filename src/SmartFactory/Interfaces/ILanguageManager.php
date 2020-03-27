@@ -235,6 +235,9 @@ interface ILanguageManager extends IInitable
      * The langauge. If it is not specified,
      * the default langauge is used.
      *
+     * @param array $display_first
+     * List of the language codes to be displayed first in the order, they appear in the list.
+     *
      * @return boolean
      * Returns true if the langauge list is successfully retrieved, otherwise false.
      *
@@ -245,7 +248,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getLanguageList(&$language_list, $lng = "");
+    public function getLanguageList(&$language_list, $lng = "", $display_first = []);
     
     /**
      * Provides the text translation for the country name by the code
@@ -326,6 +329,9 @@ interface ILanguageManager extends IInitable
      * The langauge. If it is not specified,
      * the default langauge is used.
      *
+     * @param array $display_first
+     * List of the country codes to be displayed first in the order, they appear in the list.
+     *
      * @return boolean
      * Returns true if the country list is successfully retrieved, otherwise false.
      *
@@ -336,5 +342,5 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getCountryList(&$country_list, $lng = "");
+    public function getCountryList(&$country_list, $lng = "", $display_first = []);
 } // ILanguageManager
