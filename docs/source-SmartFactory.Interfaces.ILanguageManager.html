@@ -317,116 +317,122 @@
 </span><span class="line" id="235">235: </span><span class="php-comment">     * The langauge. If it is not specified,
 </span><span class="line" id="236">236: </span><span class="php-comment">     * the default langauge is used.
 </span><span class="line" id="237">237: </span><span class="php-comment">     *
-</span><span class="line" id="238">238: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="239">239: </span><span class="php-comment">     * Returns true if the langauge list is successfully retrieved, otherwise false.
+</span><span class="line" id="238">238: </span><span class="php-comment">     * @param array $display_first
+</span><span class="line" id="239">239: </span><span class="php-comment">     * List of the language codes to be displayed first in the order, they appear in the list.
 </span><span class="line" id="240">240: </span><span class="php-comment">     *
-</span><span class="line" id="241">241: </span><span class="php-comment">     * @see getLanguageName()
-</span><span class="line" id="242">242: </span><span class="php-comment">     * @see getLanguageCode()
-</span><span class="line" id="243">243: </span><span class="php-comment">     * @see validateLanguageCode()
-</span><span class="line" id="244">244: </span><span class="php-comment">     * @see getCountryList()
-</span><span class="line" id="245">245: </span><span class="php-comment">     *
-</span><span class="line" id="246">246: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="247">247: </span><span class="php-comment">     */</span>
-<span class="line" id="248">248: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageList(&amp;<span class="php-var">$language_list</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>);
-<span class="line" id="249">249: </span>    
-<span class="line" id="250">250: </span>    <span class="php-comment">/**
-</span><span class="line" id="251">251: </span><span class="php-comment">     * Provides the text translation for the country name by the code
-</span><span class="line" id="252">252: </span><span class="php-comment">     * for the given langauge.
-</span><span class="line" id="253">253: </span><span class="php-comment">     *
-</span><span class="line" id="254">254: </span><span class="php-comment">     * @param string $code
-</span><span class="line" id="255">255: </span><span class="php-comment">     * Country ISO code (uppercase, e.g. US, DE, FR).
+</span><span class="line" id="241">241: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="242">242: </span><span class="php-comment">     * Returns true if the langauge list is successfully retrieved, otherwise false.
+</span><span class="line" id="243">243: </span><span class="php-comment">     *
+</span><span class="line" id="244">244: </span><span class="php-comment">     * @see getLanguageName()
+</span><span class="line" id="245">245: </span><span class="php-comment">     * @see getLanguageCode()
+</span><span class="line" id="246">246: </span><span class="php-comment">     * @see validateLanguageCode()
+</span><span class="line" id="247">247: </span><span class="php-comment">     * @see getCountryList()
+</span><span class="line" id="248">248: </span><span class="php-comment">     *
+</span><span class="line" id="249">249: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="250">250: </span><span class="php-comment">     */</span>
+<span class="line" id="251">251: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageList(&amp;<span class="php-var">$language_list</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$display_first</span> = []);
+<span class="line" id="252">252: </span>    
+<span class="line" id="253">253: </span>    <span class="php-comment">/**
+</span><span class="line" id="254">254: </span><span class="php-comment">     * Provides the text translation for the country name by the code
+</span><span class="line" id="255">255: </span><span class="php-comment">     * for the given langauge.
 </span><span class="line" id="256">256: </span><span class="php-comment">     *
-</span><span class="line" id="257">257: </span><span class="php-comment">     * @param string $lng
-</span><span class="line" id="258">258: </span><span class="php-comment">     * The langauge. If it is not specified,
-</span><span class="line" id="259">259: </span><span class="php-comment">     * the default langauge is used.
-</span><span class="line" id="260">260: </span><span class="php-comment">     *
-</span><span class="line" id="261">261: </span><span class="php-comment">     * @param boolean $warn_missing
-</span><span class="line" id="262">262: </span><span class="php-comment">     * If it is set to true,
-</span><span class="line" id="263">263: </span><span class="php-comment">     * the E_USER_NOTICE is triggered in the case of mussing
-</span><span class="line" id="264">264: </span><span class="php-comment">     * translations.
-</span><span class="line" id="265">265: </span><span class="php-comment">     *
-</span><span class="line" id="266">266: </span><span class="php-comment">     * @return string
-</span><span class="line" id="267">267: </span><span class="php-comment">     * Returns the translation text for the country name or the $code if no translation
-</span><span class="line" id="268">268: </span><span class="php-comment">     * is found.
-</span><span class="line" id="269">269: </span><span class="php-comment">     *
-</span><span class="line" id="270">270: </span><span class="php-comment">     * @see getCountryCode()
-</span><span class="line" id="271">271: </span><span class="php-comment">     * @see validateCountryCode()
-</span><span class="line" id="272">272: </span><span class="php-comment">     * @see getCountryList()
-</span><span class="line" id="273">273: </span><span class="php-comment">     * @see getLanguageName()
-</span><span class="line" id="274">274: </span><span class="php-comment">     *
-</span><span class="line" id="275">275: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="276">276: </span><span class="php-comment">     */</span>
-<span class="line" id="277">277: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(<span class="php-var">$code</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>);
-<span class="line" id="278">278: </span>    
-<span class="line" id="279">279: </span>    <span class="php-comment">/**
-</span><span class="line" id="280">280: </span><span class="php-comment">     * Tries to find the country code by the given name.
-</span><span class="line" id="281">281: </span><span class="php-comment">     *
-</span><span class="line" id="282">282: </span><span class="php-comment">     * @param string $country_name
-</span><span class="line" id="283">283: </span><span class="php-comment">     * The name of the country in any supported language.
+</span><span class="line" id="257">257: </span><span class="php-comment">     * @param string $code
+</span><span class="line" id="258">258: </span><span class="php-comment">     * Country ISO code (uppercase, e.g. US, DE, FR).
+</span><span class="line" id="259">259: </span><span class="php-comment">     *
+</span><span class="line" id="260">260: </span><span class="php-comment">     * @param string $lng
+</span><span class="line" id="261">261: </span><span class="php-comment">     * The langauge. If it is not specified,
+</span><span class="line" id="262">262: </span><span class="php-comment">     * the default langauge is used.
+</span><span class="line" id="263">263: </span><span class="php-comment">     *
+</span><span class="line" id="264">264: </span><span class="php-comment">     * @param boolean $warn_missing
+</span><span class="line" id="265">265: </span><span class="php-comment">     * If it is set to true,
+</span><span class="line" id="266">266: </span><span class="php-comment">     * the E_USER_NOTICE is triggered in the case of mussing
+</span><span class="line" id="267">267: </span><span class="php-comment">     * translations.
+</span><span class="line" id="268">268: </span><span class="php-comment">     *
+</span><span class="line" id="269">269: </span><span class="php-comment">     * @return string
+</span><span class="line" id="270">270: </span><span class="php-comment">     * Returns the translation text for the country name or the $code if no translation
+</span><span class="line" id="271">271: </span><span class="php-comment">     * is found.
+</span><span class="line" id="272">272: </span><span class="php-comment">     *
+</span><span class="line" id="273">273: </span><span class="php-comment">     * @see getCountryCode()
+</span><span class="line" id="274">274: </span><span class="php-comment">     * @see validateCountryCode()
+</span><span class="line" id="275">275: </span><span class="php-comment">     * @see getCountryList()
+</span><span class="line" id="276">276: </span><span class="php-comment">     * @see getLanguageName()
+</span><span class="line" id="277">277: </span><span class="php-comment">     *
+</span><span class="line" id="278">278: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="279">279: </span><span class="php-comment">     */</span>
+<span class="line" id="280">280: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(<span class="php-var">$code</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>);
+<span class="line" id="281">281: </span>    
+<span class="line" id="282">282: </span>    <span class="php-comment">/**
+</span><span class="line" id="283">283: </span><span class="php-comment">     * Tries to find the country code by the given name.
 </span><span class="line" id="284">284: </span><span class="php-comment">     *
-</span><span class="line" id="285">285: </span><span class="php-comment">     * @return string
-</span><span class="line" id="286">286: </span><span class="php-comment">     * Returns the country code if it could be found, otherwise an empty string.
+</span><span class="line" id="285">285: </span><span class="php-comment">     * @param string $country_name
+</span><span class="line" id="286">286: </span><span class="php-comment">     * The name of the country in any supported language.
 </span><span class="line" id="287">287: </span><span class="php-comment">     *
-</span><span class="line" id="288">288: </span><span class="php-comment">     * @see getCountryName()
-</span><span class="line" id="289">289: </span><span class="php-comment">     * @see validateCountryCode()
-</span><span class="line" id="290">290: </span><span class="php-comment">     * @see getCountryList()
-</span><span class="line" id="291">291: </span><span class="php-comment">     * @see getLanguageCode()
-</span><span class="line" id="292">292: </span><span class="php-comment">     *
-</span><span class="line" id="293">293: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="294">294: </span><span class="php-comment">     */</span>
-<span class="line" id="295">295: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryCode(<span class="php-var">$country_name</span>);
-<span class="line" id="296">296: </span>    
-<span class="line" id="297">297: </span>    <span class="php-comment">/**
-</span><span class="line" id="298">298: </span><span class="php-comment">     * Checks whether the country code is valid (has translation).
-</span><span class="line" id="299">299: </span><span class="php-comment">     *
-</span><span class="line" id="300">300: </span><span class="php-comment">     * @param string $code
-</span><span class="line" id="301">301: </span><span class="php-comment">     * Country ISO code (uppercase, e.g. US, DE, FR).
+</span><span class="line" id="288">288: </span><span class="php-comment">     * @return string
+</span><span class="line" id="289">289: </span><span class="php-comment">     * Returns the country code if it could be found, otherwise an empty string.
+</span><span class="line" id="290">290: </span><span class="php-comment">     *
+</span><span class="line" id="291">291: </span><span class="php-comment">     * @see getCountryName()
+</span><span class="line" id="292">292: </span><span class="php-comment">     * @see validateCountryCode()
+</span><span class="line" id="293">293: </span><span class="php-comment">     * @see getCountryList()
+</span><span class="line" id="294">294: </span><span class="php-comment">     * @see getLanguageCode()
+</span><span class="line" id="295">295: </span><span class="php-comment">     *
+</span><span class="line" id="296">296: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="297">297: </span><span class="php-comment">     */</span>
+<span class="line" id="298">298: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryCode(<span class="php-var">$country_name</span>);
+<span class="line" id="299">299: </span>    
+<span class="line" id="300">300: </span>    <span class="php-comment">/**
+</span><span class="line" id="301">301: </span><span class="php-comment">     * Checks whether the country code is valid (has translation).
 </span><span class="line" id="302">302: </span><span class="php-comment">     *
-</span><span class="line" id="303">303: </span><span class="php-comment">     * @param string $lng
-</span><span class="line" id="304">304: </span><span class="php-comment">     * The langauge. If it is not specified,
-</span><span class="line" id="305">305: </span><span class="php-comment">     * the default langauge is used.
-</span><span class="line" id="306">306: </span><span class="php-comment">     *
-</span><span class="line" id="307">307: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="308">308: </span><span class="php-comment">     * Returns true if the country code is valid (has translation), otherwise false.
+</span><span class="line" id="303">303: </span><span class="php-comment">     * @param string $code
+</span><span class="line" id="304">304: </span><span class="php-comment">     * Country ISO code (uppercase, e.g. US, DE, FR).
+</span><span class="line" id="305">305: </span><span class="php-comment">     *
+</span><span class="line" id="306">306: </span><span class="php-comment">     * @param string $lng
+</span><span class="line" id="307">307: </span><span class="php-comment">     * The langauge. If it is not specified,
+</span><span class="line" id="308">308: </span><span class="php-comment">     * the default langauge is used.
 </span><span class="line" id="309">309: </span><span class="php-comment">     *
-</span><span class="line" id="310">310: </span><span class="php-comment">     * @see getCountryName()
-</span><span class="line" id="311">311: </span><span class="php-comment">     * @see getCountryCode()
-</span><span class="line" id="312">312: </span><span class="php-comment">     * @see getCountryList()
-</span><span class="line" id="313">313: </span><span class="php-comment">     * @see validateLanguageCode()
-</span><span class="line" id="314">314: </span><span class="php-comment">     *
-</span><span class="line" id="315">315: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="316">316: </span><span class="php-comment">     */</span>
-<span class="line" id="317">317: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateCountryCode(<span class="php-var">$code</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>);
-<span class="line" id="318">318: </span>    
-<span class="line" id="319">319: </span>    <span class="php-comment">/**
-</span><span class="line" id="320">320: </span><span class="php-comment">     * Provides the list of countries for the given language in the form &quot;code&quot; =&gt; &quot;translation&quot;.
-</span><span class="line" id="321">321: </span><span class="php-comment">     *
-</span><span class="line" id="322">322: </span><span class="php-comment">     * @param array $country_list
-</span><span class="line" id="323">323: </span><span class="php-comment">     * Target array where the country list should be loaded.
+</span><span class="line" id="310">310: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="311">311: </span><span class="php-comment">     * Returns true if the country code is valid (has translation), otherwise false.
+</span><span class="line" id="312">312: </span><span class="php-comment">     *
+</span><span class="line" id="313">313: </span><span class="php-comment">     * @see getCountryName()
+</span><span class="line" id="314">314: </span><span class="php-comment">     * @see getCountryCode()
+</span><span class="line" id="315">315: </span><span class="php-comment">     * @see getCountryList()
+</span><span class="line" id="316">316: </span><span class="php-comment">     * @see validateLanguageCode()
+</span><span class="line" id="317">317: </span><span class="php-comment">     *
+</span><span class="line" id="318">318: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="319">319: </span><span class="php-comment">     */</span>
+<span class="line" id="320">320: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateCountryCode(<span class="php-var">$code</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>);
+<span class="line" id="321">321: </span>    
+<span class="line" id="322">322: </span>    <span class="php-comment">/**
+</span><span class="line" id="323">323: </span><span class="php-comment">     * Provides the list of countries for the given language in the form &quot;code&quot; =&gt; &quot;translation&quot;.
 </span><span class="line" id="324">324: </span><span class="php-comment">     *
-</span><span class="line" id="325">325: </span><span class="php-comment">     * @param string $lng
-</span><span class="line" id="326">326: </span><span class="php-comment">     * The langauge. If it is not specified,
-</span><span class="line" id="327">327: </span><span class="php-comment">     * the default langauge is used.
-</span><span class="line" id="328">328: </span><span class="php-comment">     *
-</span><span class="line" id="329">329: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="330">330: </span><span class="php-comment">     * Returns true if the country list is successfully retrieved, otherwise false.
+</span><span class="line" id="325">325: </span><span class="php-comment">     * @param array $country_list
+</span><span class="line" id="326">326: </span><span class="php-comment">     * Target array where the country list should be loaded.
+</span><span class="line" id="327">327: </span><span class="php-comment">     *
+</span><span class="line" id="328">328: </span><span class="php-comment">     * @param string $lng
+</span><span class="line" id="329">329: </span><span class="php-comment">     * The langauge. If it is not specified,
+</span><span class="line" id="330">330: </span><span class="php-comment">     * the default langauge is used.
 </span><span class="line" id="331">331: </span><span class="php-comment">     *
-</span><span class="line" id="332">332: </span><span class="php-comment">     * @see getCountryName()
-</span><span class="line" id="333">333: </span><span class="php-comment">     * @see getCountryCode()
-</span><span class="line" id="334">334: </span><span class="php-comment">     * @see validateCountryCode()
-</span><span class="line" id="335">335: </span><span class="php-comment">     * @see getLanguageList()
-</span><span class="line" id="336">336: </span><span class="php-comment">     *
-</span><span class="line" id="337">337: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="338">338: </span><span class="php-comment">     */</span>
-<span class="line" id="339">339: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryList(&amp;<span class="php-var">$country_list</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>);
-<span class="line" id="340">340: </span>} <span class="php-comment">// ILanguageManager</span>
-<span class="line" id="341">341: </span>
+</span><span class="line" id="332">332: </span><span class="php-comment">     * @param array $display_first
+</span><span class="line" id="333">333: </span><span class="php-comment">     * List of the country codes to be displayed first in the order, they appear in the list.
+</span><span class="line" id="334">334: </span><span class="php-comment">     *
+</span><span class="line" id="335">335: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="336">336: </span><span class="php-comment">     * Returns true if the country list is successfully retrieved, otherwise false.
+</span><span class="line" id="337">337: </span><span class="php-comment">     *
+</span><span class="line" id="338">338: </span><span class="php-comment">     * @see getCountryName()
+</span><span class="line" id="339">339: </span><span class="php-comment">     * @see getCountryCode()
+</span><span class="line" id="340">340: </span><span class="php-comment">     * @see validateCountryCode()
+</span><span class="line" id="341">341: </span><span class="php-comment">     * @see getLanguageList()
+</span><span class="line" id="342">342: </span><span class="php-comment">     *
+</span><span class="line" id="343">343: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="344">344: </span><span class="php-comment">     */</span>
+<span class="line" id="345">345: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryList(&amp;<span class="php-var">$country_list</span>, <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$display_first</span> = []);
+<span class="line" id="346">346: </span>} <span class="php-comment">// ILanguageManager</span>
+<span class="line" id="347">347: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2020-01-02 15:15
+                        Generated on 2020-03-27 09:46
                     </div>                    
                 </div>
             </div>
