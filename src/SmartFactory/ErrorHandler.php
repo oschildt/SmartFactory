@@ -288,11 +288,11 @@ class ErrorHandler implements IErrorHandler
         $file = $this->log_path . "trace.log";
         
         if ((!file_exists($file) && is_writable($this->log_path)) || is_writable($file)) {
-            return error_log(date("Y-m-d H:i:s") . "\r\n" .
+            return file_put_contents($file, date("Y-m-d H:i:s") . "\r\n" .
                 "----------------------------------------------------------\r\n" .
                 $message . "\r\n" .
                 "----------------------------------------------------------\r\n" .
-                "\r\n\r\n", 3, $file);
+                "\r\n\r\n", FILE_APPEND) !== false;
         } else {
             throw new \Exception(sprintf("The trace file '%s' is not writable!", $file));
         }

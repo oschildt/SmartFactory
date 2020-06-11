@@ -98,7 +98,7 @@ class DebugProfiler implements IDebugProfiler
         $file = $this->log_path . $file_name;
         
         if ((!file_exists($file) && is_writable($this->log_path)) || is_writable($file)) {
-            return error_log($message . "\r\n", 3, $file);
+            return file_put_contents($file, $message . "\r\n", FILE_APPEND) !== false;
         } else {
             throw new \Exception(sprintf("The log file '%s' is not writable!", $file));
         }
