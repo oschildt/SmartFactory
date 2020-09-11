@@ -370,11 +370,11 @@
 <span class="line" id="288">288: </span>        <span class="php-var">$file</span> = <span class="php-var">$this</span>-&gt;log_path . <span class="php-quote">&quot;trace.log&quot;</span>;
 <span class="line" id="289">289: </span>        
 <span class="line" id="290">290: </span>        <span class="php-keyword1">if</span> ((!<span class="php-keyword2">file_exists</span>(<span class="php-var">$file</span>) &amp;&amp; <span class="php-keyword2">is_writable</span>(<span class="php-var">$this</span>-&gt;log_path)) || <span class="php-keyword2">is_writable</span>(<span class="php-var">$file</span>)) {
-<span class="line" id="291">291: </span>            <span class="php-keyword1">return</span> <span class="php-keyword2">error_log</span>(<span class="php-keyword2">date</span>(<span class="php-quote">&quot;Y-m-d H:i:s&quot;</span>) . <span class="php-quote">&quot;\r\n&quot;</span> .
+<span class="line" id="291">291: </span>            <span class="php-keyword1">return</span> <span class="php-keyword2">file_put_contents</span>(<span class="php-var">$file</span>, <span class="php-keyword2">date</span>(<span class="php-quote">&quot;Y-m-d H:i:s&quot;</span>) . <span class="php-quote">&quot;\r\n&quot;</span> .
 <span class="line" id="292">292: </span>                <span class="php-quote">&quot;----------------------------------------------------------\r\n&quot;</span> .
 <span class="line" id="293">293: </span>                <span class="php-var">$message</span> . <span class="php-quote">&quot;\r\n&quot;</span> .
 <span class="line" id="294">294: </span>                <span class="php-quote">&quot;----------------------------------------------------------\r\n&quot;</span> .
-<span class="line" id="295">295: </span>                <span class="php-quote">&quot;\r\n\r\n&quot;</span>, <span class="php-num">3</span>, <span class="php-var">$file</span>);
+<span class="line" id="295">295: </span>                <span class="php-quote">&quot;\r\n\r\n&quot;</span>, FILE_APPEND) !== <span class="php-keyword1">false</span>;
 <span class="line" id="296">296: </span>        } <span class="php-keyword1">else</span> {
 <span class="line" id="297">297: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The trace file '%s' is not writable!&quot;</span>, <span class="php-var">$file</span>));
 <span class="line" id="298">298: </span>        }
@@ -587,7 +587,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2020-03-27 09:46
+                        Generated on 2020-09-11 11:28
                     </div>                    
                 </div>
             </div>

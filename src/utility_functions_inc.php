@@ -363,6 +363,43 @@ function echo_js($text)
 } // echo_js
 
 /**
+ * Sets the cookie name=value.
+ *
+ * @param string $name
+ * Name of the cookie.
+ *
+ * @param string $value
+ * Value of the cookie.
+ *
+ * @param int $expires
+ * The time the cookie expires.
+ *
+ * @param string $params
+ * Any additional parameters like expires, path, domain, secure, httponly or samesite.
+ *
+ * @return boolean
+ * Returns true if the cookie has been set successfully, otherwise false.
+ *
+ * @author Oleg Schildt
+ */
+function set_cookie($name, $value = "", $expires = 0, $params)
+{
+    if (version_compare(phpversion(), "7.3") >= 0) {
+        $params["expires"] = $expires;
+        return setcookie($name, $value, $params);
+    }
+    
+    $path = "";
+    if (!empty($params["path"])) {
+        $path = $params["path"];
+    }
+    if (!empty($params["samesite"])) {
+        $path .= "/; samesite=" . $params["samesite"];
+    }
+    return setcookie($name, $value, $expires, $path);
+} // set_cookie
+
+/**
  * Escapes the special characters in the text used for the regular
  * expression pattern.
  *

@@ -398,7 +398,9 @@ class LanguageManager implements ILanguageManager
         
         session()->vars()[self::$context . "_language"] = $language;
         
-        setcookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, "/; sameSite=strict");
+        $options = ["samesite" => "strict"];
+        
+        set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, $options);
         
         return true;
     } // setCurrentLanguage

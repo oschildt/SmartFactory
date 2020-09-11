@@ -508,6 +508,7 @@ ApiGen.elements = [
 {"file":"class-SmartFactory.SessionManager.html#vars","label":"SessionManager::vars()"},
 {"file":"class-SmartFactory.SessionManager.html#write","label":"SessionManager::write()"},
 {"file":"class-SmartFactory.SessionManager.html#writeCloseSession","label":"SessionManager::writeCloseSession()"},
+{"file":"function-SmartFactory.set_cookie.html","label":"set_cookie()"},
 {"file":"class-SmartFactory.DatabaseWorkers.ShardManager.html","label":"ShardManager - Class"},
 {"file":"class-SmartFactory.DatabaseWorkers.ShardManager.html#$load_balancing_groups","label":"ShardManager::$load_balancing_groups"},
 {"file":"class-SmartFactory.DatabaseWorkers.ShardManager.html#$shard_table","label":"ShardManager::$shard_table"},
