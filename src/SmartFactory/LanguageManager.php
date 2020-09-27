@@ -319,16 +319,17 @@ class LanguageManager implements ILanguageManager
         }
         
         // 3) last language in the cookie
-        if (!empty($_COOKIE[self::$context . "_language"]) && !empty(self::$supported_languages[$_COOKIE[self::$context . "_language"]])) {
-            $language = $_COOKIE[self::$context . "_language"];
+        $tmp = get_cookie(self::$context . "_language");
+        if (!empty($tmp) && !empty(self::$supported_languages[$tmp])) {
+            $language = $tmp;
         }
         
         // 2) last language in the session
         if (!empty(session()->vars()[self::$context . "_language"]) && !empty(self::$supported_languages[session()->vars()[self::$context . "_language"]])) {
-            $language = $_COOKIE[self::$context . "_language"];
+            $language = session()->vars()[self::$context . "_language"];
         }
         
-        // 1) explicitly set by request parameter language
+        // 3) explicitly set by request parameter language
         if (!empty($_REQUEST["language"]) && !empty(self::$supported_languages[$_REQUEST["language"]])) {
             $language = $_REQUEST["language"];
         }
@@ -398,9 +399,7 @@ class LanguageManager implements ILanguageManager
         
         session()->vars()[self::$context . "_language"] = $language;
         
-        $options = ["samesite" => "strict"];
-        
-        set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, $options);
+        set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600,  ["samesite" => "strict"]);
         
         return true;
     } // setCurrentLanguage

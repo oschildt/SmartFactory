@@ -363,6 +363,25 @@ function echo_js($text)
 } // echo_js
 
 /**
+ * Gets the cookie value by name.
+ *
+ * @param string $name
+ * Name of the cookie.
+ *
+ * @param string $value
+ * Value of the cookie.
+ *
+ * @return string
+ * Returns the cookie value of empty string if the cookie is not set.
+ *
+ * @author Oleg Schildt
+ */
+function get_cookie($name)
+{
+    return empty($_COOKIE[$name] ? "" : $_COOKIE[$name]);
+} // get_cookie
+
+/**
  * Sets the cookie name=value.
  *
  * @param string $name
@@ -374,7 +393,7 @@ function echo_js($text)
  * @param int $expires
  * The time the cookie expires.
  *
- * @param string $params
+ * @param array $params
  * Any additional parameters like expires, path, domain, secure, httponly or samesite.
  *
  * @return boolean

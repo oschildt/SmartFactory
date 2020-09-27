@@ -243,14 +243,14 @@ class SessionManager extends \SessionHandler implements ISessionManager
         }
         
         $session_path = rtrim($session_path, '/\\');
-        
-        if (empty($_COOKIE[session_name()])) {
+    
+        if (get_cookie(session_name()) == "") {
             session_start();
             session_write_close();
             return false;
         }
         
-        $session_name = preg_replace('/[^\da-z]/i', '', $_COOKIE[session_name()]);
+        $session_name = preg_replace('/[^\da-z]/i', '', get_cookie(session_name()));
         
         if (!file_exists($session_path . '/sess_' . $session_name)) {
             session_start();
@@ -413,8 +413,8 @@ class SessionManager extends \SessionHandler implements ISessionManager
      */
     public function getSessionId()
     {
-        if (self::$readonly && !empty($_COOKIE[session_name()])) {
-            return $_COOKIE[session_name()];
+        if (self::$readonly) {
+            return get_cookie(session_name());
         }
         
         return session_id();

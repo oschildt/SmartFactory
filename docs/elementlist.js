@@ -143,6 +143,7 @@ ApiGen.elements = [
 {"file":"class-SmartFactory.FactoryBuilder.html#bindClass","label":"FactoryBuilder::bindClass()"},
 {"file":"class-SmartFactory.FactoryBuilder.html#getInstance","label":"FactoryBuilder::getInstance()"},
 {"file":"function-SmartFactory.format_number.html","label":"format_number()"},
+{"file":"function-SmartFactory.get_cookie.html","label":"get_cookie()"},
 {"file":"package-HTML_Utils.html","label":"HTML Utils - Package"},
 {"file":"interface-SmartFactory.Interfaces.IDebugProfiler.html","label":"IDebugProfiler - Interface"},
 {"file":"interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFile","label":"IDebugProfiler::clearLogFile()"},
