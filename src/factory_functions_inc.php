@@ -38,7 +38,7 @@ use SmartFactory\DatabaseWorkers\DBWorker;
  */
 function singleton($interface_or_class)
 {
-    return FactoryBuilder::getInstance($interface_or_class, true);
+    return ObjectFactory::getInstance($interface_or_class, true);
 } // singleton
 
 /**
@@ -66,7 +66,7 @@ function singleton($interface_or_class)
  */
 function instance($interface_or_class)
 {
-    return FactoryBuilder::getInstance($interface_or_class, false);
+    return ObjectFactory::getInstance($interface_or_class, false);
 } // instance
 
 /**
@@ -130,7 +130,7 @@ function dbworker($parameters = null, $singleton = true)
     
     $class_name = "SmartFactory\\DatabaseWorkers\\" . $parameters["db_type"] . "_DBWorker";
     
-    $dbworker = FactoryBuilder::getInstance($class_name, $singleton);
+    $dbworker = ObjectFactory::getInstance($class_name, $singleton);
     
     if (!$dbworker->is_extension_installed()) {
         throw new \Exception(sprintf("PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!", $dbworker->get_extension_name(), $dbworker->get_rdbms_name()));

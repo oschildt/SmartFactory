@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Class: FactoryBuilder - Library SmartFactory
+            Class: ObjectFactory - Library SmartFactory
         </title>
     </head>
 
@@ -99,7 +99,7 @@
                         
  
 
-                        <li class="active">FactoryBuilder</li>
+                        <li class="active">ObjectFactory</li>
                 </ol>
                 
             </div>
@@ -111,7 +111,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Class: FactoryBuilder</h1>
+                    <h1>Class: ObjectFactory</h1>
 
 
 
@@ -124,8 +124,8 @@ Class for creation of the objects.
 
 <div class="long-description">
 <h2>Details</h2>
-<p>The class FactoryBuilder is an auxiliary class that empowers the factory methods. It provides the methods
-for binding class implementations to the interfaces.</p>
+<p>The class ObjectFactory is an auxiliary class that empowers the factory methods. It provides the methods
+for binding of class implementations to the interfaces and for creation of objects for the requested interface.</p>
 </div>
 
 
@@ -146,7 +146,7 @@ Oleg Schildt
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.FactoryBuilder.html#18">SmartFactory\FactoryBuilder.php</a>
+<a href="source-SmartFactory.ObjectFactory.html#18">SmartFactory\ObjectFactory.php</a>
 
 
 
@@ -254,7 +254,7 @@ Oleg Schildt
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.FactoryBuilder.html#36">SmartFactory\FactoryBuilder.php</a>
+  <a href="source-SmartFactory.ObjectFactory.html#36">SmartFactory\ObjectFactory.php</a>
 
   
 
@@ -288,7 +288,7 @@ Oleg Schildt
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.FactoryBuilder.html#27">SmartFactory\FactoryBuilder.php</a>
+  <a href="source-SmartFactory.ObjectFactory.html#27">SmartFactory\ObjectFactory.php</a>
 
   
 
@@ -360,11 +360,11 @@ this function is:</p>
 <li>$instance - the created instance.</li>
 </ul>
 <p>Example:</p>
-<pre><code class="language-php">FactoryBuilder::bindClass(ILanguageManager::<span class="php-keyword1">class</span>, LanguageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
+<pre><code class="language-php">ObjectFactory::bindClass(ILanguageManager::<span class="php-keyword1">class</span>, LanguageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
   <span class="php-var">$instance</span>-&gt;detectLanguage();
 });
 
-FactoryBuilder::bindClass(IRecordsetManager::<span class="php-keyword1">class</span>, RecordsetManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
+ObjectFactory::bindClass(IRecordsetManager::<span class="php-keyword1">class</span>, RecordsetManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
   <span class="php-var">$instance</span>-&gt;setDBWorker(dbworker());
 });</code></pre>
       </div>
@@ -411,7 +411,7 @@ FactoryBuilder::bindClass(IRecordsetManager::<span class="php-keyword1">class</s
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.FactoryBuilder.html#94">SmartFactory\FactoryBuilder.php</a>
+  <a href="source-SmartFactory.ObjectFactory.html#94">SmartFactory\ObjectFactory.php</a>
 
   
 
@@ -500,7 +500,7 @@ data objects like User, a separate instance must be created for each item.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.FactoryBuilder.html#167">SmartFactory\FactoryBuilder.php</a>
+  <a href="source-SmartFactory.ObjectFactory.html#167">SmartFactory\ObjectFactory.php</a>
 
   
 
@@ -523,7 +523,7 @@ data objects like User, a separate instance must be created for each item.</p>
 
                     
                     <div id="footer">
-                        Generated on 2020-09-27 06:44
+                        Generated on 2020-11-24 12:30
                     </div>                    
                 </div>
             </div>

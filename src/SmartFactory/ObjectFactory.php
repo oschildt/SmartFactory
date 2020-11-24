@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the implementation of the class FactoryBuilder
+ * This file contains the implementation of the class ObjectFactory
  * for creation of the objects.
  *
  * @package Factory
@@ -13,12 +13,12 @@ namespace SmartFactory;
 /**
  * Class for creation of the objects.
  *
- * The class FactoryBuilder is an auxiliary class that empowers the factory methods. It provides the methods
- * for binding class implementations to the interfaces.
+ * The class ObjectFactory is an auxiliary class that empowers the factory methods. It provides the methods
+ * for binding of class implementations to the interfaces and for creation of objects for the requested interface.
  *
  * @author Oleg Schildt
  */
-class FactoryBuilder
+class ObjectFactory
 {
     /**
      * Internal array for storing the singleton instances for re-using.
@@ -71,11 +71,11 @@ class FactoryBuilder
      * Example:
      *
      * ```php
-     * FactoryBuilder::bindClass(ILanguageManager::class, LanguageManager::class, function($instance) {
+     * ObjectFactory::bindClass(ILanguageManager::class, LanguageManager::class, function($instance) {
      *   $instance->detectLanguage();
      * });
      *
-     * FactoryBuilder::bindClass(IRecordsetManager::class, RecordsetManager::class, function($instance) {
+     * ObjectFactory::bindClass(IRecordsetManager::class, RecordsetManager::class, function($instance) {
      *   $instance->setDBWorker(dbworker());
      * });
      * ```
@@ -207,4 +207,4 @@ class FactoryBuilder
         
         return self::$singletons[$class_name];
     } // getInstance
-} // FactoryBuilder
+} // ObjectFactory

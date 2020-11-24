@@ -120,7 +120,7 @@
 </span><span class="line" id="38"> 38: </span><span class="php-comment"> */</span>
 <span class="line" id="39"> 39: </span><span class="php-keyword1">function</span> singleton(<span class="php-var">$interface_or_class</span>)
 <span class="line" id="40"> 40: </span>{
-<span class="line" id="41"> 41: </span>    <span class="php-keyword1">return</span> FactoryBuilder::getInstance(<span class="php-var">$interface_or_class</span>, <span class="php-keyword1">true</span>);
+<span class="line" id="41"> 41: </span>    <span class="php-keyword1">return</span> ObjectFactory::getInstance(<span class="php-var">$interface_or_class</span>, <span class="php-keyword1">true</span>);
 <span class="line" id="42"> 42: </span>} <span class="php-comment">// singleton</span>
 <span class="line" id="43"> 43: </span>
 <span class="line" id="44"> 44: </span><span class="php-comment">/**
@@ -148,7 +148,7 @@
 </span><span class="line" id="66"> 66: </span><span class="php-comment"> */</span>
 <span class="line" id="67"> 67: </span><span class="php-keyword1">function</span> instance(<span class="php-var">$interface_or_class</span>)
 <span class="line" id="68"> 68: </span>{
-<span class="line" id="69"> 69: </span>    <span class="php-keyword1">return</span> FactoryBuilder::getInstance(<span class="php-var">$interface_or_class</span>, <span class="php-keyword1">false</span>);
+<span class="line" id="69"> 69: </span>    <span class="php-keyword1">return</span> ObjectFactory::getInstance(<span class="php-var">$interface_or_class</span>, <span class="php-keyword1">false</span>);
 <span class="line" id="70"> 70: </span>} <span class="php-comment">// instance</span>
 <span class="line" id="71"> 71: </span>
 <span class="line" id="72"> 72: </span><span class="php-comment">/**
@@ -212,7 +212,7 @@
 <span class="line" id="130">130: </span>    
 <span class="line" id="131">131: </span>    <span class="php-var">$class_name</span> = <span class="php-quote">&quot;SmartFactory\\DatabaseWorkers\\&quot;</span> . <span class="php-var">$parameters</span>[<span class="php-quote">&quot;db_type&quot;</span>] . <span class="php-quote">&quot;_DBWorker&quot;</span>;
 <span class="line" id="132">132: </span>    
-<span class="line" id="133">133: </span>    <span class="php-var">$dbworker</span> = FactoryBuilder::getInstance(<span class="php-var">$class_name</span>, <span class="php-var">$singleton</span>);
+<span class="line" id="133">133: </span>    <span class="php-var">$dbworker</span> = ObjectFactory::getInstance(<span class="php-var">$class_name</span>, <span class="php-var">$singleton</span>);
 <span class="line" id="134">134: </span>    
 <span class="line" id="135">135: </span>    <span class="php-keyword1">if</span> (!<span class="php-var">$dbworker</span>-&gt;is_extension_installed()) {
 <span class="line" id="136">136: </span>        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!&quot;</span>, <span class="php-var">$dbworker</span>-&gt;get_extension_name(), <span class="php-var">$dbworker</span>-&gt;get_rdbms_name()));
@@ -242,7 +242,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2020-09-27 06:44
+                        Generated on 2020-11-24 12:30
                     </div>                    
                 </div>
             </div>

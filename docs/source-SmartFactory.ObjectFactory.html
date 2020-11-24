@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Source Code: SmartFactory\FactoryBuilder.php - Library SmartFactory
+            Source Code: SmartFactory\ObjectFactory.php - Library SmartFactory
         </title>
     </head>
 
@@ -78,11 +78,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Source Code: SmartFactory\FactoryBuilder.php</h2>
+                    <h2>Source Code: SmartFactory\ObjectFactory.php</h2>
 
 <div id="source"><pre class="code"><code><span class="line" id="1">  1: </span><span class="xlang">&lt;?php</span>
 <span class="line" id="2">  2: </span><span class="php-comment">/**
-</span><span class="line" id="3">  3: </span><span class="php-comment"> * This file contains the implementation of the class FactoryBuilder
+</span><span class="line" id="3">  3: </span><span class="php-comment"> * This file contains the implementation of the class ObjectFactory
 </span><span class="line" id="4">  4: </span><span class="php-comment"> * for creation of the objects.
 </span><span class="line" id="5">  5: </span><span class="php-comment"> *
 </span><span class="line" id="6">  6: </span><span class="php-comment"> * @package Factory
@@ -95,12 +95,12 @@
 <span class="line" id="13"> 13: </span><span class="php-comment">/**
 </span><span class="line" id="14"> 14: </span><span class="php-comment"> * Class for creation of the objects.
 </span><span class="line" id="15"> 15: </span><span class="php-comment"> *
-</span><span class="line" id="16"> 16: </span><span class="php-comment"> * The class FactoryBuilder is an auxiliary class that empowers the factory methods. It provides the methods
-</span><span class="line" id="17"> 17: </span><span class="php-comment"> * for binding class implementations to the interfaces.
+</span><span class="line" id="16"> 16: </span><span class="php-comment"> * The class ObjectFactory is an auxiliary class that empowers the factory methods. It provides the methods
+</span><span class="line" id="17"> 17: </span><span class="php-comment"> * for binding of class implementations to the interfaces and for creation of objects for the requested interface.
 </span><span class="line" id="18"> 18: </span><span class="php-comment"> *
 </span><span class="line" id="19"> 19: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="20"> 20: </span><span class="php-comment"> */</span>
-<span class="line" id="21"> 21: </span><span class="php-keyword1">class</span> FactoryBuilder
+<span class="line" id="21"> 21: </span><span class="php-keyword1">class</span> ObjectFactory
 <span class="line" id="22"> 22: </span>{
 <span class="line" id="23"> 23: </span>    <span class="php-comment">/**
 </span><span class="line" id="24"> 24: </span><span class="php-comment">     * Internal array for storing the singleton instances for re-using.
@@ -153,11 +153,11 @@
 </span><span class="line" id="71"> 71: </span><span class="php-comment">     * Example:
 </span><span class="line" id="72"> 72: </span><span class="php-comment">     *
 </span><span class="line" id="73"> 73: </span><span class="php-comment">     * ```php
-</span><span class="line" id="74"> 74: </span><span class="php-comment">     * FactoryBuilder::bindClass(ILanguageManager::class, LanguageManager::class, function($instance) {
+</span><span class="line" id="74"> 74: </span><span class="php-comment">     * ObjectFactory::bindClass(ILanguageManager::class, LanguageManager::class, function($instance) {
 </span><span class="line" id="75"> 75: </span><span class="php-comment">     *   $instance-&gt;detectLanguage();
 </span><span class="line" id="76"> 76: </span><span class="php-comment">     * });
 </span><span class="line" id="77"> 77: </span><span class="php-comment">     *
-</span><span class="line" id="78"> 78: </span><span class="php-comment">     * FactoryBuilder::bindClass(IRecordsetManager::class, RecordsetManager::class, function($instance) {
+</span><span class="line" id="78"> 78: </span><span class="php-comment">     * ObjectFactory::bindClass(IRecordsetManager::class, RecordsetManager::class, function($instance) {
 </span><span class="line" id="79"> 79: </span><span class="php-comment">     *   $instance-&gt;setDBWorker(dbworker());
 </span><span class="line" id="80"> 80: </span><span class="php-comment">     * });
 </span><span class="line" id="81"> 81: </span><span class="php-comment">     * ```
@@ -289,14 +289,14 @@
 <span class="line" id="207">207: </span>        
 <span class="line" id="208">208: </span>        <span class="php-keyword1">return</span> self::<span class="php-var">$singletons</span>[<span class="php-var">$class_name</span>];
 <span class="line" id="209">209: </span>    } <span class="php-comment">// getInstance</span>
-<span class="line" id="210">210: </span>} <span class="php-comment">// FactoryBuilder</span>
+<span class="line" id="210">210: </span>} <span class="php-comment">// ObjectFactory</span>
 <span class="line" id="211">211: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2020-09-27 06:44
+                        Generated on 2020-11-24 12:30
                     </div>                    
                 </div>
             </div>

@@ -21,19 +21,19 @@ use SmartFactory\DatabaseWorkers\ShardManager;
 //-------------------------------------------------------------------
 // Class binding
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(ISessionManager::class, SessionManager::class);
+ObjectFactory::bindClass(ISessionManager::class, SessionManager::class);
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(IEventManager::class, EventManager::class);
+ObjectFactory::bindClass(IEventManager::class, EventManager::class);
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(IMessageManager::class, MessageManager::class, function ($instance) {
+ObjectFactory::bindClass(IMessageManager::class, MessageManager::class, function ($instance) {
     $instance->init(["auto_hide_time" => 3]);
 });
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(JsonApiRequestManager::class, JsonApiRequestManager::class);
+ObjectFactory::bindClass(JsonApiRequestManager::class, JsonApiRequestManager::class);
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(MySQL_DBWorker::class, MySQL_DBWorker::class);
+ObjectFactory::bindClass(MySQL_DBWorker::class, MySQL_DBWorker::class);
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(MSSQL_DBWorker::class, MSSQL_DBWorker::class);
+ObjectFactory::bindClass(MSSQL_DBWorker::class, MSSQL_DBWorker::class);
 //-------------------------------------------------------------------
-FactoryBuilder::bindClass(IShardManager::class, ShardManager::class);
+ObjectFactory::bindClass(IShardManager::class, ShardManager::class);
 //-------------------------------------------------------------------
