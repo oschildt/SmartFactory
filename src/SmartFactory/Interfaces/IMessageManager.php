@@ -511,6 +511,49 @@ interface IMessageManager extends IInitable
     public function addMessagesToResponse(&$response);
     
     /**
+     * Returns the state whether the display of the message details is active or not.
+     *
+     * If the display of the message details is active, they are shown in the frontend.
+     *
+     * @return boolean
+     * Returns the state whether the display of the message details is active or not.
+     *
+     * @see enableDetails()
+     * @see disableDetails()
+     *
+     * @author Oleg Schildt
+     */
+    public function detailsActive();
+    
+    /**
+     * Enables the display of the message details.
+     *
+     * If the display of the message details is active, they are shown in the frontend.
+     *
+     * @return void
+     *
+     * @see detailsActive()
+     * @see disableDetails()
+     *
+     * @author Oleg Schildt
+     */
+    public function enableDetails();
+    
+    /**
+     * Disables the display of the message details.
+     *
+     * If the display of the message details is active, they are shown in the frontend.
+     *
+     * @return void
+     *
+     * @see detailsActive()
+     * @see enableDetails()
+     *
+     * @author Oleg Schildt
+     */
+    public function disableDetails();
+
+    /**
      * Returns the state whether the display of the programming warnings is active or not.
      *
      * If the display of the programming warnings is active, they are shown in the frontend.

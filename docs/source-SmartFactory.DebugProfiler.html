@@ -146,8 +146,8 @@
 <span class="line" id="64"> 64: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;log_path&quot;</span>])) {
 <span class="line" id="65"> 65: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-quote">&quot;Log path is not specified!&quot;</span>);
 <span class="line" id="66"> 66: </span>        }
-<span class="line" id="67"> 67: </span>        
-<span class="line" id="68"> 68: </span>        <span class="php-var">$this</span>-&gt;log_path = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;log_path&quot;</span>];
+<span class="line" id="67"> 67: </span>    
+<span class="line" id="68"> 68: </span>        <span class="php-var">$this</span>-&gt;log_path = <span class="php-keyword2">rtrim</span>(<span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;\\&quot;</span>, <span class="php-quote">&quot;/&quot;</span>, <span class="php-var">$parameters</span>[<span class="php-quote">&quot;log_path&quot;</span>]), <span class="php-quote">&quot;/&quot;</span>) . <span class="php-quote">&quot;/&quot;</span>;
 <span class="line" id="69"> 69: </span>        
 <span class="line" id="70"> 70: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">file_exists</span>(<span class="php-var">$this</span>-&gt;log_path) || !<span class="php-keyword2">is_writable</span>(<span class="php-var">$this</span>-&gt;log_path)) {
 <span class="line" id="71"> 71: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The log path '%s' is not writable!&quot;</span>, <span class="php-var">$this</span>-&gt;log_path));
@@ -327,7 +327,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2020-11-24 12:30
+                        Generated on 2020-11-24 17:03
                     </div>                    
                 </div>
             </div>

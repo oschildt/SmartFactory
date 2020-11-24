@@ -64,8 +64,8 @@ class DebugProfiler implements IDebugProfiler
         if (empty($parameters["log_path"])) {
             throw new \Exception("Log path is not specified!");
         }
-        
-        $this->log_path = $parameters["log_path"];
+    
+        $this->log_path = rtrim(str_replace("\\", "/", $parameters["log_path"]), "/") . "/";
         
         if (!file_exists($this->log_path) || !is_writable($this->log_path)) {
             throw new \Exception(sprintf("The log path '%s' is not writable!", $this->log_path));

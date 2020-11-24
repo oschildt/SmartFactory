@@ -45,6 +45,19 @@ class MessageManager implements IMessageManager
      *
      * @var boolean
      *
+     * @see detailsActive()
+     * @see enableDetails()
+     * @see disableDetails()
+     *
+     * @author Oleg Schildt
+     */
+    protected static $details_disabled = false;
+    
+    /**
+     * Internal variable for storing the state of programming warnings - active or not.
+     *
+     * @var boolean
+     *
      * @see progWarningsActive()
      * @see enableProgWarnings()
      * @see disableProgWarnings()
@@ -52,7 +65,7 @@ class MessageManager implements IMessageManager
      * @author Oleg Schildt
      */
     protected static $prog_warnings_disabled = false;
-    
+
     /**
      * This is internal auxiliary function for preparing messags for displaying.
      *
@@ -88,7 +101,7 @@ class MessageManager implements IMessageManager
                 $message_entry["auto_hide"] = $this->getAutoHideTime();
             }
             
-            if (!empty($current["details"]) && config_settings()->getParameter("show_message_details", false, 1)) {
+            if (!empty($current["details"]) && $this->detailsActive()) {
                 $message_entry["details"] = $current["details"];
             }
             
@@ -872,6 +885,63 @@ class MessageManager implements IMessageManager
     } // addMessagesToResponse
     
     /**
+     * Returns the state whether the display of the message details is active or not.
+     *
+     * If the display of the message details is active, they are shown in the frontend.
+     *
+     * The message details are generally managed over the setting show_prog_warning.
+     * But you can also temporarily disable message details, e.g. to avoid displaying of
+     * unnecessary warnings when you make a check that can produce a programming warning,
+     * but it is a controlled noticed and should not bother the user.
+     *
+     * @return boolean
+     * Returns the state whether the display of the message details is active or not.
+     *
+     * @see enableDetails()
+     * @see disableDetails()
+     *
+     * @author Oleg Schildt
+     */
+    public function detailsActive()
+    {
+        return empty(self::$details_disabled);
+    } // detailsActiveActive
+    
+    /**
+     * Enables the display of the message details.
+     *
+     * If the display of the message details is active, they are shown in the frontend.
+     *
+     * @return void
+     *
+     * @see detailsActive()
+     * @see disableDetails()
+     *
+     * @author Oleg Schildt
+     */
+    public function enableDetails()
+    {
+        self::$details_disabled = false;
+    } // enableDetails
+    
+    /**
+     * Disables the display of the message details.
+     *
+     * If the display of the message details is active, they are shown in the frontend.
+     *
+     * @return void
+     *
+     * @see detailsActive()
+     * @see enableDetails()
+     *
+     * @author Oleg Schildt
+     */
+    public function disableDetails()
+    {
+        self::$details_disabled = true;
+    } // disableDetails
+
+    /**
      * Returns the state whether the display of the programming warnings is active or not.
      *
      * If the display of the programming warnings is active, they are shown in the frontend.
@@ -891,8 +961,8 @@ class MessageManager implements IMessageManager
      */
     public function progWarningsActive()
     {
-        return empty(self::$prog_warnings_disabled) && config_settings()->getParameter("show_prog_warning", false, 0) == 1;
-    } // progWarningsActive
+        return empty(self::$prog_warnings_disabled);
+    } // detailsActive
     
     /**
      * Enables the display of the programming warnings.

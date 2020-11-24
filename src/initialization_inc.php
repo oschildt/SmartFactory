@@ -11,6 +11,7 @@ namespace SmartFactory;
 
 use SmartFactory\Interfaces\IMessageManager;
 use SmartFactory\Interfaces\ISessionManager;
+use SmartFactory\Interfaces\IErrorHandler;
 use SmartFactory\Interfaces\IEventManager;
 use SmartFactory\Interfaces\IShardManager;
 
@@ -20,6 +21,8 @@ use SmartFactory\DatabaseWorkers\ShardManager;
 
 //-------------------------------------------------------------------
 // Class binding
+//-------------------------------------------------------------------
+ObjectFactory::bindClass(IErrorHandler::class, ErrorHandler::class);
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(ISessionManager::class, SessionManager::class);
 //-------------------------------------------------------------------

@@ -32,6 +32,58 @@ function is_associative(&$array)
 } // is_associative
 
 /**
+ * Checks whether the session is cmd client or web.
+ *
+ * @return boolean
+ * Returns true if the session is web, otherwise false.
+ *
+ * @author Oleg Schildt
+ */
+function is_web()
+{
+    return http_response_code() !== false;
+} // is_web
+
+/**
+ * Defines the common prefix of two strings.
+ *
+ * @param string $s1
+ * First string to be checked.
+ *
+ * @param string $s2
+ * Second string to be checked.
+ *
+ * @param int $max
+ * The maximal number of charactes to check.
+ *
+ * @return string
+ * Returns the common prefix of the passed strings.
+ *
+ * @author Oleg Schildt
+ */
+function common_prefix($s1, $s2, $max = 1000)
+{
+    $prefix = "";
+    
+    $l1 = strlen($s1);
+    $l2 = strlen($s2);
+    
+    for ($i = 0; $i < $max; $i++) {
+        if ($i >= $l1 || $i >= $l2) {
+            break;
+        }
+        
+        if ($s1[$i] != $s2[$i]) {
+            break;
+        }
+        
+        $prefix .= $s1[$i];
+    }
+    
+    return $prefix;
+} // common_prefix
+
+/**
  * Converts the JSON string to an array.
  *
  * It is a wrapper over the system function json_decode. It

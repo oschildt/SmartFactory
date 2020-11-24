@@ -179,6 +179,18 @@ for the info messages with flag auto_hide = true.
       
       <tr>
           <td>
+              <a href="#$details_disabled">$details_disabled</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the state of programming warnings - active or not.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#$prog_warnings_disabled">$prog_warnings_disabled</a>
           </td>
           <td>
@@ -320,6 +332,30 @@ for the info messages with flag auto_hide = true.
       
       <tr>
           <td>
+              <a href="#detailsActive">detailsActive</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Returns the state whether the display of the message details is active or not.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#disableDetails">disableDetails</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Disables the display of the message details.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="#disableProgWarnings">disableProgWarnings</a>
           </td>
           <td>
@@ -327,6 +363,18 @@ for the info messages with flag auto_hide = true.
           </td>
           <td class="description_column">
               Disables the display of the programming warnings.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#enableDetails">enableDetails</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Enables the display of the message details.
           </td>
       </tr>
       
@@ -681,6 +729,51 @@ for the info messages with flag auto_hide = true.
 
   
   
+  <hr id="$details_disabled">
+  
+  <h1>Property: $details_disabled</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$details_disabled</b> = <span class="php-keyword1">false</span></div>
+
+  <span class="type_label">Type:</span> boolean
+  
+  
+  <div class="short-description">
+  Internal variable for storing the state of programming warnings - active or not.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.MessageManager.html#51">SmartFactory\MessageManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.MessageManager.html#detailsActive">\SmartFactory\MessageManager::detailsActive()</a><br>
+  
+  <a href="class-SmartFactory.MessageManager.html#enableDetails">\SmartFactory\MessageManager::enableDetails()</a><br>
+  
+  <a href="class-SmartFactory.MessageManager.html#disableDetails">\SmartFactory\MessageManager::disableDetails()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
   <hr id="$prog_warnings_disabled">
   
   <h1>Property: $prog_warnings_disabled</h1>
@@ -707,7 +800,7 @@ for the info messages with flag auto_hide = true.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#51">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#64">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -796,7 +889,7 @@ for the info messages with flag auto_hide = true.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#106">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#119">SmartFactory\MessageManager.php</a>
 
   
 
@@ -861,7 +954,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#840">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#853">SmartFactory\MessageManager.php</a>
 
   
 
@@ -909,7 +1002,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#799">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#812">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -972,7 +1065,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#623">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#636">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1037,7 +1130,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#313">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#326">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1102,7 +1195,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#732">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#745">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1167,7 +1260,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#518">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#531">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1232,7 +1325,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#414">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#427">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1301,7 +1394,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#642">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#655">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1316,6 +1409,138 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href="class-SmartFactory.MessageManager.html#progWarningsExist">\SmartFactory\MessageManager::progWarningsExist()</a><br>
   
   <a href="class-SmartFactory.MessageManager.html#infosExist">\SmartFactory\MessageManager::infosExist()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="detailsActive">
+  
+  <h1>Method: detailsActive</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>detailsActive</b>() : boolean</div>
+
+  
+  <div class="short-description">
+  Returns the state whether the display of the message details is active or not.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>If the display of the message details is active, they are shown in the frontend.</p>
+<p>The message details are generally managed over the setting show_prog_warning.
+But you can also temporarily disable message details, e.g. to avoid displaying of
+unnecessary warnings when you make a check that can produce a programming warning,
+but it is a controlled noticed and should not bother the user.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> boolean
+  
+  <div class="param-description">
+  <p>Returns the state whether the display of the message details is active or not.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#detailsActive">\SmartFactory\Interfaces\IMessageManager::detailsActive()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.MessageManager.html#902">SmartFactory\MessageManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.MessageManager.html#enableDetails">\SmartFactory\MessageManager::enableDetails()</a><br>
+  
+  <a href="class-SmartFactory.MessageManager.html#disableDetails">\SmartFactory\MessageManager::disableDetails()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="disableDetails">
+  
+  <h1>Method: disableDetails</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>disableDetails</b>() : void</div>
+
+  
+  <div class="short-description">
+  Disables the display of the message details.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>If the display of the message details is active, they are shown in the frontend.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#disableDetails">\SmartFactory\Interfaces\IMessageManager::disableDetails()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.MessageManager.html#936">SmartFactory\MessageManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.MessageManager.html#detailsActive">\SmartFactory\MessageManager::detailsActive()</a><br>
+  
+  <a href="class-SmartFactory.MessageManager.html#enableDetails">\SmartFactory\MessageManager::enableDetails()</a><br>
   
   </div>
   
@@ -1369,7 +1594,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#923">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#993">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1378,6 +1603,68 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href="class-SmartFactory.MessageManager.html#progWarningsActive">\SmartFactory\MessageManager::progWarningsActive()</a><br>
   
   <a href="class-SmartFactory.MessageManager.html#enableProgWarnings">\SmartFactory\MessageManager::enableProgWarnings()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="enableDetails">
+  
+  <h1>Method: enableDetails</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>enableDetails</b>() : void</div>
+
+  
+  <div class="short-description">
+  Enables the display of the message details.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>If the display of the message details is active, they are shown in the frontend.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#enableDetails">\SmartFactory\Interfaces\IMessageManager::enableDetails()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.MessageManager.html#919">SmartFactory\MessageManager.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.MessageManager.html#detailsActive">\SmartFactory\MessageManager::detailsActive()</a><br>
+  
+  <a href="class-SmartFactory.MessageManager.html#disableDetails">\SmartFactory\MessageManager::disableDetails()</a><br>
   
   </div>
   
@@ -1431,7 +1718,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#906">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#976">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1492,7 +1779,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#332">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#345">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1574,7 +1861,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#69">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#82">SmartFactory\MessageManager.php</a>
 
   
 
@@ -1632,7 +1919,7 @@ the stored active tab is cleared to avoid activating of the same tab twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#206">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#219">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1693,7 +1980,7 @@ messages with flag auto_hide = true.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#822">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#835">SmartFactory\MessageManager.php</a>
 
   
 
@@ -1751,7 +2038,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#664">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#677">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1824,7 +2111,7 @@ the stored element is cleared to avoid highlighting of the same element twice.</
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#250">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#263">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1889,7 +2176,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#354">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#367">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -1962,7 +2249,7 @@ the stored element is cleared to avoid focusing of the same element twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#163">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#176">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2027,7 +2314,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#773">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#786">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2100,7 +2387,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#559">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#572">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2173,7 +2460,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#455">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#468">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2240,7 +2527,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#751">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#764">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2321,7 +2608,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#124">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#137">SmartFactory\MessageManager.php</a>
 
   
 
@@ -2382,7 +2669,7 @@ but it is a controlled noticed and should not bother the user.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#889">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#959">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2443,7 +2730,7 @@ but it is a controlled noticed and should not bother the user.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#537">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#550">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2517,7 +2804,7 @@ but it is a controlled noticed and should not bother the user.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#188">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#201">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2601,7 +2888,7 @@ of this part might be controlled over a option
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#596">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#609">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2693,7 +2980,7 @@ of this part might be controlled over a option
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#286">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#299">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2763,7 +3050,7 @@ of this part might be controlled over a option
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#231">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#244">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2829,7 +3116,7 @@ of this part might be controlled over a option
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#145">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#158">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -2918,7 +3205,7 @@ automatically after a time defined by the initialization.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#701">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#714">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -3005,7 +3292,7 @@ of this part might be controlled over a option
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#491">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#504">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -3086,7 +3373,7 @@ of this part might be controlled over a option
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#387">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#400">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -3149,7 +3436,7 @@ of this part might be controlled over a option
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.MessageManager.html#433">SmartFactory\MessageManager.php</a>
+  <a href="source-SmartFactory.MessageManager.html#446">SmartFactory\MessageManager.php</a>
 
   
   <h2>See also</h2>
@@ -3178,7 +3465,7 @@ of this part might be controlled over a option
 
                     
                     <div id="footer">
-                        Generated on 2020-11-24 12:30
+                        Generated on 2020-11-24 17:03
                     </div>                    
                 </div>
             </div>

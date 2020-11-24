@@ -593,55 +593,98 @@
 <span class="line" id="511">511: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addMessagesToResponse(&amp;<span class="php-var">$response</span>);
 <span class="line" id="512">512: </span>    
 <span class="line" id="513">513: </span>    <span class="php-comment">/**
-</span><span class="line" id="514">514: </span><span class="php-comment">     * Returns the state whether the display of the programming warnings is active or not.
+</span><span class="line" id="514">514: </span><span class="php-comment">     * Returns the state whether the display of the message details is active or not.
 </span><span class="line" id="515">515: </span><span class="php-comment">     *
-</span><span class="line" id="516">516: </span><span class="php-comment">     * If the display of the programming warnings is active, they are shown in the frontend.
+</span><span class="line" id="516">516: </span><span class="php-comment">     * If the display of the message details is active, they are shown in the frontend.
 </span><span class="line" id="517">517: </span><span class="php-comment">     *
 </span><span class="line" id="518">518: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="519">519: </span><span class="php-comment">     * Returns the state whether the display of the programming warnings is active or not.
+</span><span class="line" id="519">519: </span><span class="php-comment">     * Returns the state whether the display of the message details is active or not.
 </span><span class="line" id="520">520: </span><span class="php-comment">     *
-</span><span class="line" id="521">521: </span><span class="php-comment">     * @see enableProgWarnings()
-</span><span class="line" id="522">522: </span><span class="php-comment">     * @see disableProgWarnings()
+</span><span class="line" id="521">521: </span><span class="php-comment">     * @see enableDetails()
+</span><span class="line" id="522">522: </span><span class="php-comment">     * @see disableDetails()
 </span><span class="line" id="523">523: </span><span class="php-comment">     *
 </span><span class="line" id="524">524: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="525">525: </span><span class="php-comment">     */</span>
-<span class="line" id="526">526: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> progWarningsActive();
+<span class="line" id="526">526: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detailsActive();
 <span class="line" id="527">527: </span>    
 <span class="line" id="528">528: </span>    <span class="php-comment">/**
-</span><span class="line" id="529">529: </span><span class="php-comment">     * Enables the display of the programming warnings.
+</span><span class="line" id="529">529: </span><span class="php-comment">     * Enables the display of the message details.
 </span><span class="line" id="530">530: </span><span class="php-comment">     *
-</span><span class="line" id="531">531: </span><span class="php-comment">     * If the display of the programming warnings is active, they are shown in the frontend.
+</span><span class="line" id="531">531: </span><span class="php-comment">     * If the display of the message details is active, they are shown in the frontend.
 </span><span class="line" id="532">532: </span><span class="php-comment">     *
 </span><span class="line" id="533">533: </span><span class="php-comment">     * @return void
 </span><span class="line" id="534">534: </span><span class="php-comment">     *
-</span><span class="line" id="535">535: </span><span class="php-comment">     * @see progWarningsActive()
-</span><span class="line" id="536">536: </span><span class="php-comment">     * @see disableProgWarnings()
+</span><span class="line" id="535">535: </span><span class="php-comment">     * @see detailsActive()
+</span><span class="line" id="536">536: </span><span class="php-comment">     * @see disableDetails()
 </span><span class="line" id="537">537: </span><span class="php-comment">     *
 </span><span class="line" id="538">538: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="539">539: </span><span class="php-comment">     */</span>
-<span class="line" id="540">540: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableProgWarnings();
+<span class="line" id="540">540: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableDetails();
 <span class="line" id="541">541: </span>    
 <span class="line" id="542">542: </span>    <span class="php-comment">/**
-</span><span class="line" id="543">543: </span><span class="php-comment">     * Disables the display of the programming warnings.
+</span><span class="line" id="543">543: </span><span class="php-comment">     * Disables the display of the message details.
 </span><span class="line" id="544">544: </span><span class="php-comment">     *
-</span><span class="line" id="545">545: </span><span class="php-comment">     * If the display of the programming warnings is active, they are shown in the frontend.
+</span><span class="line" id="545">545: </span><span class="php-comment">     * If the display of the message details is active, they are shown in the frontend.
 </span><span class="line" id="546">546: </span><span class="php-comment">     *
 </span><span class="line" id="547">547: </span><span class="php-comment">     * @return void
 </span><span class="line" id="548">548: </span><span class="php-comment">     *
-</span><span class="line" id="549">549: </span><span class="php-comment">     * @see progWarningsActive()
-</span><span class="line" id="550">550: </span><span class="php-comment">     * @see enableProgWarnings()
+</span><span class="line" id="549">549: </span><span class="php-comment">     * @see detailsActive()
+</span><span class="line" id="550">550: </span><span class="php-comment">     * @see enableDetails()
 </span><span class="line" id="551">551: </span><span class="php-comment">     *
 </span><span class="line" id="552">552: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="553">553: </span><span class="php-comment">     */</span>
-<span class="line" id="554">554: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableProgWarnings();
-<span class="line" id="555">555: </span>} <span class="php-comment">// IMessageManager</span>
-<span class="line" id="556">556: </span>
+<span class="line" id="554">554: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableDetails();
+<span class="line" id="555">555: </span>
+<span class="line" id="556">556: </span>    <span class="php-comment">/**
+</span><span class="line" id="557">557: </span><span class="php-comment">     * Returns the state whether the display of the programming warnings is active or not.
+</span><span class="line" id="558">558: </span><span class="php-comment">     *
+</span><span class="line" id="559">559: </span><span class="php-comment">     * If the display of the programming warnings is active, they are shown in the frontend.
+</span><span class="line" id="560">560: </span><span class="php-comment">     *
+</span><span class="line" id="561">561: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="562">562: </span><span class="php-comment">     * Returns the state whether the display of the programming warnings is active or not.
+</span><span class="line" id="563">563: </span><span class="php-comment">     *
+</span><span class="line" id="564">564: </span><span class="php-comment">     * @see enableProgWarnings()
+</span><span class="line" id="565">565: </span><span class="php-comment">     * @see disableProgWarnings()
+</span><span class="line" id="566">566: </span><span class="php-comment">     *
+</span><span class="line" id="567">567: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="568">568: </span><span class="php-comment">     */</span>
+<span class="line" id="569">569: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> progWarningsActive();
+<span class="line" id="570">570: </span>    
+<span class="line" id="571">571: </span>    <span class="php-comment">/**
+</span><span class="line" id="572">572: </span><span class="php-comment">     * Enables the display of the programming warnings.
+</span><span class="line" id="573">573: </span><span class="php-comment">     *
+</span><span class="line" id="574">574: </span><span class="php-comment">     * If the display of the programming warnings is active, they are shown in the frontend.
+</span><span class="line" id="575">575: </span><span class="php-comment">     *
+</span><span class="line" id="576">576: </span><span class="php-comment">     * @return void
+</span><span class="line" id="577">577: </span><span class="php-comment">     *
+</span><span class="line" id="578">578: </span><span class="php-comment">     * @see progWarningsActive()
+</span><span class="line" id="579">579: </span><span class="php-comment">     * @see disableProgWarnings()
+</span><span class="line" id="580">580: </span><span class="php-comment">     *
+</span><span class="line" id="581">581: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="582">582: </span><span class="php-comment">     */</span>
+<span class="line" id="583">583: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableProgWarnings();
+<span class="line" id="584">584: </span>    
+<span class="line" id="585">585: </span>    <span class="php-comment">/**
+</span><span class="line" id="586">586: </span><span class="php-comment">     * Disables the display of the programming warnings.
+</span><span class="line" id="587">587: </span><span class="php-comment">     *
+</span><span class="line" id="588">588: </span><span class="php-comment">     * If the display of the programming warnings is active, they are shown in the frontend.
+</span><span class="line" id="589">589: </span><span class="php-comment">     *
+</span><span class="line" id="590">590: </span><span class="php-comment">     * @return void
+</span><span class="line" id="591">591: </span><span class="php-comment">     *
+</span><span class="line" id="592">592: </span><span class="php-comment">     * @see progWarningsActive()
+</span><span class="line" id="593">593: </span><span class="php-comment">     * @see enableProgWarnings()
+</span><span class="line" id="594">594: </span><span class="php-comment">     *
+</span><span class="line" id="595">595: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="596">596: </span><span class="php-comment">     */</span>
+<span class="line" id="597">597: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableProgWarnings();
+<span class="line" id="598">598: </span>} <span class="php-comment">// IMessageManager</span>
+<span class="line" id="599">599: </span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2020-11-24 12:30
+                        Generated on 2020-11-24 17:03
                     </div>                    
                 </div>
             </div>

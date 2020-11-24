@@ -20,22 +20,13 @@ use SmartFactory\Interfaces\IErrorHandler;
 class ErrorHandler implements IErrorHandler
 {
     /**
-     * Internal variable for storing the application root.
-     *
-     * @var string
-     *
-     * @author Oleg Schildt
-     */
-    protected $app_root;
-    
-    /**
      * Internal variable for storing the log path.
      *
      * @var string
      *
      * @author Oleg Schildt
      */
-    protected $log_path;
+    protected $log_path = "";
     
     /**
      * Internal variable for storing the last error.
@@ -68,8 +59,6 @@ class ErrorHandler implements IErrorHandler
      * @param array $parameters
      * Settings for logging as an associative array in the form key => value:
      *
-     * - $parameters["app_root"] - the root directory of the application.
-     *
      * - $parameters["log_path"] - the target file path where the logs should be stored.
      *
      * @return boolean
@@ -85,18 +74,18 @@ class ErrorHandler implements IErrorHandler
      */
     public function init($parameters)
     {
-        if (!empty($parameters["app_root"])) {
-            $this->app_root = $parameters["app_root"];
-        }
-        
         if (empty($parameters["log_path"])) {
             throw new \Exception("Log path is not specified!");
         }
         
-        $this->log_path = $parameters["log_path"];
+        if ($parameters["log_path"] == "stdout") {
+            $this->log_path = $parameters["log_path"];
+            return true;
+        }
+        
+        $this->log_path = rtrim(str_replace("\\", "/", $parameters["log_path"]), "/") . "/";
         
         $file = $this->log_path . "trace.log";
-        
         if (!file_exists($this->log_path) || !is_writable($this->log_path) || (file_exists($file) && !is_writable($file))) {
             throw new \Exception(sprintf("The trace file '%s' is not writable!", $file));
         }
@@ -125,7 +114,9 @@ class ErrorHandler implements IErrorHandler
         
         foreach ($btrace as $nr => &$btrace_entry) {
             if ($nr == 0) {
-                $trace .= $btrace_entry["args"][2] . "\r\n" . "line: " . $btrace_entry["args"][3] . "\r\n" . $btrace_entry["args"][1];
+                $trace .=
+                    $btrace_entry["args"][1] . "\r\n" .
+                    "[" . $this->trim_path(str_replace("\\", "/", $btrace_entry["args"][2])) . ", " . $btrace_entry["args"][3] . "]";
                 
                 $cstack = $this->extract_call_stack($btrace);
                 if (!empty($cstack)) {
@@ -138,6 +129,24 @@ class ErrorHandler implements IErrorHandler
         
         return $trace;
     } // format_backtrace
+    
+    /**
+     * This is an auxiliary function that cuts off the common part of the path.
+     *
+     * @param string $path
+     * The path.
+     *
+     * @return string
+     * Returns the cut path.
+     *
+     * @author Oleg Schildt
+     */
+    protected function trim_path($path)
+    {
+        $common_prefix = common_prefix(str_replace("\\", "/", __DIR__), $path);
+        
+        return str_replace($common_prefix, "", $path);
+    } // trim_path
     
     /**
      * Extracts the call stack from the standard PHP backtrace (debug_backtrace).
@@ -161,7 +170,6 @@ class ErrorHandler implements IErrorHandler
         $indent = "";
         foreach ($btrace as $btrace_entry) {
             
-            
             if (!empty($btrace_entry["function"]) && ($btrace_entry["function"] == "handle_error" || strpos($btrace_entry["function"], "{closure}") !== false || $btrace_entry["function"] == "handleError" || $btrace_entry["function"] == "trigger_error")) {
                 continue;
             }
@@ -176,7 +184,7 @@ class ErrorHandler implements IErrorHandler
             
             $trace .= "[";
             
-            $trace .= str_replace($this->app_root, "", str_replace("\\", "/", $btrace_entry["file"]));
+            $trace .= $this->trim_path(str_replace("\\", "/", $btrace_entry["file"]));
             
             $trace .= ", ";
             
@@ -192,7 +200,7 @@ class ErrorHandler implements IErrorHandler
             $args_str = $this->make_arg_list($args);
             
             if (!empty($btrace_entry["function"]) && !empty($args_str)) {
-                $trace .= "  " . str_replace("SmartFactory\\", "", $btrace_entry["function"]) . "(" . $args_str . ")";
+                $trace .= ", call arguments: " . str_replace("SmartFactory\\", "", $btrace_entry["function"]) . "(" . $args_str . ")";
             }
             
             $trace .= "\r\n";
@@ -266,6 +274,9 @@ class ErrorHandler implements IErrorHandler
     /**
      * Traces an error to the standard trace file (logs/trace.log).
      *
+     * @param string $etype
+     * The type of the message to be traced.
+     *
      * @param string $message
      * The message to be traced.
      *
@@ -279,23 +290,45 @@ class ErrorHandler implements IErrorHandler
      *
      * @author Oleg Schildt
      */
-    protected function trace_message($message)
+    protected function trace_message($etype, $message)
     {
         if (!$this->traceActive()) {
             return true;
         }
         
-        $file = $this->log_path . "trace.log";
+        $message = date("Y-m-d H:i:s") . "\r\n" .
+            "----------------------------------------------------------\r\n" .
+            $etype . ":\r\n" .
+            $message . "\r\n" .
+            "----------------------------------------------------------\r\n" .
+            "\r\n\r\n";
         
-        if ((!file_exists($file) && is_writable($this->log_path)) || is_writable($file)) {
-            return file_put_contents($file, date("Y-m-d H:i:s") . "\r\n" .
-                "----------------------------------------------------------\r\n" .
-                $message . "\r\n" .
-                "----------------------------------------------------------\r\n" .
-                "\r\n\r\n", FILE_APPEND) !== false;
-        } else {
-            throw new \Exception(sprintf("The trace file '%s' is not writable!", $file));
+        $trace_file_writable = true;
+        
+        $file = $this->log_path . "trace.log";
+        if (!empty($this->log_path) && $this->log_path != "stdout" &&
+            (!file_exists($this->log_path) || !is_writable($this->log_path) || (file_exists($file) && !is_writable($file)))) {
+            $trace_file_writable = false;
+            
+            $message = sprintf("The trace file '%s' is not writable!", $file) . "\n" .
+                "Tracing to the stdout.\n\n" . $message;
         }
+    
+        if(empty($this->log_path)) {
+            $message = "The trace file is not specifed!" . "\n" .
+                "Tracing to the stdout.\n\n" . $message;
+        }
+        
+        if (empty($this->log_path) || $this->log_path == "stdout" || !$trace_file_writable) {
+            if (is_web()) {
+                $message = "<pre>" . escape_html($message) . "</pre>";
+            }
+            
+            echo $message;
+            return true;
+        }
+        
+        return file_put_contents($file, $message, FILE_APPEND) !== false;
     } // trace_message
     
     /**
@@ -344,7 +377,7 @@ class ErrorHandler implements IErrorHandler
             $etype = $errortype[$errno];
         }
         
-        $this->trace_message($this->format_backtrace(debug_backtrace()));
+        $this->trace_message($etype, $this->format_backtrace(debug_backtrace()));
         
         event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $errstr, "errfile" => $errfile, "errline" => $errline]);
     } // handleError
@@ -402,7 +435,7 @@ class ErrorHandler implements IErrorHandler
         $trace_entry["args"] = ["", $ex->getMessage(), $errfile, $errline];
         array_unshift($trace, $trace_entry);
         
-        $this->trace_message($this->format_backtrace($trace));
+        $this->trace_message($etype, $this->format_backtrace($trace));
         
         event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $ex->getMessage(), "errfile" => $ex->getFile(), "errline" => $ex->getLine()]);
     }
@@ -460,7 +493,7 @@ class ErrorHandler implements IErrorHandler
      */
     public function traceActive()
     {
-        return empty(self::$trace_disabled) && config_settings()->getParameter("tracing_enabled", false, 1) != 0;
+        return empty(self::$trace_disabled);
     } // traceActive
     
     /**

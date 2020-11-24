@@ -166,18 +166,6 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#$app_root">$app_root</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
-          </td>
-          <td class="description_column">
-              Internal variable for storing the application root.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="#$last_error">$last_error</a>
           </td>
           <td>
@@ -382,6 +370,18 @@ standard PHP backtrace (debug_backtrace).
           </td>
       </tr>
       
+      <tr>
+          <td>
+              <a href="#trim_path">trim_path</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function that cuts off the common part of the path.
+          </td>
+      </tr>
+      
       
   </table>
 
@@ -389,40 +389,6 @@ standard PHP backtrace (debug_backtrace).
 
 
 
-  
-  <hr id="$app_root">
-  
-  <h1>Property: $app_root</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$app_root</b></div>
-
-  <span class="type_label">Type:</span> string
-  
-  
-  <div class="short-description">
-  Internal variable for storing the application root.
-  </div>
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#26">SmartFactory\ErrorHandler.php</a>
-
-  
-
-  
-
-  
   
   <hr id="$last_error">
   
@@ -450,7 +416,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#47">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#38">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -471,7 +437,7 @@ standard PHP backtrace (debug_backtrace).
   
   <h1>Property: $log_path</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$log_path</b></div>
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$log_path</b> = <span class="php-quote">&quot;&quot;</span></div>
 
   <span class="type_label">Type:</span> string
   
@@ -493,7 +459,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#35">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#26">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -527,7 +493,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#60">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#51">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -602,7 +568,7 @@ function arguments from the standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#217">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#225">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -663,7 +629,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#494">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#527">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -726,7 +692,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#476">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#509">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -795,7 +761,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#150">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#159">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -855,7 +821,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#115">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#104">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -907,7 +873,7 @@ the standard file.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#415">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#448">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -995,7 +961,7 @@ error handler.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#318">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#351">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1084,7 +1050,7 @@ if an exception is thrown.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#370">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#403">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1116,12 +1082,7 @@ if an exception is thrown.
       <div class="param-description">
       <p>Settings for logging as an associative array in the form key => value:</p>
 <ul>
-<li>
-<p>$parameters["app_root"] - the root directory of the application.</p>
-</li>
-<li>
-<p>$parameters["log_path"] - the target file path where the logs should be stored.</p>
-</li>
+<li>$parameters["log_path"] - the target file path where the logs should be stored.</li>
 </ul>
       </div>
       
@@ -1170,7 +1131,7 @@ if an exception is thrown.
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#83">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#72">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1231,7 +1192,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#246">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#254">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1290,7 +1251,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#434">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#467">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1303,7 +1264,7 @@ standard PHP backtrace (debug_backtrace).
   
   <h1>Method: trace_message</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>trace_message</b>(string <span class="php-var">$message</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <b>trace_message</b>(string <span class="php-var">$etype</span>, string <span class="php-var">$message</span>) : boolean</div>
 
   
   <div class="short-description">
@@ -1315,6 +1276,14 @@ standard PHP backtrace (debug_backtrace).
 
   
   <h2>Parameters</h2>
+  
+      <h3>$etype</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The type of the message to be traced.</p>
+      </div>
+      
   
       <h3>$message</h3>
       <span class="type_label">Type:</span> string
@@ -1364,7 +1333,7 @@ standard PHP backtrace (debug_backtrace).
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#279">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#290">SmartFactory\ErrorHandler.php</a>
 
   
 
@@ -1426,7 +1395,7 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#458">SmartFactory\ErrorHandler.php</a>
+  <a href="source-SmartFactory.ErrorHandler.html#491">SmartFactory\ErrorHandler.php</a>
 
   
   <h2>See also</h2>
@@ -1444,12 +1413,72 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
   
   
   
+  <hr id="trim_path">
+  
+  <h1>Method: trim_path</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>trim_path</b>(string <span class="php-var">$path</span>) : string</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function that cuts off the common part of the path.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$path</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>The path.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the cut path.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.ErrorHandler.html#141">SmartFactory\ErrorHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
 
 
 
                     
                     <div id="footer">
-                        Generated on 2020-11-24 12:30
+                        Generated on 2020-11-24 17:03
                     </div>                    
                 </div>
             </div>
