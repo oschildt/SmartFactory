@@ -453,7 +453,7 @@ function get_cookie($name)
  *
  * @author Oleg Schildt
  */
-function set_cookie($name, $value = "", $expires = 0, $params)
+function set_cookie($name, $value = "", $expires = 0, $params = [])
 {
     if (version_compare(phpversion(), "7.3") >= 0) {
         $params["expires"] = $expires;
