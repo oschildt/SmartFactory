@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Interface: IXmlApiRequestHandler - Library SmartFactory
+            Interface: IRequestHandler - Library SmartFactory
         </title>
     </head>
 
@@ -109,7 +109,7 @@
                         
  
 
-                        <li class="active">IXmlApiRequestHandler</li>
+                        <li class="active">IRequestHandler</li>
                 </ol>
                 
             </div>
@@ -121,23 +121,27 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Interface: IXmlApiRequestHandler</h1>
+                    <h1>Interface: IRequestHandler</h1>
 
 
 <div class="short-description">
-Interface for creation of the XML hanling actions.
-</div>
-
-
-
-<div class="long-description">
-<h2>Details</h2>
-<p>You should implement this interface in your action classes.</p>
+Interface for handling the API requests.
 </div>
 
 
 
 
+
+
+
+<h2>Known implementations</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.JsonRequestHandler.html">\SmartFactory\JsonRequestHandler</a><br>
+
+<a href="class-SmartFactory.XmlRequestHandler.html">\SmartFactory\XmlRequestHandler</a><br>
+
+</div>
 
 
 
@@ -153,19 +157,12 @@ Oleg Schildt
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.Interfaces.IXmlApiRequestHandler.html#20">SmartFactory\Interfaces\IXmlApiRequestHandler.php</a>
+<a href="source-SmartFactory.Interfaces.IRequestHandler.html#14">SmartFactory\Interfaces\IRequestHandler.php</a>
 
 
 
 
 
-
-<h2>Used by</h2>
-<div class="item_list">
-
-<a href="class-SmartFactory.XmlApiRequestManager.html">\SmartFactory\XmlApiRequestManager</a><br>
-
-</div>
 
 
 <p>&nbsp;</p>
@@ -179,7 +176,7 @@ Oleg Schildt
       
       <tr>
           <td>
-              <a href="#handle">handle</a>
+              <a href="#handleRequest">handleRequest</a>
           </td>
           <td class="description_column">
               Method that is called to handle the request.
@@ -194,14 +191,11 @@ Oleg Schildt
 
 
   
-  <hr id="handle">
+  <hr id="handleRequest">
   
-  <h1>Method: handle</h1>
+  <h1>Method: handleRequest</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>handle</b>(\SmartFactory\XmlApiRequestManager <span class="php-var">$rmanager</span>,
-              string <span class="php-var">$api_request</span>,
-              \DOMDocument <span class="php-var">$xmldoc</span>
-             ) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <b>handleRequest</b>() : void</div>
 
   
   <div class="short-description">
@@ -212,41 +206,10 @@ Oleg Schildt
   
 
   
-  <h2>Parameters</h2>
-  
-      <h3>$rmanager</h3>
-      <span class="type_label">Type:</span> <a href="class-SmartFactory.XmlApiRequestManager.html">\SmartFactory\XmlApiRequestManager</a>
-      
-      <div class="param-description">
-      <p>The reference to the manager.</p>
-      </div>
-      
-  
-      <h3>$api_request</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The name of the API request.</p>
-      </div>
-      
-  
-      <h3>$xmldoc</h3>
-      <span class="type_label">Type:</span> \DOMDocument
-      
-      <div class="param-description">
-      <p>The input XML DOM object.</p>
-      </div>
-      
-  
-  
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
-  
-  <div class="param-description">
-  <p>The method should return true upon successful handling, otherwise false.</p>
-  </div>
+  <span class="type_label">Type:</span> void
   
   
 
@@ -262,7 +225,7 @@ Oleg Schildt
   
 
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IXmlApiRequestHandler.html#39">SmartFactory\Interfaces\IXmlApiRequestHandler.php</a>
+  <a href="source-SmartFactory.Interfaces.IRequestHandler.html#23">SmartFactory\Interfaces\IRequestHandler.php</a>
 
   
 
@@ -276,7 +239,7 @@ Oleg Schildt
 
                     
                     <div id="footer">
-                        Generated on 2020-11-24 17:03
+                        Generated on 2022-05-11 14:43
                     </div>                    
                 </div>
             </div>

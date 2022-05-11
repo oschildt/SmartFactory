@@ -32,8 +32,6 @@ ObjectFactory::bindClass(IMessageManager::class, MessageManager::class, function
     $instance->init(["auto_hide_time" => 3]);
 });
 //-------------------------------------------------------------------
-ObjectFactory::bindClass(JsonApiRequestManager::class, JsonApiRequestManager::class);
-//-------------------------------------------------------------------
 ObjectFactory::bindClass(MySQL_DBWorker::class, MySQL_DBWorker::class);
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(MSSQL_DBWorker::class, MSSQL_DBWorker::class);
