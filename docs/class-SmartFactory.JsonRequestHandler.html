@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: JsonRequestHandler - Library SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">JsonRequestHandler</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: JsonRequestHandler</h1>
+
+
+
+
+<div class="short-description">
+Class for handling the JSON API requests.
+</div>
+
+
+
+<div class="long-description">
+<h2>Details</h2>
+<p>The user should derive from this class and implement the methods with the names
+of the API actions.</p>
+<p>URL: http://smartfactorydev.loc/api/login/</p>
+<p>Action: login</p>
+<pre><code class="language-php"><span class="php-keyword1">function</span> login()
+{
+    <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request_data[<span class="php-quote">&quot;login&quot;</span>]) || <span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;request_data[<span class="php-quote">&quot;password&quot;</span>]) ||
+        <span class="php-var">$this</span>-&gt;request_data[<span class="php-quote">&quot;login&quot;</span>] != <span class="php-quote">&quot;admin&quot;</span> || <span class="php-var">$this</span>-&gt;request_data[<span class="php-quote">&quot;password&quot;</span>] != <span class="php-quote">&quot;qwerty&quot;</span>) {
+        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;Wrong login or password!&quot;</span>, <span class="php-quote">&quot;wrong_login&quot;</span>, SmartException::ERR_TYPE_USER_ERROR);
+    }
+
+    <span class="php-var">$this</span>-&gt;response_data[<span class="php-quote">&quot;welcome_msg&quot;</span>] = <span class="php-quote">&quot;Welcome, admin!&quot;</span>;
+}</code></pre>
+</div>
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.IRequestHandler.html">\SmartFactory\Interfaces\IRequestHandler</a><br>
+
+</div>
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-System.html">System</a>
+
+
+<h2>Source code</h2>
+<a href="source-SmartFactory.JsonRequestHandler.html#36">SmartFactory\JsonRequestHandler.php</a>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="3">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$action">$action</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the API action.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$errors">$errors</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the processing errors.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$param_string">$param_string</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the API parameter string.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$request_data">$request_data</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the request data.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$request_headers">$request_headers</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the request headers.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$response_data">$response_data</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the response data.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$response_headers">$response_headers</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the response headers.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="3">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#addError">addError</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Adds a new error to the error list.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#addExceptionError">addExceptionError</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for adding an error to the list
+from an exception.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#exitWithErrors">exitWithErrors</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for exiting the processing and
+sending all collected errors to the response.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#handleRequest">handleRequest</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              This is the main function that should be called to handle the API request.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#parseJsonInput">parseJsonInput</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for parsing the incoming JSON data.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#postprocessRequest">postprocessRequest</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This function is called after the processing of the request. It should be overridden if you want
+to perform some standard action after every API request of your library.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#preprocessRequest">preprocessRequest</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This function is called before the processing of the request. It should be overridden if you want
+to perform some standard action before every API request of your library.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#processInputData">processInputData</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for getting request headers and parsing the API url.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#sendJsonResponse">sendJsonResponse</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              This is an auxiliary function for sending the response in JSON format.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+
+
+  
+  <hr id="$action">
+  
+  <h1>Property: $action</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$action</b> = <span class="php-quote">&quot;&quot;</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the API action.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#45">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$errors">
+  
+  <h1>Property: $errors</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$errors</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the processing errors.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#81">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$param_string">
+  
+  <h1>Property: $param_string</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$param_string</b> = <span class="php-quote">&quot;&quot;</span></div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the API parameter string.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#54">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$request_data">
+  
+  <h1>Property: $request_data</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$request_data</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the request data.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#90">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$request_headers">
+  
+  <h1>Property: $request_headers</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$request_headers</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the request headers.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#63">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$response_data">
+  
+  <h1>Property: $response_data</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$response_data</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the response data.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#99">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="$response_headers">
+  
+  <h1>Property: $response_headers</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$response_headers</b> = <span class="php-keyword1">array</span>()</div>
+
+  <span class="type_label">Type:</span> array
+  
+  
+  <div class="short-description">
+  Internal variable for storing the response headers.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#72">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="addError">
+  
+  <h1>Method: addError</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>addError</b>(<span class="php-keyword1">array</span> <span class="php-var">$error</span>) : void</div>
+
+  
+  <div class="short-description">
+  Adds a new error to the error list.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It is possible to validate an API request and return many errors at once.</p>
+  </div>
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$error</h3>
+      <span class="type_label">Type:</span> array
+      
+      <div class="param-description">
+      <p>Error descrition the form key => value:</p>
+<ul>
+<li>
+<p>$error["error_code"] - error code. Since the error texts can be
+localized, the unique code of the error might be important fo using in comparison.</p>
+</li>
+<li>
+<p>$error["error_type"] - error type. The type of the error might be useful for decision how to show the error on the client. If it is a
+user error, the full error texts should be shown. If it is a programming error, the detailed text should
+be shown only in the debug mode to prevent that the hackers get sensible information about the system.</p>
+</li>
+<li>
+<p>$error["error_message"] - error message.</p>
+</li>
+</ul>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#189">SmartFactory\JsonRequestHandler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#addExceptionError">\SmartFactory\JsonRequestHandler::addExceptionError()</a><br>
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#exitWithErrors">\SmartFactory\JsonRequestHandler::exitWithErrors()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="addExceptionError">
+  
+  <h1>Method: addExceptionError</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>addExceptionError</b>(\Throwable <span class="php-var">$ex</span>) : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for adding an error to the list
+from an exception.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$ex</h3>
+      <span class="type_label">Type:</span> \Throwable
+      
+      <div class="param-description">
+      <p>The thrown exception.</p>
+      </div>
+      
+  
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#208">SmartFactory\JsonRequestHandler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#addError">\SmartFactory\JsonRequestHandler::addError()</a><br>
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#exitWithErrors">\SmartFactory\JsonRequestHandler::exitWithErrors()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="exitWithErrors">
+  
+  <h1>Method: exitWithErrors</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>exitWithErrors</b>() : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for exiting the processing and
+sending all collected errors to the response.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#238">SmartFactory\JsonRequestHandler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#addError">\SmartFactory\JsonRequestHandler::addError()</a><br>
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#addExceptionError">\SmartFactory\JsonRequestHandler::addExceptionError()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="handleRequest">
+  
+  <h1>Method: handleRequest</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>handleRequest</b>() : void</div>
+
+  
+  <div class="short-description">
+  This is the main function that should be called to handle the API request.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It detects the action, retrieves the request headers, parses the incoming JSON data and
+tries to call the corresponding method for the API action.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Implements</h2>
+  <a href="interface-SmartFactory.Interfaces.IRequestHandler.html#handleRequest">\SmartFactory\Interfaces\IRequestHandler::handleRequest()</a><br>
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#325">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="parseJsonInput">
+  
+  <h1>Method: parseJsonInput</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>parseJsonInput</b>() : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for parsing the incoming JSON data.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It validates the content type 'application/json' and takes the data from RAWDATA.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+      <b><a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a></b><br>
+      
+      
+      <p>It might throw an exception if the content type oк JSON data is invalid.</p><br>
+      
+  
+  </div>
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#261">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="postprocessRequest">
+  
+  <h1>Method: postprocessRequest</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>postprocessRequest</b>() : void</div>
+
+  
+  <div class="short-description">
+  This function is called after the processing of the request. It should be overridden if you want
+to perform some standard action after every API request of your library.
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#311">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="preprocessRequest">
+  
+  <h1>Method: preprocessRequest</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>preprocessRequest</b>() : void</div>
+
+  
+  <div class="short-description">
+  This function is called before the processing of the request. It should be overridden if you want
+to perform some standard action before every API request of your library.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>The usage example are - validation of the access tokens, checking maintenance mode and reporting it to
+the user if it is active.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#299">SmartFactory\JsonRequestHandler.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="processInputData">
+  
+  <h1>Method: processInputData</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>processInputData</b>() : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for getting request headers and parsing the API url.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It put the retrieved data into the corresponding properties.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#114">SmartFactory\JsonRequestHandler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#$action">\SmartFactory\JsonRequestHandler::$action</a><br>
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#$param_string">\SmartFactory\JsonRequestHandler::$param_string</a><br>
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#$request_headers">\SmartFactory\JsonRequestHandler::$request_headers</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="sendJsonResponse">
+  
+  <h1>Method: sendJsonResponse</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>sendJsonResponse</b>() : void</div>
+
+  
+  <div class="short-description">
+  This is an auxiliary function for sending the response in JSON format.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>It sends the collected response data and the response headers. The header
+&quot;Content-type: application/json&quot; ist sent automatically.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> void
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.JsonRequestHandler.html#146">SmartFactory\JsonRequestHandler.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.JsonRequestHandler.html#$response_headers">\SmartFactory\JsonRequestHandler::$response_headers</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2022-05-11 14:43
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+

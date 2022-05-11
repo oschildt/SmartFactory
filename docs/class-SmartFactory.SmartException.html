@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: SmartException - Library SmartFactory
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="diagram.html" class="">
+                                Diagram
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">SmartException</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: SmartException</h1>
+
+
+
+
+<div class="short-description">
+Class for extended exception user in the smarFactory library.
+</div>
+
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+\Exception<br>
+
+</div>
+
+
+
+
+
+
+
+<h2>Author</h2>
+Oleg Schildt
+
+
+
+<h2>Package</h2>
+<a href="package-System.html">System</a>
+
+
+<h2>Source code</h2>
+<a href="source-SmartFactory.SmartException.html#21">SmartFactory\SmartException.php</a>
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Constants</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_CONFIG_ERROR">ERR_CODE_CONFIG_ERROR</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "config_error".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_INVALID_CONTENT_TYPE">ERR_CODE_INVALID_CONTENT_TYPE</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "invalid_content_type".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_INVALID_REQUEST_DATA">ERR_CODE_INVALID_REQUEST_DATA</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "invalid_request_data".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_JSON_PARSE_ERROR">ERR_CODE_JSON_PARSE_ERROR</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "json_parse_error".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_MISSING_REQUEST_DATA">ERR_CODE_MISSING_REQUEST_DATA</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "missing_request_data".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_NOT_FOUND">ERR_CODE_NOT_FOUND</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "not_found".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_SYSTEM_ERROR">ERR_CODE_SYSTEM_ERROR</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "system_error".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_CODE_XML_PARSE_ERROR">ERR_CODE_XML_PARSE_ERROR</a>
+          </td>
+          <td class="description_column">
+              Constant for the error code "xml_parse_error".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_TYPE_PROGRAMMING_ERROR">ERR_TYPE_PROGRAMMING_ERROR</a>
+          </td>
+          <td class="description_column">
+              Constant for the error type "programming_error".
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#ERR_TYPE_USER_ERROR">ERR_TYPE_USER_ERROR</a>
+          </td>
+          <td class="description_column">
+              Constant for the error type "user_error".
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="3">Properties</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#$error_code">$error_code</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the error.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#$error_type">$error_type</a>
+          </td>
+          <td>
+              <span class='protected'>protected</span>
+          </td>
+          <td class="description_column">
+              Internal variable for storing the error type.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="3">Methods</th></tr>
+      
+      
+      <tr>
+          <td>
+              <a href="#__construct">__construct</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Constructor.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#getErrorCode">getErrorCode</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Returns the string error code of the exception.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="#getErrorType">getErrorType</a>
+          </td>
+          <td>
+              <span class='public'>public</span>
+          </td>
+          <td class="description_column">
+              Returns the error type of the exception.
+          </td>
+      </tr>
+      
+      
+  </table>
+
+
+
+  
+  <hr id="ERR_CODE_CONFIG_ERROR">
+  
+  <h1>Constant: ERR_CODE_CONFIG_ERROR</h1>
+
+  <div class="definition"><b>ERR_CODE_CONFIG_ERROR</b> = <span class="php-quote">&quot;config_error&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "config_error".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#57">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_CODE_INVALID_CONTENT_TYPE">
+  
+  <h1>Constant: ERR_CODE_INVALID_CONTENT_TYPE</h1>
+
+  <div class="definition"><b>ERR_CODE_INVALID_CONTENT_TYPE</b> = <span class="php-quote">&quot;invalid_content_type&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "invalid_content_type".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#84">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_CODE_INVALID_REQUEST_DATA">
+  
+  <h1>Constant: ERR_CODE_INVALID_REQUEST_DATA</h1>
+
+  <div class="definition"><b>ERR_CODE_INVALID_REQUEST_DATA</b> = <span class="php-quote">&quot;invalid_request_data&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "invalid_request_data".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#75">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_CODE_JSON_PARSE_ERROR">
+  
+  <h1>Constant: ERR_CODE_JSON_PARSE_ERROR</h1>
+
+  <div class="definition"><b>ERR_CODE_JSON_PARSE_ERROR</b> = <span class="php-quote">&quot;json_parse_error&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "json_parse_error".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#93">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_CODE_MISSING_REQUEST_DATA">
+  
+  <h1>Constant: ERR_CODE_MISSING_REQUEST_DATA</h1>
+
+  <div class="definition"><b>ERR_CODE_MISSING_REQUEST_DATA</b> = <span class="php-quote">&quot;missing_request_data&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "missing_request_data".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#66">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_CODE_NOT_FOUND">
+  
+  <h1>Constant: ERR_CODE_NOT_FOUND</h1>
+
+  <div class="definition"><b>ERR_CODE_NOT_FOUND</b> = <span class="php-quote">&quot;not_found&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "not_found".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#111">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_CODE_SYSTEM_ERROR">
+  
+  <h1>Constant: ERR_CODE_SYSTEM_ERROR</h1>
+
+  <div class="definition"><b>ERR_CODE_SYSTEM_ERROR</b> = <span class="php-quote">&quot;system_error&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "system_error".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#48">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_CODE_XML_PARSE_ERROR">
+  
+  <h1>Constant: ERR_CODE_XML_PARSE_ERROR</h1>
+
+  <div class="definition"><b>ERR_CODE_XML_PARSE_ERROR</b> = <span class="php-quote">&quot;xml_parse_error&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error code "xml_parse_error".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#102">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_TYPE_PROGRAMMING_ERROR">
+  
+  <h1>Constant: ERR_TYPE_PROGRAMMING_ERROR</h1>
+
+  <div class="definition"><b>ERR_TYPE_PROGRAMMING_ERROR</b> = <span class="php-quote">&quot;programming_error&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error type "programming_error".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#39">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  <hr id="ERR_TYPE_USER_ERROR">
+  
+  <h1>Constant: ERR_TYPE_USER_ERROR</h1>
+
+  <div class="definition"><b>ERR_TYPE_USER_ERROR</b> = <span class="php-quote">&quot;user_error&quot;</span></div>
+
+  
+  <div class="short-description">
+  Constant for the error type "user_error".
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#30">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="$error_code">
+  
+  <h1>Property: $error_code</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$error_code</b> = \SmartFactory\SmartException::ERR_CODE_SYSTEM_ERROR</div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the error.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#122">SmartFactory\SmartException.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.SmartException.html#getErrorCode">\SmartFactory\SmartException::getErrorCode()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  <hr id="$error_type">
+  
+  <h1>Property: $error_type</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <b>$error_type</b> = \SmartFactory\SmartException::ERR_TYPE_PROGRAMMING_ERROR</div>
+
+  <span class="type_label">Type:</span> string
+  
+  
+  <div class="short-description">
+  Internal variable for storing the error type.
+  </div>
+  
+
+  
+
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#133">SmartFactory\SmartException.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.SmartException.html#getErrorType">\SmartFactory\SmartException::getErrorType()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+
+
+
+  
+  <hr id="__construct">
+  
+  <h1>Constructor</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>__construct</b>(string <span class="php-var">$message</span>,
+                   string <span class="php-var">$error_code</span>,
+                   string <span class="php-var">$error_type</span>
+                  )</div>
+
+  
+  <div class="short-description">
+  Constructor.
+  </div>
+  
+
+  
+
+  
+  <h2>Parameters</h2>
+  
+      <h3>$message</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Error message.</p>
+      </div>
+      
+  
+      <h3>$error_code</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Error code.</p>
+<p>Since the error texts can be localized, the unique code of the error might be important fo using
+in comparison.</p>
+      </div>
+      
+  
+      <h3>$error_type</h3>
+      <span class="type_label">Type:</span> string
+      
+      <div class="param-description">
+      <p>Error type.</p>
+<p>The type of the error might be useful for decision how to show the error on the client. If it is a
+user error, the full error texts should be shown. If it is a programming error, the detailed text should
+be shown only in the debug mode to prevent that the hackers get sensible information about the system.</p>
+      </div>
+      
+  
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#156">SmartFactory\SmartException.php</a>
+
+  
+
+  
+
+  
+  
+  
+  <hr id="getErrorCode">
+  
+  <h1>Method: getErrorCode</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getErrorCode</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the string error code of the exception.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>Since the error texts can be localized, the unique code of the error might be important fo using
+in comparison.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the error code.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#177">SmartFactory\SmartException.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.SmartException.html#getErrorType">\SmartFactory\SmartException::getErrorType()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+  <hr id="getErrorType">
+  
+  <h1>Method: getErrorType</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <b>getErrorType</b>() : string</div>
+
+  
+  <div class="short-description">
+  Returns the error type of the exception.
+  </div>
+  
+
+  
+  <div class="long-description">
+  <h2>Details</h2>
+  <p>The type of the error might be useful for decision how to show the error on the client. If it is a
+user error, the full error texts should be shown. If it is a programming error, the detailed text should
+be shown only in the debug mode to prevent that the hackers get sensible information about the system.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <span class="type_label">Type:</span> string
+  
+  <div class="param-description">
+  <p>Returns the error type.</p>
+  </div>
+  
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <h2>Author</h2>
+  Oleg Schildt
+  
+
+  <h2>Source code</h2>
+  <a href="source-SmartFactory.SmartException.html#196">SmartFactory\SmartException.php</a>
+
+  
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.SmartException.html#getErrorCode">\SmartFactory\SmartException::getErrorCode()</a><br>
+  
+  </div>
+  
+
+  
+
+  
+  
+  
+
+
+
+                    
+                    <div id="footer">
+                        Generated on 2022-05-11 14:43
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+            $(window).resize(function(){
+                $("#viewer").height(1400);
+            });
+
+            $(document).ready(function() {
+                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
+                $('#viewer img').bind('dragstart', function(event){
+                    event.preventDefault();
+                });
+                $(window).resize();
+            });
+        </script>
+        
+    </body>
+</html>
+
+
