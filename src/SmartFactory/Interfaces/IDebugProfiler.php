@@ -76,7 +76,7 @@ interface IDebugProfiler extends IInitable
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see fixProfilePoint()
+     * @see IDebugProfiler::fixProfilePoint()
      *
      * @author Oleg Schildt
      */
@@ -96,7 +96,7 @@ interface IDebugProfiler extends IInitable
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see startProfilePoint()
+     * @see IDebugProfiler::startProfilePoint()
      *
      * @author Oleg Schildt
      */

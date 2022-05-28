@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Class: ObjectFactory - Library SmartFactory
+            Class: ObjectFactory
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -115,14 +109,16 @@
 
 
 
+<div class="definition"></div>
+
 
 <div class="short-description">
-Class for creation of the objects.
+<p>Class for creation of the objects.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>The class ObjectFactory is an auxiliary class that empowers the factory methods. It provides the methods
 for binding of class implementations to the interfaces and for creation of objects for the requested interface.</p>
@@ -136,17 +132,43 @@ for binding of class implementations to the interfaces and for creation of objec
 
 
 
-<h2>Author</h2>
-Oleg Schildt
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
 
 
 
 <h2>Package</h2>
-<a href="package-Factory.html">Factory</a>
+<div class="item_list">
+<a href='package-Factory.html'>Factory</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.ObjectFactory.html#18">SmartFactory\ObjectFactory.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.ObjectFactory.php.html#21'>SmartFactory/ObjectFactory.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -158,165 +180,170 @@ Oleg Schildt
 
 
 
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$itable">$itable</a></div>
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Properties</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#$itable">$itable</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal array for storing the mapping betwen interfaces/classes and the bound classes.
+              <p>Internal array for storing the mapping betwen interfaces/classes and the bound classes.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$singletons">$singletons</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal array for storing the singleton instances for re-using.</p>
           </td>
       </tr>
       
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
       <tr>
           <td>
-              <a href="#$singletons">$singletons</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#bindClass">bindClass()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal array for storing the singleton instances for re-using.
+              <p>Binds a class to an interface or a parent class.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getInstance">getInstance()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Сreates an object that support the interface $interface_or_class.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Methods</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#bindClass">bindClass</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Binds a class to an interface or a parent class.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#getInstance">getInstance</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Сreates an object that support the interface $interface_or_class.
-          </td>
-      </tr>
-      
-      
-  </table>
-
-
-
-
-
+<hr id="$itable">
   
-  <hr id="$itable">
-  
-  <h1>Property: $itable</h1>
+  <h1>Property: ObjectFactory::$itable</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$itable</b> = <span class="php-keyword1">array</span>()</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$itable</span> = [];</div>
 
-  <span class="type_label">Type:</span> array
-  
   
   <div class="short-description">
-  Internal array for storing the mapping betwen interfaces/classes and the bound classes.
+  <p>Internal array for storing the mapping betwen interfaces/classes and the bound classes.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ObjectFactory.html#36">SmartFactory\ObjectFactory.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ObjectFactory.php.html#39'>SmartFactory/ObjectFactory.php</a>
+  </div><hr id="$singletons">
+  
+  <h1>Property: ObjectFactory::$singletons</h1>
 
-  
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$singletons</span> = [];</div>
 
-  
-
-  
-  
-  <hr id="$singletons">
-  
-  <h1>Property: $singletons</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$singletons</b> = <span class="php-keyword1">array</span>()</div>
-
-  <span class="type_label">Type:</span> array
-  
   
   <div class="short-description">
-  Internal array for storing the singleton instances for re-using.
+  <p>Internal array for storing the singleton instances for re-using.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ObjectFactory.html#27">SmartFactory\ObjectFactory.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ObjectFactory.php.html#30'>SmartFactory/ObjectFactory.php</a>
+  </div>
 
+<hr id="bindClass">
   
+  <h1>Method: ObjectFactory::bindClass()</h1>
 
-  
-
-  
-  
-
-
-
-  
-  <hr id="bindClass">
-  
-  <h1>Method: bindClass</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <b>bindClass</b>(string|object <span class="php-var">$interface_or_class</span>,
-                        string|object <span class="php-var">$class</span>,
-                        <span class="php-keyword1">callable</span> <span class="php-var">$init_function</span> = <span class="php-keyword1">null</span>
-                       ) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> bindClass(string|object <span class="php-var">$interface_or_class</span>, 
+                                 string|object <span class="php-var">$class</span>, 
+                                 <span class="php-keyword1">callable</span> <span class="php-var">$init_function</span> = <span class="php-keyword1">null</span>
+                                ) : void;
+</div>
 
   
   <div class="short-description">
-  Binds a class to an interface or a parent class.
+  <p>Binds a class to an interface or a parent class.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>The key point of this approach is the definition common interfaces
 and implementation of them in classes. When an object that supoorts an
@@ -330,29 +357,70 @@ without affecting the code in the business logic.</p>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$interface_or_class</h3>
-      <span class="type_label">Type:</span> string|object
-      
-      <div class="param-description">
-      <p>Name of the class/interface as string or the class/interface.</p>
-      </div>
-      
-  
-      <h3>$class</h3>
-      <span class="type_label">Type:</span> string|object
-      
-      <div class="param-description">
-      <p>The class which instance should be created if the object is requested.</p>
-      </div>
-      
-  
-      <h3>$init_function</h3>
-      <span class="type_label">Type:</span> callable
-      
-      <div class="param-description">
-      <p>The optional initialization function. You can provide it to do some
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $interface_or_class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string|object
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Name of the class/interface as string or the class/interface.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string|object
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The class which instance should be created if the object is requested.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $init_function
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                callable
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>The optional initialization function. You can provide it to do some
 custom intialization. The signature of
 this function is:</p>
 <pre><code class="language-php"><span class="php-keyword1">function</span> (object <span class="php-var">$instance</span>) : void;</code></pre>
@@ -367,25 +435,26 @@ this function is:</p>
 ObjectFactory::bindClass(IRecordsetManager::<span class="php-keyword1">class</span>, RecordsetManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
   <span class="php-var">$instance</span>-&gt;setDBWorker(dbworker());
 });</code></pre>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
   
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the interface or bound class is not specified.</li>
 <li>if the interface or class does not exist.</li>
@@ -393,137 +462,163 @@ ObjectFactory::bindClass(IRecordsetManager::<span class="php-keyword1">class</sp
 <li>if the bound class does not implement the corresponding interface.</li>
 <li>if the bound class is not instantiable.</li>
 <li>if the check of the classes and interfaces fails.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ObjectFactory.php.html#97'>SmartFactory/ObjectFactory.php</a>
   </div>
   
 
   
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ObjectFactory.html#94">SmartFactory\ObjectFactory.php</a>
 
   
 
   
 
   
+
   
+
   
+
+  
+
   <hr id="getInstance">
   
-  <h1>Method: getInstance</h1>
+  <h1>Method: ObjectFactory::getInstance()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <b>getInstance</b>(string|object <span class="php-var">$interface_or_class</span>, boolean <span class="php-var">$singleton</span>) : object</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getInstance(string|object <span class="php-var">$interface_or_class</span>, bool <span class="php-var">$singleton</span>) : object;</div>
 
   
   <div class="short-description">
-  Сreates an object that support the interface $interface_or_class.
+  <p>Сreates an object that support the interface $interface_or_class.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$interface_or_class</h3>
-      <span class="type_label">Type:</span> string|object
-      
-      <div class="param-description">
-      <p>Name of the class/interface which instance should be created.</p>
-      </div>
-      
-  
-      <h3>$singleton</h3>
-      <span class="type_label">Type:</span> boolean
-      
-      <div class="param-description">
-      <p>If the parameter is true, it ensures that only one instance of this object exists.
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $interface_or_class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string|object
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Name of the class/interface which instance should be created.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $singleton
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>If the parameter is true, it ensures that only one instance of this object exists.
 The singleton is a usual patter for the action objects like SessionManager, EventManager,
 DBWorker etc. It makes no sense to produce many instances of such classes,
 it wastes the computer resources and might cause errors.</p>
 <p>If the parameter is false, then, by each request, a new object is created. If you request
 data objects like User, a separate instance must be created for each item.</p>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> object
+  <div class="item_list">
+  object<br>
   
-  <div class="param-description">
-  <p>Returns object of the class bound to the interface.</p>
+  <div class="item_description"><p>Returns object of the class bound to the interface.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the interface or class is not specified.</li>
 <li>if the interface or class does not exist.</li>
 <li>if the check of the classes and interfaces fails.</li>
-</ul><br>
-      
+</ul></div>
+  
   
   </div>
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ObjectFactory.html#167">SmartFactory\ObjectFactory.php</a>
 
   
 
-  
-
-  
-  <h2>Used by</h2>
+  <h2>Authors</h2>
   <div class="item_list">
   
-  <a href="function-SmartFactory.instance.html">\SmartFactory\instance()</a><br>
-  
-  <a href="function-SmartFactory.singleton.html">\SmartFactory\singleton()</a><br>
+  <div class='item'>Oleg Schildt</div>
   
   </div>
-  
-  
+
   
 
+  
 
-
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ObjectFactory.php.html#170'>SmartFactory/ObjectFactory.php</a>
+  </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Interface: ISettingsValidator - Library SmartFactory
+            Interface: ISettingsValidator
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -124,8 +118,12 @@
                     <h1>Interface: ISettingsValidator</h1>
 
 
+
+<div class="definition"></div>
+
+
 <div class="short-description">
-Interface for settings validation.
+<p>Interface for settings validation.</p>
 </div>
 
 
@@ -138,17 +136,56 @@ Interface for settings validation.
 
 
 
-<h2>Author</h2>
-Oleg Schildt
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
 
 
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.Interfaces.ISettingsValidator.html#14">SmartFactory\Interfaces\ISettingsValidator.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.Interfaces.ISettingsValidator.php.html#17'>SmartFactory/Interfaces/ISettingsValidator.php</a>
+</div>
+
+
+
+
+
+
+
+
+<h2>Used by</h2>
+<div class="item_list">
+
+<a href='class-SmartFactory.ConfigSettingsManager.html#validateSettings'>\SmartFactory\ConfigSettingsManager::validateSettings()</a><br>
+
+
+<a href='class-SmartFactory.RuntimeSettingsManager.html#validateSettings'>\SmartFactory\RuntimeSettingsManager::validateSettings()</a><br>
+
+
+<a href='class-SmartFactory.UserSettingsManager.html#validateSettings'>\SmartFactory\UserSettingsManager::validateSettings()</a><br>
+
+
+<a href='interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings'>\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a><br>
+
+
+</div>
+
+
 
 
 
@@ -160,58 +197,89 @@ Oleg Schildt
 
 
 
-
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
       
       <tr>
           <td>
-              <a href="#validate">validate</a>
+              <div style='float:left'><a href="#validate">validate()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Validates the settings of a settings manager.
+              <p>Validates the settings of a settings manager.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-
-
+<hr id="validate">
   
-  <hr id="validate">
-  
-  <h1>Method: validate</h1>
+  <h1>Method: ISettingsValidator::validate()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>validate</b>(\SmartFactory\Interfaces\ISettingsManager <span class="php-var">$settingsmanager</span>, string <span class="php-var">$context</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validate(\SmartFactory\Interfaces\ISettingsManager <span class="php-var">$settingsmanager</span>, string <span class="php-var">$context</span>) : bool;</div>
 
   
   <div class="short-description">
-  Validates the settings of a settings manager.
+  <p>Validates the settings of a settings manager.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$settingsmanager</h3>
-      <span class="type_label">Type:</span> <a href="interface-SmartFactory.Interfaces.ISettingsManager.html">\SmartFactory\Interfaces\ISettingsManager</a>
-      
-      <div class="param-description">
-      <p>The settings manager whose settings should be validated.</p>
-      </div>
-      
-  
-      <h3>$context</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The settings context.</p>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $settingsmanager
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <a href='interface-SmartFactory.Interfaces.ISettingsManager.html'>\SmartFactory\Interfaces\ISettingsManager</a>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The settings manager whose settings should be validated.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The settings context.</p>
 <p>Settings might be edited not in one dialog,
 There can be several masks for different type of settings,
 or the settings can be configured in a wizard.
@@ -220,48 +288,45 @@ saved and validated.
 To be able to write a flexible validator for the subsets,
 the $context is used. It can be - step1, step1, server_settings,
 db_connection_settings etc.</p>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The method should return true upon successful validation, otherwise false.</p>
+  <div class="item_description"><p>The method should return true upon successful validation, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsValidator.html#39">SmartFactory\Interfaces\ISettingsValidator.php</a>
-
-  
-
-  
-
-  
-  
-  
-
-
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsValidator.php.html#42'>SmartFactory/Interfaces/ISettingsValidator.php</a>
+  </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

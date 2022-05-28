@@ -105,8 +105,8 @@ interface IErrorHandler extends IInitable
      * @return boolean
      * Returns the state whether the trace is active or not.
      *
-     * @see enableTrace()
-     * @see disableTrace()
+     * @see IErrorHandler::enableTrace()
+     * @see IErrorHandler::disableTrace()
      *
      * @author Oleg Schildt
      */
@@ -120,8 +120,8 @@ interface IErrorHandler extends IInitable
      *
      * @return void
      *
-     * @see traceActive()
-     * @see disableTrace()
+     * @see IErrorHandler::traceActive()
+     * @see IErrorHandler::disableTrace()
      *
      * @author Oleg Schildt
      */
@@ -135,8 +135,8 @@ interface IErrorHandler extends IInitable
      *
      * @return void
      *
-     * @see traceActive()
-     * @see enableTrace()
+     * @see IErrorHandler::traceActive()
+     * @see IErrorHandler::enableTrace()
      *
      * @author Oleg Schildt
      */

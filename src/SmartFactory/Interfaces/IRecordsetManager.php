@@ -24,7 +24,7 @@ interface IRecordsetManager
      *
      * @return void
      *
-     * @see getDBWorker()
+     * @see IRecordsetManager::getDBWorker()
      *
      * @author Oleg Schildt
      */
@@ -36,7 +36,7 @@ interface IRecordsetManager
      * @return \SmartFactory\DatabaseWorkers\DBWorker
      * Returns the dbworker to be used for working with the database.
      *
-     * @see getDBWorker()
+     * @see IRecordsetManager::getDBWorker()
      *
      * @author Oleg Schildt
      */
@@ -64,7 +64,7 @@ interface IRecordsetManager
     /**
      * Loads a record into an array in the form "field_name" => "value".
      *
-     * @param array $record
+     * @param array &$record
      * The target array where the data should be loaded.
      *
      * @param string|array $where_clause
@@ -74,8 +74,8 @@ interface IRecordsetManager
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
      *
-     * @see saveRecord()
-     * @see loadRecordSet()
+     * @see IRecordsetManager::saveRecord()
+     * @see IRecordsetManager::loadRecordSet()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -93,7 +93,7 @@ interface IRecordsetManager
      * @return boolean
      * Returns true if the records have been successfully deleted, otherwise false.
      *
-     * @see saveRecord()
+     * @see IRecordsetManager::saveRecord()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -104,7 +104,7 @@ interface IRecordsetManager
     /**
      * Saves a record from an array in the form "field_name" => "value" into the table.
      *
-     * @param array $record
+     * @param array &$record
      * The source array with the data to be saved.
      *
      * @param string $identity_field
@@ -116,9 +116,9 @@ interface IRecordsetManager
      * @return boolean
      * Returns true if the record has been successfully saved, otherwise false.
      *
-     * @see loadRecord()
-     * @see saveRecordSet()
-     * @see deleteRecord()
+     * @see IRecordsetManager::loadRecord()
+     * @see IRecordsetManager::saveRecordSet()
+     * @see IRecordsetManager::deleteRecords()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -130,7 +130,7 @@ interface IRecordsetManager
      * Loads records into an array in the form $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] =
      * "value".
      *
-     * @param array $records
+     * @param array &$records
      * The target array where the data should be loaded.
      *
      * @param string|array $where_clause
@@ -143,8 +143,8 @@ interface IRecordsetManager
      * @return boolean
      * Returns true if the record has been successfully loaded, otherwise false.
      *
-     * @see  loadRecord()
-     * @see  saveRecordSet()
+     * @see IRecordsetManager::loadRecord()
+     * @see IRecordsetManager::saveRecordSet()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -156,7 +156,7 @@ interface IRecordsetManager
      * Saves records from an array in the form
      * $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.
      *
-     * @param array $records
+     * @param array &$records
      * The source array with the data to be saved.
      *
      * @param array $parent_values
@@ -166,8 +166,8 @@ interface IRecordsetManager
      * @return boolean
      * Returns true if the records have been successfully saved, otherwise false.
      *
-     * @see  loadRecordSet()
-     * @see  saveRecord()
+     * @see IRecordsetManager::loadRecordSet()
+     * @see IRecordsetManager::saveRecord()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *

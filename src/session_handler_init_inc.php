@@ -12,7 +12,5 @@ namespace SmartFactory;
 use Smartfactory\Interfaces\ISessionManager;
 
 //------------------------------------------------------------------------------
-$smanager = singleton(ISessionManager::class);
-
-session_set_save_handler($smanager, true);
+session_set_save_handler(singleton(ISessionManager::class), true);
 //------------------------------------------------------------------------------

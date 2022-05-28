@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Class: ErrorHandler - Library SmartFactory
+            Class: ErrorHandler
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -115,10 +109,13 @@
 
 
 
+<div class="definition"></div>
+
 
 <div class="short-description">
-Class for error handling.
+<p>Class for error handling.</p>
 </div>
+
 
 
 
@@ -129,7 +126,7 @@ Class for error handling.
 <h2>Implements</h2>
 <div class="item_list">
 
-<a href="interface-SmartFactory.Interfaces.IErrorHandler.html">\SmartFactory\Interfaces\IErrorHandler</a><br>
+<a href='interface-SmartFactory.Interfaces.IErrorHandler.html'>\SmartFactory\Interfaces\IErrorHandler</a><br>
 
 </div>
 
@@ -137,17 +134,40 @@ Class for error handling.
 
 
 
-<h2>Author</h2>
-Oleg Schildt
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
 
 
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.ErrorHandler.html#17">SmartFactory\ErrorHandler.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.ErrorHandler.php.html#20'>SmartFactory/ErrorHandler.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -159,445 +179,501 @@ Oleg Schildt
 
 
 
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$last_error">$last_error</a></div>
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Properties</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#$last_error">$last_error</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal variable for storing the last error.
+              <p>Internal variable for storing the last error.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#$log_path">$log_path</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#$log_path">$log_path</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal variable for storing the log path.
+              <p>Internal variable for storing the log path.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#$trace_disabled">$trace_disabled</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#$trace_disabled">$trace_disabled</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal variable for storing the state of tracing - active or not.
+              <p>Internal variable for storing the state of tracing - active or not.</p>
           </td>
       </tr>
-      
       
   </table>
 
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#deep_implode">deep_implode()</a></div>
 
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is an auxiliary function for generation of the detailed string from the
+function arguments from the standard PHP backtrace (debug_backtrace).</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#disableTrace">disableTrace()</a></div>
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Methods</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#deep_implode">deep_implode</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              This is an auxiliary function for generation of the detailed string from the
-function arguments from the standard PHP backtrace (debug_backtrace).
+              <p>Disables the trace.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#disableTrace">disableTrace</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
+              <div style='float:left'><a href="#enableTrace">enableTrace()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Disables the trace.
+              <p>Enables the trace.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#enableTrace">enableTrace</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
+              <div style='float:left'><a href="#extract_call_stack">extract_call_stack()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Enables the trace.
+              <p>Extracts the call stack from the standard PHP backtrace (debug_backtrace).</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#extract_call_stack">extract_call_stack</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#format_backtrace">format_backtrace()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Extracts the call stack from the standard PHP backtrace (debug_backtrace).
+              <p>Formats the standard PHP backtrace (debug_backtrace).</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#format_backtrace">format_backtrace</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#getLastError">getLastError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Formats the standard PHP backtrace (debug_backtrace).
+              <p>Returns the last error.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#getLastError">getLastError</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
+              <div style='float:left'><a href="#handleError">handleError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Returns the last error.
+              <p>This is the function for handling of the PHP errors. It is set a the
+error handler.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#handleError">handleError</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
+              <div style='float:left'><a href="#handleException">handleException()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              This is the function for handling of the PHP errors. It is set a the
-error handler.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#handleException">handleException</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              This is the function for handling of the PHP exceptions. It should
+              <p>This is the function for handling of the PHP exceptions. It should
 be called in the catch block to trace detailed infromation
-if an exception is thrown.
+if an exception is thrown.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#init">init</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Initializes the error handler with parameters.
+              <p>Initializes the error handler with parameters.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#make_arg_list">make_arg_list</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#make_arg_list">make_arg_list()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Generates the detailed string from the function arguments from the
-standard PHP backtrace (debug_backtrace).
+              <p>Generates the detailed string from the function arguments from the
+standard PHP backtrace (debug_backtrace).</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#setLastError">setLastError</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
+              <div style='float:left'><a href="#setLastError">setLastError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Stores the last error.
+              <p>Stores the last error.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#trace_message">trace_message</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#traceActive">traceActive()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Traces an error to the standard trace file (logs/trace.log).
+              <p>Returns the state whether the trace is active or not.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#traceActive">traceActive</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
+              <div style='float:left'><a href="#trace_message">trace_message()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Returns the state whether the trace is active or not.
+              <p>Traces an error to the standard trace file (logs/trace.log).</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#trim_path">trim_path</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#trim_path">trim_path()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              This is an auxiliary function that cuts off the common part of the path.
+              <p>This is an auxiliary function that cuts off the common part of the path.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-
-
+<hr id="$last_error">
   
-  <hr id="$last_error">
-  
-  <h1>Property: $last_error</h1>
+  <h1>Property: ErrorHandler::$last_error</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$last_error</b></div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> string <span class="php-var">$last_error</span>;</div>
 
-  <span class="type_label">Type:</span> string
-  
   
   <div class="short-description">
-  Internal variable for storing the last error.
+  <p>Internal variable for storing the last error.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#38">SmartFactory\ErrorHandler.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#41'>SmartFactory/ErrorHandler.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ErrorHandler.html#getLastError">\SmartFactory\ErrorHandler::getLastError()</a><br>
+  <a href='class-SmartFactory.ErrorHandler.html#getLastError'>\SmartFactory\ErrorHandler::getLastError()</a><br>
   
-  <a href="class-SmartFactory.ErrorHandler.html#setLastError">\SmartFactory\ErrorHandler::setLastError()</a><br>
   
-  </div>
+  <a href='class-SmartFactory.ErrorHandler.html#setLastError'>\SmartFactory\ErrorHandler::setLastError()</a><br>
   
+  
+  </div><hr id="$log_path">
+  
+  <h1>Property: ErrorHandler::$log_path</h1>
 
-  
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$log_path</span> = <span class="php-quote">&quot;&quot;</span>;</div>
 
-  
-  
-  <hr id="$log_path">
-  
-  <h1>Property: $log_path</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>$log_path</b> = <span class="php-quote">&quot;&quot;</span></div>
-
-  <span class="type_label">Type:</span> string
-  
   
   <div class="short-description">
-  Internal variable for storing the log path.
+  <p>Internal variable for storing the log path.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#26">SmartFactory\ErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#29'>SmartFactory/ErrorHandler.php</a>
+  </div><hr id="$trace_disabled">
+  
+  <h1>Property: ErrorHandler::$trace_disabled</h1>
 
-  
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> bool <span class="php-var">$trace_disabled</span> = <span class="php-keyword1">false</span>;</div>
 
-  
-
-  
-  
-  <hr id="$trace_disabled">
-  
-  <h1>Property: $trace_disabled</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$trace_disabled</b> = <span class="php-keyword1">false</span></div>
-
-  <span class="type_label">Type:</span> boolean
-  
   
   <div class="short-description">
-  Internal variable for storing the state of tracing - active or not.
+  <p>Internal variable for storing the state of tracing - active or not.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  bool
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#51">SmartFactory\ErrorHandler.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#54'>SmartFactory/ErrorHandler.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ErrorHandler.html#traceActive">\SmartFactory\ErrorHandler::traceActive()</a><br>
+  <a href='class-SmartFactory.ErrorHandler.html#traceActive'>\SmartFactory\ErrorHandler::traceActive()</a><br>
   
-  <a href="class-SmartFactory.ErrorHandler.html#enableTrace">\SmartFactory\ErrorHandler::enableTrace()</a><br>
   
-  <a href="class-SmartFactory.ErrorHandler.html#disableTrace">\SmartFactory\ErrorHandler::disableTrace()</a><br>
+  <a href='class-SmartFactory.ErrorHandler.html#enableTrace'>\SmartFactory\ErrorHandler::enableTrace()</a><br>
+  
+  
+  <a href='class-SmartFactory.ErrorHandler.html#disableTrace'>\SmartFactory\ErrorHandler::disableTrace()</a><br>
+  
   
   </div>
-  
 
+<hr id="deep_implode">
   
+  <h1>Method: ErrorHandler::deep_implode()</h1>
 
-  
-  
-
-
-
-  
-  <hr id="deep_implode">
-  
-  <h1>Method: deep_implode</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>deep_implode</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$arr</span>) : string</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> deep_implode(<span class="php-keyword1">array</span> &amp;<span class="php-var">$arr</span>) : string;</div>
 
   
   <div class="short-description">
-  This is an auxiliary function for generation of the detailed string from the
-function arguments from the standard PHP backtrace (debug_backtrace).
+  <p>This is an auxiliary function for generation of the detailed string from the
+function arguments from the standard PHP backtrace (debug_backtrace).</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$arr</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The array of the function arguments.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $arr
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The array of the function arguments.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
-  <p>Returns the detailed string from the function arguments.</p>
+  <div class="item_description"><p>Returns the detailed string from the function arguments.</p></div>
+  
   </div>
   
-  
-
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#225">SmartFactory\ErrorHandler.php</a>
 
   
 
   
 
-  
-  <h2>Used by</h2>
+  <h2>Authors</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ErrorHandler.html#make_arg_list">\SmartFactory\ErrorHandler::make_arg_list()</a><br>
+  <div class='item'>Oleg Schildt</div>
   
   </div>
+
   
+
   
+
   
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#228'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="disableTrace">
   
-  <h1>Method: disableTrace</h1>
+  <h1>Method: ErrorHandler::disableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>disableTrace</b>() : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace() : void;</div>
 
   
   <div class="short-description">
-  Disables the trace.
+  <p>Disables the trace.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>If the trace is active, any eror, warning or notice is traced to
 the standard file.</p>
@@ -607,37 +683,11 @@ the standard file.</p>
   
 
   
+
+  
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace">\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#527">SmartFactory\ErrorHandler.php</a>
-
-  
-  <h2>See also</h2>
   <div class="item_list">
-  
-  <a href="class-SmartFactory.ErrorHandler.html#traceActive">\SmartFactory\ErrorHandler::traceActive()</a><br>
-  
-  <a href="class-SmartFactory.ErrorHandler.html#enableTrace">\SmartFactory\ErrorHandler::enableTrace()</a><br>
+  void<br>
   
   </div>
   
@@ -645,22 +695,67 @@ the standard file.</p>
   
 
   
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace'>\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#530'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.ErrorHandler.html#traceActive'>\SmartFactory\ErrorHandler::traceActive()</a><br>
   
   
+  <a href='class-SmartFactory.ErrorHandler.html#enableTrace'>\SmartFactory\ErrorHandler::enableTrace()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="enableTrace">
   
-  <h1>Method: enableTrace</h1>
+  <h1>Method: ErrorHandler::enableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>enableTrace</b>() : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace() : void;</div>
 
   
   <div class="short-description">
-  Enables the trace.
+  <p>Enables the trace.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>If the trace is active, any eror, warning or notice is traced to
 the standard file.</p>
@@ -670,176 +765,267 @@ the standard file.</p>
   
 
   
+
+  
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
   
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace'>\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace">\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
 
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#509">SmartFactory\ErrorHandler.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#512'>SmartFactory/ErrorHandler.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ErrorHandler.html#traceActive">\SmartFactory\ErrorHandler::traceActive()</a><br>
+  <a href='class-SmartFactory.ErrorHandler.html#traceActive'>\SmartFactory\ErrorHandler::traceActive()</a><br>
   
-  <a href="class-SmartFactory.ErrorHandler.html#disableTrace">\SmartFactory\ErrorHandler::disableTrace()</a><br>
+  
+  <a href='class-SmartFactory.ErrorHandler.html#disableTrace'>\SmartFactory\ErrorHandler::disableTrace()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="extract_call_stack">
   
-  <h1>Method: extract_call_stack</h1>
+  <h1>Method: ErrorHandler::extract_call_stack()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>extract_call_stack</b>(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
 
   
   <div class="short-description">
-  Extracts the call stack from the standard PHP backtrace (debug_backtrace).
+  <p>Extracts the call stack from the standard PHP backtrace (debug_backtrace).</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$btrace</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The backtrace.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $btrace
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The backtrace.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
-  <p>Returns the extracted call stack.</p>
+  <div class="item_description"><p>Returns the extracted call stack.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#159">SmartFactory\ErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#162'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="format_backtrace">
   
-  <h1>Method: format_backtrace</h1>
+  <h1>Method: ErrorHandler::format_backtrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>format_backtrace</b>(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> format_backtrace(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
 
   
   <div class="short-description">
-  Formats the standard PHP backtrace (debug_backtrace).
+  <p>Formats the standard PHP backtrace (debug_backtrace).</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$btrace</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The backtrace.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $btrace
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The backtrace.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
-  <p>Returns the formatted backtrace.</p>
+  <div class="item_description"><p>Returns the formatted backtrace.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#104">SmartFactory\ErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#107'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="getLastError">
   
-  <h1>Method: getLastError</h1>
+  <h1>Method: ErrorHandler::getLastError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>getLastError</b>() : string</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError() : string;</div>
 
   
   <div class="short-description">
-  Returns the last error.
+  <p>Returns the last error.</p>
   </div>
+  
+
   
 
   
@@ -848,514 +1034,685 @@ the standard file.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
-  <p>Returns the last error or an empty string if no error occured so far.</p>
+  <div class="item_description"><p>Returns the last error or an empty string if no error occured so far.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#getLastError">\SmartFactory\Interfaces\IErrorHandler::getLastError()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#getLastError'>\SmartFactory\Interfaces\IErrorHandler::getLastError()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#448">SmartFactory\ErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#451'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="handleError">
   
-  <h1>Method: handleError</h1>
+  <h1>Method: ErrorHandler::handleError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>handleError</b>(integer <span class="php-var">$errno</span>,
-                   string <span class="php-var">$errstr</span>,
-                   string <span class="php-var">$errfile</span>,
-                   integer <span class="php-var">$errline</span>
-                  ) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(int <span class="php-var">$errno</span>, string <span class="php-var">$errstr</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>) : void;</div>
 
   
   <div class="short-description">
-  This is the function for handling of the PHP errors. It is set a the
-error handler.
+  <p>This is the function for handling of the PHP errors. It is set a the
+error handler.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$errno</h3>
-      <span class="type_label">Type:</span> integer
-      
-      <div class="param-description">
-      <p>Error code.</p>
-      </div>
-      
-  
-      <h3>$errstr</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Error text.</p>
-      </div>
-      
-  
-      <h3>$errfile</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Source file where the error occured.</p>
-      </div>
-      
-  
-      <h3>$errline</h3>
-      <span class="type_label">Type:</span> integer
-      
-      <div class="param-description">
-      <p>Line number where the error occured.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $errno
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Error code.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errstr
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Error text.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errfile
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Source file where the error occured.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errline
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Line number where the error occured.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
   
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#handleError'>\SmartFactory\Interfaces\IErrorHandler::handleError()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#handleError">\SmartFactory\Interfaces\IErrorHandler::handleError()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
 
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#351">SmartFactory\ErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#354'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="handleException">
   
-  <h1>Method: handleException</h1>
+  <h1>Method: ErrorHandler::handleException()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>handleException</b>(\Throwable <span class="php-var">$ex</span>,
-                       string <span class="php-var">$errfuntion</span>,
-                       string <span class="php-var">$errfile</span>,
-                       integer <span class="php-var">$errline</span>
-                      ) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, string <span class="php-var">$errfuntion</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>) : void;</div>
 
   
   <div class="short-description">
-  This is the function for handling of the PHP exceptions. It should
+  <p>This is the function for handling of the PHP exceptions. It should
 be called in the catch block to trace detailed infromation
-if an exception is thrown.
+if an exception is thrown.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$ex</h3>
-      <span class="type_label">Type:</span> \Throwable
-      
-      <div class="param-description">
-      <p>Thrown exception.</p>
-      </div>
-      
-  
-      <h3>$errfuntion</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Funtion name where the exception has been catched.</p>
-      </div>
-      
-  
-      <h3>$errfile</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Source file where the exception has been catched.</p>
-      </div>
-      
-  
-      <h3>$errline</h3>
-      <span class="type_label">Type:</span> integer
-      
-      <div class="param-description">
-      <p>Line number where the exception has been catched.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $ex
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                \Throwable
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Thrown exception.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errfuntion
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Funtion name where the exception has been catched.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errfile
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Source file where the exception has been catched.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errline
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Line number where the exception has been catched.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
   
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#handleException'>\SmartFactory\Interfaces\IErrorHandler::handleException()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#handleException">\SmartFactory\Interfaces\IErrorHandler::handleException()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
 
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#403">SmartFactory\ErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#406'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="init">
   
-  <h1>Method: init</h1>
+  <h1>Method: ErrorHandler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>init</b>(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : bool;</div>
 
   
   <div class="short-description">
-  Initializes the error handler with parameters.
+  <p>Initializes the error handler with parameters.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$parameters</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>Settings for logging as an associative array in the form key => value:</p>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Settings for logging as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>$parameters["log_path"] - the target file path where the logs should be stored.</li>
+<li>$parameters[&quot;log_path&quot;] - the target file path where the logs should be stored.</li>
 </ul>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true upon successful initialization, otherwise false.</p>
+  <div class="item_description"><p>Returns true upon successful initialization, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw an exception in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
 <ul>
 <li>if the log path is not specified.</li>
 <li>if the trace file is not writable.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#init'>\SmartFactory\Interfaces\IErrorHandler::init()</a>
   </div>
   
 
-  
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#init">\SmartFactory\Interfaces\IErrorHandler::init()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#72">SmartFactory\ErrorHandler.php</a>
-
-  
-
-  
-
-  
-  
-  
-  <hr id="make_arg_list">
-  
-  <h1>Method: make_arg_list</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>make_arg_list</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$args</span>) : string</div>
-
-  
-  <div class="short-description">
-  Generates the detailed string from the function arguments from the
-standard PHP backtrace (debug_backtrace).
-  </div>
-  
-
-  
-
-  
-  <h2>Parameters</h2>
-  
-      <h3>$args</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The array of the function arguments.</p>
-      </div>
-      
-  
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
-  
-  <div class="param-description">
-  <p>Returns the detailed string from the function arguments.</p>
-  </div>
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#254">SmartFactory\ErrorHandler.php</a>
-
-  
-
-  
-
-  
-  
-  
-  <hr id="setLastError">
-  
-  <h1>Method: setLastError</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>setLastError</b>(string <span class="php-var">$error</span>) : void</div>
-
-  
-  <div class="short-description">
-  Stores the last error.
-  </div>
-  
-
-  
-
-  
-  <h2>Parameters</h2>
-  
-      <h3>$error</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The error text to be stored.</p>
-      </div>
-      
-  
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#setLastError">\SmartFactory\Interfaces\IErrorHandler::setLastError()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#467">SmartFactory\ErrorHandler.php</a>
-
-  
-
-  
-
-  
-  
-  
-  <hr id="trace_message">
-  
-  <h1>Method: trace_message</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <b>trace_message</b>(string <span class="php-var">$etype</span>, string <span class="php-var">$message</span>) : boolean</div>
-
-  
-  <div class="short-description">
-  Traces an error to the standard trace file (logs/trace.log).
-  </div>
-  
-
-  
-
-  
-  <h2>Parameters</h2>
-  
-      <h3>$etype</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The type of the message to be traced.</p>
-      </div>
-      
-  
-      <h3>$message</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The message to be traced.</p>
-      </div>
-      
-  
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
-  
-  <div class="param-description">
-  <p>Returns true if the message has been successfully trace, otherwise false.</p>
-  </div>
-  
-  
-
-  
-  <h2>Throws</h2>
+  <h2>Authors</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw an exception in the case of any errors:</p>
-<ul>
-<li>if the trace file is not writable.</li>
-</ul><br>
-      
+  <div class='item'>Oleg Schildt</div>
   
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#75'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
   
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#290">SmartFactory\ErrorHandler.php</a>
 
   
 
   
 
   
-  
-  
-  <hr id="traceActive">
-  
-  <h1>Method: traceActive</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>traceActive</b>() : boolean</div>
+  
+
+  
+
+  
+
+  <hr id="make_arg_list">
+  
+  <h1>Method: ErrorHandler::make_arg_list()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> make_arg_list(<span class="php-keyword1">array</span> &amp;<span class="php-var">$args</span>) : string;</div>
 
   
   <div class="short-description">
-  Returns the state whether the trace is active or not.
+  <p>Generates the detailed string from the function arguments from the
+standard PHP backtrace (debug_backtrace).</p>
   </div>
   
 
   
-  <div class="long-description">
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $args
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The array of the function arguments.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the detailed string from the function arguments.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#257'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setLastError">
+  
+  <h1>Method: ErrorHandler::setLastError()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(string <span class="php-var">$error</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Stores the last error.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $error
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The error text to be stored.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#setLastError'>\SmartFactory\Interfaces\IErrorHandler::setLastError()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#470'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="traceActive">
+  
+  <h1>Method: ErrorHandler::traceActive()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive() : bool;</div>
+
+  
+  <div class="short-description">
+  <p>Returns the state whether the trace is active or not.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
   <h2>Details</h2>
   <p>If the trace is active, any eror, warning or notice is traced to
 the standard file.</p>
@@ -1369,116 +1726,273 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
   
 
   
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+
   
-  <div class="param-description">
-  <p>Returns the state whether the trace is active or not.</p>
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>Returns the state whether the trace is active or not.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive">\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive'>\SmartFactory\Interfaces\IErrorHandler::traceActive()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#491">SmartFactory\ErrorHandler.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#494'>SmartFactory/ErrorHandler.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.ErrorHandler.html#enableTrace">\SmartFactory\ErrorHandler::enableTrace()</a><br>
+  <a href='class-SmartFactory.ErrorHandler.html#enableTrace'>\SmartFactory\ErrorHandler::enableTrace()</a><br>
   
-  <a href="class-SmartFactory.ErrorHandler.html#disableTrace">\SmartFactory\ErrorHandler::disableTrace()</a><br>
+  
+  <a href='class-SmartFactory.ErrorHandler.html#disableTrace'>\SmartFactory\ErrorHandler::disableTrace()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
-  
-  
-  <hr id="trim_path">
-  
-  <h1>Method: trim_path</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <b>trim_path</b>(string <span class="php-var">$path</span>) : string</div>
+  
+
+  
+
+  <hr id="trace_message">
+  
+  <h1>Method: ErrorHandler::trace_message()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trace_message(string <span class="php-var">$etype</span>, string <span class="php-var">$message</span>) : bool;</div>
 
   
   <div class="short-description">
-  This is an auxiliary function that cuts off the common part of the path.
+  <p>Traces an error to the standard trace file (logs/trace.log).</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$path</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The path.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $etype
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The type of the message to be traced.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The message to be traced.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns the cut path.</p>
+  <div class="item_description"><p>Returns true if the message has been successfully trace, otherwise false.</p></div>
+  
   </div>
   
+
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if the trace file is not writable.</li>
+</ul></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
 
   
 
   
-  
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
 
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.ErrorHandler.html#141">SmartFactory\ErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#293'>SmartFactory/ErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
 
+  <hr id="trim_path">
+  
+  <h1>Method: ErrorHandler::trim_path()</h1>
 
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trim_path(string <span class="php-var">$path</span>) : string;</div>
 
+  
+  <div class="short-description">
+  <p>This is an auxiliary function that cuts off the common part of the path.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $path
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The path.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the cut path.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#144'>SmartFactory/ErrorHandler.php</a>
+  </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

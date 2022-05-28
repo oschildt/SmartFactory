@@ -58,7 +58,7 @@ interface ISessionManager
      *
      * @return void
      *
-     * @see getContext()
+     * @see ISessionManager::getContext()
      *
      * @author Oleg Schildt
      */
@@ -76,7 +76,7 @@ interface ISessionManager
      * @return string
      * Returns the current session context.
      *
-     * @see switchContext()
+     * @see ISessionManager::switchContext()
      *
      * @author Oleg Schildt
      */
@@ -108,7 +108,7 @@ interface ISessionManager
      * @return string
      * Returns the current session variable name.
      *
-     * @see setSessionName()
+     * @see ISessionManager::setSessionName()
      *
      * @author Oleg Schildt
      */
@@ -123,7 +123,7 @@ interface ISessionManager
      * @return boolean
      * Returns true if the session variable name has been successfully set, otherwise false.
      *
-     * @see getSessionName()
+     * @see ISessionManager::getSessionName()
      *
      * @author Oleg Schildt
      */
@@ -135,7 +135,7 @@ interface ISessionManager
      * @return string
      * Returns the ID of the current session.
      *
-     * @see setSessionId()
+     * @see ISessionManager::setSessionId()
      *
      * @author Oleg Schildt
      */
@@ -150,7 +150,7 @@ interface ISessionManager
      * @return boolean
      * Returns true if the session ID has been successfully set, otherwise false.
      *
-     * @see getSessionId()
+     * @see ISessionManager::getSessionId()
      *
      * @author Oleg Schildt
      */

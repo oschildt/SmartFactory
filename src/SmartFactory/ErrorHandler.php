@@ -33,8 +33,8 @@ class ErrorHandler implements IErrorHandler
      *
      * @var string
      *
-     * @see getLastError()
-     * @see setLastError()
+     * @see ErrorHandler::getLastError()
+     * @see ErrorHandler::setLastError()
      *
      * @author Oleg Schildt
      */
@@ -45,9 +45,9 @@ class ErrorHandler implements IErrorHandler
      *
      * @var boolean
      *
-     * @see traceActive()
-     * @see enableTrace()
-     * @see disableTrace()
+     * @see ErrorHandler::traceActive()
+     * @see ErrorHandler::enableTrace()
+     * @see ErrorHandler::disableTrace()
      *
      * @author Oleg Schildt
      */
@@ -215,7 +215,7 @@ class ErrorHandler implements IErrorHandler
      * This is an auxiliary function for generation of the detailed string from the
      * function arguments from the standard PHP backtrace (debug_backtrace).
      *
-     * @param array $arr
+     * @param array &$arr
      * The array of the function arguments.
      *
      * @return string
@@ -246,7 +246,7 @@ class ErrorHandler implements IErrorHandler
      * Generates the detailed string from the function arguments from the
      * standard PHP backtrace (debug_backtrace).
      *
-     * @param array $args
+     * @param array &$args
      * The array of the function arguments.
      *
      * @return string
@@ -486,8 +486,8 @@ class ErrorHandler implements IErrorHandler
      * @return boolean
      * Returns the state whether the trace is active or not.
      *
-     * @see enableTrace()
-     * @see disableTrace()
+     * @see ErrorHandler::enableTrace()
+     * @see ErrorHandler::disableTrace()
      *
      * @author Oleg Schildt
      */
@@ -504,8 +504,8 @@ class ErrorHandler implements IErrorHandler
      *
      * @return void
      *
-     * @see traceActive()
-     * @see disableTrace()
+     * @see ErrorHandler::traceActive()
+     * @see ErrorHandler::disableTrace()
      *
      * @author Oleg Schildt
      */
@@ -522,8 +522,8 @@ class ErrorHandler implements IErrorHandler
      *
      * @return void
      *
-     * @see traceActive()
-     * @see enableTrace()
+     * @see ErrorHandler::traceActive()
+     * @see ErrorHandler::enableTrace()
      *
      * @author Oleg Schildt
      */

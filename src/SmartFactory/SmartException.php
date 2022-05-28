@@ -118,7 +118,7 @@ class SmartException extends \Exception
      *
      * @var string
      *
-     * @see getErrorCode()
+     * @see SmartException::getErrorCode()
      *
      * @author Oleg Schildt
      */
@@ -129,7 +129,7 @@ class SmartException extends \Exception
      *
      * @var string
      *
-     * @see getErrorType()
+     * @see SmartException::getErrorType()
      *
      * @author Oleg Schildt
      */
@@ -173,7 +173,7 @@ class SmartException extends \Exception
      * @return string
      * Returns the error code.
      *
-     * @see getErrorType()
+     * @see SmartException::getErrorType()
      *
      * @author Oleg Schildt
      */
@@ -192,7 +192,7 @@ class SmartException extends \Exception
      * @return string
      * Returns the error type.
      *
-     * @see getErrorCode()
+     * @see SmartException::getErrorCode()
      *
      * @author Oleg Schildt
      */

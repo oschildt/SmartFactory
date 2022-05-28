@@ -33,8 +33,8 @@ class DebugProfiler implements IDebugProfiler
      *
      * @var string
      *
-     * @see startProfilePoint()
-     * @see fixProfilePoint()
+     * @see DebugProfiler::startProfilePoint()
+     * @see DebugProfiler::fixProfilePoint()
      *
      * @author Oleg Schildt
      */
@@ -140,7 +140,7 @@ class DebugProfiler implements IDebugProfiler
      *
      * - if the profile file is not writable.
      *
-     * @see fixProfilePoint()
+     * @see DebugProfiler::fixProfilePoint()
      *
      * @author Oleg Schildt
      */
@@ -169,7 +169,7 @@ class DebugProfiler implements IDebugProfiler
      *
      * - if the profile file is not writable.
      *
-     * @see startProfilePoint()
+     * @see DebugProfiler::startProfilePoint()
      *
      * @author Oleg Schildt
      */

@@ -26,8 +26,8 @@ use SmartFactory\DatabaseWorkers\DBWorker;
  * a new setting, just start saving and getting it. But you need provide a settings table
  * with a column where the settings data will be saved.
  *
- * @see  ConfigSettingsManager
- * @see  UserSettingsManager
+ * @see ConfigSettingsManager
+ * @see UserSettingsManager
  *
  * @uses DatabaseWorkers\DBWorker
  *
@@ -67,8 +67,8 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @var string
      *
-     * @see getContext()
-     * @see setContext()
+     * @see RuntimeSettingsManager::getContext()
+     * @see RuntimeSettingsManager::setContext()
      *
      * @author Oleg Schildt
      */
@@ -79,8 +79,8 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @var Interfaces\ISettingsValidator
      *
-     * @see getValidator()
-     * @see setValidator()
+     * @see RuntimeSettingsManager::getValidator()
+     * @see RuntimeSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -135,7 +135,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * This is internal auxiliary function for converting the settings to JSON and storing it
      * to the target table defined by the iniailization.
      *
-     * @param array $data
+     * @param array &$data
      * The array with the settings values to be saved.
      *
      * @return boolean
@@ -148,7 +148,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
      *
-     * @see loadJSON()
+     * @see RuntimeSettingsManager::loadJSON()
      *
      * @author Oleg Schildt
      */
@@ -190,7 +190,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * This is internal auxiliary function for loading the settings from the target table
      * defined by the iniailization.
      *
-     * @param array $data
+     * @param array &$data
      * The target array with the settings values to be loaded.
      *
      * @return boolean
@@ -204,7 +204,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * - if the query fails or if some object names are invalid.
      * - if the json is invalid.
      *
-     * @see saveJSON()
+     * @see RuntimeSettingsManager::saveJSON()
      *
      * @author Oleg Schildt
      */
@@ -285,8 +285,8 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @return void
      *
-     * @see getValidator()
-     * @see validateSettings()
+     * @see RuntimeSettingsManager::getValidator()
+     * @see RuntimeSettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -301,8 +301,8 @@ class RuntimeSettingsManager implements ISettingsManager
      * @return Interfaces\ISettingsValidator|null
      * Returns the validator for the settings or null if none is defined.
      *
-     * @see setValidator()
-     * @see validateSettings()
+     * @see RuntimeSettingsManager::setValidator()
+     * @see RuntimeSettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -328,7 +328,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @return void
      *
-     * @see getContext()
+     * @see RuntimeSettingsManager::getContext()
      *
      * @author Oleg Schildt
      */
@@ -352,7 +352,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * @return string
      * Returns the current settings context.
      *
-     * @see setContext()
+     * @see RuntimeSettingsManager::setContext()
      *
      * @author Oleg Schildt
      */
@@ -379,8 +379,8 @@ class RuntimeSettingsManager implements ISettingsManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
      *
-     * @see getParameter()
-     * @see setParameters()
+     * @see RuntimeSettingsManager::getParameter()
+     * @see RuntimeSettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -397,7 +397,7 @@ class RuntimeSettingsManager implements ISettingsManager
     /**
      * Sets settings parameters from an array.
      *
-     * @param array $parameters
+     * @param array &$parameters
      * Array of parameters in the form key => value.
      *
      * @param boolean $force_creation
@@ -414,8 +414,8 @@ class RuntimeSettingsManager implements ISettingsManager
      * - if the query fails or if some object names are invalid.
      * - if the config file is not readable.
      *
-     * @see getParameter()
-     * @see setParameter()
+     * @see RuntimeSettingsManager::getParameter()
+     * @see RuntimeSettingsManager::setParameter()
      *
      * @author Oleg Schildt
      */
@@ -455,8 +455,8 @@ class RuntimeSettingsManager implements ISettingsManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
      *
-     * @see setParameter()
-     * @see setParameters()
+     * @see RuntimeSettingsManager::setParameter()
+     * @see RuntimeSettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -485,8 +485,8 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @uses \SmartFactory\Interfaces\ISettingsValidator
      *
-     * @see  getValidator()
-     * @see  setValidator()
+     * @see RuntimeSettingsManager::getValidator()
+     * @see RuntimeSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -512,7 +512,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
      *
-     * @see saveSettings()
+     * @see RuntimeSettingsManager::saveSettings()
      *
      * @author Oleg Schildt
      */
@@ -534,7 +534,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
      *
-     * @see loadSettings()
+     * @see RuntimeSettingsManager::loadSettings()
      *
      * @author Oleg Schildt
      */

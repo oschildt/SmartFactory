@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: json_to_array - Library SmartFactory
+            Function: json_to_array()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,18 +105,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: json_to_array</h1>
+                    <h1>Function: json_to_array()</h1>
 
-<div class="definition"><b>json_to_array</b>(string &amp;<span class="php-var">$json</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>) : void</div>
+<div class="definition"><span class="php-keyword1">function</span> json_to_array(string &amp;<span class="php-var">$json</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>) : void;</div>
 
 
 <div class="short-description">
-Converts the JSON string to an array.
+<p>Converts the JSON string to an array.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>It is a wrapper over the system function json_decode. It
 is introduced to give the ability to overwrite the system
@@ -131,63 +125,102 @@ function if necessary.</p>
 
 
 
+
 <h2>Parameters</h2>
 
-    <h3>$json</h3>
-    <span class="type_label">Type:</span> string
-    
-    <div class="param-description">
-    <p>Input JSON string.</p>
-    </div>
-    
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $json
+          </td>
+          <td>
+              by reference
+          </td>
+          <td>
+              string
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>Input JSON string.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $array
+          </td>
+          <td>
+              by reference
+          </td>
+          <td>
+              array
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>target array.</p>
+          </td>
+      </tr>
+      
+      
+  </table>
 
-    <h3>$array</h3>
-    <span class="type_label">Type:</span> array
-    
-    <div class="param-description">
-    <p>target array.</p>
-    </div>
-    
 
+<h2>Returns</h2>
+<div class="item_list">
+void<br>
 
-
-
+</div>
 
 
 <h2>Throws</h2>
 <div class="item_list">
 
-    <b>\Exception</b><br>
-    
-    
-    <p>It might throw the exception if the JSON cannot be parsed.</p><br>
-    
+\Exception<br>
+
+<div class="item_description"><p>It might throw the exception if the JSON cannot be parsed.</p></div>
+
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
 
 
 
 <h2>Package</h2>
-<a href="package-Utility_Functions.html">Utility Functions</a>
+<div class="item_list">
+<a href='package-Utility Functions.html'>Utility Functions</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-utility_functions_inc.html#101">utility_functions_inc.php</a>
-
-
-
-
-
-
-
+<div class="item_list">
+<a href='source-utility_functions_inc.php.html#106'>utility_functions_inc.php</a>
+</div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

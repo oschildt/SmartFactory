@@ -12,7 +12,7 @@ namespace SmartFactory;
 use SmartFactory\DatabaseWorkers\DBWorker;
 
 /**
- * The method singleton creates an object that support the specified interface and ensures
+ * The method singleton creates an object that supports the specified interface and ensures
  * that only one instance of this object exists.
  *
  * The singleton is a usual pattern for the action objects like SessionManager, EventManager,

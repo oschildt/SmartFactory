@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: textarea - Library SmartFactory
+            Function: textarea()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,18 +105,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: textarea</h1>
+                    <h1>Function: textarea()</h1>
 
-<div class="definition"><b>textarea</b>(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, boolean <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>) : string|<span class="php-keyword1">null</span></div>
+<div class="definition"><span class="php-keyword1">function</span> textarea(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>) : string|<span class="php-keyword1">null</span>;</div>
 
 
 <div class="short-description">
-Function for rendering the text area field.
+<p>Function for rendering the text area field.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>This function renders a text area field that is bound to
 the request variable with the corresponding name.</p>
@@ -130,22 +124,43 @@ the request variable with the corresponding name.</p>
 
 
 
+
 <h2>Parameters</h2>
 
-    <h3>$parameters</h3>
-    <span class="type_label">Type:</span> array
-    
-    <div class="param-description">
-    <p>The array of parameters as an associative array in the form key => value:</p>
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $parameters
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              array
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>The array of parameters as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters["id"] - id of the field.</p>
+<p>$parameters[&quot;id&quot;] - id of the field.</p>
 </li>
 <li>
-<p>$parameters["name"] - name of the field.</p>
+<p>$parameters[&quot;name&quot;] - name of the field.</p>
 </li>
 <li>
-<p>$parameters["value"] - value that should be set for the field. If it is not specified,
+<p>$parameters[&quot;value&quot;] - value that should be set for the field. If it is not specified,
 the value of the corresponding request variable is taken.</p>
 </li>
 </ul>
@@ -160,28 +175,50 @@ the value of the corresponding request variable is taken.</p>
           <span class="php-quote">&quot;data-prop&quot;</span> =&gt; <span class="php-quote">&quot;some-prop&quot;</span>,
           <span class="php-quote">&quot;onblur&quot;</span> =&gt; <span class="php-quote">&quot;alert('Hello &amp; Buy!')&quot;</span>
          ]);</code></pre>
-    </div>
-    
-
-    <h3>$echo</h3>
-    <span class="type_label">Type:</span> boolean
-    
-    <div class="param-description">
-    <p>If the value of $echo is true, the html code of the field is directly echoed.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $echo
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              bool
+          </td>
+          <td>
+              true
+          </td>
+          <td class="description_column">
+              <p>If the value of $echo is true, the html code of the field is directly echoed.
 Otherwise it is returned as string. It might be useful to pass this code to
 other rendering functions instead of echoing.</p>
-    </div>
-    
-
-
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> string|null
+<div class="item_list">
+string|null<br>
 
-<div class="param-description">
-<p>If the paramter $echo is true, the string of the field html
-code is returned, otherwise null.</p>
+<div class="item_description"><p>If the paramter $echo is true, the string of the field html
+code is returned, otherwise null.</p></div>
+
+</div>
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
 </div>
 
 
@@ -189,44 +226,44 @@ code is returned, otherwise null.</p>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
-
-
-
 <h2>Package</h2>
-<a href="package-HTML_Utils.html">HTML Utils</a>
+<div class="item_list">
+<a href='package-HTML Utils.html'>HTML Utils</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-html_utils_inc.html#383">html_utils_inc.php</a>
+<div class="item_list">
+<a href='source-html_utils_inc.php.html#386'>html_utils_inc.php</a>
+</div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href="function-SmartFactory.input_text.html">\SmartFactory\input_text()</a><br>
+<a href='function-SmartFactory.input_text.html'>\SmartFactory\input_text()</a><br>
 
-<a href="function-SmartFactory.input_password.html">\SmartFactory\input_password()</a><br>
 
-<a href="function-SmartFactory.input_hidden.html">\SmartFactory\input_hidden()</a><br>
+<a href='function-SmartFactory.input_password.html'>\SmartFactory\input_password()</a><br>
 
-<a href="function-SmartFactory.select.html">\SmartFactory\select()</a><br>
 
-<a href="function-SmartFactory.checkbox.html">\SmartFactory\checkbox()</a><br>
+<a href='function-SmartFactory.input_hidden.html'>\SmartFactory\input_hidden()</a><br>
 
-<a href="function-SmartFactory.radiobutton.html">\SmartFactory\radiobutton()</a><br>
+
+<a href='function-SmartFactory.select.html'>\SmartFactory\select()</a><br>
+
+
+<a href='function-SmartFactory.checkbox.html'>\SmartFactory\checkbox()</a><br>
+
+
+<a href='function-SmartFactory.radiobutton.html'>\SmartFactory\radiobutton()</a><br>
+
 
 </div>
-
-
-
-
-
-
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

@@ -149,13 +149,9 @@ class MySQL_DBWorker extends DBWorker
      * Connection settings as an associative array in the form key => value:
      *
      * - $parameters["db_server"] - server address.
-     *
      * - $parameters["db_name"] - database name.
-     *
      * - $parameters["db_user"] - user name.
-     *
      * - $parameters["db_password"] - user password.
-     *
      * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
      *
      * @return boolean
@@ -191,7 +187,7 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * The method should return true if the extension is installed, otherwise false.
      *
-     * @see get_extension_name()
+     * @see MySQL_DBWorker::get_extension_name()
      *
      * @author Oleg Schildt
      */
@@ -210,7 +206,7 @@ class MySQL_DBWorker extends DBWorker
      * @return string
      * Returns the name of the required PHP extension - "mysqli".
      *
-     * @see is_extension_installed()
+     * @see MySQL_DBWorker::is_extension_installed()
      *
      * @author Oleg Schildt
      */
@@ -238,8 +234,8 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the connection is open, otherwise false.
      *
-     * @see connect()
-     * @see close_connection()
+     * @see MySQL_DBWorker::connect()
+     * @see MySQL_DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
@@ -258,8 +254,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
-     * @see is_connected()
-     * @see close_connection()
+     * @see MySQL_DBWorker::is_connected()
+     * @see MySQL_DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
@@ -341,7 +337,7 @@ class MySQL_DBWorker extends DBWorker
      * @return string
      * Returns the name of the database schema if applicable, or an empty string.
      *
-     * @see qualify_name_with_schema()
+     * @see MySQL_DBWorker::qualify_name_with_schema()
      *
      * @author Oleg Schildt
      */
@@ -360,7 +356,7 @@ class MySQL_DBWorker extends DBWorker
      * Returns the name of the database object with the schema name if applicable,
      * otherwise the name of the database object remains unchanged.
      *
-     * @see get_schema()
+     * @see MySQL_DBWorker::get_schema()
      *
      * @author Oleg Schildt
      */
@@ -412,8 +408,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
-     * @see execute_prepared_query()
-     * @see free_prepared_query()
+     * @see MySQL_DBWorker::execute_prepared_query()
+     * @see MySQL_DBWorker::free_prepared_query()
      *
      * @author Oleg Schildt
      */
@@ -447,7 +443,7 @@ class MySQL_DBWorker extends DBWorker
      * @param string $query_string
      * The SQL query to be used for stroing the long data.
      *
-     * @param resource $stream
+     * @param resource &$stream
      * The opened valid stream for reding the long data.
      *
      * Example:
@@ -548,8 +544,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Throwable
      * It throws an exception in the case of any errors.
      *
-     * @see prepare_query()
-     * @see free_prepared_query()
+     * @see MySQL_DBWorker::prepare_query()
+     * @see MySQL_DBWorker::free_prepared_query()
      *
      * @author Oleg Schildt
      */
@@ -690,8 +686,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Exception
      * It throws an exception in the case of any errors.
      *
-     * @see prepare_query()
-     * @see execute_prepared_query()
+     * @see MySQL_DBWorker::prepare_query()
+     * @see MySQL_DBWorker::execute_prepared_query()
      *
      * @author Oleg Schildt
      */
@@ -714,8 +710,8 @@ class MySQL_DBWorker extends DBWorker
      * @return boolean
      * Returns true if the connection has been successfully closed, otherwise false.
      *
-     * @see is_connected()
-     * @see connect()
+     * @see MySQL_DBWorker::is_connected()
+     * @see MySQL_DBWorker::connect()
      *
      * @author Oleg Schildt
      */
@@ -750,8 +746,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Exception
      * It throws an exception in the case of any errors.
      *
-     * @see commit_transaction()
-     * @see rollback_transaction()
+     * @see MySQL_DBWorker::commit_transaction()
+     * @see MySQL_DBWorker::rollback_transaction()
      *
      * @author Oleg Schildt
      */
@@ -769,8 +765,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Exception
      * It throws an exception in the case of any errors.
      *
-     * @see start_transaction()
-     * @see rollback_transaction()
+     * @see MySQL_DBWorker::start_transaction()
+     * @see MySQL_DBWorker::rollback_transaction()
      *
      * @author Oleg Schildt
      */
@@ -788,8 +784,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Exception
      * It throws an exception in the case of any errors.
      *
-     * @see start_transaction()
-     * @see commit_transaction()
+     * @see MySQL_DBWorker::start_transaction()
+     * @see MySQL_DBWorker::commit_transaction()
      *
      * @author Oleg Schildt
      */
@@ -935,7 +931,7 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Fetches all rows from the result into an array.
      *
-     * @param array $rows
+     * @param array &$rows
      * Target array for loading the results.
      *
      * @param array $dimension_keys
@@ -1168,8 +1164,8 @@ class MySQL_DBWorker extends DBWorker
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
-     * @see field_by_num()
-     * @see field_name()
+     * @see MySQL_DBWorker::field_by_num()
+     * @see MySQL_DBWorker::field_name()
      *
      * @author Oleg Schildt
      */
@@ -1204,9 +1200,9 @@ class MySQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
-     * @see field_by_name()
-     * @see field_info_by_num()
-     * @see field_name()
+     * @see MySQL_DBWorker::field_by_name()
+     * @see MySQL_DBWorker::field_info_by_num()
+     * @see MySQL_DBWorker::field_name()
      *
      * @author Oleg Schildt
      */
@@ -1241,8 +1237,8 @@ class MySQL_DBWorker extends DBWorker
      * @throws \Exception
      * It throws an exception in the case of any errors.
      *
-     * @see field_by_num()
-     * @see field_info_by_num()
+     * @see MySQL_DBWorker::field_by_num()
+     * @see MySQL_DBWorker::field_info_by_num()
      *
      * @author Oleg Schildt
      */
@@ -1279,8 +1275,8 @@ class MySQL_DBWorker extends DBWorker
      *
      * $info["numeric"] - whether the filed is numeric.
      *
-     * @see field_by_num()
-     * @see field_name()
+     * @see MySQL_DBWorker::field_by_num()
+     * @see MySQL_DBWorker::field_name()
      *
      * @author Oleg Schildt
      */
@@ -1367,8 +1363,8 @@ class MySQL_DBWorker extends DBWorker
      * @return string
      * Returns the escaped string.
      *
-     * @see format_date()
-     * @see format_datetime()
+     * @see MySQL_DBWorker::format_date()
+     * @see MySQL_DBWorker::format_datetime()
      *
      * @author Oleg Schildt
      */
@@ -1386,8 +1382,8 @@ class MySQL_DBWorker extends DBWorker
      * @return string
      * Returns the string representation of the date compatible for the corresponding database.
      *
-     * @see escape()
-     * @see format_datetime()
+     * @see MySQL_DBWorker::escape()
+     * @see MySQL_DBWorker::format_datetime()
      *
      * @author Oleg Schildt
      */
@@ -1405,8 +1401,8 @@ class MySQL_DBWorker extends DBWorker
      * @return string
      * Returns the string representation of the date/time compatible for the corresponding database.
      *
-     * @see escape()
-     * @see format_date()
+     * @see MySQL_DBWorker::escape()
+     * @see MySQL_DBWorker::format_date()
      *
      * @author Oleg Schildt
      */

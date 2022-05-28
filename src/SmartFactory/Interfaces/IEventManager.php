@@ -31,7 +31,6 @@ interface IEventManager
      * ```
      *
      * - $event - the event code.
-     *
      * - $parameters - parameters passed by the firing of the event.
      *
      * @return boolean
@@ -40,9 +39,9 @@ interface IEventManager
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see deleteHandler()
-     * @see deleteHandlers()
-     * @see deleteAllHandlers()
+     * @see IEventManager::deleteHandler()
+     * @see IEventManager::deleteHandlers()
+     * @see IEventManager::deleteAllHandlers()
      *
      * @author Oleg Schildt
      */
@@ -63,9 +62,9 @@ interface IEventManager
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see addHandler()
-     * @see deleteHandlers()
-     * @see deleteAllHandlers()
+     * @see IEventManager::addHandler()
+     * @see IEventManager::deleteHandlers()
+     * @see IEventManager::deleteAllHandlers()
      *
      * @author Oleg Schildt
      */
@@ -83,9 +82,9 @@ interface IEventManager
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see addHandler()
-     * @see deleteHandler()
-     * @see deleteAllHandlers()
+     * @see IEventManager::addHandler()
+     * @see IEventManager::deleteHandler()
+     * @see IEventManager::deleteAllHandlers()
      *
      * @author Oleg Schildt
      */
@@ -97,9 +96,9 @@ interface IEventManager
      * @return boolean
      * Should return true if the deletion was successfull, otherwise false.
      *
-     * @see addHandler()
-     * @see deleteHandler()
-     * @see deleteHandlers()
+     * @see IEventManager::addHandler()
+     * @see IEventManager::deleteHandler()
+     * @see IEventManager::deleteHandlers()
      *
      * @author Oleg Schildt
      */
@@ -119,8 +118,8 @@ interface IEventManager
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see resumeEvent()
-     * @see resumeAllEvents()
+     * @see IEventManager::resumeEvent()
+     * @see IEventManager::resumeAllEvents()
      *
      * @author Oleg Schildt
      */
@@ -138,8 +137,8 @@ interface IEventManager
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see suspendEvent()
-     * @see resumeAllEvents()
+     * @see IEventManager::suspendEvent()
+     * @see IEventManager::resumeAllEvents()
      *
      * @author Oleg Schildt
      */
@@ -151,8 +150,8 @@ interface IEventManager
      * @return boolean
      * Should return true if the suspesion was successfull, otherwise false.
      *
-     * @see suspendEvent()
-     * @see resumeEvent()
+     * @see IEventManager::suspendEvent()
+     * @see IEventManager::resumeEvent()
      *
      * @author Oleg Schildt
      */

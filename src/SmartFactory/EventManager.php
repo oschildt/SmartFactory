@@ -24,10 +24,10 @@ class EventManager implements IEventManager
      *
      * @var array
      *
-     * @see addHandler()
-     * @see deleteHandler()
-     * @see deleteHandlers()
-     * @see deleteAllHandlers()
+     * @see EventManager::addHandler()
+     * @see EventManager::deleteHandler()
+     * @see EventManager::deleteHandlers()
+     * @see EventManager::deleteAllHandlers()
      *
      * @author Oleg Schildt
      */
@@ -38,9 +38,9 @@ class EventManager implements IEventManager
      *
      * @var array
      *
-     * @see suspendEvent()
-     * @see resumeEvent()
-     * @see resumeAllEvents()
+     * @see EventManager::suspendEvent()
+     * @see EventManager::resumeEvent()
+     * @see EventManager::resumeAllEvents()
      *
      * @author Oleg Schildt
      */
@@ -74,9 +74,9 @@ class EventManager implements IEventManager
      * - if the event handler is not valid.
      * - if the creation of the handler fails.
      *
-     * @see deleteHandler()
-     * @see deleteHandlers()
-     * @see deleteAllHandlers()
+     * @see EventManager::deleteHandler()
+     * @see EventManager::deleteHandlers()
+     * @see EventManager::deleteAllHandlers()
      *
      * @author Oleg Schildt
      */
@@ -116,9 +116,9 @@ class EventManager implements IEventManager
      * - if the event handler is not valid.
      * - if the creation of the handler fails.
      *
-     * @see addHandler()
-     * @see deleteHandlers()
-     * @see deleteAllHandlers()
+     * @see EventManager::addHandler()
+     * @see EventManager::deleteHandlers()
+     * @see EventManager::deleteAllHandlers()
      *
      * @author Oleg Schildt
      */
@@ -155,9 +155,9 @@ class EventManager implements IEventManager
      *
      * - if the event name is not specified.
      *
-     * @see addHandler()
-     * @see deleteHandler()
-     * @see deleteAllHandlers()
+     * @see EventManager::addHandler()
+     * @see EventManager::deleteHandler()
+     * @see EventManager::deleteAllHandlers()
      *
      * @author Oleg Schildt
      */
@@ -180,9 +180,9 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the deletion was successfull, otherwise false.
      *
-     * @see addHandler()
-     * @see deleteHandler()
-     * @see deleteHandlers()
+     * @see EventManager::addHandler()
+     * @see EventManager::deleteHandler()
+     * @see EventManager::deleteHandlers()
      *
      * @author Oleg Schildt
      */
@@ -209,8 +209,8 @@ class EventManager implements IEventManager
      *
      * - if the event name is not specified.
      *
-     * @see resumeEvent()
-     * @see resumeAllEvents()
+     * @see EventManager::resumeEvent()
+     * @see EventManager::resumeAllEvents()
      *
      * @author Oleg Schildt
      */
@@ -239,8 +239,8 @@ class EventManager implements IEventManager
      *
      * - if the event name is not specified.
      *
-     * @see suspendEvent()
-     * @see resumeAllEvents()
+     * @see EventManager::suspendEvent()
+     * @see EventManager::resumeAllEvents()
      *
      * @author Oleg Schildt
      */
@@ -263,8 +263,8 @@ class EventManager implements IEventManager
      * @return boolean
      * Returns true if the suspesion was successfull, otherwise false.
      *
-     * @see suspendEvent()
-     * @see resumeEvent()
+     * @see EventManager::suspendEvent()
+     * @see EventManager::resumeEvent()
      *
      * @author Oleg Schildt
      */

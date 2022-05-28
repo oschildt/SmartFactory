@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: table - Library SmartFactory
+            Function: table()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,59 +105,87 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: table</h1>
+                    <h1>Function: table()</h1>
 
-<div class="definition"><b>table</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>,
-      <span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = <span class="php-keyword1">array</span>(),
-      boolean <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>
-     ) : string|<span class="php-keyword1">null</span></div>
+<div class="definition"><span class="php-keyword1">function</span> table(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = [], bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>) : string|<span class="php-keyword1">null</span>;</div>
 
 
 <div class="short-description">
-Function for rendering tables.
+<p>Function for rendering tables.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>This function renders a tables based on the values of an array.</p>
 </div>
 
 
 
+
 <h2>Parameters</h2>
 
-    <h3>$array</h3>
-    <span class="type_label">Type:</span> array
-    
-    <div class="param-description">
-    <p>The array of the rows.</p>
-    </div>
-    
-
-    <h3>$parameters</h3>
-    <span class="type_label">Type:</span> array
-    
-    <div class="param-description">
-    <p>The array of parameters as an associative array in the form key => value:</p>
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $array
+          </td>
+          <td>
+              by reference
+          </td>
+          <td>
+              array
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>The array of the rows.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $parameters
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              array
+          </td>
+          <td>
+              []
+          </td>
+          <td class="description_column">
+              <p>The array of parameters as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters["captions"] - the associative array of column captions. If
+<p>$parameters[&quot;captions&quot;] - the associative array of column captions. If
 it is not specified, the table is rendered without captions.</p>
 </li>
 <li>
-<p>$parameters["col_class_from_keys"] - if it is specified and set to true,
+<p>$parameters[&quot;col_class_from_keys&quot;] - if it is specified and set to true,
 the keys of the captions are used as the class names.</p>
 </li>
 <li>
-<p>$parameters["no_escape_html"] - if it is specified and set to true,
+<p>$parameters[&quot;no_escape_html&quot;] - if it is specified and set to true,
 the values of the data array are not escaped and passed as is. It is useful
 when html codes of other elements are passed. Per default, the table data
 is escaped for html.</p>
 </li>
 <li>
-<p>$parameters["formatter"] - this function is used for the value formatting
+<p>$parameters[&quot;formatter&quot;] - this function is used for the value formatting
 if specified. It is called for evelry cell of the table. The signature of
 this function is:</p>
 </li>
@@ -177,8 +199,8 @@ this function is:</p>
 <p>$colnum - the colnum number.</p>
 </li>
 <li>
-<p>$colname - the column name if the $parameters["captions"] are provided.
-The keys of the cpation array are used. If the $parameters["captions"]
+<p>$colname - the column name if the $parameters[&quot;captions&quot;] are provided.
+The keys of the cpation array are used. If the $parameters[&quot;captions&quot;]
 are not provided, $colname is equal to $colnum.</p>
 </li>
 <li>
@@ -220,28 +242,50 @@ table(<span class="php-var">$rows</span>,
        <span class="php-quote">&quot;no_escape_html&quot;</span> =&gt; <span class="php-keyword1">false</span>,
        <span class="php-quote">&quot;formatter&quot;</span> =&gt; <span class="php-var">$formatter</span>
       ]);</code></pre>
-    </div>
-    
-
-    <h3>$echo</h3>
-    <span class="type_label">Type:</span> boolean
-    
-    <div class="param-description">
-    <p>If the value of $echo is true, the html code of the table is directly echoed.
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $echo
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              bool
+          </td>
+          <td>
+              true
+          </td>
+          <td class="description_column">
+              <p>If the value of $echo is true, the html code of the table is directly echoed.
 Otherwise it is returned as string. It might be useful to pass this code to
 other rendering functions instead of echoing.</p>
-    </div>
-    
-
-
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> string|null
+<div class="item_list">
+string|null<br>
 
-<div class="param-description">
-<p>If the paramter $echo is true, the string of the table html
-code is returned, otherwise null.</p>
+<div class="item_description"><p>If the paramter $echo is true, the string of the table html
+code is returned, otherwise null.</p></div>
+
+</div>
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
 </div>
 
 
@@ -249,27 +293,20 @@ code is returned, otherwise null.</p>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
-
-
-
 <h2>Package</h2>
-<a href="package-HTML_Utils.html">HTML Utils</a>
+<div class="item_list">
+<a href='package-HTML Utils.html'>HTML Utils</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-html_utils_inc.html#871">html_utils_inc.php</a>
-
-
-
-
-
-
-
+<div class="item_list">
+<a href='source-html_utils_inc.php.html#874'>html_utils_inc.php</a>
+</div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

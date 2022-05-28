@@ -40,8 +40,8 @@ interface ISettingsManager extends IInitable
      *
      * @return void
      *
-     * @see getValidator()
-     * @see validateSettings()
+     * @see ISettingsManager::getValidator()
+     * @see ISettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -53,8 +53,8 @@ interface ISettingsManager extends IInitable
      * @return ISettingsValidator|null
      * Returns the validator for the settings or null if none is defined.
      *
-     * @see setValidator()
-     * @see validateSettings()
+     * @see ISettingsManager::setValidator()
+     * @see ISettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -71,8 +71,8 @@ interface ISettingsManager extends IInitable
      *
      * @return void
      *
-     * @see getParameter()
-     * @see setParameters()
+     * @see ISettingsManager::getParameter()
+     * @see ISettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -81,7 +81,7 @@ interface ISettingsManager extends IInitable
     /**
      * Sets settings parameters from an array.
      *
-     * @param array $parameters
+     * @param array &$parameters
      * Array of parameters in the form key => value.
      *
      * @param boolean $force_creation
@@ -90,8 +90,8 @@ interface ISettingsManager extends IInitable
      *
      * @return void
      *
-     * @see getParameter()
-     * @see setParameter()
+     * @see ISettingsManager::getParameter()
+     * @see ISettingsManager::setParameter()
      *
      * @author Oleg Schildt
      */
@@ -114,8 +114,8 @@ interface ISettingsManager extends IInitable
      * @return mixed
      * Returns the value of the settings parameter.
      *
-     * @see setParameter()
-     * @see setParameters()
+     * @see ISettingsManager::setParameter()
+     * @see ISettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -138,7 +138,7 @@ interface ISettingsManager extends IInitable
      *
      * @return void
      *
-     * @see getContext()
+     * @see ISettingsManager::getContext()
      *
      * @author Oleg Schildt
      */
@@ -159,7 +159,7 @@ interface ISettingsManager extends IInitable
      * @return string
      * Returns the current settings context.
      *
-     * @see setContext()
+     * @see ISettingsManager::setContext()
      *
      * @author Oleg Schildt
      */
@@ -177,8 +177,8 @@ interface ISettingsManager extends IInitable
      *
      * @uses ISettingsValidator
      *
-     * @see  getValidator()
-     * @see  setValidator()
+     * @see ISettingsManager::getValidator()
+     * @see ISettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -193,7 +193,7 @@ interface ISettingsManager extends IInitable
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see saveSettings()
+     * @see ISettingsManager::saveSettings()
      *
      * @author Oleg Schildt
      */
@@ -208,7 +208,7 @@ interface ISettingsManager extends IInitable
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
-     * @see loadSettings()
+     * @see ISettingsManager::loadSettings()
      *
      * @author Oleg Schildt
      */
