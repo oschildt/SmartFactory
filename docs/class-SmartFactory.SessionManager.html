@@ -949,7 +949,7 @@ Note this value is returned internally to PHP for processing.</p></div>
   
   <h1>Method: SessionManager::gc()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> gc(string <span class="php-var">$maxlifetime</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> gc(string <span class="php-var">$maxlifetime</span>) : int|<span class="php-keyword1">false</span>;</div>
 
   
   <div class="short-description">
@@ -1004,9 +1004,9 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  int|false<br>
   
-  <div class="item_description"><p>The return value (usually true on success, false on failure).
+  <div class="item_description"><p>The return value (usually positive on success, false on failure).
 Note this value is returned internally to PHP for processing.</p></div>
   
   </div>
@@ -2219,7 +2219,7 @@ Note this value is returned internally to PHP for processing.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
+                        Generated on 2022-05-28 19:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>
@@ -2233,20 +2233,6 @@ Note this value is returned internally to PHP for processing.</p></div>
         
         <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
         <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
-        
-        <script type="text/javascript">
-            $(window).resize(function(){
-                $("#viewer").height(1400);
-            });
-
-            $(document).ready(function() {
-                $("#viewer").iviewer({src: 'resources/classes.svg', zoom_animation: false});
-                $('#viewer img').bind('dragstart', function(event){
-                    event.preventDefault();
-                });
-                $(window).resize();
-            });
-        </script>
         
     </body>
 </html>
