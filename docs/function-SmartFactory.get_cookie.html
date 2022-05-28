@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: get_cookie - Library SmartFactory
+            Function: get_cookie()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,14 +105,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: get_cookie</h1>
+                    <h1>Function: get_cookie()</h1>
 
-<div class="definition"><b>get_cookie</b>(string <span class="php-var">$name</span>, string <span class="php-var">$value</span>) : string</div>
+<div class="definition"><span class="php-keyword1">function</span> get_cookie(string <span class="php-var">$name</span>) : string;</div>
 
 
 <div class="short-description">
-Gets the cookie value by name.
+<p>Gets the cookie value by name.</p>
 </div>
+
 
 
 
@@ -126,30 +121,54 @@ Gets the cookie value by name.
 
 <h2>Parameters</h2>
 
-    <h3>$name</h3>
-    <span class="type_label">Type:</span> string
-    
-    <div class="param-description">
-    <p>Name of the cookie.</p>
-    </div>
-    
-
-    <h3>$value</h3>
-    <span class="type_label">Type:</span> string
-    
-    <div class="param-description">
-    <p>Value of the cookie.</p>
-    </div>
-    
-
-
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $name
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              string
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>Name of the cookie.</p>
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> string
+<div class="item_list">
+string<br>
 
-<div class="param-description">
-<p>Returns the cookie value of empty string if the cookie is not set.</p>
+<div class="item_description"><p>Returns the cookie value of empty string if the cookie is not set.</p></div>
+
+</div>
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
 </div>
 
 
@@ -157,27 +176,20 @@ Gets the cookie value by name.
 
 
 
-<h2>Author</h2>
-Oleg Schildt
-
-
-
 <h2>Package</h2>
-<a href="package-Utility_Functions.html">Utility Functions</a>
+<div class="item_list">
+<a href='package-Utility Functions.html'>Utility Functions</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-utility_functions_inc.html#358">utility_functions_inc.php</a>
-
-
-
-
-
-
-
+<div class="item_list">
+<a href='source-utility_functions_inc.php.html#360'>utility_functions_inc.php</a>
+</div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

@@ -24,8 +24,8 @@ use SmartFactory\DatabaseWorkers\DBWorker;
  * is valid. Saving of the user settings updates both the session and the database. When a settings is
  * requested, it is taken from the session, not from the database.
  *
- * @see  ConfigSettingsManager
- * @see  RuntimeSettingsManager
+ * @see ConfigSettingsManager
+ * @see RuntimeSettingsManager
  *
  * @uses DatabaseWorkers\DBWorker
  *
@@ -38,7 +38,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @var string
      *
-     * @see setUserID()
+     * @see UserSettingsManager::setUserID()
      *
      * @author Oleg Schildt
      */
@@ -76,8 +76,8 @@ class UserSettingsManager implements ISettingsManager
      *
      * @var string
      *
-     * @see getContext()
-     * @see setContext()
+     * @see UserSettingsManager::getContext()
+     * @see UserSettingsManager::setContext()
      *
      * @author Oleg Schildt
      */
@@ -88,8 +88,8 @@ class UserSettingsManager implements ISettingsManager
      *
      * @var \SmartFactory\Interfaces\ISettingsValidator
      *
-     * @see getValidator()
-     * @see setValidator()
+     * @see UserSettingsManager::getValidator()
+     * @see UserSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -149,7 +149,7 @@ class UserSettingsManager implements ISettingsManager
      * This is internal auxiliary function for storing the settings
      * to the target user table defined by the iniailization.
      *
-     * @param array $data
+     * @param array &$data
      * The array with the settings values to be saved.
      *
      * @return boolean
@@ -164,7 +164,7 @@ class UserSettingsManager implements ISettingsManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see loadSettingsData()
+     * @see UserSettingsManager::loadSettingsData()
      *
      * @author Oleg Schildt
      */
@@ -305,7 +305,7 @@ class UserSettingsManager implements ISettingsManager
      * This is internal auxiliary function for loading the settings from the target user table
      * defined by the iniailization.
      *
-     * @param array $data
+     * @param array &$data
      * The target array with the settings values to be loaded.
      *
      * @return boolean
@@ -320,7 +320,7 @@ class UserSettingsManager implements ISettingsManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see saveSettingsData()
+     * @see UserSettingsManager::saveSettingsData()
      *
      * @author Oleg Schildt
      */
@@ -415,9 +415,7 @@ class UserSettingsManager implements ISettingsManager
      * Settings for saving and loading as an associative array in the form key => value:
      *
      * - $parameters["dbworker"] - the dbworker to used for loading and storing settings.
-     *
      * - $parameters["settings_tables"] - the definitions of the settings tables.
-     *
      * - $parameters["multichoice_tables"] - the definitions of the auxiliary tables for the multichoice values.
      *
      * Example:
@@ -486,8 +484,8 @@ class UserSettingsManager implements ISettingsManager
      *
      * @return void
      *
-     * @see getValidator()
-     * @see validateSettings()
+     * @see UserSettingsManager::getValidator()
+     * @see UserSettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -502,8 +500,8 @@ class UserSettingsManager implements ISettingsManager
      * @return \SmartFactory\Interfaces\ISettingsValidator|null
      * Returns the validator for the settings or null if none is defined.
      *
-     * @see setValidator()
-     * @see validateSettings()
+     * @see UserSettingsManager::setValidator()
+     * @see UserSettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -529,7 +527,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @return void
      *
-     * @see getContext()
+     * @see UserSettingsManager::getContext()
      *
      * @author Oleg Schildt
      */
@@ -553,7 +551,7 @@ class UserSettingsManager implements ISettingsManager
      * @return string
      * Returns the current settings context.
      *
-     * @see setContext()
+     * @see UserSettingsManager::setContext()
      *
      * @author Oleg Schildt
      */
@@ -581,8 +579,8 @@ class UserSettingsManager implements ISettingsManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see getParameter()
-     * @see setParameters()
+     * @see UserSettingsManager::getParameter()
+     * @see UserSettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -598,7 +596,7 @@ class UserSettingsManager implements ISettingsManager
     /**
      * Sets settings parameters from an array.
      *
-     * @param array $parameters
+     * @param array &$parameters
      * Array of parameters in the form key => value.
      *
      * @param boolean $force_creation
@@ -618,8 +616,8 @@ class UserSettingsManager implements ISettingsManager
      * - if the query fails or if some object names are invalid.
      * - if the config file is not readable.
      *
-     * @see getParameter()
-     * @see setParameter()
+     * @see UserSettingsManager::getParameter()
+     * @see UserSettingsManager::setParameter()
      *
      * @author Oleg Schildt
      */
@@ -660,8 +658,8 @@ class UserSettingsManager implements ISettingsManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see setParameter()
-     * @see setParameters()
+     * @see UserSettingsManager::setParameter()
+     * @see UserSettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -690,8 +688,8 @@ class UserSettingsManager implements ISettingsManager
      *
      * @uses Interfaces\ISettingsValidator
      *
-     * @see  getValidator()
-     * @see  setValidator()
+     * @see UserSettingsManager::getValidator()
+     * @see UserSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -720,7 +718,7 @@ class UserSettingsManager implements ISettingsManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see saveSettings()
+     * @see UserSettingsManager::saveSettings()
      *
      * @author Oleg Schildt
      */
@@ -743,7 +741,7 @@ class UserSettingsManager implements ISettingsManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see loadSettings()
+     * @see UserSettingsManager::loadSettings()
      *
      * @author Oleg Schildt
      */
@@ -764,8 +762,10 @@ class UserSettingsManager implements ISettingsManager
      * @param string $user_id
      * The user ID.
      *
-     * @see getUserID()
-     * @see loadSettings()
+     * @see UserSettingsManager::getUserID()
+     * @see UserSettingsManager::loadSettings()
+     *
+     * @return void
      *
      * @author Oleg Schildt
      */
@@ -780,7 +780,7 @@ class UserSettingsManager implements ISettingsManager
      * @return int|null
      * Returns the user id or null if not set.
      *
-     * @see setUserID()
+     * @see UserSettingsManager::setUserID()
      *
      * @author Oleg Schildt
      */

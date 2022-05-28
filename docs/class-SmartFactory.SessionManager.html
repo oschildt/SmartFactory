@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Class: SessionManager - Library SmartFactory
+            Class: SessionManager
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -115,10 +109,13 @@
 
 
 
+<div class="definition"></div>
+
 
 <div class="short-description">
-Class for session management.
+<p>Class for session management.</p>
 </div>
+
 
 
 
@@ -131,12 +128,10 @@ Class for session management.
 
 </div>
 
-
-
 <h2>Implements</h2>
 <div class="item_list">
 
-<a href="interface-SmartFactory.Interfaces.ISessionManager.html">\SmartFactory\Interfaces\ISessionManager</a><br>
+<a href='interface-SmartFactory.Interfaces.ISessionManager.html'>\SmartFactory\Interfaces\ISessionManager</a><br>
 
 </div>
 
@@ -144,17 +139,40 @@ Class for session management.
 
 
 
-<h2>Author</h2>
-Oleg Schildt
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
 
 
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.SessionManager.html#17">SmartFactory\SessionManager.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.SessionManager.php.html#20'>SmartFactory/SessionManager.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -166,370 +184,395 @@ Oleg Schildt
 
 
 
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$context">$context</a></div>
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Properties</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#$context">$context</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal variable for storing the current context.
+              <p>Internal variable for storing the current context.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$readonly">$readonly</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the state whether the session is started
+as readonly.</p>
           </td>
       </tr>
       
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
       <tr>
           <td>
-              <a href="#$readonly">$readonly</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#clearSession">clearSession()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal variable for storing the state whether the session is started
-as readonly.
+              <p>Clears the session data.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#close">close()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reimplementation of the method \SessionHandler::close.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#create_sid">create_sid()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reimplementation of the method \SessionHandler::create_sid.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#destroy">destroy()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reimplementation of the method \SessionHandler::destroy.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#destroySession">destroySession()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Destroys the session.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#gc">gc()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reimplementation of the method \SessionHandler::gc.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getContext">getContext()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the current session context.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getSessionId">getSessionId()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the ID of the current session.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getSessionName">getSessionName()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the current session variable name.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#open">open()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reimplementation of the method \SessionHandler::open.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#read">read()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reimplementation of the method \SessionHandler::read.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setSessionId">setSessionId()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sets the ID of the current session.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setSessionName">setSessionName()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sets the session variable name.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#startSession">startSession()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Starts the session.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#switchContext">switchContext()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Changes the session context.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#vars">vars()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the reference to the array of the session variables.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#write">write()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reimplementation of the method \SessionHandler::write.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#writeCloseSession">writeCloseSession()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Saves all unsaved session data and closes the session.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Methods</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#clearSession">clearSession</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Clears the session data.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#close">close</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Reimplementation of the method \SessionHandler::close.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#create_sid">create_sid</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Reimplementation of the method \SessionHandler::create_sid.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#destroy">destroy</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Reimplementation of the method \SessionHandler::destroy.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#destroySession">destroySession</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Destroys the session.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#gc">gc</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Reimplementation of the method \SessionHandler::gc.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#getContext">getContext</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Returns the current session context.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#getSessionId">getSessionId</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Returns the ID of the current session.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#getSessionName">getSessionName</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Returns the current session variable name.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#open">open</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Reimplementation of the method \SessionHandler::open.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#read">read</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Reimplementation of the method \SessionHandler::read.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#setSessionId">setSessionId</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Sets the ID of the current session.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#setSessionName">setSessionName</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Sets the session variable name.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#startSession">startSession</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Starts the session.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#switchContext">switchContext</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Changes the session context.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#vars">vars</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Returns the reference to the array of the session variables.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#write">write</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Reimplementation of the method \SessionHandler::write.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#writeCloseSession">writeCloseSession</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Saves all unsaved session data and closes the session.
-          </td>
-      </tr>
-      
-      
-  </table>
-
-
-
-
-
+<hr id="$context">
   
-  <hr id="$context">
-  
-  <h1>Property: $context</h1>
+  <h1>Property: SessionManager::$context</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$context</b> = <span class="php-quote">&quot;default&quot;</span></div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>;</div>
 
-  <span class="type_label">Type:</span> string
-  
   
   <div class="short-description">
-  Internal variable for storing the current context.
+  <p>Internal variable for storing the current context.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>If many instances of the application should run in parallel
 subfolders, and all subfolders are within the same session,
-and the provider does not let you to change the session path,
+and the provider does not let you change the session path,
 then you can use different $context in each instance to ensure
 that the session data of these instances does not mix.</p>
   </div>
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#45">SmartFactory\SessionManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#48'>SmartFactory/SessionManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.SessionManager.html#getContext">\SmartFactory\SessionManager::getContext()</a><br>
+  <a href='class-SmartFactory.SessionManager.html#getContext'>\SmartFactory\SessionManager::getContext()</a><br>
   
-  <a href="class-SmartFactory.SessionManager.html#switchContext">\SmartFactory\SessionManager::switchContext()</a><br>
   
-  </div>
+  <a href='class-SmartFactory.SessionManager.html#switchContext'>\SmartFactory\SessionManager::switchContext()</a><br>
   
+  
+  </div><hr id="$readonly">
+  
+  <h1>Property: SessionManager::$readonly</h1>
 
-  
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> string <span class="php-var">$readonly</span> = <span class="php-keyword1">false</span>;</div>
 
-  
-  
-  <hr id="$readonly">
-  
-  <h1>Property: $readonly</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$readonly</b> = <span class="php-keyword1">false</span></div>
-
-  <span class="type_label">Type:</span> string
-  
   
   <div class="short-description">
-  Internal variable for storing the state whether the session is started
-as readonly.
+  <p>Internal variable for storing the state whether the session is started
+as readonly.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#27">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#30'>SmartFactory/SessionManager.php</a>
+  </div>
 
+<hr id="clearSession">
   
+  <h1>Method: SessionManager::clearSession()</h1>
 
-  
-
-  
-  
-
-
-
-  
-  <hr id="clearSession">
-  
-  <h1>Method: clearSession</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>clearSession</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearSession() : bool;</div>
 
   
   <div class="short-description">
-  Clears the session data.
+  <p>Clears the session data.</p>
   </div>
+  
+
   
 
   
@@ -538,54 +581,69 @@ as readonly.
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the session data has been successfully cleared, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the session data has been successfully cleared, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#clearSession">\SmartFactory\Interfaces\ISessionManager::clearSession()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#clearSession'>\SmartFactory\Interfaces\ISessionManager::clearSession()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#446">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#449'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="close">
   
-  <h1>Method: close</h1>
+  <h1>Method: SessionManager::close()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>close</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> close() : bool;</div>
 
   
   <div class="short-description">
-  Reimplementation of the method \SessionHandler::close.
+  <p>Reimplementation of the method \SessionHandler::close.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
@@ -596,53 +654,68 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
 
   
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+
   
-  <div class="param-description">
-  <p>The return value (usually true on success, false on failure).
-Note this value is returned internally to PHP for processing.</p>
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#60">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#63'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="create_sid">
   
-  <h1>Method: create_sid</h1>
+  <h1>Method: SessionManager::create_sid()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>create_sid</b>() : string</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_sid() : string;</div>
 
   
   <div class="short-description">
-  Reimplementation of the method \SessionHandler::create_sid.
+  <p>Reimplementation of the method \SessionHandler::create_sid.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
@@ -653,52 +726,67 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
 
   
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+
   
-  <div class="param-description">
-  <p>Should return session ID valid for the default session handler.</p>
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Should return session ID valid for the default session handler.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#77">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#80'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="destroy">
   
-  <h1>Method: destroy</h1>
+  <h1>Method: SessionManager::destroy()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>destroy</b>(string <span class="php-var">$session_id</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> destroy(string <span class="php-var">$session_id</span>) : bool;</div>
 
   
   <div class="short-description">
-  Reimplementation of the method \SessionHandler::destroy.
+  <p>Reimplementation of the method \SessionHandler::destroy.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
@@ -707,62 +795,99 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$session_id</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The session ID being destroyed.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $session_id
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The session ID being destroyed.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The return value (usually true on success, false on failure).
-Note this value is returned internally to PHP for processing.</p>
+  <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#100">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#103'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="destroySession">
   
-  <h1>Method: destroySession</h1>
+  <h1>Method: SessionManager::destroySession()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>destroySession</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> destroySession() : bool;</div>
 
   
   <div class="short-description">
-  Destroys the session.
+  <p>Destroys the session.</p>
   </div>
+  
+
   
 
   
@@ -771,54 +896,69 @@ Note this value is returned internally to PHP for processing.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the session has been successfully destroyed, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the session has been successfully destroyed, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#destroySession">\SmartFactory\Interfaces\ISessionManager::destroySession()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#destroySession'>\SmartFactory\Interfaces\ISessionManager::destroySession()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#355">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#358'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="gc">
   
-  <h1>Method: gc</h1>
+  <h1>Method: SessionManager::gc()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>gc</b>(string <span class="php-var">$maxlifetime</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> gc(string <span class="php-var">$maxlifetime</span>) : bool;</div>
 
   
   <div class="short-description">
-  Reimplementation of the method \SessionHandler::gc.
+  <p>Reimplementation of the method \SessionHandler::gc.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
@@ -827,129 +967,107 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$maxlifetime</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Sessions that have not updated for the last maxlifetime seconds will be removed.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $maxlifetime
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Sessions that have not updated for the last maxlifetime seconds will be removed.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The return value (usually true on success, false on failure).
-Note this value is returned internally to PHP for processing.</p>
+  <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#121">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#124'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="getContext">
   
-  <h1>Method: getContext</h1>
+  <h1>Method: SessionManager::getContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>getContext</b>() : string</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext() : string;</div>
 
   
   <div class="short-description">
-  Returns the current session context.
-  </div>
-  
-
-  
-  <div class="long-description">
-  <h2>Details</h2>
-  <p>If many instances of the application should run in parallel
-subfolders, and all subfolders are within the same session,
-and the provider does not let you to change the session path,
-then you can use different $context in each instance to ensure
-that the session data of these instances does not mix.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
-  
-  <div class="param-description">
   <p>Returns the current session context.</p>
   </div>
   
-  
 
   
-
-  
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#getContext">\SmartFactory\Interfaces\ISessionManager::getContext()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#323">SmartFactory\SessionManager.php</a>
-
-  
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href="class-SmartFactory.SessionManager.html#switchContext">\SmartFactory\SessionManager::switchContext()</a><br>
-  
-  </div>
-  
-
-  
-
-  
-  
-  
-  <hr id="getSessionId">
-  
-  <h1>Method: getSessionId</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>getSessionId</b>() : string</div>
-
-  
-  <div class="short-description">
-  Returns the ID of the current session.
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>If many instances of the application should run in parallel
+subfolders, and all subfolders are within the same session,
+and the provider does not let you to change the session path,
+then you can use different $context in each instance to ensure
+that the session data of these instances does not mix.</p>
   </div>
   
 
@@ -959,57 +1077,73 @@ that the session data of these instances does not mix.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
+  <div class="item_description"><p>Returns the current session context.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#getContext'>\SmartFactory\Interfaces\ISessionManager::getContext()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#326'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.SessionManager.html#switchContext'>\SmartFactory\SessionManager::switchContext()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getSessionId">
+  
+  <h1>Method: SessionManager::getSessionId()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getSessionId() : string;</div>
+
+  
+  <div class="short-description">
   <p>Returns the ID of the current session.</p>
   </div>
   
-  
 
-  
-
-  
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#getSessionId">\SmartFactory\Interfaces\ISessionManager::getSessionId()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#411">SmartFactory\SessionManager.php</a>
-
-  
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href="class-SmartFactory.SessionManager.html#setSessionId">\SmartFactory\SessionManager::setSessionId()</a><br>
-  
-  </div>
-  
-
-  
-
-  
-  
-  
-  <hr id="getSessionName">
-  
-  <h1>Method: getSessionName</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>getSessionName</b>() : string</div>
-
-  
-  <div class="short-description">
-  Returns the current session variable name.
-  </div>
   
 
   
@@ -1018,38 +1152,85 @@ that the session data of these instances does not mix.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
+  <div class="item_description"><p>Returns the ID of the current session.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#getSessionId'>\SmartFactory\Interfaces\ISessionManager::getSessionId()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#414'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.SessionManager.html#setSessionId'>\SmartFactory\SessionManager::setSessionId()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getSessionName">
+  
+  <h1>Method: SessionManager::getSessionName()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getSessionName() : string;</div>
+
+  
+  <div class="short-description">
   <p>Returns the current session variable name.</p>
   </div>
   
+
+  
+
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#getSessionName">\SmartFactory\Interfaces\ISessionManager::getSessionName()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#378">SmartFactory\SessionManager.php</a>
-
-  
-  <h2>See also</h2>
+  <h2>Returns</h2>
   <div class="item_list">
+  string<br>
   
-  <a href="class-SmartFactory.SessionManager.html#setSessionName">\SmartFactory\SessionManager::setSessionName()</a><br>
+  <div class="item_description"><p>Returns the current session variable name.</p></div>
   
   </div>
   
@@ -1057,22 +1238,64 @@ that the session data of these instances does not mix.</p>
   
 
   
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#getSessionName'>\SmartFactory\Interfaces\ISessionManager::getSessionName()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#381'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.SessionManager.html#setSessionName'>\SmartFactory\SessionManager::setSessionName()</a><br>
   
   
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="open">
   
-  <h1>Method: open</h1>
+  <h1>Method: SessionManager::open()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>open</b>(string <span class="php-var">$save_path</span>, string <span class="php-var">$session_name</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> open(string <span class="php-var">$save_path</span>, string <span class="php-var">$session_name</span>) : bool;</div>
 
   
   <div class="short-description">
-  Reimplementation of the method \SessionHandler::open.
+  <p>Reimplementation of the method \SessionHandler::open.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
@@ -1081,74 +1304,119 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$save_path</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The path where to store/retrieve the session.</p>
-      </div>
-      
-  
-      <h3>$session_name</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The session name.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $save_path
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The path where to store/retrieve the session.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $session_name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The session name.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The return value (usually true on success, false on failure).
-Note this value is returned internally to PHP for processing.</p>
+  <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#145">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#148'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="read">
   
-  <h1>Method: read</h1>
+  <h1>Method: SessionManager::read()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>read</b>(string <span class="php-var">$session_id</span>) : string</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> read(string <span class="php-var">$session_id</span>) : string;</div>
 
   
   <div class="short-description">
-  Reimplementation of the method \SessionHandler::read.
+  <p>Reimplementation of the method \SessionHandler::read.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
@@ -1157,359 +1425,553 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$session_id</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The session id to read data for.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $session_id
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The session id to read data for.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
-  <p>Returns an encoded string of the read data. If nothing was read,
+  <div class="item_description"><p>Returns an encoded string of the read data. If nothing was read,
 it must return an empty string. Note this value is returned
-internally to PHP for processing. .</p>
+internally to PHP for processing. .</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#167">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#170'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="setSessionId">
   
-  <h1>Method: setSessionId</h1>
+  <h1>Method: SessionManager::setSessionId()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setSessionId</b>(string <span class="php-var">$id</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setSessionId(string <span class="php-var">$id</span>) : bool;</div>
 
   
   <div class="short-description">
-  Sets the ID of the current session.
+  <p>Sets the ID of the current session.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$id</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The new ID of the current session.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $id
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The new ID of the current session.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the session ID has been successfully set, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the session ID has been successfully set, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#setSessionId">\SmartFactory\Interfaces\ISessionManager::setSessionId()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#setSessionId'>\SmartFactory\Interfaces\ISessionManager::setSessionId()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#433">SmartFactory\SessionManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#436'>SmartFactory/SessionManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.SessionManager.html#getSessionId">\SmartFactory\SessionManager::getSessionId()</a><br>
+  <a href='class-SmartFactory.SessionManager.html#getSessionId'>\SmartFactory\SessionManager::getSessionId()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="setSessionName">
   
-  <h1>Method: setSessionName</h1>
+  <h1>Method: SessionManager::setSessionName()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setSessionName</b>(string <span class="php-var">$name</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setSessionName(string <span class="php-var">$name</span>) : bool;</div>
 
   
   <div class="short-description">
-  Sets the session variable name.
+  <p>Sets the session variable name.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$name</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The new session variable name.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The new session variable name.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the session variable name has been successfully set, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the session variable name has been successfully set, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#setSessionName">\SmartFactory\Interfaces\ISessionManager::setSessionName()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#setSessionName'>\SmartFactory\Interfaces\ISessionManager::setSessionName()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#396">SmartFactory\SessionManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#399'>SmartFactory/SessionManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.SessionManager.html#getSessionName">\SmartFactory\SessionManager::getSessionName()</a><br>
+  <a href='class-SmartFactory.SessionManager.html#getSessionName'>\SmartFactory\SessionManager::getSessionName()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="startSession">
   
-  <h1>Method: startSession</h1>
+  <h1>Method: SessionManager::startSession()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>startSession</b>(boolean <span class="php-var">$readonly</span> = <span class="php-keyword1">false</span>, string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startSession(bool <span class="php-var">$readonly</span> = <span class="php-keyword1">false</span>, string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : bool;</div>
 
   
   <div class="short-description">
-  Starts the session.
+  <p>Starts the session.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$readonly</h3>
-      <span class="type_label">Type:</span> boolean
-      
-      <div class="param-description">
-      <p>This paramters specifies whether the session should be started
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $readonly
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>This paramters specifies whether the session should be started
 in the readonly mode or not.</p>
 <p>The parameter $readonly starts the session in non-blocking
 readonly mode. It can be used in the asynchronous ajax requests
 So that they are not blocked by the main process and by each
 ohter while the write lock is held on the session file.</p>
-      </div>
-      
-  
-      <h3>$context</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The session context.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>The session context.</p>
 <p>If many instances of the application should run in parallel
 subfolders, and all subfolders are within the same session,
 and the provider does not let you to change the session path,
 then you can use different $context in each instance to ensure
 that the session data of these instances does not mix.</p>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the session has been successfully started, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the session has been successfully started, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#startSession">\SmartFactory\Interfaces\ISessionManager::startSession()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#startSession'>\SmartFactory\Interfaces\ISessionManager::startSession()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#224">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#227'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="switchContext">
   
-  <h1>Method: switchContext</h1>
+  <h1>Method: SessionManager::switchContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>switchContext</b>(string <span class="php-var">$context</span>) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> switchContext(string <span class="php-var">$context</span>) : void;</div>
 
   
   <div class="short-description">
-  Changes the session context.
+  <p>Changes the session context.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>If many instances of the application should run in parallel
 subfolders, and all subfolders are within the same session,
-and the provider does not let you to change the session path,
+and the provider does not let you change the session path,
 then you can use different $context in each instance to ensure
 that the session data of these instances does not mix.</p>
   </div>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$context</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The session context.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The session context.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
   
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#switchContext'>\SmartFactory\Interfaces\ISessionManager::switchContext()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#switchContext">\SmartFactory\Interfaces\ISessionManager::switchContext()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
 
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#302">SmartFactory\SessionManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#305'>SmartFactory/SessionManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.SessionManager.html#getContext">\SmartFactory\SessionManager::getContext()</a><br>
+  <a href='class-SmartFactory.SessionManager.html#getContext'>\SmartFactory\SessionManager::getContext()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="vars">
   
-  <h1>Method: vars</h1>
+  <h1>Method: SessionManager::vars()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>vars</b>() : <span class="php-keyword1">array</span></div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> &amp;vars() : <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
-  Returns the reference to the array of the session variables.
+  <p>Returns the reference to the array of the session variables.</p>
   </div>
+  
+
   
 
   
@@ -1518,10 +1980,10 @@ that the session data of these instances does not mix.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> array
+  <div class="item_list">
+  array<br>
   
-  <div class="param-description">
-  <p>Returns the reference to the array of the session variables.</p>
+  <div class="item_description"><p>Returns the reference to the array of the session variables.</p>
 <p>The reason of this interacfe is to wrap the standard session
 handling to be able to flexibly change the implementation without
 any change in the code where it is used.</p>
@@ -1533,51 +1995,66 @@ only one dimensional arrays, thus, it is not applicable for us.</p>
 <p>We return the reference to the internal data. It allows setting
 multidimesional arrays as follows:</p>
 <pre><code class="language-php"><span class="php-var">$smanager</span>-&gt;vars()[<span class="php-quote">&quot;user&quot;</span>][<span class="php-quote">&quot;name&quot;</span>] = <span class="php-quote">&quot;Alex&quot;</span>;
-<span class="php-var">$smanager</span>-&gt;vars()[<span class="php-quote">&quot;user&quot;</span>][<span class="php-quote">&quot;age&quot;</span>] = <span class="php-quote">&quot;22&quot;</span>;</code></pre>
+<span class="php-var">$smanager</span>-&gt;vars()[<span class="php-quote">&quot;user&quot;</span>][<span class="php-quote">&quot;age&quot;</span>] = <span class="php-quote">&quot;22&quot;</span>;</code></pre></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#vars">\SmartFactory\Interfaces\ISessionManager::vars()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#vars'>\SmartFactory\Interfaces\ISessionManager::vars()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#480">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#483'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="write">
   
-  <h1>Method: write</h1>
+  <h1>Method: SessionManager::write()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>write</b>(string <span class="php-var">$session_id</span>, string <span class="php-var">$session_data</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> write(string <span class="php-var">$session_id</span>, string <span class="php-var">$session_data</span>) : bool;</div>
 
   
   <div class="short-description">
-  Reimplementation of the method \SessionHandler::write.
+  <p>Reimplementation of the method \SessionHandler::write.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
@@ -1586,72 +2063,119 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$session_id</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The session id to write data for.</p>
-      </div>
-      
-  
-      <h3>$session_data</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The encoded session data. This data is the result of the PHP internally
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $session_id
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The session id to write data for.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $session_data
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The encoded session data. This data is the result of the PHP internally
 encoding the $_SESSION superglobal to a serialized string and passing
 it as this parameter.</p>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The return value (usually true on success, false on failure).
-Note this value is returned internally to PHP for processing.</p>
+  <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#193">SmartFactory\SessionManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#196'>SmartFactory/SessionManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="writeCloseSession">
   
-  <h1>Method: writeCloseSession</h1>
+  <h1>Method: SessionManager::writeCloseSession()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>writeCloseSession</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> writeCloseSession() : bool;</div>
 
   
   <div class="short-description">
-  Saves all unsaved session data and closes the session.
+  <p>Saves all unsaved session data and closes the session.</p>
   </div>
+  
+
   
 
   
@@ -1660,46 +2184,42 @@ Note this value is returned internally to PHP for processing.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the session has been successfully closed, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the session has been successfully closed, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.ISessionManager.html#writeCloseSession">\SmartFactory\Interfaces\ISessionManager::writeCloseSession()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#writeCloseSession'>\SmartFactory\Interfaces\ISessionManager::writeCloseSession()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.SessionManager.html#336">SmartFactory\SessionManager.php</a>
-
-  
-
-  
-
-  
-  
-  
-
-
-
+  <div class="item_list">
+  <a href='source-SmartFactory.SessionManager.php.html#339'>SmartFactory/SessionManager.php</a>
+  </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

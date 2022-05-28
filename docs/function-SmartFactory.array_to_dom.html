@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: array_to_dom - Library SmartFactory
+            Function: array_to_dom()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,18 +105,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: array_to_dom</h1>
+                    <h1>Function: array_to_dom()</h1>
 
-<div class="definition"><b>array_to_dom</b>(\DOMNode &amp;<span class="php-var">$node</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>) : void</div>
+<div class="definition"><span class="php-keyword1">function</span> array_to_dom(\DOMNode &amp;<span class="php-var">$node</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>) : void;</div>
 
 
 <div class="short-description">
-Converts an array to XML DOM structure.
+<p>Converts an array to XML DOM structure.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>This function can convert an array of any dimensions
 to a DOM structure. It might be used for loading and saving
@@ -131,52 +125,72 @@ settings to a config file.</p>
 
 
 
+
 <h2>Parameters</h2>
 
-    <h3>$node</h3>
-    <span class="type_label">Type:</span> \DOMNode
-    
-    <div class="param-description">
-    <p>The parent node of the DOM structure.</p>
-    </div>
-    
-
-    <h3>$array</h3>
-    <span class="type_label">Type:</span> array
-    
-    <div class="param-description">
-    <p>The array to be converted to the DOM structure.</p>
-    </div>
-    
-
-
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $node
+          </td>
+          <td>
+              by reference
+          </td>
+          <td>
+              \DOMNode
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>The parent node of the DOM structure.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $array
+          </td>
+          <td>
+              by reference
+          </td>
+          <td>
+              array
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>The array to be converted to the DOM structure.</p>
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> void
+<div class="item_list">
+void<br>
+
+</div>
 
 
 
 
-
-
-<h2>Author</h2>
-Oleg Schildt
-
-
-
-<h2>Package</h2>
-<a href="package-Utility_Functions.html">Utility Functions</a>
-
-
-<h2>Source code</h2>
-<a href="source-utility_functions_inc.html#154">utility_functions_inc.php</a>
-
-
-<h2>See also</h2>
+<h2>Authors</h2>
 <div class="item_list">
 
-<a href="function-SmartFactory.dom_to_array.html">\SmartFactory\dom_to_array()</a><br>
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
@@ -185,9 +199,29 @@ Oleg Schildt
 
 
 
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-Utility Functions.html'>Utility Functions</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-utility_functions_inc.php.html#159'>utility_functions_inc.php</a>
+</div>
+
+
+<h2>See also</h2>
+<div class="item_list">
+
+<a href='function-SmartFactory.dom_to_array.html'>\SmartFactory\dom_to_array()</a><br>
+
+
+</div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

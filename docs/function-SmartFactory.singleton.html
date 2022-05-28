@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: singleton - Library SmartFactory
+            Function: singleton()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,19 +105,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: singleton</h1>
+                    <h1>Function: singleton()</h1>
 
-<div class="definition"><b>singleton</b>(string|object <span class="php-var">$interface_or_class</span>) : object</div>
+<div class="definition"><span class="php-keyword1">function</span> singleton(string|object <span class="php-var">$interface_or_class</span>) : object;</div>
 
 
 <div class="short-description">
-The method singleton creates an object that support the specified interface and ensures
-that only one instance of this object exists.
+<p>The method singleton creates an object that supports the specified interface and ensures
+that only one instance of this object exists.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>The singleton is a usual pattern for the action objects like SessionManager, EventManager,
 DBWorker etc. It makes no sense to produce many instances of such classes,
@@ -132,75 +126,100 @@ it wastes the computer resources and might cause errors.</p>
 
 
 
+
 <h2>Parameters</h2>
 
-    <h3>$interface_or_class</h3>
-    <span class="type_label">Type:</span> string|object
-    
-    <div class="param-description">
-    <p>Name of the class/interface as string or the class/interface.</p>
-    </div>
-    
-
-
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $interface_or_class
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              string|object
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>Name of the class/interface as string or the class/interface.</p>
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> object
+<div class="item_list">
+object<br>
 
-<div class="param-description">
-<p>Returns object of the class bound to the interfase.</p>
+<div class="item_description"><p>Returns object of the class bound to the interfase.</p></div>
+
 </div>
-
-
 
 
 <h2>Throws</h2>
 <div class="item_list">
 
-    <b>\Exception</b><br>
-    
-    
-    <p>It might throw the following exceptions in the case of any errors:</p>
+\Exception<br>
+
+<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the interface or class is not specified.</li>
 <li>if the interface or class does not exist.</li>
 <li>if the check of the classes and interfaces fails.</li>
-</ul><br>
-    
+</ul></div>
+
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
 
 
 
 <h2>Package</h2>
-<a href="package-Factory.html">Factory</a>
+<div class="item_list">
+<a href='package-Factory.html'>Factory</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-factory_functions_inc.html#36">factory_functions_inc.php</a>
+<div class="item_list">
+<a href='source-factory_functions_inc.php.html#39'>factory_functions_inc.php</a>
+</div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href="function-SmartFactory.instance.html">\SmartFactory\instance()</a><br>
+<a href='function-SmartFactory.instance.html'>\SmartFactory\instance()</a><br>
+
 
 </div>
-
-
-
-
-
-
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

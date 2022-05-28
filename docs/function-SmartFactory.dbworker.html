@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: dbworker - Library SmartFactory
+            Function: dbworker()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,53 +105,74 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: dbworker</h1>
+                    <h1>Function: dbworker()</h1>
 
-<div class="definition"><b>dbworker</b>(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = <span class="php-keyword1">null</span>, boolean <span class="php-var">$singleton</span> = <span class="php-keyword1">true</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span></div>
+<div class="definition"><span class="php-keyword1">function</span> dbworker(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = <span class="php-keyword1">null</span>, bool <span class="php-var">$singleton</span> = <span class="php-keyword1">true</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span>;</div>
 
 
 <div class="short-description">
-The method dbworker provides the DBWorker object for working with the database.
+<p>The method dbworker provides the DBWorker object for working with the database.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>Currently supported: MySQL und MS SQL.</p>
 </div>
 
 
 
+
 <h2>Parameters</h2>
 
-    <h3>$parameters</h3>
-    <span class="type_label">Type:</span> array
-    
-    <div class="param-description">
-    <p>Connection settings as an associative array in the form key => value:</p>
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $parameters
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              array
+          </td>
+          <td>
+              null
+          </td>
+          <td class="description_column">
+              <p>Connection settings as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters["db_type"] - type of the database (MySQL or MSSQL)</p>
+<p>$parameters[&quot;db_type&quot;] - type of the database (MySQL or MSSQL)</p>
 </li>
 <li>
-<p>$parameters["db_server"] - server address</p>
+<p>$parameters[&quot;db_server&quot;] - server address</p>
 </li>
 <li>
-<p>$parameters["db_name"] - database name</p>
+<p>$parameters[&quot;db_name&quot;] - database name</p>
 </li>
 <li>
-<p>$parameters["db_user"] - user name</p>
+<p>$parameters[&quot;db_user&quot;] - user name</p>
 </li>
 <li>
-<p>$parameters["db_password"] - user password</p>
+<p>$parameters[&quot;db_password&quot;] - user password</p>
 </li>
 <li>
-<p>$parameters["autoconnect"] - should true if the connection should be established automatically
+<p>$parameters[&quot;autoconnect&quot;] - should true if the connection should be established automatically
 upon creation.</p>
 </li>
 <li>
-<p>$parameters["read_only"] - this paramter sets the connection to the read only mode.</p>
+<p>$parameters[&quot;read_only&quot;] - this paramter sets the connection to the read only mode.</p>
 </li>
 </ul>
 <p>Example:</p>
@@ -168,37 +183,46 @@ upon creation.</p>
                  <span class="php-quote">&quot;db_password&quot;</span> =&gt; <span class="php-quote">&quot;root&quot;</span>,
                  <span class="php-quote">&quot;autoconnect&quot;</span> =&gt; <span class="php-keyword1">true</span>
                 ]);</code></pre>
-    </div>
-    
-
-    <h3>$singleton</h3>
-    <span class="type_label">Type:</span> boolean
-    
-    <div class="param-description">
-    <p>If the parameter is true, it ensures that only one instance of this object exists.</p>
-    </div>
-    
-
-
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $singleton
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              bool
+          </td>
+          <td>
+              true
+          </td>
+          <td class="description_column">
+              <p>If the parameter is true, it ensures that only one instance of this object exists.</p>
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>|null
+<div class="item_list">
+<a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>|null<br>
 
-<div class="param-description">
-<p>returns DBWorker object or null if the object could not be created.</p>
+<div class="item_description"><p>returns DBWorker object or null if the object could not be created.</p></div>
+
 </div>
-
-
 
 
 <h2>Throws</h2>
 <div class="item_list">
 
-    <b>\Exception</b><br>
-    
-    
-    <p>It might throw the following exceptions in the case of any errors:</p>
+\Exception<br>
+
+<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the interface or class does not exist.</li>
 <li>if the check of the classes and interfaces fails.</li>
@@ -207,34 +231,37 @@ upon creation.</p>
 <li>db_conn_data_error - if the connection parameters are incomplete.</li>
 <li>db_server_conn_error - if the database server cannot be connected.</li>
 <li>db_not_exists_error - if database does not exists od inaccesible to the user.</li>
-</ul><br>
-    
+</ul></div>
+
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
 
 
 
 <h2>Package</h2>
-<a href="package-Factory.html">Factory</a>
+<div class="item_list">
+<a href='package-Factory.html'>Factory</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-factory_functions_inc.html#122">factory_functions_inc.php</a>
-
-
-
-
-
-
-
+<div class="item_list">
+<a href='source-factory_functions_inc.php.html#125'>factory_functions_inc.php</a>
+</div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

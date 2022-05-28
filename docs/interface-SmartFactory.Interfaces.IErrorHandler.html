@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Interface: IErrorHandler - Library SmartFactory
+            Interface: IErrorHandler
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -124,23 +118,23 @@
                     <h1>Interface: IErrorHandler</h1>
 
 
+
+<div class="definition"></div>
+
+
 <div class="short-description">
-Interface for error handling.
+<p>Interface for error handling.</p>
 </div>
 
 
 
-<div class="long-description">
-<h2>Details</h2>
-<p>You should implement this interface in your classes if they have to be initialized.</p>
-</div>
 
 
 
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
+<a href='interface-SmartFactory.Interfaces.IInitable.html'>\SmartFactory\Interfaces\IInitable</a><br>
 
 </div>
 
@@ -149,7 +143,14 @@ Interface for error handling.
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href="class-SmartFactory.ErrorHandler.html">\SmartFactory\ErrorHandler</a><br>
+<a href='class-SmartFactory.ErrorHandler.html'>\SmartFactory\ErrorHandler</a><br>
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
@@ -157,17 +158,29 @@ Interface for error handling.
 
 
 
-<h2>Author</h2>
-Oleg Schildt
-
-
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.Interfaces.IErrorHandler.html#14">SmartFactory\Interfaces\IErrorHandler.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#17'>SmartFactory/Interfaces/IErrorHandler.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -179,108 +192,136 @@ Oleg Schildt
 
 
 
-
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
       
-      
       <tr>
           <td>
-              <a href="#disableTrace">disableTrace</a>
+              <div style='float:left'><a href="#disableTrace">disableTrace()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Disables the trace.
+              <p>Disables the trace.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#enableTrace">enableTrace</a>
+              <div style='float:left'><a href="#enableTrace">enableTrace()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Enables the trace.
+              <p>Enables the trace.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#getLastError">getLastError</a>
+              <div style='float:left'><a href="#getLastError">getLastError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Returns the last error.
+              <p>Returns the last error.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#handleError">handleError</a>
+              <div style='float:left'><a href="#handleError">handleError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              This is the function for handling of the PHP errors. It is set a the
-error handler.
+              <p>This is the function for handling of the PHP errors. It is set a the
+error handler.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#handleException">handleException</a>
+              <div style='float:left'><a href="#handleException">handleException()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              This is the function for handling of the PHP exceptions. It should
+              <p>This is the function for handling of the PHP exceptions. It should
 be called in the catch block to trace detailed infromation
-if an exception is thrown.
+if an exception is thrown.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#init">init</a>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Initializes the error handler with parameters.
+              <p>Initializes the error handler with parameters.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#setLastError">setLastError</a>
+              <div style='float:left'><a href="#setLastError">setLastError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Stores the last error.
+              <p>Stores the last error.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#traceActive">traceActive</a>
+              <div style='float:left'><a href="#traceActive">traceActive()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Returns the state whether the trace is active or not.
+              <p>Returns the state whether the trace is active or not.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-
-
+<hr id="disableTrace">
   
-  <hr id="disableTrace">
-  
-  <h1>Method: disableTrace</h1>
+  <h1>Method: IErrorHandler::disableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>disableTrace</b>() : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace() : void;</div>
 
   
   <div class="short-description">
-  Disables the trace.
+  <p>Disables the trace.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>If the trace is active, any eror, warning or notice is traced to
 the standard file.</p>
@@ -290,32 +331,11 @@ the standard file.</p>
   
 
   
+
+  
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#140">SmartFactory\Interfaces\IErrorHandler.php</a>
-
-  
-  <h2>See also</h2>
   <div class="item_list">
-  
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive">\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
-  
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace">\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
+  void<br>
   
   </div>
   
@@ -323,22 +343,62 @@ the standard file.</p>
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#143'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive'>\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
   
   
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace'>\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="enableTrace">
   
-  <h1>Method: enableTrace</h1>
+  <h1>Method: IErrorHandler::enableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>enableTrace</b>() : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace() : void;</div>
 
   
   <div class="short-description">
-  Enables the trace.
+  <p>Enables the trace.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>If the trace is active, any eror, warning or notice is traced to
 the standard file.</p>
@@ -348,51 +408,72 @@ the standard file.</p>
   
 
   
+
+  
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
+  
+
   
 
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#125">SmartFactory\Interfaces\IErrorHandler.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#128'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive">\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive'>\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
   
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace">\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
+  
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace'>\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="getLastError">
   
-  <h1>Method: getLastError</h1>
+  <h1>Method: IErrorHandler::getLastError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>getLastError</b>() : string</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError() : string;</div>
 
   
   <div class="short-description">
-  Returns the last error.
+  <p>Returns the last error.</p>
   </div>
+  
+
   
 
   
@@ -401,370 +482,570 @@ the standard file.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+  <div class="item_list">
+  string<br>
   
-  <div class="param-description">
-  <p>Returns the last error or an empty string if no error occured so far.</p>
+  <div class="item_description"><p>Returns the last error or an empty string if no error occured so far.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#82">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#85'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="handleError">
   
-  <h1>Method: handleError</h1>
+  <h1>Method: IErrorHandler::handleError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>handleError</b>(integer <span class="php-var">$errno</span>,
-                   string <span class="php-var">$errstr</span>,
-                   string <span class="php-var">$errfile</span>,
-                   integer <span class="php-var">$errline</span>
-                  ) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(int <span class="php-var">$errno</span>, string <span class="php-var">$errstr</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>) : void;</div>
 
   
   <div class="short-description">
-  This is the function for handling of the PHP errors. It is set a the
-error handler.
+  <p>This is the function for handling of the PHP errors. It is set a the
+error handler.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$errno</h3>
-      <span class="type_label">Type:</span> integer
-      
-      <div class="param-description">
-      <p>Error code.</p>
-      </div>
-      
-  
-      <h3>$errstr</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Error text.</p>
-      </div>
-      
-  
-      <h3>$errfile</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Source file where the error occured.</p>
-      </div>
-      
-  
-      <h3>$errline</h3>
-      <span class="type_label">Type:</span> integer
-      
-      <div class="param-description">
-      <p>Line number where the error occured.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $errno
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Error code.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errstr
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Error text.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errfile
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Source file where the error occured.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errline
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Line number where the error occured.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
+  
+
   
 
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#49">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#52'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="handleException">
   
-  <h1>Method: handleException</h1>
+  <h1>Method: IErrorHandler::handleException()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>handleException</b>(\Throwable <span class="php-var">$ex</span>,
-                       string <span class="php-var">$errfuntion</span>,
-                       string <span class="php-var">$errfile</span>,
-                       integer <span class="php-var">$errline</span>
-                      ) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, string <span class="php-var">$errfuntion</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>) : void;</div>
 
   
   <div class="short-description">
-  This is the function for handling of the PHP exceptions. It should
+  <p>This is the function for handling of the PHP exceptions. It should
 be called in the catch block to trace detailed infromation
-if an exception is thrown.
+if an exception is thrown.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$ex</h3>
-      <span class="type_label">Type:</span> \Throwable
-      
-      <div class="param-description">
-      <p>Thrown exception.</p>
-      </div>
-      
-  
-      <h3>$errfuntion</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Funtion name where the exception has been catched.</p>
-      </div>
-      
-  
-      <h3>$errfile</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Source file where the exception has been catched.</p>
-      </div>
-      
-  
-      <h3>$errline</h3>
-      <span class="type_label">Type:</span> integer
-      
-      <div class="param-description">
-      <p>Line number where the exception has been catched.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $ex
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                \Throwable
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Thrown exception.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errfuntion
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Funtion name where the exception has been catched.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errfile
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Source file where the exception has been catched.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $errline
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Line number where the exception has been catched.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
+  
+
   
 
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#72">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#75'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="init">
   
-  <h1>Method: init</h1>
+  <h1>Method: IErrorHandler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>init</b>(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : bool;</div>
 
   
   <div class="short-description">
-  Initializes the error handler with parameters.
+  <p>Initializes the error handler with parameters.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$parameters</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The parameters may vary for each error handler.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The parameters may vary for each error handler.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The method should return true upon successful initialization, otherwise false.</p>
+  <div class="item_description"><p>The method should return true upon successful initialization, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
-  
-  
   
   <h2>Overrides</h2>
-  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IInitable.html#init'>\SmartFactory\Interfaces\IInitable::init()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#27">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#30'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="setLastError">
   
-  <h1>Method: setLastError</h1>
+  <h1>Method: IErrorHandler::setLastError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setLastError</b>(string <span class="php-var">$error</span>) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(string <span class="php-var">$error</span>) : void;</div>
 
   
   <div class="short-description">
-  Stores the last error.
+  <p>Stores the last error.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$error</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The error text to be stored.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $error
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The error text to be stored.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
+  
+
   
 
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#94">SmartFactory\Interfaces\IErrorHandler.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#97'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="traceActive">
   
-  <h1>Method: traceActive</h1>
+  <h1>Method: IErrorHandler::traceActive()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>traceActive</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive() : bool;</div>
 
   
   <div class="short-description">
-  Returns the state whether the trace is active or not.
-  </div>
-  
-
-  
-  <div class="long-description">
-  <h2>Details</h2>
-  <p>If the trace is active, any eror, warning or notice is traced to
-the standard file.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
-  
-  <div class="param-description">
   <p>Returns the state whether the trace is active or not.</p>
   </div>
   
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>If the trace is active, any eror, warning or notice is traced to
+the standard file.</p>
+  </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IErrorHandler.html#110">SmartFactory\Interfaces\IErrorHandler.php</a>
 
   
-  <h2>See also</h2>
+  <h2>Returns</h2>
   <div class="item_list">
+  bool<br>
   
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace">\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
-  
-  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace">\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
+  <div class="item_description"><p>Returns the state whether the trace is active or not.</p></div>
   
   </div>
   
@@ -772,14 +1053,38 @@ the standard file.</p>
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#113'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace'>\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
   
   
-
-
-
+  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace'>\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
+  
+  
+  </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Class: EventManager - Library SmartFactory
+            Class: EventManager
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -115,10 +109,13 @@
 
 
 
+<div class="definition"></div>
+
 
 <div class="short-description">
-Class for event management.
+<p>Class for event management.</p>
 </div>
+
 
 
 
@@ -129,7 +126,7 @@ Class for event management.
 <h2>Implements</h2>
 <div class="item_list">
 
-<a href="interface-SmartFactory.Interfaces.IEventManager.html">\SmartFactory\Interfaces\IEventManager</a><br>
+<a href='interface-SmartFactory.Interfaces.IEventManager.html'>\SmartFactory\Interfaces\IEventManager</a><br>
 
 </div>
 
@@ -137,17 +134,40 @@ Class for event management.
 
 
 
-<h2>Author</h2>
-Oleg Schildt
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
 
 
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.EventManager.html#17">SmartFactory\EventManager.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.EventManager.php.html#20'>SmartFactory/EventManager.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -159,274 +179,324 @@ Oleg Schildt
 
 
 
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$event_table">$event_table</a></div>
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Properties</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#$event_table">$event_table</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal array for storing the event handler mappings.
+              <p>Internal array for storing the event handler mappings.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$suspended_events">$suspended_events</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal array for storing the suspended events.</p>
           </td>
       </tr>
       
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
       <tr>
           <td>
-              <a href="#$suspended_events">$suspended_events</a>
-          </td>
-          <td>
-              <span class='protected'>protected</span>
+              <div style='float:left'><a href="#addHandler">addHandler()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Internal array for storing the suspended events.
+              <p>Adds the handler of an event.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#deleteAllHandlers">deleteAllHandlers()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Deletes all handlers of all events.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#deleteHandler">deleteHandler()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Deletes the handler of an event.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#deleteHandlers">deleteHandlers()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Deletes all handlers of an event.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#fireEvent">fireEvent()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Fires and event.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#resumeAllEvents">resumeAllEvents()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resumes all previously suspended events.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#resumeEvent">resumeEvent()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resumes a previously suspended event.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#suspendEvent">suspendEvent()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Suspends an event.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
-      <tr><th colspan="3">Methods</th></tr>
-      
-      
-      <tr>
-          <td>
-              <a href="#addHandler">addHandler</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Adds the handler of an event.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#deleteAllHandlers">deleteAllHandlers</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Deletes all handlers of all events.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#deleteHandler">deleteHandler</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Deletes the handler of an event.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#deleteHandlers">deleteHandlers</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Deletes all handlers of an event.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#fireEvent">fireEvent</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Fires and event.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#resumeAllEvents">resumeAllEvents</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Resumes all previously suspended events.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#resumeEvent">resumeEvent</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Resumes a previously suspended event.
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="#suspendEvent">suspendEvent</a>
-          </td>
-          <td>
-              <span class='public'>public</span>
-          </td>
-          <td class="description_column">
-              Suspends an event.
-          </td>
-      </tr>
-      
-      
-  </table>
-
-
-
-
-
+<hr id="$event_table">
   
-  <hr id="$event_table">
-  
-  <h1>Property: $event_table</h1>
+  <h1>Property: EventManager::$event_table</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$event_table</b> = <span class="php-keyword1">array</span>()</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$event_table</span> = [];</div>
 
-  <span class="type_label">Type:</span> array
-  
   
   <div class="short-description">
-  Internal array for storing the event handler mappings.
+  <p>Internal array for storing the event handler mappings.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#31">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#34'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#addHandler">\SmartFactory\EventManager::addHandler()</a><br>
+  <a href='class-SmartFactory.EventManager.html#addHandler'>\SmartFactory\EventManager::addHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandler">\SmartFactory\EventManager::deleteHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandlers">\SmartFactory\EventManager::deleteHandlers()</a><br>
+  <a href='class-SmartFactory.EventManager.html#deleteHandler'>\SmartFactory\EventManager::deleteHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteAllHandlers">\SmartFactory\EventManager::deleteAllHandlers()</a><br>
   
-  </div>
+  <a href='class-SmartFactory.EventManager.html#deleteHandlers'>\SmartFactory\EventManager::deleteHandlers()</a><br>
   
+  
+  <a href='class-SmartFactory.EventManager.html#deleteAllHandlers'>\SmartFactory\EventManager::deleteAllHandlers()</a><br>
+  
+  
+  </div><hr id="$suspended_events">
+  
+  <h1>Property: EventManager::$suspended_events</h1>
 
-  
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$suspended_events</span> = [];</div>
 
-  
-  
-  <hr id="$suspended_events">
-  
-  <h1>Property: $suspended_events</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <b>$suspended_events</b> = <span class="php-keyword1">array</span>()</div>
-
-  <span class="type_label">Type:</span> array
-  
   
   <div class="short-description">
-  Internal array for storing the suspended events.
+  <p>Internal array for storing the suspended events.</p>
   </div>
   
 
   
 
   
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
   
 
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#44">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#47'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#suspendEvent">\SmartFactory\EventManager::suspendEvent()</a><br>
+  <a href='class-SmartFactory.EventManager.html#suspendEvent'>\SmartFactory\EventManager::suspendEvent()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#resumeEvent">\SmartFactory\EventManager::resumeEvent()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#resumeAllEvents">\SmartFactory\EventManager::resumeAllEvents()</a><br>
+  <a href='class-SmartFactory.EventManager.html#resumeEvent'>\SmartFactory\EventManager::resumeEvent()</a><br>
+  
+  
+  <a href='class-SmartFactory.EventManager.html#resumeAllEvents'>\SmartFactory\EventManager::resumeAllEvents()</a><br>
+  
   
   </div>
-  
 
+<hr id="addHandler">
   
+  <h1>Method: EventManager::addHandler()</h1>
 
-  
-  
-
-
-
-  
-  <hr id="addHandler">
-  
-  <h1>Method: addHandler</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <b>addHandler</b>(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>) : bool;</div>
 
   
   <div class="short-description">
-  Adds the handler of an event.
+  <p>Adds the handler of an event.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$event</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Event code.</p>
-      </div>
-      
-  
-      <h3>$handler</h3>
-      <span class="type_label">Type:</span> callable
-      
-      <div class="param-description">
-      <p>The name or definition of the handler function. The signature of
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $event
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Event code.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $handler
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                callable
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name or definition of the handler function. The signature of
 this function is:</p>
 <pre><code class="language-php"><span class="php-keyword1">function</span> (string <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</code></pre>
 <ul>
@@ -437,84 +507,100 @@ this function is:</p>
 <p>$parameters - parameters passed by the firing of the event.</p>
 </li>
 </ul>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the adding was successfull, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the adding was successfull, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the event name is not specified.</li>
 <li>if the event handler is not valid.</li>
 <li>if the creation of the handler fails.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#addHandler'>\SmartFactory\Interfaces\IEventManager::addHandler()</a>
   </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#addHandler">\SmartFactory\Interfaces\IEventManager::addHandler()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#80">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#83'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandler">\SmartFactory\EventManager::deleteHandler()</a><br>
+  <a href='class-SmartFactory.EventManager.html#deleteHandler'>\SmartFactory\EventManager::deleteHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandlers">\SmartFactory\EventManager::deleteHandlers()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteAllHandlers">\SmartFactory\EventManager::deleteAllHandlers()</a><br>
+  <a href='class-SmartFactory.EventManager.html#deleteHandlers'>\SmartFactory\EventManager::deleteHandlers()</a><br>
+  
+  
+  <a href='class-SmartFactory.EventManager.html#deleteAllHandlers'>\SmartFactory\EventManager::deleteAllHandlers()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="deleteAllHandlers">
   
-  <h1>Method: deleteAllHandlers</h1>
+  <h1>Method: EventManager::deleteAllHandlers()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>deleteAllHandlers</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteAllHandlers() : bool;</div>
 
   
   <div class="short-description">
-  Deletes all handlers of all events.
+  <p>Deletes all handlers of all events.</p>
   </div>
+  
+
   
 
   
@@ -523,333 +609,475 @@ this function is:</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the deletion was successfull, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the deletion was successfull, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers">\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers'>\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#186">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#189'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#addHandler">\SmartFactory\EventManager::addHandler()</a><br>
+  <a href='class-SmartFactory.EventManager.html#addHandler'>\SmartFactory\EventManager::addHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandler">\SmartFactory\EventManager::deleteHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandlers">\SmartFactory\EventManager::deleteHandlers()</a><br>
+  <a href='class-SmartFactory.EventManager.html#deleteHandler'>\SmartFactory\EventManager::deleteHandler()</a><br>
+  
+  
+  <a href='class-SmartFactory.EventManager.html#deleteHandlers'>\SmartFactory\EventManager::deleteHandlers()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="deleteHandler">
   
-  <h1>Method: deleteHandler</h1>
+  <h1>Method: EventManager::deleteHandler()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>deleteHandler</b>(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>) : bool;</div>
 
   
   <div class="short-description">
-  Deletes the handler of an event.
+  <p>Deletes the handler of an event.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$event</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Event code.</p>
-      </div>
-      
-  
-      <h3>$handler</h3>
-      <span class="type_label">Type:</span> callable
-      
-      <div class="param-description">
-      <p>The name or definition of the handler function.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $event
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Event code.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $handler
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                callable
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name or definition of the handler function.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the deletion was successfull, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the deletion was successfull, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the event name is not specified.</li>
 <li>if the event handler is not valid.</li>
 <li>if the creation of the handler fails.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler'>\SmartFactory\Interfaces\IEventManager::deleteHandler()</a>
   </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler">\SmartFactory\Interfaces\IEventManager::deleteHandler()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#122">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#125'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#addHandler">\SmartFactory\EventManager::addHandler()</a><br>
+  <a href='class-SmartFactory.EventManager.html#addHandler'>\SmartFactory\EventManager::addHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandlers">\SmartFactory\EventManager::deleteHandlers()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteAllHandlers">\SmartFactory\EventManager::deleteAllHandlers()</a><br>
+  <a href='class-SmartFactory.EventManager.html#deleteHandlers'>\SmartFactory\EventManager::deleteHandlers()</a><br>
+  
+  
+  <a href='class-SmartFactory.EventManager.html#deleteAllHandlers'>\SmartFactory\EventManager::deleteAllHandlers()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="deleteHandlers">
   
-  <h1>Method: deleteHandlers</h1>
+  <h1>Method: EventManager::deleteHandlers()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>deleteHandlers</b>(string <span class="php-var">$event</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandlers(string <span class="php-var">$event</span>) : bool;</div>
 
   
   <div class="short-description">
-  Deletes all handlers of an event.
+  <p>Deletes all handlers of an event.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$event</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Event code.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $event
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Event code.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the deletion was successfull, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the deletion was successfull, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the event name is not specified.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers'>\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a>
   </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers">\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#161">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#164'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#addHandler">\SmartFactory\EventManager::addHandler()</a><br>
+  <a href='class-SmartFactory.EventManager.html#addHandler'>\SmartFactory\EventManager::addHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteHandler">\SmartFactory\EventManager::deleteHandler()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#deleteAllHandlers">\SmartFactory\EventManager::deleteAllHandlers()</a><br>
+  <a href='class-SmartFactory.EventManager.html#deleteHandler'>\SmartFactory\EventManager::deleteHandler()</a><br>
+  
+  
+  <a href='class-SmartFactory.EventManager.html#deleteAllHandlers'>\SmartFactory\EventManager::deleteAllHandlers()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="fireEvent">
   
-  <h1>Method: fireEvent</h1>
+  <h1>Method: EventManager::fireEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>fireEvent</b>(string <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : integer</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fireEvent(string <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : int;</div>
 
   
   <div class="short-description">
-  Fires and event.
+  <p>Fires and event.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$event</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Event code.</p>
-      </div>
-      
-  
-      <h3>$parameters</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>Event code.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $event
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Event code.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Event code.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> integer
+  <div class="item_list">
+  int<br>
   
-  <div class="param-description">
-  <p>Returns number of the handlers called for this event.</p>
+  <div class="item_description"><p>Returns number of the handlers called for this event.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the event name is not specified.</li>
 <li>if the creation of the handler fails.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#fireEvent'>\SmartFactory\Interfaces\IEventManager::fireEvent()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#298'>SmartFactory/EventManager.php</a>
   </div>
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#fireEvent">\SmartFactory\Interfaces\IEventManager::fireEvent()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#295">SmartFactory\EventManager.php</a>
 
   
 
   
 
   
+
   
+
   
+
+  
+
   <hr id="resumeAllEvents">
   
-  <h1>Method: resumeAllEvents</h1>
+  <h1>Method: EventManager::resumeAllEvents()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>resumeAllEvents</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeAllEvents() : bool;</div>
 
   
   <div class="short-description">
-  Resumes all previously suspended events.
+  <p>Resumes all previously suspended events.</p>
   </div>
+  
+
   
 
   
@@ -858,232 +1086,299 @@ this function is:</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the suspesion was successfull, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the suspesion was successfull, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
-  
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#resumeAllEvents">\SmartFactory\Interfaces\IEventManager::resumeAllEvents()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#resumeAllEvents'>\SmartFactory\Interfaces\IEventManager::resumeAllEvents()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#268">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#271'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#suspendEvent">\SmartFactory\EventManager::suspendEvent()</a><br>
+  <a href='class-SmartFactory.EventManager.html#suspendEvent'>\SmartFactory\EventManager::suspendEvent()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#resumeEvent">\SmartFactory\EventManager::resumeEvent()</a><br>
+  
+  <a href='class-SmartFactory.EventManager.html#resumeEvent'>\SmartFactory\EventManager::resumeEvent()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="resumeEvent">
   
-  <h1>Method: resumeEvent</h1>
+  <h1>Method: EventManager::resumeEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>resumeEvent</b>(string <span class="php-var">$event</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeEvent(string <span class="php-var">$event</span>) : bool;</div>
 
   
   <div class="short-description">
-  Resumes a previously suspended event.
+  <p>Resumes a previously suspended event.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$event</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Event code.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $event
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Event code.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the suspesion was successfull, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the suspesion was successfull, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the event name is not specified.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#resumeEvent'>\SmartFactory\Interfaces\IEventManager::resumeEvent()</a>
   </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#resumeEvent">\SmartFactory\Interfaces\IEventManager::resumeEvent()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#244">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#247'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#suspendEvent">\SmartFactory\EventManager::suspendEvent()</a><br>
+  <a href='class-SmartFactory.EventManager.html#suspendEvent'>\SmartFactory\EventManager::suspendEvent()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#resumeAllEvents">\SmartFactory\EventManager::resumeAllEvents()</a><br>
+  
+  <a href='class-SmartFactory.EventManager.html#resumeAllEvents'>\SmartFactory\EventManager::resumeAllEvents()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="suspendEvent">
   
-  <h1>Method: suspendEvent</h1>
+  <h1>Method: EventManager::suspendEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>suspendEvent</b>(string <span class="php-var">$event</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> suspendEvent(string <span class="php-var">$event</span>) : bool;</div>
 
   
   <div class="short-description">
-  Suspends an event.
+  <p>Suspends an event.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>If an event is suspended, its handlers are not called when the event is fired.</p>
   </div>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$event</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>Event code.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $event
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Event code.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the suspesion was successfull, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the suspesion was successfull, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw the following exceptions in the case of any errors:</p>
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the event name is not specified.</li>
-</ul><br>
-      
+</ul></div>
   
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IEventManager.html#suspendEvent'>\SmartFactory\Interfaces\IEventManager::suspendEvent()</a>
   </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Implements</h2>
-  <a href="interface-SmartFactory.Interfaces.IEventManager.html#suspendEvent">\SmartFactory\Interfaces\IEventManager::suspendEvent()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.EventManager.html#214">SmartFactory\EventManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.EventManager.php.html#217'>SmartFactory/EventManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="class-SmartFactory.EventManager.html#resumeEvent">\SmartFactory\EventManager::resumeEvent()</a><br>
+  <a href='class-SmartFactory.EventManager.html#resumeEvent'>\SmartFactory\EventManager::resumeEvent()</a><br>
   
-  <a href="class-SmartFactory.EventManager.html#resumeAllEvents">\SmartFactory\EventManager::resumeAllEvents()</a><br>
+  
+  <a href='class-SmartFactory.EventManager.html#resumeAllEvents'>\SmartFactory\EventManager::resumeAllEvents()</a><br>
+  
   
   </div>
-  
-
-  
-
-  
-  
-  
-
-
-
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: dbshard - Library SmartFactory
+            Function: dbshard()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,14 +105,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: dbshard</h1>
+                    <h1>Function: dbshard()</h1>
 
-<div class="definition"><b>dbshard</b>(string <span class="php-var">$shard_name</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span></div>
+<div class="definition"><span class="php-keyword1">function</span> dbshard(string <span class="php-var">$shard_name</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span>;</div>
 
 
 <div class="short-description">
-Short function for requesting the dbworker connected to the specified shard.
+<p>Short function for requesting the dbworker connected to the specified shard.</p>
 </div>
+
 
 
 
@@ -126,34 +121,53 @@ Short function for requesting the dbworker connected to the specified shard.
 
 <h2>Parameters</h2>
 
-    <h3>$shard_name</h3>
-    <span class="type_label">Type:</span> string
-    
-    <div class="param-description">
-    <p>The name of the shard.</p>
-    </div>
-    
-
-
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $shard_name
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              string
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>The name of the shard.</p>
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a>|null
+<div class="item_list">
+<a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>|null<br>
 
-<div class="param-description">
-<p>returns DBWorker object or null if the object could not be created.</p>
+<div class="item_description"><p>returns DBWorker object or null if the object could not be created.</p></div>
+
 </div>
-
-
 
 
 <h2>Throws</h2>
 <div class="item_list">
 
-    <b>\Exception</b><br>
-    
-    
-    <p>It might throw the following exceptions in the case of any errors:</p>
+\Exception<br>
+
+<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
 <ul>
 <li>if the interface or class does not exist.</li>
 <li>if the shard was not found.</li>
@@ -163,34 +177,37 @@ Short function for requesting the dbworker connected to the specified shard.
 <li>db_conn_data_error - if the connection parameters are incomplete.</li>
 <li>db_server_conn_error - if the database server cannot be connected.</li>
 <li>db_not_exists_error - if database does not exists od inaccesible to the user.</li>
-</ul><br>
-    
+</ul></div>
+
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
 
 
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-short_functions_inc.html#241">short_functions_inc.php</a>
-
-
-
-
-
-
-
+<div class="item_list">
+<a href='source-short_functions_inc.php.html#244'>short_functions_inc.php</a>
+</div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

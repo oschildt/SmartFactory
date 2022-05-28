@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: reqvar_value - Library SmartFactory
+            Function: reqvar_value()
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="active">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -111,18 +105,18 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: reqvar_value</h1>
+                    <h1>Function: reqvar_value()</h1>
 
-<div class="definition"><b>reqvar_value</b>(string <span class="php-var">$name</span>) : mixed</div>
+<div class="definition"><span class="php-keyword1">function</span> reqvar_value(string <span class="php-var">$name</span>) : mixed;</div>
 
 
 <div class="short-description">
-Function for getting value of a request variable.
+<p>Function for getting value of a request variable.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>This function checks wether the request variable exists and
 returns its value. If the request variable does not exist,
@@ -131,24 +125,57 @@ an empty value is returned.</p>
 
 
 
+
 <h2>Parameters</h2>
 
-    <h3>$name</h3>
-    <span class="type_label">Type:</span> string
-    
-    <div class="param-description">
-    <p>Name of the request variable how it is written in the form fields.</p>
-    </div>
-    
-
-
+  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+      <tr>
+      <th>Name</th>
+      <th>Pass type</th>
+      <th>Value type</th>
+      <th>Default value</th>
+      <th>Description</th>
+      </tr>
+      
+      
+      <tr>
+          <td>
+              $name
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              string
+          </td>
+          <td>
+              
+          </td>
+          <td class="description_column">
+              <p>Name of the request variable how it is written in the form fields.</p>
+          </td>
+      </tr>
+      
+      
+  </table>
 
 
 <h2>Returns</h2>
-<span class="type_label">Type:</span> mixed
+<div class="item_list">
+mixed<br>
 
-<div class="param-description">
-<p>The value of the request variable or an empty string.</p>
+<div class="item_description"><p>The value of the request variable or an empty string.</p></div>
+
+</div>
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
 </div>
 
 
@@ -156,27 +183,20 @@ an empty value is returned.</p>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
-
-
-
 <h2>Package</h2>
-<a href="package-HTML_Utils.html">HTML Utils</a>
+<div class="item_list">
+<a href='package-HTML Utils.html'>HTML Utils</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-html_utils_inc.html#28">html_utils_inc.php</a>
-
-
-
-
-
-
-
+<div class="item_list">
+<a href='source-html_utils_inc.php.html#31'>html_utils_inc.php</a>
+</div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

@@ -52,18 +52,11 @@ class ShardManager implements IShardManager
      * The connection parameters to the shard as an associative array in the form key => value:
      *
      * - $parameters["db_type"] - type of the database (MySQL or MSSQL)
-     *
      * - $parameters["db_server"] - server address
-     *
      * - $parameters["db_name"] - database name
-     *
      * - $parameters["db_user"] - user name
-     *
      * - $parameters["db_password"] - user password
-     *
-     * - $parameters["autoconnect"] - should true if the connection should be established automatically
-     *                 upon creation.
-     *
+     * - $parameters["autoconnect"] - should true if the connection should be established automatically upon creation.
      * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
      *
      * @param string $load_balancing_group

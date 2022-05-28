@@ -37,7 +37,7 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see setFocusElement()
+     * @see IMessageManager::setFocusElement()
      *
      * @author Oleg Schildt
      */
@@ -49,7 +49,7 @@ interface IMessageManager extends IInitable
      * @return string
      * Returns the ID of the element to be focused.
      *
-     * @see getFocusElement()
+     * @see IMessageManager::getFocusElement()
      *
      * @author Oleg Schildt
      */
@@ -63,7 +63,7 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see getActiveTab()
+     * @see IMessageManager::getActiveTab()
      *
      * @author Oleg Schildt
      */
@@ -75,7 +75,7 @@ interface IMessageManager extends IInitable
      * @return string
      * Returns the ID of the tab to be activated.
      *
-     * @see setActiveTab()
+     * @see IMessageManager::setActiveTab()
      *
      * @author Oleg Schildt
      */
@@ -89,7 +89,7 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see getErrorElement()
+     * @see IMessageManager::getErrorElement()
      *
      * @author Oleg Schildt
      */
@@ -101,7 +101,7 @@ interface IMessageManager extends IInitable
      * @return string
      * Returns the ID of the field to be highlighted.
      *
-     * @see setErrorElement()
+     * @see IMessageManager::setErrorElement()
      *
      * @author Oleg Schildt
      */
@@ -124,9 +124,9 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see getErrors()
-     * @see clearErrors()
-     * @see errorsExist()
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::clearErrors()
+     * @see IMessageManager::errorsExist()
      *
      * @author Oleg Schildt
      */
@@ -137,12 +137,12 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see setError()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see IMessageManager::setError()
+     * @see IMessageManager::clearWarnings()
+     * @see IMessageManager::clearProgWarnings()
+     * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -154,11 +154,11 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored error message exists, otherwise false.
      *
-     * @see setError()
-     * @see warningsExist()
-     * @see progWarningsExist()
-     * @see debugMessageExists()
-     * @see infosExist()
+     * @see IMessageManager::setError()
+     * @see IMessageManager::warningsExist()
+     * @see IMessageManager::progWarningsExist()
+     * @see IMessageManager::debugMessageExists()
+     * @see IMessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -170,11 +170,11 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of errors if any have been stored.
      *
-     * @see setError()
-     * @see getWarnings()
-     * @see getProgWarnings()
-     * @see getDebugMessages()
-     * @see getInfos()
+     * @see IMessageManager::setError()
+     * @see IMessageManager::getWarnings()
+     * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -194,9 +194,9 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see getWarnings()
-     * @see clearWarnings()
-     * @see warningsExist()
+     * @see IMessageManager::getWarnings()
+     * @see IMessageManager::clearWarnings()
+     * @see IMessageManager::warningsExist()
      *
      * @author Oleg Schildt
      */
@@ -207,12 +207,12 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see setWarning()
-     * @see clearErrors()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see IMessageManager::setWarning()
+     * @see IMessageManager::clearErrors()
+     * @see IMessageManager::clearProgWarnings()
+     * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -224,11 +224,11 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored warning message exists, otherwise false.
      *
-     * @see setWarning()
-     * @see errorsExist()
-     * @see progWarningsExist()
-     * @see debugMessageExists()
-     * @see infosExist()
+     * @see IMessageManager::setWarning()
+     * @see IMessageManager::errorsExist()
+     * @see IMessageManager::progWarningsExist()
+     * @see IMessageManager::debugMessageExists()
+     * @see IMessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -240,11 +240,11 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of warnings if any have been stored.
      *
-     * @see setWarning()
-     * @see getErrors()
-     * @see getProgWarnings()
-     * @see getDebugMessages()
-     * @see getInfos()
+     * @see IMessageManager::setWarning()
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -267,9 +267,9 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see getProgWarnings()
-     * @see clearProgWarnings()
-     * @see progWarningsExist()
+     * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::clearProgWarnings()
+     * @see IMessageManager::progWarningsExist()
      *
      * @author Oleg Schildt
      */
@@ -280,12 +280,12 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see setProgWarning()
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see IMessageManager::setProgWarning()
+     * @see IMessageManager::clearErrors()
+     * @see IMessageManager::clearWarnings()
+     * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -297,11 +297,11 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored programming warning message exists, otherwise false.
      *
-     * @see setProgWarning()
-     * @see errorsExist()
-     * @see warningsExist()
-     * @see debugMessageExists()
-     * @see infosExist()
+     * @see IMessageManager::setProgWarning()
+     * @see IMessageManager::errorsExist()
+     * @see IMessageManager::warningsExist()
+     * @see IMessageManager::debugMessageExists()
+     * @see IMessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -313,11 +313,11 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of programming warnings if any have been stored.
      *
-     * @see setProgWarning()
-     * @see getErrors()
-     * @see getWarnings()
-     * @see getDebugMessages()
-     * @see getInfos()
+     * @see IMessageManager::setProgWarning()
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::getWarnings()
+     * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -341,9 +341,9 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see getDebugMessages()
-     * @see clearDebugMessages()
-     * @see debugMessageExists()
+     * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::debugMessageExists()
      *
      * @author Oleg Schildt
      */
@@ -354,12 +354,12 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see setDebugMessage()
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see IMessageManager::setDebugMessage()
+     * @see IMessageManager::clearErrors()
+     * @see IMessageManager::clearWarnings()
+     * @see IMessageManager::clearProgWarnings()
+     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -371,11 +371,11 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored debugging message exists, otherwise false.
      *
-     * @see setDebugMessage()
-     * @see errorsExist()
-     * @see warningsExist()
-     * @see progWarningsExist()
-     * @see infosExist()
+     * @see IMessageManager::setDebugMessage()
+     * @see IMessageManager::errorsExist()
+     * @see IMessageManager::warningsExist()
+     * @see IMessageManager::progWarningsExist()
+     * @see IMessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -387,11 +387,11 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of debugging messages if any have been stored.
      *
-     * @see setDebugMessage()
-     * @see getErrors()
-     * @see getWarnings()
-     * @see getProgWarnings()
-     * @see getInfos()
+     * @see IMessageManager::setDebugMessage()
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::getWarnings()
+     * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -415,9 +415,9 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see getInfos()
-     * @see clearInfos()
-     * @see infosExist()
+     * @see IMessageManager::getInfos()
+     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -428,12 +428,12 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see setInfo()
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearAll()
+     * @see IMessageManager::setInfo()
+     * @see IMessageManager::clearErrors()
+     * @see IMessageManager::clearWarnings()
+     * @see IMessageManager::clearProgWarnings()
+     * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -445,11 +445,11 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the information message exists, otherwise false.
      *
-     * @see setInfo()
-     * @see errorsExist()
-     * @see warningsExist()
-     * @see progWarningsExist()
-     * @see debugMessageExists()
+     * @see IMessageManager::setInfo()
+     * @see IMessageManager::errorsExist()
+     * @see IMessageManager::warningsExist()
+     * @see IMessageManager::progWarningsExist()
+     * @see IMessageManager::debugMessageExists()
      *
      * @author Oleg Schildt
      */
@@ -461,11 +461,11 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of information messages if any have been stored.
      *
-     * @see setInfo()
-     * @see getErrors()
-     * @see getWarnings()
-     * @see getProgWarnings()
-     * @see getDebugMessages()
+     * @see IMessageManager::setInfo()
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::getWarnings()
+     * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::getDebugMessages()
      *
      * @author Oleg Schildt
      */
@@ -476,11 +476,11 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
+     * @see IMessageManager::clearErrors()
+     * @see IMessageManager::clearWarnings()
+     * @see IMessageManager::clearProgWarnings()
+     * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::clearInfos()
      *
      * @author Oleg Schildt
      */
@@ -501,7 +501,7 @@ interface IMessageManager extends IInitable
     /**
      * Add all stored existing messages to the response.
      *
-     * @param string $response
+     * @param string &$response
      * The target array where the messages should be added.
      *
      * @return void
@@ -518,8 +518,8 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns the state whether the display of the message details is active or not.
      *
-     * @see enableDetails()
-     * @see disableDetails()
+     * @see IMessageManager::enableDetails()
+     * @see IMessageManager::disableDetails()
      *
      * @author Oleg Schildt
      */
@@ -532,8 +532,8 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see detailsActive()
-     * @see disableDetails()
+     * @see IMessageManager::detailsActive()
+     * @see IMessageManager::disableDetails()
      *
      * @author Oleg Schildt
      */
@@ -546,8 +546,8 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see detailsActive()
-     * @see enableDetails()
+     * @see IMessageManager::detailsActive()
+     * @see IMessageManager::enableDetails()
      *
      * @author Oleg Schildt
      */
@@ -561,8 +561,8 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns the state whether the display of the programming warnings is active or not.
      *
-     * @see enableProgWarnings()
-     * @see disableProgWarnings()
+     * @see IMessageManager::enableProgWarnings()
+     * @see IMessageManager::disableProgWarnings()
      *
      * @author Oleg Schildt
      */
@@ -575,8 +575,8 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see progWarningsActive()
-     * @see disableProgWarnings()
+     * @see IMessageManager::progWarningsActive()
+     * @see IMessageManager::disableProgWarnings()
      *
      * @author Oleg Schildt
      */
@@ -589,8 +589,8 @@ interface IMessageManager extends IInitable
      *
      * @return void
      *
-     * @see progWarningsActive()
-     * @see enableProgWarnings()
+     * @see IMessageManager::progWarningsActive()
+     * @see IMessageManager::enableProgWarnings()
      *
      * @author Oleg Schildt
      */

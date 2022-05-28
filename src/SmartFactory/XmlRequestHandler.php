@@ -92,7 +92,7 @@ abstract class XmlRequestHandler implements IRequestHandler
     /**
      * Internal variable for storing the request XML document.
      *
-     * @var array
+     * @var \DOMDocument
      *
      * @author Oleg Schildt
      */
@@ -101,7 +101,7 @@ abstract class XmlRequestHandler implements IRequestHandler
     /**
      * Internal variable for storing the response XML document.
      *
-     * @var array
+     * @var \DOMDocument
      *
      * @author Oleg Schildt
      */
@@ -129,9 +129,9 @@ abstract class XmlRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see $action
-     * @see $param_string
-     * @see $request_headers
+     * @see XmlRequestHandler::$action
+     * @see XmlRequestHandler::$param_string
+     * @see XmlRequestHandler::$request_headers
      *
      * @author Oleg Schildt
      */
@@ -212,8 +212,8 @@ abstract class XmlRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see addExceptionError()
-     * @see exitWithErrors()
+     * @see XmlRequestHandler::addExceptionError()
+     * @see XmlRequestHandler::exitWithErrors()
      *
      * @author Oleg Schildt
      */
@@ -231,8 +231,8 @@ abstract class XmlRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see addError()
-     * @see exitWithErrors()
+     * @see XmlRequestHandler::addError()
+     * @see XmlRequestHandler::exitWithErrors()
      *
      * @author Oleg Schildt
      */
@@ -264,8 +264,8 @@ abstract class XmlRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see addError()
-     * @see addExceptionError()
+     * @see XmlRequestHandler::addError()
+     * @see XmlRequestHandler::addExceptionError()
      *
      * @author Oleg Schildt
      */
@@ -279,7 +279,7 @@ abstract class XmlRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see $response_headers
+     * @see XmlRequestHandler::$response_headers
      *
      * @author Oleg Schildt
      */

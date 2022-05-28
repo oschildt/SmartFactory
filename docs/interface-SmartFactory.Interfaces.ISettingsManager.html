@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Interface: ISettingsManager - Library SmartFactory
+            Interface: ISettingsManager
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -124,23 +118,23 @@
                     <h1>Interface: ISettingsManager</h1>
 
 
+
+<div class="definition"></div>
+
+
 <div class="short-description">
-Interface for working with settings.
+<p>Interface for working with settings.</p>
 </div>
 
 
 
-<div class="long-description">
-<h2>Details</h2>
-<p>You should implement this interface in your classes if they have to be initialized.</p>
-</div>
 
 
 
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
+<a href='interface-SmartFactory.Interfaces.IInitable.html'>\SmartFactory\Interfaces\IInitable</a><br>
 
 </div>
 
@@ -149,11 +143,18 @@ Interface for working with settings.
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href="class-SmartFactory.ConfigSettingsManager.html">\SmartFactory\ConfigSettingsManager</a><br>
+<a href='class-SmartFactory.ConfigSettingsManager.html'>\SmartFactory\ConfigSettingsManager</a><br>
 
-<a href="class-SmartFactory.RuntimeSettingsManager.html">\SmartFactory\RuntimeSettingsManager</a><br>
+<a href='class-SmartFactory.RuntimeSettingsManager.html'>\SmartFactory\RuntimeSettingsManager</a><br>
 
-<a href="class-SmartFactory.UserSettingsManager.html">\SmartFactory\UserSettingsManager</a><br>
+<a href='class-SmartFactory.UserSettingsManager.html'>\SmartFactory\UserSettingsManager</a><br>
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
@@ -161,17 +162,29 @@ Interface for working with settings.
 
 
 
-<h2>Author</h2>
-Oleg Schildt
-
-
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.Interfaces.ISettingsManager.html#14">SmartFactory\Interfaces\ISettingsManager.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#17'>SmartFactory/Interfaces/ISettingsManager.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -183,132 +196,172 @@ Oleg Schildt
 
 
 
-
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
       
-      
       <tr>
           <td>
-              <a href="#getContext">getContext</a>
+              <div style='float:left'><a href="#getContext">getContext()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Returns the current settings context.
+              <p>Returns the current settings context.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#getParameter">getParameter</a>
+              <div style='float:left'><a href="#getParameter">getParameter()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Returns the value of a settings parameter.
+              <p>Returns the value of a settings parameter.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#getValidator">getValidator</a>
+              <div style='float:left'><a href="#getValidator">getValidator()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Returns the validator for the settings.
+              <p>Returns the validator for the settings.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#init">init</a>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Initializes the settings manager with parameters.
+              <p>Initializes the settings manager with parameters.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#loadSettings">loadSettings</a>
+              <div style='float:left'><a href="#loadSettings">loadSettings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Loads the settings from the persitence source.
+              <p>Loads the settings from the persitence source.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#saveSettings">saveSettings</a>
+              <div style='float:left'><a href="#saveSettings">saveSettings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Saves the settings from to the persitence target.
+              <p>Saves the settings from to the persitence target.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#setContext">setContext</a>
+              <div style='float:left'><a href="#setContext">setContext()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Sets the settings context.
+              <p>Sets the settings context.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#setParameter">setParameter</a>
+              <div style='float:left'><a href="#setParameter">setParameter()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Sets a settings parameter.
+              <p>Sets a settings parameter.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#setParameters">setParameters</a>
+              <div style='float:left'><a href="#setParameters">setParameters()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Sets settings parameters from an array.
+              <p>Sets settings parameters from an array.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#setValidator">setValidator</a>
+              <div style='float:left'><a href="#setValidator">setValidator()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Sets the validator for the settings.
+              <p>Sets the validator for the settings.</p>
           </td>
-      </tr>
-      
-      <tr>
+      </tr><tr>
           <td>
-              <a href="#validateSettings">validateSettings</a>
+              <div style='float:left'><a href="#validateSettings">validateSettings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Validates the current settings values.
+              <p>Validates the current settings values.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-
-
+<hr id="getContext">
   
-  <hr id="getContext">
-  
-  <h1>Method: getContext</h1>
+  <h1>Method: ISettingsManager::getContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>getContext</b>() : string</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext() : string;</div>
 
   
   <div class="short-description">
-  Returns the current settings context.
+  <p>Returns the current settings context.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>Settings might be edited not in one dialog,
 There can be several masks for different type of settings,
@@ -324,133 +377,198 @@ db_connection_settings etc.</p>
   
 
   
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> string
+
   
-  <div class="param-description">
-  <p>Returns the current settings context.</p>
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the current settings context.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#163">SmartFactory\Interfaces\ISettingsManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#166'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setContext">\SmartFactory\Interfaces\ISettingsManager::setContext()</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#setContext'>\SmartFactory\Interfaces\ISettingsManager::setContext()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="getParameter">
   
-  <h1>Method: getParameter</h1>
+  <h1>Method: ISettingsManager::getParameter()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>getParameter</b>(string <span class="php-var">$name</span>, mixed <span class="php-var">$default</span> = <span class="php-keyword1">null</span>) : mixed</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$default</span> = <span class="php-keyword1">null</span>) : mixed;</div>
 
   
   <div class="short-description">
-  Returns the value of a settings parameter.
+  <p>Returns the value of a settings parameter.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$name</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The name of the settings parameter.</p>
-      </div>
-      
-  
-      <h3>$default</h3>
-      <span class="type_label">Type:</span> mixed
-      
-      <div class="param-description">
-      <p>The default value of the settings parameter if it is not set yet.
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the settings parameter.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $default
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                mixed
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>The default value of the settings parameter if it is not set yet.
 The parameter is a confortable way to pre-set a parameter
 to a default value if its value is not set yet.
 However, if the status of the data is dirty and the unsaved
 last entered value is requested, then always the actual
 last entered value is returned and this paramter is ignored.</p>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> mixed
+  <div class="item_list">
+  mixed<br>
   
-  <div class="param-description">
-  <p>Returns the value of the settings parameter.</p>
+  <div class="item_description"><p>Returns the value of the settings parameter.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#119">SmartFactory\Interfaces\ISettingsManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#122'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter">\SmartFactory\Interfaces\ISettingsManager::setParameter()</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter'>\SmartFactory\Interfaces\ISettingsManager::setParameter()</a><br>
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters">\SmartFactory\Interfaces\ISettingsManager::setParameters()</a><br>
+  
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters'>\SmartFactory\Interfaces\ISettingsManager::setParameters()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="getValidator">
   
-  <h1>Method: getValidator</h1>
+  <h1>Method: ISettingsManager::getValidator()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>getValidator</b>() : \SmartFactory\Interfaces\ISettingsValidator|<span class="php-keyword1">null</span></div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getValidator() : \SmartFactory\Interfaces\ISettingsValidator|<span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
-  Returns the validator for the settings.
+  <p>Returns the validator for the settings.</p>
   </div>
+  
+
   
 
   
@@ -459,126 +577,179 @@ last entered value is returned and this paramter is ignored.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> <a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a>|null
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a>|null<br>
   
-  <div class="param-description">
-  <p>Returns the validator for the settings or null if none is defined.</p>
+  <div class="item_description"><p>Returns the validator for the settings or null if none is defined.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#58">SmartFactory\Interfaces\ISettingsManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#61'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setValidator">\SmartFactory\Interfaces\ISettingsManager::setValidator()</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#setValidator'>\SmartFactory\Interfaces\ISettingsManager::setValidator()</a><br>
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings">\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a><br>
+  
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings'>\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="init">
   
-  <h1>Method: init</h1>
+  <h1>Method: ISettingsManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>init</b>(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : bool;</div>
 
   
   <div class="short-description">
-  Initializes the settings manager with parameters.
+  <p>Initializes the settings manager with parameters.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$parameters</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>The parameters may vary for each settings manager.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The parameters may vary for each settings manager.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The method should return true upon successful initialization, otherwise false.</p>
+  <div class="item_description"><p>The method should return true upon successful initialization, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw an exception in the case of any errors.</p><br>
-      
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
   
   </div>
-  
 
-  
-  
   
   <h2>Overrides</h2>
-  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a><br>
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IInitable.html#init'>\SmartFactory\Interfaces\IInitable::init()</a>
+  </div>
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#30">SmartFactory\Interfaces\ISettingsManager.php</a>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#33'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
 
   
 
   
 
   
+
   
+
   
+
   <hr id="loadSettings">
   
-  <h1>Method: loadSettings</h1>
+  <h1>Method: ISettingsManager::loadSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>loadSettings</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings() : bool;</div>
 
   
   <div class="short-description">
-  Loads the settings from the persitence source.
+  <p>Loads the settings from the persitence source.</p>
   </div>
+  
+
   
 
   
@@ -587,63 +758,76 @@ last entered value is returned and this paramter is ignored.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the settings have been successfully loaded, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the settings have been successfully loaded, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw an exception in the case of any errors.</p><br>
-      
+  \Exception<br>
   
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#200'>SmartFactory/Interfaces/ISettingsManager.php</a>
   </div>
   
 
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#197">SmartFactory\Interfaces\ISettingsManager.php</a>
-
-  
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#saveSettings">\SmartFactory\Interfaces\ISettingsManager::saveSettings()</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#saveSettings'>\SmartFactory\Interfaces\ISettingsManager::saveSettings()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="saveSettings">
   
-  <h1>Method: saveSettings</h1>
+  <h1>Method: ISettingsManager::saveSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>saveSettings</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings() : bool;</div>
 
   
   <div class="short-description">
-  Saves the settings from to the persitence target.
+  <p>Saves the settings from to the persitence target.</p>
   </div>
+  
+
   
 
   
@@ -652,67 +836,78 @@ last entered value is returned and this paramter is ignored.</p>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>Returns true if the settings have been successfully saved, otherwise false.</p>
+  <div class="item_description"><p>Returns true if the settings have been successfully saved, otherwise false.</p></div>
+  
   </div>
   
-  
 
-  
   <h2>Throws</h2>
   <div class="item_list">
   
-      <b>\Exception</b><br>
-      
-      
-      <p>It might throw an exception in the case of any errors.</p><br>
-      
+  \Exception<br>
   
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#215'>SmartFactory/Interfaces/ISettingsManager.php</a>
   </div>
   
 
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#212">SmartFactory\Interfaces\ISettingsManager.php</a>
-
-  
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#loadSettings">\SmartFactory\Interfaces\ISettingsManager::loadSettings()</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#loadSettings'>\SmartFactory\Interfaces\ISettingsManager::loadSettings()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="setContext">
   
-  <h1>Method: setContext</h1>
+  <h1>Method: ISettingsManager::setContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setContext</b>(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : void;</div>
 
   
   <div class="short-description">
-  Sets the settings context.
+  <p>Sets the settings context.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>Settings might be edited not in one dialog,
 There can be several masks for different type of settings,
@@ -726,43 +921,44 @@ db_connection_settings etc.</p>
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$context</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The settings context.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>The settings context.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#142">SmartFactory\Interfaces\ISettingsManager.php</a>
-
-  
-  <h2>See also</h2>
   <div class="item_list">
-  
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getContext">\SmartFactory\Interfaces\ISettingsManager::getContext()</a><br>
+  void<br>
   
   </div>
   
@@ -770,70 +966,116 @@ db_connection_settings etc.</p>
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#145'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#getContext'>\SmartFactory\Interfaces\ISettingsManager::getContext()</a><br>
   
   
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="setParameter">
   
-  <h1>Method: setParameter</h1>
+  <h1>Method: ISettingsManager::setParameter()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setParameter</b>(string <span class="php-var">$name</span>, mixed <span class="php-var">$value</span>) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$value</span>) : void;</div>
 
   
   <div class="short-description">
-  Sets a settings parameter.
+  <p>Sets a settings parameter.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$name</h3>
-      <span class="type_label">Type:</span> string
-      
-      <div class="param-description">
-      <p>The name of the settings parameter.</p>
-      </div>
-      
-  
-      <h3>$value</h3>
-      <span class="type_label">Type:</span> mixed
-      
-      <div class="param-description">
-      <p>The value of the settings parameter.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the settings parameter.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $value
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                mixed
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The value of the settings parameter.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#76">SmartFactory\Interfaces\ISettingsManager.php</a>
-
-  
-  <h2>See also</h2>
   <div class="item_list">
-  
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter">\SmartFactory\Interfaces\ISettingsManager::getParameter()</a><br>
-  
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters">\SmartFactory\Interfaces\ISettingsManager::setParameters()</a><br>
+  void<br>
   
   </div>
   
@@ -841,71 +1083,120 @@ db_connection_settings etc.</p>
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#79'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter'>\SmartFactory\Interfaces\ISettingsManager::getParameter()</a><br>
   
   
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters'>\SmartFactory\Interfaces\ISettingsManager::setParameters()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="setParameters">
   
-  <h1>Method: setParameters</h1>
+  <h1>Method: ISettingsManager::setParameters()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setParameters</b>(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>, boolean <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameters(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>, bool <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>) : void;</div>
 
   
   <div class="short-description">
-  Sets settings parameters from an array.
+  <p>Sets settings parameters from an array.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$parameters</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>Array of parameters in the form key => value.</p>
-      </div>
-      
-  
-      <h3>$force_creation</h3>
-      <span class="type_label">Type:</span> boolean
-      
-      <div class="param-description">
-      <p>Flag which defines whether the parameter should be created
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Array of parameters in the form key =&gt; value.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $force_creation
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Flag which defines whether the parameter should be created
 if not exists. If false, only existing parameters are updated.</p>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
-  
-  
-
-  
-
-  
-  
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
-  
-
-  <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#95">SmartFactory\Interfaces\ISettingsManager.php</a>
-
-  
-  <h2>See also</h2>
   <div class="item_list">
-  
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter">\SmartFactory\Interfaces\ISettingsManager::getParameter()</a><br>
-  
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter">\SmartFactory\Interfaces\ISettingsManager::setParameter()</a><br>
+  void<br>
   
   </div>
   
@@ -913,85 +1204,164 @@ if not exists. If false, only existing parameters are updated.</p>
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#98'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter'>\SmartFactory\Interfaces\ISettingsManager::getParameter()</a><br>
   
   
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter'>\SmartFactory\Interfaces\ISettingsManager::setParameter()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="setValidator">
   
-  <h1>Method: setValidator</h1>
+  <h1>Method: ISettingsManager::setValidator()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>setValidator</b>(\SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span>) : void</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setValidator(\SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span>) : void;</div>
 
   
   <div class="short-description">
-  Sets the validator for the settings.
+  <p>Sets the validator for the settings.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$validator</h3>
-      <span class="type_label">Type:</span> <a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a>
-      
-      <div class="param-description">
-      <p>The settings validator.</p>
-      </div>
-      
-  
-  
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $validator
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The settings validator.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> void
+  <div class="item_list">
+  void<br>
   
+  </div>
+  
+
   
 
   
 
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#45">SmartFactory\Interfaces\ISettingsManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#48'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getValidator">\SmartFactory\Interfaces\ISettingsManager::getValidator()</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#getValidator'>\SmartFactory\Interfaces\ISettingsManager::getValidator()</a><br>
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings">\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a><br>
+  
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings'>\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a><br>
+  
   
   </div>
+
+  
+
   
 
   
 
   
+
   
+
   
+
   <hr id="validateSettings">
   
-  <h1>Method: validateSettings</h1>
+  <h1>Method: ISettingsManager::validateSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>validateSettings</b>() : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateSettings() : bool;</div>
 
   
   <div class="short-description">
-  Validates the current settings values.
+  <p>Validates the current settings values.</p>
   </div>
   
 
   
-  <div class="long-description">
+  <div class="long_description">
   <h2>Details</h2>
   <p>It should be called after settings the new values of the parameters
 and before their saving.</p>
@@ -1001,59 +1371,63 @@ and before their saving.</p>
   
 
   
-  <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+
   
-  <div class="param-description">
-  <p>Returns true if there is no validator defined, otherwise lets
-the validator validate the settings.</p>
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>Returns true if there is no validator defined, otherwise lets
+the validator validate the settings.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.ISettingsManager.html#182">SmartFactory\Interfaces\ISettingsManager.php</a>
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.ISettingsManager.php.html#185'>SmartFactory/Interfaces/ISettingsManager.php</a>
+  </div>
   
+
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getValidator">\SmartFactory\Interfaces\ISettingsManager::getValidator()</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#getValidator'>\SmartFactory\Interfaces\ISettingsManager::getValidator()</a><br>
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setValidator">\SmartFactory\Interfaces\ISettingsManager::setValidator()</a><br>
+  
+  <a href='interface-SmartFactory.Interfaces.ISettingsManager.html#setValidator'>\SmartFactory\Interfaces\ISettingsManager::setValidator()</a><br>
+  
   
   </div>
-  
 
   
+
   <h2>Uses</h2>
   <div class="item_list">
   
-  <a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">\SmartFactory\Interfaces\ISettingsValidator</a><br>
+  <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a><br>
+  
   
   </div>
-  
-
-  
-  
-  
-
-
-
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

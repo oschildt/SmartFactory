@@ -108,9 +108,9 @@ class JsonRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see $action
-     * @see $param_string
-     * @see $request_headers
+     * @see JsonRequestHandler::$action
+     * @see JsonRequestHandler::$param_string
+     * @see JsonRequestHandler::$request_headers
      *
      * @author Oleg Schildt
      */
@@ -142,7 +142,7 @@ class JsonRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see $response_headers
+     * @see JsonRequestHandler::$response_headers
      *
      * @author Oleg Schildt
      */
@@ -184,8 +184,8 @@ class JsonRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see addExceptionError()
-     * @see exitWithErrors()
+     * @see JsonRequestHandler::addExceptionError()
+     * @see JsonRequestHandler::exitWithErrors()
      *
      * @author Oleg Schildt
      */
@@ -203,8 +203,8 @@ class JsonRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see addError()
-     * @see exitWithErrors()
+     * @see JsonRequestHandler::addError()
+     * @see JsonRequestHandler::exitWithErrors()
      *
      * @author Oleg Schildt
      */
@@ -233,8 +233,8 @@ class JsonRequestHandler implements IRequestHandler
      *
      * @return void
      *
-     * @see addError()
-     * @see addExceptionError()
+     * @see JsonRequestHandler::addError()
+     * @see JsonRequestHandler::addExceptionError()
      *
      * @author Oleg Schildt
      */

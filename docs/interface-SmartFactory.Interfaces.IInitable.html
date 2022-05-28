@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Interface: IInitable - Library SmartFactory
+            Interface: IInitable
         </title>
     </head>
 
@@ -45,12 +45,6 @@
                         <li>
                             <a href="functions.html" class="">
                                 Functions
-                            </a>
-                        </li>
-                        
-                        <li>
-                            <a href="diagram.html" class="">
-                                Diagram
                             </a>
                         </li>
                         
@@ -124,14 +118,18 @@
                     <h1>Interface: IInitable</h1>
 
 
+
+<div class="definition"></div>
+
+
 <div class="short-description">
-Interface for universal standard way of the object initialization
-through the array of parameters.
+<p>Interface for universal standard way of the object initialization
+through the array of parameters.</p>
 </div>
 
 
 
-<div class="long-description">
+<div class="long_description">
 <h2>Details</h2>
 <p>You should implement this interface in your classes if they have to be initialized.</p>
 </div>
@@ -140,43 +138,63 @@ through the array of parameters.
 
 
 
+
+<h2>Known inheritances</h2>
+<div class="item_list">
+
+<a href='interface-SmartFactory.Interfaces.IDebugProfiler.html'>\SmartFactory\Interfaces\IDebugProfiler</a><br>
+
+<a href='interface-SmartFactory.Interfaces.IErrorHandler.html'>\SmartFactory\Interfaces\IErrorHandler</a><br>
+
+<a href='interface-SmartFactory.Interfaces.ILanguageManager.html'>\SmartFactory\Interfaces\ILanguageManager</a><br>
+
+<a href='interface-SmartFactory.Interfaces.IMessageManager.html'>\SmartFactory\Interfaces\IMessageManager</a><br>
+
+<a href='interface-SmartFactory.Interfaces.ISettingsManager.html'>\SmartFactory\Interfaces\ISettingsManager</a><br>
+
+</div>
+
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+<a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
 
 </div>
 
-
-
-<h2>Known derivations</h2>
+<h2>Authors</h2>
 <div class="item_list">
 
-<a href="interface-SmartFactory.Interfaces.IDebugProfiler.html">\SmartFactory\Interfaces\IDebugProfiler</a><br>
-
-<a href="interface-SmartFactory.Interfaces.IErrorHandler.html">\SmartFactory\Interfaces\IErrorHandler</a><br>
-
-<a href="interface-SmartFactory.Interfaces.ILanguageManager.html">\SmartFactory\Interfaces\ILanguageManager</a><br>
-
-<a href="interface-SmartFactory.Interfaces.IMessageManager.html">\SmartFactory\Interfaces\IMessageManager</a><br>
-
-<a href="interface-SmartFactory.Interfaces.ISettingsManager.html">\SmartFactory\Interfaces\ISettingsManager</a><br>
+<div class='item'>Oleg Schildt</div>
 
 </div>
 
 
 
-<h2>Author</h2>
-Oleg Schildt
 
 
 
 <h2>Package</h2>
-<a href="package-System.html">System</a>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
 
 
 <h2>Source code</h2>
-<a href="source-SmartFactory.Interfaces.IInitable.html#17">SmartFactory\Interfaces\IInitable.php</a>
+<div class="item_list">
+<a href='source-SmartFactory.Interfaces.IInitable.php.html#20'>SmartFactory/Interfaces/IInitable.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -188,93 +206,111 @@ Oleg Schildt
 
 
 
-
-  <table class="table table-responsive table-bordered table-striped class_multicolumn">
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
       
       <tr>
           <td>
-              <a href="#init">init</a>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              Initialization method.
+              <p>Initialization method.</p>
           </td>
       </tr>
-      
       
   </table>
 
 
 
-
-
+<hr id="init">
   
-  <hr id="init">
-  
-  <h1>Method: init</h1>
+  <h1>Method: IInitable::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <b>init</b>(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : boolean</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : bool;</div>
 
   
   <div class="short-description">
-  Initialization method.
+  <p>Initialization method.</p>
   </div>
   
 
   
 
   
+
   <h2>Parameters</h2>
-  
-      <h3>$parameters</h3>
-      <span class="type_label">Type:</span> array
-      
-      <div class="param-description">
-      <p>This array may contain any data required for the initialization
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>This array may contain any data required for the initialization
 of the objects of your class.</p>
-      </div>
-      
-  
-  
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
-  <span class="type_label">Type:</span> boolean
+  <div class="item_list">
+  bool<br>
   
-  <div class="param-description">
-  <p>The method should return true upon successful initialization, otherwise false.</p>
+  <div class="item_description"><p>The method should return true upon successful initialization, otherwise false.</p></div>
+  
   </div>
   
-  
 
   
 
   
+
+  <h2>Authors</h2>
+  <div class="item_list">
   
+  <div class='item'>Oleg Schildt</div>
   
-  
-  
-  <h2>Author</h2>
-  Oleg Schildt
+  </div>
+
   
 
+  
+
+  
   <h2>Source code</h2>
-  <a href="source-SmartFactory.Interfaces.IInitable.html#31">SmartFactory\Interfaces\IInitable.php</a>
-
-  
-
-  
-
-  
-  
-  
-
-
-
+  <div class="item_list">
+  <a href='source-SmartFactory.Interfaces.IInitable.php.html#34'>SmartFactory/Interfaces/IInitable.php</a>
+  </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-11 14:43
+                        Generated on 2022-05-28 19:19 with <a href="http://www.google.com" target="_blank">DocGen</a>
                     </div>                    
                 </div>
             </div>

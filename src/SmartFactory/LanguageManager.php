@@ -33,7 +33,7 @@ class LanguageManager implements ILanguageManager
      *
      * @var string
      *
-     * @see getContext()
+     * @see LanguageManager::getContext()
      *
      * @author Oleg Schildt
      */
@@ -385,7 +385,7 @@ class LanguageManager implements ILanguageManager
      * @return boolean
      * Returns true if the current language has been successfully set, otherwise false.
      *
-     * @see getCurrentLanguage()
+     * @see LanguageManager::getCurrentLanguage()
      *
      * @author Oleg Schildt
      */
@@ -410,7 +410,7 @@ class LanguageManager implements ILanguageManager
      * @return string
      * Returns the current language ISO code.
      *
-     * @see setCurrentLanguage()
+     * @see LanguageManager::setCurrentLanguage()
      *
      * @author Oleg Schildt
      */
@@ -508,10 +508,10 @@ class LanguageManager implements ILanguageManager
      * Returns the translation text for the language name or the $code if no translation
      * is found.
      *
-     * @see getLanguageCode()
-     * @see validateLanguageCode()
-     * @see getLanguageList()
-     * @see getCountryName()
+     * @see LanguageManager::getLanguageCode()
+     * @see LanguageManager::validateLanguageCode()
+     * @see LanguageManager::getLanguageList()
+     * @see LanguageManager::getCountryName()
      *
      * @author Oleg Schildt
      */
@@ -540,10 +540,10 @@ class LanguageManager implements ILanguageManager
      * @return string
      * Returns the language code if it could be found, otherwise an empty string.
      *
-     * @see getLanguageName()
-     * @see validateLanguageCode()
-     * @see getLanguageList()
-     * @see getCountryCode()
+     * @see LanguageManager::getLanguageName()
+     * @see LanguageManager::validateLanguageCode()
+     * @see LanguageManager::getLanguageList()
+     * @see LanguageManager::getCountryCode()
      *
      * @author Oleg Schildt
      */
@@ -577,10 +577,10 @@ class LanguageManager implements ILanguageManager
      * @return boolean
      * Returns true if the langauge code is valid (has translation), otherwise false.
      *
-     * @see getLanguageName()
-     * @see getLanguageCode()
-     * @see getLanguageList()
-     * @see validateCountryCode()
+     * @see LanguageManager::getLanguageName()
+     * @see LanguageManager::getLanguageCode()
+     * @see LanguageManager::getLanguageList()
+     * @see LanguageManager::validateCountryCode()
      *
      * @author Oleg Schildt
      */
@@ -596,7 +596,7 @@ class LanguageManager implements ILanguageManager
     /**
      * Provides the list of languages for the given language in the form "code" => "translation".
      *
-     * @param array $language_list
+     * @param array &$language_list
      * Target array where the language list should be loaded.
      *
      * @param string $lng
@@ -609,10 +609,10 @@ class LanguageManager implements ILanguageManager
      * @return boolean
      * Returns true if the langauge list is successfully retrieved, otherwise false.
      *
-     * @see getLanguageName()
-     * @see getLanguageCode()
-     * @see validateLanguageCode()
-     * @see getCountryList()
+     * @see LanguageManager::getLanguageName()
+     * @see LanguageManager::getLanguageCode()
+     * @see LanguageManager::validateLanguageCode()
+     * @see LanguageManager::getCountryList()
      *
      * @author Oleg Schildt
      */
@@ -657,10 +657,10 @@ class LanguageManager implements ILanguageManager
      * Returns the translation text for the country name or the $code if no translation
      * is found.
      *
-     * @see getCountryCode()
-     * @see validateCountryCode()
-     * @see getCountryList()
-     * @see getLanguageName()
+     * @see LanguageManager::getCountryCode()
+     * @see LanguageManager::validateCountryCode()
+     * @see LanguageManager::getCountryList()
+     * @see LanguageManager::getLanguageName()
      *
      * @author Oleg Schildt
      */
@@ -689,10 +689,10 @@ class LanguageManager implements ILanguageManager
      * @return string
      * Returns the country code if it could be found, otherwise an empty string.
      *
-     * @see getCountryName()
-     * @see validateCountryCode()
-     * @see getCountryList()
-     * @see getLanguageCode()
+     * @see LanguageManager::getCountryName()
+     * @see LanguageManager::validateCountryCode()
+     * @see LanguageManager::getCountryList()
+     * @see LanguageManager::getLanguageCode()
      *
      * @author Oleg Schildt
      */
@@ -726,10 +726,10 @@ class LanguageManager implements ILanguageManager
      * @return boolean
      * Returns true if the country code is valid (has translation), otherwise false.
      *
-     * @see getCountryName()
-     * @see getCountryCode()
-     * @see getCountryList()
-     * @see validateLanguageCode()
+     * @see LanguageManager::getCountryName()
+     * @see LanguageManager::getCountryCode()
+     * @see LanguageManager::getCountryList()
+     * @see LanguageManager::validateLanguageCode()
      *
      * @author Oleg Schildt
      */
@@ -745,7 +745,7 @@ class LanguageManager implements ILanguageManager
     /**
      * Provides the list of countries for the given language in the form "code" => "translation".
      *
-     * @param array $country_list
+     * @param array &$country_list
      * Target array where the country list should be loaded.
      *
      * @param string $lng
@@ -758,10 +758,10 @@ class LanguageManager implements ILanguageManager
      * @return boolean
      * Returns true if the country list is successfully retrieved, otherwise false.
      *
-     * @see getCountryName()
-     * @see getCountryCode()
-     * @see validateCountryCode()
-     * @see getLanguageList()
+     * @see LanguageManager::getCountryName()
+     * @see LanguageManager::getCountryCode()
+     * @see LanguageManager::validateCountryCode()
+     * @see LanguageManager::getLanguageList()
      *
      * @author Oleg Schildt
      */

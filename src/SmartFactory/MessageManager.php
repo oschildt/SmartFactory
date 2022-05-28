@@ -25,7 +25,7 @@ class MessageManager implements IMessageManager
      *
      * @var int
      *
-     * @see getAutoHideTime()
+     * @see MessageManager::getAutoHideTime()
      *
      * @author Oleg Schildt
      */
@@ -45,9 +45,9 @@ class MessageManager implements IMessageManager
      *
      * @var boolean
      *
-     * @see detailsActive()
-     * @see enableDetails()
-     * @see disableDetails()
+     * @see MessageManager::detailsActive()
+     * @see MessageManager::enableDetails()
+     * @see MessageManager::disableDetails()
      *
      * @author Oleg Schildt
      */
@@ -58,9 +58,9 @@ class MessageManager implements IMessageManager
      *
      * @var boolean
      *
-     * @see progWarningsActive()
-     * @see enableProgWarnings()
-     * @see disableProgWarnings()
+     * @see MessageManager::progWarningsActive()
+     * @see MessageManager::enableProgWarnings()
+     * @see MessageManager::disableProgWarnings()
      *
      * @author Oleg Schildt
      */
@@ -74,7 +74,7 @@ class MessageManager implements IMessageManager
      *
      * The message details are removed if the flag show_message_details is false.
      *
-     * @param array $messages
+     * @param array &$messages
      * The source array of messages.
      *
      * @return array
@@ -154,7 +154,7 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see setFocusElement()
+     * @see MessageManager::setFocusElement()
      *
      * @author Oleg Schildt
      */
@@ -172,7 +172,7 @@ class MessageManager implements IMessageManager
      * @return string
      * Returns the ID of the element to be focused.
      *
-     * @see getFocusElement()
+     * @see MessageManager::getFocusElement()
      *
      * @author Oleg Schildt
      */
@@ -197,7 +197,7 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see getActiveTab()
+     * @see MessageManager::getActiveTab()
      *
      * @author Oleg Schildt
      */
@@ -215,7 +215,7 @@ class MessageManager implements IMessageManager
      * @return string
      * Returns the ID of the tab to be activated.
      *
-     * @see setActiveTab()
+     * @see MessageManager::setActiveTab()
      *
      * @author Oleg Schildt
      */
@@ -240,7 +240,7 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see getErrorElement()
+     * @see MessageManager::getErrorElement()
      *
      * @author Oleg Schildt
      */
@@ -259,7 +259,7 @@ class MessageManager implements IMessageManager
      * @return string
      * Returns the ID of the field to be highlighted.
      *
-     * @see setErrorElement()
+     * @see MessageManager::setErrorElement()
      *
      * @author Oleg Schildt
      */
@@ -293,9 +293,9 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see getErrors()
-     * @see clearErrors()
-     * @see errorsExist()
+     * @see MessageManager::getErrors()
+     * @see MessageManager::clearErrors()
+     * @see MessageManager::errorsExist()
      *
      * @author Oleg Schildt
      */
@@ -317,12 +317,12 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see setError()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see MessageManager::setError()
+     * @see MessageManager::clearWarnings()
+     * @see MessageManager::clearProgWarnings()
+     * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -337,11 +337,11 @@ class MessageManager implements IMessageManager
      * @return boolean
      * Returns true if the stored error message exists, otherwise false.
      *
-     * @see setError()
-     * @see warningsExist()
-     * @see progWarningsExist()
-     * @see debugMessageExists()
-     * @see infosExist()
+     * @see MessageManager::setError()
+     * @see MessageManager::warningsExist()
+     * @see MessageManager::progWarningsExist()
+     * @see MessageManager::debugMessageExists()
+     * @see MessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -359,11 +359,11 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of errors if any have been stored.
      *
-     * @see setError()
-     * @see getWarnings()
-     * @see getProgWarnings()
-     * @see getDebugMessages()
-     * @see getInfos()
+     * @see MessageManager::setError()
+     * @see MessageManager::getWarnings()
+     * @see MessageManager::getProgWarnings()
+     * @see MessageManager::getDebugMessages()
+     * @see MessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -394,9 +394,9 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see getWarnings()
-     * @see clearWarnings()
-     * @see warningsExist()
+     * @see MessageManager::getWarnings()
+     * @see MessageManager::clearWarnings()
+     * @see MessageManager::warningsExist()
      *
      * @author Oleg Schildt
      */
@@ -418,12 +418,12 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see setWarning()
-     * @see clearErrors()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see MessageManager::setWarning()
+     * @see MessageManager::clearErrors()
+     * @see MessageManager::clearProgWarnings()
+     * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -438,11 +438,11 @@ class MessageManager implements IMessageManager
      * @return boolean
      * Returns true if the stored warning message exists, otherwise false.
      *
-     * @see setWarning()
-     * @see errorsExist()
-     * @see progWarningsExist()
-     * @see debugMessageExists()
-     * @see infosExist()
+     * @see MessageManager::setWarning()
+     * @see MessageManager::errorsExist()
+     * @see MessageManager::progWarningsExist()
+     * @see MessageManager::debugMessageExists()
+     * @see MessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -460,11 +460,11 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of warnings if any have been stored.
      *
-     * @see setWarning()
-     * @see getErrors()
-     * @see getProgWarnings()
-     * @see getDebugMessages()
-     * @see getInfos()
+     * @see MessageManager::setWarning()
+     * @see MessageManager::getErrors()
+     * @see MessageManager::getProgWarnings()
+     * @see MessageManager::getDebugMessages()
+     * @see MessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -498,9 +498,9 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see getProgWarnings()
-     * @see clearProgWarnings()
-     * @see progWarningsExist()
+     * @see MessageManager::getProgWarnings()
+     * @see MessageManager::clearProgWarnings()
+     * @see MessageManager::progWarningsExist()
      *
      * @author Oleg Schildt
      */
@@ -522,12 +522,12 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see setProgWarning()
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see MessageManager::setProgWarning()
+     * @see MessageManager::clearErrors()
+     * @see MessageManager::clearWarnings()
+     * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -542,11 +542,11 @@ class MessageManager implements IMessageManager
      * @return boolean
      * Returns true if the stored programming warning message exists, otherwise false.
      *
-     * @see setProgWarning()
-     * @see errorsExist()
-     * @see warningsExist()
-     * @see debugMessageExists()
-     * @see infosExist()
+     * @see MessageManager::setProgWarning()
+     * @see MessageManager::errorsExist()
+     * @see MessageManager::warningsExist()
+     * @see MessageManager::debugMessageExists()
+     * @see MessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -564,11 +564,11 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of programming warnings if any have been stored.
      *
-     * @see setProgWarning()
-     * @see getErrors()
-     * @see getWarnings()
-     * @see getDebugMessages()
-     * @see getInfos()
+     * @see MessageManager::setProgWarning()
+     * @see MessageManager::getErrors()
+     * @see MessageManager::getWarnings()
+     * @see MessageManager::getDebugMessages()
+     * @see MessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -603,9 +603,9 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see getDebugMessages()
-     * @see clearDebugMessages()
-     * @see debugMessageExists()
+     * @see MessageManager::getDebugMessages()
+     * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::debugMessageExists()
      *
      * @author Oleg Schildt
      */
@@ -627,12 +627,12 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see setDebugMessage()
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearInfos()
-     * @see clearAll()
+     * @see MessageManager::setDebugMessage()
+     * @see MessageManager::clearErrors()
+     * @see MessageManager::clearWarnings()
+     * @see MessageManager::clearProgWarnings()
+     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -647,11 +647,11 @@ class MessageManager implements IMessageManager
      * @return boolean
      * Returns true if the stored debugging message exists, otherwise false.
      *
-     * @see setDebugMessage()
-     * @see errorsExist()
-     * @see warningsExist()
-     * @see progWarningsExist()
-     * @see infosExist()
+     * @see MessageManager::setDebugMessage()
+     * @see MessageManager::errorsExist()
+     * @see MessageManager::warningsExist()
+     * @see MessageManager::progWarningsExist()
+     * @see MessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -669,11 +669,11 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of debugging messages if any have been stored.
      *
-     * @see setDebugMessage()
-     * @see getErrors()
-     * @see getWarnings()
-     * @see getProgWarnings()
-     * @see getInfos()
+     * @see MessageManager::setDebugMessage()
+     * @see MessageManager::getErrors()
+     * @see MessageManager::getWarnings()
+     * @see MessageManager::getProgWarnings()
+     * @see MessageManager::getInfos()
      *
      * @author Oleg Schildt
      */
@@ -708,9 +708,9 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see getInfos()
-     * @see clearInfos()
-     * @see infosExist()
+     * @see MessageManager::getInfos()
+     * @see MessageManager::clearInfos()
+     * @see MessageManager::infosExist()
      *
      * @author Oleg Schildt
      */
@@ -736,12 +736,12 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see setInfo()
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearAll()
+     * @see MessageManager::setInfo()
+     * @see MessageManager::clearErrors()
+     * @see MessageManager::clearWarnings()
+     * @see MessageManager::clearProgWarnings()
+     * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::clearAll()
      *
      * @author Oleg Schildt
      */
@@ -756,11 +756,11 @@ class MessageManager implements IMessageManager
      * @return boolean
      * Returns true if the information message exists, otherwise false.
      *
-     * @see setInfo()
-     * @see errorsExist()
-     * @see warningsExist()
-     * @see progWarningsExist()
-     * @see debugMessageExists()
+     * @see MessageManager::setInfo()
+     * @see MessageManager::errorsExist()
+     * @see MessageManager::warningsExist()
+     * @see MessageManager::progWarningsExist()
+     * @see MessageManager::debugMessageExists()
      *
      * @author Oleg Schildt
      */
@@ -778,11 +778,11 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of information messages if any have been stored.
      *
-     * @see setInfo()
-     * @see getErrors()
-     * @see getWarnings()
-     * @see getProgWarnings()
-     * @see getDebugMessages()
+     * @see MessageManager::setInfo()
+     * @see MessageManager::getErrors()
+     * @see MessageManager::getWarnings()
+     * @see MessageManager::getProgWarnings()
+     * @see MessageManager::getDebugMessages()
      *
      * @author Oleg Schildt
      */
@@ -804,11 +804,11 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see clearErrors()
-     * @see clearWarnings()
-     * @see clearProgWarnings()
-     * @see clearDebugMessages()
-     * @see clearInfos()
+     * @see MessageManager::clearErrors()
+     * @see MessageManager::clearWarnings()
+     * @see MessageManager::clearProgWarnings()
+     * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::clearInfos()
      *
      * @author Oleg Schildt
      */
@@ -846,7 +846,7 @@ class MessageManager implements IMessageManager
      * When the messages are requested, it is assumed they will be displayed. Thus,
      * the message array is cleared to avoid displaying of the same messages twice.
      *
-     * @param string $response
+     * @param string &$response
      * The target array where the messages should be added.
      *
      * @return void
@@ -897,8 +897,8 @@ class MessageManager implements IMessageManager
      * @return boolean
      * Returns the state whether the display of the message details is active or not.
      *
-     * @see enableDetails()
-     * @see disableDetails()
+     * @see MessageManager::enableDetails()
+     * @see MessageManager::disableDetails()
      *
      * @author Oleg Schildt
      */
@@ -914,8 +914,8 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see detailsActive()
-     * @see disableDetails()
+     * @see MessageManager::detailsActive()
+     * @see MessageManager::disableDetails()
      *
      * @author Oleg Schildt
      */
@@ -931,8 +931,8 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see detailsActive()
-     * @see enableDetails()
+     * @see MessageManager::detailsActive()
+     * @see MessageManager::enableDetails()
      *
      * @author Oleg Schildt
      */
@@ -954,8 +954,8 @@ class MessageManager implements IMessageManager
      * @return boolean
      * Returns the state whether the display of the programming warnings is active or not.
      *
-     * @see enableProgWarnings()
-     * @see disableProgWarnings()
+     * @see MessageManager::enableProgWarnings()
+     * @see MessageManager::disableProgWarnings()
      *
      * @author Oleg Schildt
      */
@@ -971,8 +971,8 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see progWarningsActive()
-     * @see disableProgWarnings()
+     * @see MessageManager::progWarningsActive()
+     * @see MessageManager::disableProgWarnings()
      *
      * @author Oleg Schildt
      */
@@ -988,8 +988,8 @@ class MessageManager implements IMessageManager
      *
      * @return void
      *
-     * @see progWarningsActive()
-     * @see enableProgWarnings()
+     * @see MessageManager::progWarningsActive()
+     * @see MessageManager::enableProgWarnings()
      *
      * @author Oleg Schildt
      */

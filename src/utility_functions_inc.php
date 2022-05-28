@@ -12,7 +12,7 @@ namespace SmartFactory;
 /**
  * Checks whether the array $array is associative.
  *
- * @param array $array
+ * @param array &$array
  * Array to be checked.
  *
  * @return boolean
@@ -90,14 +90,16 @@ function common_prefix($s1, $s2, $max = 1000)
  * is introduced to give the ability to overwrite the system
  * function if necessary.
  *
- * @param string $json
+ * @param string &$json
  * Input JSON string.
  *
- * @param array $array
+ * @param array &$array
  * target array.
  *
  * @throws \Exception
  * It might throw the exception if the JSON cannot be parsed.
+ *
+ * @return void
  *
  * @author Oleg Schildt
  */
@@ -122,7 +124,7 @@ function json_to_array(&$json, &$array)
  * is introduced to give the ability to overwrite the system
  * function if necessary.
  *
- * @param array $array
+ * @param array &$array
  * Array to be converted.
  *
  * @return string
@@ -142,10 +144,10 @@ function array_to_json(&$array)
  * to a DOM structure. It might be used for loading and saving
  * settings to a config file.
  *
- * @param \DOMNode $node
+ * @param \DOMNode &$node
  * The parent node of the DOM structure.
  *
- * @param array $array
+ * @param array &$array
  * The array to be converted to the DOM structure.
  *
  * @return void
@@ -182,10 +184,10 @@ function array_to_dom(&$node, &$array)
  * It might be used for loading and saving settings to a
  * config file.
  *
- * @param \DOMNode $node
+ * @param \DOMNode &$node
  * The parent node of the DOM structure to be converted to the array.
  *
- * @param array $array
+ * @param array &$array
  * The tagrget array to be filled from the DOM structure.
  *
  * @return void
@@ -239,8 +241,8 @@ function dom_to_array(&$node, &$array)
  *
  * @return void
  *
- * @see  \SmartFactory\escape_js()
- * @see  \SmartFactory\escape_html()
+ * @see \SmartFactory\escape_js()
+ * @see \SmartFactory\escape_html()
  *
  * @uses \SmartFactory\escape_html()
  *
@@ -275,7 +277,7 @@ function escape_html($text)
  * Escapes recursively the HTML special characters in the values
  * of the array.
  *
- * @param array $array
+ * @param array &$array
  * The array to be escaped.
  *
  * @return void
@@ -332,8 +334,8 @@ function escape_js($text)
  *
  * @return void
  *
- * @see  \SmartFactory\echo_html()
- * @see  \SmartFactory\escape_js()
+ * @see \SmartFactory\echo_html()
+ * @see \SmartFactory\escape_js()
  *
  * @uses \SmartFactory\escape_js()
  *
@@ -349,9 +351,6 @@ function echo_js($text)
  *
  * @param string $name
  * Name of the cookie.
- *
- * @param string $value
- * Value of the cookie.
  *
  * @return string
  * Returns the cookie value of empty string if the cookie is not set.
@@ -442,7 +441,7 @@ function preg_r_escape($pattern)
  * This is an auxiliary function that checks whether a
  * variable exists.
  *
- * @param mixed $var
+ * @param mixed &$var
  * The variable to be checked.
  *
  * @return mixed

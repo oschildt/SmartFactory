@@ -83,8 +83,8 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @var string
      *
-     * @see getContext()
-     * @see setContext()
+     * @see ConfigSettingsManager::getContext()
+     * @see ConfigSettingsManager::setContext()
      *
      * @author Oleg Schildt
      */
@@ -95,8 +95,8 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @var \SmartFactory\Interfaces\ISettingsValidator
      *
-     * @see getValidator()
-     * @see setValidator()
+     * @see ConfigSettingsManager::getValidator()
+     * @see ConfigSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -115,7 +115,7 @@ class ConfigSettingsManager implements ISettingsManager
      * This is internal auxiliary function for converting the settings to JSON and storing it
      * to the target file defined by the iniailization.
      *
-     * @param array $data
+     * @param array &$data
      * The array with the settings values to be saved.
      *
      * @return boolean
@@ -127,7 +127,7 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the save path is not specified.
      * - if the config file is not writable.
      *
-     * @see loadJSON()
+     * @see ConfigSettingsManager::loadJSON()
      *
      * @author Oleg Schildt
      */
@@ -156,7 +156,7 @@ class ConfigSettingsManager implements ISettingsManager
      * This is internal auxiliary function for loading the settings from the target file
      * defined by the iniailization.
      *
-     * @param array $data
+     * @param array &$data
      * The target array with the settings values to be loaded.
      *
      * @return boolean
@@ -170,7 +170,7 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the config file is not readable.
      * - if the config file is invalid.
      *
-     * @see saveJSON()
+     * @see ConfigSettingsManager::saveJSON()
      *
      * @author Oleg Schildt
      */
@@ -245,13 +245,9 @@ class ConfigSettingsManager implements ISettingsManager
      * Settings for saving and loading as an associative array in the form key => value:
      *
      * - $parameters["save_path"] - the target file path where the settings data should be stored.
-     *
      * - $parameters["save_encrypted"] - if it is true, the data is encrypted before saving.
-     *
      * - $parameters["salt_key"] - the salt key if the data should be encrypted before saving.
-     *
-     * - $parameters["config_file_must_exist"] - if this paremeter is true and the config file does not exist,
-     * the loading function will fail.
+     * - $parameters["config_file_must_exist"] - if this paremeter is true and the config file does not exist, the loading function will fail.
      *
      * - $parameters["use_apcu"] - if installed, apcu can be used to cache the settings in the memory.
      *
@@ -298,8 +294,8 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @return void
      *
-     * @see getValidator()
-     * @see validateSettings()
+     * @see ConfigSettingsManager::getValidator()
+     * @see ConfigSettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -314,8 +310,8 @@ class ConfigSettingsManager implements ISettingsManager
      * @return \SmartFactory\Interfaces\ISettingsValidator|null
      * Returns the validator for the settings or null if none is defined.
      *
-     * @see setValidator()
-     * @see validateSettings()
+     * @see ConfigSettingsManager::setValidator()
+     * @see ConfigSettingsManager::validateSettings()
      *
      * @author Oleg Schildt
      */
@@ -341,7 +337,7 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @return void
      *
-     * @see getContext()
+     * @see ConfigSettingsManager::getContext()
      *
      * @author Oleg Schildt
      */
@@ -365,7 +361,7 @@ class ConfigSettingsManager implements ISettingsManager
      * @return string
      * Returns the current settings context.
      *
-     * @see setContext()
+     * @see ConfigSettingsManager::setContext()
      *
      * @author Oleg Schildt
      */
@@ -393,8 +389,8 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the query fails or if some object names are invalid.
      * - if the config file is not readable.
      *
-     * @see getParameter()
-     * @see setParameters()
+     * @see ConfigSettingsManager::getParameter()
+     * @see ConfigSettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -410,7 +406,7 @@ class ConfigSettingsManager implements ISettingsManager
     /**
      * Sets settings parameters from an array.
      *
-     * @param array $parameters
+     * @param array &$parameters
      * Array of parameters in the form key => value.
      *
      * @param boolean $force_creation
@@ -427,8 +423,8 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the query fails or if some object names are invalid.
      * - if the config file is not readable.
      *
-     * @see getParameter()
-     * @see setParameter()
+     * @see ConfigSettingsManager::getParameter()
+     * @see ConfigSettingsManager::setParameter()
      *
      * @author Oleg Schildt
      */
@@ -467,8 +463,8 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the save path is not specified.
      * - if the config file is not readable.
      *
-     * @see setParameter()
-     * @see setParameters()
+     * @see ConfigSettingsManager::setParameter()
+     * @see ConfigSettingsManager::setParameters()
      *
      * @author Oleg Schildt
      */
@@ -497,8 +493,8 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * @uses Interfaces\ISettingsValidator
      *
-     * @see  getValidator()
-     * @see  setValidator()
+     * @see  ConfigSettingsManager::getValidator()
+     * @see  ConfigSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -524,7 +520,7 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the config file is not readable.
      * - if the config file is invalid.
      *
-     * @see saveSettings()
+     * @see ConfigSettingsManager::saveSettings()
      *
      * @author Oleg Schildt
      */
@@ -546,7 +542,7 @@ class ConfigSettingsManager implements ISettingsManager
      * - if the config file is not readable.
      * - if the config file is not writable.
      *
-     * @see loadSettings()
+     * @see ConfigSettingsManager::loadSettings()
      *
      * @author Oleg Schildt
      */

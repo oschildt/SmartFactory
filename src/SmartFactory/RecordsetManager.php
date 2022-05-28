@@ -107,7 +107,7 @@ class RecordsetManager implements IRecordsetManager
     /**
      * This is internal auxiliary function for converting an array to a where clause.
      *
-     * @param string|array $where_clause
+     * @param string|array &$where_clause
      * The where clause that should be checked. If an array of keys is passed,
      * the where clause is build based on it.
      *
@@ -151,18 +151,18 @@ class RecordsetManager implements IRecordsetManager
      * It expand this multidimensional
      * array into the set of flat records suitable for call {@see RecordsetManager::saveRecord()}.
      *
-     * @param array $subarray
+     * @param array &$subarray
      * The current subarray ro be processed.
      *
      * @param array $key_fields
      * The array of the key fields. These are the fields that are used
      * to uniquely identify a record.
      *
-     * @param array $parent_values
+     * @param array &$parent_values
      * The array of the values of the foreign keys
      * in the form "field_name" => "value".
      *
-     * @param array $record
+     * @param array &$record
      * The array where the resulting flat record is built.
      *
      * @return boolean
@@ -213,7 +213,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @return void
      *
-     * @see getDBWorker()
+     * @see RecordsetManager::getDBWorker()
      *
      * @author Oleg Schildt
      */
@@ -228,7 +228,7 @@ class RecordsetManager implements IRecordsetManager
      * @return DatabaseWorkers\DBWorker
      * Returns the dbworker to be used for working with the database.
      *
-     * @see getDBWorker()
+     * @see RecordsetManager::getDBWorker()
      *
      * @author Oleg Schildt
      */
@@ -293,7 +293,7 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see  saveRecord()
+     * @see  RecordsetManager::saveRecord()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -319,7 +319,7 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Loads a record into an array in the form "field_name" => "value".
      *
-     * @param array $record
+     * @param array &$record
      * The target array where the data should be loaded.
      *
      * @param string|array $where_clause
@@ -337,8 +337,8 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see  saveRecord()
-     * @see  loadRecordSet()
+     * @see RecordsetManager::saveRecord()
+     * @see RecordsetManager::loadRecordSet()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -377,7 +377,7 @@ class RecordsetManager implements IRecordsetManager
      * Loads records into an array in the form $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] =
      * "value".
      *
-     * @param array $records
+     * @param array &$records
      * The target array where the data should be loaded.
      *
      * @param string|array $where_clause
@@ -398,8 +398,8 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see  loadRecord()
-     * @see  saveRecordSet()
+     * @see RecordsetManager::loadRecord()
+     * @see RecordsetManager::saveRecordSet()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -463,7 +463,7 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Saves a record from an array in the form "field_name" => "value" into the table.
      *
-     * @param array $record
+     * @param array &$record
      * The source array with the data to be saved.
      *
      * @param string $identity_field
@@ -483,8 +483,8 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see  loadRecord()
-     * @see  saveRecordSet()
+     * @see RecordsetManager::loadRecord()
+     * @see RecordsetManager::saveRecordSet()
      *
      * @uses DatabaseWorkers\DBWorker
      *
@@ -591,7 +591,7 @@ class RecordsetManager implements IRecordsetManager
      * Saves records from an array in the form
      * $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.
      *
-     * @param array $records
+     * @param array &$records
      * The source array with the data to be saved.
      *
      * @param array $parent_values
@@ -609,8 +609,8 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see  loadRecordSet()
-     * @see  saveRecord()
+     * @see RecordsetManager::loadRecordSet()
+     * @see RecordsetManager::saveRecord()
      *
      * @uses DatabaseWorkers\DBWorker
      *

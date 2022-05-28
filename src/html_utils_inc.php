@@ -785,7 +785,7 @@ function radiobutton($parameters, $echo = true)
  *
  * This function renders a tables based on the values of an array.
  *
- * @param array $array
+ * @param array &$array
  * The array of the rows.
  *
  * @param array $parameters
