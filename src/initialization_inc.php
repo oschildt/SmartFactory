@@ -16,6 +16,7 @@ use SmartFactory\Interfaces\IEventManager;
 use SmartFactory\Interfaces\IShardManager;
 
 use SmartFactory\DatabaseWorkers\MySQL_DBWorker;
+use SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker;
 use SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
 use SmartFactory\DatabaseWorkers\ShardManager;
 
@@ -33,6 +34,8 @@ ObjectFactory::bindClass(IMessageManager::class, MessageManager::class, function
 });
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(MySQL_DBWorker::class, MySQL_DBWorker::class);
+//-------------------------------------------------------------------
+ObjectFactory::bindClass(PostgreSQL_DBWorker::class, PostgreSQL_DBWorker::class);
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(MSSQL_DBWorker::class, MSSQL_DBWorker::class);
 //-------------------------------------------------------------------

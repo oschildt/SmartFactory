@@ -111,34 +111,37 @@
 <span class="line" id="16">16: </span><span class="php-keyword1">use</span> SmartFactory\Interfaces\IShardManager;
 <span class="line" id="17">17: </span>
 <span class="line" id="18">18: </span><span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\MySQL_DBWorker;
-<span class="line" id="19">19: </span><span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
-<span class="line" id="20">20: </span><span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\ShardManager;
-<span class="line" id="21">21: </span>
-<span class="line" id="22">22: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="23">23: </span><span class="php-comment">// Class binding</span>
-<span class="line" id="24">24: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="25">25: </span>ObjectFactory::bindClass(IErrorHandler::<span class="php-keyword1">class</span>, ErrorHandler::<span class="php-keyword1">class</span>);
-<span class="line" id="26">26: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="27">27: </span>ObjectFactory::bindClass(ISessionManager::<span class="php-keyword1">class</span>, SessionManager::<span class="php-keyword1">class</span>);
-<span class="line" id="28">28: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="29">29: </span>ObjectFactory::bindClass(IEventManager::<span class="php-keyword1">class</span>, EventManager::<span class="php-keyword1">class</span>);
-<span class="line" id="30">30: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="31">31: </span>ObjectFactory::bindClass(IMessageManager::<span class="php-keyword1">class</span>, MessageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (<span class="php-var">$instance</span>) {
-<span class="line" id="32">32: </span>    <span class="php-var">$instance</span>-&gt;init([<span class="php-quote">&quot;auto_hide_time&quot;</span> =&gt; <span class="php-num">3</span>]);
-<span class="line" id="33">33: </span>});
-<span class="line" id="34">34: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="35">35: </span>ObjectFactory::bindClass(MySQL_DBWorker::<span class="php-keyword1">class</span>, MySQL_DBWorker::<span class="php-keyword1">class</span>);
-<span class="line" id="36">36: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="37">37: </span>ObjectFactory::bindClass(MSSQL_DBWorker::<span class="php-keyword1">class</span>, MSSQL_DBWorker::<span class="php-keyword1">class</span>);
-<span class="line" id="38">38: </span><span class="php-comment">//-------------------------------------------------------------------</span>
-<span class="line" id="39">39: </span>ObjectFactory::bindClass(IShardManager::<span class="php-keyword1">class</span>, ShardManager::<span class="php-keyword1">class</span>);
-<span class="line" id="40">40: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="19">19: </span><span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker;
+<span class="line" id="20">20: </span><span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
+<span class="line" id="21">21: </span><span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\ShardManager;
+<span class="line" id="22">22: </span>
+<span class="line" id="23">23: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="24">24: </span><span class="php-comment">// Class binding</span>
+<span class="line" id="25">25: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="26">26: </span>ObjectFactory::bindClass(IErrorHandler::<span class="php-keyword1">class</span>, ErrorHandler::<span class="php-keyword1">class</span>);
+<span class="line" id="27">27: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="28">28: </span>ObjectFactory::bindClass(ISessionManager::<span class="php-keyword1">class</span>, SessionManager::<span class="php-keyword1">class</span>);
+<span class="line" id="29">29: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="30">30: </span>ObjectFactory::bindClass(IEventManager::<span class="php-keyword1">class</span>, EventManager::<span class="php-keyword1">class</span>);
+<span class="line" id="31">31: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="32">32: </span>ObjectFactory::bindClass(IMessageManager::<span class="php-keyword1">class</span>, MessageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (<span class="php-var">$instance</span>) {
+<span class="line" id="33">33: </span>    <span class="php-var">$instance</span>-&gt;init([<span class="php-quote">&quot;auto_hide_time&quot;</span> =&gt; <span class="php-num">3</span>]);
+<span class="line" id="34">34: </span>});
+<span class="line" id="35">35: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="36">36: </span>ObjectFactory::bindClass(MySQL_DBWorker::<span class="php-keyword1">class</span>, MySQL_DBWorker::<span class="php-keyword1">class</span>);
+<span class="line" id="37">37: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="38">38: </span>ObjectFactory::bindClass(PostgreSQL_DBWorker::<span class="php-keyword1">class</span>, PostgreSQL_DBWorker::<span class="php-keyword1">class</span>);
+<span class="line" id="39">39: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="40">40: </span>ObjectFactory::bindClass(MSSQL_DBWorker::<span class="php-keyword1">class</span>, MSSQL_DBWorker::<span class="php-keyword1">class</span>);
+<span class="line" id="41">41: </span><span class="php-comment">//-------------------------------------------------------------------</span>
+<span class="line" id="42">42: </span>ObjectFactory::bindClass(IShardManager::<span class="php-keyword1">class</span>, ShardManager::<span class="php-keyword1">class</span>);
+<span class="line" id="43">43: </span><span class="php-comment">//-------------------------------------------------------------------</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-28 19:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-06-26 16:01 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -1,9 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oschildt
- * Date: 23.11.2018
- * Time: 12:52
+ * This file contains the implementation of the class ShardManager
+ * for managing connections to the DB shards.
+ *
+ * @package Database
+ *
+ * @author Oleg Schildt
  */
 
 namespace SmartFactory\DatabaseWorkers;
@@ -99,7 +101,7 @@ class ShardManager implements IShardManager
      * settings and reuses the single instance of the DBWorker for all requests.
      * If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.
      *
-     * Currently supported: MySQL und MS SQL.
+     * Currently supported: MySQL, PostgreSQL und MS SQL.
      *
      * @param string $shard_name
      * The name of the shard.
@@ -117,7 +119,7 @@ class ShardManager implements IShardManager
      * - db_missing_type_error - if the database type is not specified.
      * - db_conn_data_error - if the connection parameters are incomplete.
      * - db_server_conn_error - if the database server cannot be connected.
-     * - db_not_exists_error - if database does not exists od inaccesible to the user.
+     * - db_not_exists_error - if database does not exist od inaccesible to the user.
      *
      * @author Oleg Schildt
      */
@@ -163,7 +165,7 @@ class ShardManager implements IShardManager
      *
      * - if the load balancing group was not found.
      * - db_server_conn_error - if the database server cannot be connected.
-     * - db_not_exists_error - if database does not exists od inaccesible to the user.
+     * - db_not_exists_error - if database does not exist od inaccesible to the user.
      *
      * @author Oleg Schildt
      */

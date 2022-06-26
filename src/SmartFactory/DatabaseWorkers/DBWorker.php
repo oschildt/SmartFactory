@@ -43,7 +43,25 @@ abstract class DBWorker implements IInitable
      * @author Oleg Schildt
      */
     const ERR_CONNECTION_FAILED = 2;
-    
+
+    /**
+     * The constant for the error: host not reachable.
+     *
+     * @var int
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_HOST_UNREACHABLE = 3;
+
+    /**
+     * The constant for the error: wrong user credentials.
+     *
+     * @var int
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_WRONG_USER_CREDENTIALS = 4;
+
     /**
      * The constant for the error: database not found.
      *
@@ -51,7 +69,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_DATABASE_NOT_FOUND = 3;
+    const ERR_DATABASE_NOT_FOUND = 5;
     
     /**
      * The constant for the error: query failed.
@@ -60,8 +78,17 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_QUERY_FAILED = 4;
-    
+    const ERR_QUERY_FAILED = 6;
+
+    /**
+     * The constant for the error: not connected.
+     *
+     * @var int
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_NOT_CONNECTED = 7;
+
     /**
      * The constant for the error: stream invalid.
      *
@@ -69,8 +96,17 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_STREAM_ERROR = 5;
-    
+    const ERR_STREAM_ERROR = 8;
+
+    /**
+     * The constant for the returning field value as is.
+     *
+     * @var int
+     *
+     * @author Oleg Schildt
+     */
+    const DB_AS_IS = 0;
+
     /**
      * The constant for the number type.
      *
@@ -124,7 +160,18 @@ abstract class DBWorker implements IInitable
      * @author Oleg Schildt
      */
     const DB_GEOMETRY_4326 = 6;
-    
+
+    /**
+     * The constant for the large objects.
+     *
+     * If a RDBMS supports stream reading, it is performed.
+     *
+     * @var int
+     *
+     * @author Oleg Schildt
+     */
+    const DB_LARGE_OBJECT_STREAM = 7;
+
     /**
      * Name or IP address of the server.
      *
@@ -133,7 +180,16 @@ abstract class DBWorker implements IInitable
      * @author Oleg Schildt
      */
     protected $db_server;
-    
+
+    /**
+     * Port of the server.
+     *
+     * @var string $db_port
+     *
+     * @author Oleg Schildt
+     */
+    protected $db_port;
+
     /**
      * Name of the database.
      *
@@ -247,25 +303,48 @@ abstract class DBWorker implements IInitable
      * @return boolean
      * Returns true if the connection is open, otherwise false.
      *
+     * @see DBWorker::check_connection()
      * @see DBWorker::connect()
      * @see DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
     abstract public function is_connected();
-    
+
+    /**
+     * Check whether the connection exists and throws an exceptions if not.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It throws an exception if there is no connection.
+     *
+     * @see DBWorker::connect()
+     * @see DBWorker::is_connected()
+     * @see DBWorker::close_connection()
+     *
+     * @author Oleg Schildt
+     */
+    public function check_connection() {
+        if (!$this->is_connected()) {
+            $err = "Database server not connected!";
+            trigger_error($err, E_USER_ERROR);
+            throw new \Exception($err, DBWorker::ERR_NOT_CONNECTED);
+        }
+    } // check_connection
+
     /**
      * Establishes the connection to the database using the connection
      * settings parameters specified by the initialization.
      *
-     * @return boolean
-     * Returns true if the connection has been successfully established, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
      *
      * - if some parameters are missing.
      *
+     * @see DBWorker::check_connection()
      * @see DBWorker::is_connected()
      * @see DBWorker::close_connection()
      *
@@ -274,13 +353,12 @@ abstract class DBWorker implements IInitable
     abstract public function connect();
     
     /**
-     * Sets the a database as working database.
+     * Sets the database as working database.
      *
      * @param string $db_name
      * The name of the database to be set as working database.
      *
-     * @return boolean
-     * Returns true if the database has been successfully set as working database, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -323,8 +401,7 @@ abstract class DBWorker implements IInitable
      * @param string $query_string
      * The SQL query to be executed.
      *
-     * @return boolean
-     * Returns true if the query has been successfully executed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -341,8 +418,7 @@ abstract class DBWorker implements IInitable
      *
      * All subsequent parameters are the paramteres of the SQL stored procedure.
      *
-     * @return boolean
-     * Returns true if the stored procedure has been successfully executed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -358,8 +434,10 @@ abstract class DBWorker implements IInitable
      * The number of parameters may vary and be zero. An array can also be passed.
      * These are paremeters of the prepared query.
      *
-     * @return boolean
-     * Returns true if the prepared SQL query has been successfully executed, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::prepare_query()
      * @see DBWorker::free_prepared_query()
@@ -374,8 +452,7 @@ abstract class DBWorker implements IInitable
      * @param string $query_string
      * The SQL query to be prepared.
      *
-     * @return boolean
-     * Returns true if the SQL query has been successfully prepared, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -406,8 +483,7 @@ abstract class DBWorker implements IInitable
      * }
      * ```
      *
-     * @return boolean
-     * Returns true if the long data has been successfully stored, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -419,10 +495,13 @@ abstract class DBWorker implements IInitable
     /**
      * Closes the currently opened connection.
      *
-     * @return boolean
-     * Returns true if the connection has been successfully closed, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::is_connected()
+     * @see DBWorker::check_connection()
      * @see DBWorker::connect()
      *
      * @author Oleg Schildt
@@ -432,8 +511,7 @@ abstract class DBWorker implements IInitable
     /**
      * Starts the transation.
      *
-     * @return boolean
-     * Returns true if the transaction has been successfully started, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -448,8 +526,7 @@ abstract class DBWorker implements IInitable
     /**
      * Commits the transation.
      *
-     * @return boolean
-     * Returns true if the transaction has been successfully committed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -464,11 +541,10 @@ abstract class DBWorker implements IInitable
     /**
      * Rolls back the transation.
      *
-     * @return boolean
-     * Returns true if the transaction has been successfully rolled back, otherwise false.
-     *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
+     *
+     * @return void
      *
      * @see DBWorker::start_transaction()
      * @see DBWorker::commit_transaction()
@@ -482,8 +558,7 @@ abstract class DBWorker implements IInitable
      *
      * It should be called only for the retrieving queries.
      *
-     * @return boolean
-     * Returns true if the result has been successfully freed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -497,8 +572,7 @@ abstract class DBWorker implements IInitable
      *
      * It should be called after all executions of the prepared query.
      *
-     * @return boolean
-     * Returns true if the prepared query has been successfully freed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -647,8 +721,8 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_by_name($name, $type = self::DB_STRING);
-    
+    abstract public function field_by_name($name, $type = self::DB_AS_IS);
+
     /**
      * Returns the value of a field specified by number.
      *
@@ -668,7 +742,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_by_num($num, $type = self::DB_STRING);
+    abstract public function field_by_num($num, $type = self::DB_AS_IS);
     
     /**
      * Returns the meta information about the field as an object with properties.
@@ -680,15 +754,11 @@ abstract class DBWorker implements IInitable
      * Returns the associative array with properties. In the case
      * of any error returns null.
      *
-     * $info["name"] - name of the field.
-     *
-     * $info["type"] - type of the field.
-     *
-     * $info["size"] - size of the field.
-     *
-     * $info["binary"] - whether the filed is binary.
-     *
-     * $info["numeric"] - whether the filed is numeric.
+     * - $info["name"] - name of the field.
+     * - $info["type"] - type of the field.
+     * - $info["size"] - size of the field.
+     * - $info["binary"] - whether the filed is binary.
+     * - $info["numeric"] - whether the filed is numeric.
      *
      * @see DBWorker::field_by_num()
      * @see DBWorker::field_name()

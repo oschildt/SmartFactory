@@ -118,7 +118,7 @@ function instance($interface_or_class)
  * - db_missing_type_error - if the database type is not specified.
  * - db_conn_data_error - if the connection parameters are incomplete.
  * - db_server_conn_error - if the database server cannot be connected.
- * - db_not_exists_error - if database does not exists od inaccesible to the user.
+ * - db_not_exists_error - if database does not exist od inaccesible to the user.
  *
  * @author Oleg Schildt
  */

@@ -159,6 +159,8 @@ Adding support for new database types is also much easier with this wrapping app
 
 <a href='class-SmartFactory.DatabaseWorkers.MySQL_DBWorker.html'>\SmartFactory\DatabaseWorkers\MySQL_DBWorker</a><br>
 
+<a href='class-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.html'>\SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker</a><br>
+
 </div>
 
 <h2>Authors</h2>
@@ -251,6 +253,19 @@ Adding support for new database types is also much easier with this wrapping app
       
       <tr>
           <td>
+              <div style='float:left'><a href="#DB_AS_IS">DB_AS_IS</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The constant for the returning field value as is.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#DB_DATE">DB_DATE</a></div>
 
               <div style='float:right'>
@@ -300,6 +315,19 @@ Adding support for new database types is also much easier with this wrapping app
           </td>
           <td class="description_column">
               <p>The constant for the type geometry SRID 4326 (latitude, longitude).</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#DB_LARGE_OBJECT_STREAM">DB_LARGE_OBJECT_STREAM</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The constant for the large objects.</p>
           </td>
       </tr><tr>
           <td>
@@ -368,6 +396,32 @@ Adding support for new database types is also much easier with this wrapping app
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#ERR_HOST_UNREACHABLE">ERR_HOST_UNREACHABLE</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The constant for the error: host not reachable.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#ERR_NOT_CONNECTED">ERR_NOT_CONNECTED</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The constant for the error: not connected.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#ERR_QUERY_FAILED">ERR_QUERY_FAILED</a></div>
 
               <div style='float:right'>
@@ -391,6 +445,19 @@ Adding support for new database types is also much easier with this wrapping app
           </td>
           <td class="description_column">
               <p>The constant for the error: stream invalid.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#ERR_WRONG_USER_CREDENTIALS">ERR_WRONG_USER_CREDENTIALS</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The constant for the error: wrong user credentials.</p>
           </td>
       </tr>
       
@@ -424,6 +491,19 @@ Adding support for new database types is also much easier with this wrapping app
           </td>
           <td class="description_column">
               <p>Password of the database user.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$db_port">$db_port</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Port of the server.</p>
           </td>
       </tr><tr>
           <td>
@@ -496,6 +576,19 @@ Adding support for new database types is also much easier with this wrapping app
           </td>
           <td class="description_column">
               <p>Returns the number of the rows affected by the last modification query.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#check_connection">check_connection()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Check whether the connection exists and throws an exceptions if not.</p>
           </td>
       </tr><tr>
           <td>
@@ -954,13 +1047,51 @@ and quotation if necessary.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Sets the a database as working database.</p>
+              <p>Sets the database as working database.</p>
           </td>
       </tr>
       
   </table>
 
-<hr id="DB_DATE">
+<hr id="DB_AS_IS">
+  
+  <h1>Constant: DBWorker::DB_AS_IS</h1>
+
+  <div class="definition"><span class="php-keyword1">const</span> DB_AS_IS = <span class="php-num">0</span>;</div>
+
+  
+  <div class="short-description">
+  <p>The constant for the returning field value as is.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  int
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#108'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  </div><hr id="DB_DATE">
   
   <h1>Constant: DBWorker::DB_DATE</h1>
 
@@ -997,7 +1128,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#99'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#135'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="DB_DATETIME">
   
   <h1>Constant: DBWorker::DB_DATETIME</h1>
@@ -1035,7 +1166,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#108'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#144'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="DB_GEOMETRY">
   
   <h1>Constant: DBWorker::DB_GEOMETRY</h1>
@@ -1073,7 +1204,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#117'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#153'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="DB_GEOMETRY_4326">
   
   <h1>Constant: DBWorker::DB_GEOMETRY_4326</h1>
@@ -1111,7 +1242,50 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#126'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#162'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  </div><hr id="DB_LARGE_OBJECT_STREAM">
+  
+  <h1>Constant: DBWorker::DB_LARGE_OBJECT_STREAM</h1>
+
+  <div class="definition"><span class="php-keyword1">const</span> DB_LARGE_OBJECT_STREAM = <span class="php-num">7</span>;</div>
+
+  
+  <div class="short-description">
+  <p>The constant for the large objects.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>If a RDBMS supports stream reading, it is performed.</p>
+  </div>
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  int
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#173'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="DB_NUMBER">
   
   <h1>Constant: DBWorker::DB_NUMBER</h1>
@@ -1149,7 +1323,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#81'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#117'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="DB_STRING">
   
   <h1>Constant: DBWorker::DB_STRING</h1>
@@ -1187,7 +1361,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#90'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#126'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="ERR_CONNECTION_DATA_INCOMPLETE">
   
   <h1>Constant: DBWorker::ERR_CONNECTION_DATA_INCOMPLETE</h1>
@@ -1268,7 +1442,7 @@ and quotation if necessary.</p>
   
   <h1>Constant: DBWorker::ERR_DATABASE_NOT_FOUND</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_DATABASE_NOT_FOUND = <span class="php-num">3</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> ERR_DATABASE_NOT_FOUND = <span class="php-num">5</span>;</div>
 
   
   <div class="short-description">
@@ -1301,12 +1475,88 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#72'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  </div><hr id="ERR_HOST_UNREACHABLE">
+  
+  <h1>Constant: DBWorker::ERR_HOST_UNREACHABLE</h1>
+
+  <div class="definition"><span class="php-keyword1">const</span> ERR_HOST_UNREACHABLE = <span class="php-num">3</span>;</div>
+
+  
+  <div class="short-description">
+  <p>The constant for the error: host not reachable.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  int
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
   <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#54'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  </div><hr id="ERR_NOT_CONNECTED">
+  
+  <h1>Constant: DBWorker::ERR_NOT_CONNECTED</h1>
+
+  <div class="definition"><span class="php-keyword1">const</span> ERR_NOT_CONNECTED = <span class="php-num">7</span>;</div>
+
+  
+  <div class="short-description">
+  <p>The constant for the error: not connected.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  int
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#90'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="ERR_QUERY_FAILED">
   
   <h1>Constant: DBWorker::ERR_QUERY_FAILED</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_QUERY_FAILED = <span class="php-num">4</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> ERR_QUERY_FAILED = <span class="php-num">6</span>;</div>
 
   
   <div class="short-description">
@@ -1339,12 +1589,12 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#63'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#81'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="ERR_STREAM_ERROR">
   
   <h1>Constant: DBWorker::ERR_STREAM_ERROR</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_STREAM_ERROR = <span class="php-num">5</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> ERR_STREAM_ERROR = <span class="php-num">8</span>;</div>
 
   
   <div class="short-description">
@@ -1377,7 +1627,45 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#72'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#99'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  </div><hr id="ERR_WRONG_USER_CREDENTIALS">
+  
+  <h1>Constant: DBWorker::ERR_WRONG_USER_CREDENTIALS</h1>
+
+  <div class="definition"><span class="php-keyword1">const</span> ERR_WRONG_USER_CREDENTIALS = <span class="php-num">4</span>;</div>
+
+  
+  <div class="short-description">
+  <p>The constant for the error: wrong user credentials.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  int
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#63'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
 
 <hr id="$db_name">
@@ -1417,7 +1705,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#144'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#200'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="$db_password">
   
   <h1>Property: DBWorker::$db_password</h1>
@@ -1455,7 +1743,45 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#162'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#218'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  </div><hr id="$db_port">
+  
+  <h1>Property: DBWorker::$db_port</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$db_port</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Port of the server.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#191'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="$db_server">
   
   <h1>Property: DBWorker::$db_server</h1>
@@ -1493,7 +1819,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#135'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#182'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="$db_user">
   
   <h1>Property: DBWorker::$db_user</h1>
@@ -1531,7 +1857,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#153'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#209'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="$is_clone">
   
   <h1>Property: DBWorker::$is_clone</h1>
@@ -1569,7 +1895,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#180'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#236'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div><hr id="$last_query">
   
   <h1>Property: DBWorker::$last_query</h1>
@@ -1607,7 +1933,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#171'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#227'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
 
 <hr id="affected_count">
@@ -1664,7 +1990,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#604'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#678'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -1682,15 +2008,15 @@ and quotation if necessary.</p>
 
   
 
-  <hr id="close_connection">
+  <hr id="check_connection">
   
-  <h1>Method: DBWorker::close_connection()</h1>
+  <h1>Method: DBWorker::check_connection()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> close_connection() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> check_connection() : void;</div>
 
   
   <div class="short-description">
-  <p>Closes the currently opened connection.</p>
+  <p>Check whether the connection exists and throws an exceptions if not.</p>
   </div>
   
 
@@ -1703,14 +2029,20 @@ and quotation if necessary.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the connection has been successfully closed, otherwise false.</p></div>
+  void<br>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It throws an exception if there is no connection.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1728,17 +2060,20 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#430'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#328'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#connect'>\SmartFactory\DatabaseWorkers\DBWorker::connect()</a><br>
+  
+  
   <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected'>\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a><br>
   
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#connect'>\SmartFactory\DatabaseWorkers\DBWorker::connect()</a><br>
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection'>\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a><br>
   
   
   </div>
@@ -1755,15 +2090,15 @@ and quotation if necessary.</p>
 
   
 
-  <hr id="commit_transaction">
+  <hr id="close_connection">
   
-  <h1>Method: DBWorker::commit_transaction()</h1>
+  <h1>Method: DBWorker::close_connection()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> commit_transaction() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> close_connection() : void;</div>
 
   
   <div class="short-description">
-  <p>Commits the transation.</p>
+  <p>Closes the currently opened connection.</p>
   </div>
   
 
@@ -1776,9 +2111,7 @@ and quotation if necessary.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the transaction has been successfully committed, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1809,7 +2142,89 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#462'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#509'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected'>\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a><br>
+  
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#check_connection'>\SmartFactory\DatabaseWorkers\DBWorker::check_connection()</a><br>
+  
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#connect'>\SmartFactory\DatabaseWorkers\DBWorker::connect()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="commit_transaction">
+  
+  <h1>Method: DBWorker::commit_transaction()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> commit_transaction() : void;</div>
+
+  
+  <div class="short-description">
+  <p>Commits the transation.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#539'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -1840,7 +2255,7 @@ and quotation if necessary.</p>
   
   <h1>Method: DBWorker::connect()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> connect() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> connect() : void;</div>
 
   
   <div class="short-description">
@@ -1858,9 +2273,7 @@ settings parameters specified by the initialization.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the connection has been successfully established, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1894,12 +2307,15 @@ settings parameters specified by the initialization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#274'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#353'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#check_connection'>\SmartFactory\DatabaseWorkers\DBWorker::check_connection()</a><br>
+  
   
   <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected'>\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a><br>
   
@@ -1974,7 +2390,7 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#242'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#298'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2069,7 +2485,7 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#731'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#801'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2100,7 +2516,7 @@ queries while iteration through the active results of a select query.</p>
   
   <h1>Method: DBWorker::execute_prepared_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_prepared_query(mixed ...<span class="php-var">$args</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_prepared_query(mixed ...<span class="php-var">$args</span>) : void;</div>
 
   
   <div class="short-description">
@@ -2149,14 +2565,20 @@ These are paremeters of the prepared query.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the prepared SQL query has been successfully executed, otherwise false.</p></div>
+  void<br>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
 
@@ -2174,7 +2596,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#369'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#447'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2205,7 +2627,7 @@ These are paremeters of the prepared query.</p>
   
   <h1>Method: DBWorker::execute_procedure()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_procedure(string <span class="php-var">$procedure</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_procedure(string <span class="php-var">$procedure</span>) : void;</div>
 
   
   <div class="short-description">
@@ -2254,9 +2676,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the stored procedure has been successfully executed, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -2287,7 +2707,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#352'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#428'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2309,7 +2729,7 @@ These are paremeters of the prepared query.</p>
   
   <h1>Method: DBWorker::execute_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_query(string <span class="php-var">$query_string</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_query(string <span class="php-var">$query_string</span>) : void;</div>
 
   
   <div class="short-description">
@@ -2357,9 +2777,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the query has been successfully executed, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -2390,7 +2808,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#334'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#411'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2524,7 +2942,7 @@ any error returns false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#578'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#652'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2608,7 +3026,7 @@ any error returns false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#539'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#613'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2680,7 +3098,7 @@ any error returns false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#591'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#665'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2702,7 +3120,7 @@ any error returns false.</p></div>
   
   <h1>Method: DBWorker::field_by_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_by_name(string <span class="php-var">$name</span>, int <span class="php-var">$type</span> = self::DB_STRING) : mixed|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_by_name(string <span class="php-var">$name</span>, int <span class="php-var">$type</span> = self::DB_AS_IS) : mixed|<span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -2755,7 +3173,7 @@ any error returns false.</p></div>
                 int
             </td>
             <td>
-                self::DB_STRING
+                self::DB_AS_IS
             </td>
             <td class="description_column">
                 <p>The type of the field.</p>
@@ -2794,7 +3212,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#650'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#724'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2825,7 +3243,7 @@ of any error returns null.</p></div>
   
   <h1>Method: DBWorker::field_by_num()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_by_num(int <span class="php-var">$num</span>, int <span class="php-var">$type</span> = self::DB_STRING) : mixed|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_by_num(int <span class="php-var">$num</span>, int <span class="php-var">$type</span> = self::DB_AS_IS) : mixed|<span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -2878,7 +3296,7 @@ of any error returns null.</p></div>
                 int
             </td>
             <td>
-                self::DB_STRING
+                self::DB_AS_IS
             </td>
             <td class="description_column">
                 <p>The type of the field.</p>
@@ -2917,7 +3335,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#671'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#745'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3001,7 +3419,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#617'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#691'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3075,11 +3493,13 @@ of any error returns null.</p></div>
   
   <div class="item_description"><p>Returns the associative array with properties. In the case
 of any error returns null.</p>
-<p>$info[&quot;name&quot;] - name of the field.</p>
-<p>$info[&quot;type&quot;] - type of the field.</p>
-<p>$info[&quot;size&quot;] - size of the field.</p>
-<p>$info[&quot;binary&quot;] - whether the filed is binary.</p>
-<p>$info[&quot;numeric&quot;] - whether the filed is numeric.</p></div>
+<ul>
+<li>$info[&quot;name&quot;] - name of the field.</li>
+<li>$info[&quot;type&quot;] - type of the field.</li>
+<li>$info[&quot;size&quot;] - size of the field.</li>
+<li>$info[&quot;binary&quot;] - whether the filed is binary.</li>
+<li>$info[&quot;numeric&quot;] - whether the filed is numeric.</li>
+</ul></div>
   
   </div>
   
@@ -3102,7 +3522,7 @@ of any error returns null.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#698'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#768'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3207,7 +3627,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#715'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#785'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3311,7 +3731,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#747'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#817'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3415,7 +3835,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#763'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#833'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3446,7 +3866,7 @@ of any error returns null.</p></div>
   
   <h1>Method: DBWorker::free_prepared_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> free_prepared_query() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> free_prepared_query() : void;</div>
 
   
   <div class="short-description">
@@ -3468,9 +3888,7 @@ of any error returns null.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the prepared query has been successfully freed, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -3501,7 +3919,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#511'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#585'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3532,7 +3950,7 @@ of any error returns null.</p></div>
   
   <h1>Method: DBWorker::free_result()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> free_result() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> free_result() : void;</div>
 
   
   <div class="short-description">
@@ -3554,9 +3972,7 @@ of any error returns null.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the result has been successfully freed, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -3587,7 +4003,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#493'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#568'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3651,7 +4067,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#218'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#274'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3721,7 +4137,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#790'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#860'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3785,7 +4201,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#228'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#284'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3849,7 +4265,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#302'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#380'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3955,7 +4371,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#193'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#249'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4027,7 +4443,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#630'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#704'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4091,12 +4507,15 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#255'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#312'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#check_connection'>\SmartFactory\DatabaseWorkers\DBWorker::check_connection()</a><br>
+  
   
   <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#connect'>\SmartFactory\DatabaseWorkers\DBWorker::connect()</a><br>
   
@@ -4165,7 +4584,7 @@ the corresponding database.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#206'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#262'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4285,7 +4704,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#780'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#850'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4307,7 +4726,7 @@ and quotation if necessary.</p>
   
   <h1>Method: DBWorker::prepare_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> prepare_query(string <span class="php-var">$query_string</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> prepare_query(string <span class="php-var">$query_string</span>) : void;</div>
 
   
   <div class="short-description">
@@ -4355,9 +4774,7 @@ and quotation if necessary.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the SQL query has been successfully prepared, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -4388,7 +4805,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#388'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#465'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4493,7 +4910,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#318'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#396'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4521,7 +4938,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h1>Method: DBWorker::rollback_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> rollback_transaction() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> rollback_transaction() : void;</div>
 
   
   <div class="short-description">
@@ -4538,9 +4955,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the transaction has been successfully rolled back, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -4571,7 +4986,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#478'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#554'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4602,7 +5017,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h1>Method: DBWorker::start_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> start_transaction() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> start_transaction() : void;</div>
 
   
   <div class="short-description">
@@ -4619,9 +5034,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the transaction has been successfully started, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -4652,7 +5065,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#446'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#524'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4683,7 +5096,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h1>Method: DBWorker::stream_long_data()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> stream_long_data(string <span class="php-var">$query_string</span>, resource &amp;<span class="php-var">$stream</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> stream_long_data(string <span class="php-var">$query_string</span>, resource &amp;<span class="php-var">$stream</span>) : void;</div>
 
   
   <div class="short-description">
@@ -4756,9 +5169,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the long data has been successfully stored, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -4789,7 +5200,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#417'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#493'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4811,11 +5222,11 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h1>Method: DBWorker::use_database()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> use_database(string <span class="php-var">$db_name</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> use_database(string <span class="php-var">$db_name</span>) : void;</div>
 
   
   <div class="short-description">
-  <p>Sets the a database as working database.</p>
+  <p>Sets the database as working database.</p>
   </div>
   
 
@@ -4859,9 +5270,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the database has been successfully set as working database, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -4892,11 +5301,11 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#290'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#368'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-05-28 19:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-06-26 16:01 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

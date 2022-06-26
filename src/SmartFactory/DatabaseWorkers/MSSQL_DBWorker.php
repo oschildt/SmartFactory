@@ -14,12 +14,13 @@ namespace SmartFactory\DatabaseWorkers;
  * This is the class for the MS SQL database using the extension sqlsrv.
  *
  * This is a wrapper around the database connectivity. It offers an universal
- * common way for working with databases of different types. Currently, MySQL and
+ * common way for working with databases of different types. Currently, MySQL, PostgreSQL and
  * MS SQL are supported. If in the future, there will be a better solution, or
  * the current solution turns out to be inefficient in a new version of PHP,
  * we can easily reimplement the DB wrapper without touching the business logic code.
  * Adding support for new database types is also much easier with this wrapping approach.
  *
+ * @see PostgreSQL_DBWorker
  * @see MySQL_DBWorker
  *
  * @author Oleg Schildt
@@ -34,7 +35,7 @@ class MSSQL_DBWorker extends DBWorker
      * @author Oleg Schildt
      */
     protected $connection = null;
-    
+
     /**
      * Stores the resource handle of the statement
      * of the last executed query.
@@ -44,7 +45,7 @@ class MSSQL_DBWorker extends DBWorker
      * @author Oleg Schildt
      */
     protected $statement = null;
-    
+
     /**
      * Internal variable for storing of the last prepared query.
      *
@@ -53,7 +54,7 @@ class MSSQL_DBWorker extends DBWorker
      * @author Oleg Schildt
      */
     protected $prepared_query = null;
-    
+
     /**
      * Stores the state whether the last query was an insert or not.
      *
@@ -62,7 +63,7 @@ class MSSQL_DBWorker extends DBWorker
      * @author Oleg Schildt
      */
     protected $last_query_is_insert = false;
-    
+
     /**
      * Internal variable for storing of the current fetched row
      * from the result of the last retrieving query.
@@ -72,7 +73,7 @@ class MSSQL_DBWorker extends DBWorker
      * @author Oleg Schildt
      */
     protected $row = null;
-    
+
     /**
      * Internal variable for storing of the column names
      * from the result of the last retrieving query.
@@ -82,7 +83,7 @@ class MSSQL_DBWorker extends DBWorker
      * @author Oleg Schildt
      */
     protected $field_names = null;
-    
+
     /**
      * Internal variable for storing of the parameters
      * of the last prepared query.
@@ -92,7 +93,7 @@ class MSSQL_DBWorker extends DBWorker
      * @author Oleg Schildt
      */
     protected $query_parameters = null;
-    
+
     /**
      * Retrieves the last errors ocurend while execution of the query.
      *
@@ -107,16 +108,16 @@ class MSSQL_DBWorker extends DBWorker
         if (empty($errors)) {
             return "";
         }
-        
+
         $message_array = [];
-        
+
         foreach ($errors as $error) {
             $message_array[$error['message']] = $error['message'];
         }
-        
+
         return implode("\n", $message_array);
     } // sys_get_errors
-    
+
     /**
      * Creates a clone of the dbworker that is using the same open
      * connection.
@@ -132,18 +133,19 @@ class MSSQL_DBWorker extends DBWorker
     public function create_clone()
     {
         $cln = new MSSQL_DBWorker();
-        
+
         $cln->is_clone = true;
-        
+
         $cln->db_server = $this->db_server;
+        $cln->db_port = $this->db_port;
         $cln->db_name = $this->db_name;
         $cln->db_user = $this->db_user;
         $cln->db_password = $this->db_password;
         $cln->connection = $this->connection;
-        
+
         return $cln;
     } // create_clone
-    
+
     /**
      * Constructor.
      *
@@ -152,7 +154,7 @@ class MSSQL_DBWorker extends DBWorker
     public function __construct()
     {
     } // __construct
-    
+
     /**
      * Destructor.
      *
@@ -166,7 +168,7 @@ class MSSQL_DBWorker extends DBWorker
             $this->close_connection();
         }
     } // __destruct
-    
+
     /**
      * Initializes the dbworker with connection paramters.
      *
@@ -174,6 +176,7 @@ class MSSQL_DBWorker extends DBWorker
      * Connection settings as an associative array in the form key => value:
      *
      * - $parameters["db_server"] - server address.
+     * - $parameters["db_port"] - server port.
      * - $parameters["db_name"] - database name.
      * - $parameters["db_user"] - user name.
      * - $parameters["db_password"] - user password.
@@ -188,6 +191,9 @@ class MSSQL_DBWorker extends DBWorker
         if (!empty($parameters["db_server"])) {
             $this->db_server = $parameters["db_server"];
         }
+        if (!empty($parameters["db_port"])) {
+            $this->db_server = $parameters["db_port"];
+        }
         if (!empty($parameters["db_name"])) {
             $this->db_name = $parameters["db_name"];
         }
@@ -197,10 +203,10 @@ class MSSQL_DBWorker extends DBWorker
         if (!empty($parameters["db_password"])) {
             $this->db_password = $parameters["db_password"];
         }
-        
+
         return true;
     } // init
-    
+
     /**
      * Checks whether the extension (sqlsrv) is installed which is required for work with
      * the MySQL database.
@@ -216,7 +222,7 @@ class MSSQL_DBWorker extends DBWorker
     {
         return function_exists("sqlsrv_connect");
     } // is_extension_installed
-    
+
     /**
      * Returns the name of the required PHP extension - "sqlsrv".
      *
@@ -231,7 +237,7 @@ class MSSQL_DBWorker extends DBWorker
     {
         return "sqlsrv";
     } // get_extension_name
-    
+
     /**
      * Returns the name of the supported database - "Microsoft SQL Server".
      *
@@ -244,13 +250,14 @@ class MSSQL_DBWorker extends DBWorker
     {
         return "Microsoft SQL Server";
     } // get_rdbms_name
-    
+
     /**
      * Returns the connection state.
      *
      * @return boolean
      * Returns true if the connection is open, otherwise false.
      *
+     * @see DBWorker::check_connection()
      * @see MSSQL_DBWorker::connect()
      * @see MSSQL_DBWorker::close_connection()
      *
@@ -260,17 +267,17 @@ class MSSQL_DBWorker extends DBWorker
     {
         return (!empty($this->connection) && is_resource($this->connection));
     } // is_connected
-    
+
     /**
      * Establishes the connection to the database using the connection
      * settings parameters specified by the initialization.
      *
-     * @return boolean
-     * Returns true if the connection has been successfully established, otherwise false.
+     * @return void
      *
-     * @throws \Throwable
+     * @throws \Exception
      * It throws an exception in the case of any errors.
      *
+     * @see DBWorker::check_connection()
      * @see MSSQL_DBWorker::is_connected()
      * @see MSSQL_DBWorker::close_connection()
      *
@@ -279,14 +286,14 @@ class MSSQL_DBWorker extends DBWorker
     public function connect()
     {
         sqlsrv_configure("WarningsReturnAsErrors", 0);
-        
+
         $this->last_query = null;
-        
+
         if (!isset($this->connection) || !$this->connection) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
                 throw new \Exception("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
             }
-            
+
             /*
             This new MSSQL dirver has a BIG problem. It sticks to the encoding
             of the Windows and ignores the database and server collation.
@@ -320,7 +327,7 @@ class MSSQL_DBWorker extends DBWorker
             Beacause of universality of the DBWorker independent of the database type,
             I use the choise 3.
             */
-            
+
             $config = [
                 "UID" => $this->db_user,
                 "PWD" => $this->db_password,
@@ -328,18 +335,18 @@ class MSSQL_DBWorker extends DBWorker
                 "ReturnDatesAsStrings" => true,
                 "MultipleActiveResultSets" => false
             ];
-            
+
             $this->connection = @sqlsrv_connect($this->db_server, $config);
         }
-        
+
         if (!$this->connection) {
             $err = $this->sys_get_errors();
             $this->connection = null;
-            
+
             trigger_error($err, E_USER_ERROR);
             throw new \Exception($err, DBWorker::ERR_CONNECTION_FAILED);
         }
-        
+
         if (!empty($this->db_name)) {
             try {
                 $this->use_database($this->db_name);
@@ -348,39 +355,32 @@ class MSSQL_DBWorker extends DBWorker
                 throw $ex;
             }
         }
-        
-        return true;
     } // connect
-    
+
     /**
-     * Sets the a database as working database.
+     * Sets the database as working database.
      *
      * @param string $db_name
      * The name of the database to be set as working database.
      *
-     * @return boolean
-     * Returns true if the database has been successfully set as working database, otherwise false.
+     * @return void
      *
-     * @throws \Throwable
+     * @throws \Exception
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
     public function use_database($db_name)
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         $this->db_name = $db_name;
-        
+
         $db_name = $this->escape($db_name);
-        
+
         $this->execute_query("USE " . $db_name);
-        
-        return true;
     } // use_database
-    
+
     /**
      * Returns the name of the database schema if applicable.
      *
@@ -395,7 +395,7 @@ class MSSQL_DBWorker extends DBWorker
     {
         return "dbo";
     } // get_schema
-    
+
     /**
      * Completes the name of a database object with the schema name if applicable.
      *
@@ -413,22 +413,21 @@ class MSSQL_DBWorker extends DBWorker
     public function qualify_name_with_schema($name)
     {
         $schema = $this->get_schema();
-        
+
         if (!empty($schema)) {
             $schema .= ".";
         }
-        
+
         return $schema . $name;
     } // qualify_name_with_schema
-    
+
     /**
      * Executes the SQL query.
      *
      * @param string $query_string
      * The SQL query to be executed.
      *
-     * @return boolean
-     * Returns true if the query has been successfully executed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It throws an exception in the case of any errors.
@@ -437,14 +436,12 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function execute_query($query_string)
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         $this->last_query = $query_string;
-        
+
         $options = [];
-        
+
         /*
         If the cursor is SQLSRV_CURSOR_STATIC or other than
         SQLSRV_CURSOR_FORWARD, retreiving of the data
@@ -458,32 +455,29 @@ class MSSQL_DBWorker extends DBWorker
     
         no more relevant in new version of driver
         */
-        
+
         if (preg_match("/\s*SELECT/i", $query_string)) {
             $options = ["Scrollable" => SQLSRV_CURSOR_STATIC];
         }
-        
+
         $this->statement = @sqlsrv_query($this->connection, $query_string, [], $options);
         if (!$this->statement) {
             $err = $this->sys_get_errors();
-            
+
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
-        return true;
     } // execute_query
-    
+
     /**
      * Prepares the SQL query with bindable variables.
      *
      * @param string $query_string
      * The SQL query to be prepared.
      *
-     * @return boolean
-     * Returns true if the SQL query has been successfully prepared, otherwise false.
+     * @return void
      *
-     * @throws \Throwable
+     * @throws \Exception
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::execute_prepared_query()
@@ -493,41 +487,39 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function prepare_query($query_string)
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         if ($this->statement) {
             if (is_resource($this->statement)) {
                 @sqlsrv_free_stmt($this->statement);
             }
         }
-        
+
         $this->last_query = $query_string;
         $this->prepared_query = $query_string;
-        
+
         $params = [];
         $this->query_parameters = [];
-        
+
         $cnt = preg_match_all("/\\?/", $query_string, $matches);
-        
+
         for ($i = 0; $i < $cnt; $i++) {
             $this->query_parameters[$i] = null;
             $params[$i] = &$this->query_parameters[$i];
         }
-        
+
         $query_appendix = "";
-        
+
         // to be able to get the insert id from prepared query
         // we have to add this appendix
-        
+
         $this->last_query_is_insert = false;
         if (preg_match("/\s*INSERT/i", $query_string)) {
             $this->last_query_is_insert = true;
-            
+
             $query_appendix = "; SELECT SCOPE_IDENTITY() AS IID";
         }
-        
+
         $options = [];
         /*
         If the cursor is SQLSRV_CURSOR_STATIC or other than
@@ -545,18 +537,16 @@ class MSSQL_DBWorker extends DBWorker
           $options = ["Scrollable" => SQLSRV_CURSOR_STATIC];
         }
         */
-        
+
         $this->statement = @sqlsrv_prepare($this->connection, $query_string . $query_appendix, $params, $options);
         if (!$this->statement) {
             $err = $this->sys_get_errors();
-            
+
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
-        return true;
     } // prepare_query
-    
+
     /**
      * Stores long data from a stream.
      *
@@ -576,82 +566,70 @@ class MSSQL_DBWorker extends DBWorker
      * }
      * ```
      *
-     * @return boolean
-     * Returns true if the long data has been successfully stored, otherwise false.
+     * @return void
      *
-     * @throws \Throwable
+     * @throws \Exception
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
     public function stream_long_data($query_string, &$stream)
     {
-        if (!$this->is_connected()) {
-            try {
-                $this->connect();
-            } catch (\Throwable $ex) {
-                fclose($stream);
-                throw $ex;
-            }
-        }
-        
+        $this->check_connection();
+
         if (!is_resource($stream)) {
-            fclose($stream);
-            
-            throw new \Exception("Stream is invalid", DBWorker::ERR_STREAM_ERROR);
+            throw new \Exception("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
         }
-        
+
         if ($this->statement) {
             if (is_resource($this->statement)) {
                 @sqlsrv_free_stmt($this->statement);
             }
         }
-        
+
         $this->last_query = $query_string;
         $this->prepared_query = $query_string;
-        
+
         $params = array(&$stream);
-        
+
         $options = array("SendStreamParamsAtExec" => 0);
-        
+
         $this->statement = @sqlsrv_prepare($this->connection, $query_string, $params, $options);
         if (!$this->statement) {
             fclose($stream);
-            
+
             $err = $this->sys_get_errors();
-            
+
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         if (!@sqlsrv_execute($this->statement)) {
             $err = $this->sys_get_errors();
-            
+
             if (is_resource($this->statement)) {
                 @sqlsrv_free_stmt($this->statement);
             }
             $this->statement = null;
             fclose($stream);
-            
+
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
         }
-        
+
         // Send up to 8K of parameter data to the server
         // with each call to sqlsrv_send_stream_data.
         while (sqlsrv_send_stream_data($this->statement)) {
             null;
         }
-        
+
         if (is_resource($this->statement)) {
             @sqlsrv_free_stmt($this->statement);
         }
         $this->statement = null;
         fclose($stream);
-        
-        return true;
     } // stream_long_data
-    
+
     /**
      * Executes the prepared SQL query.
      *
@@ -659,10 +637,9 @@ class MSSQL_DBWorker extends DBWorker
      * The number of parameters may vary and be zero. An array can also be passed.
      * These are paremeters of the prepared query.
      *
-     * @return boolean
-     * Returns true if the prepared SQL query has been successfully executed, otherwise false.
+     * @return void
      *
-     * @throws \Throwable
+     * @throws \Exception
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::prepare_query()
@@ -672,53 +649,49 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function execute_prepared_query(...$args)
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         if (empty($this->prepared_query) || empty($this->statement)) {
             throw new \Exception("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         if (count($args) == 1 && is_array($args[0])) {
             $args = $args[0];
         }
-        
+
         $this->last_query = $this->prepared_query;
-        
+
         $counter = 0;
         foreach ($args as $argval) {
             if ($argval === null) {
                 $this->query_parameters[$counter] = $argval;
-                
+
                 $this->last_query = preg_replace("/\\?/", "null", $this->last_query, 1);
             } elseif (is_int($argval)) {
                 $this->query_parameters[$counter] = $argval;
-                
+
                 $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
             } elseif (is_float($argval)) {
                 $this->query_parameters[$counter] = $argval;
-                
+
                 $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
             } else {
                 $this->query_parameters[$counter] = $argval;
-                
+
                 $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
             }
-            
+
             $counter++;
         }
-        
+
         if (!@sqlsrv_execute($this->statement)) {
             $err = $this->sys_get_errors();
-            
+
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
         }
-        
-        return true;
     } // execute_prepared_query
-    
+
     /**
      * Executes the SQL stored procedure.
      *
@@ -727,8 +700,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * All subsequent parameters are the paramteres of the SQL stored procedure.
      *
-     * @return boolean
-     * Returns true if the stored procedure has been successfully executed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It throws an exception in the case of any errors.
@@ -737,20 +709,18 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function execute_procedure($procedure /* arg list */)
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         $args = func_get_args();
         // prepare the arguments for placing in eval()
         // escape single quotes
-        
+
         $this->last_query = "";
-        
+
         if (count($args) > 0) {
             $proc_name = "";
             $arg_list = "";
-            
+
             $first = true;
             foreach ($args as $argkey => $argval) {
                 if ($first) {
@@ -758,7 +728,7 @@ class MSSQL_DBWorker extends DBWorker
                     $first = false;
                     continue;
                 }
-                
+
                 if ($argval === null) {
                     $arg_list .= "null, ";
                 } elseif (is_int($argval)) {
@@ -769,38 +739,28 @@ class MSSQL_DBWorker extends DBWorker
                     $arg_list .= "'" . $this->escape($argval) . "', ";
                 }
             }
-            
+
             $arg_list = trim($arg_list, ", ");
-            
+
             $this->last_query = trim("EXEC ${proc_name} ${arg_list}");
         }
-        
-        $result = $this->execute_query($this->last_query);
-        
-        if (!$result) {
-            return $result;
-        }
-        
+
+        $this->execute_query($this->last_query);
+
         // A stored procedure may generate many result objects.
-        // If the procedure has a select statement at the end,
-        // its data is in the last result.
-        
-        while (!sqlsrv_has_rows($this->statement)) {
-            if (!sqlsrv_next_result($this->statement)) {
-                break;
-            }
+        // We clear them, to prevent errors by subsequent select requests.
+
+        if ($this->statement && is_resource($this->statement)) {
+            @sqlsrv_cancel($this->statement);
         }
-        
-        return $result;
     } // execute_procedure
-    
+
     /**
      * Frees the prepared query.
      *
      * It should be called after all executions of the prepared query.
      *
-     * @return boolean
-     * Returns true if the prepared query has been successfully freed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It throws an exception in the case of any errors.
@@ -812,27 +772,27 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function free_prepared_query()
     {
-        if ($this->statement) {
-            if (is_resource($this->statement)) {
-                @sqlsrv_free_stmt($this->statement);
-            }
+        $this->check_connection();
+
+        if ($this->statement && is_resource($this->statement)) {
+            @sqlsrv_free_stmt($this->statement);
         }
-        
+
         $this->statement = null;
         $this->last_query = null;
         $this->prepared_query = null;
         $this->query_parameters = null;
-        
+
         $this->last_query_is_insert = false;
-        
-        return true;
     } // free_prepared_query
-    
+
     /**
      * Closes the currently opened connection.
      *
-     * @return boolean
-     * Returns true if the connection has been successfully closed, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::is_connected()
      * @see MSSQL_DBWorker::connect()
@@ -844,27 +804,20 @@ class MSSQL_DBWorker extends DBWorker
         $this->last_query = null;
         $this->row = null;
         $this->field_names = null;
-        
-        if (!$this->connection) {
-            return true;
-        }
-        
+
         if (is_resource($this->connection)) {
             @sqlsrv_close($this->connection);
         }
-        
+
         $this->statement = null;
         $this->connection = null;
         $this->query_parameters = null;
-        
-        return true;
     } // close_connection
-    
+
     /**
      * Starts the transation.
      *
-     * @return boolean
-     * Returns true if the transaction has been successfully started, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It throws an exception in the case of any errors.
@@ -876,25 +829,20 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function start_transaction()
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         if (!@sqlsrv_begin_transaction($this->connection)) {
             $err = $this->sys_get_errors();
-    
+
             trigger_error($err, E_USER_ERROR);
             throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
         }
-        
-        return true;
     } // start_transaction
-    
+
     /**
      * Commits the transation.
      *
-     * @return boolean
-     * Returns true if the transaction has been successfully committed, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It throws an exception in the case of any errors.
@@ -906,25 +854,20 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function commit_transaction()
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         if (!@sqlsrv_commit($this->connection)) {
             $err = $this->sys_get_errors();
-        
+
             trigger_error($err, E_USER_ERROR);
             throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
         }
-
-        return true;
     } // commit_transaction
-    
+
     /**
      * Rolls back the transation.
      *
-     * @return boolean
-     * Returns true if the transaction has been successfully rolled back, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It throws an exception in the case of any errors.
@@ -936,42 +879,37 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function rollback_transaction()
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         if (!@sqlsrv_rollback($this->connection)) {
             $err = $this->sys_get_errors();
-        
+
             trigger_error($err, E_USER_ERROR);
             throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // rollback_transaction
-    
+
     /**
      * Frees the result of the previously executed retrieving query.
      *
      * It should be called only for the retrieving queries.
      *
-     * @return boolean
-     * Returns true if the result has been successfully freed, otherwise false.
+     * @return void
      *
      * @author Oleg Schildt
      */
     public function free_result()
     {
-        if ($this->statement) {
-            if (is_resource($this->statement)) {
-                @sqlsrv_cancel($this->statement);
-            }
+        $this->check_connection();
+
+        if ($this->statement && is_resource($this->statement)) {
+            @sqlsrv_cancel($this->statement);
         }
-        
+
         $this->row = null;
         $this->field_names = null;
-        
-        return true;
     } // free_result
-    
+
     /**
      * Returns the value of the auto increment field by the last insertion.
      *
@@ -985,53 +923,53 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function insert_id()
     {
-        if (!$this->is_connected()) {
-            $this->connect();
-        }
-        
+        $this->check_connection();
+
         if ($this->last_query_is_insert) {
             if (!$this->statement) {
                 return null;
             }
-            
+
             if (!sqlsrv_next_result($this->statement)) {
                 $err = $this->sys_get_errors();
 
                 trigger_error($err, E_USER_ERROR);
                 throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
             }
-            
+
             $id = null;
-            
+
             if (@sqlsrv_fetch($this->statement)) {
                 $id = sqlsrv_get_field($this->statement, 0);
             }
-            
+
             return $id;
         }
-        
+
         $this->statement = @sqlsrv_query($this->connection, "SELECT SCOPE_IDENTITY() AS IID");
         if (!$this->statement) {
             $err = $this->sys_get_errors();
-    
+
             trigger_error($err, E_USER_ERROR);
             throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         if (!$this->fetch_row()) {
             $err = "Identity field cannot be retrieved";
-    
+
+            $this->free_result();
+
             trigger_error($err, E_USER_ERROR);
             throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         $id = $this->field_by_name("IID");
-        
+
         $this->free_result();
-        
+
         return $id;
     } // insert_id
-    
+
     /**
      * Fetches the next row of data from the result of the execution of the retrieving query.
      *
@@ -1060,24 +998,26 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function fetch_row()
     {
+        $this->check_connection();
+
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         $this->row = @sqlsrv_fetch_array($this->statement, SQLSRV_FETCH_ASSOC);
         if (!$this->row) {
             return false;
         }
-        
+
         if (!$this->field_names) {
             $this->field_names = array_keys($this->row);
         }
-        
+
         return true;
     } // fetch_row
-    
+
     /**
      * Fetches all rows from the result into an array.
      *
@@ -1087,7 +1027,7 @@ class MSSQL_DBWorker extends DBWorker
      * @param array $dimension_keys
      * Array of the column names that should be used as dimensions.
      *
-     * Per default, the rows are fetched as two dimensional array.
+     * Per default, the rows are fetched as two-dimensional array.
      *
      * Example:
      * ```php
@@ -1116,50 +1056,52 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function fetch_array(&$rows, $dimension_keys = null)
     {
+        $this->check_connection();
+
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         $rows = [];
-        
+
         if (!empty($dimension_keys)) {
             $dimension_keys = array_flip($dimension_keys);
         }
-        
+
         $counter = 0;
         while ($row = @sqlsrv_fetch_array($this->statement, SQLSRV_FETCH_ASSOC)) {
             $counter++;
-            
+
             if (!$this->field_names) {
                 $this->field_names = array_keys($row);
             }
-            
+
             if (empty($dimension_keys)) {
                 $rows[] = $row;
             } else {
                 $dimensions = array_intersect_key($row, $dimension_keys);
                 $row = array_diff_key($row, $dimension_keys);
-                
+
                 $reference = &$rows;
-                
+
                 foreach ($dimensions as &$dval) {
                     if (empty($reference[$dval])) {
                         $reference[$dval] = [];
                     }
                     $reference = &$reference[$dval];
                 }
-                
+
                 $reference = $row;
-                
+
                 unset($reference);
             }
         }
-        
+
         return $counter;
     } // fetch_array
-    
+
     /**
      * Returns the number of the rows fetched by the last retrieving query.
      *
@@ -1173,29 +1115,31 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function fetched_count()
     {
+        $this->check_connection();
+
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         /*
         If the cursor is SQLSRV_CURSOR_STATIC or other than
         SQLSRV_CURSOR_FORWARD, retreiving of the data
         has sometimes very poor performance. Not the query execution,
         but the data retrieving!
-    
+
         The default is SQLSRV_CURSOR_FORWARD, but it is not possible
         to get fetched_count by this type of cursor. So we sacrifice
         the possibility to get fetched_count for the preformance.
         The preformance is more important.
-    
+
         no more relevant in new version of driver
         */
-        
+
         return @sqlsrv_num_rows($this->statement);
     } // fetched_count
-    
+
     /**
      * Returns the number of the rows affected by the last modification query.
      *
@@ -1209,15 +1153,17 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function affected_count()
     {
+        $this->check_connection();
+
         if (!$this->statement) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         return @sqlsrv_rows_affected($this->statement);
     } // affected_count
-    
+
     /**
      * Returns the number of the fields in the result of the last retrieving query.
      *
@@ -1231,15 +1177,17 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function field_count()
     {
+        $this->check_connection();
+
         if (!$this->statement) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         return @sqlsrv_num_fields($this->statement);
     } // field_count
-    
+
     /**
      * Returns the value of a field specified by name.
      *
@@ -1253,29 +1201,34 @@ class MSSQL_DBWorker extends DBWorker
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see MSSQL_DBWorker::field_by_num()
      * @see MSSQL_DBWorker::field_name()
      *
      * @author Oleg Schildt
      */
-    public function field_by_name($name, $type = self::DB_STRING)
+    public function field_by_name($name, $type = self::DB_AS_IS)
     {
+        $this->check_connection();
+
         if (!$this->row) {
             return null;
         }
-        
+
         if (!array_key_exists($name, $this->row)) {
             trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_ERROR);
             return null;
         }
-    
-        if(($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$name])) {
+
+        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$name])) {
             return strtotime($this->row[$name]);
         }
 
         return $this->row[$name];
     } // field_by_name
-    
+
     /**
      * Returns the value of a field specified by number.
      *
@@ -1289,30 +1242,35 @@ class MSSQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
+     * @throws \Exception
+     * It throws an exception in the case of any errors.
+     *
      * @see MSSQL_DBWorker::field_by_name()
      * @see MSSQL_DBWorker::field_info_by_num()
      * @see MSSQL_DBWorker::field_name()
      *
      * @author Oleg Schildt
      */
-    public function field_by_num($num, $type = self::DB_STRING)
+    public function field_by_num($num, $type = self::DB_AS_IS)
     {
+        $this->check_connection();
+
         if (!$this->row) {
             return null;
         }
-        
+
         if (!array_key_exists($num, $this->field_names)) {
             trigger_error("Field with the index $num does not exist in the result set!", E_USER_ERROR);
             return null;
         }
-    
-        if(($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$this->field_names[$num]])) {
+
+        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$this->field_names[$num]])) {
             return strtotime($this->row[$this->field_names[$num]]);
         }
 
         return $this->row[$this->field_names[$num]];
     } // field_by_num
-    
+
     /**
      * Returns the meta information about the field as an object with properties.
      *
@@ -1322,15 +1280,11 @@ class MSSQL_DBWorker extends DBWorker
      * @return array
      * Returns the associative array with properties.
      *
-     * $info["name"] - name of the field.
-     *
-     * $info["type"] - type of the field.
-     *
-     * $info["size"] - size of the field.
-     *
-     * $info["binary"] - whether the filed is binary.
-     *
-     * $info["numeric"] - whether the filed is numeric.
+     * - $info["name"] - name of the field.
+     * - $info["type"] - type of the field.
+     * - $info["size"] - size of the field.
+     * - $info["binary"] - whether the filed is binary.
+     * - $info["numeric"] - whether the filed is numeric.
      *
      * @throws \Exception
      * It throws an exception in the case of any errors.
@@ -1342,12 +1296,14 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function field_info_by_num($num)
     {
+        $this->check_connection();
+
         if (!$this->statement) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         $info = @sqlsrv_field_metadata($this->statement);
         if (!$info) {
             $err = $this->sys_get_errors();
@@ -1355,34 +1311,34 @@ class MSSQL_DBWorker extends DBWorker
             trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
             throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
         }
-        
+
         if (empty($info[$num])) {
             return false;
         }
-        
+
         $sqlsrv_type = [];
-        
+
         $sqlsrv_type[-5] = "bigint";
         $sqlsrv_type[-2] = "binary";
         $sqlsrv_type[-7] = "bit";
         $sqlsrv_type[1] = "char";
         $sqlsrv_type[91] = "date";
         $sqlsrv_type[93] = "datetime";
-        
+
         $sqlsrv_type[-155] = "datetimeoffset";
         $sqlsrv_type[3] = "decimal";
         $sqlsrv_type[6] = "float";
         $sqlsrv_type[-4] = "image";
         $sqlsrv_type[4] = "int";
         $sqlsrv_type[-8] = "nchar";
-        
+
         $sqlsrv_type[-10] = "ntext";
         $sqlsrv_type[2] = "numeric";
         $sqlsrv_type[-9] = "nvarchar";
         $sqlsrv_type[7] = "real";
         $sqlsrv_type[5] = "smallint";
         $sqlsrv_type[-1] = "text";
-        
+
         $sqlsrv_type[-154] = "time";
         $sqlsrv_type[-6] = "tinyint";
         $sqlsrv_type[-151] = "udt";
@@ -1390,16 +1346,16 @@ class MSSQL_DBWorker extends DBWorker
         $sqlsrv_type[-3] = "varbinary";
         $sqlsrv_type[12] = "varchar";
         $sqlsrv_type[-152] = "xml";
-        
+
         $field_info = [];
-        
+
         $field_info["name"] = $info[$num]["Name"];
         $field_info["type"] = $info[$num]["Type"];
         $field_info["size"] = $info[$num]["Size"];
-        
+
         $field_info["binary"] = 0;
         $field_info["numeric"] = 0;
-        
+
         if (!empty($field_info["type"])) {
             if (in_array($field_info["type"], [-5, 3, 6, 4, 2, 7, 5, -6])) {
                 $field_info["numeric"] = 1;
@@ -1407,17 +1363,17 @@ class MSSQL_DBWorker extends DBWorker
             if (in_array($field_info["type"], [-2, -4, -3])) {
                 $field_info["binary"] = 1;
             }
-            
+
             if (isset($sqlsrv_type[$field_info["type"]])) {
                 $field_info["type"] = $sqlsrv_type[$field_info["type"]];
             } else {
                 $field_info["type"] = "undefined";
             }
         }
-        
+
         return $field_info;
     } // field_info_by_num
-    
+
     /**
      * Returns the name of the field by number.
      *
@@ -1437,14 +1393,16 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function field_name($num)
     {
+        $this->check_connection();
+
         $info = $this->field_info_by_num($num);
         if (!$info) {
             return null;
         }
-        
+
         return \SmartFactory\checkempty($info["name"]);
     } // field_name
-    
+
     /**
      * Escapes the string so that it can be used in the query without causing an error.
      *
@@ -1463,7 +1421,7 @@ class MSSQL_DBWorker extends DBWorker
     {
         return str_replace("'", "''", "$str");
     } // escape
-    
+
     /**
      * Formats the date to a string compatible for the corresponding database.
      *
@@ -1482,7 +1440,7 @@ class MSSQL_DBWorker extends DBWorker
     {
         return date("Ymd", $date);
     } // format_date
-    
+
     /**
      * Formats the date/time to a string compatible for the corresponding database.
      *
@@ -1516,7 +1474,7 @@ class MSSQL_DBWorker extends DBWorker
      * Returns the prepared value.
      *
      * @author Oleg Schildt
-     */     
+     */
     function prepare_for_query($value, $type)
     {
         if (empty($value) && (string)$value != "0") {
@@ -1524,16 +1482,16 @@ class MSSQL_DBWorker extends DBWorker
         } else switch ($type) {
             case DBWorker::DB_NUMBER:
                 return $this->escape($value);
-        
+
             case DBWorker::DB_DATETIME:
                 return "'" . $this->format_datetime($value) . "'";
-        
+
             case DBWorker::DB_DATE:
                 return "'" . $this->format_date($value) . "'";
-        
+
             case DBWorker::DB_GEOMETRY:
                 return "ST_GeomFromText('" . $this->escape($value) . "')";
-        
+
             case DBWorker::DB_GEOMETRY_4326:
                 return "ST_GeomFromText('" . $this->escape($value) . "', 4326)";
 
@@ -1542,4 +1500,3 @@ class MSSQL_DBWorker extends DBWorker
         }
     } // prepare_for_query
 } // MSSQL_DBWorker
-//----------------------------------------------------------------------
