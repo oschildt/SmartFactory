@@ -114,6 +114,17 @@ class SmartException extends \Exception
     const ERR_CODE_NOT_FOUND = "not_found";
 
     /**
+     * Internal variable for storing the error element.
+     *
+     * @var string
+     *
+     * @see SmartException::getErrorElement()
+     *
+     * @author Oleg Schildt
+     */
+    protected $error_element = "";
+
+    /**
      * Internal variable for storing the error.
      *
      * @var string
@@ -136,6 +147,22 @@ class SmartException extends \Exception
     protected $error_type = SmartException::ERR_TYPE_PROGRAMMING_ERROR;
 
     /**
+     * Internal variable for storing the error details.
+     *
+     * The error details might be useful if the error message translations are provided on the client, not
+     * on the server, and the error message should contain some details that may vary from case to case.
+     * In that case, the servers return the error message id instead of final text and the details, the client
+     * uses the error message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @var array
+     *
+     * @see SmartException::getErrorDetails()
+     *
+     * @author Oleg Schildt
+     */
+    protected $error_details = [];
+
+    /**
      * Constructor.
      *
      * @param string $message
@@ -154,14 +181,27 @@ class SmartException extends \Exception
      * user error, the full error texts should be shown. If it is a programming error, the detailed text should
      * be shown only in the debug mode to prevent that the hackers get sensible information about the system.
      *
+     * @param string $error_element
+     * Error element.
+     *
+     * @param array $error_details
+     * Error details.
+     *
+     * The error details might be useful if the error message translations are provided on the client, not
+     * on the server, and the error message should contain some details that may vary from case to case.
+     * In that case, the servers return the error message id instead of final text and the details, the client
+     * uses the error message id, gets the final translated text and substitutes the parameters through the details.
+     *
      * @author Oleg Schildt
      */
-    public function __construct($message, $error_code, $error_type)
+    public function __construct($message, $error_code, $error_type, $error_element = "", $error_details = [])
     {
         parent::__construct($message);
 
         $this->error_code = $error_code;
         $this->error_type = $error_type;
+        $this->error_element = $error_element;
+        $this->error_details = $error_details;
     }
 
     /**
@@ -174,6 +214,8 @@ class SmartException extends \Exception
      * Returns the error code.
      *
      * @see SmartException::getErrorType()
+     * @see SmartException::getErrorDetails()
+     * @see SmartException::getErrorElement()
      *
      * @author Oleg Schildt
      */
@@ -193,11 +235,52 @@ class SmartException extends \Exception
      * Returns the error type.
      *
      * @see SmartException::getErrorCode()
+     * @see SmartException::getErrorDetails()
+     * @see SmartException::getErrorElement()
      *
      * @author Oleg Schildt
      */
     public function getErrorType()
     {
         return $this->error_type;
+    }
+
+    /**
+     * Returns the error element.
+     *
+     * @return string
+     * Returns the error element.
+     *
+     * @see SmartException::getErrorType()
+     * @see SmartException::getErrorCode()
+     * @see SmartException::getErrorDetails()
+     *
+     * @author Oleg Schildt
+     */
+    public function getErrorElement()
+    {
+        return $this->error_element;
+    }
+
+    /**
+     * Returns the error details of the exception.
+     *
+     * The error details might be useful if the error message translations are provided on the client, not
+     * on the server, and the error message should contain some details that may vary from case to case.
+     * In that case, the servers return the error message id instead of final text and the details, the client
+     * uses the error message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @return array
+     * Returns the error details.
+     *
+     * @see SmartException::getErrorType()
+     * @see SmartException::getErrorCode()
+     * @see SmartException::getErrorElement()
+     *
+     * @author Oleg Schildt
+     */
+    public function getErrorDetails()
+    {
+        return $this->error_details;
     }
 } // SmartException

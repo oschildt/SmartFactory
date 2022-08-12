@@ -262,6 +262,19 @@
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#$module_localization_path">$module_localization_path</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the path with the module localization files.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#$supported_languages">$supported_languages</a></div>
 
               <div style='float:right'>
@@ -298,6 +311,19 @@
           </td>
           <td class="description_column">
               <p>Internal variable for storing the state whether the APCU should be used.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$warn_missing">$warn_missing</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
           </td>
       </tr>
       
@@ -572,7 +598,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#40'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#49'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -619,7 +645,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#94'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#112'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$current_language">
   
   <h1>Property: LanguageManager::$current_language</h1>
@@ -657,7 +683,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#49'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#58'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$dictionary_loaded">
   
   <h1>Property: LanguageManager::$dictionary_loaded</h1>
@@ -695,7 +721,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#58'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#67'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$languages">
   
   <h1>Property: LanguageManager::$languages</h1>
@@ -733,7 +759,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#85'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#103'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$localization_path">
   
   <h1>Property: LanguageManager::$localization_path</h1>
@@ -772,6 +798,44 @@ for the given langauge.</p>
   <h2>Source code</h2>
   <div class="item_list">
   <a href='source-SmartFactory.LanguageManager.php.html#29'>SmartFactory/LanguageManager.php</a>
+  </div><hr id="$module_localization_path">
+  
+  <h1>Property: LanguageManager::$module_localization_path</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$module_localization_path</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the path with the module localization files.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#38'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$supported_languages">
   
   <h1>Property: LanguageManager::$supported_languages</h1>
@@ -809,7 +873,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#76'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#94'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$texts">
   
   <h1>Property: LanguageManager::$texts</h1>
@@ -847,7 +911,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#103'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#121'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$use_apcu">
   
   <h1>Property: LanguageManager::$use_apcu</h1>
@@ -885,7 +949,45 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#67'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#76'>SmartFactory/LanguageManager.php</a>
+  </div><hr id="$warn_missing">
+  
+  <h1>Property: LanguageManager::$warn_missing</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$warn_missing</span> = <span class="php-keyword1">false</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  bool
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#85'>SmartFactory/LanguageManager.php</a>
   </div>
 
 <hr id="detectLanguage">
@@ -991,7 +1093,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#282'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#372'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1074,7 +1176,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#361'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#451'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1174,7 +1276,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#699'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#774'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1326,7 +1428,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#768'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#843'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1363,7 +1465,7 @@ the default langauge is used.</p>
   
   <h1>Method: LanguageManager::getCountryName()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, bool <span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
 
   
   <div class="short-description">
@@ -1425,26 +1527,6 @@ the default langauge is used.</p>
             </td>
         </tr>
         
-        <tr>
-            <td>
-                $warn_missing
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                bool
-            </td>
-            <td>
-                true
-            </td>
-            <td class="description_column">
-                <p>If it is set to true,
-the E_USER_NOTICE is triggered in the case of mussing
-translations.</p>
-            </td>
-        </tr>
-        
         
     </table>
 
@@ -1482,7 +1564,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#667'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#742'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1566,7 +1648,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#417'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#507'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1672,7 +1754,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#550'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#630'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1824,7 +1906,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#619'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#699'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1861,7 +1943,7 @@ the default langauge is used.</p>
   
   <h1>Method: LanguageManager::getLanguageName()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, bool <span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
 
   
   <div class="short-description">
@@ -1923,26 +2005,6 @@ the default langauge is used.</p>
             </td>
         </tr>
         
-        <tr>
-            <td>
-                $warn_missing
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                bool
-            </td>
-            <td>
-                true
-            </td>
-            <td class="description_column">
-                <p>If it is set to true,
-the E_USER_NOTICE is triggered in the case of mussing
-translations.</p>
-            </td>
-        </tr>
-        
         
     </table>
 
@@ -1980,7 +2042,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#518'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#598'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2064,7 +2126,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#374'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#464'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2183,7 +2245,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#482'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#567'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2249,7 +2311,13 @@ the default langauge is used.</p>
 <p>$parameters[&quot;localization_path&quot;] - the path where the localization files are stored.</p>
 </li>
 <li>
+<p>$parameters[&quot;module_localization_path&quot;] - the path where the module localization files are stored.</p>
+</li>
+<li>
 <p>$parameters[&quot;use_apcu&quot;] - if installed, apcu can be used to cache the translations in the memory.</p>
+</li>
+<li>
+<p>$parameters[&quot;warn_missing&quot;] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
 </li>
 </ul>
             </td>
@@ -2291,7 +2359,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#120'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#142'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2366,7 +2434,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#146'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#176'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2466,7 +2534,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#392'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#482'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2494,7 +2562,7 @@ the default langauge is used.</p>
   
   <h1>Method: LanguageManager::text()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, bool <span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>, string <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
 
   
   <div class="short-description">
@@ -2557,26 +2625,6 @@ the default langauge is used.</p>
         
         <tr>
             <td>
-                $warn_missing
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                bool
-            </td>
-            <td>
-                true
-            </td>
-            <td class="description_column">
-                <p>If it is set to true,
-the E_USER_NOTICE is triggered in the case of missing
-translations.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
                 $default_text
             </td>
             <td>
@@ -2630,7 +2678,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#446'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#531'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2749,7 +2797,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#736'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#811'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2883,7 +2931,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#587'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#667'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2905,7 +2953,7 @@ the default langauge is used.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-06-26 16:01 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

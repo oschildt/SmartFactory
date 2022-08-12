@@ -214,6 +214,19 @@ of the API actions.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#$bubble_messages">$bubble_messages</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the processing bubble messages.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#$errors">$errors</a></div>
 
               <div style='float:right'>
@@ -224,6 +237,19 @@ of the API actions.</p>
           </td>
           <td class="description_column">
               <p>Internal variable for storing the processing errors.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$info_messages">$info_messages</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the processing information messages.</p>
           </td>
       </tr><tr>
           <td>
@@ -290,6 +316,19 @@ of the API actions.</p>
           <td class="description_column">
               <p>Internal variable for storing the response headers.</p>
           </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$warnings">$warnings</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the processing warnings.</p>
+          </td>
       </tr>
       
   </table>
@@ -298,6 +337,19 @@ of the API actions.</p>
       <tr><th colspan="2">Methods</th></tr>
       
       <tr>
+          <td>
+              <div style='float:left'><a href="#addBubbleMessage">addBubbleMessage()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds a new bubble message to the bubble message list.</p>
+          </td>
+      </tr><tr>
           <td>
               <div style='float:left'><a href="#addError">addError()</a></div>
 
@@ -323,6 +375,45 @@ of the API actions.</p>
           <td class="description_column">
               <p>This is an auxiliary function for adding an error to the list
 from an exception.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addInfoMessage">addInfoMessage()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds a new information message to the info list.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addResponseHeader">addResponseHeader()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds a response header to the response.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addWarning">addWarning()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds a new warning to the warning list.</p>
           </td>
       </tr><tr>
           <td>
@@ -462,6 +553,44 @@ to perform some standard action before every API request of your library.</p>
   <h2>Source code</h2>
   <div class="item_list">
   <a href='source-SmartFactory.JsonRequestHandler.php.html#48'>SmartFactory/JsonRequestHandler.php</a>
+  </div><hr id="$bubble_messages">
+  
+  <h1>Property: JsonRequestHandler::$bubble_messages</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$bubble_messages</span> = <span class="php-keyword1">array</span>();</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the processing bubble messages.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#111'>SmartFactory/JsonRequestHandler.php</a>
   </div><hr id="$errors">
   
   <h1>Property: JsonRequestHandler::$errors</h1>
@@ -500,6 +629,44 @@ to perform some standard action before every API request of your library.</p>
   <h2>Source code</h2>
   <div class="item_list">
   <a href='source-SmartFactory.JsonRequestHandler.php.html#84'>SmartFactory/JsonRequestHandler.php</a>
+  </div><hr id="$info_messages">
+  
+  <h1>Property: JsonRequestHandler::$info_messages</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$info_messages</span> = <span class="php-keyword1">array</span>();</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the processing information messages.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#102'>SmartFactory/JsonRequestHandler.php</a>
   </div><hr id="$param_string">
   
   <h1>Property: JsonRequestHandler::$param_string</h1>
@@ -575,7 +742,7 @@ to perform some standard action before every API request of your library.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#93'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#120'>SmartFactory/JsonRequestHandler.php</a>
   </div><hr id="$request_headers">
   
   <h1>Property: JsonRequestHandler::$request_headers</h1>
@@ -651,7 +818,7 @@ to perform some standard action before every API request of your library.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#102'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#129'>SmartFactory/JsonRequestHandler.php</a>
   </div><hr id="$response_headers">
   
   <h1>Property: JsonRequestHandler::$response_headers</h1>
@@ -690,9 +857,163 @@ to perform some standard action before every API request of your library.</p>
   <h2>Source code</h2>
   <div class="item_list">
   <a href='source-SmartFactory.JsonRequestHandler.php.html#75'>SmartFactory/JsonRequestHandler.php</a>
+  </div><hr id="$warnings">
+  
+  <h1>Property: JsonRequestHandler::$warnings</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$warnings</span> = <span class="php-keyword1">array</span>();</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the processing warnings.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
   </div>
 
-<hr id="addError">
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#93'>SmartFactory/JsonRequestHandler.php</a>
+  </div>
+
+<hr id="addBubbleMessage">
+  
+  <h1>Method: JsonRequestHandler::addBubbleMessage()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addBubbleMessage(<span class="php-keyword1">array</span> <span class="php-var">$bubble_message</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Adds a new bubble message to the bubble message list.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $bubble_message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Message description the form key =&gt; value:</p>
+<ul>
+<li>
+<p>$bubble_message[&quot;message&quot;] - bubble message.</p>
+</li>
+<li>
+<p>$bubble_message[&quot;details&quot;] - bubble message details. The bubble message details might be useful if the bubble message translations are provided on the client, not
+on the server, and the bubble message should contain some details that may vary from case to case.
+In that case, the servers return the bubble message id instead of final text and the details, the client
+uses the bubble message id, gets the final translated text and substitutes the parameters through the details.</p>
+</li>
+</ul>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#331'>SmartFactory/JsonRequestHandler.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addInfoMessage'>\SmartFactory\JsonRequestHandler::addInfoMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addError'>\SmartFactory\JsonRequestHandler::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addWarning'>\SmartFactory\JsonRequestHandler::addWarning()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addError">
   
   <h1>Method: JsonRequestHandler::addError()</h1>
 
@@ -739,19 +1060,28 @@ to perform some standard action before every API request of your library.</p>
                 
             </td>
             <td class="description_column">
-                <p>Error descrition the form key =&gt; value:</p>
+                <p>Error description the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$error[&quot;error_code&quot;] - error code. Since the error texts can be
+<p>$error[&quot;code&quot;] - error code. Since the error texts can be
 localized, the unique code of the error might be important fo using in comparison.</p>
 </li>
 <li>
-<p>$error[&quot;error_type&quot;] - error type. The type of the error might be useful for decision how to show the error on the client. If it is a
+<p>$error[&quot;type&quot;] - error type. The type of the error might be useful for decision how to show the error on the client. If it is a
 user error, the full error texts should be shown. If it is a programming error, the detailed text should
 be shown only in the debug mode to prevent that the hackers get sensible information about the system.</p>
 </li>
 <li>
-<p>$error[&quot;error_message&quot;] - error message.</p>
+<p>$error[&quot;message&quot;] - error message.</p>
+</li>
+<li>
+<p>$error[&quot;focus_element&quot;] - error element.</p>
+</li>
+<li>
+<p>$error[&quot;details&quot;] - error details. The error details might be useful if the error message translations are provided on the client, not
+on the server, and the error message should contain some details that may vary from case to case.
+In that case, the servers return the error message id instead of final text and the details, the client
+uses the error message id, gets the final translated text and substitutes the parameters through the details.</p>
 </li>
 </ul>
             </td>
@@ -786,7 +1116,7 @@ be shown only in the debug mode to prevent that the hackers get sensible informa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#192'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#231'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -797,6 +1127,15 @@ be shown only in the debug mode to prevent that the hackers get sensible informa
   
   
   <a href='class-SmartFactory.JsonRequestHandler.html#exitWithErrors'>\SmartFactory\JsonRequestHandler::exitWithErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addBubbleMessage'>\SmartFactory\JsonRequestHandler::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addWarning'>\SmartFactory\JsonRequestHandler::addWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addInfoMessage'>\SmartFactory\JsonRequestHandler::addInfoMessage()</a><br>
   
   
   </div>
@@ -889,7 +1228,7 @@ from an exception.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#211'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#350'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -900,6 +1239,358 @@ from an exception.</p>
   
   
   <a href='class-SmartFactory.JsonRequestHandler.html#exitWithErrors'>\SmartFactory\JsonRequestHandler::exitWithErrors()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addInfoMessage">
+  
+  <h1>Method: JsonRequestHandler::addInfoMessage()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addInfoMessage(<span class="php-keyword1">array</span> <span class="php-var">$info_message</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Adds a new information message to the info list.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $info_message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Message description the form key =&gt; value:</p>
+<ul>
+<li>
+<p>$info_message[&quot;message&quot;] - information message.</p>
+</li>
+<li>
+<p>$info_message[&quot;details&quot;] - information details. The information details might be useful if the information message translations are provided on the client, not
+on the server, and the information message should contain some details that may vary from case to case.
+In that case, the servers return the information message id instead of final text and the details, the client
+uses the information message id, gets the final translated text and substitutes the parameters through the details.</p>
+</li>
+</ul>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#305'>SmartFactory/JsonRequestHandler.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addBubbleMessage'>\SmartFactory\JsonRequestHandler::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addError'>\SmartFactory\JsonRequestHandler::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addWarning'>\SmartFactory\JsonRequestHandler::addWarning()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addResponseHeader">
+  
+  <h1>Method: JsonRequestHandler::addResponseHeader()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addResponseHeader(string <span class="php-var">$header</span>, string <span class="php-var">$value</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Adds a response header to the response.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $header
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the response header.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $value
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The value of the response header.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#251'>SmartFactory/JsonRequestHandler.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#sendJsonResponse'>\SmartFactory\JsonRequestHandler::sendJsonResponse()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addWarning">
+  
+  <h1>Method: JsonRequestHandler::addWarning()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addWarning(<span class="php-keyword1">array</span> <span class="php-var">$warning</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Adds a new warning to the warning list.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $warning
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Warning description the form key =&gt; value:</p>
+<ul>
+<li>
+<p>$warning[&quot;message&quot;] - warning message.</p>
+</li>
+<li>
+<p>$warning[&quot;focus_element&quot;] - warning element.</p>
+</li>
+<li>
+<p>$warning[&quot;details&quot;] - warning details. The warning details might be useful if the warning message translations are provided on the client, not
+on the server, and the warning message should contain some details that may vary from case to case.
+In that case, the servers return the warning message id instead of final text and the details, the client
+uses the warning message id, gets the final translated text and substitutes the parameters through the details.</p>
+</li>
+</ul>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#279'>SmartFactory/JsonRequestHandler.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addBubbleMessage'>\SmartFactory\JsonRequestHandler::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addError'>\SmartFactory\JsonRequestHandler::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.JsonRequestHandler.html#addInfoMessage'>\SmartFactory\JsonRequestHandler::addInfoMessage()</a><br>
   
   
   </div>
@@ -961,7 +1652,7 @@ sending all collected errors to the response.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#241'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#381'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -1043,7 +1734,7 @@ tries to call the corresponding method for the API action.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#328'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#482'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -1118,7 +1809,7 @@ tries to call the corresponding method for the API action.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#264'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#414'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -1181,7 +1872,7 @@ to perform some standard action after every API request of your library.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#314'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#468'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -1250,7 +1941,7 @@ the user if it is active.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#302'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#456'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -1317,7 +2008,7 @@ the user if it is active.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#117'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#144'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -1363,7 +2054,7 @@ the user if it is active.</p>
   <div class="long_description">
   <h2>Details</h2>
   <p>It sends the collected response data and the response headers. The header
-&quot;Content-type: application/json&quot; ist sent automatically.</p>
+&quot;Content-type: application/json; charset=UTF-8&quot; ist sent automatically.</p>
   </div>
   
 
@@ -1397,7 +2088,7 @@ the user if it is active.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#149'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#180'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -1410,7 +2101,7 @@ the user if it is active.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-06-26 16:01 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -309,9 +309,7 @@ class RecordsetManager implements IRecordsetManager
         
         $query .= $where_clause;
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         return true;
     } // deleteRecords
@@ -358,9 +356,7 @@ class RecordsetManager implements IRecordsetManager
         
         $query .= $where_clause;
         
-        if (!$this->dbworker->execute_query($query)) {
-            throw new \Exception($this->dbworker->get_last_error() . "\n\n" . $this->dbworker->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-        }
+        $this->dbworker->execute_query($query);
         
         if ($this->dbworker->fetch_row()) {
             foreach ($this->fields as $field => $type) {

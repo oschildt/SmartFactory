@@ -84,6 +84,33 @@ class JsonRequestHandler implements IRequestHandler
     protected $errors = array();
 
     /**
+     * Internal variable for storing the processing warnings.
+     *
+     * @var array
+     *
+     * @author Oleg Schildt
+     */
+    protected $warnings = array();
+
+    /**
+     * Internal variable for storing the processing information messages.
+     *
+     * @var array
+     *
+     * @author Oleg Schildt
+     */
+    protected $info_messages = array();
+
+    /**
+     * Internal variable for storing the processing bubble messages.
+     *
+     * @var array
+     *
+     * @author Oleg Schildt
+     */
+    protected $bubble_messages = array();
+
+    /**
      * Internal variable for storing the request data.
      *
      * @var array
@@ -116,6 +143,10 @@ class JsonRequestHandler implements IRequestHandler
      */
     protected function processInputData()
     {
+        $this->response_headers = [];
+
+        $this->addResponseHeader("Content-type", "application/json; charset=UTF-8");
+
         if (empty($_SERVER['REQUEST_URI'])) {
             return;
         }
@@ -123,7 +154,7 @@ class JsonRequestHandler implements IRequestHandler
         $api_base = str_replace(basename($_SERVER['SCRIPT_NAME']), "", $_SERVER['SCRIPT_NAME']);
         $api_request = str_replace($api_base, "", $_SERVER['REQUEST_URI']);
 
-        if (preg_match("~^([^/.?&]+)([/?]?.+)~", $api_request, $matches)) {
+        if (preg_match("~^([^/.?&]+)([/?]?.*)~", $api_request, $matches)) {
             $this->action = $matches[1];
             $this->param_string = $matches[2];
         } else {
@@ -138,7 +169,7 @@ class JsonRequestHandler implements IRequestHandler
      * This is an auxiliary function for sending the response in JSON format.
      *
      * It sends the collected response data and the response headers. The header
-     * "Content-type: application/json" ist sent automatically.
+     * "Content-type: application/json; charset=UTF-8" ist sent automatically.
      *
      * @return void
      *
@@ -148,12 +179,10 @@ class JsonRequestHandler implements IRequestHandler
      */
     protected function sendJsonResponse()
     {
-        header('Content-type: application/json');
-
         if (!empty($this->response_headers)) {
             if (is_array($this->response_headers)) {
-                foreach ($this->response_headers as $header) {
-                    header($header);
+                foreach ($this->response_headers as $header => $value) {
+                    header($header . ": " . $value);
                 }
             }
         }
@@ -171,21 +200,31 @@ class JsonRequestHandler implements IRequestHandler
      * It is possible to validate an API request and return many errors at once.
      *
      * @param array $error
-     * Error descrition the form key => value:
+     * Error description the form key => value:
      *
-     * - $error["error_code"] - error code. Since the error texts can be
+     * - $error["code"] - error code. Since the error texts can be
      * localized, the unique code of the error might be important fo using in comparison.
      *
-     * - $error["error_type"] - error type. The type of the error might be useful for decision how to show the error on the client. If it is a
+     * - $error["type"] - error type. The type of the error might be useful for decision how to show the error on the client. If it is a
      * user error, the full error texts should be shown. If it is a programming error, the detailed text should
      * be shown only in the debug mode to prevent that the hackers get sensible information about the system.
      *
-     * - $error["error_message"] - error message.
+     * - $error["message"] - error message.
+     *
+     * - $error["focus_element"] - error element.
+     *
+     * - $error["details"] - error details. The error details might be useful if the error message translations are provided on the client, not
+     * on the server, and the error message should contain some details that may vary from case to case.
+     * In that case, the servers return the error message id instead of final text and the details, the client
+     * uses the error message id, gets the final translated text and substitutes the parameters through the details.
      *
      * @return void
      *
      * @see JsonRequestHandler::addExceptionError()
      * @see JsonRequestHandler::exitWithErrors()
+     * @see JsonRequestHandler::addBubbleMessage()
+     * @see JsonRequestHandler::addWarning()
+     * @see JsonRequestHandler::addInfoMessage()
      *
      * @author Oleg Schildt
      */
@@ -193,6 +232,106 @@ class JsonRequestHandler implements IRequestHandler
     {
         $this->errors[] = $error;
     } // addError
+
+    /**
+     * Adds a response header to the response.
+     *
+     * @param string $header
+     * The name of the response header.
+     *
+     * @param string $value
+     * The value of the response header.
+     *
+     * @return void
+     *
+     * @see JsonRequestHandler::sendJsonResponse()
+     *
+     * @author Oleg Schildt
+     */
+    protected function addResponseHeader($header, $value)
+    {
+        $this->response_headers[$header] = $value;
+    } // addResponseHeader
+
+    /**
+     * Adds a new warning to the warning list.
+     *
+     * @param array $warning
+     * Warning description the form key => value:
+     *
+     * - $warning["message"] - warning message.
+     *
+     * - $warning["focus_element"] - warning element.
+     *
+     * - $warning["details"] - warning details. The warning details might be useful if the warning message translations are provided on the client, not
+     * on the server, and the warning message should contain some details that may vary from case to case.
+     * In that case, the servers return the warning message id instead of final text and the details, the client
+     * uses the warning message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @return void
+     *
+     * @see JsonRequestHandler::addBubbleMessage()
+     * @see JsonRequestHandler::addError()
+     * @see JsonRequestHandler::addInfoMessage()
+     *
+     * @author Oleg Schildt
+     */
+    protected function addWarning(array $warning)
+    {
+        $this->warnings[] = $warning;
+    } // addWarning
+
+    /**
+     * Adds a new information message to the info list.
+     *
+     * @param array $info_message
+     * Message description the form key => value:
+     *
+     * - $info_message["message"] - information message.
+     *
+     * - $info_message["details"] - information details. The information details might be useful if the information message translations are provided on the client, not
+     * on the server, and the information message should contain some details that may vary from case to case.
+     * In that case, the servers return the information message id instead of final text and the details, the client
+     * uses the information message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @return void
+     *
+     * @see JsonRequestHandler::addBubbleMessage()
+     * @see JsonRequestHandler::addError()
+     * @see JsonRequestHandler::addWarning()
+     *
+     * @author Oleg Schildt
+     */
+    protected function addInfoMessage(array $info_message)
+    {
+        $this->info_messages[] = $info_message;
+    } // addInfoMessage
+
+    /**
+     * Adds a new bubble message to the bubble message list.
+     *
+     * @param array $bubble_message
+     * Message description the form key => value:
+     *
+     * - $bubble_message["message"] - bubble message.
+     *
+     * - $bubble_message["details"] - bubble message details. The bubble message details might be useful if the bubble message translations are provided on the client, not
+     * on the server, and the bubble message should contain some details that may vary from case to case.
+     * In that case, the servers return the bubble message id instead of final text and the details, the client
+     * uses the bubble message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @return void
+     *
+     * @see JsonRequestHandler::addInfoMessage()
+     * @see JsonRequestHandler::addError()
+     * @see JsonRequestHandler::addWarning()
+     *
+     * @author Oleg Schildt
+     */
+    protected function addBubbleMessage(array $bubble_message)
+    {
+        $this->bubble_messages[] = $bubble_message;
+    } // addBubbleMessage
 
     /**
      * This is an auxiliary function for adding an error to the list
@@ -213,16 +352,17 @@ class JsonRequestHandler implements IRequestHandler
         if ($ex instanceof SmartException) {
             $this->addError(
                 [
-                    "error_code" => $ex->getErrorCode(),
-                    "error_type" => $ex->getErrorType(),
-                    "error_text" => $ex->getMessage()
+                    "code" => $ex->getErrorCode(),
+                    "type" => $ex->getErrorType(),
+                    "message" => $ex->getMessage(),
+                    "focus_element" => $ex->getErrorElement()
                 ]);
         } else {
             $this->addError(
                 [
-                    "error_code" => SmartException::ERR_CODE_SYSTEM_ERROR,
-                    "error_type" => SmartException::ERR_TYPE_PROGRAMMING_ERROR,
-                    "error_text" => $ex->getMessage()
+                    "code" => SmartException::ERR_CODE_SYSTEM_ERROR,
+                    "type" => SmartException::ERR_TYPE_PROGRAMMING_ERROR,
+                    "message" => $ex->getMessage()
                 ]);
         }
     } // addExceptionError
@@ -245,6 +385,16 @@ class JsonRequestHandler implements IRequestHandler
         $this->response_data["result"] = "error";
         $this->response_data["errors"] = $this->errors;
 
+        if ($this->warnings) {
+            $this->response_data["warnings"] = $this->warnings;
+        }
+        if ($this->info_messages) {
+            $this->response_data["info_messages"] = $this->info_messages;
+        }
+        if ($this->bubble_messages) {
+            $this->response_data["bubble_messages"] = $this->bubble_messages;
+        }
+
         $this->sendJsonResponse();
         exit;
     } // exitWithErrors
@@ -254,19 +404,23 @@ class JsonRequestHandler implements IRequestHandler
      *
      * It validates the content type 'application/json' and takes the data from RAWDATA.
      *
+     * @return void
+     *
      * @throws SmartException
      * It might throw an exception if the content type oк JSON data is invalid.
-     *
-     * @return void
      *
      * @author Oleg Schildt
      */
     protected function parseJsonInput()
     {
         try {
-            $content_type = empty($this->request_headers["Content-Type"]) ? "" : $this->request_headers["Content-Type"];
-            if (!preg_match("/application\/json.*/", $content_type)) {
-                throw new SmartException(sprintf("Content type 'application/json' is expected, got '%s'!", $content_type), SmartException::ERR_CODE_INVALID_CONTENT_TYPE, SmartException::ERR_TYPE_PROGRAMMING_ERROR);
+            if (empty($this->request_headers["Content-Type"])) {
+                throw new SmartException("Content type header 'Content-Type' is missing, expected 'application/json; charset=UTF-8'!", SmartException::ERR_CODE_INVALID_CONTENT_TYPE, SmartException::ERR_TYPE_PROGRAMMING_ERROR);
+            }
+
+            $content_type = $this->request_headers["Content-Type"];
+            if (!preg_match("/application\/json.*charset=UTF-8/i", $content_type)) {
+                throw new SmartException(sprintf("Content type 'application/json; charset=UTF-8' is expected, got '%s'!", $content_type), SmartException::ERR_CODE_INVALID_CONTENT_TYPE, SmartException::ERR_TYPE_PROGRAMMING_ERROR);
             }
 
             $json = trim(file_get_contents("php://input"));
@@ -352,6 +506,16 @@ class JsonRequestHandler implements IRequestHandler
             $this->preprocessRequest();
             $rmethod->invoke($this);
             $this->postprocessRequest();
+
+            if ($this->warnings) {
+                $this->response_data["warnings"] = $this->warnings;
+            }
+            if ($this->info_messages) {
+                $this->response_data["info_messages"] = $this->info_messages;
+            }
+            if ($this->bubble_messages) {
+                $this->response_data["bubble_messages"] = $this->bubble_messages;
+            }
 
             $this->sendJsonResponse();
         } catch (\Exception $ex) {

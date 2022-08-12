@@ -28,11 +28,6 @@ use SmartFactory\Interfaces\IShardManager;
  * The langauge. If it is not specified,
  * the default langauge is used.
  *
- * @param boolean $warn_missing
- * If it is set to true,
- * the E_USER_NOTICE is triggered in the case of missing
- * translations.
- *
  * @param string $default_text
  * The default text to be used if there is no translation.
  *
@@ -49,9 +44,9 @@ use SmartFactory\Interfaces\IShardManager;
  *
  * @author Oleg Schildt
  */
-function text($text_id, $lng = "", $warn_missing = true, $default_text = "")
+function text($text_id, $lng = "", $default_text = "")
 {
-    return singleton(ILanguageManager::class)->text($text_id, $lng, $warn_missing, $default_text);
+    return singleton(ILanguageManager::class)->text($text_id, $lng, $default_text);
 } // text
 
 /**

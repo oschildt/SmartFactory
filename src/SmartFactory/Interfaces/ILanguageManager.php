@@ -123,11 +123,6 @@ interface ILanguageManager extends IInitable
      * The langauge. If it is not specified,
      * the default langauge is used.
      *
-     * @param boolean $warn_missing
-     * If it is set to true,
-     * the E_USER_NOTICE is triggered in the case of mussing
-     * translations.
-     *
      * @param string $default_text
      * The default text to be used if there is no translation.
      *
@@ -137,7 +132,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function text($text_id, $lng = "", $warn_missing = true, $default_text = "");
+    public function text($text_id, $lng = "", $default_text = "");
     
     /**
      * Checks whether the text translation for the text ID for the given langauge exists.
@@ -167,11 +162,6 @@ interface ILanguageManager extends IInitable
      * The langauge. If it is not specified,
      * the default langauge is used.
      *
-     * @param boolean $warn_missing
-     * If it is set to true,
-     * the E_USER_NOTICE is triggered in the case of mussing
-     * translations.
-     *
      * @return string
      * Returns the translation text for the language name or the $code if no translation
      * is found.
@@ -183,7 +173,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getLanguageName($code, $lng = "", $warn_missing = true);
+    public function getLanguageName($code, $lng = "");
     
     /**
      * Tries to find the language code by the given name.
@@ -261,11 +251,6 @@ interface ILanguageManager extends IInitable
      * The langauge. If it is not specified,
      * the default langauge is used.
      *
-     * @param boolean $warn_missing
-     * If it is set to true,
-     * the E_USER_NOTICE is triggered in the case of mussing
-     * translations.
-     *
      * @return string
      * Returns the translation text for the country name or the $code if no translation
      * is found.
@@ -277,7 +262,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getCountryName($code, $lng = "", $warn_missing = true);
+    public function getCountryName($code, $lng = "");
     
     /**
      * Tries to find the country code by the given name.
