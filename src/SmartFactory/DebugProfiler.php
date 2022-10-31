@@ -27,7 +27,17 @@ class DebugProfiler implements IDebugProfiler
      * @author Oleg Schildt
      */
     protected $log_path;
-    
+
+    /**
+     * Internal variable for storing the flag that defines whether for each debug output the source file and
+     * line number are written from where it is called.
+     *
+     * @var string
+     *
+     * @author Oleg Schildt
+     */
+    protected $write_source_file_and_line_by_debug;
+
     /**
      * Internal variable for storing the time by profiling.
      *
@@ -48,11 +58,13 @@ class DebugProfiler implements IDebugProfiler
      *
      * - $parameters["log_path"] - the target file path where the logs should be stored.
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * - $parameters["write_source_file_and_line_by_debug"] - the flag that defines whether for each debug output the source file and
+     * line number are written from where it is called.
+     *
+     * @return void
      *
      * @throws \Exception
-     * It might throw an exception in the case of any errors:
+     * It might throw an exception in the case of any system errors:
      *
      * - if the log path is not specified.
      * - if the trace file is not writable.
@@ -61,6 +73,8 @@ class DebugProfiler implements IDebugProfiler
      */
     public function init($parameters)
     {
+        $this->write_source_file_and_line_by_debug = !empty($parameters["write_source_file_and_line_by_debug"]);
+
         if (empty($parameters["log_path"])) {
             throw new \Exception("Log path is not specified!");
         }
@@ -70,12 +84,10 @@ class DebugProfiler implements IDebugProfiler
         if (!file_exists($this->log_path) || !is_writable($this->log_path)) {
             throw new \Exception(sprintf("The log path '%s' is not writable!", $this->log_path));
         }
-        
-        return true;
     }
     
     /**
-     * Logs a message to a specified log file.
+     * Logs a message to a standard debug output (logs/debug.log).
      *
      * @param string $message
      * Message to be logged.
@@ -89,40 +101,34 @@ class DebugProfiler implements IDebugProfiler
      * @throws \Exception
      * It might throw an exception in the case of any errors:
      *
-     * - if the log file is not writable.
-     *
-     * @author Oleg Schildt
-     */
-    public function logMessageToFile($message, $file_name)
-    {
-        $file = $this->log_path . $file_name;
-        
-        if ((!file_exists($file) && is_writable($this->log_path)) || is_writable($file)) {
-            return file_put_contents($file, $message . "\r\n", FILE_APPEND) !== false;
-        } else {
-            throw new \Exception(sprintf("The log file '%s' is not writable!", $file));
-        }
-    } // logMessageToFile
-    
-    /**
-     * Logs a message to a standard debug output (logs/debug.log).
-     *
-     * @param string $message
-     * Message to be logged.
-     *
-     * @return boolean
-     * It should return true if the logging was successful, otherwise false.
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
-     *
      * - if the debug file is not writable.
      *
      * @author Oleg Schildt
      */
-    public function debugMessage($message)
+    public function debugMessage($message, $file_name = "debug.log")
     {
-        return $this->logMessageToFile($message, "debug.log");
+        $logfile = $this->log_path . $file_name;
+
+        $backfiles = debug_backtrace();
+
+        if (basename($backfiles[0]['file']) == "short_functions_inc.php" && $backfiles[0]['function'] == "debugMessage") {
+            $file = empty($backfiles[1]['file']) ? "" : $backfiles[1]['file'];
+            $line = empty($backfiles[1]['line']) ? "" : $backfiles[1]['line'];
+        } else {
+            $file = empty($backfiles[0]['file']) ? "" : $backfiles[0]['file'];
+            $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
+        }
+
+        $appendix = "";
+        if($this->write_source_file_and_line_by_debug && !empty($file) && !empty($line)) {
+            $appendix = "\r\n#source: " . $file . ", " . $line . "\r\n\r\n";
+        }
+
+        if ((!file_exists($logfile) && is_writable($this->log_path)) || is_writable($logfile)) {
+            return file_put_contents($logfile, $appendix . trim($message) . "\r\n", FILE_APPEND) !== false;
+        } else {
+            throw new \Exception(sprintf("The log file '%s' is not writable!", $logfile));
+        }
     } // debugMessage
     
     /**
@@ -146,7 +152,7 @@ class DebugProfiler implements IDebugProfiler
      */
     public function startProfilePoint($message)
     {
-        $result = $this->logMessageToFile($message, "profile.log");
+        $result = $this->debugMessage($message, "profile.log");
         
         self::$profile_time = microtime(true);
         
@@ -179,7 +185,7 @@ class DebugProfiler implements IDebugProfiler
             $message = $message . ": " . number_format(microtime(true) - self::$profile_time, 3, ".", "") . " seconds";
         }
         
-        $result = $this->logMessageToFile($message, "profile.log");
+        $result = $this->debugMessage($message, "profile.log");
         
         self::$profile_time = microtime(true);
         
@@ -194,6 +200,8 @@ class DebugProfiler implements IDebugProfiler
      *
      * @return boolean
      * It should return true if the file has been successfully deleted, otherwise false.
+     *
+     * @see DebugProfiler::clearLogFiles()
      *
      * @author Oleg Schildt
      */
@@ -213,6 +221,8 @@ class DebugProfiler implements IDebugProfiler
      *
      * @return boolean
      * It should return true if the files have been successfully deleted, otherwise false.
+     *
+     * @see DebugProfiler::clearLogFile()
      *
      * @author Oleg Schildt
      */
@@ -238,4 +248,4 @@ class DebugProfiler implements IDebugProfiler
         
         return true;
     } // clearLogFiles
-} // IDebugProfiler
+} // DebugProfiler

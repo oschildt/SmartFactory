@@ -30,7 +30,7 @@ ObjectFactory::bindClass(ISessionManager::class, SessionManager::class);
 ObjectFactory::bindClass(IEventManager::class, EventManager::class);
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(IMessageManager::class, MessageManager::class, function ($instance) {
-    $instance->init(["auto_hide_time" => 3]);
+    $instance->init(["debug_mode" => 1]);
 });
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(MySQL_DBWorker::class, MySQL_DBWorker::class);

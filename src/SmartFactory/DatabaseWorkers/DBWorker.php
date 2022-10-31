@@ -29,74 +29,83 @@ abstract class DBWorker implements IInitable
     /**
      * The constant for the error: connection data is incomplete.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_CONNECTION_DATA_INCOMPLETE = 1;
+    const ERR_CONNECTION_DATA_INCOMPLETE = "err_connection_data_incomplete";
     
     /**
      * The constant for the error: connection to the server failed.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_CONNECTION_FAILED = 2;
+    const ERR_CONNECTION_FAILED = "err_connection_failed";
 
     /**
      * The constant for the error: host not reachable.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_HOST_UNREACHABLE = 3;
+    const ERR_HOST_UNREACHABLE = "err_host_unreachable";
 
     /**
      * The constant for the error: wrong user credentials.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_WRONG_USER_CREDENTIALS = 4;
+    const ERR_WRONG_USER_CREDENTIALS = "err_wrong_user_credentials";
 
     /**
      * The constant for the error: database not found.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_DATABASE_NOT_FOUND = 5;
+    const ERR_DATABASE_NOT_FOUND = "err_database_not_found";
     
     /**
      * The constant for the error: query failed.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_QUERY_FAILED = 6;
+    const ERR_QUERY_FAILED = "err_query_failed";
 
     /**
      * The constant for the error: not connected.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_NOT_CONNECTED = 7;
+    const ERR_NOT_CONNECTED = "err_not_connected";
 
     /**
      * The constant for the error: stream invalid.
      *
-     * @var int
+     * @var string
      *
      * @author Oleg Schildt
      */
-    const ERR_STREAM_ERROR = 8;
+    const ERR_STREAM_ERROR = "err_stream_error";
+
+    /**
+     * The constant for the error: wrong data format.
+     *
+     * @var string
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_WRONG_DATA_FORMAT = "err_data_format";
 
     /**
      * The constant for the returning field value as is.
@@ -241,8 +250,10 @@ abstract class DBWorker implements IInitable
      * @param array $parameters
      * The parameters may vary for each database.
      *
-     * @return boolean
-     * The method should return true upon successful initialization, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -316,7 +327,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception if there is no connection.
      *
      * @see DBWorker::connect()
@@ -329,7 +340,7 @@ abstract class DBWorker implements IInitable
         if (!$this->is_connected()) {
             $err = "Database server not connected!";
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_NOT_CONNECTED);
+            throw new DBWorkerException($err, DBWorker::ERR_NOT_CONNECTED);
         }
     } // check_connection
 
@@ -339,7 +350,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * - if some parameters are missing.
@@ -360,7 +371,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -403,7 +414,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -420,7 +431,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -436,7 +447,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::prepare_query()
@@ -454,7 +465,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::execute_prepared_query()
@@ -485,7 +496,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -497,7 +508,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::is_connected()
@@ -513,7 +524,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::commit_transaction()
@@ -528,7 +539,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::start_transaction()
@@ -541,7 +552,7 @@ abstract class DBWorker implements IInitable
     /**
      * Rolls back the transation.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @return void
@@ -560,7 +571,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -574,7 +585,7 @@ abstract class DBWorker implements IInitable
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @see DBWorker::prepare_query()
@@ -605,7 +616,7 @@ abstract class DBWorker implements IInitable
      * $dbw->free_result();
      * ```
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -644,7 +655,7 @@ abstract class DBWorker implements IInitable
      * Returns the number of the fetched rows. It might be also 0. In the case of
      * any error returns false.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -657,7 +668,7 @@ abstract class DBWorker implements IInitable
      * @return int
      * Returns the number of the rows fetched by the last retrieving query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -670,7 +681,7 @@ abstract class DBWorker implements IInitable
      * @return int
      * Returns the number of the rows affected by the last modification query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -683,7 +694,7 @@ abstract class DBWorker implements IInitable
      * @return int
      * Returns the number of the fields in the result of the last retrieving query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -696,7 +707,7 @@ abstract class DBWorker implements IInitable
      * @return int
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -759,6 +770,7 @@ abstract class DBWorker implements IInitable
      * - $info["size"] - size of the field.
      * - $info["binary"] - whether the filed is binary.
      * - $info["numeric"] - whether the filed is numeric.
+     * - $info["datetime"] - whether the filed is datetime.
      *
      * @see DBWorker::field_by_num()
      * @see DBWorker::field_name()
@@ -795,11 +807,66 @@ abstract class DBWorker implements IInitable
      *
      * @see DBWorker::format_date()
      * @see DBWorker::format_datetime()
+     * @see DBWorker::quotes_or_null()
+     * @see DBWorker::number_or_null()
      *
      * @author Oleg Schildt
      */
     abstract public function escape($str);
-    
+
+    /**
+     * Escapes the string so that it can be used in the query without causing an error or returns the string NULL if the string is empty.
+     *
+     * @param string $str
+     * The string to be escaped.
+     *
+     * @return string
+     * Returns the escaped string.
+     *
+     * @see DBWorker::escape()
+     * @see DBWorker::format_date()
+     * @see DBWorker::format_datetime()
+     * @see DBWorker::number_or_null()
+     *
+     * @author Oleg Schildt
+     */
+    function quotes_or_null($str)
+    {
+        return (string)$str === "" ? "NULL" : "'" . $this->escape($str) . "'";
+    }
+
+    /**
+     * Checks that the value is a number and returns it, or returns the string NULL if the value is empty.
+     *
+     * @param string $str
+     * The string to be escaped.
+     *
+     * @return string
+     * Returns the escaped string.
+     *
+     * @throws DBWorkerException
+     * It might throw an exception in the case of any errors.
+     *
+     * @see DBWorker::escape()
+     * @see DBWorker::format_date()
+     * @see DBWorker::format_datetime()
+     * @see DBWorker::quotes_or_null()
+     *
+     * @author Oleg Schildt
+     */
+    function number_or_null($str)
+    {
+        if (empty($str) && (string)$str != "0") {
+            return "NULL";
+        }
+
+        if (!is_numeric($str)) {
+            throw new DBWorkerException("Value '$str' is not a number!", DBWorker::ERR_WRONG_DATA_FORMAT);
+        }
+
+        return $str;
+    }
+
     /**
      * Formats the date to a string compatible for the corresponding database.
      *
@@ -811,6 +878,8 @@ abstract class DBWorker implements IInitable
      *
      * @see DBWorker::escape()
      * @see DBWorker::format_datetime()
+     * @see DBWorker::quotes_or_null()
+     * @see DBWorker::number_or_null()
      *
      * @author Oleg Schildt
      */
@@ -827,6 +896,8 @@ abstract class DBWorker implements IInitable
      *
      * @see DBWorker::escape()
      * @see DBWorker::format_date()
+     * @see DBWorker::quotes_or_null()
+     * @see DBWorker::number_or_null()
      *
      * @author Oleg Schildt
      */
@@ -848,7 +919,28 @@ abstract class DBWorker implements IInitable
      * @author Oleg Schildt
      */
     abstract function prepare_for_query($value, $type);
-    
+
+    /**
+     * Builds simple select query based on parameters.
+     *
+     * It is used for building queries with limits.
+     *
+     * @param string $where_clause
+     * The where clause that should restrict the result.
+     *
+     * @param string $order_clause
+     * The order clause to sort the results.
+     *
+     * @param int $limit
+     * The limit how many records shoud be loaded. 0 for unlimited.
+     *
+     * @return string
+     * Returns the built query.
+     *
+     * @author Oleg Schildt
+     */
+    abstract function build_select_query($table, $fields, $where_clause, $order_clause, $limit);
+
     /**
      * Returns the last executed query.
      *

@@ -61,8 +61,7 @@ class ErrorHandler implements IErrorHandler
      *
      * - $parameters["log_path"] - the target file path where the logs should be stored.
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -80,7 +79,7 @@ class ErrorHandler implements IErrorHandler
         
         if ($parameters["log_path"] == "stdout") {
             $this->log_path = $parameters["log_path"];
-            return true;
+            return;
         }
         
         $this->log_path = rtrim(str_replace("\\", "/", $parameters["log_path"]), "/") . "/";
@@ -89,8 +88,6 @@ class ErrorHandler implements IErrorHandler
         if (!file_exists($this->log_path) || !is_writable($this->log_path) || (file_exists($file) && !is_writable($file))) {
             throw new \Exception(sprintf("The trace file '%s' is not writable!", $file));
         }
-        
-        return true;
     }
     
     /**
@@ -297,10 +294,10 @@ class ErrorHandler implements IErrorHandler
         }
         
         $message = date("Y-m-d H:i:s") . "\r\n" .
-            "----------------------------------------------------------\r\n" .
+            "------------------------------------\r\n" .
             $etype . ":\r\n" .
             $message . "\r\n" .
-            "----------------------------------------------------------\r\n" .
+            "------------------------------------\r\n" .
             "\r\n\r\n";
         
         $trace_file_writable = true;
@@ -378,8 +375,12 @@ class ErrorHandler implements IErrorHandler
         }
         
         $this->trace_message($etype, $this->format_backtrace(debug_backtrace()));
-        
-        event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $errstr, "errfile" => $errfile, "errline" => $errline]);
+
+        // E_USER_ERROR means that the error has been explicitly triggered by the programmer for tracing.
+        // The extra programming warning is not necessary because the message will be shown as a program error.
+        if ($errno != E_USER_ERROR) {
+            event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $errstr, "errfile" => $errfile, "errline" => $errline]);
+        }
     } // handleError
     
     /**
@@ -436,8 +437,12 @@ class ErrorHandler implements IErrorHandler
         array_unshift($trace, $trace_entry);
         
         $this->trace_message($etype, $this->format_backtrace($trace));
-        
-        event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $ex->getMessage(), "errfile" => $ex->getFile(), "errline" => $ex->getLine()]);
+
+        // E_USER_ERROR means that the error has been explicitly triggered by the programmer for tracing.
+        // The extra programming warning is not necessary because the message will be shown as a program error.
+        if ($errno != E_USER_ERROR) {
+            event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $ex->getMessage(), "errfile" => $ex->getFile(), "errline" => $ex->getLine()]);
+        }
     }
     
     /**

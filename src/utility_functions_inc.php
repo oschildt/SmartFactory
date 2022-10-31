@@ -359,8 +359,34 @@ function echo_js($text)
  */
 function get_cookie($name)
 {
-    return empty($_COOKIE[$name] ? "" : $_COOKIE[$name]);
+    return empty($_COOKIE[$name]) ? "" : $_COOKIE[$name];
 } // get_cookie
+
+/**
+ * Gets the header by its name.
+ *
+ * @param string $name
+ * Name of the header.
+ *
+ * @return string
+ * Returns the header value of empty string if the header is not set.
+ *
+ * @author Oleg Schildt
+ */
+function get_header($name) {
+    static $headers;
+
+    if(empty($headers)) {
+        $tmp = getallheaders();
+        foreach($tmp as $header => $value) {
+            $headers[strtolower($header)] = $value;
+        }
+    }
+
+    if(empty($headers[strtolower($name)])) return "";
+
+    return $headers[strtolower($name)];
+}
 
 /**
  * Sets the cookie name=value.

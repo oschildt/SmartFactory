@@ -30,24 +30,6 @@ class SessionManager extends \SessionHandler implements ISessionManager
     protected static $readonly = false;
 
     /**
-     * Internal variable for storing the current context.
-     *
-     * If many instances of the application should run in parallel
-     * subfolders, and all subfolders are within the same session,
-     * and the provider does not let you change the session path,
-     * then you can use different $context in each instance to ensure
-     * that the session data of these instances does not mix.
-     *
-     * @var string
-     *
-     * @see SessionManager::getContext()
-     * @see SessionManager::switchContext()
-     *
-     * @author Oleg Schildt
-     */
-    protected static $context = "default";
-
-    /**
      * Reimplementation of the method \SessionHandler::close.
      *
      * SessionManager extends the \SessionHandler. You can reimplement this
@@ -79,9 +61,7 @@ class SessionManager extends \SessionHandler implements ISessionManager
      */
     public function create_sid(): string
     {
-        $sid = parent::create_sid();
-
-        return $sid;
+        return parent::create_sid();
     } // create_sid
 
     /**
@@ -210,23 +190,13 @@ class SessionManager extends \SessionHandler implements ISessionManager
      * So that they are not blocked by the main process and by each
      * ohter while the write lock is held on the session file.
      *
-     * @param string $context
-     * The session context.
-     *
-     * If many instances of the application should run in parallel
-     * subfolders, and all subfolders are within the same session,
-     * and the provider does not let you to change the session path,
-     * then you can use different $context in each instance to ensure
-     * that the session data of these instances does not mix.
-     *
      * @return boolean
      * Returns true if the session has been successfully started, otherwise false.
      *
      * @author Oleg Schildt
      */
-    public function startSession($readonly = false, $context = "default")
+    public function startSession($readonly = false)
     {
-        self::$context = $context;
         self::$readonly = $readonly;
 
         if (!$readonly) {
@@ -312,7 +282,7 @@ class SessionManager extends \SessionHandler implements ISessionManager
      *
      * If many instances of the application should run in parallel
      * subfolders, and all subfolders are within the same session,
-     * and the provider does not let you to change the session path,
+     * and the provider does not let you change the session path,
      * then you can use different $context in each instance to ensure
      * that the session data of these instances does not mix.
      *
@@ -362,8 +332,6 @@ class SessionManager extends \SessionHandler implements ISessionManager
         if (self::$readonly) {
             return false;
         }
-
-        $_SESSION[$this->getContext()] = [];
 
         return session_destroy();
     } // destroySession
@@ -441,20 +409,34 @@ class SessionManager extends \SessionHandler implements ISessionManager
     /**
      * Clears the session data.
      *
+     * @param string $context
+     * If many instances of the application should run in parallel
+     * subfolders, and all subfolders are within the same session,
+     * and the provider does not let you change the session path,
+     * then you can use different $context in each instance to ensure
+     * that the session data of these instances does not mix.
+     *
      * @return boolean
      * Returns true if the session data has been successfully cleared, otherwise false.
      *
      * @author Oleg Schildt
      */
-    public function clearSession()
+    public function clearSession($context = "default")
     {
-        $_SESSION[$this->getContext()] = [];
+        $_SESSION[$context] = [];
 
         return true;
     } // clearSession
 
     /**
      * Returns the reference to the array of the session variables.
+     *
+     * @param string $context
+     * If many instances of the application should run in parallel
+     * subfolders, and all subfolders are within the same session,
+     * and the provider does not let you change the session path,
+     * then you can use different $context in each instance to ensure
+     * that the session data of these instances does not mix.
      *
      * @return array
      * Returns the reference to the array of the session variables.
@@ -480,12 +462,12 @@ class SessionManager extends \SessionHandler implements ISessionManager
      *
      * @author Oleg Schildt
      */
-    public function &vars()
+    public function &vars($context = "default")
     {
-        if (empty($_SESSION[$this->getContext()])) {
-            $_SESSION[$this->getContext()] = [];
+        if (empty($_SESSION[$context])) {
+            $_SESSION[$context] = [];
         }
 
-        return $_SESSION[$this->getContext()];
+        return $_SESSION[$context];
     } // getSessionVariables
 } // class

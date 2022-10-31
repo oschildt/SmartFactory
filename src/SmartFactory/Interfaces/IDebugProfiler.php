@@ -22,15 +22,17 @@ interface IDebugProfiler extends IInitable
      * @param array $parameters
      * The parameters may vary for each debug profiler.
      *
-     * @return boolean
-     * The method should return true upon successful initialization, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any system errors.
      *
      * @author Oleg Schildt
      */
     public function init($parameters);
     
     /**
-     * Logs a message to a specified log file.
+     * Logs a message to a standard debug output.
      *
      * @param string $message
      * Message to be logged.
@@ -46,23 +48,7 @@ interface IDebugProfiler extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function logMessageToFile($message, $file_name);
-    
-    /**
-     * Logs a message to a standard debug output.
-     *
-     * @param string $message
-     * Message to be logged.
-     *
-     * @return boolean
-     * It should return true if the logging was successful, otherwise false.
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function debugMessage($message);
+    public function debugMessage($message, $file_name = "debug.log");
     
     /**
      * Logs a message to a standard profiling output and stores the current time.
@@ -111,6 +97,8 @@ interface IDebugProfiler extends IInitable
      * @return boolean
      * It should return true if the file has been successfully deleted, otherwise false.
      *
+     * @see IDebugProfiler::clearLogFiles()
+     *
      * @author Oleg Schildt
      */
     public function clearLogFile($file_name);
@@ -120,6 +108,8 @@ interface IDebugProfiler extends IInitable
      *
      * @return boolean
      * It should return true if the files have been successfully deleted, otherwise false.
+     *
+     * @see IDebugProfiler::clearLogFile()
      *
      * @author Oleg Schildt
      */

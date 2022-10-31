@@ -99,8 +99,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * This is internal auxiliary function for checking that the settings
      * manager is intialized correctly.
      *
-     * @return boolean
-     * It should return true if the settings manager is intialized correctly, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -127,8 +126,6 @@ class RuntimeSettingsManager implements ISettingsManager
         if (empty($this->settings_column)) {
             throw new \Exception("The 'settings_column' is not specified!");
         }
-        
-        return true;
     } // validateParameters
     
     /**
@@ -138,8 +135,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * @param array &$data
      * The array with the settings values to be saved.
      *
-     * @return boolean
-     * Returns true if the data has been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -175,15 +171,13 @@ class RuntimeSettingsManager implements ISettingsManager
         $json = $this->dbworker->escape($json);
         
         if ($must_insert) {
-            $query = "INSERT INTO " . $this->settings_table . "(" . $this->settings_column . ")\n";
-            $query .= "VALUES ('$json')";
+            $query = "insert into " . $this->settings_table . "(" . $this->settings_column . ")\n";
+            $query .= "values ('$json')";
         } else {
-            $query = "UPDATE " . $this->settings_table . " SET " . $this->settings_column . " = '$json'";
+            $query = "update " . $this->settings_table . " set " . $this->settings_column . " = '$json'";
         }
         
         $this->dbworker->execute_query($query);
-        
-        return true;
     } // saveJSON
     
     /**
@@ -193,8 +187,7 @@ class RuntimeSettingsManager implements ISettingsManager
      * @param array &$data
      * The target array with the settings values to be loaded.
      *
-     * @return boolean
-     * Returns true if the data has been successfully loaded, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -212,7 +205,7 @@ class RuntimeSettingsManager implements ISettingsManager
     {
         $this->validateParameters();
         
-        $query = "SELECT " . $this->settings_column . " FROM " . $this->settings_table;
+        $query = "select " . $this->settings_column . " from " . $this->settings_table;
         
         $this->dbworker->execute_query($query);
         
@@ -225,7 +218,7 @@ class RuntimeSettingsManager implements ISettingsManager
         $this->dbworker->free_result();
         
         if (empty($json)) {
-            return true;
+            return;
         }
         
         try {
@@ -233,8 +226,6 @@ class RuntimeSettingsManager implements ISettingsManager
         } catch (\Throwable $ex) {
             throw new \Exception("JSON parse error: " . $ex->getMessage());
         }
-        
-        return true;
     } // loadJSON
     
     /**
@@ -249,8 +240,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * - $parameters["settings_column"] - the name of the column for the storing of the settings.
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -274,7 +264,7 @@ class RuntimeSettingsManager implements ISettingsManager
             $this->settings_column = $parameters["settings_column"];
         }
         
-        return $this->validateParameters();
+        $this->validateParameters();
     } // init
     
     /**
@@ -502,8 +492,7 @@ class RuntimeSettingsManager implements ISettingsManager
     /**
      * Loads the settings from the target table.
      *
-     * @return boolean
-     * Returns true if the settings have been successfully loaded, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -518,14 +507,13 @@ class RuntimeSettingsManager implements ISettingsManager
      */
     public function loadSettings()
     {
-        return $this->loadJSON($this->settings);
+        $this->loadJSON($this->settings);
     } // loadSettings
     
     /**
      * Saves the settings from to the target table.
      *
-     * @return boolean
-     * Returns true if the settings have been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -544,6 +532,6 @@ class RuntimeSettingsManager implements ISettingsManager
             $this->loadSettings();
         }
 
-        return $this->saveJSON($this->settings);
+        $this->saveJSON($this->settings);
     } // saveSettings
 } // RuntimeSettingsManager

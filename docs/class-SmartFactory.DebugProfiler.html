@@ -208,6 +208,20 @@
           <td class="description_column">
               <p>Internal variable for storing the time by profiling.</p>
           </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$write_source_file_and_line_by_debug">$write_source_file_and_line_by_debug</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the flag that defines whether for each debug output the source file and
+line number are written from where it is called.</p>
+          </td>
       </tr>
       
   </table>
@@ -281,19 +295,6 @@ fixProfilePoint.</p>
           </td>
           <td class="description_column">
               <p>Initializes the debug profiler with parameters.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#logMessageToFile">logMessageToFile()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Logs a message to a specified log file.</p>
           </td>
       </tr><tr>
           <td>
@@ -390,7 +391,7 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#41'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#51'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -403,6 +404,45 @@ and stores the current time.</p>
   <a href='class-SmartFactory.DebugProfiler.html#fixProfilePoint'>\SmartFactory\DebugProfiler::fixProfilePoint()</a><br>
   
   
+  </div><hr id="$write_source_file_and_line_by_debug">
+  
+  <h1>Property: DebugProfiler::$write_source_file_and_line_by_debug</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$write_source_file_and_line_by_debug</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the flag that defines whether for each debug output the source file and
+line number are written from where it is called.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DebugProfiler.php.html#39'>SmartFactory/DebugProfiler.php</a>
   </div>
 
 <hr id="clearLogFile">
@@ -487,11 +527,17 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#200'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#204'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
+  <h2>See also</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.DebugProfiler.html#clearLogFiles'>\SmartFactory\DebugProfiler::clearLogFiles()</a><br>
+  
+  
+  </div>
 
   
 
@@ -556,11 +602,17 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#219'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#225'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
+  <h2>See also</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.DebugProfiler.html#clearLogFile'>\SmartFactory\DebugProfiler::clearLogFile()</a><br>
+  
+  
+  </div>
 
   
 
@@ -578,7 +630,7 @@ and stores the current time.</p>
   
   <h1>Method: DebugProfiler::debugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>) : bool;</div>
 
   
   <div class="short-description">
@@ -617,6 +669,24 @@ and stores the current time.</p>
             </td>
             <td class="description_column">
                 <p>Message to be logged.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $file_name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;debug.log&quot;
+            </td>
+            <td class="description_column">
+                <p>The target file name.</p>
             </td>
         </tr>
         
@@ -667,7 +737,7 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#123'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#108'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -780,7 +850,7 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#176'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#178'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -808,7 +878,7 @@ fixProfilePoint.</p>
   
   <h1>Method: DebugProfiler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
 
   
   <div class="short-description">
@@ -848,7 +918,13 @@ fixProfilePoint.</p>
             <td class="description_column">
                 <p>Settings for logging as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>$parameters[&quot;log_path&quot;] - the target file path where the logs should be stored.</li>
+<li>
+<p>$parameters[&quot;log_path&quot;] - the target file path where the logs should be stored.</p>
+</li>
+<li>
+<p>$parameters[&quot;write_source_file_and_line_by_debug&quot;] - the flag that defines whether for each debug output the source file and
+line number are written from where it is called.</p>
+</li>
 </ul>
             </td>
         </tr>
@@ -859,9 +935,7 @@ fixProfilePoint.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true upon successful initialization, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -871,7 +945,7 @@ fixProfilePoint.</p>
   
   \Exception<br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
+  <div class="item_description"><p>It might throw an exception in the case of any system errors:</p>
 <ul>
 <li>if the log path is not specified.</li>
 <li>if the trace file is not writable.</li>
@@ -901,136 +975,7 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#62'>SmartFactory/DebugProfiler.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="logMessageToFile">
-  
-  <h1>Method: DebugProfiler::logMessageToFile()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> logMessageToFile(string <span class="php-var">$message</span>, string <span class="php-var">$file_name</span>) : bool;</div>
-
-  
-  <div class="short-description">
-  <p>Logs a message to a specified log file.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $message
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Message to be logged.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $file_name
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The target file name.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  \Exception<br>
-  
-  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
-<ul>
-<li>if the log file is not writable.</li>
-</ul></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#logMessageToFile'>\SmartFactory\Interfaces\IDebugProfiler::logMessageToFile()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#96'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#74'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1142,7 +1087,7 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#147'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#149'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1155,7 +1100,7 @@ and stores the current time.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

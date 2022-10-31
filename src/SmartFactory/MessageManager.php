@@ -20,336 +20,176 @@ use SmartFactory\Interfaces\IMessageManager;
 class MessageManager implements IMessageManager
 {
     /**
-     * Internal variable for storing the auto hide time
-     * for the info messages with flag auto_hide = true.
-     *
-     * @var int
-     *
-     * @see MessageManager::getAutoHideTime()
-     *
-     * @author Oleg Schildt
-     */
-    protected static $auto_hide_time = 3;
-    
-    /**
-     * Internal variable for storing the reference to session variables.
+     * Internal variable for storing the messages.
      *
      * @var array
      *
      * @author Oleg Schildt
      */
-    protected static $session_vars = null;
-    
-    /**
-     * Internal variable for storing the state of programming warnings - active or not.
-     *
-     * @var boolean
-     *
-     * @see MessageManager::detailsActive()
-     * @see MessageManager::enableDetails()
-     * @see MessageManager::disableDetails()
-     *
-     * @author Oleg Schildt
-     */
-    protected static $details_disabled = false;
-    
-    /**
-     * Internal variable for storing the state of programming warnings - active or not.
-     *
-     * @var boolean
-     *
-     * @see MessageManager::progWarningsActive()
-     * @see MessageManager::enableProgWarnings()
-     * @see MessageManager::disableProgWarnings()
-     *
-     * @author Oleg Schildt
-     */
-    protected static $prog_warnings_disabled = false;
+    protected $messages = null;
 
     /**
-     * This is internal auxiliary function for preparing messags for displaying.
+     * Internal variable for storing the state whether technical details, programmer warnings and debug infromation are also sent to the client.
      *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * The message details are removed if the flag show_message_details is false.
-     *
-     * @param array &$messages
-     * The source array of messages.
-     *
-     * @return array
-     * Returns the array of messages for displaying.
+     * @var boolean
      *
      * @author Oleg Schildt
      */
-    protected function extractMessagesForDisplay(&$messages)
-    {
-        $output = [];
-        
-        if (empty($messages) || count($messages) == 0) {
-            return $output;
-        }
-        
-        foreach ($messages as $current) {
-            $message_entry["message"] = $current["message"];
-            
-            if (!empty($current["code"])) {
-                $message_entry["code"] = $current["code"];
-            }
-            
-            if (!empty($current["auto_hide"])) {
-                $message_entry["auto_hide"] = $this->getAutoHideTime();
-            }
-            
-            if (!empty($current["details"]) && $this->detailsActive()) {
-                $message_entry["details"] = $current["details"];
-            }
-            
-            $output[] = $message_entry;
-        } // foreach
-        
-        // unset messages because they has been shown
-        $messages = null;
-        
-        return $output;
-    } // extractMessagesForDisplay
-    
+    protected $debug_mode = false;
+
     /**
-     * Constructor.
+     * Internal variable for storing the flag that defines whether for each debug output the source file and
+     * line number are written from where it is called.
+     *
+     * @var string
      *
      * @author Oleg Schildt
      */
-    public function __construct()
-    {
-        self::$session_vars = &session()->vars();
-    } // __construct
-    
+    protected $write_source_file_and_line_by_debug;
+
     /**
      * Initializes the message manager.
      *
      * @param array $parameters
-     * Initialization parameters as an associative array in the form key => value:
+     * Settings for message management as an associative array in the form key => value:
      *
-     * - $parameters["auto_hide_time"] - server address.
+     * - $parameters["debug_mode"] - if set to True, the technical details, programmer warnings and debug infromation are also sent to the client. Use it only during dubugging!
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * - $parameters["write_source_file_and_line_by_debug"] - the flag that defines whether for each debug output the source file and
+     * line number are written from where it is called.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
     public function init($parameters)
     {
-        if (!empty($parameters["auto_hide_time"])) {
-            self::$auto_hide_time = $parameters["auto_hide_time"];
-        }
-        
-        return true;
+        $this->debug_mode = !empty($parameters["debug_mode"]);
+
+        $this->write_source_file_and_line_by_debug = !empty($parameters["write_source_file_and_line_by_debug"]);
     } // init
-    
-    /**
-     * Sets the element to be focused.
-     *
-     * @param string $element
-     * The ID of the element to be focused.
-     *
-     * @return void
-     *
-     * @see MessageManager::setFocusElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function setFocusElement($element)
-    {
-        self::$session_vars["focus_element"] = $element;
-    } // setFocusElement
-    
-    /**
-     * Returns the element to be focused.
-     *
-     * When this method is called, it is assumed that the element will be focused. Thus,
-     * the stored element is cleared to avoid focusing of the same element twice.
-     *
-     * @return string
-     * Returns the ID of the element to be focused.
-     *
-     * @see MessageManager::getFocusElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function getFocusElement()
-    {
-        if (empty(self::$session_vars["focus_element"])) {
-            return "";
-        }
-        
-        $felm = self::$session_vars["focus_element"];
-        
-        unset(self::$session_vars["focus_element"]);
-        
-        return $felm;
-    } // getFocusElement
-    
-    /**
-     * Sets the tab to be activated.
-     *
-     * @param string $tab
-     * The ID of the tab to be activated.
-     *
-     * @return void
-     *
-     * @see MessageManager::getActiveTab()
-     *
-     * @author Oleg Schildt
-     */
-    public function setActiveTab($tab)
-    {
-        self::$session_vars["active_tab"] = $tab;
-    } // setActiveTab
-    
-    /**
-     * Returns the tab to be activated.
-     *
-     * When this method is called, it is assumed that the tab will be activated. Thus,
-     * the stored active tab is cleared to avoid activating of the same tab twice.
-     *
-     * @return string
-     * Returns the ID of the tab to be activated.
-     *
-     * @see MessageManager::setActiveTab()
-     *
-     * @author Oleg Schildt
-     */
-    public function getActiveTab()
-    {
-        if (empty(self::$session_vars["active_tab"])) {
-            return "";
-        }
-        
-        $atab = self::$session_vars["active_tab"];
-        
-        unset(self::$session_vars["active_tab"]);
-        
-        return $atab;
-    } // getActiveTab
-    
-    /**
-     * Sets the field to be highlighted.
-     *
-     * @param string $element
-     * The ID of the field to be highlighted.
-     *
-     * @return void
-     *
-     * @see MessageManager::getErrorElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function setErrorElement($element)
-    {
-        self::$session_vars["focus_element"] = $element;
-        self::$session_vars["error_element"] = $element;
-    } // setErrorElement
-    
-    /**
-     * Returns the field to be highlighted.
-     *
-     * When this method is called, it is assumed that element will be highlighted. Thus,
-     * the stored element is cleared to avoid highlighting of the same element twice.
-     *
-     * @return string
-     * Returns the ID of the field to be highlighted.
-     *
-     * @see MessageManager::setErrorElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function getErrorElement()
-    {
-        if (empty(self::$session_vars["error_element"])) {
-            return "";
-        }
-        
-        $felm = self::$session_vars["error_element"];
-        
-        unset(self::$session_vars["error_element"]);
-        
-        return $felm;
-    } // getErrorElement
-    
+
     /**
      * Stores the error to be reported.
      *
      * @param string $message
      * The error message to be reported.
      *
-     * @param string $details
-     * The error details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @param string $related_element
+     * The error element accociated with the error.
      *
      * @param string $code
      * The error code to be reported.
      *
+     * @param string $technical_info
+     * The technical information for the error. Displaying
+     * of this part might be controlled over an option
+     * "debug_mode".
+     *
+     * @param string $file
+     * The source file where the error occured. Per default, the file where the adding error called.
+     *
+     * @param string $line
+     * The source file line where the error occured. Per default, the file line where the adding error called.
+     *
      * @return void
      *
+     * @see MessageManager::addWarning()
+     * @see MessageManager::addProgWarning()
+     * @see MessageManager::addDebugMessage()
+     * @see MessageManager::addInfoMessage()
+     * @see MessageManager::addBubbleMessage()
      * @see MessageManager::getErrors()
+     * @see MessageManager::hasErrors()
      * @see MessageManager::clearErrors()
-     * @see MessageManager::errorsExist()
      *
      * @author Oleg Schildt
      */
-    public function setError($message, $details = "", $code = "")
+    public function addError($message, $details = [], $related_element = "", $code = "", $technical_info = "", $file = "", $line = "")
     {
         if (empty($message)) {
             return;
         }
-        
-        // we keep messages in the session
-        // until we are sure they are shown
-        // otherwise some messages may be lost
-        // because of redirection
-        self::$session_vars["errors"][$message] = ["message" => $message, "details" => $details, "code" => $code];
-    } // setError
-    
+
+        if (empty($file) || empty($line)) {
+            $backfiles = debug_backtrace();
+
+            if (empty($file)) {
+                $file = empty($backfiles[0]['file']) ? "" : $backfiles[0]['file'];
+            }
+
+            if (empty($line)) {
+                $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
+            }
+        }
+
+        if (!$this->debug_mode) {
+            $technical_info = "";
+            $file = "";
+            $line = "";
+        }
+
+        $this->messages["errors"][$message . implode("#", $details)] = [
+            "message" => $message,
+            "details" => $details,
+            "related_element" => $related_element,
+            "code" => $code,
+            "technical_info" => $technical_info,
+            "file" => $file,
+            "line" => $line
+        ];
+    } // addError
+
     /**
      * Clears the stored error messages.
      *
      * @return void
      *
-     * @see MessageManager::setError()
      * @see MessageManager::clearWarnings()
      * @see MessageManager::clearProgWarnings()
      * @see MessageManager::clearDebugMessages()
-     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearInfoMessages()
+     * @see MessageManager::clearBubbleMessages()
      * @see MessageManager::clearAll()
+     * @see MessageManager::addError()
      *
      * @author Oleg Schildt
      */
     public function clearErrors()
     {
-        unset(self::$session_vars["errors"]);
+        unset($this->messages["errors"]);
     } // clearErrors
-    
+
     /**
      * Checks whether a stored error message exist.
      *
      * @return boolean
      * Returns true if the stored error message exists, otherwise false.
      *
-     * @see MessageManager::setError()
-     * @see MessageManager::warningsExist()
-     * @see MessageManager::progWarningsExist()
-     * @see MessageManager::debugMessageExists()
-     * @see MessageManager::infosExist()
+     * @see MessageManager::hasWarnings()
+     * @see MessageManager::hasProgWarnings()
+     * @see MessageManager::hasDebugMessages()
+     * @see MessageManager::hasInfoMessages()
+     * @see MessageManager::hasBubbleMessages()
+     * @see MessageManager::getErrors()
+     * @see MessageManager::addError()
      *
      * @author Oleg Schildt
      */
-    public function errorsExist()
+    public function hasErrors()
     {
-        return (isset(self::$session_vars["errors"]) && count(self::$session_vars["errors"]) > 0);
-    } // errorsExist
-    
+        return (isset($this->messages["errors"]) && count($this->messages["errors"]) > 0);
+    } // hasErrors
+
     /**
      * Returns the array of errors if any have been stored.
      *
@@ -359,98 +199,107 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of errors if any have been stored.
      *
-     * @see MessageManager::setError()
      * @see MessageManager::getWarnings()
      * @see MessageManager::getProgWarnings()
      * @see MessageManager::getDebugMessages()
-     * @see MessageManager::getInfos()
+     * @see MessageManager::getInfoMessages()
+     * @see MessageManager::getBubbleMessages()
+     * @see MessageManager::hasErrors()
+     * @see MessageManager::addError()
      *
      * @author Oleg Schildt
      */
     public function getErrors()
     {
-        // we keep messages in the session
-        // until we are sure they are shown (calling get... means they are being shown)
-        // otherwise some messages may be lost
-        // because of redirection
-        if (!$this->errorsExist()) {
+        if (!$this->hasErrors()) {
             return [];
         }
-        
-        return $this->extractMessagesForDisplay(self::$session_vars["errors"]);
+
+        return $this->getMessages($this->messages["errors"]);
     } // getErrors
-    
+
     /**
      * Stores the warning to be reported.
      *
      * @param string $message
      * The warning message to be reported.
      *
-     * @param string $details
-     * The warning details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @param string $related_element
+     * The error element accociated with the warning.
      *
      * @return void
      *
+     * @see MessageManager::addError()
+     * @see MessageManager::addProgWarning()
+     * @see MessageManager::addDebugMessage()
+     * @see MessageManager::addInfoMessage()
+     * @see MessageManager::addBubbleMessage()
      * @see MessageManager::getWarnings()
+     * @see MessageManager::hasWarnings()
      * @see MessageManager::clearWarnings()
-     * @see MessageManager::warningsExist()
      *
      * @author Oleg Schildt
      */
-    public function setWarning($message, $details = "")
+    public function addWarning($message, $details = [], $related_element = "")
     {
         if (empty($message)) {
             return;
         }
-        
-        // we keep messages in the session
-        // until we are sure they are shown
-        // otherwise some messages may be lost
-        // because of redirection
-        self::$session_vars["warnings"][$message] = ["message" => $message, "details" => $details];
-    } // setWarning
-    
+
+        $this->messages["warnings"][$message . implode("#", $details)] = [
+            "message" => $message,
+            "details" => $details,
+            "related_element" => $related_element
+        ];
+    } // addWarning
+
     /**
      * Clears the stored warning messages.
      *
      * @return void
      *
-     * @see MessageManager::setWarning()
      * @see MessageManager::clearErrors()
      * @see MessageManager::clearProgWarnings()
      * @see MessageManager::clearDebugMessages()
-     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearInfoMessages()
+     * @see MessageManager::clearBubbleMessages()
      * @see MessageManager::clearAll()
+     * @see MessageManager::addWarning()
      *
      * @author Oleg Schildt
      */
     public function clearWarnings()
     {
-        unset(self::$session_vars["warnings"]);
+        unset($this->messages["warnings"]);
     } // clearWarnings
-    
+
     /**
      * Checks whether a stored error warning exist.
      *
      * @return boolean
      * Returns true if the stored warning message exists, otherwise false.
      *
-     * @see MessageManager::setWarning()
-     * @see MessageManager::errorsExist()
-     * @see MessageManager::progWarningsExist()
-     * @see MessageManager::debugMessageExists()
-     * @see MessageManager::infosExist()
+     * @see MessageManager::hasErrors()
+     * @see MessageManager::hasProgWarnings()
+     * @see MessageManager::hasDebugMessages()
+     * @see MessageManager::hasInfoMessages()
+     * @see MessageManager::hasBubbleMessages()
+     * @see MessageManager::getWarnings()
+     * @see MessageManager::addWarning()
      *
      * @author Oleg Schildt
      */
-    public function warningsExist()
+    public function hasWarnings()
     {
-        return (isset(self::$session_vars["warnings"]) && count(self::$session_vars["warnings"]) > 0);
-    } // warningsExist
-    
+        return (isset($this->messages["warnings"]) && count($this->messages["warnings"]) > 0);
+    } // hasWarnings
+
     /**
      * Returns the array of warnings if any have been stored.
      *
@@ -460,27 +309,25 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of warnings if any have been stored.
      *
-     * @see MessageManager::setWarning()
      * @see MessageManager::getErrors()
      * @see MessageManager::getProgWarnings()
      * @see MessageManager::getDebugMessages()
-     * @see MessageManager::getInfos()
+     * @see MessageManager::getInfoMessages()
+     * @see MessageManager::getBubbleMessages()
+     * @see MessageManager::hasWarnings()
+     * @see MessageManager::addWarning()
      *
      * @author Oleg Schildt
      */
     public function getWarnings()
     {
-        // we keep messages in the session
-        // until we are sure they are shown (calling get... means they are being shown)
-        // otherwise some messages may be lost
-        // because of redirection
-        if (!$this->warningsExist()) {
+        if (!$this->hasWarnings()) {
             return [];
         }
-        
-        return $this->extractMessagesForDisplay(self::$session_vars["warnings"]);
+
+        return $this->getMessages($this->messages["warnings"]);
     } // getWarnings
-    
+
     /**
      * Stores the programming warning to be reported.
      *
@@ -490,71 +337,95 @@ class MessageManager implements IMessageManager
      * @param string $message
      * The programming warning message to be reported.
      *
-     * @param string $details
-     * The programming warning details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param string $file
+     * The source file where the error occured. Per default, the file where the adding error called.
+     *
+     * @param string $line
+     * The source file line where the error occured. Per default, the file line where the adding error called.
      *
      * @return void
      *
+     * @see MessageManager::addError()
+     * @see MessageManager::addWarning()
+     * @see MessageManager::addDebugMessage()
+     * @see MessageManager::addInfoMessage()
+     * @see MessageManager::addBubbleMessage()
      * @see MessageManager::getProgWarnings()
+     * @see MessageManager::hasProgWarnings()
      * @see MessageManager::clearProgWarnings()
-     * @see MessageManager::progWarningsExist()
      *
      * @author Oleg Schildt
      */
-    public function setProgWarning($message, $details = "")
+    public function addProgWarning($message, $file = "", $line = "")
     {
-        if (empty($message) || !$this->progWarningsActive()) {
+        if (!$this->debug_mode) {
             return;
         }
-        
-        // we keep messages in the session
-        // until we are sure they are shown
-        // otherwise some messages may be lost
-        // because of redirection
-        self::$session_vars["prog_warnings"][$message] = ["message" => $message, "details" => $details];
-    } // setProgWarning
-    
+
+        if (empty($message)) {
+            return;
+        }
+
+        if (empty($file) || empty($line)) {
+            $backfiles = debug_backtrace();
+
+            if (empty($file)) {
+                $file = empty($backfiles[0]['file']) ? "" : $backfiles[0]['file'];
+            }
+
+            if (empty($line)) {
+                $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
+            }
+        }
+
+        $this->messages["prog_warnings"][$message] = [
+            "message" => $message,
+            "file" => $file,
+            "line" => $line
+        ];
+    } // addProgWarning
+
     /**
      * Clears the stored programming warning messages.
      *
      * @return void
      *
-     * @see MessageManager::setProgWarning()
      * @see MessageManager::clearErrors()
      * @see MessageManager::clearWarnings()
      * @see MessageManager::clearDebugMessages()
-     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearInfoMessages()
+     * @see MessageManager::clearBubbleMessages()
      * @see MessageManager::clearAll()
+     * @see MessageManager::addProgWarning()
      *
      * @author Oleg Schildt
      */
     public function clearProgWarnings()
     {
-        unset(self::$session_vars["prog_warnings"]);
+        unset($this->messages["prog_warnings"]);
     } // clearProgWarnings
-    
+
     /**
      * Checks whether a stored programming warning exist.
      *
      * @return boolean
      * Returns true if the stored programming warning message exists, otherwise false.
      *
-     * @see MessageManager::setProgWarning()
-     * @see MessageManager::errorsExist()
-     * @see MessageManager::warningsExist()
-     * @see MessageManager::debugMessageExists()
-     * @see MessageManager::infosExist()
+     * @see MessageManager::hasErrors()
+     * @see MessageManager::hasWarnings()
+     * @see MessageManager::hasDebugMessages()
+     * @see MessageManager::hasInfoMessages()
+     * @see MessageManager::hasBubbleMessages()
+     * @see MessageManager::getProgWarnings()
+     * @see MessageManager::addProgWarning()
      *
      * @author Oleg Schildt
      */
-    public function progWarningsExist()
+    public function hasProgWarnings()
     {
-        return (isset(self::$session_vars["prog_warnings"]) && count(self::$session_vars["prog_warnings"]) > 0);
-    } // progWarningsExist
-    
+        return (isset($this->messages["prog_warnings"]) && count($this->messages["prog_warnings"]) > 0);
+    } // hasProgWarnings
+
     /**
      * Returns the array of programming warnings if any have been stored.
      *
@@ -564,27 +435,25 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of programming warnings if any have been stored.
      *
-     * @see MessageManager::setProgWarning()
      * @see MessageManager::getErrors()
      * @see MessageManager::getWarnings()
      * @see MessageManager::getDebugMessages()
-     * @see MessageManager::getInfos()
+     * @see MessageManager::getInfoMessages()
+     * @see MessageManager::getBubbleMessages()
+     * @see MessageManager::hasProgWarnings()
+     * @see MessageManager::addProgWarning()
      *
      * @author Oleg Schildt
      */
     public function getProgWarnings()
     {
-        // we keep messages in the session
-        // until we are sure they are shown (calling get... means they are being shown)
-        // otherwise some messages may be lost
-        // because of redirection
-        if (!$this->progWarningsExist()) {
+        if (!$this->hasProgWarnings()) {
             return [];
         }
-        
-        return $this->extractMessagesForDisplay(self::$session_vars["prog_warnings"]);
+
+        return $this->getMessages($this->messages["prog_warnings"]);
     } // getProgWarnings
-    
+
     /**
      * Stores the debugging message to be reported.
      *
@@ -593,73 +462,103 @@ class MessageManager implements IMessageManager
      * e.g. to the browser console or in a lightbox.
      *
      * @param string $message
-     * The debugging message message to be reported.
+     * The debugging message to be reported.
      *
-     * @param string $details
-     * The debugging message details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param string $file
+     * The source file where the debug output occured. Per default, the file where the debug output called.
+     *
+     * @param string $line
+     * The source file line where the debug output occured. Per default, the file line where the debug output called.
      *
      * @return void
      *
+     * @see MessageManager::addError()
+     * @see MessageManager::addWarning()
+     * @see MessageManager::addProgWarning()
+     * @see MessageManager::addInfoMessage()
+     * @see MessageManager::addBubbleMessage()
      * @see MessageManager::getDebugMessages()
+     * @see MessageManager::hasDebugMessages()
      * @see MessageManager::clearDebugMessages()
-     * @see MessageManager::debugMessageExists()
      *
      * @author Oleg Schildt
      */
-    public function setDebugMessage($message, $details = "")
+    public function addDebugMessage($message, $file = "", $line = "")
     {
+        if (!$this->debug_mode) {
+            return;
+        }
+
         if (empty($message)) {
             return;
         }
-        
-        // we keep messages in the session
-        // until we are sure they are shown
-        // otherwise some messages may be lost
-        // because of redirection
-        self::$session_vars["debug"][$message] = ["message" => $message, "details" => $details];
-    } // setDebugMessage
-    
+
+
+        if (empty($file) || empty($line)) {
+            $backfiles = debug_backtrace();
+
+            if (empty($file)) {
+                $file = empty($backfiles[0]['file']) ? "" : $backfiles[0]['file'];
+            }
+
+            if (empty($line)) {
+                $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
+            }
+        }
+
+        if (!$this->write_source_file_and_line_by_debug) {
+            $file = "";
+            $line = "";
+        }
+
+        $this->messages["debug_messages"][$message] = [
+            "message" => $message,
+            "file" => $file,
+            "line" => $line
+        ];
+    } // addDebugMessage
+
     /**
      * Clears the stored debugging messages.
      *
      * @return void
      *
-     * @see MessageManager::setDebugMessage()
      * @see MessageManager::clearErrors()
      * @see MessageManager::clearWarnings()
      * @see MessageManager::clearProgWarnings()
-     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearInfoMessages()
+     * @see MessageManager::clearBubbleMessages()
      * @see MessageManager::clearAll()
+     * @see MessageManager::addDebugMessage()
      *
      * @author Oleg Schildt
      */
     public function clearDebugMessages()
     {
-        unset(self::$session_vars["debug"]);
+        unset($this->messages["debug_messages"]);
     } // clearDebugMessages
-    
+
     /**
      * Checks whether a stored debugging message exist.
      *
      * @return boolean
      * Returns true if the stored debugging message exists, otherwise false.
      *
-     * @see MessageManager::setDebugMessage()
-     * @see MessageManager::errorsExist()
-     * @see MessageManager::warningsExist()
-     * @see MessageManager::progWarningsExist()
-     * @see MessageManager::infosExist()
+     * @see MessageManager::hasErrors()
+     * @see MessageManager::hasWarnings()
+     * @see MessageManager::hasProgWarnings()
+     * @see MessageManager::hasInfoMessages()
+     * @see MessageManager::hasBubbleMessages()
+     * @see MessageManager::getDebugMessages()
+     * @see MessageManager::addDebugMessage()
      *
      * @author Oleg Schildt
      */
-    public function debugMessageExists()
+    public function hasDebugMessages()
     {
-        return (isset(self::$session_vars["debug"]) && count(self::$session_vars["debug"]) > 0);
-    } // debugMessageExists
-    
+        return (isset($this->messages["debug_messages"]) && count($this->messages["debug_messages"]) > 0);
+    } // hasDebugMessages
+
     /**
      * Returns the array of debugging messages if any have been stored.
      *
@@ -669,106 +568,107 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of debugging messages if any have been stored.
      *
-     * @see MessageManager::setDebugMessage()
      * @see MessageManager::getErrors()
      * @see MessageManager::getWarnings()
      * @see MessageManager::getProgWarnings()
-     * @see MessageManager::getInfos()
+     * @see MessageManager::getInfoMessages()
+     * @see MessageManager::getBubbleMessages()
+     * @see MessageManager::hasDebugMessages()
+     * @see MessageManager::addDebugMessage()
      *
      * @author Oleg Schildt
      */
     public function getDebugMessages()
     {
-        // we keep messages in the session
-        // until we are sure they are shown (calling get... means they are being shown)
-        // otherwise some messages may be lost
-        // because of redirection
-        if (!$this->debugMessageExists()) {
+        if (!$this->hasDebugMessages()) {
             return [];
         }
-        
-        return $this->extractMessagesForDisplay(self::$session_vars["debug"]);
+
+        return $this->getMessages($this->messages["debug_messages"]);
     } // getDebugMessages
-    
+
     /**
      * Stores the information message to be reported.
      *
      * @param string $message
      * The information message to be reported.
      *
-     * @param string $details
-     * The information message details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
-     * @param boolean $auto_hide
-     * The flag that controls whether the message box should be closed
-     * automatically after a time defined by the initialization.
+     * @param boolean $autoclose
+     * The flag that controls whether the message box should be closed automatically after a time.
      *
      * @return void
      *
-     * @see MessageManager::getInfos()
-     * @see MessageManager::clearInfos()
-     * @see MessageManager::infosExist()
+     * @see MessageManager::addError()
+     * @see MessageManager::addWarning()
+     * @see MessageManager::addProgWarning()
+     * @see MessageManager::addDebugMessage()
+     * @see MessageManager::addBubbleMessage()
+     * @see MessageManager::getInfoMessages()
+     * @see MessageManager::hasInfoMessages()
+     * @see MessageManager::clearInfoMessages()
      *
      * @author Oleg Schildt
      */
-    public function setInfo($message, $details = "", $auto_hide = false)
+    public function addInfoMessage($message, $details = [], $autoclose = false)
     {
         if (empty($message)) {
             return;
         }
-        
-        // we keep messages in the session
-        // until we are sure they are shown
-        // otherwise some messages may be lost
-        // because of redirection
-        self::$session_vars["infos"][$message] = [
+
+        $this->messages["info_messages"][$message . implode("#", $details)] = [
             "message" => $message,
             "details" => $details,
-            "auto_hide" => $auto_hide
+            "autoclose" => $autoclose
         ];
-    } // setInfo
-    
+    } // addInfoMessage
+
     /**
      * Clears the stored information messages.
      *
      * @return void
      *
-     * @see MessageManager::setInfo()
      * @see MessageManager::clearErrors()
      * @see MessageManager::clearWarnings()
      * @see MessageManager::clearProgWarnings()
      * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::clearBubbleMessages()
      * @see MessageManager::clearAll()
+     * @see MessageManager::addInfoMessage()
      *
      * @author Oleg Schildt
      */
-    public function clearInfos()
+    public function clearInfoMessages()
     {
-        unset(self::$session_vars["infos"]);
-    } // clearInfos
-    
+        unset($this->messages["info_messages"]);
+    } // clearInfoMessages
+
     /**
      * Checks whether an information message exist.
      *
      * @return boolean
      * Returns true if the information message exists, otherwise false.
      *
-     * @see MessageManager::setInfo()
-     * @see MessageManager::errorsExist()
-     * @see MessageManager::warningsExist()
-     * @see MessageManager::progWarningsExist()
-     * @see MessageManager::debugMessageExists()
+     * @see MessageManager::hasErrors()
+     * @see MessageManager::hasWarnings()
+     * @see MessageManager::hasProgWarnings()
+     * @see MessageManager::hasDebugMessages()
+     * @see MessageManager::hasBubbleMessages()
+     * @see MessageManager::getInfoMessages()
+     * @see MessageManager::addInfoMessage()
      *
      * @author Oleg Schildt
      */
-    public function infosExist()
+    public function hasInfoMessages()
     {
-        return (isset(self::$session_vars["infos"]) && count(self::$session_vars["infos"]) > 0);
-    } // infosExist
-    
+        return (isset($this->messages["info_messages"]) && count($this->messages["info_messages"]) > 0);
+    } // hasInfoMessages
+
     /**
      * Returns the array of information messages if any have been stored.
      *
@@ -778,27 +678,136 @@ class MessageManager implements IMessageManager
      * @return array
      * Returns the array of information messages if any have been stored.
      *
-     * @see MessageManager::setInfo()
      * @see MessageManager::getErrors()
      * @see MessageManager::getWarnings()
      * @see MessageManager::getProgWarnings()
      * @see MessageManager::getDebugMessages()
+     * @see MessageManager::getBubbleMessages()
+     * @see MessageManager::hasInfoMessages()
+     * @see MessageManager::addInfoMessage()
      *
      * @author Oleg Schildt
      */
-    public function getInfos()
+    public function getInfoMessages()
     {
-        // we keep messages in the session
-        // until we are sure they are shown (calling get... means they are being shown)
-        // otherwise some messages may be lost
-        // because of redirection
-        if (!$this->infosExist()) {
+        if (!$this->hasInfoMessages()) {
             return [];
         }
-        
-        return $this->extractMessagesForDisplay(self::$session_vars["infos"]);
-    } // getInfos
-    
+
+        return $this->getMessages($this->messages["info_messages"]);
+    } // getInfoMessages
+
+    /**
+     * Stores the information message to be reported.
+     *
+     * @param string $message
+     * The information message to be reported.
+     *
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @param boolean $autoclose
+     * The flag that controls whether the message box should be closed
+     * automatically after a time.
+     *
+     * @return void
+     *
+     * @see MessageManager::addError()
+     * @see MessageManager::addWarning()
+     * @see MessageManager::addProgWarning()
+     * @see MessageManager::addDebugMessage()
+     * @see MessageManager::addInfoMessage()
+     * @see MessageManager::getBubbleMessages()
+     * @see MessageManager::hasBubbleMessages()
+     * @see MessageManager::clearBubbleMessages()
+     *
+     * @author Oleg Schildt
+     */
+    public function addBubbleMessage($message, $details = [], $autoclose = true)
+    {
+        if (empty($message)) {
+            return;
+        }
+
+        $this->messages["bubble_messages"][$message] = [
+            "message" => $message,
+            "details" => $details,
+            "autoclose" => $autoclose
+        ];
+    } // addBubbleMessage
+
+    /**
+     * Clears the stored information messages.
+     *
+     * @return void
+     *
+     * @see MessageManager::clearErrors()
+     * @see MessageManager::clearWarnings()
+     * @see MessageManager::clearProgWarnings()
+     * @see MessageManager::clearDebugMessages()
+     * @see MessageManager::clearInfoMessages()
+     * @see MessageManager::clearAll()
+     * @see MessageManager::addBubbleMessage()
+     *
+     * @author Oleg Schildt
+     */
+    public function clearBubbleMessages()
+    {
+        unset($this->messages["bubble_messages"]);
+    } // clearBubbleMessages
+
+    /**
+     * Checks whether an information message exist.
+     *
+     * @return boolean
+     * Returns true if the information message exists, otherwise false.
+     *
+     * @see MessageManager::hasErrors()
+     * @see MessageManager::hasWarnings()
+     * @see MessageManager::hasProgWarnings()
+     * @see MessageManager::hasDebugMessages()
+     * @see MessageManager::hasInfoMessages()
+     * @see MessageManager::getBubbleMessages()
+     * @see MessageManager::addBubbleMessage()
+     *
+     * @author Oleg Schildt
+     */
+    public function hasBubbleMessages()
+    {
+        return (isset($this->messages["bubble_messages"]) && count($this->messages["bubble_messages"]) > 0);
+    } // hasBubbleMessages
+
+    /**
+     * Returns the array of information messages if any have been stored.
+     *
+     * When the messages are requested, it is assumed they will be displayed. Thus,
+     * the message array is cleared to avoid displaying of the same messages twice.
+     *
+     * @return array
+     * Returns the array of information messages if any have been stored.
+     *
+     * @see MessageManager::getErrors()
+     * @see MessageManager::getWarnings()
+     * @see MessageManager::getProgWarnings()
+     * @see MessageManager::getDebugMessages()
+     * @see MessageManager::getInfoMessages()
+     * @see MessageManager::hasBubbleMessages()
+     * @see MessageManager::addBubbleMessage()
+     *
+     * @author Oleg Schildt
+     */
+    public function getBubbleMessages()
+    {
+        if (!$this->hasBubbleMessages()) {
+            return [];
+        }
+
+        return $this->getMessages($this->messages["bubble_messages"]);
+    } // getBubbleMessages
+
     /**
      * Clears all stored messages and active elements.
      *
@@ -808,7 +817,8 @@ class MessageManager implements IMessageManager
      * @see MessageManager::clearWarnings()
      * @see MessageManager::clearProgWarnings()
      * @see MessageManager::clearDebugMessages()
-     * @see MessageManager::clearInfos()
+     * @see MessageManager::clearInfoMessages()
+     * @see MessageManager::clearBubbleMessages()
      *
      * @author Oleg Schildt
      */
@@ -818,183 +828,23 @@ class MessageManager implements IMessageManager
         $this->clearWarnings();
         $this->clearProgWarnings();
         $this->clearDebugMessages();
-        $this->clearInfos();
-        
-        unset(self::$session_vars["focus_element"]);
-        unset(self::$session_vars["error_element"]);
-        unset(self::$session_vars["active_tab"]);
+        $this->clearInfoMessages();
+        $this->clearBubbleMessages();
     } // clearAll
-    
-    /**
-     * Returns the auto hide time in seconds for the info
-     * messages with flag auto_hide = true.
-     *
-     * @return int
-     * Returns the auto hide time in seconds for the info
-     * messages with flag auto_hide = true.
-     *
-     * @author Oleg Schildt
-     */
-    public function getAutoHideTime()
-    {
-        return self::$auto_hide_time;
-    } // getAutoHideTime
-    
-    /**
-     * Add all stored existing messages to the response.
-     *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * @param string &$response
-     * The target array where the messages should be added.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    public function addMessagesToResponse(&$response)
-    {
-        if ($this->infosExist()) {
-            $response["INFO_MESSAGES"] = $this->getInfos();
-        }
-        
-        if ($this->warningsExist()) {
-            $response["WARNING_MESSAGES"] = $this->getWarnings();
-        }
-        
-        if ($this->errorsExist()) {
-            $response["ERROR_MESSAGES"] = $this->getErrors();
-        }
-        
-        if ($this->progWarningsExist()) {
-            $response["PROG_WARNINGS"] = $this->getProgWarnings();
-        }
-        
-        if ($this->debugMessageExists()) {
-            $response["DEBUG_MESSAGES"] = $this->getDebugMessages();
-        }
-        
-        $response["AUTO_HIDE_TIME"] = $this->getAutoHideTime();
-        
-        $response["FOCUS_ELEMENT"] = $this->getFocusElement();
-        
-        $response["ACTIVE_TAB"] = $this->getActiveTab();
-        
-        $response["ERROR_ELEMENT"] = $this->getErrorElement();
-    } // addMessagesToResponse
-    
-    /**
-     * Returns the state whether the display of the message details is active or not.
-     *
-     * If the display of the message details is active, they are shown in the frontend.
-     *
-     * The message details are generally managed over the setting show_prog_warning.
-     * But you can also temporarily disable message details, e.g. to avoid displaying of
-     * unnecessary warnings when you make a check that can produce a programming warning,
-     * but it is a controlled noticed and should not bother the user.
-     *
-     * @return boolean
-     * Returns the state whether the display of the message details is active or not.
-     *
-     * @see MessageManager::enableDetails()
-     * @see MessageManager::disableDetails()
-     *
-     * @author Oleg Schildt
-     */
-    public function detailsActive()
-    {
-        return empty(self::$details_disabled);
-    } // detailsActiveActive
-    
-    /**
-     * Enables the display of the message details.
-     *
-     * If the display of the message details is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see MessageManager::detailsActive()
-     * @see MessageManager::disableDetails()
-     *
-     * @author Oleg Schildt
-     */
-    public function enableDetails()
-    {
-        self::$details_disabled = false;
-    } // enableDetails
-    
-    /**
-     * Disables the display of the message details.
-     *
-     * If the display of the message details is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see MessageManager::detailsActive()
-     * @see MessageManager::enableDetails()
-     *
-     * @author Oleg Schildt
-     */
-    public function disableDetails()
-    {
-        self::$details_disabled = true;
-    } // disableDetails
 
     /**
-     * Returns the state whether the display of the programming warnings is active or not.
+     * This auxiliary function returns the messages of the desired type.
      *
-     * If the display of the programming warnings is active, they are shown in the frontend.
+     * @param array &$messages
+     * The messages to be retrieved.
      *
-     * The programming warnings are generally managed over the setting show_prog_warning.
-     * But you can also temporarily disable programming warnings, e.g. to avoid displaying of
-     * unnecessary warnings when you make a check that can produce a programming warning,
-     * but it is a controlled noticed and should not bother the user.
-     *
-     * @return boolean
-     * Returns the state whether the display of the programming warnings is active or not.
-     *
-     * @see MessageManager::enableProgWarnings()
-     * @see MessageManager::disableProgWarnings()
+     * @return array
+     * Returns the array of messages.
      *
      * @author Oleg Schildt
      */
-    public function progWarningsActive()
+    protected function getMessages(&$messages)
     {
-        return empty(self::$prog_warnings_disabled);
-    } // detailsActive
-    
-    /**
-     * Enables the display of the programming warnings.
-     *
-     * If the display of the programming warnings is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see MessageManager::progWarningsActive()
-     * @see MessageManager::disableProgWarnings()
-     *
-     * @author Oleg Schildt
-     */
-    public function enableProgWarnings()
-    {
-        self::$prog_warnings_disabled = false;
-    } // enableProgWarnings
-    
-    /**
-     * Disables the display of the programming warnings.
-     *
-     * If the display of the programming warnings is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see MessageManager::progWarningsActive()
-     * @see MessageManager::enableProgWarnings()
-     *
-     * @author Oleg Schildt
-     */
-    public function disableProgWarnings()
-    {
-        self::$prog_warnings_disabled = true;
-    } // disableProgWarnings
+        return array_values($messages);
+    } // getMessages
 } // MessageManager

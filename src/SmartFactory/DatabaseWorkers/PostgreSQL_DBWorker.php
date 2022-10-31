@@ -152,20 +152,21 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return string
      * Returns the data read from the largeobject.
-     * 
+     *
      * @used_by PostgreSQL_DBWorker::field_by_name()
      * @used_by PostgreSQL_DBWorker::field_by_num()
      *
      * @author Oleg Schildt
      */
-    protected function read_large_object($oid) {
+    protected function read_large_object($oid)
+    {
         $ohandle = @pg_lo_open($this->connection, $oid, "r");
-        if(empty($ohandle)) {
-            throw new \Exception("Large object id is invalid!", DBWorker::ERR_STREAM_ERROR);
+        if (empty($ohandle)) {
+            throw new DBWorkerException("Large object id is invalid!", DBWorker::ERR_STREAM_ERROR);
         }
 
         $data = "";
-        while($chunk = @pg_lo_read($ohandle, 8192)) {
+        while ($chunk = @pg_lo_read($ohandle, 8192)) {
             $data .= $chunk;
         }
 
@@ -185,8 +186,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * - $parameters["db_password"] - user password.
      * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
      *
-     * @return boolean
-     * The method returns true upon successful initialization, otherwise false.
+     * @return void
      *
      * @author Oleg Schildt
      */
@@ -210,8 +210,6 @@ class PostgreSQL_DBWorker extends DBWorker
         if (!empty($parameters["read_only"])) {
             $this->read_only = $parameters["read_only"];
         }
-
-        return true;
     } // init
 
     /**
@@ -303,7 +301,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see DBWorker::check_connection()
@@ -314,13 +312,17 @@ class PostgreSQL_DBWorker extends DBWorker
      */
     public function connect()
     {
+        if ($this->is_connected()) {
+            return;
+        }
+
         if (!$this->connection) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                throw new \Exception("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
+                throw new DBWorkerException("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
             }
 
             if (empty($this->db_name)) {
-                throw new \Exception("The database must be specified immediately by the connection!", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
+                throw new DBWorkerException("The database must be specified immediately by the connection!", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
             }
 
             $connection_string = "connect_timeout=20 options='--client_encoding=UTF8' ";
@@ -348,7 +350,7 @@ class PostgreSQL_DBWorker extends DBWorker
             $this->connection = null;
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_CONNECTION_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
         }
     } // connect
 
@@ -360,14 +362,14 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
     public function use_database($db_name)
     {
-        throw new \Exception("The database must be specified immediately by the connection!", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
+        throw new DBWorkerException("The database must be specified immediately by the connection!", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
     } // use_database
 
     /**
@@ -418,7 +420,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -432,7 +434,7 @@ class PostgreSQL_DBWorker extends DBWorker
         $this->result = @pg_query($this->connection, $query_string);
         if (!$this->result) {
             trigger_error(pg_last_error() . "\n\n" . $query_string, E_USER_ERROR);
-            throw new \Exception(pg_last_error() . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException(pg_last_error() . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         }
     } // execute_query
 
@@ -444,7 +446,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::execute_prepared_query()
@@ -472,7 +474,7 @@ class PostgreSQL_DBWorker extends DBWorker
         $this->statement = @pg_prepare($this->connection, "", $query_string);
         if (!$this->statement) {
             trigger_error(pg_last_error($this->connection) . "\n\n" . $query_string, E_USER_ERROR);
-            throw new \Exception(pg_last_error($this->connection) . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException(pg_last_error($this->connection) . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         }
     } // prepare_query
 
@@ -497,7 +499,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -507,7 +509,7 @@ class PostgreSQL_DBWorker extends DBWorker
         $this->check_connection();
 
         if (!is_resource($stream)) {
-            throw new \Exception("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
+            throw new DBWorkerException("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
         }
 
         if ($this->statement) {
@@ -523,25 +525,25 @@ class PostgreSQL_DBWorker extends DBWorker
         $this->statement = @pg_prepare($this->connection, "", $query_string);
         if (!$this->statement) {
             trigger_error(pg_last_error($this->connection) . "\n\n" . $query_string, E_USER_ERROR);
-            throw new \Exception(pg_last_error($this->connection) . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException(pg_last_error($this->connection) . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         }
 
         $this->result = @pg_execute($this->connection, "", [$oid]);
         if (!$this->result) {
-            trigger_error(pg_last_error() . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception(pg_last_error() . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error(pg_last_error() . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException(pg_last_error() . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
-       $ohandle = @pg_lo_open($this->connection, $oid, "w");
-        if(empty($ohandle)) {
-            throw new \Exception("Error writing from stream to PG large object!", DBWorker::ERR_STREAM_ERROR);
+        $ohandle = @pg_lo_open($this->connection, $oid, "w");
+        if (empty($ohandle)) {
+            throw new DBWorkerException("Error writing from stream to PG large object!", DBWorker::ERR_STREAM_ERROR);
         }
 
         while (!feof($stream)) {
-            if(!@pg_lo_write($ohandle, fread($stream, 8192))) {
+            if (!@pg_lo_write($ohandle, fread($stream, 8192))) {
                 fclose($stream);
                 @pg_lo_close($ohandle);
-                throw new \Exception("Error writing from stream to PG large object!", DBWorker::ERR_STREAM_ERROR);
+                throw new DBWorkerException("Error writing from stream to PG large object!", DBWorker::ERR_STREAM_ERROR);
             }
         }
 
@@ -557,7 +559,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::prepare_query()
@@ -570,7 +572,7 @@ class PostgreSQL_DBWorker extends DBWorker
         $this->check_connection();
 
         if (empty($this->prepared_query) || empty($this->statement)) {
-            throw new \Exception("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
         }
 
         if (count($args) == 1 && is_array($args[0])) {
@@ -581,8 +583,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         $this->result = @pg_execute($this->connection, "", $args);
         if (!$this->result) {
-            trigger_error(pg_last_error() . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception(pg_last_error() . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error(pg_last_error() . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException(pg_last_error() . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
     } // execute_prepared_query
 
@@ -596,7 +598,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -650,7 +652,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::prepare_query()
@@ -678,7 +680,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::is_connected()
@@ -715,7 +717,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::commit_transaction()
@@ -735,7 +737,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::start_transaction()
@@ -755,7 +757,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::start_transaction()
@@ -777,7 +779,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -810,7 +812,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @return int
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -827,7 +829,7 @@ class PostgreSQL_DBWorker extends DBWorker
             $this->free_result();
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
 
         $id = $this->field_by_name("iid");
@@ -858,7 +860,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * $dbw->free_result();
      * ```
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -869,8 +871,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         if (!$this->result) {
             $err = "Result is empty!";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         $this->row = @pg_fetch_array($this->result, null, PGSQL_ASSOC);
@@ -917,7 +919,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the fetched rows. It might be also 0.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -937,8 +939,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         if (!$this->result) {
             $err = "Result is empty!";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         while ($row = @pg_fetch_array($this->result, null, PGSQL_ASSOC)) {
@@ -978,7 +980,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @return int|false
      * Returns the number of the rows fetched by the last retrieving query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -989,8 +991,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         if (!$this->result || !is_object($this->result)) {
             $err = "Result is empty!";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return pg_affected_rows($this->result);
@@ -1002,7 +1004,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the rows affected by the last modification query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1013,8 +1015,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         if (!$this->result || !is_object($this->result)) {
             $err = "Result is empty!";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return pg_affected_rows($this->result);
@@ -1027,7 +1029,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * Returns the number of the fields in the result of the last retrieving query. In the case
      * of any error returns false.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1038,8 +1040,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         if (!$this->result || !is_object($this->result)) {
             $err = "Result is empty!";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return pg_num_fields($this->result);
@@ -1058,7 +1060,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::field_by_num()
@@ -1079,7 +1081,7 @@ class PostgreSQL_DBWorker extends DBWorker
             return null;
         }
 
-        if($type == DBWorker::DB_LARGE_OBJECT_STREAM) {
+        if ($type == DBWorker::DB_LARGE_OBJECT_STREAM) {
             return $this->read_large_object($this->row[$name]);
         }
 
@@ -1103,7 +1105,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::field_by_name()
@@ -1125,7 +1127,7 @@ class PostgreSQL_DBWorker extends DBWorker
             return null;
         }
 
-        if($type == DBWorker::DB_LARGE_OBJECT_STREAM) {
+        if ($type == DBWorker::DB_LARGE_OBJECT_STREAM) {
             return $this->read_large_object($this->row[$this->field_names[$num]]);
         }
 
@@ -1146,7 +1148,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number as an object with properties. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::field_by_num()
@@ -1181,8 +1183,9 @@ class PostgreSQL_DBWorker extends DBWorker
      * - $info["size"] - size of the field.
      * - $info["binary"] - whether the filed is binary.
      * - $info["numeric"] - whether the filed is numeric.
+     * - $info["datetime"] - whether the filed is datetime.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::field_by_num()
@@ -1196,8 +1199,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         if (!$this->result) {
             $err = "Result is empty!";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         $field_info = [];
@@ -1207,8 +1210,8 @@ class PostgreSQL_DBWorker extends DBWorker
         $field_info["size"] = pg_field_size($this->result, $num);
 
         $field_info["binary"] = ($field_info["type"] == "bytea") ? 1 : 0;
-        $field_info["numeric"] = (stripos($field_info["type"], "int") || stripos($field_info["type"], "float") ||
-            stripos($field_info["type"], "numeric")) ? 1 : 0;
+        $field_info["numeric"] = ($field_info["type"] == "int" || $field_info["type"] == "float" || $field_info["type"] == "numeric") ? 1 : 0;
+        $field_info["datetime"] = ($field_info["type"] == "timestamp" || $field_info["type"] == "date") ? 1 : 0;
 
         return $field_info;
     } // field_info_by_num
@@ -1248,7 +1251,11 @@ class PostgreSQL_DBWorker extends DBWorker
      */
     public function format_date($date)
     {
-        return date("Y-m-d", $date);
+        if (empty($date)) {
+            return $this->quotes_or_null("");
+        }
+
+        return $this->quotes_or_null(date("Y-m-d", $date));
     } // format_date
 
     /**
@@ -1267,7 +1274,11 @@ class PostgreSQL_DBWorker extends DBWorker
      */
     public function format_datetime($datetime)
     {
-        return date("Y-m-d H:i:s", $datetime);
+        if (empty($datetime)) {
+            return $this->quotes_or_null("");
+        }
+
+        return $this->quotes_or_null(date("Y-m-d H:i:s", $datetime));
     } // format_datetime
 
     /**
@@ -1289,24 +1300,55 @@ class PostgreSQL_DBWorker extends DBWorker
     {
         if (empty($value) && (string)$value != "0") {
             return "NULL";
-        } else switch ($type) {
-            case DBWorker::DB_NUMBER:
-                return $this->escape($value);
-
-            case DBWorker::DB_DATETIME:
-                return "'" . $this->format_datetime($value) . "'";
-
-            case DBWorker::DB_DATE:
-                return "'" . $this->format_date($value) . "'";
-
-            case DBWorker::DB_GEOMETRY:
-                return "ST_GeomFromText('" . $this->escape($value) . "')";
-
-            case DBWorker::DB_GEOMETRY_4326:
-                return "ST_GeomFromText('" . $this->escape($value) . "', 4326, 'axis-order=lat-long')";
-
-            default:
-                return "'" . $this->escape($value) . "'";
+        } else {
+            return match ($type) {
+                DBWorker::DB_NUMBER => $this->number_or_null($value),
+                DBWorker::DB_DATETIME => $this->format_datetime($value),
+                DBWorker::DB_DATE => $this->format_date($value),
+                default => $this->quotes_or_null($value)
+            };
         }
     } // prepare_for_query
+
+    /**
+     * Builds simple select query based on parameters.
+     *
+     * It is used for building queries with limits.
+     *
+     * @param string $where_clause
+     * The where clause that should restrict the result.
+     *
+     * @param string $order_clause
+     * The order clause to sort the results.
+     *
+     * @param int $limit
+     * The limit how many records shoud be loaded. 0 for unlimited.
+     *
+     * @return string
+     * Returns the built query.
+     *
+     * @author Oleg Schildt
+     */
+    function build_select_query($table, $fields, $where_clause, $order_clause, $limit)
+    {
+        $query = "select\n";
+
+        $query .= implode(", ", $fields) . "\n";
+
+        $query .= "from " . $table . "\n";
+
+        if (!empty($where_clause)) {
+            $query .= $where_clause . "\n";
+        }
+
+        if (!empty($where_clause)) {
+            $query .= $order_clause . "\n";
+        }
+
+        if (!empty($limit) && is_numeric($limit)) {
+            $query .= "limit " . $limit . "\n";
+        }
+
+        return $query;
+    } // build_select_query
 } // PostgreSQL_DBWorker

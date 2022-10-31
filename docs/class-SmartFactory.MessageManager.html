@@ -132,7 +132,12 @@
 
 
 
+<h2>Known inheritances</h2>
+<div class="item_list">
 
+<a href='class-SmartFactory.SessionMessageManager.html'>\SmartFactory\SessionMessageManager</a><br>
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -184,56 +189,43 @@
       
       <tr>
           <td>
-              <div style='float:left'><a href="#$auto_hide_time">$auto_hide_time</a></div>
+              <div style='float:left'><a href="#$debug_mode">$debug_mode</a></div>
 
               <div style='float:right'>
-              <span class="label label-primary">static</span>
+              
               <span class='label label-warning'>protected</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the auto hide time
-for the info messages with flag auto_hide = true.</p>
+              <p>Internal variable for storing the state whether technical details, programmer warnings and debug infromation are also sent to the client.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$details_disabled">$details_disabled</a></div>
+              <div style='float:left'><a href="#$messages">$messages</a></div>
 
               <div style='float:right'>
-              <span class="label label-primary">static</span>
+              
               <span class='label label-warning'>protected</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the state of programming warnings - active or not.</p>
+              <p>Internal variable for storing the messages.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$prog_warnings_disabled">$prog_warnings_disabled</a></div>
+              <div style='float:left'><a href="#$write_source_file_and_line_by_debug">$write_source_file_and_line_by_debug</a></div>
 
               <div style='float:right'>
-              <span class="label label-primary">static</span>
+              
               <span class='label label-warning'>protected</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the state of programming warnings - active or not.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#$session_vars">$session_vars</a></div>
-
-              <div style='float:right'>
-              <span class="label label-primary">static</span>
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the reference to session variables.</p>
+              <p>Internal variable for storing the flag that defines whether for each debug output the source file and
+line number are written from where it is called.</p>
           </td>
       </tr>
       
@@ -244,7 +236,7 @@ for the info messages with flag auto_hide = true.</p>
       
       <tr>
           <td>
-              <div style='float:left'><a href="#__construct">__construct()</a></div>
+              <div style='float:left'><a href="#addBubbleMessage">addBubbleMessage()</a></div>
 
               <div style='float:right'>
               
@@ -253,11 +245,11 @@ for the info messages with flag auto_hide = true.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Constructor.</p>
+              <p>Stores the information message to be reported.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#addMessagesToResponse">addMessagesToResponse()</a></div>
+              <div style='float:left'><a href="#addDebugMessage">addDebugMessage()</a></div>
 
               <div style='float:right'>
               
@@ -266,7 +258,59 @@ for the info messages with flag auto_hide = true.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Add all stored existing messages to the response.</p>
+              <p>Stores the debugging message to be reported.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addError">addError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the error to be reported.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addInfoMessage">addInfoMessage()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the information message to be reported.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addProgWarning">addProgWarning()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the programming warning to be reported.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addWarning">addWarning()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the warning to be reported.</p>
           </td>
       </tr><tr>
           <td>
@@ -280,6 +324,19 @@ for the info messages with flag auto_hide = true.</p>
           </td>
           <td class="description_column">
               <p>Clears all stored messages and active elements.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#clearBubbleMessages">clearBubbleMessages()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Clears the stored information messages.</p>
           </td>
       </tr><tr>
           <td>
@@ -309,7 +366,7 @@ for the info messages with flag auto_hide = true.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#clearInfos">clearInfos()</a></div>
+              <div style='float:left'><a href="#clearInfoMessages">clearInfoMessages()</a></div>
 
               <div style='float:right'>
               
@@ -348,7 +405,7 @@ for the info messages with flag auto_hide = true.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#debugMessageExists">debugMessageExists()</a></div>
+              <div style='float:left'><a href="#getBubbleMessages">getBubbleMessages()</a></div>
 
               <div style='float:right'>
               
@@ -357,125 +414,7 @@ for the info messages with flag auto_hide = true.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether a stored debugging message exist.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#detailsActive">detailsActive()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the state whether the display of the message details is active or not.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#disableDetails">disableDetails()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Disables the display of the message details.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#disableProgWarnings">disableProgWarnings()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Disables the display of the programming warnings.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#enableDetails">enableDetails()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Enables the display of the message details.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#enableProgWarnings">enableProgWarnings()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Enables the display of the programming warnings.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#errorsExist">errorsExist()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Checks whether a stored error message exist.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#extractMessagesForDisplay">extractMessagesForDisplay()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>This is internal auxiliary function for preparing messags for displaying.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#getActiveTab">getActiveTab()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the tab to be activated.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#getAutoHideTime">getAutoHideTime()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the auto hide time in seconds for the info
-messages with flag auto_hide = true.</p>
+              <p>Returns the array of information messages if any have been stored.</p>
           </td>
       </tr><tr>
           <td>
@@ -492,19 +431,6 @@ messages with flag auto_hide = true.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#getErrorElement">getErrorElement()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the field to be highlighted.</p>
-          </td>
-      </tr><tr>
-          <td>
               <div style='float:left'><a href="#getErrors">getErrors()</a></div>
 
               <div style='float:right'>
@@ -518,20 +444,7 @@ messages with flag auto_hide = true.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#getFocusElement">getFocusElement()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the element to be focused.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#getInfos">getInfos()</a></div>
+              <div style='float:left'><a href="#getInfoMessages">getInfoMessages()</a></div>
 
               <div style='float:right'>
               
@@ -541,6 +454,19 @@ messages with flag auto_hide = true.</p>
           </td>
           <td class="description_column">
               <p>Returns the array of information messages if any have been stored.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getMessages">getMessages()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This auxiliary function returns the messages of the desired type.</p>
           </td>
       </tr><tr>
           <td>
@@ -570,7 +496,7 @@ messages with flag auto_hide = true.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#infosExist">infosExist()</a></div>
+              <div style='float:left'><a href="#hasBubbleMessages">hasBubbleMessages()</a></div>
 
               <div style='float:right'>
               
@@ -580,6 +506,71 @@ messages with flag auto_hide = true.</p>
           </td>
           <td class="description_column">
               <p>Checks whether an information message exist.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#hasDebugMessages">hasDebugMessages()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether a stored debugging message exist.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#hasErrors">hasErrors()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether a stored error message exist.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#hasInfoMessages">hasInfoMessages()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether an information message exist.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#hasProgWarnings">hasProgWarnings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether a stored programming warning exist.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#hasWarnings">hasWarnings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether a stored error warning exist.</p>
           </td>
       </tr><tr>
           <td>
@@ -594,212 +585,21 @@ messages with flag auto_hide = true.</p>
           <td class="description_column">
               <p>Initializes the message manager.</p>
           </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#progWarningsActive">progWarningsActive()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the state whether the display of the programming warnings is active or not.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#progWarningsExist">progWarningsExist()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Checks whether a stored programming warning exist.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setActiveTab">setActiveTab()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Sets the tab to be activated.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setDebugMessage">setDebugMessage()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Stores the debugging message to be reported.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setError">setError()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Stores the error to be reported.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setErrorElement">setErrorElement()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Sets the field to be highlighted.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setFocusElement">setFocusElement()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Sets the element to be focused.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setInfo">setInfo()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Stores the information message to be reported.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setProgWarning">setProgWarning()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Stores the programming warning to be reported.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#setWarning">setWarning()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Stores the warning to be reported.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#warningsExist">warningsExist()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Checks whether a stored error warning exist.</p>
-          </td>
       </tr>
       
   </table>
 
 
 
-<hr id="$auto_hide_time">
+<hr id="$debug_mode">
   
-  <h1>Property: MessageManager::$auto_hide_time</h1>
+  <h1>Property: MessageManager::$debug_mode</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> int <span class="php-var">$auto_hide_time</span> = <span class="php-num">3</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the auto hide time
-for the info messages with flag auto_hide = true.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  int
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#32'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getAutoHideTime'>\SmartFactory\MessageManager::getAutoHideTime()</a><br>
-  
-  
-  </div><hr id="$details_disabled">
-  
-  <h1>Property: MessageManager::$details_disabled</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> bool <span class="php-var">$details_disabled</span> = <span class="php-keyword1">false</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$debug_mode</span> = <span class="php-keyword1">false</span>;</div>
 
   
   <div class="short-description">
-  <p>Internal variable for storing the state of programming warnings - active or not.</p>
+  <p>Internal variable for storing the state whether technical details, programmer warnings and debug infromation are also sent to the client.</p>
   </div>
   
 
@@ -828,84 +628,16 @@ for the info messages with flag auto_hide = true.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#54'>SmartFactory/MessageManager.php</a>
-  </div>
+  <a href='source-SmartFactory.MessageManager.php.html#38'>SmartFactory/MessageManager.php</a>
+  </div><hr id="$messages">
   
+  <h1>Property: MessageManager::$messages</h1>
 
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#detailsActive'>\SmartFactory\MessageManager::detailsActive()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#enableDetails'>\SmartFactory\MessageManager::enableDetails()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#disableDetails'>\SmartFactory\MessageManager::disableDetails()</a><br>
-  
-  
-  </div><hr id="$prog_warnings_disabled">
-  
-  <h1>Property: MessageManager::$prog_warnings_disabled</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> bool <span class="php-var">$prog_warnings_disabled</span> = <span class="php-keyword1">false</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$messages</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
-  <p>Internal variable for storing the state of programming warnings - active or not.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  bool
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#67'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#progWarningsActive'>\SmartFactory\MessageManager::progWarningsActive()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#enableProgWarnings'>\SmartFactory\MessageManager::enableProgWarnings()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#disableProgWarnings'>\SmartFactory\MessageManager::disableProgWarnings()</a><br>
-  
-  
-  </div><hr id="$session_vars">
-  
-  <h1>Property: MessageManager::$session_vars</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$session_vars</span> = <span class="php-keyword1">null</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the reference to session variables.</p>
+  <p>Internal variable for storing the messages.</p>
   </div>
   
 
@@ -934,29 +666,27 @@ for the info messages with flag auto_hide = true.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#41'>SmartFactory/MessageManager.php</a>
-  </div>
-
-<hr id="__construct">
+  <a href='source-SmartFactory.MessageManager.php.html#29'>SmartFactory/MessageManager.php</a>
+  </div><hr id="$write_source_file_and_line_by_debug">
   
-  <h1>Method: MessageManager::__construct()</h1>
+  <h1>Property: MessageManager::$write_source_file_and_line_by_debug</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct();</div>
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$write_source_file_and_line_by_debug</span>;</div>
 
   
   <div class="short-description">
-  <p>Constructor.</p>
+  <p>Internal variable for storing the flag that defines whether for each debug output the source file and
+line number are written from where it is called.</p>
   </div>
   
 
   
 
   
-
-  
-
-  
-
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
   
 
   
@@ -975,42 +705,21 @@ for the info messages with flag auto_hide = true.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#122'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#48'>SmartFactory/MessageManager.php</a>
   </div>
-  
 
+<hr id="addBubbleMessage">
   
+  <h1>Method: MessageManager::addBubbleMessage()</h1>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="addMessagesToResponse">
-  
-  <h1>Method: MessageManager::addMessagesToResponse()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addMessagesToResponse(string &amp;<span class="php-var">$response</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addBubbleMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">true</span>) : void;</div>
 
   
   <div class="short-description">
-  <p>Add all stored existing messages to the response.</p>
+  <p>Stores the information message to be reported.</p>
   </div>
   
 
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>When the messages are requested, it is assumed they will be displayed. Thus,
-the message array is cleared to avoid displaying of the same messages twice.</p>
-  </div>
   
 
   
@@ -1029,10 +738,10 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
         
         <tr>
             <td>
-                $response
+                $message
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 string
@@ -1041,7 +750,47 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target array where the messages should be added.</p>
+                <p>The information message to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $details
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                []
+            </td>
+            <td class="description_column">
+                <p>The details might be useful if the message translations are provided on the client, not
+on the server, and the message should contain some details that may vary from case to case.
+In that case, the servers return the message id instead of final text and the details, the client
+uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $autoclose
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                true
+            </td>
+            <td class="description_column">
+                <p>The flag that controls whether the message box should be closed
+automatically after a time.</p>
             </td>
         </tr>
         
@@ -1061,7 +810,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addMessagesToResponse'>\SmartFactory\Interfaces\IMessageManager::addMessagesToResponse()</a>
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a>
   </div>
   
 
@@ -1079,11 +828,947 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#856'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#729'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getBubbleMessages'>\SmartFactory\MessageManager::getBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasBubbleMessages'>\SmartFactory\MessageManager::hasBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearBubbleMessages'>\SmartFactory\MessageManager::clearBubbleMessages()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addDebugMessage">
+  
+  <h1>Method: MessageManager::addDebugMessage()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addDebugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Stores the debugging message to be reported.</p>
   </div>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Displaying of the debugging messages might be
+implemented to simplify the debugging process,
+e.g. to the browser console or in a lightbox.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The debugging message to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $file
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file where the debug output occured. Per default, the file where the debug output called.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $line
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file line where the debug output occured. Per default, the file line where the debug output called.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#486'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasDebugMessages'>\SmartFactory\MessageManager::hasDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addError">
+  
+  <h1>Method: MessageManager::addError()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addError(string <span class="php-var">$message</span>, 
+                         <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], 
+                         string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$code</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>
+                        ) : void;
+</div>
+
+  
+  <div class="short-description">
+  <p>Stores the error to be reported.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The error message to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $details
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                []
+            </td>
+            <td class="description_column">
+                <p>The details might be useful if the message translations are provided on the client, not
+on the server, and the message should contain some details that may vary from case to case.
+In that case, the servers return the message id instead of final text and the details, the client
+uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $related_element
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The error element accociated with the error.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $code
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The error code to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $technical_info
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The technical information for the error. Displaying
+of this part might be controlled over an option
+&quot;debug_mode&quot;.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $file
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file where the error occured. Per default, the file where the adding error called.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $line
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file line where the error occured. Per default, the file line where the adding error called.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#117'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addInfoMessage">
+  
+  <h1>Method: MessageManager::addInfoMessage()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addInfoMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">false</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Stores the information message to be reported.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The information message to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $details
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                []
+            </td>
+            <td class="description_column">
+                <p>The details might be useful if the message translations are provided on the client, not
+on the server, and the message should contain some details that may vary from case to case.
+In that case, the servers return the message id instead of final text and the details, the client
+uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $autoclose
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>The flag that controls whether the message box should be closed automatically after a time.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#618'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getInfoMessages'>\SmartFactory\MessageManager::getInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasInfoMessages'>\SmartFactory\MessageManager::hasInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearInfoMessages'>\SmartFactory\MessageManager::clearInfoMessages()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addProgWarning">
+  
+  <h1>Method: MessageManager::addProgWarning()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addProgWarning(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Stores the programming warning to be reported.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Programming warnings are shown only if the option
+&quot;show programming warning&quot; is active.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The programming warning message to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $file
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file where the error occured. Per default, the file where the adding error called.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $line
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file line where the error occured. Per default, the file line where the adding error called.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#359'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getProgWarnings'>\SmartFactory\MessageManager::getProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasProgWarnings'>\SmartFactory\MessageManager::hasProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearProgWarnings'>\SmartFactory\MessageManager::clearProgWarnings()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addWarning">
+  
+  <h1>Method: MessageManager::addWarning()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addWarning(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Stores the warning to be reported.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The warning message to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $details
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                []
+            </td>
+            <td class="description_column">
+                <p>The details might be useful if the message translations are provided on the client, not
+on the server, and the message should contain some details that may vary from case to case.
+In that case, the servers return the message id instead of final text and the details, the client
+uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $related_element
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The error element accociated with the warning.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#249'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getWarnings'>\SmartFactory\MessageManager::getWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasWarnings'>\SmartFactory\MessageManager::hasWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearWarnings'>\SmartFactory\MessageManager::clearWarnings()</a><br>
+  
+  
+  </div>
 
   
 
@@ -1146,7 +1831,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#815'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#825'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -1165,7 +1850,101 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#clearInfos'>\SmartFactory\MessageManager::clearInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#clearInfoMessages'>\SmartFactory\MessageManager::clearInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearBubbleMessages'>\SmartFactory\MessageManager::clearBubbleMessages()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="clearBubbleMessages">
+  
+  <h1>Method: MessageManager::clearBubbleMessages()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearBubbleMessages() : void;</div>
+
+  
+  <div class="short-description">
+  <p>Clears the stored information messages.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#757'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearWarnings'>\SmartFactory\MessageManager::clearWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearProgWarnings'>\SmartFactory\MessageManager::clearProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearInfoMessages'>\SmartFactory\MessageManager::clearInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearAll'>\SmartFactory\MessageManager::clearAll()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
   
   
   </div>
@@ -1231,15 +2010,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#639'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#536'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setDebugMessage'>\SmartFactory\MessageManager::setDebugMessage()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
   
@@ -1250,10 +2026,16 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#clearProgWarnings'>\SmartFactory\MessageManager::clearProgWarnings()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#clearInfos'>\SmartFactory\MessageManager::clearInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#clearInfoMessages'>\SmartFactory\MessageManager::clearInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearBubbleMessages'>\SmartFactory\MessageManager::clearBubbleMessages()</a><br>
   
   
   <a href='class-SmartFactory.MessageManager.html#clearAll'>\SmartFactory\MessageManager::clearAll()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
   
   
   </div>
@@ -1319,15 +2101,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#329'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#167'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setError'>\SmartFactory\MessageManager::setError()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#clearWarnings'>\SmartFactory\MessageManager::clearWarnings()</a><br>
   
@@ -1338,10 +2117,16 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#clearInfos'>\SmartFactory\MessageManager::clearInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#clearInfoMessages'>\SmartFactory\MessageManager::clearInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearBubbleMessages'>\SmartFactory\MessageManager::clearBubbleMessages()</a><br>
   
   
   <a href='class-SmartFactory.MessageManager.html#clearAll'>\SmartFactory\MessageManager::clearAll()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
   
   
   </div>
@@ -1358,11 +2143,11 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
 
   
 
-  <hr id="clearInfos">
+  <hr id="clearInfoMessages">
   
-  <h1>Method: MessageManager::clearInfos()</h1>
+  <h1>Method: MessageManager::clearInfoMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearInfos() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearInfoMessages() : void;</div>
 
   
   <div class="short-description">
@@ -1389,7 +2174,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfos'>\SmartFactory\Interfaces\IMessageManager::clearInfos()</a>
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a>
   </div>
   
 
@@ -1407,15 +2192,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#748'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#646'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setInfo'>\SmartFactory\MessageManager::setInfo()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
   
@@ -1429,7 +2211,13 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
   
   
+  <a href='class-SmartFactory.MessageManager.html#clearBubbleMessages'>\SmartFactory\MessageManager::clearBubbleMessages()</a><br>
+  
+  
   <a href='class-SmartFactory.MessageManager.html#clearAll'>\SmartFactory\MessageManager::clearAll()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
   
   
   </div>
@@ -1495,15 +2283,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#534'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#403'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setProgWarning'>\SmartFactory\MessageManager::setProgWarning()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
   
@@ -1514,10 +2299,16 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#clearInfos'>\SmartFactory\MessageManager::clearInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#clearInfoMessages'>\SmartFactory\MessageManager::clearInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearBubbleMessages'>\SmartFactory\MessageManager::clearBubbleMessages()</a><br>
   
   
   <a href='class-SmartFactory.MessageManager.html#clearAll'>\SmartFactory\MessageManager::clearAll()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
   
   
   </div>
@@ -1583,15 +2374,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#430'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#277'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setWarning'>\SmartFactory\MessageManager::setWarning()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
   
@@ -1602,12 +2390,18 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#clearInfos'>\SmartFactory\MessageManager::clearInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#clearInfoMessages'>\SmartFactory\MessageManager::clearInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearBubbleMessages'>\SmartFactory\MessageManager::clearBubbleMessages()</a><br>
   
   
   <a href='class-SmartFactory.MessageManager.html#clearAll'>\SmartFactory\MessageManager::clearAll()</a><br>
   
   
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
+  
+  
   </div>
 
   
@@ -1622,600 +2416,15 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
 
   
 
-  <hr id="debugMessageExists">
+  <hr id="getBubbleMessages">
   
-  <h1>Method: MessageManager::debugMessageExists()</h1>
+  <h1>Method: MessageManager::getBubbleMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessageExists() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getBubbleMessages() : <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
-  <p>Checks whether a stored debugging message exist.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the stored debugging message exists, otherwise false.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#debugMessageExists'>\SmartFactory\Interfaces\IMessageManager::debugMessageExists()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#658'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setDebugMessage'>\SmartFactory\MessageManager::setDebugMessage()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#errorsExist'>\SmartFactory\MessageManager::errorsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#warningsExist'>\SmartFactory\MessageManager::warningsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#progWarningsExist'>\SmartFactory\MessageManager::progWarningsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#infosExist'>\SmartFactory\MessageManager::infosExist()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="detailsActive">
-  
-  <h1>Method: MessageManager::detailsActive()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detailsActive() : bool;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the state whether the display of the message details is active or not.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If the display of the message details is active, they are shown in the frontend.</p>
-<p>The message details are generally managed over the setting show_prog_warning.
-But you can also temporarily disable message details, e.g. to avoid displaying of
-unnecessary warnings when you make a check that can produce a programming warning,
-but it is a controlled noticed and should not bother the user.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns the state whether the display of the message details is active or not.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#detailsActive'>\SmartFactory\Interfaces\IMessageManager::detailsActive()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#905'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#enableDetails'>\SmartFactory\MessageManager::enableDetails()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#disableDetails'>\SmartFactory\MessageManager::disableDetails()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="disableDetails">
-  
-  <h1>Method: MessageManager::disableDetails()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableDetails() : void;</div>
-
-  
-  <div class="short-description">
-  <p>Disables the display of the message details.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If the display of the message details is active, they are shown in the frontend.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#disableDetails'>\SmartFactory\Interfaces\IMessageManager::disableDetails()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#939'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#detailsActive'>\SmartFactory\MessageManager::detailsActive()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#enableDetails'>\SmartFactory\MessageManager::enableDetails()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="disableProgWarnings">
-  
-  <h1>Method: MessageManager::disableProgWarnings()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableProgWarnings() : void;</div>
-
-  
-  <div class="short-description">
-  <p>Disables the display of the programming warnings.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If the display of the programming warnings is active, they are shown in the frontend.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#disableProgWarnings'>\SmartFactory\Interfaces\IMessageManager::disableProgWarnings()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#996'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#progWarningsActive'>\SmartFactory\MessageManager::progWarningsActive()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#enableProgWarnings'>\SmartFactory\MessageManager::enableProgWarnings()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="enableDetails">
-  
-  <h1>Method: MessageManager::enableDetails()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableDetails() : void;</div>
-
-  
-  <div class="short-description">
-  <p>Enables the display of the message details.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If the display of the message details is active, they are shown in the frontend.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#enableDetails'>\SmartFactory\Interfaces\IMessageManager::enableDetails()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#922'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#detailsActive'>\SmartFactory\MessageManager::detailsActive()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#disableDetails'>\SmartFactory\MessageManager::disableDetails()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="enableProgWarnings">
-  
-  <h1>Method: MessageManager::enableProgWarnings()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableProgWarnings() : void;</div>
-
-  
-  <div class="short-description">
-  <p>Enables the display of the programming warnings.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If the display of the programming warnings is active, they are shown in the frontend.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#enableProgWarnings'>\SmartFactory\Interfaces\IMessageManager::enableProgWarnings()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#979'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#progWarningsActive'>\SmartFactory\MessageManager::progWarningsActive()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#disableProgWarnings'>\SmartFactory\MessageManager::disableProgWarnings()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="errorsExist">
-  
-  <h1>Method: MessageManager::errorsExist()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> errorsExist() : bool;</div>
-
-  
-  <div class="short-description">
-  <p>Checks whether a stored error message exist.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the stored error message exists, otherwise false.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#errorsExist'>\SmartFactory\Interfaces\IMessageManager::errorsExist()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#348'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setError'>\SmartFactory\MessageManager::setError()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#warningsExist'>\SmartFactory\MessageManager::warningsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#progWarningsExist'>\SmartFactory\MessageManager::progWarningsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#debugMessageExists'>\SmartFactory\MessageManager::debugMessageExists()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#infosExist'>\SmartFactory\MessageManager::infosExist()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="extractMessagesForDisplay">
-  
-  <h1>Method: MessageManager::extractMessagesForDisplay()</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extractMessagesForDisplay(<span class="php-keyword1">array</span> &amp;<span class="php-var">$messages</span>) : <span class="php-keyword1">array</span>;</div>
-
-  
-  <div class="short-description">
-  <p>This is internal auxiliary function for preparing messags for displaying.</p>
+  <p>Returns the array of information messages if any have been stored.</p>
   </div>
   
 
@@ -2224,121 +2433,19 @@ but it is a controlled noticed and should not bother the user.</p>
   <h2>Details</h2>
   <p>When the messages are requested, it is assumed they will be displayed. Thus,
 the message array is cleared to avoid displaying of the same messages twice.</p>
-<p>The message details are removed if the flag show_message_details is false.</p>
   </div>
   
 
   
 
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $messages
-            </td>
-            <td>
-                by reference
-            </td>
-            <td>
-                array
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The source array of messages.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
+  
 
   
   <h2>Returns</h2>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of messages for displaying.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#85'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="getActiveTab">
-  
-  <h1>Method: MessageManager::getActiveTab()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getActiveTab() : string;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the tab to be activated.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>When this method is called, it is assumed that the tab will be activated. Thus,
-the stored active tab is cleared to avoid activating of the same tab twice.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  string<br>
-  
-  <div class="item_description"><p>Returns the ID of the tab to be activated.</p></div>
+  <div class="item_description"><p>Returns the array of information messages if any have been stored.</p></div>
   
   </div>
   
@@ -2348,7 +2455,7 @@ the stored active tab is cleared to avoid activating of the same tab twice.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getActiveTab'>\SmartFactory\Interfaces\IMessageManager::getActiveTab()</a>
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a>
   </div>
   
 
@@ -2366,88 +2473,35 @@ the stored active tab is cleared to avoid activating of the same tab twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#222'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#802'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.MessageManager.html#setActiveTab'>\SmartFactory\MessageManager::setActiveTab()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getWarnings'>\SmartFactory\MessageManager::getWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getProgWarnings'>\SmartFactory\MessageManager::getProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getInfoMessages'>\SmartFactory\MessageManager::getInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasBubbleMessages'>\SmartFactory\MessageManager::hasBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
   
   
   </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="getAutoHideTime">
-  
-  <h1>Method: MessageManager::getAutoHideTime()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getAutoHideTime() : int;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the auto hide time in seconds for the info
-messages with flag auto_hide = true.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  int<br>
-  
-  <div class="item_description"><p>Returns the auto hide time in seconds for the info
-messages with flag auto_hide = true.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getAutoHideTime'>\SmartFactory\Interfaces\IMessageManager::getAutoHideTime()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#838'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  
 
   
 
@@ -2518,15 +2572,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#680'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#581'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setDebugMessage'>\SmartFactory\MessageManager::setDebugMessage()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
   
@@ -2537,88 +2588,16 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#getProgWarnings'>\SmartFactory\MessageManager::getProgWarnings()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#getInfos'>\SmartFactory\MessageManager::getInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#getInfoMessages'>\SmartFactory\MessageManager::getInfoMessages()</a><br>
   
   
-  </div>
-
+  <a href='class-SmartFactory.MessageManager.html#getBubbleMessages'>\SmartFactory\MessageManager::getBubbleMessages()</a><br>
   
-
   
-
+  <a href='class-SmartFactory.MessageManager.html#hasDebugMessages'>\SmartFactory\MessageManager::hasDebugMessages()</a><br>
   
-
   
-
-  
-
-  
-
-  <hr id="getErrorElement">
-  
-  <h1>Method: MessageManager::getErrorElement()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrorElement() : string;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the field to be highlighted.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>When this method is called, it is assumed that element will be highlighted. Thus,
-the stored element is cleared to avoid highlighting of the same element twice.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  string<br>
-  
-  <div class="item_description"><p>Returns the ID of the field to be highlighted.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrorElement'>\SmartFactory\Interfaces\IMessageManager::getErrorElement()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#266'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setErrorElement'>\SmartFactory\MessageManager::setErrorElement()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
   
   
   </div>
@@ -2692,15 +2671,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#370'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#212'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setError'>\SmartFactory\MessageManager::setError()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#getWarnings'>\SmartFactory\MessageManager::getWarnings()</a><br>
   
@@ -2711,7 +2687,16 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#getInfos'>\SmartFactory\MessageManager::getInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#getInfoMessages'>\SmartFactory\MessageManager::getInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getBubbleMessages'>\SmartFactory\MessageManager::getBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
   
   
   </div>
@@ -2728,92 +2713,11 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
 
   
 
-  <hr id="getFocusElement">
+  <hr id="getInfoMessages">
   
-  <h1>Method: MessageManager::getFocusElement()</h1>
+  <h1>Method: MessageManager::getInfoMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getFocusElement() : string;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the element to be focused.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>When this method is called, it is assumed that the element will be focused. Thus,
-the stored element is cleared to avoid focusing of the same element twice.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  string<br>
-  
-  <div class="item_description"><p>Returns the ID of the element to be focused.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getFocusElement'>\SmartFactory\Interfaces\IMessageManager::getFocusElement()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#179'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getFocusElement'>\SmartFactory\MessageManager::getFocusElement()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="getInfos">
-  
-  <h1>Method: MessageManager::getInfos()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getInfos() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getInfoMessages() : <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2848,7 +2752,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfos'>\SmartFactory\Interfaces\IMessageManager::getInfos()</a>
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a>
   </div>
   
 
@@ -2866,15 +2770,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#789'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#691'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setInfo'>\SmartFactory\MessageManager::setInfo()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
   
@@ -2888,7 +2789,111 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
   
   
+  <a href='class-SmartFactory.MessageManager.html#getBubbleMessages'>\SmartFactory\MessageManager::getBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasInfoMessages'>\SmartFactory\MessageManager::hasInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
   </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getMessages">
+  
+  <h1>Method: MessageManager::getMessages()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getMessages(<span class="php-keyword1">array</span> &amp;<span class="php-var">$messages</span>) : <span class="php-keyword1">array</span>;</div>
+
+  
+  <div class="short-description">
+  <p>This auxiliary function returns the messages of the desired type.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $messages
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The messages to be retrieved.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  array<br>
+  
+  <div class="item_description"><p>Returns the array of messages.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#846'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  
 
   
 
@@ -2959,15 +2964,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#575'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#448'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setProgWarning'>\SmartFactory\MessageManager::setProgWarning()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
   
@@ -2978,7 +2980,16 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#getInfos'>\SmartFactory\MessageManager::getInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#getInfoMessages'>\SmartFactory\MessageManager::getInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getBubbleMessages'>\SmartFactory\MessageManager::getBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasProgWarnings'>\SmartFactory\MessageManager::hasProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
   
   
   </div>
@@ -3052,15 +3063,12 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#471'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#322'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setWarning'>\SmartFactory\MessageManager::setWarning()</a><br>
-  
   
   <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
   
@@ -3071,7 +3079,16 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#getInfos'>\SmartFactory\MessageManager::getInfos()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#getInfoMessages'>\SmartFactory\MessageManager::getInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getBubbleMessages'>\SmartFactory\MessageManager::getBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasWarnings'>\SmartFactory\MessageManager::hasWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
   
   
   </div>
@@ -3088,11 +3105,11 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
 
   
 
-  <hr id="infosExist">
+  <hr id="hasBubbleMessages">
   
-  <h1>Method: MessageManager::infosExist()</h1>
+  <h1>Method: MessageManager::hasBubbleMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> infosExist() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasBubbleMessages() : bool;</div>
 
   
   <div class="short-description">
@@ -3121,7 +3138,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#infosExist'>\SmartFactory\Interfaces\IMessageManager::infosExist()</a>
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a>
   </div>
   
 
@@ -3139,26 +3156,497 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#767'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#778'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.MessageManager.html#setInfo'>\SmartFactory\MessageManager::setInfo()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#errorsExist'>\SmartFactory\MessageManager::errorsExist()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#hasWarnings'>\SmartFactory\MessageManager::hasWarnings()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#warningsExist'>\SmartFactory\MessageManager::warningsExist()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#hasProgWarnings'>\SmartFactory\MessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#progWarningsExist'>\SmartFactory\MessageManager::progWarningsExist()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#hasDebugMessages'>\SmartFactory\MessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='class-SmartFactory.MessageManager.html#debugMessageExists'>\SmartFactory\MessageManager::debugMessageExists()</a><br>
+  <a href='class-SmartFactory.MessageManager.html#hasInfoMessages'>\SmartFactory\MessageManager::hasInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getBubbleMessages'>\SmartFactory\MessageManager::getBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="hasDebugMessages">
+  
+  <h1>Method: MessageManager::hasDebugMessages()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasDebugMessages() : bool;</div>
+
+  
+  <div class="short-description">
+  <p>Checks whether a stored debugging message exist.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>Returns true if the stored debugging message exists, otherwise false.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#557'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasWarnings'>\SmartFactory\MessageManager::hasWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasProgWarnings'>\SmartFactory\MessageManager::hasProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasInfoMessages'>\SmartFactory\MessageManager::hasInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasBubbleMessages'>\SmartFactory\MessageManager::hasBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="hasErrors">
+  
+  <h1>Method: MessageManager::hasErrors()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasErrors() : bool;</div>
+
+  
+  <div class="short-description">
+  <p>Checks whether a stored error message exist.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>Returns true if the stored error message exists, otherwise false.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#188'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#hasWarnings'>\SmartFactory\MessageManager::hasWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasProgWarnings'>\SmartFactory\MessageManager::hasProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasDebugMessages'>\SmartFactory\MessageManager::hasDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasInfoMessages'>\SmartFactory\MessageManager::hasInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasBubbleMessages'>\SmartFactory\MessageManager::hasBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="hasInfoMessages">
+  
+  <h1>Method: MessageManager::hasInfoMessages()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasInfoMessages() : bool;</div>
+
+  
+  <div class="short-description">
+  <p>Checks whether an information message exist.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>Returns true if the information message exists, otherwise false.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#667'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasWarnings'>\SmartFactory\MessageManager::hasWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasProgWarnings'>\SmartFactory\MessageManager::hasProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasDebugMessages'>\SmartFactory\MessageManager::hasDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasBubbleMessages'>\SmartFactory\MessageManager::hasBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getInfoMessages'>\SmartFactory\MessageManager::getInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="hasProgWarnings">
+  
+  <h1>Method: MessageManager::hasProgWarnings()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasProgWarnings() : bool;</div>
+
+  
+  <div class="short-description">
+  <p>Checks whether a stored programming warning exist.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>Returns true if the stored programming warning message exists, otherwise false.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#424'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasWarnings'>\SmartFactory\MessageManager::hasWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasDebugMessages'>\SmartFactory\MessageManager::hasDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasInfoMessages'>\SmartFactory\MessageManager::hasInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasBubbleMessages'>\SmartFactory\MessageManager::hasBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getProgWarnings'>\SmartFactory\MessageManager::getProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="hasWarnings">
+  
+  <h1>Method: MessageManager::hasWarnings()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasWarnings() : bool;</div>
+
+  
+  <div class="short-description">
+  <p>Checks whether a stored error warning exist.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  bool<br>
+  
+  <div class="item_description"><p>Returns true if the stored warning message exists, otherwise false.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#298'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasProgWarnings'>\SmartFactory\MessageManager::hasProgWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasDebugMessages'>\SmartFactory\MessageManager::hasDebugMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasInfoMessages'>\SmartFactory\MessageManager::hasInfoMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasBubbleMessages'>\SmartFactory\MessageManager::hasBubbleMessages()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getWarnings'>\SmartFactory\MessageManager::getWarnings()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
   
   
   </div>
@@ -3179,7 +3667,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h1>Method: MessageManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
 
   
   <div class="short-description">
@@ -3217,9 +3705,15 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
                 
             </td>
             <td class="description_column">
-                <p>Initialization parameters as an associative array in the form key =&gt; value:</p>
+                <p>Settings for message management as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>$parameters[&quot;auto_hide_time&quot;] - server address.</li>
+<li>
+<p>$parameters[&quot;debug_mode&quot;] - if set to True, the technical details, programmer warnings and debug infromation are also sent to the client. Use it only during dubugging!</p>
+</li>
+<li>
+<p>$parameters[&quot;write_source_file_and_line_by_debug&quot;] - the flag that defines whether for each debug output the source file and
+line number are written from where it is called.</p>
+</li>
 </ul>
             </td>
         </tr>
@@ -3230,14 +3724,20 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true upon successful initialization, otherwise false.</p></div>
+  void<br>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -3260,1292 +3760,11 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#140'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="progWarningsActive">
-  
-  <h1>Method: MessageManager::progWarningsActive()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> progWarningsActive() : bool;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the state whether the display of the programming warnings is active or not.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If the display of the programming warnings is active, they are shown in the frontend.</p>
-<p>The programming warnings are generally managed over the setting show_prog_warning.
-But you can also temporarily disable programming warnings, e.g. to avoid displaying of
-unnecessary warnings when you make a check that can produce a programming warning,
-but it is a controlled noticed and should not bother the user.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns the state whether the display of the programming warnings is active or not.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#progWarningsActive'>\SmartFactory\Interfaces\IMessageManager::progWarningsActive()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#962'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#enableProgWarnings'>\SmartFactory\MessageManager::enableProgWarnings()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#disableProgWarnings'>\SmartFactory\MessageManager::disableProgWarnings()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="progWarningsExist">
-  
-  <h1>Method: MessageManager::progWarningsExist()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> progWarningsExist() : bool;</div>
-
-  
-  <div class="short-description">
-  <p>Checks whether a stored programming warning exist.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the stored programming warning message exists, otherwise false.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#progWarningsExist'>\SmartFactory\Interfaces\IMessageManager::progWarningsExist()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#553'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setProgWarning'>\SmartFactory\MessageManager::setProgWarning()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#errorsExist'>\SmartFactory\MessageManager::errorsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#warningsExist'>\SmartFactory\MessageManager::warningsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#debugMessageExists'>\SmartFactory\MessageManager::debugMessageExists()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#infosExist'>\SmartFactory\MessageManager::infosExist()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setActiveTab">
-  
-  <h1>Method: MessageManager::setActiveTab()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setActiveTab(string <span class="php-var">$tab</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Sets the tab to be activated.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $tab
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The ID of the tab to be activated.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setActiveTab'>\SmartFactory\Interfaces\IMessageManager::setActiveTab()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#204'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getActiveTab'>\SmartFactory\MessageManager::getActiveTab()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setDebugMessage">
-  
-  <h1>Method: MessageManager::setDebugMessage()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDebugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$details</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Stores the debugging message to be reported.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>Displaying of the debugging messages might be
-implemented to simplify the debugging process,
-e.g. to the browser console or in a lightbox.</p>
-  </div>
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $message
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The debugging message message to be reported.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $details
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The debugging message details to be reported. Here, more
-technical details should be placed. Displaying
-of this part might be controlled over a option
-&quot;display message details&quot;.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setDebugMessage'>\SmartFactory\Interfaces\IMessageManager::setDebugMessage()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#612'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getDebugMessages'>\SmartFactory\MessageManager::getDebugMessages()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#clearDebugMessages'>\SmartFactory\MessageManager::clearDebugMessages()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#debugMessageExists'>\SmartFactory\MessageManager::debugMessageExists()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setError">
-  
-  <h1>Method: MessageManager::setError()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setError(string <span class="php-var">$message</span>, string <span class="php-var">$details</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$code</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Stores the error to be reported.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $message
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The error message to be reported.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $details
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The error details to be reported. Here, more
-technical details should be placed. Displaying
-of this part might be controlled over a option
-&quot;display message details&quot;.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $code
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The error code to be reported.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setError'>\SmartFactory\Interfaces\IMessageManager::setError()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#302'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#errorsExist'>\SmartFactory\MessageManager::errorsExist()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setErrorElement">
-  
-  <h1>Method: MessageManager::setErrorElement()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setErrorElement(string <span class="php-var">$element</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Sets the field to be highlighted.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $element
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The ID of the field to be highlighted.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setErrorElement'>\SmartFactory\Interfaces\IMessageManager::setErrorElement()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#247'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getErrorElement'>\SmartFactory\MessageManager::getErrorElement()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setFocusElement">
-  
-  <h1>Method: MessageManager::setFocusElement()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setFocusElement(string <span class="php-var">$element</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Sets the element to be focused.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $element
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The ID of the element to be focused.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setFocusElement'>\SmartFactory\Interfaces\IMessageManager::setFocusElement()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#161'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setFocusElement'>\SmartFactory\MessageManager::setFocusElement()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setInfo">
-  
-  <h1>Method: MessageManager::setInfo()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setInfo(string <span class="php-var">$message</span>, string <span class="php-var">$details</span> = <span class="php-quote">&quot;&quot;</span>, bool <span class="php-var">$auto_hide</span> = <span class="php-keyword1">false</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Stores the information message to be reported.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $message
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The information message to be reported.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $details
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The information message details to be reported. Here, more
-technical details should be placed. Displaying
-of this part might be controlled over a option
-&quot;display message details&quot;.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $auto_hide
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                bool
-            </td>
-            <td>
-                false
-            </td>
-            <td class="description_column">
-                <p>The flag that controls whether the message box should be closed
-automatically after a time defined by the initialization.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setInfo'>\SmartFactory\Interfaces\IMessageManager::setInfo()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#717'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getInfos'>\SmartFactory\MessageManager::getInfos()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#clearInfos'>\SmartFactory\MessageManager::clearInfos()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#infosExist'>\SmartFactory\MessageManager::infosExist()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setProgWarning">
-  
-  <h1>Method: MessageManager::setProgWarning()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setProgWarning(string <span class="php-var">$message</span>, string <span class="php-var">$details</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Stores the programming warning to be reported.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>Programming warnings are shown only if the option
-&quot;show programming warning&quot; is active.</p>
-  </div>
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $message
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The programming warning message to be reported.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $details
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The programming warning details to be reported. Here, more
-technical details should be placed. Displaying
-of this part might be controlled over a option
-&quot;display message details&quot;.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setProgWarning'>\SmartFactory\Interfaces\IMessageManager::setProgWarning()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#507'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getProgWarnings'>\SmartFactory\MessageManager::getProgWarnings()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#clearProgWarnings'>\SmartFactory\MessageManager::clearProgWarnings()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#progWarningsExist'>\SmartFactory\MessageManager::progWarningsExist()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="setWarning">
-  
-  <h1>Method: MessageManager::setWarning()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setWarning(string <span class="php-var">$message</span>, string <span class="php-var">$details</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Stores the warning to be reported.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $message
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The warning message to be reported.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $details
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The warning details to be reported. Here, more
-technical details should be placed. Displaying
-of this part might be controlled over a option
-&quot;display message details&quot;.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#setWarning'>\SmartFactory\Interfaces\IMessageManager::setWarning()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#403'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#getWarnings'>\SmartFactory\MessageManager::getWarnings()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#clearWarnings'>\SmartFactory\MessageManager::clearWarnings()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#warningsExist'>\SmartFactory\MessageManager::warningsExist()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="warningsExist">
-  
-  <h1>Method: MessageManager::warningsExist()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> warningsExist() : bool;</div>
-
-  
-  <div class="short-description">
-  <p>Checks whether a stored error warning exist.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the stored warning message exists, otherwise false.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#warningsExist'>\SmartFactory\Interfaces\IMessageManager::warningsExist()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#449'>SmartFactory/MessageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.MessageManager.html#setWarning'>\SmartFactory\MessageManager::setWarning()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#errorsExist'>\SmartFactory\MessageManager::errorsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#progWarningsExist'>\SmartFactory\MessageManager::progWarningsExist()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#debugMessageExists'>\SmartFactory\MessageManager::debugMessageExists()</a><br>
-  
-  
-  <a href='class-SmartFactory.MessageManager.html#infosExist'>\SmartFactory\MessageManager::infosExist()</a><br>
-  
-  
+  <a href='source-SmartFactory.MessageManager.php.html#68'>SmartFactory/MessageManager.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

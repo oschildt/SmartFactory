@@ -26,8 +26,10 @@ interface IInitable
      * This array may contain any data required for the initialization
      * of the objects of your class.
      *
-     * @return boolean
-     * The method should return true upon successful initialization, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */

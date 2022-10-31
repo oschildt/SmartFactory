@@ -900,7 +900,7 @@ db_connection_settings etc.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#368'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#358'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1038,7 +1038,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#471'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#461'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1116,7 +1116,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#318'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#308'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1147,7 +1147,7 @@ to a default value if its value is not set yet.</p>
   
   <h1>Method: ConfigSettingsManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
 
   
   <div class="short-description">
@@ -1212,9 +1212,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true upon successful initialization, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1224,7 +1222,7 @@ to a default value if its value is not set yet.</p>
   
   \Exception<br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
+  <div class="item_description"><p>It might throw an exception in the case of any system errors:</p>
 <ul>
 <li>if the save path is not specified.</li>
 </ul></div>
@@ -1253,7 +1251,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#264'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#254'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1275,7 +1273,7 @@ to a default value if its value is not set yet.</p>
   
   <h1>Method: ConfigSettingsManager::loadJSON()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : void;</div>
 
   
   <div class="short-description">
@@ -1324,9 +1322,7 @@ defined by the iniailization.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the data has been successfully loaded, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1363,7 +1359,7 @@ defined by the iniailization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#177'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#173'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1391,7 +1387,7 @@ defined by the iniailization.</p>
   
   <h1>Method: ConfigSettingsManager::loadSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings() : void;</div>
 
   
   <div class="short-description">
@@ -1408,7 +1404,7 @@ defined by the iniailization.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  void<br>
   
   <div class="item_description"><p>Returns true if the settings have been successfully loaded, otherwise false.</p></div>
   
@@ -1451,7 +1447,7 @@ defined by the iniailization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#527'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#517'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1479,7 +1475,7 @@ defined by the iniailization.</p>
   
   <h1>Method: ConfigSettingsManager::saveJSON()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : void;</div>
 
   
   <div class="short-description">
@@ -1528,9 +1524,7 @@ to the target file defined by the iniailization.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the data has been successfully saved, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1565,7 +1559,7 @@ to the target file defined by the iniailization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#134'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#133'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1593,7 +1587,7 @@ to the target file defined by the iniailization.</p>
   
   <h1>Method: ConfigSettingsManager::saveSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings() : void;</div>
 
   
   <div class="short-description">
@@ -1610,9 +1604,7 @@ to the target file defined by the iniailization.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the settings have been successfully saved, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1653,7 +1645,7 @@ to the target file defined by the iniailization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#549'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#538'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1769,7 +1761,7 @@ db_connection_settings etc.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#344'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#334'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -1905,7 +1897,7 @@ db_connection_settings etc.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#397'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#387'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -2045,7 +2037,7 @@ if not exists. If false, only existing parameters are updated.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#431'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#421'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -2152,7 +2144,7 @@ if not exists. If false, only existing parameters are updated.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#302'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#292'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -2183,7 +2175,7 @@ if not exists. If false, only existing parameters are updated.</p>
   
   <h1>Method: ConfigSettingsManager::validateParameters()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters() : bool;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters() : void;</div>
 
   
   <div class="short-description">
@@ -2201,9 +2193,7 @@ manager is intialized correctly.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the settings manager is intialized correctly, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -2237,7 +2227,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#232'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#225'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -2313,7 +2303,7 @@ the validator validate the settings.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ConfigSettingsManager.php.html#501'>SmartFactory/ConfigSettingsManager.php</a>
+  <a href='source-SmartFactory.ConfigSettingsManager.php.html#491'>SmartFactory/ConfigSettingsManager.php</a>
   </div>
   
 
@@ -2339,7 +2329,7 @@ the validator validate the settings.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

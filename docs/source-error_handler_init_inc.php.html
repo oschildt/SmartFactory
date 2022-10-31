@@ -116,7 +116,7 @@
 <span class="line" id="21">21: </span>});
 <span class="line" id="22">22: </span>
 <span class="line" id="23">23: </span>singleton(IEventManager::<span class="php-keyword1">class</span>)-&gt;addHandler(<span class="php-quote">&quot;php_error&quot;</span>, <span class="php-keyword1">function</span> (<span class="php-var">$event</span>, <span class="php-var">$params</span>) {
-<span class="line" id="24">24: </span>    singleton(IMessageManager::<span class="php-keyword1">class</span>)-&gt;setProgWarning(<span class="php-var">$params</span>[<span class="php-quote">&quot;etype&quot;</span>] . <span class="php-quote">&quot;: &quot;</span> . <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;&lt;br/&gt;&quot;</span>, <span class="php-quote">&quot;\n&quot;</span>, <span class="php-keyword2">trim</span>(<span class="php-var">$params</span>[<span class="php-quote">&quot;errstr&quot;</span>])) . <span class="php-quote">&quot;\n\n&quot;</span> . <span class="php-var">$params</span>[<span class="php-quote">&quot;errfile&quot;</span>] . <span class="php-quote">&quot;\n&quot;</span> . <span class="php-quote">&quot;line &quot;</span> . <span class="php-var">$params</span>[<span class="php-quote">&quot;errline&quot;</span>]);
+<span class="line" id="24">24: </span>    singleton(IMessageManager::<span class="php-keyword1">class</span>)-&gt;addProgWarning(<span class="php-var">$params</span>[<span class="php-quote">&quot;etype&quot;</span>] . <span class="php-quote">&quot;: &quot;</span> . <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;&lt;br/&gt;&quot;</span>, <span class="php-quote">&quot;\n&quot;</span>, <span class="php-keyword2">trim</span>(<span class="php-var">$params</span>[<span class="php-quote">&quot;errstr&quot;</span>])), <span class="php-var">$params</span>[<span class="php-quote">&quot;errfile&quot;</span>], <span class="php-var">$params</span>[<span class="php-quote">&quot;errline&quot;</span>]);
 <span class="line" id="25">25: </span>});
 <span class="line" id="26">26: </span><span class="php-comment">//------------------------------------------------------------------------------</span>
 </code>
@@ -124,7 +124,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

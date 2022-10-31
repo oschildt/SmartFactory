@@ -17,30 +17,12 @@
 namespace SmartFactory;
 
 /**
- * Class for extended exception user in the smarFactory library.
+ * Class for extended exception used in the SmartFactory library.
  *
  * @author Oleg Schildt
  */
 class SmartException extends \Exception
 {
-    /**
-     * Constant for the error type "user_error".
-     *
-     * @var string
-     *
-     * @author Oleg Schildt
-     */
-    const ERR_TYPE_USER_ERROR = "user_error";
-
-    /**
-     * Constant for the error type "programming_error".
-     *
-     * @var string
-     *
-     * @author Oleg Schildt
-     */
-    const ERR_TYPE_PROGRAMMING_ERROR = "programming_error";
-
     /**
      * Constant for the error code "system_error".
      *
@@ -136,17 +118,6 @@ class SmartException extends \Exception
     protected $error_code = SmartException::ERR_CODE_SYSTEM_ERROR;
 
     /**
-     * Internal variable for storing the error type.
-     *
-     * @var string
-     *
-     * @see SmartException::getErrorType()
-     *
-     * @author Oleg Schildt
-     */
-    protected $error_type = SmartException::ERR_TYPE_PROGRAMMING_ERROR;
-
-    /**
      * Internal variable for storing the error details.
      *
      * The error details might be useful if the error message translations are provided on the client, not
@@ -163,6 +134,17 @@ class SmartException extends \Exception
     protected $error_details = [];
 
     /**
+     * Internal variable for storing the additional technical infromation.
+     *
+     * @var string
+     *
+     * @see SmartException::getTechnicalInfo()
+     *
+     * @author Oleg Schildt
+     */
+    protected $technical_info = "";
+
+    /**
      * Constructor.
      *
      * @param string $message
@@ -174,34 +156,28 @@ class SmartException extends \Exception
      * Since the error texts can be localized, the unique code of the error might be important fo using
      * in comparison.
      *
-     * @param string $error_type
-     * Error type.
-     *
-     * The type of the error might be useful for decision how to show the error on the client. If it is a
-     * user error, the full error texts should be shown. If it is a programming error, the detailed text should
-     * be shown only in the debug mode to prevent that the hackers get sensible information about the system.
-     *
      * @param string $error_element
      * Error element.
      *
      * @param array $error_details
-     * Error details.
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
-     * The error details might be useful if the error message translations are provided on the client, not
-     * on the server, and the error message should contain some details that may vary from case to case.
-     * In that case, the servers return the error message id instead of final text and the details, the client
-     * uses the error message id, gets the final translated text and substitutes the parameters through the details.
+     * @param string $technical_info
+     * Additional technical infromation. It can be used if it is a programming error and displayed only if the debug mode is active.
      *
      * @author Oleg Schildt
      */
-    public function __construct($message, $error_code, $error_type, $error_element = "", $error_details = [])
+    public function __construct($message, $error_code = SmartException::ERR_CODE_SYSTEM_ERROR, $error_element = "", $error_details = [], $technical_info = "")
     {
         parent::__construct($message);
 
         $this->error_code = $error_code;
-        $this->error_type = $error_type;
         $this->error_element = $error_element;
         $this->error_details = $error_details;
+        $this->technical_info = $technical_info;
     }
 
     /**
@@ -213,9 +189,9 @@ class SmartException extends \Exception
      * @return string
      * Returns the error code.
      *
-     * @see SmartException::getErrorType()
      * @see SmartException::getErrorDetails()
      * @see SmartException::getErrorElement()
+     * @see SmartException::getTechnicalInfo()
      *
      * @author Oleg Schildt
      */
@@ -225,35 +201,14 @@ class SmartException extends \Exception
     }
 
     /**
-     * Returns the error type of the exception.
-     *
-     * The type of the error might be useful for decision how to show the error on the client. If it is a
-     * user error, the full error texts should be shown. If it is a programming error, the detailed text should
-     * be shown only in the debug mode to prevent that the hackers get sensible information about the system.
-     *
-     * @return string
-     * Returns the error type.
-     *
-     * @see SmartException::getErrorCode()
-     * @see SmartException::getErrorDetails()
-     * @see SmartException::getErrorElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function getErrorType()
-    {
-        return $this->error_type;
-    }
-
-    /**
      * Returns the error element.
      *
      * @return string
      * Returns the error element.
      *
-     * @see SmartException::getErrorType()
      * @see SmartException::getErrorCode()
      * @see SmartException::getErrorDetails()
+     * @see SmartException::getTechnicalInfo()
      *
      * @author Oleg Schildt
      */
@@ -273,14 +228,31 @@ class SmartException extends \Exception
      * @return array
      * Returns the error details.
      *
-     * @see SmartException::getErrorType()
      * @see SmartException::getErrorCode()
      * @see SmartException::getErrorElement()
+     * @see SmartException::getTechnicalInfo()
      *
      * @author Oleg Schildt
      */
     public function getErrorDetails()
     {
         return $this->error_details;
+    }
+
+    /**
+     * Returns the technical infromation for the error.
+     *
+     * @return string
+     * Returns the technical infromation for the error.
+     *
+     * @see SmartException::getErrorCode()
+     * @see SmartException::getErrorElement()
+     * @see SmartException::getTechnicalInfo()
+     *
+     * @author Oleg Schildt
+     */
+    public function getTechnicalInfo()
+    {
+        return $this->technical_info;
     }
 } // SmartException

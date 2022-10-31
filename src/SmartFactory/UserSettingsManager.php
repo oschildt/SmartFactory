@@ -24,8 +24,8 @@ use SmartFactory\DatabaseWorkers\DBWorker;
  * is valid. Saving of the user settings updates both the session and the database. When a settings is
  * requested, it is taken from the session, not from the database.
  *
- * @see ConfigSettingsManager
- * @see RuntimeSettingsManager
+ * @see  ConfigSettingsManager
+ * @see  RuntimeSettingsManager
  *
  * @uses DatabaseWorkers\DBWorker
  *
@@ -43,7 +43,7 @@ class UserSettingsManager implements ISettingsManager
      * @author Oleg Schildt
      */
     protected $user_id = "";
-    
+
     /**
      * Internal variable for storing the dbworker.
      *
@@ -52,7 +52,7 @@ class UserSettingsManager implements ISettingsManager
      * @author Oleg Schildt
      */
     protected $dbworker;
-    
+
     /**
      * Internal array for storing the settings tables.
      *
@@ -61,7 +61,7 @@ class UserSettingsManager implements ISettingsManager
      * @author Oleg Schildt
      */
     protected $settings_tables;
-    
+
     /**
      * Internal array for storing the auxiliary tables for storing the multichoce values.
      *
@@ -70,7 +70,7 @@ class UserSettingsManager implements ISettingsManager
      * @author Oleg Schildt
      */
     protected $multichoice_tables;
-    
+
     /**
      * Internal variable for storing the current context.
      *
@@ -82,7 +82,7 @@ class UserSettingsManager implements ISettingsManager
      * @author Oleg Schildt
      */
     protected $context = "default";
-    
+
     /**
      * Internal variable for storing the validator.
      *
@@ -94,7 +94,7 @@ class UserSettingsManager implements ISettingsManager
      * @author Oleg Schildt
      */
     protected $validator = null;
-    
+
     /**
      * Internal variable for storing the array of the settings values.
      *
@@ -103,13 +103,12 @@ class UserSettingsManager implements ISettingsManager
      * @author Oleg Schildt
      */
     protected $settings = [];
-    
+
     /**
      * This is internal auxiliary function for checking that the settings
      * manager is intialized correctly.
      *
-     * @return boolean
-     * It should return true if the settings manager is intialized correctly, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -125,26 +124,24 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
         }
-        
+
         if (!$this->dbworker instanceof DBWorker) {
             throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
         }
-        
+
         if (empty($this->settings_tables)) {
             throw new \Exception("The 'settings_tables' are not defined!");
         }
-        
+
         if (!is_array($this->settings_tables)) {
             throw new \Exception("Settings tables 'settings_tables' must be an array!");
         }
-        
+
         if (!empty($this->multichoice_tables) && !is_array($this->multichoice_tables)) {
             throw new \Exception("Multichoice tables 'multichoice_tables' must be an array!");
         }
-        
-        return true;
     } // validateParameters
-    
+
     /**
      * This is internal auxiliary function for storing the settings
      * to the target user table defined by the iniailization.
@@ -152,8 +149,7 @@ class UserSettingsManager implements ISettingsManager
      * @param array &$data
      * The array with the settings values to be saved.
      *
-     * @return boolean
-     * Returns true if the data has been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Throwable
      * It might throw an exception in the case of any errors:
@@ -171,53 +167,62 @@ class UserSettingsManager implements ISettingsManager
     protected function saveSettingsData(&$data)
     {
         $this->validateParameters();
-        
+
         $this->dbworker->start_transaction();
-        
+
         try {
-            
             foreach ($this->settings_tables as $table => $fields) {
                 // First field is the ID field
                 $uid_field = "";
                 $uid_field_type = "";
-                
+
                 $update_string = "";
-                
+
                 $c = 0;
                 foreach ($fields as $field => $field_type) {
                     $c++;
-                    
+
                     if ($c == 1) {
                         $uid_field = $field;
                         $uid_field_type = $field_type;
                         continue;
                     }
-                    
-                    $value = $this->dbworker->prepare_for_query(checkempty($data[$field]), $field_type);
-                    
+
+                    $value = "";
+
+                    if (!empty($data[$table . "." . $field])) {
+                        $value = $data[$table . "." . $field];
+                    }
+
+                    if (!empty($data[$field])) {
+                        $value = $data[$field];
+                    }
+
+                    $value = $this->dbworker->prepare_for_query($value, $field_type);
+
                     $update_string .= $field . " = " . $value . ",\n";
                 }
-                
-                $query = "UPDATE " . $table . " SET\n";
+
+                $query = "update " . $table . " set\n";
                 $query .= trim($update_string, ",\n") . "\n";
-    
+
                 $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-                $query .= "WHERE " . $uid_field . " = " . $user_id;
-    
+                $query .= "where " . $uid_field . " = " . $user_id;
+
                 $this->dbworker->execute_query($query);
             }
-            
+
             // update the subtables
-    
+
             foreach ($this->multichoice_tables as $table => $fields) {
                 // First field is the ID field
                 $uid_field = "";
                 $uid_field_type = "";
-        
+
                 // Second field is the value field
                 $value_field = "";
                 $value_field_type = "";
-        
+
                 $c = 1;
                 foreach ($fields as $field => $field_type) {
                     if ($c == 1) {
@@ -229,78 +234,76 @@ class UserSettingsManager implements ISettingsManager
                     } else {
                         break;
                     }
-            
+
                     $c++;
                 }
-                
+
                 if (!empty($data[$table])) {
                     $value = $data[$table];
                 } else {
                     $value = [];
                 }
-                
+
                 // insert the values that are in the list but not in the table
-    
+
                 $in_list = "";
                 $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-                
+
                 foreach ($value as $entry) {
                     if (empty($entry)) {
                         continue;
                     }
-    
+
                     $entry = $this->dbworker->prepare_for_query($entry, $value_field_type);
-                    
-                    $query = "SELECT 1 FROM $table WHERE $uid_field = $user_id";
-    
+
+                    $query = "select 1 from $table where $uid_field = $user_id";
+
                     if ($value == "NULL") {
-                        $query .= " AND $value_field IS NULL";
+                        $query .= " and $value_field is NULL";
                     } else {
-                        $query .= " AND $value_field = $entry";
+                        $query .= " and $value_field = $entry";
                     }
-                    
+
                     $this->dbworker->execute_query($query);
-        
+
                     $must_insert = true;
                     if ($this->dbworker->fetch_row()) {
                         $must_insert = false;
                     }
-        
+
                     $this->dbworker->free_result();
-        
+
                     if ($must_insert) {
-                        $query = "INSERT INTO $table ($uid_field, $value_field) VALUES ($user_id, $entry)";
-            
+                        $query = "insert into $table ($uid_field, $value_field) values ($user_id, $entry)";
+
                         $this->dbworker->execute_query($query);
                     }
-        
+
                     $in_list .= $entry . ",\n";
                 }
-    
+
                 $in_list = trim($in_list, " ,\n\r");
 
-                $where = "WHERE " . $uid_field . " = " . $user_id;
-    
+                $where = "where " . $uid_field . " = " . $user_id;
+
                 // delete the values that are no more in the new list but still in the table.
-    
+
                 if (empty($in_list)) {
-                    $query = "DELETE FROM $table\n" . $where;
+                    $query = "delete from $table\n" . $where;
                 } else {
-                    $query = "DELETE FROM $table\n" . $where . " AND " . $value_field . " NOT IN ($in_list)";
+                    $query = "delete from $table\n" . $where . " and " . $value_field . " not in ($in_list)";
                 }
-    
+
                 $this->dbworker->execute_query($query);
             }
         } catch (\Throwable $ex) {
             $this->dbworker->rollback_transaction();
             throw $ex;
         }
-        
+
         $this->dbworker->commit_transaction();
-        
-        return true;
     } // saveSettingsData
-    
+
     /**
      * This is internal auxiliary function for loading the settings from the target user table
      * defined by the iniailization.
@@ -308,8 +311,7 @@ class UserSettingsManager implements ISettingsManager
      * @param array &$data
      * The target array with the settings values to be loaded.
      *
-     * @return boolean
-     * Returns true if the data has been successfully loaded, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -327,51 +329,53 @@ class UserSettingsManager implements ISettingsManager
     protected function loadSettingsData(&$data)
     {
         $this->validateParameters();
-        
+
         foreach ($this->settings_tables as $table => $fields) {
             // First field is the ID field
             $uid_field = "";
             $uid_field_type = "";
-            
+
             foreach ($fields as $field => $field_type) {
                 $uid_field = $field;
                 $uid_field_type = $field_type;
                 break;
             }
-            
-            $query = "SELECT\n";
-            
+
+            $query = "select\n";
+
             $query .= implode(", ", array_keys($fields)) . "\n";
-            
-            $query .= "FROM " . $table . "\n";
-            
+
+            $query .= "from " . $table . "\n";
+
             $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-            $query .= "WHERE " . $uid_field . " = " . $user_id;
-            
+            $query .= "where " . $uid_field . " = " . $user_id;
+
             $this->dbworker->execute_query($query);
-            
+
             if ($this->dbworker->fetch_row()) {
                 foreach ($fields as $field => $type) {
-                    $data[$field] = $this->dbworker->field_by_name($field, $type);
+                    $data[$field] = $this->dbworker->field_by_name($field, $type); // short name (only field name)
+                    $data[$table . "." . $field] = $data[$field]; // full name (table name and field name)
+
                 }
             }
-            
+
             $this->dbworker->free_result();
         }
-        
+
         if (empty($this->multichoice_tables)) {
-            return true;
+            return;
         }
-        
+
         foreach ($this->multichoice_tables as $table => $fields) {
             // First field is the ID field
             $uid_field = "";
             $uid_field_type = "";
-            
+
             // Second field is the value field
             $value_field = "";
             $value_field_type = "";
-            
+
             $c = 1;
             foreach ($fields as $field => $field_type) {
                 if ($c == 1) {
@@ -383,31 +387,29 @@ class UserSettingsManager implements ISettingsManager
                 } else {
                     break;
                 }
-                
+
                 $c++;
             }
-            
-            $query = "SELECT " . $value_field . "\n";
-            
-            $query .= "FROM " . $table . "\n";
-            
+
+            $query = "select " . $value_field . "\n";
+
+            $query .= "from " . $table . "\n";
+
             $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-            $query .= "WHERE " . $uid_field . " = " . $user_id;
-            
+            $query .= "where " . $uid_field . " = " . $user_id;
+
             $this->dbworker->execute_query($query);
-    
+
             $data[$table] = [];
-            
+
             while ($this->dbworker->fetch_row()) {
                 $data[$table][] = $this->dbworker->field_by_name($value_field, $value_field_type);
             }
-            
+
             $this->dbworker->free_result();
         }
-        
-        return true;
     } // loadSettingsData
-    
+
     /**
      * Initializes the settings manager parameters.
      *
@@ -425,28 +427,30 @@ class UserSettingsManager implements ISettingsManager
      *           "dbworker" => app_dbworker(),
      *
      *           "settings_tables" => [
-     *                "USERS" => [
-     *                    "ID" => DBWorker::DB_NUMBER,
-     *                    "LANGUAGE" => DBWorker::DB_STRING,
-     *                    "TIME_ZONE" => DBWorker::DB_STRING
-     *                  ],
-     *                "USER_FORUM_SETTINGS" => [
-     *                    "USER_ID" => DBWorker::DB_NUMBER,
-     *                    "SIGNATURE" => DBWorker::DB_STRING,
-     *                    "STATUS" => DBWorker::DB_STRING,
-     *                    "HIDE_PICTURES" => DBWorker::DB_NUMBER,
-     *                    "HIDE_SIGNATURES" => DBWorker::DB_NUMBER
-     *                  ]
+     *                "users" => [
+     *                    "id" => DBWorker::DB_NUMBER,
+     *                    "language" => DBWorker::DB_STRING,
+     *                    "time_zone" => DBWorker::DB_STRING
+     *                ],
+     *                "user_forum_settings" => [
+     *                    "user_id" => DBWorker::DB_NUMBER,
+     *                    "signature" => DBWorker::DB_STRING,
+     *                    "status" => DBWorker::DB_STRING,
+     *                    "hide_pictures" => DBWorker::DB_NUMBER,
+     *                    "hide_signatures" => DBWorker::DB_NUMBER
+     *                ]
      *           ],
      *
      *           "multichoice_tables" => [
-     *                "USER_COLORS" => [
-     *                    "USER_ID" => DBWorker::DB_NUMBER,
-     *                    "COLOR" => DBWorker::DB_STRING
-     *                  ]
+     *                "user_colors" => [
+     *                    "user_id" => DBWorker::DB_NUMBER,
+     *                    "color" => DBWorker::DB_STRING
+     *                ]
      *           ]
      *   ]);
      * ```
+     *
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -455,8 +459,8 @@ class UserSettingsManager implements ISettingsManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if some parameters are not of the proper type.
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -465,17 +469,17 @@ class UserSettingsManager implements ISettingsManager
         if (!empty($parameters["dbworker"])) {
             $this->dbworker = $parameters["dbworker"];
         }
-        
+
         if (!empty($parameters["settings_tables"])) {
             $this->settings_tables = $parameters["settings_tables"];
         }
         if (!empty($parameters["multichoice_tables"])) {
             $this->multichoice_tables = $parameters["multichoice_tables"];
         }
-    
-        return $this->validateParameters();
+
+        $this->validateParameters();
     } // init
-    
+
     /**
      * Sets the validator for the settings.
      *
@@ -493,7 +497,7 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->validator = $validator;
     } // setValidator
-    
+
     /**
      * Returns the validator for the settings.
      *
@@ -509,7 +513,7 @@ class UserSettingsManager implements ISettingsManager
     {
         return $this->validator;
     } // getValidator
-    
+
     /**
      * Sets the settings context.
      *
@@ -535,7 +539,7 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->context = $context;
     } // setContext
-    
+
     /**
      * Returns the current settings context.
      *
@@ -559,7 +563,7 @@ class UserSettingsManager implements ISettingsManager
     {
         return $this->context;
     } // getContext
-    
+
     /**
      * Sets a settings parameter.
      *
@@ -589,10 +593,10 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->settings)) {
             $this->loadSettings();
         }
-        
+
         $this->settings[$name] = $value;
     } // setParameter
-    
+
     /**
      * Sets settings parameters from an array.
      *
@@ -626,16 +630,16 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->settings)) {
             $this->loadSettings();
         }
-        
+
         foreach ($parameters as $key => $val) {
             if (!array_key_exists($key, $this->settings)) {
                 continue;
             }
-            
+
             $this->settings[$key] = $val;
         }
     } // setParameters
-    
+
     /**
      * Returns the value of a settings parameter.
      *
@@ -668,14 +672,14 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->settings)) {
             $this->loadSettings();
         }
-        
+
         if (!isset($this->settings[$name])) {
             return $default;
         }
-        
+
         return $this->settings[$name];
     } // getParameter
-    
+
     /**
      * Validates the current settings values.
      *
@@ -688,8 +692,8 @@ class UserSettingsManager implements ISettingsManager
      *
      * @uses Interfaces\ISettingsValidator
      *
-     * @see UserSettingsManager::getValidator()
-     * @see UserSettingsManager::setValidator()
+     * @see  UserSettingsManager::getValidator()
+     * @see  UserSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
@@ -698,17 +702,16 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->validator)) {
             return true;
         }
-        
+
         return $this->validator->validate($this, $this->context);
     } // validateSettings
-    
+
     /**
      * Loads the settings from the target user table.
      *
      * The user ID must be set before loading settings, see {@see \SmartFactory\UserSettingsManager::setUserID()}.
      *
-     * @return boolean
-     * Returns true if the settings have been successfully loaded, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -724,14 +727,13 @@ class UserSettingsManager implements ISettingsManager
      */
     public function loadSettings()
     {
-        return $this->loadSettingsData($this->settings);
+        $this->loadSettingsData($this->settings);
     } // loadSettings
-    
+
     /**
      * Saves the settings from to the target user table.
      *
-     * @return boolean
-     * Returns true if the settings have been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -750,10 +752,10 @@ class UserSettingsManager implements ISettingsManager
         if (empty($this->settings)) {
             $this->loadSettings();
         }
-        
-        return $this->saveSettingsData($this->settings);
+
+        $this->saveSettingsData($this->settings);
     } // saveSettings
-    
+
     /**
      * Sets the user id to be used for loading settings.
      *
@@ -762,11 +764,11 @@ class UserSettingsManager implements ISettingsManager
      * @param string $user_id
      * The user ID.
      *
-     * @see UserSettingsManager::getUserID()
-     * @see UserSettingsManager::loadSettings()
-     *
      * @return void
      *
+     * @see UserSettingsManager::loadSettings()
+     *
+     * @see UserSettingsManager::getUserID()
      * @author Oleg Schildt
      */
     public function setUserID($user_id)

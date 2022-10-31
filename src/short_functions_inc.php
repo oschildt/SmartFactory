@@ -90,6 +90,31 @@ function session()
 } // session
 
 /**
+ * Short function for getting direct access to the session variables.
+ *
+ * @return array
+ * Returns the reference to the array of the session variables.
+ *
+ * ```php
+ * session_vars()["user"]["name"] = "Alex";
+ * session_vars()["user"]["age"] = "22";
+ * ```
+ *
+ * @throws \Exception
+ * It might throw the following exceptions in the case of any errors:
+ *
+ * - if the interface or class is not specified.
+ * - if the interface or class does not exist.
+ * - if the check of the classes and interfaces fails.
+ *
+ * @author Oleg Schildt
+ */
+function &session_vars()
+{
+    return singleton(ISessionManager::class)->vars();
+} // session
+
+/**
  * Short function for getting the instance of the IDebugProfiler.
  *
  * @return IDebugProfiler

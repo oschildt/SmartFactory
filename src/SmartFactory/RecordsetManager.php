@@ -11,7 +11,9 @@
 namespace SmartFactory;
 
 use SmartFactory\Interfaces\IRecordsetManager;
+
 use SmartFactory\DatabaseWorkers\DBWorker;
+use SmartFactory\DatabaseWorkers\DBWorkerException;
 
 /**
  * Class for working with record sets.
@@ -30,7 +32,7 @@ class RecordsetManager implements IRecordsetManager
      * @author Oleg Schildt
      */
     protected $dbworker = null;
-    
+
     /**
      * Internal variable for storing the target table name.
      *
@@ -39,7 +41,7 @@ class RecordsetManager implements IRecordsetManager
      * @author Oleg Schildt
      */
     protected $table = null;
-    
+
     /**
      * Internal array for storing the target fields.
      *
@@ -48,7 +50,7 @@ class RecordsetManager implements IRecordsetManager
      * @author Oleg Schildt
      */
     protected $fields = null;
-    
+
     /**
      * Internal array for storing the key fields. These are the fields that are used
      * to uniquely identify a record.
@@ -58,13 +60,12 @@ class RecordsetManager implements IRecordsetManager
      * @author Oleg Schildt
      */
     protected $key_fields = null;
-    
+
     /**
      * This is internal auxiliary function for checking that the recordset manager
      * is intialized correctly.
      *
-     * @return boolean
-     * It should return true if the recordset manager is intialized correctly, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -75,35 +76,33 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected function validateParameters()
+    protected function validateParameters($type)
     {
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
         }
-        
+
         if (!$this->dbworker instanceof DBWorker) {
             throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
         }
-        
-        if (empty($this->table)) {
+
+        if ($type == "table" && empty($this->table)) {
             throw new \Exception("The target table is not specified!");
         }
-        
+
         if (empty($this->fields)) {
             throw new \Exception("The target fields are not specified!");
         }
-        
+
         if (!is_array($this->fields)) {
             throw new \Exception("Field definition must be an array - field => type!");
         }
-        
+
         if (!empty($this->key_fields) && !is_array($this->key_fields)) {
             throw new \Exception("Key field definition must be an array!");
         }
-        
-        return true;
     } // validateParameters
-    
+
     /**
      * This is internal auxiliary function for converting an array to a where clause.
      *
@@ -111,8 +110,7 @@ class RecordsetManager implements IRecordsetManager
      * The where clause that should be checked. If an array of keys is passed,
      * the where clause is build based on it.
      *
-     * @return boolean
-     * It should returns true if the conversion is successful, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case if a field for the clause wad not described
@@ -123,27 +121,25 @@ class RecordsetManager implements IRecordsetManager
     protected function checkWhereClause(&$where_clause)
     {
         if (!is_array($where_clause)) {
-            return true;
+            return;
         }
-        
+
         $tmp = "";
         foreach ($where_clause as $key_field => $value) {
             if (empty($this->fields[$key_field])) {
                 throw new \Exception(sprintf("The field '%s' is not described!", $key_field));
             }
-            
+
             if (!empty($tmp)) {
-                $tmp .= " AND ";
+                $tmp .= " and ";
             }
-            
+
             $tmp .= $key_field . " = " . $this->dbworker->prepare_for_query($value, $this->fields[$key_field]);
         }
-        
-        $where_clause = "WHERE " . $tmp;
-        
-        return true;
+
+        $where_clause = "where " . $tmp;
     } // checkWhereClause
-    
+
     /**
      * This is internal auxiliary function for saving a record set from an array
      * with key field values as array dimensions.
@@ -165,8 +161,7 @@ class RecordsetManager implements IRecordsetManager
      * @param array &$record
      * The array where the resulting flat record is built.
      *
-     * @return boolean
-     * Returns true if the subarray has been processed successfully, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -181,30 +176,26 @@ class RecordsetManager implements IRecordsetManager
     protected function processSubarray(&$subarray, $key_fields, &$parent_values, &$record)
     {
         $current_key = array_shift($key_fields);
-        
+
         foreach ($subarray as $key => $value) {
             if (!empty($current_key)) {
                 $record[$current_key] = $key;
-                
+
                 if (!empty($parent_values[$current_key])) {
                     $record[$current_key] = $parent_values[$current_key];
                 }
-                
-                if (!$this->processSubarray($value, $key_fields, $parent_values, $record)) {
-                    return false;
-                }
+
+                $this->processSubarray($value, $key_fields, $parent_values, $record);
             } else {
                 $record[$key] = $value;
             }
         }
-        
+
         if (empty($current_key)) {
-            return $this->saveRecord($record);
+            $this->saveRecord($record);
         }
-        
-        return true;
     } // processSubarray
-    
+
     /**
      * Sets the dbworker to be used for working with the database.
      *
@@ -221,7 +212,7 @@ class RecordsetManager implements IRecordsetManager
     {
         $this->dbworker = $dbworker;
     } // setDBWorker
-    
+
     /**
      * Returns the dbworker to be used for working with the database.
      *
@@ -236,9 +227,9 @@ class RecordsetManager implements IRecordsetManager
     {
         return $this->dbworker;
     } // getDBWorker
-    
+
     /**
-     * Describes the table fields for working with record sets.
+     * Defines the field mappings for working with record sets based on a table.
      *
      * @param string $table
      * The name of the table.
@@ -259,22 +250,60 @@ class RecordsetManager implements IRecordsetManager
      * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
      * - if the query fails or if some object names are invalid.
      *
+     * @see IRecordsetManager::describeTableFieldsQuery()
+     *
      * @author Oleg Schildt
      */
     public function describeTableFields($table, $fields, $key_fields)
     {
         $this->table = $table;
         $this->fields = $fields;
-        
+
         if (is_array($key_fields)) {
             $this->key_fields = $key_fields;
         } else {
             $this->key_fields = [];
         }
-        
-        $this->validateParameters();
+
+        $this->validateParameters("table");
     } // describeTableFields
-    
+
+    /**
+     * Defines the field mappings for working with record sets based on a query.
+     *
+     * @param array $fields
+     * The array of fields in the form "field name" => "field type".
+     *
+     * @param array $key_fields
+     * The array of key fields. These are the fields that are used
+     * to uniquely identify a record.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if the query fails or if some object names are invalid.
+     *
+     * @see IRecordsetManager::describeTableFields()
+     *
+     * @author Oleg Schildt
+     */
+    public function describeTableFieldsQuery($fields, $key_fields)
+    {
+        $this->fields = $fields;
+
+        if (is_array($key_fields)) {
+            $this->key_fields = $key_fields;
+        } else {
+            $this->key_fields = [];
+        }
+
+        $this->validateParameters("query");
+    } // describeTableFieldsQuery
+
     /**
      * Deletes records by a given where clause.
      *
@@ -282,8 +311,7 @@ class RecordsetManager implements IRecordsetManager
      * The where clause for the records to be deleted. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
-     * @return boolean
-     * Returns true if the records have been successfully deleted, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -294,6 +322,7 @@ class RecordsetManager implements IRecordsetManager
      * - if the query fails or if some object names are invalid.
      *
      * @see  RecordsetManager::saveRecord()
+     * @see  RecordsetManager::deleteRecordsQuery()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -301,31 +330,24 @@ class RecordsetManager implements IRecordsetManager
      */
     public function deleteRecords($where_clause)
     {
-        $this->validateParameters();
-        
+        $this->validateParameters("table");
+
         $this->checkWhereClause($where_clause);
-        
-        $query = "DELETE FROM " . $this->table . "\n";
-        
+
+        $query = "delete from " . $this->table . "\n";
+
         $query .= $where_clause;
-        
-        $this->dbworker->execute_query($query);
-        
-        return true;
+
+        $this->deleteRecordsQuery($query);
     } // deleteRecords
-    
+
     /**
-     * Loads a record into an array in the form "field_name" => "value".
+     * Deletes records by a given query.
      *
-     * @param array &$record
-     * The target array where the data should be loaded.
+     * @param string $query
+     * The query to be used.
      *
-     * @param string|array $where_clause
-     * The where clause that should restrict the result to one record. If an array of keys is passed,
-     * the where clause is build automatically based on it.
-     *
-     * @return boolean
-     * Returns true if the record has been successfully loaded, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -335,8 +357,44 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see RecordsetManager::saveRecord()
-     * @see RecordsetManager::loadRecordSet()
+     * @see  RecordsetManager::deleteRecords()
+     *
+     * @uses \SmartFactory\DatabaseWorkers\DBWorker
+     *
+     * @author Oleg Schildt
+     */
+    public function deleteRecordsQuery($query)
+    {
+        $this->validateParameters("query");
+
+        $this->dbworker->connect();
+
+        $this->dbworker->execute_query($query);
+    } // deleteRecordsQuery
+
+    /**
+     * Loads a record into an array in the form "field_name" => "value" based on a table.
+     *
+     * @param array &$record
+     * The target array where the data should be loaded.
+     *
+     * @param string|array $where_clause
+     * The where clause that should restrict the result to one record. If an array of keys is passed,
+     * the where clause is build automatically based on it.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
+     *
+     * @see  RecordsetManager::saveRecord()
+     * @see  RecordsetManager::loadRecordSet()
+     * @see  RecordsetManager::loadRecordQuery()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
@@ -344,34 +402,70 @@ class RecordsetManager implements IRecordsetManager
      */
     public function loadRecord(&$record, $where_clause)
     {
-        $this->validateParameters();
-        
+        $this->validateParameters("table");
+
         $this->checkWhereClause($where_clause);
-        
-        $query = "SELECT\n";
-        
+
+        $query = "select\n";
+
         $query .= implode(", ", array_keys($this->fields)) . "\n";
-        
-        $query .= "FROM " . $this->table . "\n";
-        
+
+        $query .= "from " . $this->table . "\n";
+
         $query .= $where_clause;
-        
+
+        $this->loadRecordQuery($record, $query);
+    } // loadRecord
+
+    /**
+     * Loads a record into an array in the form "field_name" => "value".
+     *
+     * @param array &$record
+     * The target array where the data should be loaded.
+     *
+     * @param string $query
+     * The query to be used.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
+     *
+     * @see  RecordsetManager::loadRecord()
+     * @see  RecordsetManager::loadRecordSetQuery()
+     *
+     * @uses \SmartFactory\DatabaseWorkers\DBWorker
+     *
+     * @author Oleg Schildt
+     */
+    public function loadRecordQuery(&$record, $query)
+    {
+        $this->validateParameters("query");
+
+        $this->dbworker->connect();
+
         $this->dbworker->execute_query($query);
-        
+
         if ($this->dbworker->fetch_row()) {
             foreach ($this->fields as $field => $type) {
                 $record[$field] = $this->dbworker->field_by_name($field, $type);
             }
         }
-        
+
         $this->dbworker->free_result();
-        
-        return true;
-    } // loadRecord
-    
+    } // loadRecordQuery
+
     /**
-     * Loads records into an array in the form $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] =
-     * "value".
+     * Loads records into an array in the form
+     *
+     * $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value".
+     *
+     * baed on a table.
      *
      * @param array &$records
      * The target array where the data should be loaded.
@@ -383,8 +477,10 @@ class RecordsetManager implements IRecordsetManager
      * @param string $order_clause
      * The order clause to sort the results.
      *
-     * @return boolean
-     * Returns true if the record has been successfully loaded, otherwise false.
+     * @param int $limit
+     * The limit how many records shoud be loaded. 0 for unlimited.
+     *
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -394,68 +490,98 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see RecordsetManager::loadRecord()
-     * @see RecordsetManager::saveRecordSet()
+     * @see  RecordsetManager::loadRecord()
+     * @see  RecordsetManager::saveRecordSet()
+     * @see  RecordsetManager::loadRecordSetQuery()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
      * @author Oleg Schildt
      */
-    public function loadRecordSet(&$records, $where_clause, $order_clause = "")
+    public function loadRecordSet(&$records, $where_clause, $order_clause = "", $limit = 0)
     {
-        $this->validateParameters();
-        
+        $this->validateParameters("table");
+
         $this->checkWhereClause($where_clause);
-        
-        $query = "SELECT\n";
-        
-        $query .= implode(", ", array_keys($this->fields)) . "\n";
-        
-        $query .= "FROM " . $this->table . "\n";
-        
-        if (!empty($where_clause)) {
-            $query .= $where_clause . "\n";
-        }
-        
-        if (!empty($where_clause)) {
-            $query .= $order_clause;
-        }
-        
+
+        $query = $this->dbworker->build_select_query($this->table, array_keys($this->fields), $where_clause, $order_clause, $limit);
+
+        $this->loadRecordSetQuery($records, $query);
+    } // loadRecordSet
+
+    /**
+     * Loads records into an array in the form
+     *
+     * $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value".
+     *
+     * baed on a query.
+     *
+     * @param array &$records
+     * The target array where the data should be loaded.
+     *
+     * @param string $query
+     * The query to be used.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors:
+     *
+     * - if some parameters are missing.
+     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
+     * - if some parameters are not of the proper type.
+     * - if the query fails or if some object names are invalid.
+     *
+     * @see  RecordsetManager::loadRecordSet()
+     * @see  RecordsetManager::loadRecordQuery()
+     *
+     * @uses \SmartFactory\DatabaseWorkers\DBWorker
+     *
+     * @author Oleg Schildt
+     */
+    public function loadRecordSetQuery(&$records, $query)
+    {
+        $this->validateParameters("query");
+
+        $this->dbworker->connect();
+
         $this->dbworker->execute_query($query);
-        
+
         while ($this->dbworker->fetch_row()) {
             $dimensions = [];
             $row = [];
-            
+
             foreach ($this->fields as $field => $type) {
                 $val = $this->dbworker->field_by_name($field, $type);
-                
+
+                $row[$field] = $val;
+
                 if (in_array($field, $this->key_fields)) {
                     $dimensions[$field] = $val;
-                } else {
-                    $row[$field] = $val;
                 }
             }
-            
-            $reference = &$records;
-            
-            foreach ($dimensions as &$dval) {
-                if (empty($reference[$dval])) {
-                    $reference[$dval] = [];
+
+            if(!empty($dimensions)) {
+                $reference = &$records;
+
+                foreach ($dimensions as &$dval) {
+                    if (empty($reference[$dval])) {
+                        $reference[$dval] = [];
+                    }
+                    $reference = &$reference[$dval];
                 }
-                $reference = &$reference[$dval];
+
+                $reference = $row;
+
+                unset($reference);
+            } else {
+                $records[] = $row;
             }
-            
-            $reference = $row;
-            
-            unset($reference);
         }
-        
+
         $this->dbworker->free_result();
-        
-        return true;
-    } // loadRecordSet
-    
+    } // loadRecordSetQuery
+
     /**
      * Saves a record from an array in the form "field_name" => "value" into the table.
      *
@@ -468,8 +594,7 @@ class RecordsetManager implements IRecordsetManager
      * with a pair "identity field" => "identity value" issued by the database by this
      * insert operation.
      *
-     * @return boolean
-     * Returns true if the record has been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -479,8 +604,8 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see RecordsetManager::loadRecord()
-     * @see RecordsetManager::saveRecordSet()
+     * @see  RecordsetManager::loadRecord()
+     * @see  RecordsetManager::saveRecordSet()
      *
      * @uses DatabaseWorkers\DBWorker
      *
@@ -488,101 +613,101 @@ class RecordsetManager implements IRecordsetManager
      */
     public function saveRecord(&$record, $identity_field = null)
     {
-        $this->validateParameters();
-        
+        $this->validateParameters("table");
+
+        $this->dbworker->connect();
+
         $where = "";
         $must_insert = false;
-        
+
         // key_fields not specified - always insert
         // identity firld exists but its value is not specified - always insert
         if (empty($this->key_fields) || (!empty($identity_field) && empty($record[$identity_field]))) {
             $must_insert = true;
         } else {
             // check existence
-            
-            $query = "SELECT\n";
-            
+
+            $query = "select\n";
+
             $query .= "1\n";
-            
-            $query .= "FROM " . $this->table . "\n";
-            
+
+            $query .= "from " . $this->table . "\n";
+
             foreach ($this->key_fields as $key_field) {
                 if (!empty($where)) {
-                    $where .= " AND ";
+                    $where .= " and ";
                 }
-                
+
                 $value = $this->dbworker->prepare_for_query(checkempty($record[$key_field]), checkempty($this->fields[$key_field]));
-                
+
                 if ($value == "NULL") {
-                    $where .= $key_field . " IS NULL";
+                    $where .= $key_field . " is NULL";
                 } else {
                     $where .= $key_field . " = " . $value;
                 }
             }
-            
+
             if (!empty($where)) {
-                $where = "WHERE " . $where;
+                $where = "where " . $where;
             }
-            
+
             $query .= $where;
-            
+
             $this->dbworker->execute_query($query);
-            
+
             if (!$this->dbworker->fetch_row()) {
                 $must_insert = true;
             }
-            
+
             $this->dbworker->free_result();
         }
-        
+
         // saving
-        
+
         $update_string = "";
         $insert_fields = "";
         $insert_values = "";
-        
+
         foreach ($this->fields as $field => $type) {
-            if ($must_insert && $field == $identity_field) {
+            if ($must_insert && $field == $identity_field && empty($record[$field])) {
                 continue;
             }
-            
+
             if (!$must_insert && in_array($field, $this->key_fields)) {
                 continue;
             }
-            
+
             // The value for the field is not passed in the record,
             // skip it
             if (!array_key_exists($field, $record)) {
                 continue;
             }
-            
+
             $value = $this->dbworker->prepare_for_query(checkempty($record[$field]), checkempty($this->fields[$field]));
-            
+
             $update_string .= $field . " = " . $value . ",\n";
             $insert_fields .= $field . ", ";
             $insert_values .= $value . ", ";
         }
-        
+
         if ($must_insert) {
-            $query = "INSERT INTO " . $this->table . "(" . trim($insert_fields, ", ") . ")\n";
-            $query .= "VALUES (" . trim($insert_values, ", ") . ")\n";
+            $query = "insert into " . $this->table . "(" . trim($insert_fields, ", ") . ")\n";
+            $query .= "values (" . trim($insert_values, ", ") . ")\n";
 
             $this->dbworker->execute_query($query);
-        } elseif(!empty($update_string)) {
-            $query = "UPDATE " . $this->table . " SET\n";
+        } elseif (!empty($update_string)) {
+            $query = "update " . $this->table . " set\n";
             $query .= trim($update_string, ",\n") . "\n";
             $query .= $where;
 
             $this->dbworker->execute_query($query);
         }
-        
+
         if (!empty($identity_field) && $must_insert) {
             $record[$identity_field] = $this->dbworker->insert_id();
         }
-        
-        return true;
     } // saveRecord
-    
+
     /**
      * Saves records from an array in the form
      * $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.
@@ -594,8 +719,7 @@ class RecordsetManager implements IRecordsetManager
      * If this recordset is a child subset of data to be saved, you can set the values of the foreign keys
      * in the form "field_name" => "value".
      *
-     * @return boolean
-     * Returns true if the records have been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -605,8 +729,8 @@ class RecordsetManager implements IRecordsetManager
      * - if some parameters are not of the proper type.
      * - if the query fails or if some object names are invalid.
      *
-     * @see RecordsetManager::loadRecordSet()
-     * @see RecordsetManager::saveRecord()
+     * @see  RecordsetManager::loadRecordSet()
+     * @see  RecordsetManager::saveRecord()
      *
      * @uses DatabaseWorkers\DBWorker
      *
@@ -614,24 +738,257 @@ class RecordsetManager implements IRecordsetManager
      */
     public function saveRecordSet(&$records, $parent_values = [])
     {
-        $this->validateParameters();
-        
+        $this->validateParameters("table");
+
+        $this->dbworker->connect();
+
         $key_fields = $this->key_fields;
         $current_key = array_shift($key_fields);
-        
-        foreach ($records As $key => $value) {
+
+        foreach ($records as $key => $value) {
             $record = [];
             $record[$current_key] = $key;
-            
+
             if (!empty($parent_values[$current_key])) {
                 $record[$current_key] = $parent_values[$current_key];
             }
-            
-            if (!$this->processSubarray($value, $key_fields, $parent_values, $record)) {
-                return false;
-            }
+
+            $this->processSubarray($value, $key_fields, $parent_values, $record);
         }
-        
-        return true;
     } // saveRecordSet
+
+    /**
+     * Counts records based on the where clause.
+     *
+     * @param string|array $where_clause
+     * The where clause that should restrict the result. If an array of keys is passed,
+     * the where clause is build automatically based on it.
+     *
+     * @return int
+     * Returns the number of records.
+     *
+     * @see  IRecordsetManager::countRecordsQuery()
+     *
+     * @uses \SmartFactory\DatabaseWorkers\DBWorker
+     *
+     * @author Oleg Schildt
+     */
+    public function countRecords($where_clause)
+    {
+        $this->validateParameters("table");
+
+        $this->checkWhereClause($where_clause);
+
+        $query = "select\n";
+
+        $query .= "count(*)\n";
+
+        $query .= "from " . $this->table . "\n";
+
+        if (!empty($where_clause)) {
+            $query .= $where_clause . "\n";
+        }
+
+        return $this->countRecordsQuery($query);
+    } // countRecords
+
+    /**
+     * Counts records based on the query.
+     *
+     * @param string $query
+     * The query to be used.
+     *
+     * @return int
+     * Returns the number of records.
+     *
+     * @see  IRecordsetManager::countRecords()
+     *
+     * @uses \SmartFactory\DatabaseWorkers\DBWorker
+     *
+     * @author Oleg Schildt
+     */
+    public function countRecordsQuery($query)
+    {
+        $this->validateParameters("query");
+
+        $this->dbworker->connect();
+
+        $cnt = 0;
+
+        $this->dbworker->execute_query($query);
+
+        if ($this->dbworker->fetch_row()) {
+            $cnt = $this->dbworker->field_by_num(0);
+        }
+
+        $this->dbworker->free_result();
+
+        return $cnt;
+    } // countRecordsQuery
+
+    /**
+     * Starts the transation.
+     *
+     * @return void
+     *
+     * @throws DBWorkerException
+     * It might throw an exception in the case of any errors.
+     *
+     * @see RecordsetManager::commit_transaction()
+     * @see RecordsetManager::rollback_transaction()
+     *
+     * @author Oleg Schildt
+     */
+    public function start_transaction()
+    {
+
+    }
+
+    /**
+     * Commits the transation.
+     *
+     * @return void
+     *
+     * @throws DBWorkerException
+     * It might throw an exception in the case of any errors.
+     *
+     * @see RecordsetManager::start_transaction()
+     * @see RecordsetManager::rollback_transaction()
+     *
+     * @author Oleg Schildt
+     */
+    public function commit_transaction()
+    {
+        $this->dbworker->connect();
+
+        $this->dbworker->commit_transaction();
+    }
+
+    /**
+     * Rolls back the transation.
+     *
+     * @throws DBWorkerException
+     * It might throw an exception in the case of any errors.
+     *
+     * @return void
+     *
+     * @see RecordsetManager::start_transaction()
+     * @see RecordsetManager::commit_transaction()
+     *
+     * @author Oleg Schildt
+     */
+    public function rollback_transaction()
+    {
+        $this->dbworker->connect();
+
+        $this->dbworker->rollback_transaction();
+    }
+
+    /**
+     * Escapes the string so that it can be used in the query without causing an error.
+     *
+     * @param string $str
+     * The string to be escaped.
+     *
+     * @return string
+     * Returns the escaped string.
+     *
+     * @see RecordsetManager::format_date()
+     * @see RecordsetManager::format_datetime()
+     * @see RecordsetManager::quotes_or_null()
+     * @see RecordsetManager::number_or_null()
+     *
+     * @author Oleg Schildt
+     */
+    public function escape($str)
+    {
+        return $this->dbworker->escape($str);
+    }
+
+    /**
+     * Escapes the string so that it can be used in the query without causing an error or returns the sstring NULL if the string is empty.
+     *
+     * @param string $str
+     * The string to be escaped.
+     *
+     * @return string
+     * Returns the escaped string.
+     *
+     * @see RecordsetManager::escape()
+     * @see RecordsetManager::format_date()
+     * @see RecordsetManager::format_datetime()
+     * @see RecordsetManager::number_or_null()
+     *
+     * @author Oleg Schildt
+     */
+    function quotes_or_null($str)
+    {
+        return $this->dbworker->quotes_or_null($str);
+    }
+
+    /**
+     * Checks that the value is a number and returns it, or returns the string NULL if the value is empty.
+     *
+     * @param string $str
+     * The string to be escaped.
+     *
+     * @return string
+     * Returns the escaped string.
+     *
+     * @throws DBWorkerException
+     * It might throw an exception in the case of any errors.
+     *
+     * @see RecordsetManager::escape()
+     * @see RecordsetManager::format_date()
+     * @see RecordsetManager::format_datetime()
+     * @see RecordsetManager::quotes_or_null()
+     *
+     * @author Oleg Schildt
+     */
+    function number_or_null($str)
+    {
+        return $this->dbworker->number_or_null($str);
+    }
+
+    /**
+     * Formats the date to a string compatible for the corresponding database.
+     *
+     * @param int $date
+     * The date value as timestamp.
+     *
+     * @return string
+     * Returns the string representation of the date compatible for the corresponding database.
+     *
+     * @see RecordsetManager::escape()
+     * @see RecordsetManager::format_datetime()
+     * @see RecordsetManager::quotes_or_null()
+     * @see RecordsetManager::number_or_null()
+     *
+     * @author Oleg Schildt
+     */
+    public function format_date($date)
+    {
+        return $this->dbworker->format_date($date);
+    }
+
+    /**
+     * Formats the date/time to a string compatible for the corresponding database.
+     *
+     * @param int $datetime
+     * The date/time value as timestamp.
+     *
+     * @return string
+     * Returns the string representation of the date/time compatible for the corresponding database.
+     *
+     * @see RecordsetManager::escape()
+     * @see RecordsetManager::format_date()
+     * @see RecordsetManager::quotes_or_null()
+     * @see RecordsetManager::number_or_null()
+     *
+     * @author Oleg Schildt
+     */
+    public function format_datetime($datetime)
+    {
+        return $this->dbworker->format_datetime($datetime);
+    }
 } // RecordsetManager

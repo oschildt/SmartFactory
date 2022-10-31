@@ -218,19 +218,6 @@
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#getContext">getContext()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the current session context.</p>
-          </td>
-      </tr><tr>
-          <td>
               <div style='float:left'><a href="#getSessionId">getSessionId()</a></div>
 
               <div style='float:right'>
@@ -296,19 +283,6 @@
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#switchContext">switchContext()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Changes the session context.</p>
-          </td>
-      </tr><tr>
-          <td>
               <div style='float:left'><a href="#vars">vars()</a></div>
 
               <div style='float:right'>
@@ -343,7 +317,7 @@
   
   <h1>Method: ISessionManager::clearSession()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearSession() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearSession(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : bool;</div>
 
   
   <div class="short-description">
@@ -355,7 +329,42 @@
 
   
 
-  
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>If many instances of the application should run in parallel
+subfolders, and all subfolders are within the same session,
+and the provider does not let you change the session path,
+then you can use different $context in each instance to ensure
+that the session data of these instances does not mix.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
 
   
   <h2>Returns</h2>
@@ -385,7 +394,7 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#167'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#127'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
@@ -449,90 +458,11 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#103'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#56'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="getContext">
-  
-  <h1>Method: ISessionManager::getContext()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext() : string;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the current session context.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If many instances of the application should run in parallel
-subfolders, and all subfolders are within the same session,
-and the provider does not let you to change the session path,
-then you can use different $context in each instance to ensure
-that the session data of these instances does not mix.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  string<br>
-  
-  <div class="item_description"><p>Returns the current session context.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#83'>SmartFactory/Interfaces/ISessionManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#switchContext'>\SmartFactory\Interfaces\ISessionManager::switchContext()</a><br>
-  
-  
-  </div>
 
   
 
@@ -592,7 +522,7 @@ that the session data of these instances does not mix.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#142'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#95'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
@@ -662,7 +592,7 @@ that the session data of these instances does not mix.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#115'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#68'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
@@ -763,7 +693,7 @@ that the session data of these instances does not mix.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#157'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#110'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
@@ -864,7 +794,7 @@ that the session data of these instances does not mix.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#130'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#83'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
@@ -892,7 +822,7 @@ that the session data of these instances does not mix.</p>
   
   <h1>Method: ISessionManager::startSession()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startSession(bool <span class="php-var">$readonly</span> = <span class="php-keyword1">false</span>, string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startSession(bool <span class="php-var">$readonly</span> = <span class="php-keyword1">false</span>) : bool;</div>
 
   
   <div class="short-description">
@@ -939,29 +869,6 @@ ohter while the write lock is held on the session file.</p>
             </td>
         </tr>
         
-        <tr>
-            <td>
-                $context
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;default&quot;
-            </td>
-            <td class="description_column">
-                <p>The session context.</p>
-<p>If many instances of the application should run in parallel
-subfolders, and all subfolders are within the same session,
-and the provider does not let you to change the session path,
-then you can use different $context in each instance to ensure
-that the session data of these instances does not mix.</p>
-            </td>
-        </tr>
-        
         
     </table>
 
@@ -993,7 +900,7 @@ that the session data of these instances does not mix.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#45'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#36'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
@@ -1011,27 +918,18 @@ that the session data of these instances does not mix.</p>
 
   
 
-  <hr id="switchContext">
+  <hr id="vars">
   
-  <h1>Method: ISessionManager::switchContext()</h1>
+  <h1>Method: ISessionManager::vars()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> switchContext(string <span class="php-var">$context</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> &amp;vars(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
-  <p>Changes the session context.</p>
+  <p>Returns the reference to the array of the session variables.</p>
   </div>
   
 
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>If many instances of the application should run in parallel
-subfolders, and all subfolders are within the same session,
-and the provider does not let you to change the session path,
-then you can use different $context in each instance to ensure
-that the session data of these instances does not mix.</p>
-  </div>
   
 
   
@@ -1059,83 +957,19 @@ that the session data of these instances does not mix.</p>
                 string
             </td>
             <td>
-                
+                &quot;default&quot;
             </td>
             <td class="description_column">
-                <p>The session context.</p>
+                <p>If many instances of the application should run in parallel
+subfolders, and all subfolders are within the same session,
+and the provider does not let you change the session path,
+then you can use different $context in each instance to ensure
+that the session data of these instances does not mix.</p>
             </td>
         </tr>
         
         
     </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#65'>SmartFactory/Interfaces/ISessionManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='interface-SmartFactory.Interfaces.ISessionManager.html#getContext'>\SmartFactory\Interfaces\ISessionManager::getContext()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="vars">
-  
-  <h1>Method: ISessionManager::vars()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> &amp;vars() : <span class="php-keyword1">array</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the reference to the array of the session variables.</p>
-  </div>
-  
-
-  
-
-  
-
-  
 
   
   <h2>Returns</h2>
@@ -1177,7 +1011,7 @@ multidimesional arrays as follows:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#196'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#163'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
   
 
@@ -1241,11 +1075,11 @@ multidimesional arrays as follows:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#93'>SmartFactory/Interfaces/ISessionManager.php</a>
+  <a href='source-SmartFactory.Interfaces.ISessionManager.php.html#46'>SmartFactory/Interfaces/ISessionManager.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

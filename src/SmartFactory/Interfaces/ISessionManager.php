@@ -28,59 +28,12 @@ interface ISessionManager
      * So that they are not blocked by the main process and by each
      * ohter while the write lock is held on the session file.
      *
-     * @param string $context
-     * The session context.
-     *
-     * If many instances of the application should run in parallel
-     * subfolders, and all subfolders are within the same session,
-     * and the provider does not let you to change the session path,
-     * then you can use different $context in each instance to ensure
-     * that the session data of these instances does not mix.
-     *
      * @return boolean
      * Returns true if the session has been successfully started, otherwise false.
      *
      * @author Oleg Schildt
      */
-    public function startSession($readonly = false, $context = "default");
-    
-    /**
-     * Changes the session context.
-     *
-     * If many instances of the application should run in parallel
-     * subfolders, and all subfolders are within the same session,
-     * and the provider does not let you to change the session path,
-     * then you can use different $context in each instance to ensure
-     * that the session data of these instances does not mix.
-     *
-     * @param string $context
-     * The session context.
-     *
-     * @return void
-     *
-     * @see ISessionManager::getContext()
-     *
-     * @author Oleg Schildt
-     */
-    public function switchContext($context);
-    
-    /**
-     * Returns the current session context.
-     *
-     * If many instances of the application should run in parallel
-     * subfolders, and all subfolders are within the same session,
-     * and the provider does not let you to change the session path,
-     * then you can use different $context in each instance to ensure
-     * that the session data of these instances does not mix.
-     *
-     * @return string
-     * Returns the current session context.
-     *
-     * @see ISessionManager::switchContext()
-     *
-     * @author Oleg Schildt
-     */
-    public function getContext();
+    public function startSession($readonly = false);
     
     /**
      * Saves all unsaved session data and closes the session.
@@ -159,15 +112,29 @@ interface ISessionManager
     /**
      * Clears the session data.
      *
+     * @param string $context
+     * If many instances of the application should run in parallel
+     * subfolders, and all subfolders are within the same session,
+     * and the provider does not let you change the session path,
+     * then you can use different $context in each instance to ensure
+     * that the session data of these instances does not mix.
+     *
      * @return boolean
      * Returns true if the session data has been successfully cleared, otherwise false.
      *
      * @author Oleg Schildt
      */
-    public function clearSession();
+    public function clearSession($context = "default");
     
     /**
      * Returns the reference to the array of the session variables.
+     *
+     * @param string $context
+     * If many instances of the application should run in parallel
+     * subfolders, and all subfolders are within the same session,
+     * and the provider does not let you change the session path,
+     * then you can use different $context in each instance to ensure
+     * that the session data of these instances does not mix.
      *
      * @return array
      * Returns the reference to the array of the session variables.
@@ -193,5 +160,5 @@ interface ISessionManager
      *
      * @author Oleg Schildt
      */
-    public function &vars();
+    public function &vars($context = "default");
 } // ISessionManager

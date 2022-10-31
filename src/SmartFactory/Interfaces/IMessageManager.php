@@ -9,6 +9,8 @@
 
 namespace SmartFactory\Interfaces;
 
+use SmartFactory\SmartException;
+
 /**
  * Interface for working with messages.
  *
@@ -22,127 +24,71 @@ interface IMessageManager extends IInitable
      * @param array $parameters
      * The parameters may vary for each message manager.
      *
-     * @return boolean
-     * The method should return true upon successful initialization, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any system errors.
      *
      * @author Oleg Schildt
      */
     public function init($parameters);
-    
-    /**
-     * Sets the element to be focused.
-     *
-     * @param string $element
-     * The ID of the element to be focused.
-     *
-     * @return void
-     *
-     * @see IMessageManager::setFocusElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function setFocusElement($element);
-    
-    /**
-     * Returns the element to be focused.
-     *
-     * @return string
-     * Returns the ID of the element to be focused.
-     *
-     * @see IMessageManager::getFocusElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function getFocusElement();
-    
-    /**
-     * Sets the tab to be activated.
-     *
-     * @param string $tab
-     * The ID of the tab to be activated.
-     *
-     * @return void
-     *
-     * @see IMessageManager::getActiveTab()
-     *
-     * @author Oleg Schildt
-     */
-    public function setActiveTab($tab);
-    
-    /**
-     * Returns the tab to be activated.
-     *
-     * @return string
-     * Returns the ID of the tab to be activated.
-     *
-     * @see IMessageManager::setActiveTab()
-     *
-     * @author Oleg Schildt
-     */
-    public function getActiveTab();
-    
-    /**
-     * Sets the field to be highlighted.
-     *
-     * @param string $element
-     * The ID of the field to be highlighted.
-     *
-     * @return void
-     *
-     * @see IMessageManager::getErrorElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function setErrorElement($element);
-    
-    /**
-     * Returns the field to be highlighted.
-     *
-     * @return string
-     * Returns the ID of the field to be highlighted.
-     *
-     * @see IMessageManager::setErrorElement()
-     *
-     * @author Oleg Schildt
-     */
-    public function getErrorElement();
-    
+
     /**
      * Stores the error to be reported.
      *
      * @param string $message
      * The error message to be reported.
      *
-     * @param string $details
-     * The error details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @param string $related_element
+     * The error element acciciated with the error.
      *
      * @param string $code
      * The error code to be reported.
      *
+     * @param string $technical_info
+     * The technical information for the error. Displaying
+     * of this part might be controlled over an option
+     * "debug_mode".
+     *
+     * @param string $file
+     * The source file where the error occured. Per default, the file where the adding error called.
+     *
+     * @param string $line
+     * The source file line where the error occured. Per default, the file line where the adding error called.
+     *
      * @return void
      *
+     * @see IMessageManager::addWarning()
+     * @see IMessageManager::addProgWarning()
+     * @see IMessageManager::addDebugMessage()
+     * @see IMessageManager::addInfoMessage()
+     * @see IMessageManager::addBubbleMessage()
      * @see IMessageManager::getErrors()
+     * @see IMessageManager::hasErrors()
      * @see IMessageManager::clearErrors()
-     * @see IMessageManager::errorsExist()
      *
      * @author Oleg Schildt
      */
-    public function setError($message, $details = "", $code = "");
-    
+    public function addError($message, $details = [], $related_element = "", $code = "", $technical_info = "", $file = "", $line = "");
+
     /**
      * Clears the stored error messages.
      *
      * @return void
      *
-     * @see IMessageManager::setError()
      * @see IMessageManager::clearWarnings()
      * @see IMessageManager::clearProgWarnings()
      * @see IMessageManager::clearDebugMessages()
-     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearInfoMessages()
+     * @see IMessageManager::clearBubbleMessages()
      * @see IMessageManager::clearAll()
+     * @see IMessageManager::addError()
      *
      * @author Oleg Schildt
      */
@@ -154,15 +100,17 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored error message exists, otherwise false.
      *
-     * @see IMessageManager::setError()
-     * @see IMessageManager::warningsExist()
-     * @see IMessageManager::progWarningsExist()
-     * @see IMessageManager::debugMessageExists()
-     * @see IMessageManager::infosExist()
+     * @see IMessageManager::hasWarnings()
+     * @see IMessageManager::hasProgWarnings()
+     * @see IMessageManager::hasDebugMessages()
+     * @see IMessageManager::hasInfoMessages()
+     * @see IMessageManager::hasBubbleMessages()
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::addError()
      *
      * @author Oleg Schildt
      */
-    public function errorsExist();
+    public function hasErrors();
     
     /**
      * Returns the array of errors if any have been stored.
@@ -170,11 +118,13 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of errors if any have been stored.
      *
-     * @see IMessageManager::setError()
      * @see IMessageManager::getWarnings()
      * @see IMessageManager::getProgWarnings()
      * @see IMessageManager::getDebugMessages()
-     * @see IMessageManager::getInfos()
+     * @see IMessageManager::getInfoMessages()
+     * @see IMessageManager::getBubbleMessages()
+     * @see IMessageManager::hasErrors()
+     * @see IMessageManager::addError()
      *
      * @author Oleg Schildt
      */
@@ -186,33 +136,42 @@ interface IMessageManager extends IInitable
      * @param string $message
      * The warning message to be reported.
      *
-     * @param string $details
-     * The warning details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @param string $related_element
+     * The error element accociated with the warning.
      *
      * @return void
      *
+     * @see IMessageManager::addError()
+     * @see IMessageManager::addProgWarning()
+     * @see IMessageManager::addDebugMessage()
+     * @see IMessageManager::addInfoMessage()
+     * @see IMessageManager::addBubbleMessage()
      * @see IMessageManager::getWarnings()
+     * @see IMessageManager::hasWarnings()
      * @see IMessageManager::clearWarnings()
-     * @see IMessageManager::warningsExist()
      *
      * @author Oleg Schildt
      */
-    public function setWarning($message, $details = "");
+    public function addWarning($message, $details = [], $related_element = "");
     
     /**
      * Clears the stored warning messages.
      *
      * @return void
      *
-     * @see IMessageManager::setWarning()
      * @see IMessageManager::clearErrors()
      * @see IMessageManager::clearProgWarnings()
      * @see IMessageManager::clearDebugMessages()
-     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearInfoMessages()
+     * @see IMessageManager::clearBubbleMessages()
      * @see IMessageManager::clearAll()
+     * @see IMessageManager::addWarning()
      *
      * @author Oleg Schildt
      */
@@ -224,15 +183,17 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored warning message exists, otherwise false.
      *
-     * @see IMessageManager::setWarning()
-     * @see IMessageManager::errorsExist()
-     * @see IMessageManager::progWarningsExist()
-     * @see IMessageManager::debugMessageExists()
-     * @see IMessageManager::infosExist()
+     * @see IMessageManager::hasErrors()
+     * @see IMessageManager::hasProgWarnings()
+     * @see IMessageManager::hasDebugMessages()
+     * @see IMessageManager::hasInfoMessages()
+     * @see IMessageManager::hasBubbleMessages()
+     * @see IMessageManager::getWarnings()
+     * @see IMessageManager::addWarning()
      *
      * @author Oleg Schildt
      */
-    public function warningsExist();
+    public function hasWarnings();
     
     /**
      * Returns the array of warnings if any have been stored.
@@ -240,11 +201,13 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of warnings if any have been stored.
      *
-     * @see IMessageManager::setWarning()
      * @see IMessageManager::getErrors()
      * @see IMessageManager::getProgWarnings()
      * @see IMessageManager::getDebugMessages()
-     * @see IMessageManager::getInfos()
+     * @see IMessageManager::getInfoMessages()
+     * @see IMessageManager::getBubbleMessages()
+     * @see IMessageManager::hasWarnings()
+     * @see IMessageManager::addWarning()
      *
      * @author Oleg Schildt
      */
@@ -259,33 +222,39 @@ interface IMessageManager extends IInitable
      * @param string $message
      * The programming warning message to be reported.
      *
-     * @param string $details
-     * The programming warning details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param string $file
+     * The source file where the error occured. Per default, the file where the adding error called.
+     *
+     * @param string $line
+     * The source file line where the error occured. Per default, the file line where the adding error called.
      *
      * @return void
      *
+     * @see IMessageManager::addError()
+     * @see IMessageManager::addWarning()
+     * @see IMessageManager::addDebugMessage()
+     * @see IMessageManager::addInfoMessage()
+     * @see IMessageManager::addBubbleMessage()
      * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::hasProgWarnings()
      * @see IMessageManager::clearProgWarnings()
-     * @see IMessageManager::progWarningsExist()
      *
      * @author Oleg Schildt
      */
-    public function setProgWarning($message, $details = "");
+    public function addProgWarning($message, $file = "", $line = "");
     
     /**
      * Clears the stored programming warning messages.
      *
      * @return void
      *
-     * @see IMessageManager::setProgWarning()
      * @see IMessageManager::clearErrors()
      * @see IMessageManager::clearWarnings()
      * @see IMessageManager::clearDebugMessages()
-     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearInfoMessages()
+     * @see IMessageManager::clearBubbleMessages()
      * @see IMessageManager::clearAll()
+     * @see IMessageManager::addProgWarning()
      *
      * @author Oleg Schildt
      */
@@ -297,15 +266,17 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored programming warning message exists, otherwise false.
      *
-     * @see IMessageManager::setProgWarning()
-     * @see IMessageManager::errorsExist()
-     * @see IMessageManager::warningsExist()
-     * @see IMessageManager::debugMessageExists()
-     * @see IMessageManager::infosExist()
+     * @see IMessageManager::hasErrors()
+     * @see IMessageManager::hasWarnings()
+     * @see IMessageManager::hasDebugMessages()
+     * @see IMessageManager::hasInfoMessages()
+     * @see IMessageManager::hasBubbleMessages()
+     * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::addProgWarning()
      *
      * @author Oleg Schildt
      */
-    public function progWarningsExist();
+    public function hasProgWarnings();
     
     /**
      * Returns the array of programming warnings if any have been stored.
@@ -313,11 +284,13 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of programming warnings if any have been stored.
      *
-     * @see IMessageManager::setProgWarning()
      * @see IMessageManager::getErrors()
      * @see IMessageManager::getWarnings()
      * @see IMessageManager::getDebugMessages()
-     * @see IMessageManager::getInfos()
+     * @see IMessageManager::getInfoMessages()
+     * @see IMessageManager::getBubbleMessages()
+     * @see IMessageManager::hasProgWarnings()
+     * @see IMessageManager::addProgWarning()
      *
      * @author Oleg Schildt
      */
@@ -331,35 +304,41 @@ interface IMessageManager extends IInitable
      * e.g. to the browser console or in a lightbox.
      *
      * @param string $message
-     * The debugging message message to be reported.
+     * The debugging message to be reported.
      *
-     * @param string $details
-     * The debugging message details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param string $file
+     * The source file where the debug output occured. Per default, the file where the debug output called.
      *
+     * @param string $line
+     * The source file line where the debug output occured. Per default, the file line where the debug output called.
+     * 
      * @return void
      *
+     * @see IMessageManager::addError()
+     * @see IMessageManager::addWarning()
+     * @see IMessageManager::addProgWarning()
+     * @see IMessageManager::addInfoMessage()
+     * @see IMessageManager::addBubbleMessage()
      * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::hasDebugMessages()
      * @see IMessageManager::clearDebugMessages()
-     * @see IMessageManager::debugMessageExists()
      *
      * @author Oleg Schildt
      */
-    public function setDebugMessage($message, $details = "");
+    public function addDebugMessage($message, $file = "", $line = "");
     
     /**
      * Clears the stored debugging messages.
      *
      * @return void
      *
-     * @see IMessageManager::setDebugMessage()
      * @see IMessageManager::clearErrors()
      * @see IMessageManager::clearWarnings()
      * @see IMessageManager::clearProgWarnings()
-     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearInfoMessages()
+     * @see IMessageManager::clearBubbleMessages()
      * @see IMessageManager::clearAll()
+     * @see IMessageManager::addDebugMessage()
      *
      * @author Oleg Schildt
      */
@@ -371,15 +350,17 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the stored debugging message exists, otherwise false.
      *
-     * @see IMessageManager::setDebugMessage()
-     * @see IMessageManager::errorsExist()
-     * @see IMessageManager::warningsExist()
-     * @see IMessageManager::progWarningsExist()
-     * @see IMessageManager::infosExist()
+     * @see IMessageManager::hasErrors()
+     * @see IMessageManager::hasWarnings()
+     * @see IMessageManager::hasProgWarnings()
+     * @see IMessageManager::hasInfoMessages()
+     * @see IMessageManager::hasBubbleMessages()
+     * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::addDebugMessage()
      *
      * @author Oleg Schildt
      */
-    public function debugMessageExists();
+    public function hasDebugMessages();
     
     /**
      * Returns the array of debugging messages if any have been stored.
@@ -387,11 +368,13 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of debugging messages if any have been stored.
      *
-     * @see IMessageManager::setDebugMessage()
      * @see IMessageManager::getErrors()
      * @see IMessageManager::getWarnings()
      * @see IMessageManager::getProgWarnings()
-     * @see IMessageManager::getInfos()
+     * @see IMessageManager::getInfoMessages()
+     * @see IMessageManager::getBubbleMessages()
+     * @see IMessageManager::hasDebugMessages()
+     * @see IMessageManager::addDebugMessage()
      *
      * @author Oleg Schildt
      */
@@ -403,41 +386,47 @@ interface IMessageManager extends IInitable
      * @param string $message
      * The information message to be reported.
      *
-     * @param string $details
-     * The information message details to be reported. Here, more
-     * technical details should be placed. Displaying
-     * of this part might be controlled over a option
-     * "display message details".
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
-     * @param boolean $auto_hide
+     * @param boolean $autoclose
      * The flag that controls whether the message box should be closed
-     * automatically after a time defined by the initialization.
+     * automatically after a time.
      *
      * @return void
      *
-     * @see IMessageManager::getInfos()
-     * @see IMessageManager::clearInfos()
-     * @see IMessageManager::infosExist()
+     * @see IMessageManager::addError()
+     * @see IMessageManager::addWarning()
+     * @see IMessageManager::addProgWarning()
+     * @see IMessageManager::addDebugMessage()
+     * @see IMessageManager::addBubbleMessage()
+     * @see IMessageManager::getInfoMessages()
+     * @see IMessageManager::hasInfoMessages()
+     * @see IMessageManager::clearInfoMessages()
      *
      * @author Oleg Schildt
      */
-    public function setInfo($message, $details = "", $auto_hide = false);
+    public function addInfoMessage($message, $details = [], $autoclose = false);
     
     /**
      * Clears the stored information messages.
      *
      * @return void
      *
-     * @see IMessageManager::setInfo()
      * @see IMessageManager::clearErrors()
      * @see IMessageManager::clearWarnings()
      * @see IMessageManager::clearProgWarnings()
      * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::clearBubbleMessages()
      * @see IMessageManager::clearAll()
+     * @see IMessageManager::addInfoMessage()
      *
      * @author Oleg Schildt
      */
-    public function clearInfos();
+    public function clearInfoMessages();
     
     /**
      * Checks whether an information message exist.
@@ -445,15 +434,17 @@ interface IMessageManager extends IInitable
      * @return boolean
      * Returns true if the information message exists, otherwise false.
      *
-     * @see IMessageManager::setInfo()
-     * @see IMessageManager::errorsExist()
-     * @see IMessageManager::warningsExist()
-     * @see IMessageManager::progWarningsExist()
-     * @see IMessageManager::debugMessageExists()
+     * @see IMessageManager::hasErrors()
+     * @see IMessageManager::hasWarnings()
+     * @see IMessageManager::hasProgWarnings()
+     * @see IMessageManager::hasDebugMessages()
+     * @see IMessageManager::hasBubbleMessages()
+     * @see IMessageManager::getInfoMessages()
+     * @see IMessageManager::addInfoMessage()
      *
      * @author Oleg Schildt
      */
-    public function infosExist();
+    public function hasInfoMessages();
     
     /**
      * Returns the array of information messages if any have been stored.
@@ -461,16 +452,102 @@ interface IMessageManager extends IInitable
      * @return array
      * Returns the array of information messages if any have been stored.
      *
-     * @see IMessageManager::setInfo()
      * @see IMessageManager::getErrors()
      * @see IMessageManager::getWarnings()
      * @see IMessageManager::getProgWarnings()
      * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::getBubbleMessages()
+     * @see IMessageManager::hasInfoMessages()
+     * @see IMessageManager::addInfoMessage()
      *
      * @author Oleg Schildt
      */
-    public function getInfos();
-    
+    public function getInfoMessages();
+
+    /**
+     * Stores the information message to be reported.
+     *
+     * @param string $message
+     * The information message to be reported.
+     *
+     * @param array $details
+     * The details might be useful if the message translations are provided on the client, not
+     * on the server, and the message should contain some details that may vary from case to case.
+     * In that case, the servers return the message id instead of final text and the details, the client
+     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     *
+     * @param boolean $autoclose
+     * The flag that controls whether the message box should be closed
+     * automatically after a time.
+     *
+     * @return void
+     *
+     * @see IMessageManager::addError()
+     * @see IMessageManager::addWarning()
+     * @see IMessageManager::addProgWarning()
+     * @see IMessageManager::addDebugMessage()
+     * @see IMessageManager::addInfoMessage()
+     * @see IMessageManager::getBubbleMessages()
+     * @see IMessageManager::hasBubbleMessages()
+     * @see IMessageManager::clearBubbleMessages()
+     *
+     * @author Oleg Schildt
+     */
+    public function addBubbleMessage($message, $details = [], $autoclose = true);
+
+    /**
+     * Clears the stored information messages.
+     *
+     * @return void
+     *
+     * @see IMessageManager::clearErrors()
+     * @see IMessageManager::clearWarnings()
+     * @see IMessageManager::clearProgWarnings()
+     * @see IMessageManager::clearDebugMessages()
+     * @see IMessageManager::clearInfoMessages()
+     * @see IMessageManager::clearAll()
+     * @see IMessageManager::addBubbleMessage()
+     *
+     * @author Oleg Schildt
+     */
+    public function clearBubbleMessages();
+
+    /**
+     * Checks whether an information message exist.
+     *
+     * @return boolean
+     * Returns true if the information message exists, otherwise false.
+     *
+     * @see IMessageManager::hasErrors()
+     * @see IMessageManager::hasWarnings()
+     * @see IMessageManager::hasProgWarnings()
+     * @see IMessageManager::hasDebugMessages()
+     * @see IMessageManager::hasInfoMessages()
+     * @see IMessageManager::getBubbleMessages()
+     * @see IMessageManager::addBubbleMessage()
+     *
+     * @author Oleg Schildt
+     */
+    public function hasBubbleMessages();
+
+    /**
+     * Returns the array of information messages if any have been stored.
+     *
+     * @return array
+     * Returns the array of information messages if any have been stored.
+     *
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::getWarnings()
+     * @see IMessageManager::getProgWarnings()
+     * @see IMessageManager::getDebugMessages()
+     * @see IMessageManager::getInfoMessages()
+     * @see IMessageManager::hasBubbleMessages()
+     * @see IMessageManager::addBubbleMessage()
+     *
+     * @author Oleg Schildt
+     */
+    public function getBubbleMessages();
+
     /**
      * Clears all stored messages and active elements.
      *
@@ -480,119 +557,10 @@ interface IMessageManager extends IInitable
      * @see IMessageManager::clearWarnings()
      * @see IMessageManager::clearProgWarnings()
      * @see IMessageManager::clearDebugMessages()
-     * @see IMessageManager::clearInfos()
+     * @see IMessageManager::clearInfoMessages()
+     * @see IMessageManager::clearBubbleMessages()
      *
      * @author Oleg Schildt
      */
     public function clearAll();
-    
-    /**
-     * Returns the auto hide time in seconds for the info
-     * messages with flag atuo_hide = true.
-     *
-     * @return int
-     * Returns the auto hide time in seconds for the info
-     * messages with flag atuo_hide = true.
-     *
-     * @author Oleg Schildt
-     */
-    public function getAutoHideTime();
-    
-    /**
-     * Add all stored existing messages to the response.
-     *
-     * @param string &$response
-     * The target array where the messages should be added.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    public function addMessagesToResponse(&$response);
-    
-    /**
-     * Returns the state whether the display of the message details is active or not.
-     *
-     * If the display of the message details is active, they are shown in the frontend.
-     *
-     * @return boolean
-     * Returns the state whether the display of the message details is active or not.
-     *
-     * @see IMessageManager::enableDetails()
-     * @see IMessageManager::disableDetails()
-     *
-     * @author Oleg Schildt
-     */
-    public function detailsActive();
-    
-    /**
-     * Enables the display of the message details.
-     *
-     * If the display of the message details is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see IMessageManager::detailsActive()
-     * @see IMessageManager::disableDetails()
-     *
-     * @author Oleg Schildt
-     */
-    public function enableDetails();
-    
-    /**
-     * Disables the display of the message details.
-     *
-     * If the display of the message details is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see IMessageManager::detailsActive()
-     * @see IMessageManager::enableDetails()
-     *
-     * @author Oleg Schildt
-     */
-    public function disableDetails();
-
-    /**
-     * Returns the state whether the display of the programming warnings is active or not.
-     *
-     * If the display of the programming warnings is active, they are shown in the frontend.
-     *
-     * @return boolean
-     * Returns the state whether the display of the programming warnings is active or not.
-     *
-     * @see IMessageManager::enableProgWarnings()
-     * @see IMessageManager::disableProgWarnings()
-     *
-     * @author Oleg Schildt
-     */
-    public function progWarningsActive();
-    
-    /**
-     * Enables the display of the programming warnings.
-     *
-     * If the display of the programming warnings is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see IMessageManager::progWarningsActive()
-     * @see IMessageManager::disableProgWarnings()
-     *
-     * @author Oleg Schildt
-     */
-    public function enableProgWarnings();
-    
-    /**
-     * Disables the display of the programming warnings.
-     *
-     * If the display of the programming warnings is active, they are shown in the frontend.
-     *
-     * @return void
-     *
-     * @see IMessageManager::progWarningsActive()
-     * @see IMessageManager::enableProgWarnings()
-     *
-     * @author Oleg Schildt
-     */
-    public function disableProgWarnings();
 } // IMessageManager

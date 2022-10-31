@@ -29,13 +29,13 @@ class LanguageManager implements ILanguageManager
     protected $localization_path;
 
     /**
-     * Internal variable for storing the path with the module localization files.
+     * Internal variable for storing the paths of the additional localization files.
      *
      * @var string
      *
      * @author Oleg Schildt
      */
-    protected $module_localization_path;
+    protected $additional_localization_files;
 
     /**
      * Internal variable for storing the current context.
@@ -128,14 +128,16 @@ class LanguageManager implements ILanguageManager
      *
      * - $parameters["localization_path"] - the path where the localization files are stored.
      *
-     * - $parameters["module_localization_path"] - the path where the module localization files are stored.
+     * - $parameters["additional_localization_files"] - the paths of the additional localization files.
      *
      * - $parameters["use_apcu"] - if installed, apcu can be used to cache the translations in the memory.
      *
      * - $parameters["warn_missing"] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
@@ -145,8 +147,8 @@ class LanguageManager implements ILanguageManager
             $this->localization_path = $parameters["localization_path"];
         }
 
-        if (!empty($parameters["module_localization_path"])) {
-            $this->module_localization_path = $parameters["module_localization_path"];
+        if (!empty($parameters["additional_localization_files"])) {
+            $this->additional_localization_files = $parameters["additional_localization_files"];
         }
 
         if (!empty($parameters["use_apcu"])) {
@@ -156,8 +158,6 @@ class LanguageManager implements ILanguageManager
         if (!empty($parameters["warn_missing"])) {
             $this->warn_missing = $parameters["warn_missing"];
         }
-
-        return true;
     }
 
     /**
@@ -264,28 +264,20 @@ class LanguageManager implements ILanguageManager
             throw new \Exception("Translation file '" . $this->localization_path . "texts.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
         }
 
-        if (!empty($this->module_localization_path)) {
-            $modules = scandir($this->module_localization_path);
-
-            foreach ($modules as $module) {
-                if ($module == "." || $module == ".." || !is_dir($this->module_localization_path . $module)) {
-                    continue;
-                }
-
-                $module_dir = $this->module_localization_path . $module . "/";
-
-                $json = file_get_contents($module_dir . "localization/texts.json");
+        if (!empty($this->additional_localization_files)) {
+            foreach ($this->additional_localization_files as $localization_file) {
+                $json = file_get_contents($localization_file);
                 if ($json === false) {
-                    throw new \Exception("Translation file '" . $module_dir . "localization/texts.json" . "' cannot be loaded or does not exist!");
+                    throw new \Exception("Translation file '" . $localization_file . "' cannot be loaded or does not exist!");
                 }
 
                 try {
-                    $module_texts = [];
-                    json_to_array($json, $module_texts);
+                    $translation_texts = [];
+                    json_to_array($json, $translation_texts);
 
-                    $json_array["texts"] = array_merge($json_array["texts"], $module_texts);
+                    $json_array["texts"] = array_merge($json_array["texts"], $translation_texts);
                 } catch (\Throwable $ex) {
-                    throw new \Exception("Translation file '" . $module_dir . "localization/texts.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
+                    throw new \Exception("Translation file '" . $localization_file . "' is invalid!" . "\n\n" . $ex->getMessage());
                 }
             }
         }
@@ -343,7 +335,7 @@ class LanguageManager implements ILanguageManager
      * Priority:
      *
      * 1. explicitly set by the request parameter language.
-     * 2. last language in the session.
+     * 2. header 'Content-Language'.
      * 3. last language in the cookie.
      * 4. browser default language.
      * 5. the first one from the supported list.
@@ -373,26 +365,18 @@ class LanguageManager implements ILanguageManager
     {
         self::$context = $context;
 
-        // Priority:
-
-        // 1) explicitly set by the request parameter language
-        // 2) last language in the session
-        // 3) last language in the cookie
-        // 4) browser default language
-        // 5) the first one from the supported list
-        // 6) English
-
         // Let's go
 
+        // 6. English
         $language = "en";
 
-        // 5) the first one from the supported list
+        // 5. the first one from the supported list
         foreach (self::$supported_languages as $lng) {
             $language = $lng;
             break;
         }
 
-        // 4) browser default
+        // 4. browser default language
         if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) && trim($_SERVER["HTTP_ACCEPT_LANGUAGE"]) != "") {
             $accepted = explode(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
 
@@ -408,18 +392,19 @@ class LanguageManager implements ILanguageManager
             }
         }
 
-        // 3) last language in the cookie
+        // 3. last language in the cookie
         $tmp = get_cookie(self::$context . "_language");
         if (!empty($tmp) && !empty(self::$supported_languages[$tmp])) {
             $language = $tmp;
         }
 
-        // 2) last language in the session
-        if (!empty(session()->vars()[self::$context . "_language"]) && !empty(self::$supported_languages[session()->vars()[self::$context . "_language"]])) {
-            $language = session()->vars()[self::$context . "_language"];
+        // 2. header 'Content-Language'.
+        $header = get_header("Content-Language");
+        if (!empty($header) && !empty(self::$supported_languages[$header])) {
+            $language = $header;
         }
 
-        // 3) explicitly set by request parameter language
+        // 1. explicitly set by request parameter language
         if (!empty($_REQUEST["language"]) && !empty(self::$supported_languages[$_REQUEST["language"]])) {
             $language = $_REQUEST["language"];
         }
@@ -443,7 +428,7 @@ class LanguageManager implements ILanguageManager
      * languages for different parts of your application.
      * If you do not need the $context, just do not specify it.
      *
-     * @return boolean
+     * @return string
      * Returns the current context.
      *
      * @author Oleg Schildt
@@ -487,9 +472,9 @@ class LanguageManager implements ILanguageManager
 
         self::$current_language = $language;
 
-        session()->vars()[self::$context . "_language"] = $language;
-
-        set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, ["samesite" => "strict"]);
+        if (get_cookie("language_cookie_allowed")) {
+            set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, ["samesite" => "strict"]);
+        }
 
         return true;
     } // setCurrentLanguage

@@ -22,11 +22,10 @@ interface ISettingsManager extends IInitable
      * @param array $parameters
      * The parameters may vary for each settings manager.
      *
-     * @return boolean
-     * The method should return true upon successful initialization, otherwise false.
+     * @return void
      *
      * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * It might throw an exception in the case of any system errors.
      *
      * @author Oleg Schildt
      */
@@ -175,6 +174,8 @@ interface ISettingsManager extends IInitable
      * Returns true if there is no validator defined, otherwise lets
      * the validator validate the settings.
      *
+     * It is not based on exceptions in order to allow catch many errors at once.
+     *
      * @uses ISettingsValidator
      *
      * @see ISettingsManager::getValidator()
@@ -187,8 +188,7 @@ interface ISettingsManager extends IInitable
     /**
      * Loads the settings from the persitence source.
      *
-     * @return boolean
-     * Returns true if the settings have been successfully loaded, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -202,8 +202,7 @@ interface ISettingsManager extends IInitable
     /**
      * Saves the settings from to the persitence target.
      *
-     * @return boolean
-     * Returns true if the settings have been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.

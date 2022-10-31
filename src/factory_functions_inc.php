@@ -110,19 +110,11 @@ function instance($interface_or_class)
  * returns DBWorker object or null if the object could not be created.
  *
  * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
- *
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
- * - if the php extension is not installed.
- * - db_missing_type_error - if the database type is not specified.
- * - db_conn_data_error - if the connection parameters are incomplete.
- * - db_server_conn_error - if the database server cannot be connected.
- * - db_not_exists_error - if database does not exist od inaccesible to the user.
+ * It might throw the following exceptions in the case of any errors.
  *
  * @author Oleg Schildt
  */
-function dbworker($parameters = null, $singleton = true)
+function dbworker($parameters = [], $singleton = true)
 {
     if (empty($parameters["db_type"])) {
         throw new \Exception("Database type is not specified!");

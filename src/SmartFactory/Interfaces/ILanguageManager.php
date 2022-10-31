@@ -22,8 +22,10 @@ interface ILanguageManager extends IInitable
      * @param array $parameters
      * The parameters may vary for each language manager.
      *
-     * @return boolean
-     * The method should return true upon successful initialization, otherwise false.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any system errors.
      *
      * @author Oleg Schildt
      */

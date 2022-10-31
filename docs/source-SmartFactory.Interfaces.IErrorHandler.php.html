@@ -117,132 +117,134 @@
 </span><span class="line" id="22"> 22: </span><span class="php-comment">     * @param array $parameters
 </span><span class="line" id="23"> 23: </span><span class="php-comment">     * The parameters may vary for each error handler.
 </span><span class="line" id="24"> 24: </span><span class="php-comment">     *
-</span><span class="line" id="25"> 25: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="26"> 26: </span><span class="php-comment">     * The method should return true upon successful initialization, otherwise false.
-</span><span class="line" id="27"> 27: </span><span class="php-comment">     *
-</span><span class="line" id="28"> 28: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="29"> 29: </span><span class="php-comment">     */</span>
-<span class="line" id="30"> 30: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-var">$parameters</span>);
-<span class="line" id="31"> 31: </span>    
-<span class="line" id="32"> 32: </span>    <span class="php-comment">/**
-</span><span class="line" id="33"> 33: </span><span class="php-comment">     * This is the function for handling of the PHP errors. It is set a the
-</span><span class="line" id="34"> 34: </span><span class="php-comment">     * error handler.
-</span><span class="line" id="35"> 35: </span><span class="php-comment">     *
-</span><span class="line" id="36"> 36: </span><span class="php-comment">     * @param int $errno
-</span><span class="line" id="37"> 37: </span><span class="php-comment">     * Error code.
-</span><span class="line" id="38"> 38: </span><span class="php-comment">     *
-</span><span class="line" id="39"> 39: </span><span class="php-comment">     * @param string $errstr
-</span><span class="line" id="40"> 40: </span><span class="php-comment">     * Error text.
-</span><span class="line" id="41"> 41: </span><span class="php-comment">     *
-</span><span class="line" id="42"> 42: </span><span class="php-comment">     * @param string $errfile
-</span><span class="line" id="43"> 43: </span><span class="php-comment">     * Source file where the error occured.
-</span><span class="line" id="44"> 44: </span><span class="php-comment">     *
-</span><span class="line" id="45"> 45: </span><span class="php-comment">     * @param int $errline
-</span><span class="line" id="46"> 46: </span><span class="php-comment">     * Line number where the error occured.
-</span><span class="line" id="47"> 47: </span><span class="php-comment">     *
-</span><span class="line" id="48"> 48: </span><span class="php-comment">     * @return void
+</span><span class="line" id="25"> 25: </span><span class="php-comment">     * @return void
+</span><span class="line" id="26"> 26: </span><span class="php-comment">     *
+</span><span class="line" id="27"> 27: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="28"> 28: </span><span class="php-comment">     * It might throw an exception in the case of any system errors.
+</span><span class="line" id="29"> 29: </span><span class="php-comment">     *
+</span><span class="line" id="30"> 30: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="31"> 31: </span><span class="php-comment">     */</span>
+<span class="line" id="32"> 32: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-var">$parameters</span>);
+<span class="line" id="33"> 33: </span>    
+<span class="line" id="34"> 34: </span>    <span class="php-comment">/**
+</span><span class="line" id="35"> 35: </span><span class="php-comment">     * This is the function for handling of the PHP errors. It is set a the
+</span><span class="line" id="36"> 36: </span><span class="php-comment">     * error handler.
+</span><span class="line" id="37"> 37: </span><span class="php-comment">     *
+</span><span class="line" id="38"> 38: </span><span class="php-comment">     * @param int $errno
+</span><span class="line" id="39"> 39: </span><span class="php-comment">     * Error code.
+</span><span class="line" id="40"> 40: </span><span class="php-comment">     *
+</span><span class="line" id="41"> 41: </span><span class="php-comment">     * @param string $errstr
+</span><span class="line" id="42"> 42: </span><span class="php-comment">     * Error text.
+</span><span class="line" id="43"> 43: </span><span class="php-comment">     *
+</span><span class="line" id="44"> 44: </span><span class="php-comment">     * @param string $errfile
+</span><span class="line" id="45"> 45: </span><span class="php-comment">     * Source file where the error occured.
+</span><span class="line" id="46"> 46: </span><span class="php-comment">     *
+</span><span class="line" id="47"> 47: </span><span class="php-comment">     * @param int $errline
+</span><span class="line" id="48"> 48: </span><span class="php-comment">     * Line number where the error occured.
 </span><span class="line" id="49"> 49: </span><span class="php-comment">     *
-</span><span class="line" id="50"> 50: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="51"> 51: </span><span class="php-comment">     */</span>
-<span class="line" id="52"> 52: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(<span class="php-var">$errno</span>, <span class="php-var">$errstr</span>, <span class="php-var">$errfile</span>, <span class="php-var">$errline</span>);
-<span class="line" id="53"> 53: </span>    
-<span class="line" id="54"> 54: </span>    <span class="php-comment">/**
-</span><span class="line" id="55"> 55: </span><span class="php-comment">     * This is the function for handling of the PHP exceptions. It should
-</span><span class="line" id="56"> 56: </span><span class="php-comment">     * be called in the catch block to trace detailed infromation
-</span><span class="line" id="57"> 57: </span><span class="php-comment">     * if an exception is thrown.
-</span><span class="line" id="58"> 58: </span><span class="php-comment">     *
-</span><span class="line" id="59"> 59: </span><span class="php-comment">     * @param \Throwable $ex
-</span><span class="line" id="60"> 60: </span><span class="php-comment">     * Thrown exception.
-</span><span class="line" id="61"> 61: </span><span class="php-comment">     *
-</span><span class="line" id="62"> 62: </span><span class="php-comment">     * @param string $errfuntion
-</span><span class="line" id="63"> 63: </span><span class="php-comment">     * Funtion name where the exception has been catched.
-</span><span class="line" id="64"> 64: </span><span class="php-comment">     *
-</span><span class="line" id="65"> 65: </span><span class="php-comment">     * @param string $errfile
-</span><span class="line" id="66"> 66: </span><span class="php-comment">     * Source file where the exception has been catched.
-</span><span class="line" id="67"> 67: </span><span class="php-comment">     *
-</span><span class="line" id="68"> 68: </span><span class="php-comment">     * @param int $errline
-</span><span class="line" id="69"> 69: </span><span class="php-comment">     * Line number where the exception has been catched.
-</span><span class="line" id="70"> 70: </span><span class="php-comment">     *
-</span><span class="line" id="71"> 71: </span><span class="php-comment">     * @return void
+</span><span class="line" id="50"> 50: </span><span class="php-comment">     * @return void
+</span><span class="line" id="51"> 51: </span><span class="php-comment">     *
+</span><span class="line" id="52"> 52: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="53"> 53: </span><span class="php-comment">     */</span>
+<span class="line" id="54"> 54: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(<span class="php-var">$errno</span>, <span class="php-var">$errstr</span>, <span class="php-var">$errfile</span>, <span class="php-var">$errline</span>);
+<span class="line" id="55"> 55: </span>    
+<span class="line" id="56"> 56: </span>    <span class="php-comment">/**
+</span><span class="line" id="57"> 57: </span><span class="php-comment">     * This is the function for handling of the PHP exceptions. It should
+</span><span class="line" id="58"> 58: </span><span class="php-comment">     * be called in the catch block to trace detailed infromation
+</span><span class="line" id="59"> 59: </span><span class="php-comment">     * if an exception is thrown.
+</span><span class="line" id="60"> 60: </span><span class="php-comment">     *
+</span><span class="line" id="61"> 61: </span><span class="php-comment">     * @param \Throwable $ex
+</span><span class="line" id="62"> 62: </span><span class="php-comment">     * Thrown exception.
+</span><span class="line" id="63"> 63: </span><span class="php-comment">     *
+</span><span class="line" id="64"> 64: </span><span class="php-comment">     * @param string $errfuntion
+</span><span class="line" id="65"> 65: </span><span class="php-comment">     * Funtion name where the exception has been catched.
+</span><span class="line" id="66"> 66: </span><span class="php-comment">     *
+</span><span class="line" id="67"> 67: </span><span class="php-comment">     * @param string $errfile
+</span><span class="line" id="68"> 68: </span><span class="php-comment">     * Source file where the exception has been catched.
+</span><span class="line" id="69"> 69: </span><span class="php-comment">     *
+</span><span class="line" id="70"> 70: </span><span class="php-comment">     * @param int $errline
+</span><span class="line" id="71"> 71: </span><span class="php-comment">     * Line number where the exception has been catched.
 </span><span class="line" id="72"> 72: </span><span class="php-comment">     *
-</span><span class="line" id="73"> 73: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="74"> 74: </span><span class="php-comment">     */</span>
-<span class="line" id="75"> 75: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(<span class="php-var">$ex</span>, <span class="php-var">$errfuntion</span>, <span class="php-var">$errfile</span>, <span class="php-var">$errline</span>);
-<span class="line" id="76"> 76: </span>    
-<span class="line" id="77"> 77: </span>    <span class="php-comment">/**
-</span><span class="line" id="78"> 78: </span><span class="php-comment">     * Returns the last error.
-</span><span class="line" id="79"> 79: </span><span class="php-comment">     *
-</span><span class="line" id="80"> 80: </span><span class="php-comment">     * @return string
-</span><span class="line" id="81"> 81: </span><span class="php-comment">     * Returns the last error or an empty string if no error occured so far.
-</span><span class="line" id="82"> 82: </span><span class="php-comment">     *
-</span><span class="line" id="83"> 83: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="84"> 84: </span><span class="php-comment">     */</span>
-<span class="line" id="85"> 85: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError();
-<span class="line" id="86"> 86: </span>    
-<span class="line" id="87"> 87: </span>    <span class="php-comment">/**
-</span><span class="line" id="88"> 88: </span><span class="php-comment">     * Stores the last error.
-</span><span class="line" id="89"> 89: </span><span class="php-comment">     *
-</span><span class="line" id="90"> 90: </span><span class="php-comment">     * @param string $error
-</span><span class="line" id="91"> 91: </span><span class="php-comment">     * The error text to be stored.
-</span><span class="line" id="92"> 92: </span><span class="php-comment">     *
-</span><span class="line" id="93"> 93: </span><span class="php-comment">     * @return void
+</span><span class="line" id="73"> 73: </span><span class="php-comment">     * @return void
+</span><span class="line" id="74"> 74: </span><span class="php-comment">     *
+</span><span class="line" id="75"> 75: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="76"> 76: </span><span class="php-comment">     */</span>
+<span class="line" id="77"> 77: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(<span class="php-var">$ex</span>, <span class="php-var">$errfuntion</span>, <span class="php-var">$errfile</span>, <span class="php-var">$errline</span>);
+<span class="line" id="78"> 78: </span>    
+<span class="line" id="79"> 79: </span>    <span class="php-comment">/**
+</span><span class="line" id="80"> 80: </span><span class="php-comment">     * Returns the last error.
+</span><span class="line" id="81"> 81: </span><span class="php-comment">     *
+</span><span class="line" id="82"> 82: </span><span class="php-comment">     * @return string
+</span><span class="line" id="83"> 83: </span><span class="php-comment">     * Returns the last error or an empty string if no error occured so far.
+</span><span class="line" id="84"> 84: </span><span class="php-comment">     *
+</span><span class="line" id="85"> 85: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="86"> 86: </span><span class="php-comment">     */</span>
+<span class="line" id="87"> 87: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError();
+<span class="line" id="88"> 88: </span>    
+<span class="line" id="89"> 89: </span>    <span class="php-comment">/**
+</span><span class="line" id="90"> 90: </span><span class="php-comment">     * Stores the last error.
+</span><span class="line" id="91"> 91: </span><span class="php-comment">     *
+</span><span class="line" id="92"> 92: </span><span class="php-comment">     * @param string $error
+</span><span class="line" id="93"> 93: </span><span class="php-comment">     * The error text to be stored.
 </span><span class="line" id="94"> 94: </span><span class="php-comment">     *
-</span><span class="line" id="95"> 95: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="96"> 96: </span><span class="php-comment">     */</span>
-<span class="line" id="97"> 97: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(<span class="php-var">$error</span>);
-<span class="line" id="98"> 98: </span>    
-<span class="line" id="99"> 99: </span>    <span class="php-comment">/**
-</span><span class="line" id="100">100: </span><span class="php-comment">     * Returns the state whether the trace is active or not.
-</span><span class="line" id="101">101: </span><span class="php-comment">     *
-</span><span class="line" id="102">102: </span><span class="php-comment">     * If the trace is active, any eror, warning or notice is traced to
-</span><span class="line" id="103">103: </span><span class="php-comment">     * the standard file.
-</span><span class="line" id="104">104: </span><span class="php-comment">     *
-</span><span class="line" id="105">105: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="106">106: </span><span class="php-comment">     * Returns the state whether the trace is active or not.
-</span><span class="line" id="107">107: </span><span class="php-comment">     *
-</span><span class="line" id="108">108: </span><span class="php-comment">     * @see IErrorHandler::enableTrace()
-</span><span class="line" id="109">109: </span><span class="php-comment">     * @see IErrorHandler::disableTrace()
-</span><span class="line" id="110">110: </span><span class="php-comment">     *
-</span><span class="line" id="111">111: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="112">112: </span><span class="php-comment">     */</span>
-<span class="line" id="113">113: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive();
-<span class="line" id="114">114: </span>    
-<span class="line" id="115">115: </span>    <span class="php-comment">/**
-</span><span class="line" id="116">116: </span><span class="php-comment">     * Enables the trace.
-</span><span class="line" id="117">117: </span><span class="php-comment">     *
-</span><span class="line" id="118">118: </span><span class="php-comment">     * If the trace is active, any eror, warning or notice is traced to
-</span><span class="line" id="119">119: </span><span class="php-comment">     * the standard file.
-</span><span class="line" id="120">120: </span><span class="php-comment">     *
-</span><span class="line" id="121">121: </span><span class="php-comment">     * @return void
+</span><span class="line" id="95"> 95: </span><span class="php-comment">     * @return void
+</span><span class="line" id="96"> 96: </span><span class="php-comment">     *
+</span><span class="line" id="97"> 97: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="98"> 98: </span><span class="php-comment">     */</span>
+<span class="line" id="99"> 99: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(<span class="php-var">$error</span>);
+<span class="line" id="100">100: </span>    
+<span class="line" id="101">101: </span>    <span class="php-comment">/**
+</span><span class="line" id="102">102: </span><span class="php-comment">     * Returns the state whether the trace is active or not.
+</span><span class="line" id="103">103: </span><span class="php-comment">     *
+</span><span class="line" id="104">104: </span><span class="php-comment">     * If the trace is active, any eror, warning or notice is traced to
+</span><span class="line" id="105">105: </span><span class="php-comment">     * the standard file.
+</span><span class="line" id="106">106: </span><span class="php-comment">     *
+</span><span class="line" id="107">107: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="108">108: </span><span class="php-comment">     * Returns the state whether the trace is active or not.
+</span><span class="line" id="109">109: </span><span class="php-comment">     *
+</span><span class="line" id="110">110: </span><span class="php-comment">     * @see IErrorHandler::enableTrace()
+</span><span class="line" id="111">111: </span><span class="php-comment">     * @see IErrorHandler::disableTrace()
+</span><span class="line" id="112">112: </span><span class="php-comment">     *
+</span><span class="line" id="113">113: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="114">114: </span><span class="php-comment">     */</span>
+<span class="line" id="115">115: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive();
+<span class="line" id="116">116: </span>    
+<span class="line" id="117">117: </span>    <span class="php-comment">/**
+</span><span class="line" id="118">118: </span><span class="php-comment">     * Enables the trace.
+</span><span class="line" id="119">119: </span><span class="php-comment">     *
+</span><span class="line" id="120">120: </span><span class="php-comment">     * If the trace is active, any eror, warning or notice is traced to
+</span><span class="line" id="121">121: </span><span class="php-comment">     * the standard file.
 </span><span class="line" id="122">122: </span><span class="php-comment">     *
-</span><span class="line" id="123">123: </span><span class="php-comment">     * @see IErrorHandler::traceActive()
-</span><span class="line" id="124">124: </span><span class="php-comment">     * @see IErrorHandler::disableTrace()
-</span><span class="line" id="125">125: </span><span class="php-comment">     *
-</span><span class="line" id="126">126: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="127">127: </span><span class="php-comment">     */</span>
-<span class="line" id="128">128: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace();
-<span class="line" id="129">129: </span>    
-<span class="line" id="130">130: </span>    <span class="php-comment">/**
-</span><span class="line" id="131">131: </span><span class="php-comment">     * Disables the trace.
-</span><span class="line" id="132">132: </span><span class="php-comment">     *
-</span><span class="line" id="133">133: </span><span class="php-comment">     * If the trace is active, any eror, warning or notice is traced to
-</span><span class="line" id="134">134: </span><span class="php-comment">     * the standard file.
-</span><span class="line" id="135">135: </span><span class="php-comment">     *
-</span><span class="line" id="136">136: </span><span class="php-comment">     * @return void
+</span><span class="line" id="123">123: </span><span class="php-comment">     * @return void
+</span><span class="line" id="124">124: </span><span class="php-comment">     *
+</span><span class="line" id="125">125: </span><span class="php-comment">     * @see IErrorHandler::traceActive()
+</span><span class="line" id="126">126: </span><span class="php-comment">     * @see IErrorHandler::disableTrace()
+</span><span class="line" id="127">127: </span><span class="php-comment">     *
+</span><span class="line" id="128">128: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="129">129: </span><span class="php-comment">     */</span>
+<span class="line" id="130">130: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace();
+<span class="line" id="131">131: </span>    
+<span class="line" id="132">132: </span>    <span class="php-comment">/**
+</span><span class="line" id="133">133: </span><span class="php-comment">     * Disables the trace.
+</span><span class="line" id="134">134: </span><span class="php-comment">     *
+</span><span class="line" id="135">135: </span><span class="php-comment">     * If the trace is active, any eror, warning or notice is traced to
+</span><span class="line" id="136">136: </span><span class="php-comment">     * the standard file.
 </span><span class="line" id="137">137: </span><span class="php-comment">     *
-</span><span class="line" id="138">138: </span><span class="php-comment">     * @see IErrorHandler::traceActive()
-</span><span class="line" id="139">139: </span><span class="php-comment">     * @see IErrorHandler::enableTrace()
-</span><span class="line" id="140">140: </span><span class="php-comment">     *
-</span><span class="line" id="141">141: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="142">142: </span><span class="php-comment">     */</span>
-<span class="line" id="143">143: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace();
-<span class="line" id="144">144: </span>} <span class="php-comment">// IErrorHandler</span>
+</span><span class="line" id="138">138: </span><span class="php-comment">     * @return void
+</span><span class="line" id="139">139: </span><span class="php-comment">     *
+</span><span class="line" id="140">140: </span><span class="php-comment">     * @see IErrorHandler::traceActive()
+</span><span class="line" id="141">141: </span><span class="php-comment">     * @see IErrorHandler::enableTrace()
+</span><span class="line" id="142">142: </span><span class="php-comment">     *
+</span><span class="line" id="143">143: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="144">144: </span><span class="php-comment">     */</span>
+<span class="line" id="145">145: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace();
+<span class="line" id="146">146: </span>} <span class="php-comment">// IErrorHandler</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

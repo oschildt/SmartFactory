@@ -21,6 +21,6 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 });
 
 singleton(IEventManager::class)->addHandler("php_error", function ($event, $params) {
-    singleton(IMessageManager::class)->setProgWarning($params["etype"] . ": " . str_replace("<br/>", "\n", trim($params["errstr"])) . "\n\n" . $params["errfile"] . "\n" . "line " . $params["errline"]);
+    singleton(IMessageManager::class)->addProgWarning($params["etype"] . ": " . str_replace("<br/>", "\n", trim($params["errstr"])), $params["errfile"], $params["errline"]);
 });
 //------------------------------------------------------------------------------

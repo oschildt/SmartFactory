@@ -130,7 +130,7 @@ of the API actions.</p>
 
    <span class="php-var">$nodes</span> = <span class="php-var">$xsdpath</span>-&gt;evaluate(<span class="php-quote">&quot;/Request/City&quot;</span>);
    <span class="php-keyword1">if</span> (<span class="php-var">$nodes</span>-&gt;length == <span class="php-num">0</span>) {
-       <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;City is undefined!&quot;</span>, <span class="php-quote">&quot;no_city&quot;</span>, SmartException::ERR_TYPE_USER_ERROR);
+       <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;City is undefined!&quot;</span>, <span class="php-quote">&quot;no_city&quot;</span>);
    }
    <span class="php-var">$city</span> = <span class="php-var">$nodes</span>-&gt;item(<span class="php-num">0</span>)-&gt;nodeValue;
 
@@ -144,14 +144,14 @@ of the API actions.</p>
 
 
 
-
-
-<h2>Implements</h2>
+<h2>Extends</h2>
 <div class="item_list">
 
-<a href='interface-SmartFactory.Interfaces.IRequestHandler.html'>\SmartFactory\Interfaces\IRequestHandler</a><br>
+<a href='class-SmartFactory.RequestHandler.html'>\SmartFactory\RequestHandler</a><br>
 
 </div>
+
+
 
 
 
@@ -178,7 +178,7 @@ of the API actions.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.XmlRequestHandler.php.html#45'>SmartFactory/XmlRequestHandler.php</a>
+<a href='source-SmartFactory.XmlRequestHandler.php.html#43'>SmartFactory/XmlRequestHandler.php</a>
 </div>
 
 
@@ -207,58 +207,6 @@ of the API actions.</p>
       
       <tr>
           <td>
-              <div style='float:left'><a href="#$action">$action</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the API action.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#$errors">$errors</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the processing errors.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#$param_string">$param_string</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the API parameter string.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#$request_headers">$request_headers</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the request headers.</p>
-          </td>
-      </tr><tr>
-          <td>
               <div style='float:left'><a href="#$request_xmldoc">$request_xmldoc</a></div>
 
               <div style='float:right'>
@@ -269,19 +217,6 @@ of the API actions.</p>
           </td>
           <td class="description_column">
               <p>Internal variable for storing the request XML document.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#$response_headers">$response_headers</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the response headers.</p>
           </td>
       </tr><tr>
           <td>
@@ -318,61 +253,7 @@ of the API actions.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#addError">addError()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Adds a new error to the error list.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#addExceptionError">addExceptionError()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>This is an auxiliary function for adding an error to the list
-from an exception.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#exitWithErrors">exitWithErrors()</a></div>
-
-              <div style='float:right'>
-              <span class="label label-info">abstract</span>
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>This is an auxiliary function for exiting the processing and
-sending all collected errors to the response.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#handleRequest">handleRequest()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>This is the main function that should be called to handle the API request.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#parseXmlInput">parseXmlInput()</a></div>
+              <div style='float:left'><a href="#parseInput">parseInput()</a></div>
 
               <div style='float:right'>
               
@@ -385,48 +266,7 @@ sending all collected errors to the response.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#postprocessRequest">postprocessRequest()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>This function is called after the processing of the request. It should be overridden if you want
-to perform some standard action after every API request of your library.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#preprocessRequest">preprocessRequest()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>This function is called before the processing of the request. It should be overridden if you want
-to perform some standard action before every API request of your library.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#processInputData">processInputData()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>This is an auxiliary function for getting request headers and parsing the API url.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#sendXmlResponse">sendXmlResponse()</a></div>
+              <div style='float:left'><a href="#sendResponse">sendResponse()</a></div>
 
               <div style='float:right'>
               
@@ -443,159 +283,7 @@ to perform some standard action before every API request of your library.</p>
 
 
 
-<hr id="$action">
-  
-  <h1>Property: XmlRequestHandler::$action</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$action</span> = <span class="php-quote">&quot;&quot;</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the API action.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  string
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#54'>SmartFactory/XmlRequestHandler.php</a>
-  </div><hr id="$errors">
-  
-  <h1>Property: XmlRequestHandler::$errors</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$errors</span> = <span class="php-keyword1">array</span>();</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the processing errors.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  array
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#90'>SmartFactory/XmlRequestHandler.php</a>
-  </div><hr id="$param_string">
-  
-  <h1>Property: XmlRequestHandler::$param_string</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$param_string</span> = <span class="php-quote">&quot;&quot;</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the API parameter string.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  string
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#63'>SmartFactory/XmlRequestHandler.php</a>
-  </div><hr id="$request_headers">
-  
-  <h1>Property: XmlRequestHandler::$request_headers</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$request_headers</span> = <span class="php-keyword1">array</span>();</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the request headers.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  array
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#72'>SmartFactory/XmlRequestHandler.php</a>
-  </div><hr id="$request_xmldoc">
+<hr id="$request_xmldoc">
   
   <h1>Property: XmlRequestHandler::$request_xmldoc</h1>
 
@@ -632,45 +320,7 @@ to perform some standard action before every API request of your library.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#99'>SmartFactory/XmlRequestHandler.php</a>
-  </div><hr id="$response_headers">
-  
-  <h1>Property: XmlRequestHandler::$response_headers</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$response_headers</span> = <span class="php-keyword1">array</span>();</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the response headers.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  array
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#81'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-SmartFactory.XmlRequestHandler.php.html#52'>SmartFactory/XmlRequestHandler.php</a>
   </div><hr id="$response_xmldoc">
   
   <h1>Property: XmlRequestHandler::$response_xmldoc</h1>
@@ -708,7 +358,7 @@ to perform some standard action before every API request of your library.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#108'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-SmartFactory.XmlRequestHandler.php.html#61'>SmartFactory/XmlRequestHandler.php</a>
   </div>
 
 <hr id="__construct">
@@ -754,7 +404,7 @@ to perform some standard action before every API request of your library.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#117'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-SmartFactory.XmlRequestHandler.php.html#70'>SmartFactory/XmlRequestHandler.php</a>
   </div>
   
 
@@ -772,386 +422,11 @@ to perform some standard action before every API request of your library.</p>
 
   
 
-  <hr id="addError">
+  <hr id="parseInput">
   
-  <h1>Method: XmlRequestHandler::addError()</h1>
+  <h1>Method: XmlRequestHandler::parseInput()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addError(<span class="php-keyword1">array</span> <span class="php-var">$error</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>Adds a new error to the error list.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It is possible to validate an API request and return many errors at once.</p>
-  </div>
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $error
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                array
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Error descrition the form key =&gt; value:</p>
-<ul>
-<li>
-<p>$error[&quot;error_code&quot;] - error code. Since the error texts can be
-localized, the unique code of the error might be important fo using in comparison.</p>
-</li>
-<li>
-<p>$error[&quot;error_type&quot;] - error type. The type of the error might be useful for decision how to show the error on the client. If it is a
-user error, the full error texts should be shown. If it is a programming error, the detailed text should
-be shown only in the debug mode to prevent that the hackers get sensible information about the system.</p>
-</li>
-<li>
-<p>$error[&quot;error_message&quot;] - error message.</p>
-</li>
-</ul>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#220'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#addExceptionError'>\SmartFactory\XmlRequestHandler::addExceptionError()</a><br>
-  
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#exitWithErrors'>\SmartFactory\XmlRequestHandler::exitWithErrors()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="addExceptionError">
-  
-  <h1>Method: XmlRequestHandler::addExceptionError()</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addExceptionError(\Throwable <span class="php-var">$ex</span>) : void;</div>
-
-  
-  <div class="short-description">
-  <p>This is an auxiliary function for adding an error to the list
-from an exception.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $ex
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                \Throwable
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The thrown exception.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#239'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#addError'>\SmartFactory\XmlRequestHandler::addError()</a><br>
-  
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#exitWithErrors'>\SmartFactory\XmlRequestHandler::exitWithErrors()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="exitWithErrors">
-  
-  <h1>Method: XmlRequestHandler::exitWithErrors()</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> exitWithErrors() : void;</div>
-
-  
-  <div class="short-description">
-  <p>This is an auxiliary function for exiting the processing and
-sending all collected errors to the response.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>Since the desired format of the response XML is not fixed, the user should implement
-this method in his derived class.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#272'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#addError'>\SmartFactory\XmlRequestHandler::addError()</a><br>
-  
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#addExceptionError'>\SmartFactory\XmlRequestHandler::addExceptionError()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="handleRequest">
-  
-  <h1>Method: XmlRequestHandler::handleRequest()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleRequest() : void;</div>
-
-  
-  <div class="short-description">
-  <p>This is the main function that should be called to handle the API request.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It detects the action, retrieves the request headers, parses the incoming XML data and
-tries to call the corresponding method for the API action.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IRequestHandler.html#handleRequest'>\SmartFactory\Interfaces\IRequestHandler::handleRequest()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#337'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="parseXmlInput">
-  
-  <h1>Method: XmlRequestHandler::parseXmlInput()</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseXmlInput() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput() : void;</div>
 
   
   <div class="short-description">
@@ -1189,68 +464,10 @@ tries to call the corresponding method for the API action.</p>
   </div>
 
   
-
-  <h2>Authors</h2>
+  <h2>Overrides</h2>
   <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
+  <a href='class-SmartFactory.RequestHandler.html#parseInput'>\SmartFactory\RequestHandler::parseInput()</a>
   </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#170'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="postprocessRequest">
-  
-  <h1>Method: XmlRequestHandler::postprocessRequest()</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> postprocessRequest() : void;</div>
-
-  
-  <div class="short-description">
-  <p>This function is called after the processing of the request. It should be overridden if you want
-to perform some standard action after every API request of your library.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
   
 
   <h2>Authors</h2>
@@ -1267,7 +484,7 @@ to perform some standard action after every API request of your library.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#323'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-SmartFactory.XmlRequestHandler.php.html#90'>SmartFactory/XmlRequestHandler.php</a>
   </div>
   
 
@@ -1285,159 +502,11 @@ to perform some standard action after every API request of your library.</p>
 
   
 
-  <hr id="preprocessRequest">
+  <hr id="sendResponse">
   
-  <h1>Method: XmlRequestHandler::preprocessRequest()</h1>
+  <h1>Method: XmlRequestHandler::sendResponse()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> preprocessRequest() : void;</div>
-
-  
-  <div class="short-description">
-  <p>This function is called before the processing of the request. It should be overridden if you want
-to perform some standard action before every API request of your library.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>The usage example are - validation of the access tokens, checking maintenance mode and reporting it to
-the user if it is active.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#311'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="processInputData">
-  
-  <h1>Method: XmlRequestHandler::processInputData()</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processInputData() : void;</div>
-
-  
-  <div class="short-description">
-  <p>This is an auxiliary function for getting request headers and parsing the API url.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It put the retrieved data into the corresponding properties.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#138'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#$action'>\SmartFactory\XmlRequestHandler::$action</a><br>
-  
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#$param_string'>\SmartFactory\XmlRequestHandler::$param_string</a><br>
-  
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#$request_headers'>\SmartFactory\XmlRequestHandler::$request_headers</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="sendXmlResponse">
-  
-  <h1>Method: XmlRequestHandler::sendXmlResponse()</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendXmlResponse() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse() : void;</div>
 
   
   <div class="short-description">
@@ -1468,6 +537,11 @@ the user if it is active.</p>
   
 
   
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='class-SmartFactory.RequestHandler.html#sendResponse'>\SmartFactory\RequestHandler::sendResponse()</a>
+  </div>
+  
 
   <h2>Authors</h2>
   <div class="item_list">
@@ -1483,20 +557,11 @@ the user if it is active.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#286'>SmartFactory/XmlRequestHandler.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.XmlRequestHandler.html#$response_headers'>\SmartFactory\XmlRequestHandler::$response_headers</a><br>
-  
-  
+  <a href='source-SmartFactory.XmlRequestHandler.php.html#130'>SmartFactory/XmlRequestHandler.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-12 12:09 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

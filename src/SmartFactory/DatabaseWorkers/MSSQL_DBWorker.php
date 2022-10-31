@@ -181,8 +181,7 @@ class MSSQL_DBWorker extends DBWorker
      * - $parameters["db_user"] - user name.
      * - $parameters["db_password"] - user password.
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * @return void
      *
      * @author Oleg Schildt
      */
@@ -203,8 +202,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!empty($parameters["db_password"])) {
             $this->db_password = $parameters["db_password"];
         }
-
-        return true;
     } // init
 
     /**
@@ -274,7 +271,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see DBWorker::check_connection()
@@ -285,13 +282,17 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function connect()
     {
+        if ($this->is_connected()) {
+            return;
+        }
+
         sqlsrv_configure("WarningsReturnAsErrors", 0);
 
         $this->last_query = null;
 
         if (!isset($this->connection) || !$this->connection) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                throw new \Exception("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
+                throw new DBWorkerException("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
             }
 
             /*
@@ -344,7 +345,7 @@ class MSSQL_DBWorker extends DBWorker
             $this->connection = null;
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_CONNECTION_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
         }
 
         if (!empty($this->db_name)) {
@@ -365,7 +366,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -429,7 +430,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -464,8 +465,8 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
     } // execute_query
 
@@ -477,7 +478,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::execute_prepared_query()
@@ -542,8 +543,8 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
     } // prepare_query
 
@@ -568,7 +569,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -578,7 +579,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->check_connection();
 
         if (!is_resource($stream)) {
-            throw new \Exception("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
+            throw new DBWorkerException("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
         }
 
         if ($this->statement) {
@@ -600,8 +601,8 @@ class MSSQL_DBWorker extends DBWorker
 
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         if (!@sqlsrv_execute($this->statement)) {
@@ -613,8 +614,8 @@ class MSSQL_DBWorker extends DBWorker
             $this->statement = null;
             fclose($stream);
 
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         // Send up to 8K of parameter data to the server
@@ -639,7 +640,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::prepare_query()
@@ -652,7 +653,7 @@ class MSSQL_DBWorker extends DBWorker
         $this->check_connection();
 
         if (empty($this->prepared_query) || empty($this->statement)) {
-            throw new \Exception("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
         }
 
         if (count($args) == 1 && is_array($args[0])) {
@@ -687,8 +688,8 @@ class MSSQL_DBWorker extends DBWorker
         if (!@sqlsrv_execute($this->statement)) {
             $err = $this->sys_get_errors();
 
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
     } // execute_prepared_query
 
@@ -702,7 +703,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -762,7 +763,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::prepare_query()
@@ -791,7 +792,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::is_connected()
@@ -819,7 +820,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::commit_transaction()
@@ -835,7 +836,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // start_transaction
 
@@ -844,7 +845,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::start_transaction()
@@ -860,7 +861,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // commit_transaction
 
@@ -869,7 +870,7 @@ class MSSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::start_transaction()
@@ -885,7 +886,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // rollback_transaction
 
@@ -916,7 +917,7 @@ class MSSQL_DBWorker extends DBWorker
      * @return int
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -934,7 +935,7 @@ class MSSQL_DBWorker extends DBWorker
                 $err = $this->sys_get_errors();
 
                 trigger_error($err, E_USER_ERROR);
-                throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+                throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
             }
 
             $id = null;
@@ -951,7 +952,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
 
         if (!$this->fetch_row()) {
@@ -960,7 +961,7 @@ class MSSQL_DBWorker extends DBWorker
             $this->free_result();
 
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
 
         $id = $this->field_by_name("IID");
@@ -991,7 +992,7 @@ class MSSQL_DBWorker extends DBWorker
      * $dbw->free_result();
      * ```
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1002,8 +1003,8 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         $this->row = @sqlsrv_fetch_array($this->statement, SQLSRV_FETCH_ASSOC);
@@ -1049,7 +1050,7 @@ class MSSQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the fetched rows. It might be also 0.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1060,8 +1061,8 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         $rows = [];
@@ -1108,7 +1109,7 @@ class MSSQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the rows fetched by the last retrieving query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1119,8 +1120,8 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         /*
@@ -1146,7 +1147,7 @@ class MSSQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the rows affected by the last modification query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1157,8 +1158,8 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return @sqlsrv_rows_affected($this->statement);
@@ -1170,7 +1171,7 @@ class MSSQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the fields in the result of the last retrieving query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1181,8 +1182,8 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return @sqlsrv_num_fields($this->statement);
@@ -1201,7 +1202,7 @@ class MSSQL_DBWorker extends DBWorker
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::field_by_num()
@@ -1242,7 +1243,7 @@ class MSSQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::field_by_name()
@@ -1285,8 +1286,9 @@ class MSSQL_DBWorker extends DBWorker
      * - $info["size"] - size of the field.
      * - $info["binary"] - whether the filed is binary.
      * - $info["numeric"] - whether the filed is numeric.
+     * - $info["datetime"] - whether the filed is datetime.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::field_by_num()
@@ -1300,16 +1302,16 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         $info = @sqlsrv_field_metadata($this->statement);
         if (!$info) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         if (empty($info[$num])) {
@@ -1363,6 +1365,9 @@ class MSSQL_DBWorker extends DBWorker
             if (in_array($field_info["type"], [-2, -4, -3])) {
                 $field_info["binary"] = 1;
             }
+            if (in_array($field_info["type"], [91, 93])) {
+                $field_info["datetime"] = 1;
+            }
 
             if (isset($sqlsrv_type[$field_info["type"]])) {
                 $field_info["type"] = $sqlsrv_type[$field_info["type"]];
@@ -1383,7 +1388,7 @@ class MSSQL_DBWorker extends DBWorker
      * @return string|null
      * Returns the name of the field by number.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MSSQL_DBWorker::field_by_num()
@@ -1438,7 +1443,11 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function format_date($date)
     {
-        return date("Ymd", $date);
+        if (empty($date)) {
+            return $this->quotes_or_null("");
+        }
+
+        return $this->quotes_or_null(date("Ymd", $date));
     } // format_date
 
     /**
@@ -1457,7 +1466,11 @@ class MSSQL_DBWorker extends DBWorker
      */
     public function format_datetime($datetime)
     {
-        return date("Ymd H:i:s", $datetime);
+        if (empty($datetime)) {
+            return $this->quotes_or_null("");
+        }
+
+        return $this->quotes_or_null(date("Ymd H:i:s", $datetime));
     } // format_datetime
 
     /**
@@ -1479,24 +1492,55 @@ class MSSQL_DBWorker extends DBWorker
     {
         if (empty($value) && (string)$value != "0") {
             return "NULL";
-        } else switch ($type) {
-            case DBWorker::DB_NUMBER:
-                return $this->escape($value);
-
-            case DBWorker::DB_DATETIME:
-                return "'" . $this->format_datetime($value) . "'";
-
-            case DBWorker::DB_DATE:
-                return "'" . $this->format_date($value) . "'";
-
-            case DBWorker::DB_GEOMETRY:
-                return "ST_GeomFromText('" . $this->escape($value) . "')";
-
-            case DBWorker::DB_GEOMETRY_4326:
-                return "ST_GeomFromText('" . $this->escape($value) . "', 4326)";
-
-            default:
-                return "'" . $this->escape($value) . "'";
+        } else {
+            return match ($type) {
+                DBWorker::DB_NUMBER => $this->number_or_null($value),
+                DBWorker::DB_DATETIME => $this->format_datetime($value),
+                DBWorker::DB_DATE => $this->format_date($value),
+                default => $this->quotes_or_null($value)
+            };
         }
     } // prepare_for_query
+
+    /**
+     * Builds simple select query based on parameters.
+     *
+     * It is used for building queries with limits.
+     *
+     * @param string $where_clause
+     * The where clause that should restrict the result.
+     *
+     * @param string $order_clause
+     * The order clause to sort the results.
+     *
+     * @param int $limit
+     * The limit how many records shoud be loaded. 0 for unlimited.
+     *
+     * @return string
+     * Returns the built query.
+     *
+     * @author Oleg Schildt
+     */
+    function build_select_query($table, $fields, $where_clause, $order_clause, $limit)
+    {
+        $query = "select\n";
+
+        if (!empty($limit) && is_numeric($limit)) {
+            $query .= "top " . $limit . "\n";
+        }
+
+        $query .= implode(", ", $fields) . "\n";
+
+        $query .= "from " . $table . "\n";
+
+        if (!empty($where_clause)) {
+            $query .= $where_clause . "\n";
+        }
+
+        if (!empty($where_clause)) {
+            $query .= $order_clause . "\n";
+        }
+
+        return $query;
+    } // build_select_query
 } // MSSQL_DBWorker

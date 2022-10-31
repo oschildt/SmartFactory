@@ -118,8 +118,7 @@ class ConfigSettingsManager implements ISettingsManager
      * @param array &$data
      * The array with the settings values to be saved.
      *
-     * @return boolean
-     * Returns true if the data has been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -148,8 +147,6 @@ class ConfigSettingsManager implements ISettingsManager
         if ($this->use_apcu) {
             apcu_delete("config_settings");
         }
-        
-        return true;
     } // saveJSON
     
     /**
@@ -159,8 +156,7 @@ class ConfigSettingsManager implements ISettingsManager
      * @param array &$data
      * The target array with the settings values to be loaded.
      *
-     * @return boolean
-     * Returns true if the data has been successfully loaded, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -179,14 +175,14 @@ class ConfigSettingsManager implements ISettingsManager
         if ($this->use_apcu && apcu_exists("config_settings")) {
             $data = apcu_fetch("config_settings");
             if (!empty($data)) {
-                return true;
+                return;
             }
         }
         
         $this->validateParameters();
         
         if (!file_exists($this->save_path) && empty($this->config_file_must_exist)) {
-            return true;
+            return;
         }
         
         if (!file_exists($this->save_path) || !is_readable($this->save_path)) {
@@ -211,16 +207,13 @@ class ConfigSettingsManager implements ISettingsManager
         if ($this->use_apcu) {
             apcu_store("config_settings", $data);
         }
-        
-        return true;
     } // loadJSON
     
     /**
      * This is internal auxiliary function for checking that the settings
      * manager is intialized correctly.
      *
-     * @return boolean
-     * It should return true if the settings manager is intialized correctly, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -234,8 +227,6 @@ class ConfigSettingsManager implements ISettingsManager
         if (empty($this->save_path)) {
             throw new \Exception("The 'save_path' is not specified!");
         }
-        
-        return true;
     } // validateParameters
     
     /**
@@ -251,11 +242,10 @@ class ConfigSettingsManager implements ISettingsManager
      *
      * - $parameters["use_apcu"] - if installed, apcu can be used to cache the settings in the memory.
      *
-     * @return boolean
-     * Returns true upon successful initialization, otherwise false.
+     * @return void
      *
      * @throws \Exception
-     * It might throw an exception in the case of any errors:
+     * It might throw an exception in the case of any system errors:
      *
      * - if the save path is not specified.
      *
@@ -283,7 +273,7 @@ class ConfigSettingsManager implements ISettingsManager
             $this->use_apcu = $parameters["use_apcu"];
         }
         
-        return $this->validateParameters();
+        $this->validateParameters();
     } // init
     
     /**
@@ -510,7 +500,7 @@ class ConfigSettingsManager implements ISettingsManager
     /**
      * Loads the settings from the target file.
      *
-     * @return boolean
+     * @return void
      * Returns true if the settings have been successfully loaded, otherwise false.
      *
      * @throws \Exception
@@ -526,14 +516,13 @@ class ConfigSettingsManager implements ISettingsManager
      */
     public function loadSettings()
     {
-        return $this->loadJSON($this->settings);
+        $this->loadJSON($this->settings);
     } // loadSettings
     
     /**
      * Saves the settings from to the target file.
      *
-     * @return boolean
-     * Returns true if the settings have been successfully saved, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors:
@@ -552,6 +541,6 @@ class ConfigSettingsManager implements ISettingsManager
             $this->loadSettings();
         }
         
-        return $this->saveJSON($this->settings);
+        $this->saveJSON($this->settings);
     } // saveSettings
 } // ConfigSettingsManager

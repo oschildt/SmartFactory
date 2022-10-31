@@ -157,8 +157,7 @@ class MySQL_DBWorker extends DBWorker
      * - $parameters["db_password"] - user password.
      * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
      *
-     * @return boolean
-     * The method returns true upon successful initialization, otherwise false.
+     * @return void
      *
      * @author Oleg Schildt
      */
@@ -182,8 +181,6 @@ class MySQL_DBWorker extends DBWorker
         if (!empty($parameters["read_only"])) {
             $this->read_only = $parameters["read_only"];
         }
-
-        return true;
     } // init
 
     /**
@@ -257,7 +254,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see DBWorker::check_connection()
@@ -268,11 +265,15 @@ class MySQL_DBWorker extends DBWorker
      */
     public function connect()
     {
+        if ($this->is_connected()) {
+            return;
+        }
+
         mysqli_report(MYSQLI_REPORT_STRICT);
 
         if (!$this->mysqli) {
             if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                throw new \Exception("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
+                throw new DBWorkerException("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
             }
 
             try {
@@ -293,13 +294,13 @@ class MySQL_DBWorker extends DBWorker
 
                 switch ($ex->getCode()) {
                     case 2002:
-                        throw new \Exception($err, DBWorker::ERR_HOST_UNREACHABLE);
+                        throw new DBWorkerException($err, DBWorker::ERR_HOST_UNREACHABLE);
 
                     case 1045:
-                        throw new \Exception($err, DBWorker::ERR_WRONG_USER_CREDENTIALS);
+                        throw new DBWorkerException($err, DBWorker::ERR_WRONG_USER_CREDENTIALS);
 
                     default:
-                        throw new \Exception($err, DBWorker::ERR_CONNECTION_FAILED);
+                        throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
                 }
             }
         }
@@ -323,7 +324,7 @@ class MySQL_DBWorker extends DBWorker
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // connect
 
@@ -335,7 +336,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -351,7 +352,7 @@ class MySQL_DBWorker extends DBWorker
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_DATABASE_NOT_FOUND);
+            throw new DBWorkerException($err, DBWorker::ERR_DATABASE_NOT_FOUND);
         }
     } // use_database
 
@@ -397,7 +398,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -411,7 +412,7 @@ class MySQL_DBWorker extends DBWorker
         $this->mysqli_result = @$this->mysqli->query($query_string);
         if (!$this->mysqli_result) {
             trigger_error($this->mysqli->error . "\n\n" . $query_string, E_USER_ERROR);
-            throw new \Exception($this->mysqli->error . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($this->mysqli->error . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         }
     } // execute_query
 
@@ -423,7 +424,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::execute_prepared_query()
@@ -448,7 +449,7 @@ class MySQL_DBWorker extends DBWorker
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             trigger_error($err . "\n\n" . $query_string, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         }
     } // prepare_query
 
@@ -473,7 +474,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -483,7 +484,7 @@ class MySQL_DBWorker extends DBWorker
         $this->check_connection();
 
         if (!is_resource($stream)) {
-            throw new \Exception("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
+            throw new DBWorkerException("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
         }
 
         if ($this->statement) {
@@ -508,7 +509,7 @@ class MySQL_DBWorker extends DBWorker
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             trigger_error($err . "\n\n" . $query_string, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
         } finally {
             fclose($stream);
 
@@ -528,7 +529,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::prepare_query()
@@ -541,7 +542,7 @@ class MySQL_DBWorker extends DBWorker
         $this->check_connection();
 
         if (empty($this->prepared_query) || empty($this->statement)) {
-            throw new \Exception("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
         }
 
         if (count($args) == 1 && is_array($args[0])) {
@@ -582,18 +583,18 @@ class MySQL_DBWorker extends DBWorker
 
         if (count($args) > 0 && !call_user_func_array([$this->statement, 'bind_param'], $parameters)) {
             $err = "Number of elements in type definition string doesn't match number of bind variables.";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         if (!$this->statement->execute()) {
-            trigger_error($this->statement->error . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($this->statement->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($this->statement->error . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($this->statement->error . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         if (!$this->statement->store_result()) {
-            trigger_error($this->statement->error . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($this->statement->error . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($this->statement->error . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($this->statement->error . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         $this->mysqli_result = $this->statement->result_metadata();
@@ -609,7 +610,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -669,7 +670,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::prepare_query()
@@ -687,8 +688,8 @@ class MySQL_DBWorker extends DBWorker
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         } finally {
             $this->statement = null;
             $this->last_query = null;
@@ -701,7 +702,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::is_connected()
@@ -727,7 +728,7 @@ class MySQL_DBWorker extends DBWorker
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             trigger_error($err, E_USER_ERROR);
-            throw new \Exception($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
         } finally {
             $this->statement = null;
             $this->mysqli = null;
@@ -740,7 +741,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::commit_transaction()
@@ -760,7 +761,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::start_transaction()
@@ -780,7 +781,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::start_transaction()
@@ -802,7 +803,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -823,8 +824,8 @@ class MySQL_DBWorker extends DBWorker
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         } finally {
             $this->row = null;
             $this->field_names = null;
@@ -838,7 +839,7 @@ class MySQL_DBWorker extends DBWorker
      * @return int
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -871,7 +872,7 @@ class MySQL_DBWorker extends DBWorker
      * $dbw->free_result();
      * ```
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -918,8 +919,8 @@ class MySQL_DBWorker extends DBWorker
 
             if (!$this->mysqli_result) {
                 $err = "Result is empty!";
-                trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-                throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+                trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+                throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             }
 
             $this->row = @$this->mysqli_result->fetch_assoc();
@@ -935,8 +936,8 @@ class MySQL_DBWorker extends DBWorker
             return true;
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
     } // fetch_row
 
@@ -971,7 +972,7 @@ class MySQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the fetched rows. It might be also 0.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1053,8 +1054,8 @@ class MySQL_DBWorker extends DBWorker
 
             if (!$this->mysqli_result) {
                 $err = "Result is empty!";
-                trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-                throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+                trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+                throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             }
 
             while ($row = @$this->mysqli_result->fetch_assoc()) {
@@ -1089,8 +1090,8 @@ class MySQL_DBWorker extends DBWorker
 
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
     } // fetch_array
 
@@ -1100,7 +1101,7 @@ class MySQL_DBWorker extends DBWorker
      * @return int|false
      * Returns the number of the rows fetched by the last retrieving query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1115,8 +1116,8 @@ class MySQL_DBWorker extends DBWorker
 
         if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return $this->mysqli_result->num_rows;
@@ -1128,7 +1129,7 @@ class MySQL_DBWorker extends DBWorker
      * @return int
      * Returns the number of the rows affected by the last modification query.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1140,8 +1141,8 @@ class MySQL_DBWorker extends DBWorker
         if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
             $err = "Result fetch error";
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return $this->mysqli->affected_rows;
@@ -1154,7 +1155,7 @@ class MySQL_DBWorker extends DBWorker
      * Returns the number of the fields in the result of the last retrieving query. In the case
      * of any error returns false.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
@@ -1170,8 +1171,8 @@ class MySQL_DBWorker extends DBWorker
         if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
             $err = "Result fetch error";
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         return $this->mysqli_result->field_count;
@@ -1190,7 +1191,7 @@ class MySQL_DBWorker extends DBWorker
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::field_by_num()
@@ -1231,7 +1232,7 @@ class MySQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::field_by_name()
@@ -1270,7 +1271,7 @@ class MySQL_DBWorker extends DBWorker
      * Returns the value of a field specified by number as an object with properties. In the case
      * of any error returns null.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::field_by_num()
@@ -1305,8 +1306,9 @@ class MySQL_DBWorker extends DBWorker
      * - $info["size"] - size of the field.
      * - $info["binary"] - whether the filed is binary.
      * - $info["numeric"] - whether the filed is numeric.
+     * - $info["datetime"] - whether the filed is datetime.
      *
-     * @throws \Exception
+     * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::field_by_num()
@@ -1320,16 +1322,16 @@ class MySQL_DBWorker extends DBWorker
 
         if (!$this->mysqli_result) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         try {
             $res = @$this->mysqli_result->fetch_field_direct($num);
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->last_query, E_USER_ERROR);
-            throw new \Exception($err . "\n\n" . $this->last_query, DBWorker::ERR_QUERY_FAILED);
+            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
         }
 
         // some corrections for compatible format
@@ -1381,6 +1383,9 @@ class MySQL_DBWorker extends DBWorker
             if (in_array($field_info["type"], [249, 250, 251, 252])) {
                 $field_info["binary"] = 1;
             }
+            if (in_array($field_info["type"], [12, 14])) {
+                $field_info["datetime"] = 1;
+            }
 
             if (isset($mysqli_type[$field_info["type"]])) {
                 $field_info["type"] = $mysqli_type[$field_info["type"]];
@@ -1427,7 +1432,11 @@ class MySQL_DBWorker extends DBWorker
      */
     public function format_date($date)
     {
-        return date("Y-m-d", $date);
+        if (empty($date)) {
+            return $this->quotes_or_null("");
+        }
+
+        return $this->quotes_or_null(date("Y-m-d", $date));
     } // format_date
 
     /**
@@ -1446,7 +1455,11 @@ class MySQL_DBWorker extends DBWorker
      */
     public function format_datetime($datetime)
     {
-        return date("Y-m-d H:i:s", $datetime);
+        if (empty($datetime)) {
+            return $this->quotes_or_null("");
+        }
+
+        return $this->quotes_or_null(date("Y-m-d H:i:s", $datetime));
     } // format_datetime
 
     /**
@@ -1468,24 +1481,57 @@ class MySQL_DBWorker extends DBWorker
     {
         if (empty($value) && (string)$value != "0") {
             return "NULL";
-        } else switch ($type) {
-            case DBWorker::DB_NUMBER:
-                return $this->escape($value);
-
-            case DBWorker::DB_DATETIME:
-                return "'" . $this->format_datetime($value) . "'";
-
-            case DBWorker::DB_DATE:
-                return "'" . $this->format_date($value) . "'";
-
-            case DBWorker::DB_GEOMETRY:
-                return "ST_GeomFromText('" . $this->escape($value) . "')";
-
-            case DBWorker::DB_GEOMETRY_4326:
-                return "ST_GeomFromText('" . $this->escape($value) . "', 4326, 'axis-order=lat-long')";
-
-            default:
-                return "'" . $this->escape($value) . "'";
+        } else {
+            return match ($type) {
+                DBWorker::DB_NUMBER => $this->number_or_null($value),
+                DBWorker::DB_DATETIME => $this->format_datetime($value),
+                DBWorker::DB_DATE => $this->format_date($value),
+                DBWorker::DB_GEOMETRY => "ST_GeomFromText('" . $this->escape($value) . "')",
+                DBWorker::DB_GEOMETRY_4326 => "ST_GeomFromText('" . $this->escape($value) . "', 4326, 'axis-order=lat-long')",
+                default => $this->quotes_or_null($value)
+            };
         }
     } // prepare_for_query
+
+    /**
+     * Builds simple select query based on parameters.
+     *
+     * It is used for building queries with limits.
+     *
+     * @param string $where_clause
+     * The where clause that should restrict the result.
+     *
+     * @param string $order_clause
+     * The order clause to sort the results.
+     *
+     * @param int $limit
+     * The limit how many records shoud be loaded. 0 for unlimited.
+     *
+     * @return string
+     * Returns the built query.
+     *
+     * @author Oleg Schildt
+     */
+    function build_select_query($table, $fields, $where_clause, $order_clause, $limit)
+    {
+        $query = "select\n";
+
+        $query .= implode(", ", $fields) . "\n";
+
+        $query .= "from " . $table . "\n";
+
+        if (!empty($where_clause)) {
+            $query .= $where_clause . "\n";
+        }
+
+        if (!empty($order_clause)) {
+            $query .= $order_clause . "\n";
+        }
+
+        if (!empty($limit) && is_numeric($limit)) {
+            $query .= "limit " . $limit . "\n";
+        }
+
+        return $query;
+    } // build_select_query
 } // MySQL_DBWorker
