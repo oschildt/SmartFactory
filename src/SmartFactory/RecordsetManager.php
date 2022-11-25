@@ -161,6 +161,12 @@ class RecordsetManager implements IRecordsetManager
      * @param array &$record
      * The array where the resulting flat record is built.
      *
+     * @param string $identity_field
+     * The name of the identity field if exists. If the identity field is specified
+     * and the record does not exist yet in the table, the source array is extended
+     * with a pair "identity field" => "identity value" issued by the database by this
+     * insert operation.
+     *
      * @return void
      *
      * @throws \Exception
@@ -173,26 +179,33 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected function processSubarray(&$subarray, $key_fields, &$parent_values, &$record)
+    protected function processSubarray(&$subarray, $key_fields, &$parent_values, &$record, $identity_field)
     {
         $current_key = array_shift($key_fields);
 
         foreach ($subarray as $key => $value) {
             if (!empty($current_key)) {
-                $record[$current_key] = $key;
-
                 if (!empty($parent_values[$current_key])) {
                     $record[$current_key] = $parent_values[$current_key];
+                } else {
+                    $record[$current_key] = $key;
                 }
-
-                $this->processSubarray($value, $key_fields, $parent_values, $record);
+                $this->processSubarray($value, $key_fields, $parent_values, $record, $identity_field);
             } else {
                 $record[$key] = $value;
             }
         }
 
         if (empty($current_key)) {
-            $this->saveRecord($record);
+            $where_clause = [];
+
+            foreach ($this->key_fields as $field) {
+                if (!empty($record[$field])) {
+                    $where_clause[$field] = $record[$field];
+                }
+            }
+
+            $this->saveRecord($record, $where_clause, $identity_field);
         }
     } // processSubarray
 
@@ -307,8 +320,8 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Deletes records by a given where clause.
      *
-     * @param string $where_clause
-     * The where clause for the records to be deleted. If an array of keys is passed,
+     * @param string|array $where_clause
+     * The where clause that should restrict the result. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
      * @return void
@@ -561,7 +574,7 @@ class RecordsetManager implements IRecordsetManager
                 }
             }
 
-            if(!empty($dimensions)) {
+            if (!empty($dimensions)) {
                 $reference = &$records;
 
                 foreach ($dimensions as &$dval) {
@@ -588,6 +601,10 @@ class RecordsetManager implements IRecordsetManager
      * @param array &$record
      * The source array with the data to be saved.
      *
+     * @param string|array $where_clause
+     * The where clause that should be used to define whether a record should be inserted or updated. If an array of keys is passed,
+     * the where clause is build automatically based on it.
+     *
      * @param string $identity_field
      * The name of the identity field if exists. If the identity field is specified
      * and the record does not exist yet in the table, the source array is extended
@@ -611,47 +628,28 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecord(&$record, $identity_field = null)
+    public function saveRecord(&$record, $where_clause, $identity_field = "")
     {
         $this->validateParameters("table");
 
         $this->dbworker->connect();
 
-        $where = "";
         $must_insert = false;
 
         // key_fields not specified - always insert
         // identity firld exists but its value is not specified - always insert
-        if (empty($this->key_fields) || (!empty($identity_field) && empty($record[$identity_field]))) {
+        if (empty($this->key_fields) || empty($where_clause)) {
             $must_insert = true;
         } else {
             // check existence
 
             $query = "select\n";
-
             $query .= "1\n";
-
             $query .= "from " . $this->table . "\n";
 
-            foreach ($this->key_fields as $key_field) {
-                if (!empty($where)) {
-                    $where .= " and ";
-                }
+            $this->checkWhereClause($where_clause);
 
-                $value = $this->dbworker->prepare_for_query(checkempty($record[$key_field]), checkempty($this->fields[$key_field]));
-
-                if ($value == "NULL") {
-                    $where .= $key_field . " is NULL";
-                } else {
-                    $where .= $key_field . " = " . $value;
-                }
-            }
-
-            if (!empty($where)) {
-                $where = "where " . $where;
-            }
-
-            $query .= $where;
+            $query .= $where_clause;
 
             $this->dbworker->execute_query($query);
 
@@ -669,11 +667,8 @@ class RecordsetManager implements IRecordsetManager
         $insert_values = "";
 
         foreach ($this->fields as $field => $type) {
-            if ($must_insert && $field == $identity_field && empty($record[$field])) {
-                continue;
-            }
-
-            if (!$must_insert && in_array($field, $this->key_fields)) {
+            // if autoincrement
+            if ($must_insert && $field == $identity_field) {
                 continue;
             }
 
@@ -698,12 +693,12 @@ class RecordsetManager implements IRecordsetManager
         } elseif (!empty($update_string)) {
             $query = "update " . $this->table . " set\n";
             $query .= trim($update_string, ",\n") . "\n";
-            $query .= $where;
+            $query .= $where_clause;
 
             $this->dbworker->execute_query($query);
         }
 
-        if (!empty($identity_field) && $must_insert) {
+        if ($must_insert && !empty($identity_field)) {
             $record[$identity_field] = $this->dbworker->insert_id();
         }
     } // saveRecord
@@ -718,6 +713,12 @@ class RecordsetManager implements IRecordsetManager
      * @param array $parent_values
      * If this recordset is a child subset of data to be saved, you can set the values of the foreign keys
      * in the form "field_name" => "value".
+     *
+     * @param string $identity_field
+     * The name of the identity field if exists. If the identity field is specified
+     * and the record does not exist yet in the table, the source array is extended
+     * with a pair "identity field" => "identity value" issued by the database by this
+     * insert operation.
      *
      * @return void
      *
@@ -736,7 +737,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecordSet(&$records, $parent_values = [])
+    public function saveRecordSet(&$records, $parent_values = [], $identity_field = "")
     {
         $this->validateParameters("table");
 
@@ -747,13 +748,14 @@ class RecordsetManager implements IRecordsetManager
 
         foreach ($records as $key => $value) {
             $record = [];
-            $record[$current_key] = $key;
 
             if (!empty($parent_values[$current_key])) {
                 $record[$current_key] = $parent_values[$current_key];
+            } else {
+                $record[$current_key] = $key;
             }
 
-            $this->processSubarray($value, $key_fields, $parent_values, $record);
+            $this->processSubarray($value, $key_fields, $parent_values, $record, $identity_field);
         }
     } // saveRecordSet
 
@@ -841,7 +843,9 @@ class RecordsetManager implements IRecordsetManager
      */
     public function start_transaction()
     {
+        $this->dbworker->connect();
 
+        $this->dbworker->start_transaction();
     }
 
     /**
@@ -867,10 +871,10 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Rolls back the transation.
      *
+     * @return void
+     *
      * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
-     *
-     * @return void
      *
      * @see RecordsetManager::start_transaction()
      * @see RecordsetManager::commit_transaction()

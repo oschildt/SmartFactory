@@ -128,7 +128,7 @@ interface IRecordsetManager
     /**
      * Deletes records by a given where clause.
      *
-     * @param string $where_clause
+     * @param string|array $where_clause
      * The where clause for the records to be deleted. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -165,6 +165,10 @@ interface IRecordsetManager
      * @param array &$record
      * The source array with the data to be saved.
      *
+     * @param string|array $where_clause
+     * The where clause that should be used to define whether a record should be inserted or updated. If an array of keys is passed,
+     * the where clause is build automatically based on it.
+     *
      * @param string $identity_field
      * The name of the identity field if exists. If the identity field is specified
      * and the record does not exist yet in the table, the source array is extended
@@ -181,7 +185,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecord(&$record, $identity_field = null);
+    public function saveRecord(&$record, $where_clause, $identity_field = "");
 
     /**
      * Saves records from an array in the form
@@ -194,6 +198,12 @@ interface IRecordsetManager
      * If this recordset is a child subset of data to be saved, you can set the values of the foreign keys
      * in the form "field_name" => "value".
      *
+     * @param string $identity_field
+     * The name of the identity field if exists. If the identity field is specified
+     * and the record does not exist yet in the table, the source array is extended
+     * with a pair "identity field" => "identity value" issued by the database by this
+     * insert operation.
+     *
      * @return void
      *
      * @see IRecordsetManager::loadRecordSet()
@@ -203,7 +213,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecordSet(&$records, $parent_values = []);
+    public function saveRecordSet(&$records, $parent_values = [], $identity_field = "");
 
     /**
      * Counts records based on the where clause.

@@ -378,7 +378,7 @@ class ErrorHandler implements IErrorHandler
 
         // E_USER_ERROR means that the error has been explicitly triggered by the programmer for tracing.
         // The extra programming warning is not necessary because the message will be shown as a program error.
-        if ($errno != E_USER_ERROR) {
+        if ($errno != E_USER_ERROR && error_reporting() !== null) {
             event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $errstr, "errfile" => $errfile, "errline" => $errline]);
         }
     } // handleError
@@ -391,20 +391,14 @@ class ErrorHandler implements IErrorHandler
      * @param \Throwable $ex
      * Thrown exception.
      *
-     * @param string $errfuntion
-     * Funtion name where the exception has been catched.
-     *
-     * @param string $errfile
-     * Source file where the exception has been catched.
-     *
-     * @param int $errline
-     * Line number where the exception has been catched.
+     * @param int $errno
+     * Error code.
      *
      * @return void
      *
      * @author Oleg Schildt
      */
-    public function handleException($ex, $errfuntion, $errfile, $errline)
+    public function handleException($ex, $errno)
     {
         $this->setLastError($ex->getMessage());
         
@@ -424,8 +418,6 @@ class ErrorHandler implements IErrorHandler
             E_DEPRECATED => "Deprecated Notice"
         ];
         
-        $errno = $ex->getCode();
-        
         if (empty($errortype[$errno])) {
             $etype = $errno;
         } else {
@@ -433,16 +425,10 @@ class ErrorHandler implements IErrorHandler
         }
         
         $trace = $ex->getTrace();
-        $trace_entry["args"] = ["", $ex->getMessage(), $errfile, $errline];
+        $trace_entry["args"] = ["", $ex->getMessage(), $ex->getFile(), $ex->getLine()];
         array_unshift($trace, $trace_entry);
-        
-        $this->trace_message($etype, $this->format_backtrace($trace));
 
-        // E_USER_ERROR means that the error has been explicitly triggered by the programmer for tracing.
-        // The extra programming warning is not necessary because the message will be shown as a program error.
-        if ($errno != E_USER_ERROR) {
-            event()->fireEvent("php_error", ["etype" => $etype, "errstr" => $ex->getMessage(), "errfile" => $ex->getFile(), "errline" => $ex->getLine()]);
-        }
+        $this->trace_message($etype, $this->format_backtrace($trace));
     }
     
     /**

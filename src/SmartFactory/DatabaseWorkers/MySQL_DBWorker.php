@@ -116,7 +116,6 @@ class MySQL_DBWorker extends DBWorker
         $cln->db_user = $this->db_user;
         $cln->db_password = $this->db_password;
         $cln->read_only = $this->read_only;
-        $cln->mysqli = $this->mysqli;
 
         return $cln;
     } // create_clone

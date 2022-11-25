@@ -61,20 +61,14 @@ interface IErrorHandler extends IInitable
      * @param \Throwable $ex
      * Thrown exception.
      *
-     * @param string $errfuntion
-     * Funtion name where the exception has been catched.
-     *
-     * @param string $errfile
-     * Source file where the exception has been catched.
-     *
-     * @param int $errline
-     * Line number where the exception has been catched.
+     * @param int $errno
+     * Error code.
      *
      * @return void
      *
      * @author Oleg Schildt
      */
-    public function handleException($ex, $errfuntion, $errfile, $errline);
+    public function handleException($ex, $errno);
     
     /**
      * Returns the last error.

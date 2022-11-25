@@ -54,13 +54,23 @@ class UserSettingsManager implements ISettingsManager
     protected $dbworker;
 
     /**
+     * Internal variable for storing the state whether the transcation should be started or commited or
+     * no transaction should be used because the saving process is a part of other saving process.
+     *
+     * @var boolean
+     *
+     * @author Oleg Schildt
+     */
+    protected $no_own_transcation;
+
+    /**
      * Internal array for storing the settings tables.
      *
      * @var array
      *
      * @author Oleg Schildt
      */
-    protected $settings_tables;
+    protected $settings_tables = [];
 
     /**
      * Internal array for storing the auxiliary tables for storing the multichoce values.
@@ -69,7 +79,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $multichoice_tables;
+    protected $multichoice_tables = [];
 
     /**
      * Internal variable for storing the current context.
@@ -168,7 +178,9 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->validateParameters();
 
-        $this->dbworker->start_transaction();
+        if (empty($this->no_own_transcation)) {
+            this->dbworker->start_transaction();
+        }
 
         try {
             foreach ($this->settings_tables as $table => $fields) {
@@ -177,6 +189,9 @@ class UserSettingsManager implements ISettingsManager
                 $uid_field_type = "";
 
                 $update_string = "";
+
+                $insert_fields_string = "";
+                $insert_values_string = "";
 
                 $c = 0;
                 foreach ($fields as $field => $field_type) {
@@ -201,13 +216,40 @@ class UserSettingsManager implements ISettingsManager
                     $value = $this->dbworker->prepare_for_query($value, $field_type);
 
                     $update_string .= $field . " = " . $value . ",\n";
+
+                    $insert_fields_string .= $field . ", ";
+                    $insert_values_string .= $value . ", ";
                 }
 
-                $query = "update " . $table . " set\n";
-                $query .= trim($update_string, ",\n") . "\n";
-
                 $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
+
+                $insert_fields_string .= $uid_field . ", ";
+                $insert_values_string .= $user_id . ", ";
+
+                $query = "select\n";
+                $query .= "1\n";
+                $query .= "from " . $table . "\n";
                 $query .= "where " . $uid_field . " = " . $user_id;
+
+                $this->dbworker->execute_query($query);
+
+                $must_insert = false;
+                if (!$this->dbworker->fetch_row()) {
+                    $must_insert = true;
+                }
+
+                $this->dbworker->free_result();
+
+                if ($must_insert) {
+                    $query = "insert into " . $table . "\n";
+                    $query .= "(" . trim($insert_fields_string, ", ") . ")\n";
+                    $query .= "values\n";
+                    $query .= "(" . trim($insert_values_string, ", ") . ")\n";
+                } else {
+                    $query = "update " . $table . " set\n";
+                    $query .= trim($update_string, ",\n") . "\n";
+                    $query .= "where " . $uid_field . " = " . $user_id;
+                }
 
                 $this->dbworker->execute_query($query);
             }
@@ -297,11 +339,16 @@ class UserSettingsManager implements ISettingsManager
                 $this->dbworker->execute_query($query);
             }
         } catch (\Throwable $ex) {
-            $this->dbworker->rollback_transaction();
+            if (empty($this->no_own_transcation)) {
+                $this->dbworker->rollback_transaction();
+            }
+
             throw $ex;
         }
 
-        $this->dbworker->commit_transaction();
+        if (empty($this->no_own_transcation)) {
+            $this->dbworker->commit_transaction();
+        }
     } // saveSettingsData
 
     /**
@@ -416,7 +463,7 @@ class UserSettingsManager implements ISettingsManager
      * @param array $parameters
      * Settings for saving and loading as an associative array in the form key => value:
      *
-     * - $parameters["dbworker"] - the dbworker to used for loading and storing settings.
+     * - $parameters["dbworker"] - the dbworker to use for loading and storing settings.
      * - $parameters["settings_tables"] - the definitions of the settings tables.
      * - $parameters["multichoice_tables"] - the definitions of the auxiliary tables for the multichoice values.
      *
@@ -479,6 +526,49 @@ class UserSettingsManager implements ISettingsManager
 
         $this->validateParameters();
     } // init
+
+    /**
+     * Sets the dbworker to be used for working with the database.
+     *
+     * @param DatabaseWorkers\DBWorker $dbworker
+     * The dbworker to be used for working with the database.
+     *
+     * @return void
+     *
+     * @see RecordsetManager::getDBWorker()
+     *
+     * @author Oleg Schildt
+     */
+
+    /**
+     * Sets the dbworker to use for loading and storing settings.
+     *
+     * @param DatabaseWorkers\DBWorker $dbworker
+     * The dbworker to be used for loading and storing settings.
+     *
+     * @param boolean $no_own_transcation
+     * The state whether the transcation should be started or commited or
+     * no transaction should be used because the saving process is a part of other saving process.
+     *
+     * @return void
+     *
+     * @see RecordsetManager::getDBWorker()
+     *
+     * @author Oleg Schildt
+     */
+    public function setDBWorker($dbworker, $no_own_transcation = false)
+    {
+        $this->dbworker = $dbworker;
+        $this->no_own_transcation = $no_own_transcation;
+
+        if (empty($this->dbworker)) {
+            throw new \Exception("The 'dbworker' is not specified!");
+        }
+
+        if (!$this->dbworker instanceof DBWorker) {
+            throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
+        }
+    } // setDBWorker
 
     /**
      * Sets the validator for the settings.
