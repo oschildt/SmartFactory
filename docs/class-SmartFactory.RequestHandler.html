@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: RequestHandler
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">RequestHandler</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: RequestHandler</h1>
+
+<span class="label label-primary">abstract</span>
+
+<div class="definition"></div>
+
+
+<div class="short-description">
+<p>Abscract class for handling the JSON and XML requests.</p>
+</div>
+
+
+
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href='interface-SmartFactory.Interfaces.IRequestHandler.html'>\SmartFactory\Interfaces\IRequestHandler</a><br>
+
+</div>
+
+
+
+<h2>Known inheritances</h2>
+<div class="item_list">
+
+<a href='class-SmartFactory.JsonRequestHandler.html'>\SmartFactory\JsonRequestHandler</a><br>
+
+<a href='class-SmartFactory.XmlRequestHandler.html'>\SmartFactory\XmlRequestHandler</a><br>
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-SmartFactory.RequestHandler.php.html#20'>SmartFactory/RequestHandler.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$action">$action</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the API action.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$param_string">$param_string</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the API parameter string.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$request_headers">$request_headers</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the request headers.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$response_headers">$response_headers</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the response headers.</p>
+          </td>
+      </tr>
+      
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#addMessagesToResponse">addMessagesToResponse()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is an auxiliary function for adding error messages, warnings, info messages to the response which might have been collected
+during handling of the request.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addResponseHeader">addResponseHeader()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds a response header to the response.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#handleRequest">handleRequest()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is the main function that should be called to handle the API request.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#parseInput">parseInput()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is an auxiliary function for parsing the incoming data.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#postprocessRequest">postprocessRequest()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This function is called after the processing of the request. It should be overridden if you want
+to perform some standard action after every API request of your library.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#preprocessRequest">preprocessRequest()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This function is called before the processing of the request. It should be overridden if you want
+to perform some standard action before every API request of your library.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#processInputData">processInputData()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is an auxiliary function for getting request headers and parsing the API url.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#sendResponse">sendResponse()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is an auxiliary function for sending the response.</p>
+          </td>
+      </tr>
+      
+  </table>
+
+
+
+<hr id="$action">
+  
+  <h1>Property: RequestHandler::$action</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$action</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the API action.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#29'>SmartFactory/RequestHandler.php</a>
+  </div><hr id="$param_string">
+  
+  <h1>Property: RequestHandler::$param_string</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$param_string</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the API parameter string.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#38'>SmartFactory/RequestHandler.php</a>
+  </div><hr id="$request_headers">
+  
+  <h1>Property: RequestHandler::$request_headers</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$request_headers</span> = [];</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the request headers.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#47'>SmartFactory/RequestHandler.php</a>
+  </div><hr id="$response_headers">
+  
+  <h1>Property: RequestHandler::$response_headers</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$response_headers</span> = [];</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the response headers.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#56'>SmartFactory/RequestHandler.php</a>
+  </div>
+
+<hr id="addMessagesToResponse">
+  
+  <h1>Method: RequestHandler::addMessagesToResponse()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> addMessagesToResponse() : void;</div>
+
+  
+  <div class="short-description">
+  <p>This is an auxiliary function for adding error messages, warnings, info messages to the response which might have been collected
+during handling of the request.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a><br>
+  
+  <div class="item_description"><p>It might throw an exception if the content type or data is invalid.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#137'>SmartFactory/RequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addResponseHeader">
+  
+  <h1>Method: RequestHandler::addResponseHeader()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addResponseHeader(string <span class="php-var">$header</span>, string <span class="php-var">$value</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Adds a response header to the response.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $header
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the response header.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $value
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The value of the response header.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#109'>SmartFactory/RequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="handleRequest">
+  
+  <h1>Method: RequestHandler::handleRequest()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleRequest() : void;</div>
+
+  
+  <div class="short-description">
+  <p>This is the main function that should be called to handle the API request.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>It detects the action, retrieves the request headers, parses the incoming JSON data and
+tries to call the corresponding method for the API action.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRequestHandler.html#handleRequest'>\SmartFactory\Interfaces\IRequestHandler::handleRequest()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#175'>SmartFactory/RequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="parseInput">
+  
+  <h1>Method: RequestHandler::parseInput()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> parseInput() : void;</div>
+
+  
+  <div class="short-description">
+  <p>This is an auxiliary function for parsing the incoming data.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a><br>
+  
+  <div class="item_description"><p>It might throw an exception if the content type or data is invalid.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#124'>SmartFactory/RequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="postprocessRequest">
+  
+  <h1>Method: RequestHandler::postprocessRequest()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> postprocessRequest() : void;</div>
+
+  
+  <div class="short-description">
+  <p>This function is called after the processing of the request. It should be overridden if you want
+to perform some standard action after every API request of your library.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#161'>SmartFactory/RequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="preprocessRequest">
+  
+  <h1>Method: RequestHandler::preprocessRequest()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> preprocessRequest() : void;</div>
+
+  
+  <div class="short-description">
+  <p>This function is called before the processing of the request. It should be overridden if you want
+to perform some standard action before every API request of your library.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The usage example are - validation of the access tokens, checking maintenance mode and reporting it to
+the user if it is active.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#149'>SmartFactory/RequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="processInputData">
+  
+  <h1>Method: RequestHandler::processInputData()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processInputData() : void;</div>
+
+  
+  <div class="short-description">
+  <p>This is an auxiliary function for getting request headers and parsing the API url.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>It put the retrieved data into the corresponding properties.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#67'>SmartFactory/RequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="sendResponse">
+  
+  <h1>Method: RequestHandler::sendResponse()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> sendResponse() : void;</div>
+
+  
+  <div class="short-description">
+  <p>This is an auxiliary function for sending the response.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RequestHandler.php.html#94'>SmartFactory/RequestHandler.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+
