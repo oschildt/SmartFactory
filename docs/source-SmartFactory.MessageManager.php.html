@@ -228,12 +228,12 @@
 <span class="line" id="133">133: </span>        }
 <span class="line" id="134">134: </span>
 <span class="line" id="135">135: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;debug_mode) {
-<span class="line" id="136">136: </span>            <span class="php-var">$technical_details</span> = <span class="php-quote">&quot;&quot;</span>;
+<span class="line" id="136">136: </span>            <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="137">137: </span>            <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="138">138: </span>            <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="139">139: </span>        }
 <span class="line" id="140">140: </span>
-<span class="line" id="141">141: </span>        <span class="php-var">$this</span>-&gt;messages[<span class="php-quote">&quot;errors&quot;</span>][<span class="php-var">$message</span>] = [
+<span class="line" id="141">141: </span>        <span class="php-var">$this</span>-&gt;messages[<span class="php-quote">&quot;errors&quot;</span>][<span class="php-var">$message</span> . <span class="php-keyword2">implode</span>(<span class="php-quote">&quot;#&quot;</span>, <span class="php-var">$details</span>)] = [
 <span class="line" id="142">142: </span>            <span class="php-quote">&quot;message&quot;</span> =&gt; <span class="php-var">$message</span>,
 <span class="line" id="143">143: </span>            <span class="php-quote">&quot;details&quot;</span> =&gt; <span class="php-var">$details</span>,
 <span class="line" id="144">144: </span>            <span class="php-quote">&quot;related_element&quot;</span> =&gt; <span class="php-var">$related_element</span>,
@@ -347,7 +347,7 @@
 <span class="line" id="252">252: </span>            <span class="php-keyword1">return</span>;
 <span class="line" id="253">253: </span>        }
 <span class="line" id="254">254: </span>
-<span class="line" id="255">255: </span>        <span class="php-var">$this</span>-&gt;messages[<span class="php-quote">&quot;warnings&quot;</span>][<span class="php-var">$message</span>] = [
+<span class="line" id="255">255: </span>        <span class="php-var">$this</span>-&gt;messages[<span class="php-quote">&quot;warnings&quot;</span>][<span class="php-var">$message</span> . <span class="php-keyword2">implode</span>(<span class="php-quote">&quot;#&quot;</span>, <span class="php-var">$details</span>)] = [
 <span class="line" id="256">256: </span>            <span class="php-quote">&quot;message&quot;</span> =&gt; <span class="php-var">$message</span>,
 <span class="line" id="257">257: </span>            <span class="php-quote">&quot;details&quot;</span> =&gt; <span class="php-var">$details</span>,
 <span class="line" id="258">258: </span>            <span class="php-quote">&quot;related_element&quot;</span> =&gt; <span class="php-var">$related_element</span>
@@ -716,7 +716,7 @@
 <span class="line" id="621">621: </span>            <span class="php-keyword1">return</span>;
 <span class="line" id="622">622: </span>        }
 <span class="line" id="623">623: </span>
-<span class="line" id="624">624: </span>        <span class="php-var">$this</span>-&gt;messages[<span class="php-quote">&quot;info_messages&quot;</span>][<span class="php-var">$message</span>] = [
+<span class="line" id="624">624: </span>        <span class="php-var">$this</span>-&gt;messages[<span class="php-quote">&quot;info_messages&quot;</span>][<span class="php-var">$message</span> . <span class="php-keyword2">implode</span>(<span class="php-quote">&quot;#&quot;</span>, <span class="php-var">$details</span>)] = [
 <span class="line" id="625">625: </span>            <span class="php-quote">&quot;message&quot;</span> =&gt; <span class="php-var">$message</span>,
 <span class="line" id="626">626: </span>            <span class="php-quote">&quot;details&quot;</span> =&gt; <span class="php-var">$details</span>,
 <span class="line" id="627">627: </span>            <span class="php-quote">&quot;autoclose&quot;</span> =&gt; <span class="php-var">$autoclose</span>
@@ -948,7 +948,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

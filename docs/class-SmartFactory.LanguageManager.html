@@ -184,6 +184,19 @@
       
       <tr>
           <td>
+              <div style='float:left'><a href="#$additional_localization_files">$additional_localization_files</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the paths of the additional localization files.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#$context">$context</a></div>
 
               <div style='float:right'>
@@ -259,19 +272,6 @@
           </td>
           <td class="description_column">
               <p>Internal variable for storing the path with the localization files.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#$module_localization_path">$module_localization_path</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the path with the module localization files.</p>
           </td>
       </tr><tr>
           <td>
@@ -561,7 +561,45 @@ for the given langauge.</p>
 
 
 
-<hr id="$context">
+<hr id="$additional_localization_files">
+  
+  <h1>Property: LanguageManager::$additional_localization_files</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$additional_localization_files</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the paths of the additional localization files.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#38'>SmartFactory/LanguageManager.php</a>
+  </div><hr id="$context">
   
   <h1>Property: LanguageManager::$context</h1>
 
@@ -798,44 +836,6 @@ for the given langauge.</p>
   <h2>Source code</h2>
   <div class="item_list">
   <a href='source-SmartFactory.LanguageManager.php.html#29'>SmartFactory/LanguageManager.php</a>
-  </div><hr id="$module_localization_path">
-  
-  <h1>Property: LanguageManager::$module_localization_path</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$module_localization_path</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the path with the module localization files.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  string
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#38'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$supported_languages">
   
   <h1>Property: LanguageManager::$supported_languages</h1>
@@ -1008,6 +1008,7 @@ for the given langauge.</p>
   <p>Priority:</p>
 <ol>
 <li>explicitly set by the request parameter language.</li>
+<li>header 'Content-Language'.</li>
 <li>last language in the cookie.</li>
 <li>browser default language.</li>
 <li>the first one from the supported list.</li>
@@ -1092,7 +1093,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#371'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#364'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1175,7 +1176,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#444'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#436'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1275,7 +1276,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#765'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#759'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1427,7 +1428,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#834'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#828'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1563,7 +1564,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#733'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#727'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1647,7 +1648,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#498'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#492'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1753,7 +1754,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#621'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#615'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1905,7 +1906,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#690'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#684'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2041,7 +2042,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#589'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#583'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2125,7 +2126,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#457'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#449'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2244,7 +2245,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#558'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#552'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2310,7 +2311,7 @@ the default langauge is used.</p>
 <p>$parameters[&quot;localization_path&quot;] - the path where the localization files are stored.</p>
 </li>
 <li>
-<p>$parameters[&quot;module_localization_path&quot;] - the path where the module localization files are stored.</p>
+<p>$parameters[&quot;additional_localization_files&quot;] - the paths of the additional localization files.</p>
 </li>
 <li>
 <p>$parameters[&quot;use_apcu&quot;] - if installed, apcu can be used to cache the translations in the memory.</p>
@@ -2539,7 +2540,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#475'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#467'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2683,7 +2684,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#522'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#516'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2802,7 +2803,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#802'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#796'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2936,7 +2937,7 @@ the default langauge is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#658'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#652'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2958,7 +2959,7 @@ the default langauge is used.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

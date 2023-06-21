@@ -65,6 +65,9 @@ class RecordsetManager implements IRecordsetManager
      * This is internal auxiliary function for checking that the recordset manager
      * is intialized correctly.
      *
+     * @param string $type
+     * The type of validation - table or query.
+     *
      * @return void
      *
      * @throws \Exception

@@ -247,6 +247,20 @@ requested, it is taken from the session, not from the database.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#$no_own_transcation">$no_own_transcation</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the state whether the transcation should be started or commited or
+no transaction should be used because the saving process is a part of other saving process.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#$settings">$settings</a></div>
 
               <div style='float:right'>
@@ -438,6 +452,19 @@ to the target user table defined by the iniailization.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#setDBWorker">setDBWorker()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sets the dbworker to use for loading and storing settings.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#setParameter">setParameter()</a></div>
 
               <div style='float:right'>
@@ -558,7 +585,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#84'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#94'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -613,7 +640,7 @@ manager is intialized correctly.</p>
   
   <h1>Property: UserSettingsManager::$multichoice_tables</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$multichoice_tables</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$multichoice_tables</span> = [];</div>
 
   
   <div class="short-description">
@@ -646,7 +673,46 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#72'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#82'>SmartFactory/UserSettingsManager.php</a>
+  </div><hr id="$no_own_transcation">
+  
+  <h1>Property: UserSettingsManager::$no_own_transcation</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$no_own_transcation</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the state whether the transcation should be started or commited or
+no transaction should be used because the saving process is a part of other saving process.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  bool
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.UserSettingsManager.php.html#64'>SmartFactory/UserSettingsManager.php</a>
   </div><hr id="$settings">
   
   <h1>Property: UserSettingsManager::$settings</h1>
@@ -684,12 +750,12 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#105'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#115'>SmartFactory/UserSettingsManager.php</a>
   </div><hr id="$settings_tables">
   
   <h1>Property: UserSettingsManager::$settings_tables</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$settings_tables</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$settings_tables</span> = [];</div>
 
   
   <div class="short-description">
@@ -722,7 +788,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#63'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#73'>SmartFactory/UserSettingsManager.php</a>
   </div><hr id="$user_id">
   
   <h1>Property: UserSettingsManager::$user_id</h1>
@@ -807,7 +873,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#96'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#106'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -885,7 +951,7 @@ db_connection_settings etc.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#551'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#652'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1025,7 +1091,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#659'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#760'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1098,7 +1164,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#778'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#879'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1173,7 +1239,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#501'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#602'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1244,7 +1310,7 @@ to a default value if its value is not set yet.</p>
             <td class="description_column">
                 <p>Settings for saving and loading as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>$parameters[&quot;dbworker&quot;] - the dbworker to used for loading and storing settings.</li>
+<li>$parameters[&quot;dbworker&quot;] - the dbworker to use for loading and storing settings.</li>
 <li>$parameters[&quot;settings_tables&quot;] - the definitions of the settings tables.</li>
 <li>$parameters[&quot;multichoice_tables&quot;] - the definitions of the auxiliary tables for the multichoice values.</li>
 </ul>
@@ -1329,7 +1395,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#456'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#514'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1415,7 +1481,7 @@ to a default value if its value is not set yet.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#717'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#818'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1530,7 +1596,7 @@ defined by the iniailization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#320'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#376'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1617,7 +1683,7 @@ defined by the iniailization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#739'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#840'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1732,7 +1798,7 @@ to the target user table defined by the iniailization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#167'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#177'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1848,7 +1914,7 @@ db_connection_settings etc.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#527'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#628'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1856,6 +1922,124 @@ db_connection_settings etc.</p>
   <div class="item_list">
   
   <a href='class-SmartFactory.UserSettingsManager.html#getContext'>\SmartFactory\UserSettingsManager::getContext()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setDBWorker">
+  
+  <h1>Method: UserSettingsManager::setDBWorker()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(\SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>, bool <span class="php-var">$no_own_transcation</span> = <span class="php-keyword1">false</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Sets the dbworker to use for loading and storing settings.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $dbworker
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The dbworker to be used for loading and storing settings.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $no_own_transcation
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>The state whether the transcation should be started or commited or
+no transaction should be used because the saving process is a part of other saving process.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.UserSettingsManager.php.html#559'>SmartFactory/UserSettingsManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#getDBWorker'>\SmartFactory\RecordsetManager::getDBWorker()</a><br>
   
   
   </div>
@@ -1984,7 +2168,7 @@ db_connection_settings etc.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#580'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#681'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2127,7 +2311,7 @@ on the fly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#617'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#718'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2234,17 +2418,17 @@ on the fly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#763'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#864'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.UserSettingsManager.html#getUserID'>\SmartFactory\UserSettingsManager::getUserID()</a><br>
-  
-  
   <a href='class-SmartFactory.UserSettingsManager.html#loadSettings'>\SmartFactory\UserSettingsManager::loadSettings()</a><br>
+  
+  
+  <a href='class-SmartFactory.UserSettingsManager.html#getUserID'>\SmartFactory\UserSettingsManager::getUserID()</a><br>
   
   
   </div>
@@ -2341,7 +2525,7 @@ on the fly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#485'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#586'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2426,7 +2610,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#122'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#132'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2502,7 +2686,7 @@ the validator validate the settings.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#689'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#790'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2528,7 +2712,7 @@ the validator validate the settings.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

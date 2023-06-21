@@ -82,7 +82,7 @@ abstract class JsonRequestHandler extends RequestHandler
         if (empty($this->response_data)) {
             echo json_encode($this->response_data, JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
         } else {
-            echo json_encode($this->response_data, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
+            echo json_encode($this->response_data, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
     } // sendResponse
 

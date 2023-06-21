@@ -352,6 +352,19 @@ from the result of the last retrieving query.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#build_select_query">build_select_query()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Builds simple select query based on parameters.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#close_connection">close_connection()</a></div>
 
               <div style='float:right'>
@@ -1110,7 +1123,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#129'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#128'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1172,7 +1185,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#140'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#139'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1249,7 +1262,190 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1133'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1136'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="build_select_query">
+  
+  <h1>Method: MySQL_DBWorker::build_select_query()</h1>
+
+  <div class="definition"><span class="php-keyword1">function</span> build_select_query(string <span class="php-var">$table</span>, 
+                            <span class="php-keyword1">array</span> <span class="php-var">$fields</span>, 
+                            string <span class="php-var">$where_clause</span>, 
+                            string <span class="php-var">$order_clause</span>, 
+                            int <span class="php-var">$limit</span>
+                           ) : string;
+</div>
+
+  
+  <div class="short-description">
+  <p>Builds simple select query based on parameters.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>It is used for building queries with limits.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $table
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the table.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $fields
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The list of request fields.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $where_clause
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The where clause that should restrict the result.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $order_clause
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The order clause to sort the results.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $limit
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The limit how many records shoud be loaded. 0 for unlimited.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the built query.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#build_select_query'>\SmartFactory\DatabaseWorkers\DBWorker::build_select_query()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1520'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1324,7 +1520,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#709'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#712'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1408,7 +1604,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#768'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#771'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1493,7 +1689,7 @@ settings parameters specified by the initialization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#266'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#265'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1681,7 +1877,7 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1406'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1413'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1797,7 +1993,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#536'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#539'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -1913,7 +2109,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#614'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#617'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2019,7 +2215,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#402'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#405'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2157,7 +2353,7 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#976'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#979'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2246,7 +2442,7 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#876'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#879'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2323,7 +2519,7 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1105'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1108'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2450,7 +2646,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1198'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1201'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2586,7 +2782,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1240'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1243'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2676,7 +2872,7 @@ of any error returns false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1159'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1162'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2756,6 +2952,7 @@ of any error returns null.</p>
 <li>$info[&quot;size&quot;] - size of the field.</li>
 <li>$info[&quot;binary&quot;] - whether the filed is binary.</li>
 <li>$info[&quot;numeric&quot;] - whether the filed is numeric.</li>
+<li>$info[&quot;datetime&quot;] - whether the filed is datetime.</li>
 </ul></div>
   
   </div>
@@ -2792,7 +2989,7 @@ of any error returns null.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1314'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1318'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -2910,7 +3107,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1278'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1281'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3019,7 +3216,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1425'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1432'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3128,7 +3325,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1444'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1455'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3217,7 +3414,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#677'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#680'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3306,7 +3503,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#807'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#810'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3375,7 +3572,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#216'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#215'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3450,7 +3647,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#229'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#228'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3519,7 +3716,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#365'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#368'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3631,7 +3828,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#164'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#163'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3708,7 +3905,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#843'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#846'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3777,7 +3974,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#246'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#245'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3859,7 +4056,7 @@ the MySQL database.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#197'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#196'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -3984,7 +4181,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1464'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#1479'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -4090,7 +4287,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#431'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#434'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -4200,7 +4397,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#384'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#387'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -4281,7 +4478,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#788'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#791'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -4365,7 +4562,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#748'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#751'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -4505,7 +4702,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#478'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#481'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
   
 
@@ -4611,11 +4808,11 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#340'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.MySQL_DBWorker.php.html#343'>SmartFactory/DatabaseWorkers/MySQL_DBWorker.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -932,13 +932,7 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h1>Method: SmartException::__construct()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(string <span class="php-var">$message</span>, 
-                            string <span class="php-var">$error_code</span>, 
-                            string <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>, 
-                            <span class="php-keyword1">array</span> <span class="php-var">$error_details</span> = [], 
-                            string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>
-                           ) : ;
-</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(string <span class="php-var">$message</span>, string <span class="php-var">$error_code</span> = SmartException::ERR_CODE_SYSTEM_ERROR, string <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$error_details</span> = [], string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>);</div>
 
   
   <div class="short-description">
@@ -991,7 +985,7 @@ uses the error message id, gets the final translated text and substitutes the pa
                 string
             </td>
             <td>
-                
+                SmartException::ERR_CODE_SYSTEM_ERROR
             </td>
             <td class="description_column">
                 <p>Error code.</p>
@@ -1405,7 +1399,7 @@ uses the error message id, gets the final translated text and substitutes the pa
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

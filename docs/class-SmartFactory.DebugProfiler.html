@@ -270,6 +270,19 @@ line number are written from where it is called.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#extract_call_stack">extract_call_stack()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Extracts the call stack from the standard PHP backtrace (debug_backtrace).</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#fixProfilePoint">fixProfilePoint()</a></div>
 
               <div style='float:right'>
@@ -527,7 +540,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#204'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#274'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -602,7 +615,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#225'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#295'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -630,7 +643,7 @@ line number are written from where it is called.</p>
   
   <h1>Method: DebugProfiler::debugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>, bool <span class="php-var">$show_callstack</span> = <span class="php-keyword1">false</span>) : bool;</div>
 
   
   <div class="short-description">
@@ -690,6 +703,24 @@ line number are written from where it is called.</p>
             </td>
         </tr>
         
+        <tr>
+            <td>
+                $show_callstack
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>The flag that defines whether the callstack should be also traced.</p>
+            </td>
+        </tr>
+        
         
     </table>
 
@@ -737,7 +768,102 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#108'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#167'>SmartFactory/DebugProfiler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="extract_call_stack">
+  
+  <h1>Method: DebugProfiler::extract_call_stack()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>Extracts the call stack from the standard PHP backtrace (debug_backtrace).</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $btrace
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The backtrace.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the extracted call stack.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DebugProfiler.php.html#100'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -850,7 +976,7 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#178'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#248'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1087,7 +1213,7 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#149'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#219'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1100,7 +1226,7 @@ and stores the current time.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -87,6 +87,62 @@ class DebugProfiler implements IDebugProfiler
     }
     
     /**
+     * Extracts the call stack from the standard PHP backtrace (debug_backtrace).
+     *
+     * @param array $btrace
+     * The backtrace.
+     *
+     * @return string
+     * Returns the extracted call stack.
+     *
+     * @author Oleg Schildt
+     */
+    protected function extract_call_stack($btrace)
+    {
+        if (empty($btrace) || !is_array($btrace)) {
+            return "";
+        }
+
+        $trace = "";
+
+        $indent = "";
+        foreach ($btrace as $btrace_entry) {
+
+            if (!empty($btrace_entry["function"]) && ($btrace_entry["function"] == "handle_error" || strpos($btrace_entry["function"], "{closure}") !== false || $btrace_entry["function"] == "handleError" || $btrace_entry["function"] == "trigger_error")) {
+                continue;
+            }
+
+            if (empty($btrace_entry["file"])) {
+                continue;
+            }
+
+            if (!empty($btrace_entry["function"])) {
+                $trace .= $indent . str_replace("SmartFactory\\", "", $btrace_entry["function"]) . "() ";
+            }
+
+            $trace .= "[";
+
+            $trace .= str_replace("\\", "/", $btrace_entry["file"]);
+
+            $trace .= ", ";
+
+            if (empty($btrace_entry["line"])) {
+                $trace .= "line number undefined";
+            } else {
+                $trace .= $btrace_entry["line"];
+            }
+
+            $trace .= "]";
+
+            $trace .= "\r\n";
+
+            $indent .= "  ";
+        }
+
+        return trim($trace);
+    } // extract_call_stack
+
+    /**
      * Logs a message to a standard debug output (logs/debug.log).
      *
      * @param string $message
@@ -94,6 +150,9 @@ class DebugProfiler implements IDebugProfiler
      *
      * @param string $file_name
      * The target file name.
+     *
+     * @param boolean $show_callstack
+     * The flag that defines whether the callstack should be also traced.
      *
      * @return boolean
      * It should return true if the logging was successful, otherwise false.
@@ -105,7 +164,7 @@ class DebugProfiler implements IDebugProfiler
      *
      * @author Oleg Schildt
      */
-    public function debugMessage($message, $file_name = "debug.log")
+    public function debugMessage($message, $file_name = "debug.log", $show_callstack = false)
     {
         $logfile = $this->log_path . $file_name;
 
@@ -119,13 +178,20 @@ class DebugProfiler implements IDebugProfiler
             $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
         }
 
-        $appendix = "";
+        $message = trim($message);
+
         if($this->write_source_file_and_line_by_debug && !empty($file) && !empty($line)) {
-            $appendix = "\r\n#source: " . $file . ", " . $line . "\r\n\r\n";
+            $message = "\r\n#source: " . $file . ", " . $line . "\r\n\r\n" . $message;
+        }
+
+        $message .= "\r\n";
+
+        if ($show_callstack) {
+            $message .= "\r\n" . $this->extract_call_stack($backfiles) . "\r\n";
         }
 
         if ((!file_exists($logfile) && is_writable($this->log_path)) || is_writable($logfile)) {
-            return file_put_contents($logfile, $appendix . trim($message) . "\r\n", FILE_APPEND) !== false;
+            return file_put_contents($logfile, $message, FILE_APPEND) !== false;
         } else {
             throw new \Exception(sprintf("The log file '%s' is not writable!", $logfile));
         }

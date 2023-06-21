@@ -925,6 +925,12 @@ abstract class DBWorker implements IInitable
      *
      * It is used for building queries with limits.
      *
+     * @param string $table
+     * The name of the table.
+     *
+     * @param array $fields
+     * The list of request fields.
+     *
      * @param string $where_clause
      * The where clause that should restrict the result.
      *

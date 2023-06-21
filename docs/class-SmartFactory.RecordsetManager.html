@@ -155,7 +155,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.RecordsetManager.php.html#23'>SmartFactory/RecordsetManager.php</a>
+<a href='source-SmartFactory.RecordsetManager.php.html#25'>SmartFactory/RecordsetManager.php</a>
 </div>
 
 
@@ -263,6 +263,45 @@ to uniquely identify a record.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#commit_transaction">commit_transaction()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Commits the transation.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#countRecords">countRecords()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Counts records based on the where clause.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#countRecordsQuery">countRecordsQuery()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Counts records based on the query.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#deleteRecords">deleteRecords()</a></div>
 
               <div style='float:right'>
@@ -276,6 +315,19 @@ to uniquely identify a record.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#deleteRecordsQuery">deleteRecordsQuery()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Deletes records by a given query.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#describeTableFields">describeTableFields()</a></div>
 
               <div style='float:right'>
@@ -285,7 +337,59 @@ to uniquely identify a record.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Describes the table fields for working with record sets.</p>
+              <p>Defines the field mappings for working with record sets based on a table.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#describeTableFieldsQuery">describeTableFieldsQuery()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Defines the field mappings for working with record sets based on a query.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#escape">escape()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Escapes the string so that it can be used in the query without causing an error.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#format_date">format_date()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Formats the date to a string compatible for the corresponding database.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#format_datetime">format_datetime()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Formats the date/time to a string compatible for the corresponding database.</p>
           </td>
       </tr><tr>
           <td>
@@ -311,6 +415,19 @@ to uniquely identify a record.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
+              <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; based on a table.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadRecordQuery">loadRecordQuery()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
               <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
           </td>
       </tr><tr>
@@ -324,8 +441,33 @@ to uniquely identify a record.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Loads records into an array in the form $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] =
-&quot;value&quot;.</p>
+              <p>Loads records into an array in the form</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadRecordSetQuery">loadRecordSetQuery()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Loads records into an array in the form</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#number_or_null">number_or_null()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks that the value is a number and returns it, or returns the string NULL if the value is empty.</p>
           </td>
       </tr><tr>
           <td>
@@ -340,6 +482,32 @@ to uniquely identify a record.</p>
           <td class="description_column">
               <p>This is internal auxiliary function for saving a record set from an array
 with key field values as array dimensions.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#quotes_or_null">quotes_or_null()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Escapes the string so that it can be used in the query without causing an error or returns the sstring NULL if the string is empty.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#rollback_transaction">rollback_transaction()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Rolls back the transation.</p>
           </td>
       </tr><tr>
           <td>
@@ -380,6 +548,19 @@ $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;]
           </td>
           <td class="description_column">
               <p>Sets the dbworker to be used for working with the database.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#start_transaction">start_transaction()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Starts the transation.</p>
           </td>
       </tr><tr>
           <td>
@@ -438,7 +619,7 @@ is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#32'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#34'>SmartFactory/RecordsetManager.php</a>
   </div><hr id="$fields">
   
   <h1>Property: RecordsetManager::$fields</h1>
@@ -476,7 +657,7 @@ is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#50'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#52'>SmartFactory/RecordsetManager.php</a>
   </div><hr id="$key_fields">
   
   <h1>Property: RecordsetManager::$key_fields</h1>
@@ -515,7 +696,7 @@ to uniquely identify a record.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#60'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#62'>SmartFactory/RecordsetManager.php</a>
   </div><hr id="$table">
   
   <h1>Property: RecordsetManager::$table</h1>
@@ -553,14 +734,14 @@ to uniquely identify a record.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#41'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#43'>SmartFactory/RecordsetManager.php</a>
   </div>
 
 <hr id="checkWhereClause">
   
   <h1>Method: RecordsetManager::checkWhereClause()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> checkWhereClause(string|<span class="php-keyword1">array</span> &amp;<span class="php-var">$where_clause</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> checkWhereClause(string|<span class="php-keyword1">array</span> &amp;<span class="php-var">$where_clause</span>) : void;</div>
 
   
   <div class="short-description">
@@ -609,9 +790,7 @@ the where clause is build based on it.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should returns true if the conversion is successful, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -643,7 +822,7 @@ by the initialization.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#123'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#124'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -661,11 +840,320 @@ by the initialization.</p></div>
 
   
 
+  <hr id="commit_transaction">
+  
+  <h1>Method: RecordsetManager::commit_transaction()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction() : void;</div>
+
+  
+  <div class="short-description">
+  <p>Commits the transation.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#commit_transaction'>\SmartFactory\Interfaces\IRecordsetManager::commit_transaction()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#867'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#start_transaction'>\SmartFactory\RecordsetManager::start_transaction()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#rollback_transaction'>\SmartFactory\RecordsetManager::rollback_transaction()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="countRecords">
+  
+  <h1>Method: RecordsetManager::countRecords()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecords(string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : int;</div>
+
+  
+  <div class="short-description">
+  <p>Counts records based on the where clause.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $where_clause
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string|array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The where clause that should restrict the result. If an array of keys is passed,
+the where clause is build automatically based on it.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  int<br>
+  
+  <div class="item_description"><p>Returns the number of records.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#countRecords'>\SmartFactory\Interfaces\IRecordsetManager::countRecords()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#781'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#countRecordsQuery'>\SmartFactory\Interfaces\IRecordsetManager::countRecordsQuery()</a><br>
+  
+  
+  </div>
+
+  
+
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="countRecordsQuery">
+  
+  <h1>Method: RecordsetManager::countRecordsQuery()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecordsQuery(string <span class="php-var">$query</span>) : int;</div>
+
+  
+  <div class="short-description">
+  <p>Counts records based on the query.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $query
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The query to be used.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  int<br>
+  
+  <div class="item_description"><p>Returns the number of records.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#countRecordsQuery'>\SmartFactory\Interfaces\IRecordsetManager::countRecordsQuery()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#815'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#countRecords'>\SmartFactory\Interfaces\IRecordsetManager::countRecords()</a><br>
+  
+  
+  </div>
+
+  
+
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
   <hr id="deleteRecords">
   
   <h1>Method: RecordsetManager::deleteRecords()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecords(string <span class="php-var">$where_clause</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecords(string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : void;</div>
 
   
   <div class="short-description">
@@ -697,13 +1185,13 @@ by the initialization.</p></div>
                 by value
             </td>
             <td>
-                string
+                string|array
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The where clause for the records to be deleted. If an array of keys is passed,
+                <p>The where clause that should restrict the result. If an array of keys is passed,
 the where clause is build automatically based on it.</p>
             </td>
         </tr>
@@ -714,9 +1202,7 @@ the where clause is build automatically based on it.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the records have been successfully deleted, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -758,7 +1244,7 @@ the where clause is build automatically based on it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#302'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#347'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -766,6 +1252,133 @@ the where clause is build automatically based on it.</p>
   <div class="item_list">
   
   <a href='class-SmartFactory.RecordsetManager.html#saveRecord'>\SmartFactory\RecordsetManager::saveRecord()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#deleteRecordsQuery'>\SmartFactory\RecordsetManager::deleteRecordsQuery()</a><br>
+  
+  
+  </div>
+
+  
+
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="deleteRecordsQuery">
+  
+  <h1>Method: RecordsetManager::deleteRecordsQuery()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecordsQuery(string <span class="php-var">$query</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Deletes records by a given query.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $query
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The query to be used.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if some parameters are not of the proper type.</li>
+<li>if the query fails or if some object names are invalid.</li>
+</ul></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#deleteRecordsQuery'>\SmartFactory\Interfaces\IRecordsetManager::deleteRecordsQuery()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#382'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#deleteRecords'>\SmartFactory\RecordsetManager::deleteRecords()</a><br>
   
   
   </div>
@@ -796,7 +1409,7 @@ the where clause is build automatically based on it.</p>
 
   
   <div class="short-description">
-  <p>Describes the table fields for working with record sets.</p>
+  <p>Defines the field mappings for working with record sets based on a table.</p>
   </div>
   
 
@@ -918,11 +1531,498 @@ to uniquely identify a record.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#264'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#273'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#describeTableFieldsQuery'>\SmartFactory\Interfaces\IRecordsetManager::describeTableFieldsQuery()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="describeTableFieldsQuery">
+  
+  <h1>Method: RecordsetManager::describeTableFieldsQuery()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFieldsQuery(<span class="php-keyword1">array</span> <span class="php-var">$fields</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Defines the field mappings for working with record sets based on a query.</p>
   </div>
   
 
   
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $fields
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The array of fields in the form &quot;field name&quot; =&gt; &quot;field type&quot;.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $key_fields
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The array of key fields. These are the fields that are used
+to uniquely identify a record.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if the query fails or if some object names are invalid.</li>
+</ul></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#describeTableFieldsQuery'>\SmartFactory\Interfaces\IRecordsetManager::describeTableFieldsQuery()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#310'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#describeTableFields'>\SmartFactory\Interfaces\IRecordsetManager::describeTableFields()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="escape">
+  
+  <h1>Method: RecordsetManager::escape()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>Escapes the string so that it can be used in the query without causing an error.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $str
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The string to be escaped.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the escaped string.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#escape'>\SmartFactory\Interfaces\IRecordsetManager::escape()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#910'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_date'>\SmartFactory\RecordsetManager::format_date()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_datetime'>\SmartFactory\RecordsetManager::format_datetime()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#quotes_or_null'>\SmartFactory\RecordsetManager::quotes_or_null()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#number_or_null'>\SmartFactory\RecordsetManager::number_or_null()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="format_date">
+  
+  <h1>Method: RecordsetManager::format_date()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>Formats the date to a string compatible for the corresponding database.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $date
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The date value as timestamp.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#format_date'>\SmartFactory\Interfaces\IRecordsetManager::format_date()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#976'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#escape'>\SmartFactory\RecordsetManager::escape()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_datetime'>\SmartFactory\RecordsetManager::format_datetime()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#quotes_or_null'>\SmartFactory\RecordsetManager::quotes_or_null()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#number_or_null'>\SmartFactory\RecordsetManager::number_or_null()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="format_datetime">
+  
+  <h1>Method: RecordsetManager::format_datetime()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>Formats the date/time to a string compatible for the corresponding database.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $datetime
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The date/time value as timestamp.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#format_datetime'>\SmartFactory\Interfaces\IRecordsetManager::format_datetime()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#997'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#escape'>\SmartFactory\RecordsetManager::escape()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_date'>\SmartFactory\RecordsetManager::format_date()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#quotes_or_null'>\SmartFactory\RecordsetManager::quotes_or_null()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#number_or_null'>\SmartFactory\RecordsetManager::number_or_null()</a><br>
+  
+  
+  </div>
 
   
 
@@ -987,7 +2087,7 @@ to uniquely identify a record.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#235'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#242'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1015,11 +2115,11 @@ to uniquely identify a record.</p>
   
   <h1>Method: RecordsetManager::loadRecord()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : void;</div>
 
   
   <div class="short-description">
-  <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
+  <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; based on a table.</p>
   </div>
   
 
@@ -1082,9 +2182,7 @@ the where clause is build automatically based on it.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the record has been successfully loaded, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1126,7 +2224,7 @@ the where clause is build automatically based on it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#345'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#419'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1137,6 +2235,154 @@ the where clause is build automatically based on it.</p>
   
   
   <a href='class-SmartFactory.RecordsetManager.html#loadRecordSet'>\SmartFactory\RecordsetManager::loadRecordSet()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#loadRecordQuery'>\SmartFactory\RecordsetManager::loadRecordQuery()</a><br>
+  
+  
+  </div>
+
+  
+
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="loadRecordQuery">
+  
+  <h1>Method: RecordsetManager::loadRecordQuery()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string <span class="php-var">$query</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $record
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The target array where the data should be loaded.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $query
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The query to be used.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if some parameters are not of the proper type.</li>
+<li>if the query fails or if some object names are invalid.</li>
+</ul></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#loadRecordQuery'>\SmartFactory\Interfaces\IRecordsetManager::loadRecordQuery()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#462'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#loadRecord'>\SmartFactory\RecordsetManager::loadRecord()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#loadRecordSetQuery'>\SmartFactory\RecordsetManager::loadRecordSetQuery()</a><br>
   
   
   </div>
@@ -1163,15 +2409,25 @@ the where clause is build automatically based on it.</p>
   
   <h1>Method: RecordsetManager::loadRecordSet()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSet(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>, string <span class="php-var">$order_clause</span> = <span class="php-quote">&quot;&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSet(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, 
+                              string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>, 
+                              string <span class="php-var">$order_clause</span> = <span class="php-quote">&quot;&quot;</span>, 
+                              int <span class="php-var">$limit</span> = <span class="php-num">0</span>
+                             ) : void;
+</div>
 
   
   <div class="short-description">
-  <p>Loads records into an array in the form $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] =
-&quot;value&quot;.</p>
+  <p>Loads records into an array in the form</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>$records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot;.</p>
+<p>baed on a table.</p>
+  </div>
   
 
   
@@ -1243,15 +2499,31 @@ the where clause is build automatically based on it.</p>
             </td>
         </tr>
         
+        <tr>
+            <td>
+                $limit
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                0
+            </td>
+            <td class="description_column">
+                <p>The limit how many records shoud be loaded. 0 for unlimited.</p>
+            </td>
+        </tr>
+        
         
     </table>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the record has been successfully loaded, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1293,7 +2565,7 @@ the where clause is build automatically based on it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#404'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#517'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1304,6 +2576,9 @@ the where clause is build automatically based on it.</p>
   
   
   <a href='class-SmartFactory.RecordsetManager.html#saveRecordSet'>\SmartFactory\RecordsetManager::saveRecordSet()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#loadRecordSetQuery'>\SmartFactory\RecordsetManager::loadRecordSetQuery()</a><br>
   
   
   </div>
@@ -1326,11 +2601,286 @@ the where clause is build automatically based on it.</p>
 
   
 
+  <hr id="loadRecordSetQuery">
+  
+  <h1>Method: RecordsetManager::loadRecordSetQuery()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSetQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string <span class="php-var">$query</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Loads records into an array in the form</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>$records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot;.</p>
+<p>baed on a query.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $records
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The target array where the data should be loaded.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $query
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The query to be used.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
+<ul>
+<li>if some parameters are missing.</li>
+<li>if dbworker does not extend <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>.</li>
+<li>if some parameters are not of the proper type.</li>
+<li>if the query fails or if some object names are invalid.</li>
+</ul></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#loadRecordSetQuery'>\SmartFactory\Interfaces\IRecordsetManager::loadRecordSetQuery()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#558'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#loadRecordSet'>\SmartFactory\RecordsetManager::loadRecordSet()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#loadRecordQuery'>\SmartFactory\RecordsetManager::loadRecordQuery()</a><br>
+  
+  
+  </div>
+
+  
+
+  <h2>Uses</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="number_or_null">
+  
+  <h1>Method: RecordsetManager::number_or_null()</h1>
+
+  <div class="definition"><span class="php-keyword1">function</span> number_or_null(string <span class="php-var">$str</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>Checks that the value is a number and returns it, or returns the string NULL if the value is empty.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $str
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The string to be escaped.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the escaped string.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#955'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#escape'>\SmartFactory\RecordsetManager::escape()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_date'>\SmartFactory\RecordsetManager::format_date()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_datetime'>\SmartFactory\RecordsetManager::format_datetime()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#quotes_or_null'>\SmartFactory\RecordsetManager::quotes_or_null()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="processSubarray">
   
   <h1>Method: RecordsetManager::processSubarray()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processSubarray(<span class="php-keyword1">array</span> &amp;<span class="php-var">$subarray</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processSubarray(<span class="php-keyword1">array</span> &amp;<span class="php-var">$subarray</span>, 
+                                   <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>, 
+                                   <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span>, 
+                                   <span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, 
+                                   string <span class="php-var">$identity_field</span>
+                                  ) : void;
+</div>
 
   
   <div class="short-description">
@@ -1435,15 +2985,34 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
             </td>
         </tr>
         
+        <tr>
+            <td>
+                $identity_field
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the identity field if exists. If the identity field is specified
+and the record does not exist yet in the table, the source array is extended
+with a pair &quot;identity field&quot; =&gt; &quot;identity value&quot; issued by the database by this
+insert operation.</p>
+            </td>
+        </tr>
+        
         
     </table>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the subarray has been processed successfully, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1480,7 +3049,7 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#181'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#185'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1498,11 +3067,205 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
 
   
 
+  <hr id="quotes_or_null">
+  
+  <h1>Method: RecordsetManager::quotes_or_null()</h1>
+
+  <div class="definition"><span class="php-keyword1">function</span> quotes_or_null(string <span class="php-var">$str</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>Escapes the string so that it can be used in the query without causing an error or returns the sstring NULL if the string is empty.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $str
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The string to be escaped.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the escaped string.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#931'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#escape'>\SmartFactory\RecordsetManager::escape()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_date'>\SmartFactory\RecordsetManager::format_date()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#format_datetime'>\SmartFactory\RecordsetManager::format_datetime()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#number_or_null'>\SmartFactory\RecordsetManager::number_or_null()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="rollback_transaction">
+  
+  <h1>Method: RecordsetManager::rollback_transaction()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction() : void;</div>
+
+  
+  <div class="short-description">
+  <p>Rolls back the transation.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#rollback_transaction'>\SmartFactory\Interfaces\IRecordsetManager::rollback_transaction()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#887'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#start_transaction'>\SmartFactory\RecordsetManager::start_transaction()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#commit_transaction'>\SmartFactory\RecordsetManager::commit_transaction()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="saveRecord">
   
   <h1>Method: RecordsetManager::saveRecord()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string <span class="php-var">$identity_field</span> = <span class="php-keyword1">null</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>, string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
 
   
   <div class="short-description">
@@ -1546,6 +3309,25 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
         
         <tr>
             <td>
+                $where_clause
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string|array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The where clause that should be used to define whether a record should be inserted or updated. If an array of keys is passed,
+the where clause is build automatically based on it.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
                 $identity_field
             </td>
             <td>
@@ -1555,7 +3337,7 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
                 string
             </td>
             <td>
-                null
+                &quot;&quot;
             </td>
             <td class="description_column">
                 <p>The name of the identity field if exists. If the identity field is specified
@@ -1571,9 +3353,7 @@ insert operation.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the record has been successfully saved, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1615,7 +3395,7 @@ insert operation.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#489'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#634'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1652,7 +3432,7 @@ insert operation.</p>
   
   <h1>Method: RecordsetManager::saveRecordSet()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, <span class="php-keyword1">array</span> <span class="php-var">$parent_values</span> = []) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, <span class="php-keyword1">array</span> <span class="php-var">$parent_values</span> = [], string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
 
   
   <div class="short-description">
@@ -1714,15 +3494,34 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
             </td>
         </tr>
         
+        <tr>
+            <td>
+                $identity_field
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The name of the identity field if exists. If the identity field is specified
+and the record does not exist yet in the table, the source array is extended
+with a pair &quot;identity field&quot; =&gt; &quot;identity value&quot; issued by the database by this
+insert operation.</p>
+            </td>
+        </tr>
+        
         
     </table>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the records have been successfully saved, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1764,7 +3563,7 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#615'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#743'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1877,7 +3676,7 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#220'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#227'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1901,16 +3700,15 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
 
   
 
-  <hr id="validateParameters">
+  <hr id="start_transaction">
   
-  <h1>Method: RecordsetManager::validateParameters()</h1>
+  <h1>Method: RecordsetManager::start_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction() : void;</div>
 
   
   <div class="short-description">
-  <p>This is internal auxiliary function for checking that the recordset manager
-is intialized correctly.</p>
+  <p>Starts the transation.</p>
   </div>
   
 
@@ -1923,9 +3721,123 @@ is intialized correctly.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  void<br>
   
-  <div class="item_description"><p>It should return true if the recordset manager is intialized correctly, otherwise false.</p></div>
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IRecordsetManager.html#start_transaction'>\SmartFactory\Interfaces\IRecordsetManager::start_transaction()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.RecordsetManager.php.html#847'>SmartFactory/RecordsetManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.RecordsetManager.html#commit_transaction'>\SmartFactory\RecordsetManager::commit_transaction()</a><br>
+  
+  
+  <a href='class-SmartFactory.RecordsetManager.html#rollback_transaction'>\SmartFactory\RecordsetManager::rollback_transaction()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="validateParameters">
+  
+  <h1>Method: RecordsetManager::validateParameters()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters(string <span class="php-var">$type</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>This is internal auxiliary function for checking that the recordset manager
+is intialized correctly.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $type
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The type of validation - table or query.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
   
   </div>
   
@@ -1961,11 +3873,11 @@ is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#78'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#82'>SmartFactory/RecordsetManager.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

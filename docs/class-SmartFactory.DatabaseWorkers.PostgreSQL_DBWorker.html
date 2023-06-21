@@ -352,6 +352,19 @@ from the result of the last retrieving query.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#build_select_query">build_select_query()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Builds simple select query based on parameters.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#close_connection">close_connection()</a></div>
 
               <div style='float:right'>
@@ -1136,7 +1149,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#129'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#128'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1198,7 +1211,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#140'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#139'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1275,7 +1288,190 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1007'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1011'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="build_select_query">
+  
+  <h1>Method: PostgreSQL_DBWorker::build_select_query()</h1>
+
+  <div class="definition"><span class="php-keyword1">function</span> build_select_query(string <span class="php-var">$table</span>, 
+                            <span class="php-keyword1">array</span> <span class="php-var">$fields</span>, 
+                            string <span class="php-var">$where_clause</span>, 
+                            string <span class="php-var">$order_clause</span>, 
+                            int <span class="php-var">$limit</span>
+                           ) : string;
+</div>
+
+  
+  <div class="short-description">
+  <p>Builds simple select query based on parameters.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>It is used for building queries with limits.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $table
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the table.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $fields
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The list of request fields.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $where_clause
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The where clause that should restrict the result.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $order_clause
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The order clause to sort the results.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $limit
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The limit how many records shoud be loaded. 0 for unlimited.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the built query.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#build_select_query'>\SmartFactory\DatabaseWorkers\DBWorker::build_select_query()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1337'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1350,7 +1546,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#686'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#690'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1434,7 +1630,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#743'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#747'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1707,7 +1903,7 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1227'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1232'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1823,7 +2019,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#565'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#569'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1939,7 +2135,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#601'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#605'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2045,7 +2241,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#423'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#427'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2183,7 +2379,7 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#922'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#926'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2272,7 +2468,7 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#863'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#867'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2349,7 +2545,7 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#983'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#987'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2476,7 +2672,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1066'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1070'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2612,7 +2808,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1112'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1116'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2702,7 +2898,7 @@ of any error returns false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1032'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1036'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2782,6 +2978,7 @@ of any error returns null.</p>
 <li>$info[&quot;size&quot;] - size of the field.</li>
 <li>$info[&quot;binary&quot;] - whether the filed is binary.</li>
 <li>$info[&quot;numeric&quot;] - whether the filed is numeric.</li>
+<li>$info[&quot;datetime&quot;] - whether the filed is datetime.</li>
 </ul></div>
   
   </div>
@@ -2818,7 +3015,7 @@ of any error returns null.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1190'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1195'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2936,7 +3133,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1154'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1158'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3045,7 +3242,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1246'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1251'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3154,7 +3351,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1265'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1274'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3243,7 +3440,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#658'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#662'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3332,7 +3529,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#782'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#786'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3545,7 +3742,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#380'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#384'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3743,7 +3940,7 @@ and write your inserts with explicit ID values.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#815'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#819'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4019,7 +4216,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1285'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1298'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4125,7 +4322,7 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#452'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#456'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4235,7 +4432,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#399'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#403'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4336,7 +4533,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#161'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#160'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4411,7 +4608,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#763'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#767'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4495,7 +4692,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#723'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#727'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4635,7 +4832,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#502'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#506'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4805,11 +5002,11 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#365'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#369'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

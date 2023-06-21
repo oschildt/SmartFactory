@@ -650,7 +650,7 @@ class MySQL_DBWorker extends DBWorker
 
             $arg_list = trim($arg_list, ", ");
 
-            $this->last_query = "CALL ${proc_name}(${arg_list});";
+            $this->last_query = "CALL {$proc_name}({$arg_list});";
         }
 
         $this->execute_query($this->last_query);
@@ -1496,6 +1496,12 @@ class MySQL_DBWorker extends DBWorker
      * Builds simple select query based on parameters.
      *
      * It is used for building queries with limits.
+     *
+     * @param string $table
+     * The name of the table.
+     *
+     * @param array $fields
+     * The list of request fields.
      *
      * @param string $where_clause
      * The where clause that should restrict the result.

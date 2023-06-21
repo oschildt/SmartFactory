@@ -287,7 +287,7 @@ function arguments from the standard PHP backtrace (debug_backtrace).</p>
 
               <div style='float:right'>
               
-              <span class='label label-warning'>protected</span>
+              <span class='label label-success'>public</span>
               </div>
               <div style="clear:both"></div>
           </td>
@@ -715,7 +715,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#527'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#533'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -797,7 +797,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#509'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#515'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -923,7 +923,7 @@ the standard file.</p>
   
   <h1>Method: ErrorHandler::format_backtrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> format_backtrace(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> format_backtrace(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
 
   
   <div class="short-description">
@@ -1065,7 +1065,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#448'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#442'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1240,7 +1240,7 @@ error handler.</p>
   
   <h1>Method: ErrorHandler::handleException()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, string <span class="php-var">$errfuntion</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, int <span class="php-var">$errno</span>) : void;</div>
 
   
   <div class="short-description">
@@ -1286,43 +1286,7 @@ if an exception is thrown.</p>
         
         <tr>
             <td>
-                $errfuntion
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Funtion name where the exception has been catched.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $errfile
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Source file where the exception has been catched.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $errline
+                $errno
             </td>
             <td>
                 by value
@@ -1334,7 +1298,7 @@ if an exception is thrown.</p>
                 
             </td>
             <td class="description_column">
-                <p>Line number where the exception has been catched.</p>
+                <p>Error code.</p>
             </td>
         </tr>
         
@@ -1372,7 +1336,7 @@ if an exception is thrown.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#403'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#401'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1679,7 +1643,7 @@ standard PHP backtrace (debug_backtrace).</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#467'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#473'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1758,7 +1722,7 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#491'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#497'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1990,7 +1954,7 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2022-08-23 12:35 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

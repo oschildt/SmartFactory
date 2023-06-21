@@ -101,7 +101,7 @@ class ErrorHandler implements IErrorHandler
      *
      * @author Oleg Schildt
      */
-    protected function format_backtrace($btrace)
+    function format_backtrace($btrace)
     {
         if (empty($btrace) || count($btrace) == 0) {
             return "backtrace empty";
@@ -442,7 +442,19 @@ class ErrorHandler implements IErrorHandler
     public function getLastError()
     {
         if (empty(self::$last_error)) {
-            return "";
+            $errors = error_get_last();
+
+            if (empty($errors)) {
+                return "";
+            }
+        
+            $error = array_pop($errors);
+
+            if (empty($error)) {
+                return "";
+            }
+
+            return checkempty($error["message"]);
         }
         
         return self::$last_error;
