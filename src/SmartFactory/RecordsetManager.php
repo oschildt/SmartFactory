@@ -193,6 +193,7 @@ class RecordsetManager implements IRecordsetManager
                 } else {
                     $record[$current_key] = $key;
                 }
+
                 $this->processSubarray($value, $key_fields, $parent_values, $record, $identity_field);
             } else {
                 $record[$key] = $value;

@@ -10,6 +10,8 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
+use function SmartFactory\debugger;
+
 /**
  * This is the class for the MySQL database using the extension mysqli.
  *
@@ -408,6 +410,10 @@ class MySQL_DBWorker extends DBWorker
 
         $this->last_query = $query_string;
 
+        if ($this->logging) {
+            debugger()->debugMessage($this->last_query, "sql.log");
+        }
+
         $this->mysqli_result = @$this->mysqli->query($query_string);
         if (!$this->mysqli_result) {
             trigger_error($this->mysqli->error . "\n\n" . $query_string, E_USER_ERROR);
@@ -578,6 +584,10 @@ class MySQL_DBWorker extends DBWorker
             }
 
             $counter++;
+        }
+
+        if ($this->logging) {
+            debugger()->debugMessage($this->last_query, "sql.log");
         }
 
         if (count($args) > 0 && !call_user_func_array([$this->statement, 'bind_param'], $parameters)) {

@@ -236,6 +236,14 @@ abstract class DBWorker implements IInitable
     protected $last_query = null;
     
     /**
+     * This variable stores the logging flag.
+     *
+     * @var boolean $logging
+     *
+     * @author Oleg Schildt
+     */
+    protected $logging = false;
+    /**
      * Flag property for storing the state whether it is clone or not.
      *
      * @var boolean $is_clone
@@ -959,4 +967,17 @@ abstract class DBWorker implements IInitable
     {
         return trim($this->last_query);
     } // get_last_query
+
+    /**
+     * Sets the logging flag. If set, query is logged to a log file.
+     *
+     * @param boolean $state
+     * The state of the logging.
+     *
+     * @author Oleg Schildt
+     */
+    function enable_logging($state)
+    {
+        $this->logging = $state;
+    } // enable_logging
 } // class DBWorker

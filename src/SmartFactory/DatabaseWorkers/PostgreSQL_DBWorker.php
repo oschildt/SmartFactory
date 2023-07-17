@@ -10,6 +10,8 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
+use function SmartFactory\debugger;
+
 /**
  * This is the class for the PostreSQL database using the extension pgsql.
  *
@@ -430,6 +432,10 @@ class PostgreSQL_DBWorker extends DBWorker
 
         $this->last_query = $query_string;
 
+        if ($this->logging) {
+            debugger()->debugMessage($this->last_query, "sql.log");
+        }
+
         $this->result = @pg_query($this->connection, $query_string);
         if (!$this->result) {
             trigger_error(pg_last_error() . "\n\n" . $query_string, E_USER_ERROR);
@@ -579,6 +585,10 @@ class PostgreSQL_DBWorker extends DBWorker
         }
 
         $this->last_query = $this->prepared_query;
+
+        if ($this->logging) {
+            debugger()->debugMessage($this->last_query, "sql.log");
+        }
 
         $this->result = @pg_execute($this->connection, "", $args);
         if (!$this->result) {

@@ -10,6 +10,8 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
+use function SmartFactory\debugger;
+
 /**
  * This is the class for the MS SQL database using the extension sqlsrv.
  *
@@ -440,6 +442,10 @@ class MSSQL_DBWorker extends DBWorker
 
         $this->last_query = $query_string;
 
+        if ($this->logging) {
+            debugger()->debugMessage($this->last_query, "sql.log");
+        }
+
         $options = [];
 
         /*
@@ -682,6 +688,10 @@ class MSSQL_DBWorker extends DBWorker
             }
 
             $counter++;
+        }
+
+        if ($this->logging) {
+            debugger()->debugMessage($this->last_query, "sql.log");
         }
 
         if (!@sqlsrv_execute($this->statement)) {
