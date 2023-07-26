@@ -464,29 +464,6 @@ function preg_r_escape($pattern)
 } // preg_r_escape
 
 /**
- * This is an auxiliary function that checks whether a
- * variable exists.
- *
- * @param mixed &$var
- * The variable to be checked.
- *
- * @return mixed
- * If the variable exists, it is returned. Otherwise
- * an empty value is returned, whereas no standard PHP
- * warning is emitted that the variable is undefined.
- *
- * @author Oleg Schildt
- */
-function &checkempty(&$var)
-{
-    if ($var === null) {
-        $var = "";
-    }
-    
-    return $var;
-} // checkempty
-
-/**
  * Converts the string representing the date/time in the
  * specified format to the timestap.
  *

@@ -438,8 +438,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         $this->result = @pg_query($this->connection, $query_string);
         if (!$this->result) {
-            trigger_error(pg_last_error() . "\n\n" . $query_string, E_USER_ERROR);
-            throw new DBWorkerException(pg_last_error() . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            trigger_error(pg_last_error() . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException(pg_last_error(), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // execute_query
 
@@ -478,8 +478,8 @@ class PostgreSQL_DBWorker extends DBWorker
 
         $this->statement = @pg_prepare($this->connection, "", $query_string);
         if (!$this->statement) {
-            trigger_error(pg_last_error($this->connection) . "\n\n" . $query_string, E_USER_ERROR);
-            throw new DBWorkerException(pg_last_error($this->connection) . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            trigger_error(pg_last_error($this->connection) . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException(pg_last_error($this->connection), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // prepare_query
 
@@ -529,14 +529,14 @@ class PostgreSQL_DBWorker extends DBWorker
 
         $this->statement = @pg_prepare($this->connection, "", $query_string);
         if (!$this->statement) {
-            trigger_error(pg_last_error($this->connection) . "\n\n" . $query_string, E_USER_ERROR);
-            throw new DBWorkerException(pg_last_error($this->connection) . "\n\n" . $query_string, DBWorker::ERR_QUERY_FAILED);
+            trigger_error(pg_last_error($this->connection) . "\n\n" . $this->get_last_query(), E_USER_ERROR);
+            throw new DBWorkerException(pg_last_error($this->connection), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         $this->result = @pg_execute($this->connection, "", [$oid]);
         if (!$this->result) {
             trigger_error(pg_last_error() . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException(pg_last_error() . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException(pg_last_error(), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         $ohandle = @pg_lo_open($this->connection, $oid, "w");
@@ -593,7 +593,7 @@ class PostgreSQL_DBWorker extends DBWorker
         $this->result = @pg_execute($this->connection, "", $args);
         if (!$this->result) {
             trigger_error(pg_last_error() . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException(pg_last_error() . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException(pg_last_error(), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // execute_prepared_query
 
@@ -838,7 +838,7 @@ class PostgreSQL_DBWorker extends DBWorker
             $this->free_result();
 
             trigger_error($err, E_USER_ERROR);
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], "select lastval() as iid");
         }
 
         $id = $this->field_by_name("iid");
@@ -881,7 +881,7 @@ class PostgreSQL_DBWorker extends DBWorker
         if (!$this->result) {
             $err = "Result is empty!";
             trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         $this->row = @pg_fetch_array($this->result, null, PGSQL_ASSOC);
@@ -949,7 +949,7 @@ class PostgreSQL_DBWorker extends DBWorker
         if (!$this->result) {
             $err = "Result is empty!";
             trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         while ($row = @pg_fetch_array($this->result, null, PGSQL_ASSOC)) {
@@ -1001,7 +1001,7 @@ class PostgreSQL_DBWorker extends DBWorker
         if (!$this->result || !is_object($this->result)) {
             $err = "Result is empty!";
             trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         return pg_affected_rows($this->result);
@@ -1025,7 +1025,7 @@ class PostgreSQL_DBWorker extends DBWorker
         if (!$this->result || !is_object($this->result)) {
             $err = "Result is empty!";
             trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         return pg_affected_rows($this->result);
@@ -1050,7 +1050,7 @@ class PostgreSQL_DBWorker extends DBWorker
         if (!$this->result || !is_object($this->result)) {
             $err = "Result is empty!";
             trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         return pg_num_fields($this->result);
@@ -1174,7 +1174,7 @@ class PostgreSQL_DBWorker extends DBWorker
             return null;
         }
 
-        return \SmartFactory\checkempty($info["name"]);
+        return $info["name"] ?? "";
     } // field_name
 
     /**
@@ -1209,7 +1209,7 @@ class PostgreSQL_DBWorker extends DBWorker
         if (!$this->result) {
             $err = "Result is empty!";
             trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         $field_info = [];

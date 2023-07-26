@@ -454,7 +454,7 @@ class ErrorHandler implements IErrorHandler
                 return "";
             }
 
-            return checkempty($error["message"]);
+            return $error["message"] ?? "";
         }
         
         return self::$last_error;

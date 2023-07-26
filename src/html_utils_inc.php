@@ -642,7 +642,7 @@ function checkbox($parameters, $echo = true)
     if (!is_array($val) && !empty($val)) {
         $checked = " checked";
     }
-    if (is_array($val) && in_array(checkempty($parameters["value"]), $val)) {
+    if (is_array($val) && in_array($parameters["value"] ?? "", $val)) {
         $checked = " checked";
     }
     
@@ -750,7 +750,7 @@ function radiobutton($parameters, $echo = true)
     
     $checked = "";
     
-    if (!empty($val) && checkempty($parameters["value"]) == $val) {
+    if (!empty($val) && ($parameters["value"] ?? "") == $val) {
         $checked = " checked";
     }
     

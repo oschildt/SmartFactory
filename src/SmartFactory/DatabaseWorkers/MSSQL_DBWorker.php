@@ -471,7 +471,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // execute_query
 
@@ -549,7 +549,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // prepare_query
 
@@ -607,7 +607,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         if (!@sqlsrv_execute($this->statement)) {
@@ -620,7 +620,7 @@ class MSSQL_DBWorker extends DBWorker
             fclose($stream);
 
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         // Send up to 8K of parameter data to the server
@@ -697,8 +697,8 @@ class MSSQL_DBWorker extends DBWorker
         if (!@sqlsrv_execute($this->statement)) {
             $err = $this->sys_get_errors();
 
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // execute_prepared_query
 
@@ -1013,7 +1013,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         $this->row = @sqlsrv_fetch_array($this->statement, SQLSRV_FETCH_ASSOC);
@@ -1071,7 +1071,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         $rows = [];
@@ -1130,7 +1130,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         /*
@@ -1168,7 +1168,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         return @sqlsrv_rows_affected($this->statement);
@@ -1192,7 +1192,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         return @sqlsrv_num_fields($this->statement);
@@ -1312,7 +1312,7 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = "Result fetch error";
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         $info = @sqlsrv_field_metadata($this->statement);
@@ -1320,7 +1320,7 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
 
             trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
-            throw new DBWorkerException($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
+            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         if (empty($info[$num])) {
@@ -1414,7 +1414,7 @@ class MSSQL_DBWorker extends DBWorker
             return null;
         }
 
-        return \SmartFactory\checkempty($info["name"]);
+        return $info["name"] ?? "";
     } // field_name
 
     /**

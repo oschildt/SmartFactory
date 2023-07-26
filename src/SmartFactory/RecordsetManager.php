@@ -682,7 +682,7 @@ class RecordsetManager implements IRecordsetManager
                 continue;
             }
 
-            $value = $this->dbworker->prepare_for_query(checkempty($record[$field]), checkempty($this->fields[$field]));
+            $value = $this->dbworker->prepare_for_query($record[$field] ?? "", $this->fields[$field] ?? "");
 
             $update_string .= $field . " = " . $value . ",\n";
             $insert_fields .= $field . ", ";
@@ -690,7 +690,7 @@ class RecordsetManager implements IRecordsetManager
         }
 
         if ($must_insert) {
-            $query = "insert into " . $this->table . "(" . trim($insert_fields, ", ") . ")\n";
+            $query = "insert into " . $this->table . " (" . trim($insert_fields, ", ") . ")\n";
             $query .= "values (" . trim($insert_values, ", ") . ")\n";
 
             $this->dbworker->execute_query($query);
