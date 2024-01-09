@@ -636,116 +636,148 @@
 <span class="line" id="541">541: </span>
 <span class="line" id="542">542: </span><span class="php-comment">/**
 </span><span class="line" id="543">543: </span><span class="php-comment"> * Formats the number due to the specified settings.
-</span><span class="line" id="544">544: </span><span class="php-comment"> *
-</span><span class="line" id="545">545: </span><span class="php-comment"> * It is a wrapper over the system function number_format.
-</span><span class="line" id="546">546: </span><span class="php-comment"> *
-</span><span class="line" id="547">547: </span><span class="php-comment"> * @param float $number
-</span><span class="line" id="548">548: </span><span class="php-comment"> * The number to be formatted.
-</span><span class="line" id="549">549: </span><span class="php-comment"> *
-</span><span class="line" id="550">550: </span><span class="php-comment"> * @param int $decimals
-</span><span class="line" id="551">551: </span><span class="php-comment"> * The number of digits after the dot.
-</span><span class="line" id="552">552: </span><span class="php-comment"> *
-</span><span class="line" id="553">553: </span><span class="php-comment"> * @param string $dec_point
-</span><span class="line" id="554">554: </span><span class="php-comment"> * The decimal separator.
-</span><span class="line" id="555">555: </span><span class="php-comment"> *
-</span><span class="line" id="556">556: </span><span class="php-comment"> * @param string $thousand_sep
-</span><span class="line" id="557">557: </span><span class="php-comment"> * The thousand separator.
-</span><span class="line" id="558">558: </span><span class="php-comment"> *
-</span><span class="line" id="559">559: </span><span class="php-comment"> * @return string|null
-</span><span class="line" id="560">560: </span><span class="php-comment"> * If the number is a vialid number, its formatted value is returned. Otherwise,
-</span><span class="line" id="561">561: </span><span class="php-comment"> * the empty value is returned. It is usefil if we need to distiguish the empty value and 0.
-</span><span class="line" id="562">562: </span><span class="php-comment"> *
-</span><span class="line" id="563">563: </span><span class="php-comment"> * @author Oleg Schildt
-</span><span class="line" id="564">564: </span><span class="php-comment"> */</span>
-<span class="line" id="565">565: </span><span class="php-keyword1">function</span> format_number(<span class="php-var">$number</span>, <span class="php-var">$decimals</span> = <span class="php-num">0</span>, <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>)
-<span class="line" id="566">566: </span>{
-<span class="line" id="567">567: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$number</span> === <span class="php-keyword1">null</span> || <span class="php-var">$number</span> === <span class="php-quote">&quot;&quot;</span>) {
-<span class="line" id="568">568: </span>        <span class="php-keyword1">return</span> <span class="php-var">$number</span>;
-<span class="line" id="569">569: </span>    }
-<span class="line" id="570">570: </span>    
-<span class="line" id="571">571: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">number_format</span>(<span class="php-var">$number</span>, <span class="php-var">$decimals</span>, <span class="php-var">$dec_point</span>, <span class="php-var">$thousand_sep</span>);
-<span class="line" id="572">572: </span>} <span class="php-comment">// format_number</span>
-<span class="line" id="573">573: </span>
-<span class="line" id="574">574: </span><span class="php-comment">/**
-</span><span class="line" id="575">575: </span><span class="php-comment"> * Encrypts the text with the AES 256 using a password key.
-</span><span class="line" id="576">576: </span><span class="php-comment"> *
-</span><span class="line" id="577">577: </span><span class="php-comment"> * @param string $data
-</span><span class="line" id="578">578: </span><span class="php-comment"> * The data to be encrypted.
-</span><span class="line" id="579">579: </span><span class="php-comment"> *
-</span><span class="line" id="580">580: </span><span class="php-comment"> * @param string $password_key
-</span><span class="line" id="581">581: </span><span class="php-comment"> * The password key used for the encryption.
-</span><span class="line" id="582">582: </span><span class="php-comment"> *
-</span><span class="line" id="583">583: </span><span class="php-comment"> * @return string
-</span><span class="line" id="584">584: </span><span class="php-comment"> * Returns the encrypted text.
-</span><span class="line" id="585">585: </span><span class="php-comment"> *
-</span><span class="line" id="586">586: </span><span class="php-comment"> * @see \SmartFactory\aes_256_decrypt()
+</span><span class="line" id="544">544: </span><span class="php-comment"> * It is a wrapper over the system function number_format.
+</span><span class="line" id="545">545: </span><span class="php-comment"> *
+</span><span class="line" id="546">546: </span><span class="php-comment"> * @param float $number
+</span><span class="line" id="547">547: </span><span class="php-comment"> * The number to be formatted.
+</span><span class="line" id="548">548: </span><span class="php-comment"> *
+</span><span class="line" id="549">549: </span><span class="php-comment"> * @param int $decimals
+</span><span class="line" id="550">550: </span><span class="php-comment"> * The number of digits after the dot.
+</span><span class="line" id="551">551: </span><span class="php-comment"> *
+</span><span class="line" id="552">552: </span><span class="php-comment"> * @param string $dec_point
+</span><span class="line" id="553">553: </span><span class="php-comment"> * The decimal separator.
+</span><span class="line" id="554">554: </span><span class="php-comment"> *
+</span><span class="line" id="555">555: </span><span class="php-comment"> * @param string $thousand_sep
+</span><span class="line" id="556">556: </span><span class="php-comment"> * The thousand separator.
+</span><span class="line" id="557">557: </span><span class="php-comment"> *
+</span><span class="line" id="558">558: </span><span class="php-comment"> * @return string|null
+</span><span class="line" id="559">559: </span><span class="php-comment"> * If the number is a vialid number, its formatted value is returned. Otherwise,
+</span><span class="line" id="560">560: </span><span class="php-comment"> * the empty value is returned. It is usefil if we need to distiguish the empty value and 0.
+</span><span class="line" id="561">561: </span><span class="php-comment"> *
+</span><span class="line" id="562">562: </span><span class="php-comment"> * @author Oleg Schildt
+</span><span class="line" id="563">563: </span><span class="php-comment"> */</span>
+<span class="line" id="564">564: </span><span class="php-keyword1">function</span> format_number(<span class="php-var">$number</span>, <span class="php-var">$decimals</span> = <span class="php-num">0</span>, <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>)
+<span class="line" id="565">565: </span>{
+<span class="line" id="566">566: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$number</span> === <span class="php-keyword1">null</span> || <span class="php-var">$number</span> === <span class="php-quote">&quot;&quot;</span>) {
+<span class="line" id="567">567: </span>        <span class="php-keyword1">return</span> <span class="php-var">$number</span>;
+<span class="line" id="568">568: </span>    }
+<span class="line" id="569">569: </span>    
+<span class="line" id="570">570: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">number_format</span>(<span class="php-var">$number</span>, <span class="php-var">$decimals</span>, <span class="php-var">$dec_point</span>, <span class="php-var">$thousand_sep</span>);
+<span class="line" id="571">571: </span>} <span class="php-comment">// format_number</span>
+<span class="line" id="572">572: </span>
+<span class="line" id="573">573: </span><span class="php-comment">/**
+</span><span class="line" id="574">574: </span><span class="php-comment"> * Converts the string to number due to the specified settings.
+</span><span class="line" id="575">575: </span><span class="php-comment"> *
+</span><span class="line" id="576">576: </span><span class="php-comment"> * @param string $str
+</span><span class="line" id="577">577: </span><span class="php-comment"> * The string to be converted.
+</span><span class="line" id="578">578: </span><span class="php-comment"> *
+</span><span class="line" id="579">579: </span><span class="php-comment"> * @param string $dec_point
+</span><span class="line" id="580">580: </span><span class="php-comment"> * The decimal separator.
+</span><span class="line" id="581">581: </span><span class="php-comment"> *
+</span><span class="line" id="582">582: </span><span class="php-comment"> * @param string $thousand_sep
+</span><span class="line" id="583">583: </span><span class="php-comment"> * The thousand separator.
+</span><span class="line" id="584">584: </span><span class="php-comment"> *
+</span><span class="line" id="585">585: </span><span class="php-comment"> * @throws \Exception
+</span><span class="line" id="586">586: </span><span class="php-comment"> * It might throw the exception if the string is not a number
 </span><span class="line" id="587">587: </span><span class="php-comment"> *
-</span><span class="line" id="588">588: </span><span class="php-comment"> * @author Oleg Schildt
-</span><span class="line" id="589">589: </span><span class="php-comment"> */</span>
-<span class="line" id="590">590: </span><span class="php-keyword1">function</span> aes_256_encrypt(<span class="php-var">$data</span>, <span class="php-var">$password_key</span>)
-<span class="line" id="591">591: </span>{
-<span class="line" id="592">592: </span>    <span class="php-comment">// Set a random salt</span>
-<span class="line" id="593">593: </span>    <span class="php-var">$salt</span> = <span class="php-keyword2">openssl_random_pseudo_bytes</span>(<span class="php-num">16</span>);
-<span class="line" id="594">594: </span>    
-<span class="line" id="595">595: </span>    <span class="php-var">$salted</span> = <span class="php-quote">''</span>;
-<span class="line" id="596">596: </span>    <span class="php-var">$dx</span> = <span class="php-quote">''</span>;
-<span class="line" id="597">597: </span>    <span class="php-comment">// Salt the key(32) and iv(16) = 48</span>
-<span class="line" id="598">598: </span>    <span class="php-keyword1">while</span> (<span class="php-keyword2">strlen</span>(<span class="php-var">$salted</span>) &lt; <span class="php-num">48</span>) {
-<span class="line" id="599">599: </span>        <span class="php-var">$dx</span> = <span class="php-keyword2">hash</span>(<span class="php-quote">'sha256'</span>, <span class="php-var">$dx</span> . <span class="php-var">$password_key</span> . <span class="php-var">$salt</span>, <span class="php-keyword1">true</span>);
-<span class="line" id="600">600: </span>        <span class="php-var">$salted</span> .= <span class="php-var">$dx</span>;
-<span class="line" id="601">601: </span>    }
+</span><span class="line" id="588">588: </span><span class="php-comment"> * @return float|null
+</span><span class="line" id="589">589: </span><span class="php-comment"> * If the string is a vialid number, its numeric value is returned.
+</span><span class="line" id="590">590: </span><span class="php-comment"> *
+</span><span class="line" id="591">591: </span><span class="php-comment"> * @author Oleg Schildt
+</span><span class="line" id="592">592: </span><span class="php-comment"> */</span>
+<span class="line" id="593">593: </span><span class="php-keyword1">function</span> string_to_number(<span class="php-var">$str</span>, <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>) 
+<span class="line" id="594">594: </span>{
+<span class="line" id="595">595: </span>    <span class="php-keyword1">if</span> (<span class="php-var">$str</span> === <span class="php-quote">&quot;&quot;</span> || <span class="php-var">$str</span> === <span class="php-keyword1">null</span>) {
+<span class="line" id="596">596: </span>        <span class="php-keyword1">return</span> <span class="php-var">$str</span>;
+<span class="line" id="597">597: </span>    }
+<span class="line" id="598">598: </span>    
+<span class="line" id="599">599: </span>    <span class="php-var">$str</span> = <span class="php-keyword2">str_replace</span>(<span class="php-var">$thousand_sep</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$str</span>);
+<span class="line" id="600">600: </span>    <span class="php-var">$str</span> = <span class="php-keyword2">str_replace</span>(<span class="php-var">$dec_point</span>, <span class="php-quote">&quot;.&quot;</span>, <span class="php-var">$str</span>);
+<span class="line" id="601">601: </span>    <span class="php-var">$number</span> = <span class="php-keyword2">floatval</span>(<span class="php-var">$str</span>);
 <span class="line" id="602">602: </span>    
-<span class="line" id="603">603: </span>    <span class="php-var">$key</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$salted</span>, <span class="php-num">0</span>, <span class="php-num">32</span>);
-<span class="line" id="604">604: </span>    <span class="php-var">$iv</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$salted</span>, <span class="php-num">32</span>, <span class="php-num">16</span>);
-<span class="line" id="605">605: </span>    
-<span class="line" id="606">606: </span>    <span class="php-var">$encrypted_data</span> = <span class="php-keyword2">openssl_encrypt</span>(<span class="php-var">$data</span>, <span class="php-quote">'AES-256-CBC'</span>, <span class="php-var">$key</span>, <span class="php-keyword1">true</span>, <span class="php-var">$iv</span>);
-<span class="line" id="607">607: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">base64_encode</span>(<span class="php-var">$salt</span> . <span class="php-var">$encrypted_data</span>);
-<span class="line" id="608">608: </span>} <span class="php-comment">// aes_256_encrypt</span>
-<span class="line" id="609">609: </span>
-<span class="line" id="610">610: </span><span class="php-comment">/**
-</span><span class="line" id="611">611: </span><span class="php-comment"> * Decrypts the text previously encrypted with the AES 256 using a password key.
-</span><span class="line" id="612">612: </span><span class="php-comment"> *
-</span><span class="line" id="613">613: </span><span class="php-comment"> * @param string $edata
-</span><span class="line" id="614">614: </span><span class="php-comment"> * The data to be decrypted.
-</span><span class="line" id="615">615: </span><span class="php-comment"> *
-</span><span class="line" id="616">616: </span><span class="php-comment"> * @param string $password_key
-</span><span class="line" id="617">617: </span><span class="php-comment"> * The password key used for the encryption.
-</span><span class="line" id="618">618: </span><span class="php-comment"> *
-</span><span class="line" id="619">619: </span><span class="php-comment"> * @return string
-</span><span class="line" id="620">620: </span><span class="php-comment"> * Returns the decrypted text.
-</span><span class="line" id="621">621: </span><span class="php-comment"> *
-</span><span class="line" id="622">622: </span><span class="php-comment"> * @see \SmartFactory\aes_256_decrypt()
-</span><span class="line" id="623">623: </span><span class="php-comment"> *
-</span><span class="line" id="624">624: </span><span class="php-comment"> * @author Oleg Schildt
-</span><span class="line" id="625">625: </span><span class="php-comment"> */</span>
-<span class="line" id="626">626: </span><span class="php-keyword1">function</span> aes_256_decrypt(<span class="php-var">$edata</span>, <span class="php-var">$password_key</span>)
-<span class="line" id="627">627: </span>{
-<span class="line" id="628">628: </span>    <span class="php-var">$data</span> = <span class="php-keyword2">base64_decode</span>(<span class="php-var">$edata</span>);
-<span class="line" id="629">629: </span>    <span class="php-var">$salt</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$data</span>, <span class="php-num">0</span>, <span class="php-num">16</span>);
-<span class="line" id="630">630: </span>    <span class="php-var">$ct</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$data</span>, <span class="php-num">16</span>);
-<span class="line" id="631">631: </span>    
-<span class="line" id="632">632: </span>    <span class="php-var">$rounds</span> = <span class="php-num">3</span>; <span class="php-comment">// depends on key length</span>
-<span class="line" id="633">633: </span>    <span class="php-var">$data00</span> = <span class="php-var">$password_key</span> . <span class="php-var">$salt</span>;
-<span class="line" id="634">634: </span>    <span class="php-var">$hash</span> = <span class="php-keyword1">array</span>();
-<span class="line" id="635">635: </span>    <span class="php-var">$hash</span>[<span class="php-num">0</span>] = <span class="php-keyword2">hash</span>(<span class="php-quote">'sha256'</span>, <span class="php-var">$data00</span>, <span class="php-keyword1">true</span>);
-<span class="line" id="636">636: </span>    <span class="php-var">$result</span> = <span class="php-var">$hash</span>[<span class="php-num">0</span>];
+<span class="line" id="603">603: </span>    <span class="php-keyword1">return</span> <span class="php-var">$number</span>;
+<span class="line" id="604">604: </span>}
+<span class="line" id="605">605: </span>
+<span class="line" id="606">606: </span><span class="php-comment">/**
+</span><span class="line" id="607">607: </span><span class="php-comment"> * Encrypts the text with the AES 256 using a password key.
+</span><span class="line" id="608">608: </span><span class="php-comment"> *
+</span><span class="line" id="609">609: </span><span class="php-comment"> * @param string $data
+</span><span class="line" id="610">610: </span><span class="php-comment"> * The data to be encrypted.
+</span><span class="line" id="611">611: </span><span class="php-comment"> *
+</span><span class="line" id="612">612: </span><span class="php-comment"> * @param string $password_key
+</span><span class="line" id="613">613: </span><span class="php-comment"> * The password key used for the encryption.
+</span><span class="line" id="614">614: </span><span class="php-comment"> *
+</span><span class="line" id="615">615: </span><span class="php-comment"> * @return string
+</span><span class="line" id="616">616: </span><span class="php-comment"> * Returns the encrypted text.
+</span><span class="line" id="617">617: </span><span class="php-comment"> *
+</span><span class="line" id="618">618: </span><span class="php-comment"> * @see \SmartFactory\aes_256_decrypt()
+</span><span class="line" id="619">619: </span><span class="php-comment"> *
+</span><span class="line" id="620">620: </span><span class="php-comment"> * @author Oleg Schildt
+</span><span class="line" id="621">621: </span><span class="php-comment"> */</span>
+<span class="line" id="622">622: </span><span class="php-keyword1">function</span> aes_256_encrypt(<span class="php-var">$data</span>, <span class="php-var">$password_key</span>)
+<span class="line" id="623">623: </span>{
+<span class="line" id="624">624: </span>    <span class="php-comment">// Set a random salt</span>
+<span class="line" id="625">625: </span>    <span class="php-var">$salt</span> = <span class="php-keyword2">openssl_random_pseudo_bytes</span>(<span class="php-num">16</span>);
+<span class="line" id="626">626: </span>    
+<span class="line" id="627">627: </span>    <span class="php-var">$salted</span> = <span class="php-quote">''</span>;
+<span class="line" id="628">628: </span>    <span class="php-var">$dx</span> = <span class="php-quote">''</span>;
+<span class="line" id="629">629: </span>    <span class="php-comment">// Salt the key(32) and iv(16) = 48</span>
+<span class="line" id="630">630: </span>    <span class="php-keyword1">while</span> (<span class="php-keyword2">strlen</span>(<span class="php-var">$salted</span>) &lt; <span class="php-num">48</span>) {
+<span class="line" id="631">631: </span>        <span class="php-var">$dx</span> = <span class="php-keyword2">hash</span>(<span class="php-quote">'sha256'</span>, <span class="php-var">$dx</span> . <span class="php-var">$password_key</span> . <span class="php-var">$salt</span>, <span class="php-keyword1">true</span>);
+<span class="line" id="632">632: </span>        <span class="php-var">$salted</span> .= <span class="php-var">$dx</span>;
+<span class="line" id="633">633: </span>    }
+<span class="line" id="634">634: </span>    
+<span class="line" id="635">635: </span>    <span class="php-var">$key</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$salted</span>, <span class="php-num">0</span>, <span class="php-num">32</span>);
+<span class="line" id="636">636: </span>    <span class="php-var">$iv</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$salted</span>, <span class="php-num">32</span>, <span class="php-num">16</span>);
 <span class="line" id="637">637: </span>    
-<span class="line" id="638">638: </span>    <span class="php-keyword1">for</span> (<span class="php-var">$i</span> = <span class="php-num">1</span>; <span class="php-var">$i</span> &lt; <span class="php-var">$rounds</span>; <span class="php-var">$i</span>++) {
-<span class="line" id="639">639: </span>        <span class="php-var">$hash</span>[<span class="php-var">$i</span>] = <span class="php-keyword2">hash</span>(<span class="php-quote">'sha256'</span>, <span class="php-var">$hash</span>[<span class="php-var">$i</span> - <span class="php-num">1</span>] . <span class="php-var">$data00</span>, <span class="php-keyword1">true</span>);
-<span class="line" id="640">640: </span>        <span class="php-var">$result</span> .= <span class="php-var">$hash</span>[<span class="php-var">$i</span>];
-<span class="line" id="641">641: </span>    }
-<span class="line" id="642">642: </span>    
-<span class="line" id="643">643: </span>    <span class="php-var">$key</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$result</span>, <span class="php-num">0</span>, <span class="php-num">32</span>);
-<span class="line" id="644">644: </span>    <span class="php-var">$iv</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$result</span>, <span class="php-num">32</span>, <span class="php-num">16</span>);
-<span class="line" id="645">645: </span>    
-<span class="line" id="646">646: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">openssl_decrypt</span>(<span class="php-var">$ct</span>, <span class="php-quote">'AES-256-CBC'</span>, <span class="php-var">$key</span>, <span class="php-keyword1">true</span>, <span class="php-var">$iv</span>);
-<span class="line" id="647">647: </span>} <span class="php-comment">// aes_256_decrypt</span>
+<span class="line" id="638">638: </span>    <span class="php-var">$encrypted_data</span> = <span class="php-keyword2">openssl_encrypt</span>(<span class="php-var">$data</span>, <span class="php-quote">'AES-256-CBC'</span>, <span class="php-var">$key</span>, <span class="php-keyword1">true</span>, <span class="php-var">$iv</span>);
+<span class="line" id="639">639: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">base64_encode</span>(<span class="php-var">$salt</span> . <span class="php-var">$encrypted_data</span>);
+<span class="line" id="640">640: </span>} <span class="php-comment">// aes_256_encrypt</span>
+<span class="line" id="641">641: </span>
+<span class="line" id="642">642: </span><span class="php-comment">/**
+</span><span class="line" id="643">643: </span><span class="php-comment"> * Decrypts the text previously encrypted with the AES 256 using a password key.
+</span><span class="line" id="644">644: </span><span class="php-comment"> *
+</span><span class="line" id="645">645: </span><span class="php-comment"> * @param string $edata
+</span><span class="line" id="646">646: </span><span class="php-comment"> * The data to be decrypted.
+</span><span class="line" id="647">647: </span><span class="php-comment"> *
+</span><span class="line" id="648">648: </span><span class="php-comment"> * @param string $password_key
+</span><span class="line" id="649">649: </span><span class="php-comment"> * The password key used for the encryption.
+</span><span class="line" id="650">650: </span><span class="php-comment"> *
+</span><span class="line" id="651">651: </span><span class="php-comment"> * @return string
+</span><span class="line" id="652">652: </span><span class="php-comment"> * Returns the decrypted text.
+</span><span class="line" id="653">653: </span><span class="php-comment"> *
+</span><span class="line" id="654">654: </span><span class="php-comment"> * @see \SmartFactory\aes_256_decrypt()
+</span><span class="line" id="655">655: </span><span class="php-comment"> *
+</span><span class="line" id="656">656: </span><span class="php-comment"> * @author Oleg Schildt
+</span><span class="line" id="657">657: </span><span class="php-comment"> */</span>
+<span class="line" id="658">658: </span><span class="php-keyword1">function</span> aes_256_decrypt(<span class="php-var">$edata</span>, <span class="php-var">$password_key</span>)
+<span class="line" id="659">659: </span>{
+<span class="line" id="660">660: </span>    <span class="php-var">$data</span> = <span class="php-keyword2">base64_decode</span>(<span class="php-var">$edata</span>);
+<span class="line" id="661">661: </span>    <span class="php-var">$salt</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$data</span>, <span class="php-num">0</span>, <span class="php-num">16</span>);
+<span class="line" id="662">662: </span>    <span class="php-var">$ct</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$data</span>, <span class="php-num">16</span>);
+<span class="line" id="663">663: </span>    
+<span class="line" id="664">664: </span>    <span class="php-var">$rounds</span> = <span class="php-num">3</span>; <span class="php-comment">// depends on key length</span>
+<span class="line" id="665">665: </span>    <span class="php-var">$data00</span> = <span class="php-var">$password_key</span> . <span class="php-var">$salt</span>;
+<span class="line" id="666">666: </span>    <span class="php-var">$hash</span> = <span class="php-keyword1">array</span>();
+<span class="line" id="667">667: </span>    <span class="php-var">$hash</span>[<span class="php-num">0</span>] = <span class="php-keyword2">hash</span>(<span class="php-quote">'sha256'</span>, <span class="php-var">$data00</span>, <span class="php-keyword1">true</span>);
+<span class="line" id="668">668: </span>    <span class="php-var">$result</span> = <span class="php-var">$hash</span>[<span class="php-num">0</span>];
+<span class="line" id="669">669: </span>    
+<span class="line" id="670">670: </span>    <span class="php-keyword1">for</span> (<span class="php-var">$i</span> = <span class="php-num">1</span>; <span class="php-var">$i</span> &lt; <span class="php-var">$rounds</span>; <span class="php-var">$i</span>++) {
+<span class="line" id="671">671: </span>        <span class="php-var">$hash</span>[<span class="php-var">$i</span>] = <span class="php-keyword2">hash</span>(<span class="php-quote">'sha256'</span>, <span class="php-var">$hash</span>[<span class="php-var">$i</span> - <span class="php-num">1</span>] . <span class="php-var">$data00</span>, <span class="php-keyword1">true</span>);
+<span class="line" id="672">672: </span>        <span class="php-var">$result</span> .= <span class="php-var">$hash</span>[<span class="php-var">$i</span>];
+<span class="line" id="673">673: </span>    }
+<span class="line" id="674">674: </span>    
+<span class="line" id="675">675: </span>    <span class="php-var">$key</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$result</span>, <span class="php-num">0</span>, <span class="php-num">32</span>);
+<span class="line" id="676">676: </span>    <span class="php-var">$iv</span> = <span class="php-keyword2">substr</span>(<span class="php-var">$result</span>, <span class="php-num">32</span>, <span class="php-num">16</span>);
+<span class="line" id="677">677: </span>    
+<span class="line" id="678">678: </span>    <span class="php-keyword1">return</span> <span class="php-keyword2">openssl_decrypt</span>(<span class="php-var">$ct</span>, <span class="php-quote">'AES-256-CBC'</span>, <span class="php-var">$key</span>, <span class="php-keyword1">true</span>, <span class="php-var">$iv</span>);
+<span class="line" id="679">679: </span>} <span class="php-comment">// aes_256_decrypt</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2024-01-09 09:29 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2024-01-09 10:14 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>
