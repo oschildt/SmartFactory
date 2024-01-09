@@ -655,6 +655,7 @@ ApiGen.elements = [
 {"file":"function-SmartFactory.session_vars.html","label":"session_vars()"},
 {"file":"function-SmartFactory.set_cookie.html","label":"set_cookie()"},
 {"file":"function-SmartFactory.singleton.html","label":"singleton()"},
+{"file":"function-SmartFactory.string_to_number.html","label":"string_to_number()"},
 {"file":"function-SmartFactory.table.html","label":"table()"},
 {"file":"function-SmartFactory.text.html","label":"text()"},
 {"file":"function-SmartFactory.textarea.html","label":"textarea()"},
