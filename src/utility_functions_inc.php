@@ -118,7 +118,7 @@ function json_to_array(&$json, &$array)
 } // json_to_array
 
 /**
- * Converts the array to JSON string.
+ * Converts the array to a JSON string.
  *
  * It is a wrapper over the system function json_encode. It
  * is introduced to give the ability to overwrite the system

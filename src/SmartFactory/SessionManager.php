@@ -52,7 +52,7 @@ class SessionManager extends \SessionHandler implements ISessionManager
      *
      * SessionManager extends the \SessionHandler. You can reimplement this
      * method if wan to change the way the session is handled internally, e.g.
-     * stroe the session data in Amazon Redis for quicker access.
+     * store the session data in Amazon Redis for quicker access.
      *
      * @return string
      * Should return session ID valid for the default session handler.

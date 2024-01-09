@@ -1,8 +1,7 @@
 <?php
 /**
  * This file contains the implementation of the interface ISettingsManager
- * in the class UserSettingsManager for management of the
- * application settings.
+ * in the class UserSettingsManager for management of the application settings.
  *
  * @package System
  *
