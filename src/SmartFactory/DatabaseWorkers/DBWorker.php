@@ -974,6 +974,8 @@ abstract class DBWorker implements IInitable
      * @param boolean $state
      * The state of the logging.
      *
+     * @return void
+     *
      * @author Oleg Schildt
      */
     function enable_logging($state)

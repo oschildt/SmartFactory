@@ -179,7 +179,7 @@ class UserSettingsManager implements ISettingsManager
         $this->validateParameters();
 
         if (empty($this->no_own_transcation)) {
-            this->dbworker->start_transaction();
+            $this->dbworker->start_transaction();
         }
 
         try {
