@@ -10,7 +10,6 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use function SmartFactory\debug_message;
 use function SmartFactory\debugger;
 
 /**
@@ -30,6 +29,15 @@ use function SmartFactory\debugger;
  */
 class MySQL_DBWorker extends DBWorker
 {
+    /**
+     * Stores the resource handle of the opened connection.
+     *
+     * @var resource
+     *
+     * @author Oleg Schildt
+     */
+    protected $connection = null;
+
     /**
      * Flag for setting the connection to read only.
      *
@@ -350,7 +358,9 @@ class MySQL_DBWorker extends DBWorker
         $this->db_name = $db_name;
 
         try {
-            !@$this->mysqli->select_db($this->db_name);
+            if (!$this->mysqli->select_db($this->db_name)) {
+                throw new \mysqli_sql_exception($this->mysqli->error);
+            }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             trigger_error($err, E_USER_ERROR);

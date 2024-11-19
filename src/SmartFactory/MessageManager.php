@@ -131,6 +131,11 @@ class MessageManager implements IMessageManager
                 $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
             }
         }
+        
+        if (!$this->write_source_file_and_line_by_debug) {
+            $file = "";
+            $line = "";
+        }
 
         if (!$this->debug_mode) {
             $technical_info = "";

@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: checkempty()
+            Function: string_to_number()
         </title>
     </head>
 
@@ -93,7 +93,7 @@
                         
  
 
-                        <li class="active">checkempty()</li>
+                        <li class="active">string_to_number()</li>
                 </ol>
                 
             </div>
@@ -105,14 +105,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: checkempty()</h1>
+                    <h1>Function: string_to_number()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> &amp;checkempty(mixed &amp;<span class="php-var">$var</span>) : mixed;</div>
+<div class="definition"><span class="php-keyword1">function</span> string_to_number(string <span class="php-var">$str</span>, string <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, string <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>) : float|<span class="php-keyword1">null</span>;</div>
 
 
 <div class="short-description">
-<p>This is an auxiliary function that checks whether a
-variable exists.</p>
+<p>Converts the string to number due to the specified settings.</p>
 </div>
 
 
@@ -134,19 +133,58 @@ variable exists.</p>
       
       <tr>
           <td>
-              $var
+              $str
           </td>
           <td>
-              by reference
+              by value
           </td>
           <td>
-              mixed
+              string
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The variable to be checked.</p>
+              <p>The string to be converted.
+The string to be converted.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $dec_point
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              string
+          </td>
+          <td>
+              &quot;.&quot;
+          </td>
+          <td class="description_column">
+              <p>The decimal separator.
+The decimal separator.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $thousand_sep
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              string
+          </td>
+          <td>
+              &quot;,&quot;
+          </td>
+          <td class="description_column">
+              <p>The thousand separator.
+The thousand separator.</p>
           </td>
       </tr>
       
@@ -156,16 +194,23 @@ variable exists.</p>
 
 <h2>Returns</h2>
 <div class="item_list">
-mixed<br>
+float|null<br>
 
-<div class="item_description"><p>If the variable exists, it is returned. Otherwise
-an empty value is returned, whereas no standard PHP
-warning is emitted that the variable is undefined.</p></div>
+<div class="item_description"><p>If the string is a vialid number, its numeric value is returned.
+If the string is a vialid number, its numeric value is returned.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+\Exception<br>
+
+<div class="item_description"><p>It might throw the exception if the string is not a number</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -188,11 +233,11 @@ warning is emitted that the variable is undefined.</p></div>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#480'>utility_functions_inc.php</a>
+<a href='source-utility_functions_inc.php.html#593'>utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2024-11-19 13:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

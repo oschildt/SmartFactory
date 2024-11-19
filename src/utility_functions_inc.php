@@ -541,7 +541,6 @@ function timestamp($time_string, $format)
 
 /**
  * Formats the number due to the specified settings.
- *
  * It is a wrapper over the system function number_format.
  *
  * @param float $number
@@ -570,6 +569,39 @@ function format_number($number, $decimals = 0, $dec_point = ".", $thousand_sep =
     
     return number_format($number, $decimals, $dec_point, $thousand_sep);
 } // format_number
+
+/**
+ * Converts the string to number due to the specified settings.
+ *
+ * @param string $str
+ * The string to be converted.
+ *
+ * @param string $dec_point
+ * The decimal separator.
+ *
+ * @param string $thousand_sep
+ * The thousand separator.
+ *
+ * @throws \Exception
+ * It might throw the exception if the string is not a number
+ *
+ * @return float|null
+ * If the string is a vialid number, its numeric value is returned.
+ *
+ * @author Oleg Schildt
+ */
+function string_to_number($str, $dec_point = ".", $thousand_sep = ",") 
+{
+    if ($str === "" || $str === null) {
+        return $str;
+    }
+    
+    $str = str_replace($thousand_sep, "", $str);
+    $str = str_replace($dec_point, ".", $str);
+    $number = floatval($str);
+    
+    return $number;
+}
 
 /**
  * Encrypts the text with the AES 256 using a password key.

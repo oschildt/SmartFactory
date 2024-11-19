@@ -270,6 +270,19 @@ line number are written from where it is called.</p>
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#enableFileAndLineDetails">enableFileAndLineDetails()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sets the flag that defines whether the file name and the line number should be written along with the message.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#extract_call_stack">extract_call_stack()</a></div>
 
               <div style='float:right'>
@@ -500,7 +513,8 @@ line number are written from where it is called.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target file name.</p>
+                <p>The target file name.
+The target file name.</p>
             </td>
         </tr>
         
@@ -512,7 +526,8 @@ line number are written from where it is called.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>It should return true if the file has been successfully deleted, otherwise false.</p></div>
+  <div class="item_description"><p>It should return true if the file has been successfully deleted, otherwise false.
+It should return true if the file has been successfully deleted, otherwise false.</p></div>
   
   </div>
   
@@ -540,7 +555,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#274'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#289'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -587,7 +602,8 @@ line number are written from where it is called.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>It should return true if the files have been successfully deleted, otherwise false.</p></div>
+  <div class="item_description"><p>It should return true if the files have been successfully deleted, otherwise false.
+It should return true if the files have been successfully deleted, otherwise false.</p></div>
   
   </div>
   
@@ -615,7 +631,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#295'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#310'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -681,7 +697,8 @@ line number are written from where it is called.</p>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.</p>
+                <p>Message to be logged.
+Message to be logged.</p>
             </td>
         </tr>
         
@@ -699,7 +716,8 @@ line number are written from where it is called.</p>
                 &quot;debug.log&quot;
             </td>
             <td class="description_column">
-                <p>The target file name.</p>
+                <p>The target file name.
+The target file name.</p>
             </td>
         </tr>
         
@@ -717,7 +735,8 @@ line number are written from where it is called.</p>
                 false
             </td>
             <td class="description_column">
-                <p>The flag that defines whether the callstack should be also traced.</p>
+                <p>The flag that defines whether the callstack should be also traced.
+The flag that defines whether the callstack should be also traced.</p>
             </td>
         </tr>
         
@@ -729,7 +748,8 @@ line number are written from where it is called.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.</p></div>
+  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
+It should return true if the logging was successful, otherwise false.</p></div>
   
   </div>
   
@@ -768,7 +788,101 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#167'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#182'>SmartFactory/DebugProfiler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="enableFileAndLineDetails">
+  
+  <h1>Method: DebugProfiler::enableFileAndLineDetails()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableFileAndLineDetails(bool <span class="php-var">$state</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Sets the flag that defines whether the file name and the line number should be written along with the message.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $state
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>the flag that defines whether the file name and the line number should be written along with the message.
+the flag that defines whether the file name and the line number should be written along with the message.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DebugProfiler.php.html#99'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -828,7 +942,8 @@ line number are written from where it is called.</p>
                 
             </td>
             <td class="description_column">
-                <p>The backtrace.</p>
+                <p>The backtrace.
+The backtrace.</p>
             </td>
         </tr>
         
@@ -840,7 +955,8 @@ line number are written from where it is called.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the extracted call stack.</p></div>
+  <div class="item_description"><p>Returns the extracted call stack.
+Returns the extracted call stack.</p></div>
   
   </div>
   
@@ -863,7 +979,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#100'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#115'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -925,7 +1041,8 @@ fixProfilePoint.</p>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.</p>
+                <p>Message to be logged.
+Message to be logged.</p>
             </td>
         </tr>
         
@@ -937,7 +1054,8 @@ fixProfilePoint.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.</p></div>
+  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
+It should return true if the logging was successful, otherwise false.</p></div>
   
   </div>
   
@@ -976,7 +1094,7 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#248'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#263'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1049,6 +1167,7 @@ fixProfilePoint.</p>
 </li>
 <li>
 <p>$parameters[&quot;write_source_file_and_line_by_debug&quot;] - the flag that defines whether for each debug output the source file and
+line number are written from where it is called.
 line number are written from where it is called.</p>
 </li>
 </ul>
@@ -1162,7 +1281,8 @@ and stores the current time.</p>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.</p>
+                <p>Message to be logged.
+Message to be logged.</p>
             </td>
         </tr>
         
@@ -1174,7 +1294,8 @@ and stores the current time.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.</p></div>
+  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
+It should return true if the logging was successful, otherwise false.</p></div>
   
   </div>
   
@@ -1213,7 +1334,7 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#219'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#234'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1226,7 +1347,7 @@ and stores the current time.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2024-11-19 13:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

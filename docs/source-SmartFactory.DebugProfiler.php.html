@@ -182,240 +182,255 @@
 <span class="line" id="87"> 87: </span>    }
 <span class="line" id="88"> 88: </span>    
 <span class="line" id="89"> 89: </span>    <span class="php-comment">/**
-</span><span class="line" id="90"> 90: </span><span class="php-comment">     * Extracts the call stack from the standard PHP backtrace (debug_backtrace).
+</span><span class="line" id="90"> 90: </span><span class="php-comment">     * Sets the flag that defines whether the file name and the line number should be written along with the message.
 </span><span class="line" id="91"> 91: </span><span class="php-comment">     *
-</span><span class="line" id="92"> 92: </span><span class="php-comment">     * @param array $btrace
-</span><span class="line" id="93"> 93: </span><span class="php-comment">     * The backtrace.
+</span><span class="line" id="92"> 92: </span><span class="php-comment">     * @param boolean $state
+</span><span class="line" id="93"> 93: </span><span class="php-comment">     * the flag that defines whether the file name and the line number should be written along with the message.
 </span><span class="line" id="94"> 94: </span><span class="php-comment">     *
-</span><span class="line" id="95"> 95: </span><span class="php-comment">     * @return string
-</span><span class="line" id="96"> 96: </span><span class="php-comment">     * Returns the extracted call stack.
-</span><span class="line" id="97"> 97: </span><span class="php-comment">     *
-</span><span class="line" id="98"> 98: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="99"> 99: </span><span class="php-comment">     */</span>
-<span class="line" id="100">100: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-var">$btrace</span>)
-<span class="line" id="101">101: </span>    {
-<span class="line" id="102">102: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$btrace</span>) || !<span class="php-keyword2">is_array</span>(<span class="php-var">$btrace</span>)) {
-<span class="line" id="103">103: </span>            <span class="php-keyword1">return</span> <span class="php-quote">&quot;&quot;</span>;
-<span class="line" id="104">104: </span>        }
-<span class="line" id="105">105: </span>
-<span class="line" id="106">106: </span>        <span class="php-var">$trace</span> = <span class="php-quote">&quot;&quot;</span>;
-<span class="line" id="107">107: </span>
-<span class="line" id="108">108: </span>        <span class="php-var">$indent</span> = <span class="php-quote">&quot;&quot;</span>;
-<span class="line" id="109">109: </span>        <span class="php-keyword1">foreach</span> (<span class="php-var">$btrace</span> <span class="php-keyword1">as</span> <span class="php-var">$btrace_entry</span>) {
-<span class="line" id="110">110: </span>
-<span class="line" id="111">111: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>]) &amp;&amp; (<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>] == <span class="php-quote">&quot;handle_error&quot;</span> || <span class="php-keyword2">strpos</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>], <span class="php-quote">&quot;{closure}&quot;</span>) !== <span class="php-keyword1">false</span> || <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>] == <span class="php-quote">&quot;handleError&quot;</span> || <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>] == <span class="php-quote">&quot;trigger_error&quot;</span>)) {
-<span class="line" id="112">112: </span>                <span class="php-keyword1">continue</span>;
-<span class="line" id="113">113: </span>            }
-<span class="line" id="114">114: </span>
-<span class="line" id="115">115: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;file&quot;</span>])) {
-<span class="line" id="116">116: </span>                <span class="php-keyword1">continue</span>;
-<span class="line" id="117">117: </span>            }
-<span class="line" id="118">118: </span>
-<span class="line" id="119">119: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>])) {
-<span class="line" id="120">120: </span>                <span class="php-var">$trace</span> .= <span class="php-var">$indent</span> . <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;SmartFactory\\&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>]) . <span class="php-quote">&quot;() &quot;</span>;
-<span class="line" id="121">121: </span>            }
+</span><span class="line" id="95"> 95: </span><span class="php-comment">     * @return void
+</span><span class="line" id="96"> 96: </span><span class="php-comment">     *
+</span><span class="line" id="97"> 97: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="98"> 98: </span><span class="php-comment">     */</span>
+<span class="line" id="99"> 99: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableFileAndLineDetails(<span class="php-var">$state</span>)
+<span class="line" id="100">100: </span>    {
+<span class="line" id="101">101: </span>        <span class="php-var">$this</span>-&gt;write_source_file_and_line_by_debug = <span class="php-var">$state</span>;
+<span class="line" id="102">102: </span>    }
+<span class="line" id="103">103: </span>
+<span class="line" id="104">104: </span>    <span class="php-comment">/**
+</span><span class="line" id="105">105: </span><span class="php-comment">     * Extracts the call stack from the standard PHP backtrace (debug_backtrace).
+</span><span class="line" id="106">106: </span><span class="php-comment">     *
+</span><span class="line" id="107">107: </span><span class="php-comment">     * @param array $btrace
+</span><span class="line" id="108">108: </span><span class="php-comment">     * The backtrace.
+</span><span class="line" id="109">109: </span><span class="php-comment">     *
+</span><span class="line" id="110">110: </span><span class="php-comment">     * @return string
+</span><span class="line" id="111">111: </span><span class="php-comment">     * Returns the extracted call stack.
+</span><span class="line" id="112">112: </span><span class="php-comment">     *
+</span><span class="line" id="113">113: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="114">114: </span><span class="php-comment">     */</span>
+<span class="line" id="115">115: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-var">$btrace</span>)
+<span class="line" id="116">116: </span>    {
+<span class="line" id="117">117: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$btrace</span>) || !<span class="php-keyword2">is_array</span>(<span class="php-var">$btrace</span>)) {
+<span class="line" id="118">118: </span>            <span class="php-keyword1">return</span> <span class="php-quote">&quot;&quot;</span>;
+<span class="line" id="119">119: </span>        }
+<span class="line" id="120">120: </span>
+<span class="line" id="121">121: </span>        <span class="php-var">$trace</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="122">122: </span>
-<span class="line" id="123">123: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;[&quot;</span>;
-<span class="line" id="124">124: </span>
-<span class="line" id="125">125: </span>            <span class="php-var">$trace</span> .= <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;\\&quot;</span>, <span class="php-quote">&quot;/&quot;</span>, <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;file&quot;</span>]);
-<span class="line" id="126">126: </span>
-<span class="line" id="127">127: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;, &quot;</span>;
-<span class="line" id="128">128: </span>
-<span class="line" id="129">129: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;line&quot;</span>])) {
-<span class="line" id="130">130: </span>                <span class="php-var">$trace</span> .= <span class="php-quote">&quot;line number undefined&quot;</span>;
-<span class="line" id="131">131: </span>            } <span class="php-keyword1">else</span> {
-<span class="line" id="132">132: </span>                <span class="php-var">$trace</span> .= <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;line&quot;</span>];
-<span class="line" id="133">133: </span>            }
-<span class="line" id="134">134: </span>
-<span class="line" id="135">135: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;]&quot;</span>;
-<span class="line" id="136">136: </span>
-<span class="line" id="137">137: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;\r\n&quot;</span>;
-<span class="line" id="138">138: </span>
-<span class="line" id="139">139: </span>            <span class="php-var">$indent</span> .= <span class="php-quote">&quot;  &quot;</span>;
-<span class="line" id="140">140: </span>        }
+<span class="line" id="123">123: </span>        <span class="php-var">$indent</span> = <span class="php-quote">&quot;&quot;</span>;
+<span class="line" id="124">124: </span>        <span class="php-keyword1">foreach</span> (<span class="php-var">$btrace</span> <span class="php-keyword1">as</span> <span class="php-var">$btrace_entry</span>) {
+<span class="line" id="125">125: </span>
+<span class="line" id="126">126: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>]) &amp;&amp; (<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>] == <span class="php-quote">&quot;handle_error&quot;</span> || <span class="php-keyword2">strpos</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>], <span class="php-quote">&quot;{closure}&quot;</span>) !== <span class="php-keyword1">false</span> || <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>] == <span class="php-quote">&quot;handleError&quot;</span> || <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>] == <span class="php-quote">&quot;trigger_error&quot;</span>)) {
+<span class="line" id="127">127: </span>                <span class="php-keyword1">continue</span>;
+<span class="line" id="128">128: </span>            }
+<span class="line" id="129">129: </span>
+<span class="line" id="130">130: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;file&quot;</span>])) {
+<span class="line" id="131">131: </span>                <span class="php-keyword1">continue</span>;
+<span class="line" id="132">132: </span>            }
+<span class="line" id="133">133: </span>
+<span class="line" id="134">134: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>])) {
+<span class="line" id="135">135: </span>                <span class="php-var">$trace</span> .= <span class="php-var">$indent</span> . <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;SmartFactory\\&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;function&quot;</span>]) . <span class="php-quote">&quot;() &quot;</span>;
+<span class="line" id="136">136: </span>            }
+<span class="line" id="137">137: </span>
+<span class="line" id="138">138: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;[&quot;</span>;
+<span class="line" id="139">139: </span>
+<span class="line" id="140">140: </span>            <span class="php-var">$trace</span> .= <span class="php-keyword2">str_replace</span>(<span class="php-quote">&quot;\\&quot;</span>, <span class="php-quote">&quot;/&quot;</span>, <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;file&quot;</span>]);
 <span class="line" id="141">141: </span>
-<span class="line" id="142">142: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$trace</span>);
-<span class="line" id="143">143: </span>    } <span class="php-comment">// extract_call_stack</span>
-<span class="line" id="144">144: </span>
-<span class="line" id="145">145: </span>    <span class="php-comment">/**
-</span><span class="line" id="146">146: </span><span class="php-comment">     * Logs a message to a standard debug output (logs/debug.log).
-</span><span class="line" id="147">147: </span><span class="php-comment">     *
-</span><span class="line" id="148">148: </span><span class="php-comment">     * @param string $message
-</span><span class="line" id="149">149: </span><span class="php-comment">     * Message to be logged.
-</span><span class="line" id="150">150: </span><span class="php-comment">     *
-</span><span class="line" id="151">151: </span><span class="php-comment">     * @param string $file_name
-</span><span class="line" id="152">152: </span><span class="php-comment">     * The target file name.
-</span><span class="line" id="153">153: </span><span class="php-comment">     *
-</span><span class="line" id="154">154: </span><span class="php-comment">     * @param boolean $show_callstack
-</span><span class="line" id="155">155: </span><span class="php-comment">     * The flag that defines whether the callstack should be also traced.
-</span><span class="line" id="156">156: </span><span class="php-comment">     *
-</span><span class="line" id="157">157: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="158">158: </span><span class="php-comment">     * It should return true if the logging was successful, otherwise false.
-</span><span class="line" id="159">159: </span><span class="php-comment">     *
-</span><span class="line" id="160">160: </span><span class="php-comment">     * @throws \Exception
-</span><span class="line" id="161">161: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
+<span class="line" id="142">142: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;, &quot;</span>;
+<span class="line" id="143">143: </span>
+<span class="line" id="144">144: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;line&quot;</span>])) {
+<span class="line" id="145">145: </span>                <span class="php-var">$trace</span> .= <span class="php-quote">&quot;line number undefined&quot;</span>;
+<span class="line" id="146">146: </span>            } <span class="php-keyword1">else</span> {
+<span class="line" id="147">147: </span>                <span class="php-var">$trace</span> .= <span class="php-var">$btrace_entry</span>[<span class="php-quote">&quot;line&quot;</span>];
+<span class="line" id="148">148: </span>            }
+<span class="line" id="149">149: </span>
+<span class="line" id="150">150: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;]&quot;</span>;
+<span class="line" id="151">151: </span>
+<span class="line" id="152">152: </span>            <span class="php-var">$trace</span> .= <span class="php-quote">&quot;\r\n&quot;</span>;
+<span class="line" id="153">153: </span>
+<span class="line" id="154">154: </span>            <span class="php-var">$indent</span> .= <span class="php-quote">&quot;  &quot;</span>;
+<span class="line" id="155">155: </span>        }
+<span class="line" id="156">156: </span>
+<span class="line" id="157">157: </span>        <span class="php-keyword1">return</span> <span class="php-keyword2">trim</span>(<span class="php-var">$trace</span>);
+<span class="line" id="158">158: </span>    } <span class="php-comment">// extract_call_stack</span>
+<span class="line" id="159">159: </span>
+<span class="line" id="160">160: </span>    <span class="php-comment">/**
+</span><span class="line" id="161">161: </span><span class="php-comment">     * Logs a message to a standard debug output (logs/debug.log).
 </span><span class="line" id="162">162: </span><span class="php-comment">     *
-</span><span class="line" id="163">163: </span><span class="php-comment">     * - if the debug file is not writable.
-</span><span class="line" id="164">164: </span><span class="php-comment">     *
-</span><span class="line" id="165">165: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="166">166: </span><span class="php-comment">     */</span>
-<span class="line" id="167">167: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(<span class="php-var">$message</span>, <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>, <span class="php-var">$show_callstack</span> = <span class="php-keyword1">false</span>)
-<span class="line" id="168">168: </span>    {
-<span class="line" id="169">169: </span>        <span class="php-var">$logfile</span> = <span class="php-var">$this</span>-&gt;log_path . <span class="php-var">$file_name</span>;
-<span class="line" id="170">170: </span>
-<span class="line" id="171">171: </span>        <span class="php-var">$backfiles</span> = <span class="php-keyword2">debug_backtrace</span>();
-<span class="line" id="172">172: </span>
-<span class="line" id="173">173: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword2">basename</span>(<span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'file'</span>]) == <span class="php-quote">&quot;short_functions_inc.php&quot;</span> &amp;&amp; <span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'function'</span>] == <span class="php-quote">&quot;debugMessage&quot;</span>) {
-<span class="line" id="174">174: </span>            <span class="php-var">$file</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'file'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'file'</span>];
-<span class="line" id="175">175: </span>            <span class="php-var">$line</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'line'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'line'</span>];
-<span class="line" id="176">176: </span>        } <span class="php-keyword1">else</span> {
-<span class="line" id="177">177: </span>            <span class="php-var">$file</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'file'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'file'</span>];
-<span class="line" id="178">178: </span>            <span class="php-var">$line</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'line'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'line'</span>];
-<span class="line" id="179">179: </span>        }
-<span class="line" id="180">180: </span>
-<span class="line" id="181">181: </span>        <span class="php-var">$message</span> = <span class="php-keyword2">trim</span>(<span class="php-var">$message</span>);
-<span class="line" id="182">182: </span>
-<span class="line" id="183">183: </span>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;write_source_file_and_line_by_debug &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$file</span>) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$line</span>)) {
-<span class="line" id="184">184: </span>            <span class="php-var">$message</span> = <span class="php-quote">&quot;\r\n#source: &quot;</span> . <span class="php-var">$file</span> . <span class="php-quote">&quot;, &quot;</span> . <span class="php-var">$line</span> . <span class="php-quote">&quot;\r\n\r\n&quot;</span> . <span class="php-var">$message</span>;
-<span class="line" id="185">185: </span>        }
-<span class="line" id="186">186: </span>
-<span class="line" id="187">187: </span>        <span class="php-var">$message</span> .= <span class="php-quote">&quot;\r\n&quot;</span>;
-<span class="line" id="188">188: </span>
-<span class="line" id="189">189: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$show_callstack</span>) {
-<span class="line" id="190">190: </span>            <span class="php-var">$message</span> .= <span class="php-quote">&quot;\r\n&quot;</span> . <span class="php-var">$this</span>-&gt;extract_call_stack(<span class="php-var">$backfiles</span>) . <span class="php-quote">&quot;\r\n&quot;</span>;
-<span class="line" id="191">191: </span>        }
-<span class="line" id="192">192: </span>
-<span class="line" id="193">193: </span>        <span class="php-keyword1">if</span> ((!<span class="php-keyword2">file_exists</span>(<span class="php-var">$logfile</span>) &amp;&amp; <span class="php-keyword2">is_writable</span>(<span class="php-var">$this</span>-&gt;log_path)) || <span class="php-keyword2">is_writable</span>(<span class="php-var">$logfile</span>)) {
-<span class="line" id="194">194: </span>            <span class="php-keyword1">return</span> <span class="php-keyword2">file_put_contents</span>(<span class="php-var">$logfile</span>, <span class="php-var">$message</span>, FILE_APPEND) !== <span class="php-keyword1">false</span>;
-<span class="line" id="195">195: </span>        } <span class="php-keyword1">else</span> {
-<span class="line" id="196">196: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The log file '%s' is not writable!&quot;</span>, <span class="php-var">$logfile</span>));
-<span class="line" id="197">197: </span>        }
-<span class="line" id="198">198: </span>    } <span class="php-comment">// debugMessage</span>
-<span class="line" id="199">199: </span>    
-<span class="line" id="200">200: </span>    <span class="php-comment">/**
-</span><span class="line" id="201">201: </span><span class="php-comment">     * Logs a message to a standard profiling output (logs/profile.log)
-</span><span class="line" id="202">202: </span><span class="php-comment">     * and stores the current time.
-</span><span class="line" id="203">203: </span><span class="php-comment">     *
-</span><span class="line" id="204">204: </span><span class="php-comment">     * @param string $message
-</span><span class="line" id="205">205: </span><span class="php-comment">     * Message to be logged.
-</span><span class="line" id="206">206: </span><span class="php-comment">     *
-</span><span class="line" id="207">207: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="208">208: </span><span class="php-comment">     * It should return true if the logging was successful, otherwise false.
-</span><span class="line" id="209">209: </span><span class="php-comment">     *
-</span><span class="line" id="210">210: </span><span class="php-comment">     * @throws \Exception
-</span><span class="line" id="211">211: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
-</span><span class="line" id="212">212: </span><span class="php-comment">     *
-</span><span class="line" id="213">213: </span><span class="php-comment">     * - if the profile file is not writable.
-</span><span class="line" id="214">214: </span><span class="php-comment">     *
-</span><span class="line" id="215">215: </span><span class="php-comment">     * @see DebugProfiler::fixProfilePoint()
-</span><span class="line" id="216">216: </span><span class="php-comment">     *
-</span><span class="line" id="217">217: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="218">218: </span><span class="php-comment">     */</span>
-<span class="line" id="219">219: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(<span class="php-var">$message</span>)
-<span class="line" id="220">220: </span>    {
-<span class="line" id="221">221: </span>        <span class="php-var">$result</span> = <span class="php-var">$this</span>-&gt;debugMessage(<span class="php-var">$message</span>, <span class="php-quote">&quot;profile.log&quot;</span>);
-<span class="line" id="222">222: </span>        
-<span class="line" id="223">223: </span>        self::<span class="php-var">$profile_time</span> = <span class="php-keyword2">microtime</span>(<span class="php-keyword1">true</span>);
-<span class="line" id="224">224: </span>        
-<span class="line" id="225">225: </span>        <span class="php-keyword1">return</span> <span class="php-var">$result</span>;
-<span class="line" id="226">226: </span>    } <span class="php-comment">// startProfilePoint</span>
-<span class="line" id="227">227: </span>    
-<span class="line" id="228">228: </span>    <span class="php-comment">/**
-</span><span class="line" id="229">229: </span><span class="php-comment">     * Logs a message to a standard profiling output (logs/profile.log) and shows
-</span><span class="line" id="230">230: </span><span class="php-comment">     * the time elapsed since the last call startProfilePoint or
-</span><span class="line" id="231">231: </span><span class="php-comment">     * fixProfilePoint.
-</span><span class="line" id="232">232: </span><span class="php-comment">     *
-</span><span class="line" id="233">233: </span><span class="php-comment">     * @param string $message
-</span><span class="line" id="234">234: </span><span class="php-comment">     * Message to be logged.
-</span><span class="line" id="235">235: </span><span class="php-comment">     *
-</span><span class="line" id="236">236: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="237">237: </span><span class="php-comment">     * It should return true if the logging was successful, otherwise false.
-</span><span class="line" id="238">238: </span><span class="php-comment">     *
-</span><span class="line" id="239">239: </span><span class="php-comment">     * @throws \Exception
-</span><span class="line" id="240">240: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
-</span><span class="line" id="241">241: </span><span class="php-comment">     *
-</span><span class="line" id="242">242: </span><span class="php-comment">     * - if the profile file is not writable.
-</span><span class="line" id="243">243: </span><span class="php-comment">     *
-</span><span class="line" id="244">244: </span><span class="php-comment">     * @see DebugProfiler::startProfilePoint()
-</span><span class="line" id="245">245: </span><span class="php-comment">     *
-</span><span class="line" id="246">246: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="247">247: </span><span class="php-comment">     */</span>
-<span class="line" id="248">248: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(<span class="php-var">$message</span>)
-<span class="line" id="249">249: </span>    {
-<span class="line" id="250">250: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(self::<span class="php-var">$profile_time</span>)) {
-<span class="line" id="251">251: </span>            <span class="php-var">$message</span> = <span class="php-var">$message</span> . <span class="php-quote">&quot;: &quot;</span> . <span class="php-keyword2">number_format</span>(<span class="php-keyword2">microtime</span>(<span class="php-keyword1">true</span>) - self::<span class="php-var">$profile_time</span>, <span class="php-num">3</span>, <span class="php-quote">&quot;.&quot;</span>, <span class="php-quote">&quot;&quot;</span>) . <span class="php-quote">&quot; seconds&quot;</span>;
-<span class="line" id="252">252: </span>        }
-<span class="line" id="253">253: </span>        
-<span class="line" id="254">254: </span>        <span class="php-var">$result</span> = <span class="php-var">$this</span>-&gt;debugMessage(<span class="php-var">$message</span>, <span class="php-quote">&quot;profile.log&quot;</span>);
-<span class="line" id="255">255: </span>        
-<span class="line" id="256">256: </span>        self::<span class="php-var">$profile_time</span> = <span class="php-keyword2">microtime</span>(<span class="php-keyword1">true</span>);
-<span class="line" id="257">257: </span>        
-<span class="line" id="258">258: </span>        <span class="php-keyword1">return</span> <span class="php-var">$result</span>;
-<span class="line" id="259">259: </span>    } <span class="php-comment">// fixProfilePoint</span>
-<span class="line" id="260">260: </span>    
-<span class="line" id="261">261: </span>    <span class="php-comment">/**
-</span><span class="line" id="262">262: </span><span class="php-comment">     * Clears the specified log file.
-</span><span class="line" id="263">263: </span><span class="php-comment">     *
-</span><span class="line" id="264">264: </span><span class="php-comment">     * @param string $file_name
-</span><span class="line" id="265">265: </span><span class="php-comment">     * The target file name.
-</span><span class="line" id="266">266: </span><span class="php-comment">     *
-</span><span class="line" id="267">267: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="268">268: </span><span class="php-comment">     * It should return true if the file has been successfully deleted, otherwise false.
-</span><span class="line" id="269">269: </span><span class="php-comment">     *
-</span><span class="line" id="270">270: </span><span class="php-comment">     * @see DebugProfiler::clearLogFiles()
-</span><span class="line" id="271">271: </span><span class="php-comment">     *
-</span><span class="line" id="272">272: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="273">273: </span><span class="php-comment">     */</span>
-<span class="line" id="274">274: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(<span class="php-var">$file_name</span>)
-<span class="line" id="275">275: </span>    {
-<span class="line" id="276">276: </span>        <span class="php-var">$file</span> = <span class="php-var">$this</span>-&gt;log_path . <span class="php-var">$file_name</span>;
-<span class="line" id="277">277: </span>        
-<span class="line" id="278">278: </span>        <span class="php-keyword1">if</span> ((!<span class="php-keyword2">file_exists</span>(<span class="php-var">$file</span>) &amp;&amp; <span class="php-keyword2">is_writable</span>(<span class="php-var">$this</span>-&gt;log_path)) || <span class="php-keyword2">is_writable</span>(<span class="php-var">$file</span>)) {
-<span class="line" id="279">279: </span>            <span class="php-keyword1">return</span> @<span class="php-keyword2">unlink</span>(<span class="php-var">$file</span>);
-<span class="line" id="280">280: </span>        }
-<span class="line" id="281">281: </span>        
-<span class="line" id="282">282: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="283">283: </span>    } <span class="php-comment">// clearLogFile</span>
-<span class="line" id="284">284: </span>    
-<span class="line" id="285">285: </span>    <span class="php-comment">/**
-</span><span class="line" id="286">286: </span><span class="php-comment">     * Clears all log files.
-</span><span class="line" id="287">287: </span><span class="php-comment">     *
-</span><span class="line" id="288">288: </span><span class="php-comment">     * @return boolean
-</span><span class="line" id="289">289: </span><span class="php-comment">     * It should return true if the files have been successfully deleted, otherwise false.
-</span><span class="line" id="290">290: </span><span class="php-comment">     *
-</span><span class="line" id="291">291: </span><span class="php-comment">     * @see DebugProfiler::clearLogFile()
-</span><span class="line" id="292">292: </span><span class="php-comment">     *
-</span><span class="line" id="293">293: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="294">294: </span><span class="php-comment">     */</span>
-<span class="line" id="295">295: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles()
-<span class="line" id="296">296: </span>    {
-<span class="line" id="297">297: </span>        <span class="php-var">$dir</span> = <span class="php-var">$this</span>-&gt;log_path;
-<span class="line" id="298">298: </span>        <span class="php-var">$files</span> = <span class="php-keyword2">scandir</span>(<span class="php-var">$dir</span>);
-<span class="line" id="299">299: </span>        <span class="php-keyword1">foreach</span> (<span class="php-var">$files</span> <span class="php-keyword1">as</span> <span class="php-var">$file</span>) {
-<span class="line" id="300">300: </span>            <span class="php-keyword1">if</span> (<span class="php-var">$file</span> == <span class="php-quote">&quot;.&quot;</span> || <span class="php-var">$file</span> == <span class="php-quote">&quot;..&quot;</span> || <span class="php-keyword2">is_dir</span>(<span class="php-var">$dir</span> . <span class="php-var">$file</span>)) {
-<span class="line" id="301">301: </span>                <span class="php-keyword1">continue</span>;
-<span class="line" id="302">302: </span>            }
-<span class="line" id="303">303: </span>            
-<span class="line" id="304">304: </span>            <span class="php-var">$pi</span> = <span class="php-keyword2">pathinfo</span>(<span class="php-var">$dir</span> . <span class="php-var">$file</span>);
-<span class="line" id="305">305: </span>            
-<span class="line" id="306">306: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$pi</span>[<span class="php-quote">&quot;extension&quot;</span>]) || <span class="php-keyword2">strtolower</span>(<span class="php-var">$pi</span>[<span class="php-quote">&quot;extension&quot;</span>]) != <span class="php-quote">&quot;log&quot;</span>) {
-<span class="line" id="307">307: </span>                <span class="php-keyword1">continue</span>;
-<span class="line" id="308">308: </span>            }
-<span class="line" id="309">309: </span>            
-<span class="line" id="310">310: </span>            <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;clearLogFile(<span class="php-var">$file</span>)) {
-<span class="line" id="311">311: </span>                <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
-<span class="line" id="312">312: </span>            }
-<span class="line" id="313">313: </span>        }
-<span class="line" id="314">314: </span>        
-<span class="line" id="315">315: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
-<span class="line" id="316">316: </span>    } <span class="php-comment">// clearLogFiles</span>
-<span class="line" id="317">317: </span>} <span class="php-comment">// DebugProfiler</span>
+</span><span class="line" id="163">163: </span><span class="php-comment">     * @param string $message
+</span><span class="line" id="164">164: </span><span class="php-comment">     * Message to be logged.
+</span><span class="line" id="165">165: </span><span class="php-comment">     *
+</span><span class="line" id="166">166: </span><span class="php-comment">     * @param string $file_name
+</span><span class="line" id="167">167: </span><span class="php-comment">     * The target file name.
+</span><span class="line" id="168">168: </span><span class="php-comment">     *
+</span><span class="line" id="169">169: </span><span class="php-comment">     * @param boolean $show_callstack
+</span><span class="line" id="170">170: </span><span class="php-comment">     * The flag that defines whether the callstack should be also traced.
+</span><span class="line" id="171">171: </span><span class="php-comment">     *
+</span><span class="line" id="172">172: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="173">173: </span><span class="php-comment">     * It should return true if the logging was successful, otherwise false.
+</span><span class="line" id="174">174: </span><span class="php-comment">     *
+</span><span class="line" id="175">175: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="176">176: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
+</span><span class="line" id="177">177: </span><span class="php-comment">     *
+</span><span class="line" id="178">178: </span><span class="php-comment">     * - if the debug file is not writable.
+</span><span class="line" id="179">179: </span><span class="php-comment">     *
+</span><span class="line" id="180">180: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="181">181: </span><span class="php-comment">     */</span>
+<span class="line" id="182">182: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(<span class="php-var">$message</span>, <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>, <span class="php-var">$show_callstack</span> = <span class="php-keyword1">false</span>)
+<span class="line" id="183">183: </span>    {
+<span class="line" id="184">184: </span>        <span class="php-var">$logfile</span> = <span class="php-var">$this</span>-&gt;log_path . <span class="php-var">$file_name</span>;
+<span class="line" id="185">185: </span>
+<span class="line" id="186">186: </span>        <span class="php-var">$backfiles</span> = <span class="php-keyword2">debug_backtrace</span>();
+<span class="line" id="187">187: </span>
+<span class="line" id="188">188: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword2">basename</span>(<span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'file'</span>]) == <span class="php-quote">&quot;short_functions_inc.php&quot;</span> &amp;&amp; <span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'function'</span>] == <span class="php-quote">&quot;debugMessage&quot;</span>) {
+<span class="line" id="189">189: </span>            <span class="php-var">$file</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'file'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'file'</span>];
+<span class="line" id="190">190: </span>            <span class="php-var">$line</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'line'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">1</span>][<span class="php-quote">'line'</span>];
+<span class="line" id="191">191: </span>        } <span class="php-keyword1">else</span> {
+<span class="line" id="192">192: </span>            <span class="php-var">$file</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'file'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'file'</span>];
+<span class="line" id="193">193: </span>            <span class="php-var">$line</span> = <span class="php-keyword1">empty</span>(<span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'line'</span>]) ? <span class="php-quote">&quot;&quot;</span> : <span class="php-var">$backfiles</span>[<span class="php-num">0</span>][<span class="php-quote">'line'</span>];
+<span class="line" id="194">194: </span>        }
+<span class="line" id="195">195: </span>
+<span class="line" id="196">196: </span>        <span class="php-var">$message</span> = <span class="php-keyword2">trim</span>(<span class="php-var">$message</span>);
+<span class="line" id="197">197: </span>
+<span class="line" id="198">198: </span>        <span class="php-keyword1">if</span>(<span class="php-var">$this</span>-&gt;write_source_file_and_line_by_debug &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$file</span>) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$line</span>)) {
+<span class="line" id="199">199: </span>            <span class="php-var">$message</span> = <span class="php-quote">&quot;\r\n#source: &quot;</span> . <span class="php-var">$file</span> . <span class="php-quote">&quot;, &quot;</span> . <span class="php-var">$line</span> . <span class="php-quote">&quot;\r\n\r\n&quot;</span> . <span class="php-var">$message</span>;
+<span class="line" id="200">200: </span>        }
+<span class="line" id="201">201: </span>
+<span class="line" id="202">202: </span>        <span class="php-var">$message</span> .= <span class="php-quote">&quot;\r\n&quot;</span>;
+<span class="line" id="203">203: </span>
+<span class="line" id="204">204: </span>        <span class="php-keyword1">if</span> (<span class="php-var">$show_callstack</span>) {
+<span class="line" id="205">205: </span>            <span class="php-var">$message</span> .= <span class="php-quote">&quot;\r\n&quot;</span> . <span class="php-var">$this</span>-&gt;extract_call_stack(<span class="php-var">$backfiles</span>) . <span class="php-quote">&quot;\r\n&quot;</span>;
+<span class="line" id="206">206: </span>        }
+<span class="line" id="207">207: </span>
+<span class="line" id="208">208: </span>        <span class="php-keyword1">if</span> ((!<span class="php-keyword2">file_exists</span>(<span class="php-var">$logfile</span>) &amp;&amp; <span class="php-keyword2">is_writable</span>(<span class="php-var">$this</span>-&gt;log_path)) || <span class="php-keyword2">is_writable</span>(<span class="php-var">$logfile</span>)) {
+<span class="line" id="209">209: </span>            <span class="php-keyword1">return</span> <span class="php-keyword2">file_put_contents</span>(<span class="php-var">$logfile</span>, <span class="php-var">$message</span>, FILE_APPEND) !== <span class="php-keyword1">false</span>;
+<span class="line" id="210">210: </span>        } <span class="php-keyword1">else</span> {
+<span class="line" id="211">211: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \Exception(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;The log file '%s' is not writable!&quot;</span>, <span class="php-var">$logfile</span>));
+<span class="line" id="212">212: </span>        }
+<span class="line" id="213">213: </span>    } <span class="php-comment">// debugMessage</span>
+<span class="line" id="214">214: </span>    
+<span class="line" id="215">215: </span>    <span class="php-comment">/**
+</span><span class="line" id="216">216: </span><span class="php-comment">     * Logs a message to a standard profiling output (logs/profile.log)
+</span><span class="line" id="217">217: </span><span class="php-comment">     * and stores the current time.
+</span><span class="line" id="218">218: </span><span class="php-comment">     *
+</span><span class="line" id="219">219: </span><span class="php-comment">     * @param string $message
+</span><span class="line" id="220">220: </span><span class="php-comment">     * Message to be logged.
+</span><span class="line" id="221">221: </span><span class="php-comment">     *
+</span><span class="line" id="222">222: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="223">223: </span><span class="php-comment">     * It should return true if the logging was successful, otherwise false.
+</span><span class="line" id="224">224: </span><span class="php-comment">     *
+</span><span class="line" id="225">225: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="226">226: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
+</span><span class="line" id="227">227: </span><span class="php-comment">     *
+</span><span class="line" id="228">228: </span><span class="php-comment">     * - if the profile file is not writable.
+</span><span class="line" id="229">229: </span><span class="php-comment">     *
+</span><span class="line" id="230">230: </span><span class="php-comment">     * @see DebugProfiler::fixProfilePoint()
+</span><span class="line" id="231">231: </span><span class="php-comment">     *
+</span><span class="line" id="232">232: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="233">233: </span><span class="php-comment">     */</span>
+<span class="line" id="234">234: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(<span class="php-var">$message</span>)
+<span class="line" id="235">235: </span>    {
+<span class="line" id="236">236: </span>        <span class="php-var">$result</span> = <span class="php-var">$this</span>-&gt;debugMessage(<span class="php-var">$message</span>, <span class="php-quote">&quot;profile.log&quot;</span>);
+<span class="line" id="237">237: </span>        
+<span class="line" id="238">238: </span>        self::<span class="php-var">$profile_time</span> = <span class="php-keyword2">microtime</span>(<span class="php-keyword1">true</span>);
+<span class="line" id="239">239: </span>        
+<span class="line" id="240">240: </span>        <span class="php-keyword1">return</span> <span class="php-var">$result</span>;
+<span class="line" id="241">241: </span>    } <span class="php-comment">// startProfilePoint</span>
+<span class="line" id="242">242: </span>    
+<span class="line" id="243">243: </span>    <span class="php-comment">/**
+</span><span class="line" id="244">244: </span><span class="php-comment">     * Logs a message to a standard profiling output (logs/profile.log) and shows
+</span><span class="line" id="245">245: </span><span class="php-comment">     * the time elapsed since the last call startProfilePoint or
+</span><span class="line" id="246">246: </span><span class="php-comment">     * fixProfilePoint.
+</span><span class="line" id="247">247: </span><span class="php-comment">     *
+</span><span class="line" id="248">248: </span><span class="php-comment">     * @param string $message
+</span><span class="line" id="249">249: </span><span class="php-comment">     * Message to be logged.
+</span><span class="line" id="250">250: </span><span class="php-comment">     *
+</span><span class="line" id="251">251: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="252">252: </span><span class="php-comment">     * It should return true if the logging was successful, otherwise false.
+</span><span class="line" id="253">253: </span><span class="php-comment">     *
+</span><span class="line" id="254">254: </span><span class="php-comment">     * @throws \Exception
+</span><span class="line" id="255">255: </span><span class="php-comment">     * It might throw an exception in the case of any errors:
+</span><span class="line" id="256">256: </span><span class="php-comment">     *
+</span><span class="line" id="257">257: </span><span class="php-comment">     * - if the profile file is not writable.
+</span><span class="line" id="258">258: </span><span class="php-comment">     *
+</span><span class="line" id="259">259: </span><span class="php-comment">     * @see DebugProfiler::startProfilePoint()
+</span><span class="line" id="260">260: </span><span class="php-comment">     *
+</span><span class="line" id="261">261: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="262">262: </span><span class="php-comment">     */</span>
+<span class="line" id="263">263: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(<span class="php-var">$message</span>)
+<span class="line" id="264">264: </span>    {
+<span class="line" id="265">265: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(self::<span class="php-var">$profile_time</span>)) {
+<span class="line" id="266">266: </span>            <span class="php-var">$message</span> = <span class="php-var">$message</span> . <span class="php-quote">&quot;: &quot;</span> . <span class="php-keyword2">number_format</span>(<span class="php-keyword2">microtime</span>(<span class="php-keyword1">true</span>) - self::<span class="php-var">$profile_time</span>, <span class="php-num">3</span>, <span class="php-quote">&quot;.&quot;</span>, <span class="php-quote">&quot;&quot;</span>) . <span class="php-quote">&quot; seconds&quot;</span>;
+<span class="line" id="267">267: </span>        }
+<span class="line" id="268">268: </span>        
+<span class="line" id="269">269: </span>        <span class="php-var">$result</span> = <span class="php-var">$this</span>-&gt;debugMessage(<span class="php-var">$message</span>, <span class="php-quote">&quot;profile.log&quot;</span>);
+<span class="line" id="270">270: </span>        
+<span class="line" id="271">271: </span>        self::<span class="php-var">$profile_time</span> = <span class="php-keyword2">microtime</span>(<span class="php-keyword1">true</span>);
+<span class="line" id="272">272: </span>        
+<span class="line" id="273">273: </span>        <span class="php-keyword1">return</span> <span class="php-var">$result</span>;
+<span class="line" id="274">274: </span>    } <span class="php-comment">// fixProfilePoint</span>
+<span class="line" id="275">275: </span>    
+<span class="line" id="276">276: </span>    <span class="php-comment">/**
+</span><span class="line" id="277">277: </span><span class="php-comment">     * Clears the specified log file.
+</span><span class="line" id="278">278: </span><span class="php-comment">     *
+</span><span class="line" id="279">279: </span><span class="php-comment">     * @param string $file_name
+</span><span class="line" id="280">280: </span><span class="php-comment">     * The target file name.
+</span><span class="line" id="281">281: </span><span class="php-comment">     *
+</span><span class="line" id="282">282: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="283">283: </span><span class="php-comment">     * It should return true if the file has been successfully deleted, otherwise false.
+</span><span class="line" id="284">284: </span><span class="php-comment">     *
+</span><span class="line" id="285">285: </span><span class="php-comment">     * @see DebugProfiler::clearLogFiles()
+</span><span class="line" id="286">286: </span><span class="php-comment">     *
+</span><span class="line" id="287">287: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="288">288: </span><span class="php-comment">     */</span>
+<span class="line" id="289">289: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(<span class="php-var">$file_name</span>)
+<span class="line" id="290">290: </span>    {
+<span class="line" id="291">291: </span>        <span class="php-var">$file</span> = <span class="php-var">$this</span>-&gt;log_path . <span class="php-var">$file_name</span>;
+<span class="line" id="292">292: </span>        
+<span class="line" id="293">293: </span>        <span class="php-keyword1">if</span> ((!<span class="php-keyword2">file_exists</span>(<span class="php-var">$file</span>) &amp;&amp; <span class="php-keyword2">is_writable</span>(<span class="php-var">$this</span>-&gt;log_path)) || <span class="php-keyword2">is_writable</span>(<span class="php-var">$file</span>)) {
+<span class="line" id="294">294: </span>            <span class="php-keyword1">return</span> @<span class="php-keyword2">unlink</span>(<span class="php-var">$file</span>);
+<span class="line" id="295">295: </span>        }
+<span class="line" id="296">296: </span>        
+<span class="line" id="297">297: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="298">298: </span>    } <span class="php-comment">// clearLogFile</span>
+<span class="line" id="299">299: </span>    
+<span class="line" id="300">300: </span>    <span class="php-comment">/**
+</span><span class="line" id="301">301: </span><span class="php-comment">     * Clears all log files.
+</span><span class="line" id="302">302: </span><span class="php-comment">     *
+</span><span class="line" id="303">303: </span><span class="php-comment">     * @return boolean
+</span><span class="line" id="304">304: </span><span class="php-comment">     * It should return true if the files have been successfully deleted, otherwise false.
+</span><span class="line" id="305">305: </span><span class="php-comment">     *
+</span><span class="line" id="306">306: </span><span class="php-comment">     * @see DebugProfiler::clearLogFile()
+</span><span class="line" id="307">307: </span><span class="php-comment">     *
+</span><span class="line" id="308">308: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="309">309: </span><span class="php-comment">     */</span>
+<span class="line" id="310">310: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles()
+<span class="line" id="311">311: </span>    {
+<span class="line" id="312">312: </span>        <span class="php-var">$dir</span> = <span class="php-var">$this</span>-&gt;log_path;
+<span class="line" id="313">313: </span>        <span class="php-var">$files</span> = <span class="php-keyword2">scandir</span>(<span class="php-var">$dir</span>);
+<span class="line" id="314">314: </span>        <span class="php-keyword1">foreach</span> (<span class="php-var">$files</span> <span class="php-keyword1">as</span> <span class="php-var">$file</span>) {
+<span class="line" id="315">315: </span>            <span class="php-keyword1">if</span> (<span class="php-var">$file</span> == <span class="php-quote">&quot;.&quot;</span> || <span class="php-var">$file</span> == <span class="php-quote">&quot;..&quot;</span> || <span class="php-keyword2">is_dir</span>(<span class="php-var">$dir</span> . <span class="php-var">$file</span>)) {
+<span class="line" id="316">316: </span>                <span class="php-keyword1">continue</span>;
+<span class="line" id="317">317: </span>            }
+<span class="line" id="318">318: </span>            
+<span class="line" id="319">319: </span>            <span class="php-var">$pi</span> = <span class="php-keyword2">pathinfo</span>(<span class="php-var">$dir</span> . <span class="php-var">$file</span>);
+<span class="line" id="320">320: </span>            
+<span class="line" id="321">321: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$pi</span>[<span class="php-quote">&quot;extension&quot;</span>]) || <span class="php-keyword2">strtolower</span>(<span class="php-var">$pi</span>[<span class="php-quote">&quot;extension&quot;</span>]) != <span class="php-quote">&quot;log&quot;</span>) {
+<span class="line" id="322">322: </span>                <span class="php-keyword1">continue</span>;
+<span class="line" id="323">323: </span>            }
+<span class="line" id="324">324: </span>            
+<span class="line" id="325">325: </span>            <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;clearLogFile(<span class="php-var">$file</span>)) {
+<span class="line" id="326">326: </span>                <span class="php-keyword1">return</span> <span class="php-keyword1">false</span>;
+<span class="line" id="327">327: </span>            }
+<span class="line" id="328">328: </span>        }
+<span class="line" id="329">329: </span>        
+<span class="line" id="330">330: </span>        <span class="php-keyword1">return</span> <span class="php-keyword1">true</span>;
+<span class="line" id="331">331: </span>    } <span class="php-comment">// clearLogFiles</span>
+<span class="line" id="332">332: </span>} <span class="php-comment">// DebugProfiler</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2024-11-19 13:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

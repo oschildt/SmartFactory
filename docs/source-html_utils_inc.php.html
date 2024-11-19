@@ -737,7 +737,7 @@
 <span class="line" id="642">642: </span>    <span class="php-keyword1">if</span> (!<span class="php-keyword2">is_array</span>(<span class="php-var">$val</span>) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$val</span>)) {
 <span class="line" id="643">643: </span>        <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;
 <span class="line" id="644">644: </span>    }
-<span class="line" id="645">645: </span>    <span class="php-keyword1">if</span> (<span class="php-keyword2">is_array</span>(<span class="php-var">$val</span>) &amp;&amp; <span class="php-keyword2">in_array</span>(checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>]), <span class="php-var">$val</span>)) {
+<span class="line" id="645">645: </span>    <span class="php-keyword1">if</span> (<span class="php-keyword2">is_array</span>(<span class="php-var">$val</span>) &amp;&amp; <span class="php-keyword2">in_array</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>] ?? <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$val</span>)) {
 <span class="line" id="646">646: </span>        <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;
 <span class="line" id="647">647: </span>    }
 <span class="line" id="648">648: </span>    
@@ -845,7 +845,7 @@
 <span class="line" id="750">750: </span>    
 <span class="line" id="751">751: </span>    <span class="php-var">$checked</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="752">752: </span>    
-<span class="line" id="753">753: </span>    <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$val</span>) &amp;&amp; checkempty(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>]) == <span class="php-var">$val</span>) {
+<span class="line" id="753">753: </span>    <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$val</span>) &amp;&amp; (<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>] ?? <span class="php-quote">&quot;&quot;</span>) == <span class="php-var">$val</span>) {
 <span class="line" id="754">754: </span>        <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;
 <span class="line" id="755">755: </span>    }
 <span class="line" id="756">756: </span>    
@@ -1056,7 +1056,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2024-11-19 13:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

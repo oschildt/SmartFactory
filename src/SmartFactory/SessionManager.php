@@ -52,7 +52,7 @@ class SessionManager extends \SessionHandler implements ISessionManager
      *
      * SessionManager extends the \SessionHandler. You can reimplement this
      * method if wan to change the way the session is handled internally, e.g.
-     * stroe the session data in Amazon Redis for quicker access.
+     * store the session data in Amazon Redis for quicker access.
      *
      * @return string
      * Should return session ID valid for the default session handler.
@@ -246,9 +246,9 @@ class SessionManager extends \SessionHandler implements ISessionManager
             $num = $pos - $offset;
             $varname = substr($session_data, $offset, $num);
             $offset += $num + 1;
-            $data = unserialize(substr($session_data, $offset));
+            $data = @unserialize(substr($session_data, $offset));
             $_SESSION[$varname] = $data;
-            $offset += strlen(serialize($data));
+            $offset += strlen(@serialize($data));
         }
 
         return true;

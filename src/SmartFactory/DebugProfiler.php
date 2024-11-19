@@ -87,6 +87,21 @@ class DebugProfiler implements IDebugProfiler
     }
     
     /**
+     * Sets the flag that defines whether the file name and the line number should be written along with the message.
+     *
+     * @param boolean $state
+     * the flag that defines whether the file name and the line number should be written along with the message.
+     *
+     * @return void
+     *
+     * @author Oleg Schildt
+     */
+    public function enableFileAndLineDetails($state)
+    {
+        $this->write_source_file_and_line_by_debug = $state;
+    }
+
+    /**
      * Extracts the call stack from the standard PHP backtrace (debug_backtrace).
      *
      * @param array $btrace

@@ -535,6 +535,7 @@ as readonly.</p>
 subfolders, and all subfolders are within the same session,
 and the provider does not let you change the session path,
 then you can use different $context in each instance to ensure
+that the session data of these instances does not mix.
 that the session data of these instances does not mix.</p>
             </td>
         </tr>
@@ -547,7 +548,8 @@ that the session data of these instances does not mix.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the session data has been successfully cleared, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the session data has been successfully cleared, otherwise false.
+Returns true if the session data has been successfully cleared, otherwise false.</p></div>
   
   </div>
   
@@ -624,6 +626,7 @@ stroe the session data in Amazon Redis for quicker access.</p>
   bool<br>
   
   <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.
 Note this value is returned internally to PHP for processing.</p></div>
   
   </div>
@@ -682,7 +685,7 @@ Note this value is returned internally to PHP for processing.</p></div>
   <h2>Details</h2>
   <p>SessionManager extends the \SessionHandler. You can reimplement this
 method if wan to change the way the session is handled internally, e.g.
-stroe the session data in Amazon Redis for quicker access.</p>
+store the session data in Amazon Redis for quicker access.</p>
   </div>
   
 
@@ -695,7 +698,8 @@ stroe the session data in Amazon Redis for quicker access.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Should return session ID valid for the default session handler.</p></div>
+  <div class="item_description"><p>Should return session ID valid for the default session handler.
+Should return session ID valid for the default session handler.</p></div>
   
   </div>
   
@@ -785,7 +789,8 @@ stroe the session data in Amazon Redis for quicker access.</p>
                 
             </td>
             <td class="description_column">
-                <p>The session ID being destroyed.</p>
+                <p>The session ID being destroyed.
+The session ID being destroyed.</p>
             </td>
         </tr>
         
@@ -798,6 +803,7 @@ stroe the session data in Amazon Redis for quicker access.</p>
   bool<br>
   
   <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.
 Note this value is returned internally to PHP for processing.</p></div>
   
   </div>
@@ -862,7 +868,8 @@ Note this value is returned internally to PHP for processing.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the session has been successfully destroyed, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the session has been successfully destroyed, otherwise false.
+Returns true if the session has been successfully destroyed, otherwise false.</p></div>
   
   </div>
   
@@ -957,7 +964,8 @@ stroe the session data in Amazon Redis for quicker access.</p>
                 
             </td>
             <td class="description_column">
-                <p>Sessions that have not updated for the last maxlifetime seconds will be removed.</p>
+                <p>Sessions that have not updated for the last maxlifetime seconds will be removed.
+Sessions that have not updated for the last maxlifetime seconds will be removed.</p>
             </td>
         </tr>
         
@@ -970,6 +978,7 @@ stroe the session data in Amazon Redis for quicker access.</p>
   int|false<br>
   
   <div class="item_description"><p>The return value (usually positive on success, false on failure).
+Note this value is returned internally to PHP for processing.
 Note this value is returned internally to PHP for processing.</p></div>
   
   </div>
@@ -1043,7 +1052,8 @@ that the session data of these instances does not mix.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the current session context.</p></div>
+  <div class="item_description"><p>Returns the current session context.
+Returns the current session context.</p></div>
   
   </div>
   
@@ -1113,7 +1123,8 @@ that the session data of these instances does not mix.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the ID of the current session.</p></div>
+  <div class="item_description"><p>Returns the ID of the current session.
+Returns the ID of the current session.</p></div>
   
   </div>
   
@@ -1188,7 +1199,8 @@ that the session data of these instances does not mix.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the current session variable name.</p></div>
+  <div class="item_description"><p>Returns the current session variable name.
+Returns the current session variable name.</p></div>
   
   </div>
   
@@ -1289,7 +1301,8 @@ stroe the session data in Amazon Redis for quicker access.</p>
                 
             </td>
             <td class="description_column">
-                <p>The path where to store/retrieve the session.</p>
+                <p>The path where to store/retrieve the session.
+The path where to store/retrieve the session.</p>
             </td>
         </tr>
         
@@ -1307,7 +1320,8 @@ stroe the session data in Amazon Redis for quicker access.</p>
                 
             </td>
             <td class="description_column">
-                <p>The session name.</p>
+                <p>The session name.
+The session name.</p>
             </td>
         </tr>
         
@@ -1320,6 +1334,7 @@ stroe the session data in Amazon Redis for quicker access.</p>
   bool<br>
   
   <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.
 Note this value is returned internally to PHP for processing.</p></div>
   
   </div>
@@ -1410,7 +1425,8 @@ stroe the session data in Amazon Redis for quicker access.</p>
                 
             </td>
             <td class="description_column">
-                <p>The session id to read data for.</p>
+                <p>The session id to read data for.
+The session id to read data for.</p>
             </td>
         </tr>
         
@@ -1424,6 +1440,7 @@ stroe the session data in Amazon Redis for quicker access.</p>
   
   <div class="item_description"><p>Returns an encoded string of the read data. If nothing was read,
 it must return an empty string. Note this value is returned
+internally to PHP for processing. .
 internally to PHP for processing. .</p></div>
   
   </div>
@@ -1507,7 +1524,8 @@ internally to PHP for processing. .</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The new ID of the current session.</p>
+                <p>The new ID of the current session.
+The new ID of the current session.</p>
             </td>
         </tr>
         
@@ -1519,7 +1537,8 @@ internally to PHP for processing. .</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the session ID has been successfully set, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the session ID has been successfully set, otherwise false.
+Returns true if the session ID has been successfully set, otherwise false.</p></div>
   
   </div>
   
@@ -1613,7 +1632,8 @@ internally to PHP for processing. .</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The new session variable name.</p>
+                <p>The new session variable name.
+The new session variable name.</p>
             </td>
         </tr>
         
@@ -1625,7 +1645,8 @@ internally to PHP for processing. .</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the session variable name has been successfully set, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the session variable name has been successfully set, otherwise false.
+Returns true if the session variable name has been successfully set, otherwise false.</p></div>
   
   </div>
   
@@ -1724,6 +1745,7 @@ in the readonly mode or not.</p>
 <p>The parameter $readonly starts the session in non-blocking
 readonly mode. It can be used in the asynchronous ajax requests
 So that they are not blocked by the main process and by each
+ohter while the write lock is held on the session file.
 ohter while the write lock is held on the session file.</p>
             </td>
         </tr>
@@ -1736,7 +1758,8 @@ ohter while the write lock is held on the session file.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the session has been successfully started, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the session has been successfully started, otherwise false.
+Returns true if the session has been successfully started, otherwise false.</p></div>
   
   </div>
   
@@ -1833,7 +1856,8 @@ that the session data of these instances does not mix.</p>
                 
             </td>
             <td class="description_column">
-                <p>The session context.</p>
+                <p>The session context.
+The session context.</p>
             </td>
         </tr>
         
@@ -1936,6 +1960,7 @@ that the session data of these instances does not mix.</p>
 subfolders, and all subfolders are within the same session,
 and the provider does not let you change the session path,
 then you can use different $context in each instance to ensure
+that the session data of these instances does not mix.
 that the session data of these instances does not mix.</p>
             </td>
         </tr>
@@ -1960,7 +1985,8 @@ only one dimensional arrays, thus, it is not applicable for us.</p>
 <p>We return the reference to the internal data. It allows setting
 multidimesional arrays as follows:</p>
 <pre><code class="language-php"><span class="php-var">$smanager</span>-&gt;vars()[<span class="php-quote">&quot;user&quot;</span>][<span class="php-quote">&quot;name&quot;</span>] = <span class="php-quote">&quot;Alex&quot;</span>;
-<span class="php-var">$smanager</span>-&gt;vars()[<span class="php-quote">&quot;user&quot;</span>][<span class="php-quote">&quot;age&quot;</span>] = <span class="php-quote">&quot;22&quot;</span>;</code></pre></div>
+<span class="php-var">$smanager</span>-&gt;vars()[<span class="php-quote">&quot;user&quot;</span>][<span class="php-quote">&quot;age&quot;</span>] = <span class="php-quote">&quot;22&quot;</span>;</code></pre>
+<pre><code></code></pre></div>
   
   </div>
   
@@ -2055,7 +2081,8 @@ stroe the session data in Amazon Redis for quicker access.</p>
                 
             </td>
             <td class="description_column">
-                <p>The session id to write data for.</p>
+                <p>The session id to write data for.
+The session id to write data for.</p>
             </td>
         </tr>
         
@@ -2075,6 +2102,7 @@ stroe the session data in Amazon Redis for quicker access.</p>
             <td class="description_column">
                 <p>The encoded session data. This data is the result of the PHP internally
 encoding the $_SESSION superglobal to a serialized string and passing
+it as this parameter.
 it as this parameter.</p>
             </td>
         </tr>
@@ -2088,6 +2116,7 @@ it as this parameter.</p>
   bool<br>
   
   <div class="item_description"><p>The return value (usually true on success, false on failure).
+Note this value is returned internally to PHP for processing.
 Note this value is returned internally to PHP for processing.</p></div>
   
   </div>
@@ -2152,7 +2181,8 @@ Note this value is returned internally to PHP for processing.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the session has been successfully closed, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the session has been successfully closed, otherwise false.
+Returns true if the session has been successfully closed, otherwise false.</p></div>
   
   </div>
   
@@ -2184,7 +2214,7 @@ Note this value is returned internally to PHP for processing.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2024-11-19 13:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

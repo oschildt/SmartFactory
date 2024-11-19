@@ -140,8 +140,22 @@ class ConfigSettingsManager implements ISettingsManager
             $json = aes_256_encrypt($json, $this->salt_key);
         }
         
-        if (file_put_contents($this->save_path, $json) === false) {
-            throw new \Exception(sprintf("The config file '%s' cannot be written!", $this->save_path));
+        if (!is_writable(file_exists($this->save_path) ? $this->save_path : dirname($this->save_path))) {
+            throw new \Exception(sprintf("The config file '%s' ot its directory is not accesible for writing!", $this->save_path));
+        }
+
+        $write_success = false;
+        
+        $fp = fopen($this->save_path, "w");
+        if (flock($fp, LOCK_EX)) {
+            $write_success = fwrite($fp, $json);
+            flock($fp, LOCK_UN); 
+        }        
+
+        fclose($fp);
+
+        if ($write_success === false) {
+            throw new \Exception(sprintf("Writing of the config file '%s' failed!", $this->save_path));
         }
         
         if ($this->use_apcu) {
@@ -186,12 +200,21 @@ class ConfigSettingsManager implements ISettingsManager
         }
         
         if (!file_exists($this->save_path) || !is_readable($this->save_path)) {
-            throw new \Exception(sprintf("The config file '%s' cannot be read!", $this->save_path));
+            throw new \Exception(sprintf("The config file '%s' is not accesible for reading or does not exist!", $this->save_path));
         }
         
-        $json = file_get_contents($this->save_path);
-        if ($json === false) {
-            throw new \Exception(sprintf("The config file '%s' cannot be read!", $this->save_path));
+        $json = null;
+        
+        $fp = fopen($this->save_path, "r");
+        if (flock($fp, LOCK_SH)) {
+            $json = fread($fp, filesize($this->save_path));
+            flock($fp, LOCK_UN); 
+        }        
+
+        fclose($fp);
+        
+        if (empty($json)) {
+            throw new \Exception(sprintf("Reading of the config file '%s' failed!", $this->save_path));
         }
         
         if (!empty($this->save_encrypted)) {

@@ -1,8 +1,7 @@
 <?php
 /**
  * This file contains the implementation of the interface ISettingsManager
- * in the class UserSettingsManager for management of the
- * application settings.
+ * in the class UserSettingsManager for management of the user settings.
  *
  * @package System
  *
@@ -178,8 +177,10 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->validateParameters();
 
+        $this->dbworker->connect();
+
         if (empty($this->no_own_transcation)) {
-            this->dbworker->start_transaction();
+            $this->dbworker->start_transaction();
         }
 
         try {
@@ -209,7 +210,7 @@ class UserSettingsManager implements ISettingsManager
                         $value = $data[$table . "." . $field];
                     }
 
-                    if (!empty($data[$field])) {
+                    if (isset($data[$field])) {
                         $value = $data[$field];
                     }
 
@@ -376,6 +377,8 @@ class UserSettingsManager implements ISettingsManager
     protected function loadSettingsData(&$data)
     {
         $this->validateParameters();
+
+        $this->dbworker->connect();
 
         foreach ($this->settings_tables as $table => $fields) {
             // First field is the ID field

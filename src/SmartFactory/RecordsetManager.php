@@ -242,6 +242,10 @@ class RecordsetManager implements IRecordsetManager
      */
     public function getDBWorker()
     {
+        if ($this->dbworker) {
+            $this->dbworker->connect();
+        }    
+
         return $this->dbworker;
     } // getDBWorker
 

@@ -383,7 +383,8 @@ db_connection_settings etc.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the current settings context.</p></div>
+  <div class="item_description"><p>Returns the current settings context.
+Returns the current settings context.</p></div>
   
   </div>
   
@@ -472,7 +473,8 @@ db_connection_settings etc.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the settings parameter.</p>
+                <p>The name of the settings parameter.
+The name of the settings parameter.</p>
             </td>
         </tr>
         
@@ -495,6 +497,7 @@ The parameter is a confortable way to pre-set a parameter
 to a default value if its value is not set yet.
 However, if the status of the data is dirty and the unsaved
 last entered value is requested, then always the actual
+last entered value is returned and this paramter is ignored.
 last entered value is returned and this paramter is ignored.</p>
             </td>
         </tr>
@@ -507,7 +510,8 @@ last entered value is returned and this paramter is ignored.</p>
   <div class="item_list">
   mixed<br>
   
-  <div class="item_description"><p>Returns the value of the settings parameter.</p></div>
+  <div class="item_description"><p>Returns the value of the settings parameter.
+Returns the value of the settings parameter.</p></div>
   
   </div>
   
@@ -580,7 +584,8 @@ last entered value is returned and this paramter is ignored.</p>
   <div class="item_list">
   <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a>|null<br>
   
-  <div class="item_description"><p>Returns the validator for the settings or null if none is defined.</p></div>
+  <div class="item_description"><p>Returns the validator for the settings or null if none is defined.
+Returns the validator for the settings or null if none is defined.</p></div>
   
   </div>
   
@@ -672,7 +677,8 @@ last entered value is returned and this paramter is ignored.</p>
                 
             </td>
             <td class="description_column">
-                <p>The parameters may vary for each settings manager.</p>
+                <p>The parameters may vary for each settings manager.
+The parameters may vary for each settings manager.</p>
             </td>
         </tr>
         
@@ -942,7 +948,8 @@ db_connection_settings etc.</p>
                 &quot;default&quot;
             </td>
             <td class="description_column">
-                <p>The settings context.</p>
+                <p>The settings context.
+The settings context.</p>
             </td>
         </tr>
         
@@ -1041,7 +1048,8 @@ db_connection_settings etc.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the settings parameter.</p>
+                <p>The name of the settings parameter.
+The name of the settings parameter.</p>
             </td>
         </tr>
         
@@ -1059,7 +1067,8 @@ db_connection_settings etc.</p>
                 
             </td>
             <td class="description_column">
-                <p>The value of the settings parameter.</p>
+                <p>The value of the settings parameter.
+The value of the settings parameter.</p>
             </td>
         </tr>
         
@@ -1161,7 +1170,8 @@ db_connection_settings etc.</p>
                 
             </td>
             <td class="description_column">
-                <p>Array of parameters in the form key =&gt; value.</p>
+                <p>Array of parameters in the form key =&gt; value.
+Array of parameters in the form key =&gt; value.</p>
             </td>
         </tr>
         
@@ -1180,6 +1190,7 @@ db_connection_settings etc.</p>
             </td>
             <td class="description_column">
                 <p>Flag which defines whether the parameter should be created
+if not exists. If false, only existing parameters are updated.
 if not exists. If false, only existing parameters are updated.</p>
             </td>
         </tr>
@@ -1282,7 +1293,8 @@ if not exists. If false, only existing parameters are updated.</p>
                 
             </td>
             <td class="description_column">
-                <p>The settings validator.</p>
+                <p>The settings validator.
+The settings validator.</p>
             </td>
         </tr>
         
@@ -1373,6 +1385,7 @@ and before their saving.</p>
   
   <div class="item_description"><p>Returns true if there is no validator defined, otherwise lets
 the validator validate the settings.</p>
+<p>It is not based on exceptions in order to allow catch many errors at once.</p>
 <p>It is not based on exceptions in order to allow catch many errors at once.</p></div>
   
   </div>
@@ -1422,7 +1435,7 @@ the validator validate the settings.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2023-06-21 09:02 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2024-11-19 13:42 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>
