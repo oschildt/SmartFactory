@@ -118,7 +118,7 @@ function json_to_array(&$json, &$array)
 } // json_to_array
 
 /**
- * Converts the array to a JSON string.
+ * Converts the array to JSON string.
  *
  * It is a wrapper over the system function json_encode. It
  * is introduced to give the ability to overwrite the system
@@ -232,6 +232,26 @@ function dom_to_array(&$node, &$array)
         $array[$name] = $child->nodeValue;
     }
 } // dom_to_array
+
+/**
+ * Checks whether the text is an empty string.
+ *
+ * @param string $text
+ * The text to be checked.
+ *
+ * @return boolean
+ * Returns true if the string is an empty string.
+ *
+ * @author Oleg Schildt
+ */
+function string_empty($text)
+{
+    if ($text === null) return true;
+
+    if ((string)$text === "") return true;
+    
+    return false;
+} // string_empty
 
 /**
  * Echoes the text with escaping of HTML special characters.

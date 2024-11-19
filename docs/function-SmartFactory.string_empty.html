@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: escape_html()
+            Function: string_empty()
         </title>
     </head>
 
@@ -93,7 +93,7 @@
                         
  
 
-                        <li class="active">escape_html()</li>
+                        <li class="active">string_empty()</li>
                 </ol>
                 
             </div>
@@ -105,13 +105,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: escape_html()</h1>
+                    <h1>Function: string_empty()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> escape_html(string <span class="php-var">$text</span>) : string;</div>
+<div class="definition"><span class="php-keyword1">function</span> string_empty(string <span class="php-var">$text</span>) : bool;</div>
 
 
 <div class="short-description">
-<p>Escapes the HTML special characters in the text.</p>
+<p>Checks whether the text is an empty string.</p>
 </div>
 
 
@@ -145,8 +145,8 @@
               
           </td>
           <td class="description_column">
-              <p>The text to be escaped.
-The text to be escaped.</p>
+              <p>The text to be checked.
+The text to be checked.</p>
           </td>
       </tr>
       
@@ -156,10 +156,10 @@ The text to be escaped.</p>
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+bool<br>
 
-<div class="item_description"><p>Returns the text with escaped HTML special characters.
-Returns the text with escaped HTML special characters.</p></div>
+<div class="item_description"><p>Returns true if the string is an empty string.
+Returns true if the string is an empty string.</p></div>
 
 </div>
 
@@ -187,34 +187,7 @@ Returns the text with escaped HTML special characters.</p></div>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#291'>utility_functions_inc.php</a>
-</div>
-
-
-<h2>See also</h2>
-<div class="item_list">
-
-<a href='function-SmartFactory.echo_html.html'>\SmartFactory\echo_html()</a><br>
-
-
-<a href='function-SmartFactory.escape_html_array.html'>\SmartFactory\escape_html_array()</a><br>
-
-
-<a href='function-SmartFactory.escape_js.html'>\SmartFactory\escape_js()</a><br>
-
-
-</div>
-
-
-
-
-
-<h2>Used by</h2>
-<div class="item_list">
-
-<a href='function-SmartFactory.echo_html.html'>\SmartFactory\echo_html()</a><br>
-
-
+<a href='source-utility_functions_inc.php.html#247'>utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
