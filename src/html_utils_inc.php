@@ -874,7 +874,7 @@ function radiobutton($parameters, $echo = true)
 function table(&$array, $parameters = [], $echo = true)
 {
     if (!is_array($array)) {
-        trigger_error("An array expected!", E_USER_ERROR);
+        trigger_error("An array expected!", E_WARNING);
     }
     
     $html = "<table";

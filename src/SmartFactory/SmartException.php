@@ -87,6 +87,24 @@ class SmartException extends \Exception
     const ERR_CODE_XML_PARSE_ERROR = "xml_parse_error";
 
     /**
+     * Constant for the error code "path_access_error".
+     *
+     * @var string
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_CODE_PATH_ACCESS_ERROR = "path_access_error";
+
+    /**
+     * Constant for the error code "file_write_error".
+     *
+     * @var string
+     *
+     * @author Oleg Schildt
+     */
+    const ERR_CODE_FILE_WRITE_ERROR = "file_write_error";
+
+    /**
      * Constant for the error code "not_found".
      *
      * @var string
@@ -201,11 +219,29 @@ class SmartException extends \Exception
     }
 
     /**
+     * Sets the error element.
+     *
+     * @param string $error_element
+     * Error element.
+     *
+     * @return void
+     *
+     * @see SmartException::getErrorElement()
+     *
+     * @author Oleg Schildt
+     */
+    public function setErrorElement($error_element)
+    {
+        $this->error_element = $error_element;
+    }
+
+    /**
      * Returns the error element.
      *
      * @return string
      * Returns the error element.
      *
+     * @see SmartException::setErrorElement()
      * @see SmartException::getErrorCode()
      * @see SmartException::getErrorDetails()
      * @see SmartException::getTechnicalInfo()

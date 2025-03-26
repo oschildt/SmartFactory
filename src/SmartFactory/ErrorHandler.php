@@ -10,7 +10,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IErrorHandler;
+use \SmartFactory\Interfaces\IErrorHandler;
 
 /**
  * Class for error handling.
@@ -209,6 +209,28 @@ class ErrorHandler implements IErrorHandler
     } // extract_call_stack
     
     /**
+     * This is an auxiliary function for truncating long arguments.
+     *
+     * @param string $str
+     * The string to be truncated.
+     *
+     * @param int $limit
+     * The limit of the length after which the string is truncated.
+     *
+     * @return string
+     * Returns the truncated string.
+     *
+     * @author Oleg Schildt
+     */
+    protected function truncate_argument($str, $limit) {
+        $str = preg_replace("/[\r\n\t]+/", " ", $str);
+        
+        return mb_strlen($str) > $limit
+            ? mb_substr($str, 0, $limit) . "..."
+            : $str;
+    }
+
+    /**
      * This is an auxiliary function for generation of the detailed string from the
      * function arguments from the standard PHP backtrace (debug_backtrace).
      *
@@ -226,19 +248,28 @@ class ErrorHandler implements IErrorHandler
     {
         $list = "";
         
+        $count = 1;
+        
         foreach ($arr as $nm => &$val) {
+            if ($count >= 4) {
+                $list .= "...";
+                break;
+            }
+
             if (is_array($val)) {
                 $list .= $this->deep_implode($val) . ", ";
             } elseif (is_object($val)) {
                 $list .= str_replace("SmartFactory\\", "", get_class($val)) . ", ";
             } else {
-                $list .= $nm . "=" . $val . ", ";
+                $list .= $nm . "=" . $this->truncate_argument($val, 15) . ", ";
             }
+            
+            $count++;
         }
         
         return "[" . trim($list, ", ") . "]";
     } // deep_implode
-    
+
     /**
      * Generates the detailed string from the function arguments from the
      * standard PHP backtrace (debug_backtrace).
@@ -261,7 +292,7 @@ class ErrorHandler implements IErrorHandler
             } elseif (is_object($arg)) {
                 $list .= str_replace("SmartFactory\\", "", get_class($arg)) . ", ";
             } else {
-                $list .= $arg . ", ";
+                $list .= $this->truncate_argument($arg, 15) . ", ";
             }
         }
         

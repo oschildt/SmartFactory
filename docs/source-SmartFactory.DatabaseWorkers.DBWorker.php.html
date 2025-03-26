@@ -105,7 +105,7 @@
 <span class="line" id="10"> 10: </span>
 <span class="line" id="11"> 11: </span><span class="php-keyword1">namespace</span> SmartFactory\DatabaseWorkers;
 <span class="line" id="12"> 12: </span>
-<span class="line" id="13"> 13: </span><span class="php-keyword1">use</span> SmartFactory\Interfaces\IInitable;
+<span class="line" id="13"> 13: </span><span class="php-keyword1">use</span> \SmartFactory\Interfaces\IInitable;
 <span class="line" id="14"> 14: </span>
 <span class="line" id="15"> 15: </span><span class="php-comment">/**
 </span><span class="line" id="16"> 16: </span><span class="php-comment"> * This is the abstract base class for all dbworkers for different databases.
@@ -442,7 +442,7 @@
 <span class="line" id="347">347: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> check_connection() {
 <span class="line" id="348">348: </span>        <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;is_connected()) {
 <span class="line" id="349">349: </span>            <span class="php-var">$err</span> = <span class="php-quote">&quot;Database server not connected!&quot;</span>;
-<span class="line" id="350">350: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$err</span>, E_USER_ERROR);
+<span class="line" id="350">350: </span>            <span class="php-keyword2">trigger_error</span>(<span class="php-var">$err</span>, E_USER_WARNING);
 <span class="line" id="351">351: </span>            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> DBWorkerException(<span class="php-var">$err</span>, DBWorker::ERR_NOT_CONNECTED);
 <span class="line" id="352">352: </span>        }
 <span class="line" id="353">353: </span>    } <span class="php-comment">// check_connection</span>
@@ -935,7 +935,7 @@
 </span><span class="line" id="840">840: </span><span class="php-comment">     */</span>
 <span class="line" id="841">841: </span>    <span class="php-keyword1">function</span> quotes_or_null(<span class="php-var">$str</span>)
 <span class="line" id="842">842: </span>    {
-<span class="line" id="843">843: </span>        <span class="php-keyword1">return</span> (string)<span class="php-var">$str</span> === <span class="php-quote">&quot;&quot;</span> ? <span class="php-quote">&quot;NULL&quot;</span> : <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$str</span>) . <span class="php-quote">&quot;'&quot;</span>;
+<span class="line" id="843">843: </span>        <span class="php-keyword1">return</span> (string)<span class="php-var">$str</span> === <span class="php-quote">&quot;&quot;</span> ? <span class="php-quote">&quot;null&quot;</span> : <span class="php-quote">&quot;'&quot;</span> . <span class="php-var">$this</span>-&gt;escape(<span class="php-var">$str</span>) . <span class="php-quote">&quot;'&quot;</span>;
 <span class="line" id="844">844: </span>    }
 <span class="line" id="845">845: </span>
 <span class="line" id="846">846: </span>    <span class="php-comment">/**
@@ -960,7 +960,7 @@
 <span class="line" id="865">865: </span>    <span class="php-keyword1">function</span> number_or_null(<span class="php-var">$str</span>)
 <span class="line" id="866">866: </span>    {
 <span class="line" id="867">867: </span>        <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$str</span>) &amp;&amp; (string)<span class="php-var">$str</span> != <span class="php-quote">&quot;0&quot;</span>) {
-<span class="line" id="868">868: </span>            <span class="php-keyword1">return</span> <span class="php-quote">&quot;NULL&quot;</span>;
+<span class="line" id="868">868: </span>            <span class="php-keyword1">return</span> <span class="php-quote">&quot;null&quot;</span>;
 <span class="line" id="869">869: </span>        }
 <span class="line" id="870">870: </span>
 <span class="line" id="871">871: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword2">is_numeric</span>(<span class="php-var">$str</span>)) {
@@ -1083,7 +1083,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2024-11-19 13:55 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

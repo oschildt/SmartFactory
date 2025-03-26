@@ -10,8 +10,8 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IErrorHandler;
-use SmartFactory\Interfaces\IRequestHandler;
+use \SmartFactory\Interfaces\IErrorHandler;
+use \SmartFactory\Interfaces\IRequestHandler;
 
 /**
  * Abscract class for handling the JSON and XML requests.

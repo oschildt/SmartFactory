@@ -9,7 +9,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\DatabaseWorkers\DBWorker;
+use \SmartFactory\DatabaseWorkers\DBWorker;
 
 /**
  * The method singleton creates an object that supports the specified interface and ensures

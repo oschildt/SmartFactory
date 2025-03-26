@@ -10,7 +10,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\ISessionManager;
+use \SmartFactory\Interfaces\ISessionManager;
 
 /**
  * Class for session management.

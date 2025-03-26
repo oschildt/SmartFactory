@@ -10,6 +10,8 @@
 
 namespace SmartFactory;
 
+use \SmartFactory\Interfaces\IErrorHandler;
+
 /**
  * Class for handling the XML API requests.
  *
@@ -114,6 +116,8 @@ abstract class XmlRequestHandler extends RequestHandler
         } catch (SmartException $ex) {
             throw $ex;
         } catch (\Throwable $ex) {
+            singleton(IErrorHandler::class)->handleException($ex, E_USER_ERROR);
+
             throw new SmartException($ex->getMessage(), SmartException::ERR_CODE_XML_PARSE_ERROR);
         }
     } // parseInput

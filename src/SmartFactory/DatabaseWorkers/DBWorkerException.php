@@ -10,7 +10,7 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use SmartFactory\SmartException;
+use \SmartFactory\SmartException;
 
 /**
  * Class for DBWorkerException in the smarFactory library.

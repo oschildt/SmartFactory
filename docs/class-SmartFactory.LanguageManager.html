@@ -210,6 +210,19 @@
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#$cookie_path">$cookie_path</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the cookie path.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#$countries">$countries</a></div>
 
               <div style='float:right'>
@@ -239,7 +252,7 @@
               <div style='float:left'><a href="#$dictionary_loaded">$dictionary_loaded</a></div>
 
               <div style='float:right'>
-              <span class="label label-primary">static</span>
+              
               <span class='label label-warning'>protected</span>
               </div>
               <div style="clear:both"></div>
@@ -301,6 +314,19 @@
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#$trace_missing">$trace_missing</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#$use_apcu">$use_apcu</a></div>
 
               <div style='float:right'>
@@ -314,7 +340,7 @@
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$warn_missing">$warn_missing</a></div>
+              <div style='float:left'><a href="#$use_cookie">$use_cookie</a></div>
 
               <div style='float:right'>
               
@@ -323,7 +349,20 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
+              <p>Internal variable for storing the state whether the last selected language can be stored to cookie.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$use_fallback_language">$use_fallback_language</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the fallback language.</p>
           </td>
       </tr>
       
@@ -333,6 +372,19 @@
       <tr><th colspan="2">Methods</th></tr>
       
       <tr>
+          <td>
+              <div style='float:left'><a href="#addLocalizationFile">addLocalizationFile()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds additional localization files to the dictionary.</p>
+          </td>
+      </tr><tr>
           <td>
               <div style='float:left'><a href="#detectLanguage">detectLanguage()</a></div>
 
@@ -344,6 +396,19 @@
           </td>
           <td class="description_column">
               <p>This function should detect the current language based on cookies, browser languages etc.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#extendDictionary">extendDictionary()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds additional translations to the dictionary.</p>
           </td>
       </tr><tr>
           <td>
@@ -410,6 +475,20 @@ for the given langauge.</p>
           </td>
           <td class="description_column">
               <p>Returns the current language.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getFallbackLanguage">getFallbackLanguage()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the fallback language. If set and a tranlation
+is missing on a langauge, the translation on this language will be used.</p>
           </td>
       </tr><tr>
           <td>
@@ -501,7 +580,20 @@ for the given langauge.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>This is internal auxiliary function for loading the translations from the source JSON file.</p>
+              <p>This is function for loading the translations from the source JSON file.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setContext">setContext()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sets the current context.</p>
           </td>
       </tr><tr>
           <td>
@@ -528,6 +620,19 @@ for the given langauge.</p>
           </td>
           <td class="description_column">
               <p>Provides the text translation for the text ID for the given langauge.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#try_text">try_text()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Provides the text translation for the text ID for the given langauge if the translation exists.</p>
           </td>
       </tr><tr>
           <td>
@@ -565,7 +670,7 @@ for the given langauge.</p>
   
   <h1>Property: LanguageManager::$additional_localization_files</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$additional_localization_files</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$additional_localization_files</span> = [];</div>
 
   
   <div class="short-description">
@@ -636,7 +741,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#49'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#59'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -646,6 +751,44 @@ for the given langauge.</p>
   <a href='class-SmartFactory.LanguageManager.html#getContext'>\SmartFactory\LanguageManager::getContext()</a><br>
   
   
+  </div><hr id="$cookie_path">
+  
+  <h1>Property: LanguageManager::$cookie_path</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$cookie_path</span> = <span class="php-quote">&quot;/&quot;</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the cookie path.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  string
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#95'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$countries">
   
   <h1>Property: LanguageManager::$countries</h1>
@@ -683,12 +826,12 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#112'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#140'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$current_language">
   
   <h1>Property: LanguageManager::$current_language</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> string <span class="php-var">$current_language</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$current_language</span> = [];</div>
 
   
   <div class="short-description">
@@ -701,7 +844,7 @@ for the given langauge.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  array
   </div>
   
 
@@ -721,12 +864,12 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#58'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#122'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$dictionary_loaded">
   
   <h1>Property: LanguageManager::$dictionary_loaded</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> bool <span class="php-var">$dictionary_loaded</span> = <span class="php-keyword1">false</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$dictionary_loaded</span> = <span class="php-keyword1">false</span>;</div>
 
   
   <div class="short-description">
@@ -759,7 +902,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#67'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#68'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$languages">
   
   <h1>Property: LanguageManager::$languages</h1>
@@ -797,7 +940,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#103'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#131'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$localization_path">
   
   <h1>Property: LanguageManager::$localization_path</h1>
@@ -873,7 +1016,7 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#94'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#113'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$texts">
   
   <h1>Property: LanguageManager::$texts</h1>
@@ -911,7 +1054,45 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#121'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#149'>SmartFactory/LanguageManager.php</a>
+  </div><hr id="$trace_missing">
+  
+  <h1>Property: LanguageManager::$trace_missing</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$trace_missing</span> = <span class="php-keyword1">false</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  bool
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#104'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$use_apcu">
   
   <h1>Property: LanguageManager::$use_apcu</h1>
@@ -949,16 +1130,16 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#76'>SmartFactory/LanguageManager.php</a>
-  </div><hr id="$warn_missing">
+  <a href='source-SmartFactory.LanguageManager.php.html#77'>SmartFactory/LanguageManager.php</a>
+  </div><hr id="$use_cookie">
   
-  <h1>Property: LanguageManager::$warn_missing</h1>
+  <h1>Property: LanguageManager::$use_cookie</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$warn_missing</span> = <span class="php-keyword1">false</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$use_cookie</span> = <span class="php-keyword1">false</span>;</div>
 
   
   <div class="short-description">
-  <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
+  <p>Internal variable for storing the state whether the last selected language can be stored to cookie.</p>
   </div>
   
 
@@ -987,14 +1168,164 @@ for the given langauge.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#85'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#86'>SmartFactory/LanguageManager.php</a>
+  </div><hr id="$use_fallback_language">
+  
+  <h1>Property: LanguageManager::$use_fallback_language</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$use_fallback_language</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the fallback language.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>If set and a tranlation is missing on a langauge, the translation on this language will be used.</p>
+  </div>
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
   </div>
 
-<hr id="detectLanguage">
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#48'>SmartFactory/LanguageManager.php</a>
+  </div>
+
+<hr id="addLocalizationFile">
+  
+  <h1>Method: LanguageManager::addLocalizationFile()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addLocalizationFile(string <span class="php-var">$localization_file</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Adds additional localization files to the dictionary.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $localization_file
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The path of the additional localization file.
+The path of the additional localization file.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#addLocalizationFile'>\SmartFactory\Interfaces\ILanguageManager::addLocalizationFile()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#216'>SmartFactory/LanguageManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="detectLanguage">
   
   <h1>Method: LanguageManager::detectLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detectLanguage(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detectLanguage() : void;</div>
 
   
   <div class="short-description">
@@ -1014,38 +1345,6 @@ for the given langauge.</p>
 <li>the first one from the supported list.</li>
 <li>English.</li>
 </ol>
-  </div>
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $context
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;default&quot;
-            </td>
-            <td class="description_column">
-                <p>The context of the application.</p>
 <p>Some applications may consist of two parts - administration
 console and public site. A usual example is a CMS system.</p>
 <p>For example, you are using administration console in English
@@ -1055,13 +1354,13 @@ you want it to be open in the corresponding language, but
 the administration console should remain in English.</p>
 <p>With the help of $context, you are able to maintain different
 languages for different parts of your application.
-If you do not need the $context, just do not specify it.
 If you do not need the $context, just do not specify it.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
+  </div>
+  
+
+  
+
+  
 
   
   <h2>Returns</h2>
@@ -1094,7 +1393,114 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#364'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#435'>SmartFactory/LanguageManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="extendDictionary">
+  
+  <h1>Method: LanguageManager::extendDictionary()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> extendDictionary(<span class="php-keyword1">array</span> &amp;<span class="php-var">$dictionary</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Adds additional translations to the dictionary.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $dictionary
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The array with additional translations.
+The array with additional translations.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#extendDictionary'>\SmartFactory\Interfaces\ILanguageManager::extendDictionary()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#395'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1178,11 +1584,17 @@ Returns the current context.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#436'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#537'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
+  <h2>See also</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.LanguageManager.html#setContext'>\SmartFactory\LanguageManager::setContext()</a><br>
+  
+  
+  </div>
 
   
 
@@ -1280,7 +1692,7 @@ Returns the country code if it could be found, otherwise an empty string.</p></d
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#759'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#914'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1436,7 +1848,7 @@ Returns true if the country list is successfully retrieved, otherwise false.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#828'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#983'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1575,7 +1987,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#727'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#882'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1660,7 +2072,7 @@ Returns the current language ISO code.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#492'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#606'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1671,6 +2083,77 @@ Returns the current language ISO code.</p></div>
   
   
   </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getFallbackLanguage">
+  
+  <h1>Method: LanguageManager::getFallbackLanguage()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getFallbackLanguage() : string;</div>
+
+  
+  <div class="short-description">
+  <p>Returns the fallback language. If set and a tranlation
+is missing on a langauge, the translation on this language will be used.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the fallback language.
+Returns the fallback language.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getFallbackLanguage'>\SmartFactory\Interfaces\ILanguageManager::getFallbackLanguage()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#591'>SmartFactory/LanguageManager.php</a>
+  </div>
+  
+
+  
 
   
 
@@ -1768,7 +2251,7 @@ Returns the language code if it could be found, otherwise an empty string.</p></
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#615'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#770'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1924,7 +2407,7 @@ Returns true if the langauge list is successfully retrieved, otherwise false.</p
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#684'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#839'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2063,7 +2546,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#583'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#738'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2148,7 +2631,7 @@ Returns the list of supported languages.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#449'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#550'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2270,7 +2753,7 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#552'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#707'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2336,16 +2819,22 @@ Returns true if the translation exists, otherwise false.</p></div>
 <p>$parameters[&quot;localization_path&quot;] - the path where the localization files are stored.</p>
 </li>
 <li>
-<p>$parameters[&quot;additional_localization_files&quot;] - the paths of the additional localization files.</p>
+<p>$parameters[&quot;use_cookie&quot;] - if set to true, the last selected language is stored to cookie.</p>
+</li>
+<li>
+<p>$parameters[&quot;use_fallback_language&quot;] - if set and a tranlation is missing on a langauge, the translation on this language will be used.</p>
+</li>
+<li>
+<p>$parameters[&quot;cookie_path&quot;] - Cookie path.</p>
 </li>
 <li>
 <p>$parameters[&quot;use_apcu&quot;] - if installed, apcu can be used to cache the translations in the memory.</p>
 </li>
 <li>
-<p>$parameters[&quot;warn_missing&quot;] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
+<p>$parameters[&quot;trace_missing&quot;] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
 </li>
 <li>
-<p>$parameters[&quot;warn_missing&quot;] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
+<p>$parameters[&quot;trace_missing&quot;] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
 </li>
 </ul>
             </td>
@@ -2393,7 +2882,7 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#144'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#176'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2415,11 +2904,11 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h1>Method: LanguageManager::loadDictionary()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadDictionary() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadDictionary() : void;</div>
 
   
   <div class="short-description">
-  <p>This is internal auxiliary function for loading the translations from the source JSON file.</p>
+  <p>This is function for loading the translations from the source JSON file.</p>
   </div>
   
 
@@ -2432,10 +2921,7 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the dictoinary has been successfully loaded, otherwise false.
-It should return true if the dictoinary has been successfully loaded, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -2454,6 +2940,11 @@ It should return true if the dictoinary has been successfully loaded, otherwise 
   </div>
 
   
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#loadDictionary'>\SmartFactory\Interfaces\ILanguageManager::loadDictionary()</a>
+  </div>
+  
 
   <h2>Authors</h2>
   <div class="item_list">
@@ -2469,11 +2960,130 @@ It should return true if the dictoinary has been successfully loaded, otherwise 
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#176'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#233'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setContext">
+  
+  <h1>Method: LanguageManager::setContext()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span>) : void;</div>
+
+  
+  <div class="short-description">
+  <p>Sets the current context.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Some applications may consist of two parts - administration
+console and public site. A usual example is a CMS system.</p>
+<p>For example, you are using administration console in English
+and editing the public site for German and French.
+When you open the public site for preview in German or French,
+you want it to be open in the corresponding language, but
+the administration console should remain in English.</p>
+<p>With the help of $context, you are able to maintain different
+languages for different parts of your application.
+If you do not need the $context, just do not specify it.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The name of the context.
+The name of the context.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#setContext'>\SmartFactory\Interfaces\ILanguageManager::setContext()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#509'>SmartFactory/LanguageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.LanguageManager.html#getContext'>\SmartFactory\LanguageManager::getContext()</a><br>
+  
+  
+  </div>
 
   
 
@@ -2491,7 +3101,7 @@ It should return true if the dictoinary has been successfully loaded, otherwise 
   
   <h1>Method: LanguageManager::setCurrentLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setCurrentLanguage(string <span class="php-var">$language</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setCurrentLanguage(string <span class="php-var">$language</span>) : void;</div>
 
   
   <div class="short-description">
@@ -2540,10 +3150,7 @@ The language ISO code to be set.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the current language has been successfully set, otherwise false.
-Returns true if the current language has been successfully set, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -2571,7 +3178,7 @@ Returns true if the current language has been successfully set, otherwise false.
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#467'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#567'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2719,7 +3326,135 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#516'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#637'>SmartFactory/LanguageManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="try_text">
+  
+  <h1>Method: LanguageManager::try_text()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> try_text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>Provides the text translation for the text ID for the given langauge if the translation exists.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Otherwise it returns the text ID and emits no warning.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $text_id
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Text ID
+Text ID</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $lng
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The langauge. If it is not specified,
+the default langauge is used.
+the default langauge is used.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the translation text or the $default_text/$text_id if no translation
+is found.
+is found.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#try_text'>\SmartFactory\Interfaces\ILanguageManager::try_text()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#679'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2841,7 +3576,7 @@ Returns true if the country code is valid (has translation), otherwise false.</p
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#796'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#951'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2978,7 +3713,7 @@ Returns true if the langauge code is valid (has translation), otherwise false.</
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#652'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#807'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -3000,7 +3735,7 @@ Returns true if the langauge code is valid (has translation), otherwise false.</
   </div>
                     
                     <div id="footer">
-                        Generated on 2024-11-19 13:55 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -9,16 +9,16 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IMessageManager;
-use SmartFactory\Interfaces\ISessionManager;
-use SmartFactory\Interfaces\IErrorHandler;
-use SmartFactory\Interfaces\IEventManager;
-use SmartFactory\Interfaces\IShardManager;
+use \SmartFactory\Interfaces\IMessageManager;
+use \SmartFactory\Interfaces\ISessionManager;
+use \SmartFactory\Interfaces\IErrorHandler;
+use \SmartFactory\Interfaces\IEventManager;
+use \SmartFactory\Interfaces\IShardManager;
 
-use SmartFactory\DatabaseWorkers\MySQL_DBWorker;
-use SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker;
-use SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
-use SmartFactory\DatabaseWorkers\ShardManager;
+use \SmartFactory\DatabaseWorkers\MySQL_DBWorker;
+use \SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker;
+use \SmartFactory\DatabaseWorkers\MSSQL_DBWorker;
+use \SmartFactory\DatabaseWorkers\ShardManager;
 
 //-------------------------------------------------------------------
 // Class binding

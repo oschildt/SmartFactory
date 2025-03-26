@@ -11,9 +11,9 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IErrorHandler;
-use SmartFactory\Interfaces\IEventManager;
-use SmartFactory\Interfaces\IMessageManager;
+use \SmartFactory\Interfaces\IErrorHandler;
+use \SmartFactory\Interfaces\IEventManager;
+use \SmartFactory\Interfaces\IMessageManager;
 
 //------------------------------------------------------------------------------
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {

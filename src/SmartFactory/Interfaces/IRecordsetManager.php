@@ -9,7 +9,7 @@
 
 namespace SmartFactory\Interfaces;
 
-use SmartFactory\DatabaseWorkers\DBWorkerException;
+use \SmartFactory\DatabaseWorkers\DBWorkerException;
 
 /**
  * Interface for working with record sets.

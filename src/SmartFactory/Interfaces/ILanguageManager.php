@@ -32,10 +32,51 @@ interface ILanguageManager extends IInitable
     public function init($parameters);
     
     /**
-     * This function should detect the current language based on cookies, browser languages etc.
+     * This is function for loading the translations from the source JSON file.
      *
-     * @param string $context
-     * The context of the application.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw the following exceptions in the case of any errors:
+     *
+     * - if the translation file is invalid.
+     *
+     * @author Oleg Schildt
+     */
+    public function loadDictionary();
+
+    /**
+     * Adds additional translations to the dictionary.
+     *
+     * @param array &$dictionary
+     * The array with additional translations.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
+     * @author Oleg Schildt
+     */
+    public function extendDictionary(&$dictionary);
+
+    /**
+     * Adds additional localization files to the dictionary.
+     *
+     * @param string $localization_file
+     * The path of the additional localization file.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
+     * @author Oleg Schildt
+     */
+    public function addLocalizationFile($localization_file);
+
+    /**
+     * This function should detect the current language based on cookies, browser languages etc.
      *
      * Some applications may consist of two parts - administration
      * console and public site. A usual example is a CMS system.
@@ -54,8 +95,35 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function detectLanguage($context = "default");
+    public function detectLanguage();
     
+    /**
+     * Sets the current context.
+     *
+     * Some applications may consist of two parts - administration
+     * console and public site. A usual example is a CMS system.
+     *
+     * For example, you are using administration console in English
+     * and editing the public site for German and French.
+     * When you open the public site for preview in German or French,
+     * you want it to be open in the corresponding language, but
+     * the administration console should remain in English.
+     *
+     * With the help of $context, you are able to maintain different
+     * languages for different parts of your application.
+     * If you do not need the $context, just do not specify it.
+     *
+     * @param string $context
+     * The name of the context.
+     *
+     * @return void
+     *
+     * @see LanguageManager::getContext()
+     *
+     * @author Oleg Schildt
+     */
+    public function setContext($context);
+
     /**
      * Returns the current context.
      *
@@ -72,7 +140,7 @@ interface ILanguageManager extends IInitable
      * languages for different parts of your application.
      * If you do not need the $context, just do not specify it.
      *
-     * @return boolean
+     * @return string
      * Returns the current context.
      *
      * @author Oleg Schildt
@@ -116,6 +184,17 @@ interface ILanguageManager extends IInitable
     public function getCurrentLanguage();
     
     /**
+     * Returns the fallback language. If set and a tranlation 
+     * is missing on a langauge, the translation on this language will be used.
+     *
+     * @return string
+     * Returns the fallback language.
+     *
+     * @author Oleg Schildt
+     */
+    public function getFallbackLanguage();
+
+    /**
      * Provides the text translation for the text ID for the given langauge.
      *
      * @param string $text_id
@@ -136,6 +215,25 @@ interface ILanguageManager extends IInitable
      */
     public function text($text_id, $lng = "", $default_text = "");
     
+    /**
+     * Provides the text translation for the text ID for the given langauge if the translation exists.
+     * Otherwise it returns the text ID and emits no warning.
+     *
+     * @param string $text_id
+     * Text ID
+     *
+     * @param string $lng
+     * The langauge. If it is not specified,
+     * the default langauge is used.
+     *
+     * @return string
+     * Returns the translation text or the $default_text/$text_id if no translation
+     * is found.
+     *
+     * @author Oleg Schildt
+     */
+    public function try_text($text_id, $lng = "");
+
     /**
      * Checks whether the text translation for the text ID for the given langauge exists.
      *

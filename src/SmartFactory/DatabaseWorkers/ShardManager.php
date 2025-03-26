@@ -10,9 +10,9 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use SmartFactory\Interfaces\IShardManager;
+use \SmartFactory\Interfaces\IShardManager;
 
-use function SmartFactory\dbworker;
+use function \SmartFactory\dbworker;
 
 /**
  * Class for managing connections to the DB shards.

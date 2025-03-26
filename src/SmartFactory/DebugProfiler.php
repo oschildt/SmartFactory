@@ -10,7 +10,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IDebugProfiler;
+use \SmartFactory\Interfaces\IDebugProfiler;
 
 /**
  * Class for debugging, tracing and profiling.
@@ -196,7 +196,8 @@ class DebugProfiler implements IDebugProfiler
         $message = trim($message);
 
         if($this->write_source_file_and_line_by_debug && !empty($file) && !empty($line)) {
-            $message = "\r\n#source: " . $file . ", " . $line . "\r\n\r\n" . $message;
+            $message = "\r\n#URI: " . ($_SERVER["REQUEST_URI"] ?? "") . "\r\n" .
+                       "#source: " . $file . ", " . $line . "\r\n\r\n" . $message;
         }
 
         $message .= "\r\n";

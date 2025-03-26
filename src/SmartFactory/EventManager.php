@@ -10,7 +10,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IEventManager;
+use \SmartFactory\Interfaces\IEventManager;
 
 /**
  * Class for event management.

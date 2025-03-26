@@ -10,8 +10,9 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\ISettingsManager;
-use SmartFactory\DatabaseWorkers\DBWorker;
+use \SmartFactory\Interfaces\ISettingsManager;
+use \SmartFactory\Interfaces\IErrorHandler;
+use \SmartFactory\DatabaseWorkers\DBWorker;
 
 /**
  * Class for management of the user settings.
@@ -343,6 +344,8 @@ class UserSettingsManager implements ISettingsManager
             if (empty($this->no_own_transcation)) {
                 $this->dbworker->rollback_transaction();
             }
+
+            singleton(IErrorHandler::class)->handleException($ex, E_USER_ERROR);
 
             throw $ex;
         }

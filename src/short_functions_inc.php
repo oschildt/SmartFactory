@@ -10,12 +10,12 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\ILanguageManager;
-use SmartFactory\Interfaces\IMessageManager;
-use SmartFactory\Interfaces\ISessionManager;
-use SmartFactory\Interfaces\IDebugProfiler;
-use SmartFactory\Interfaces\IEventManager;
-use SmartFactory\Interfaces\IShardManager;
+use \SmartFactory\Interfaces\ILanguageManager;
+use \SmartFactory\Interfaces\IMessageManager;
+use \SmartFactory\Interfaces\ISessionManager;
+use \SmartFactory\Interfaces\IDebugProfiler;
+use \SmartFactory\Interfaces\IEventManager;
+use \SmartFactory\Interfaces\IShardManager;
 
 /**
  * Short function that provides the text translation for

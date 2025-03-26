@@ -415,6 +415,19 @@ standard PHP backtrace (debug_backtrace).</p>
           <td class="description_column">
               <p>This is an auxiliary function that cuts off the common part of the path.</p>
           </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#truncate_argument">truncate_argument()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is an auxiliary function for truncating long arguments.</p>
+          </td>
       </tr>
       
   </table>
@@ -644,7 +657,7 @@ Returns the detailed string from the function arguments.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#225'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#247'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -717,7 +730,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#533'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#564'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -799,7 +812,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#515'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#546'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1072,7 +1085,7 @@ Returns the last error or an empty string if no error occured so far.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#442'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#473'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1229,7 +1242,7 @@ Line number where the error occured.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#351'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#382'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1349,7 +1362,7 @@ Error code.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#401'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#432'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1565,7 +1578,7 @@ Returns the detailed string from the function arguments.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#254'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#285'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1664,7 +1677,7 @@ The error text to be stored.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#473'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#504'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1744,7 +1757,7 @@ Returns the state whether the trace is active or not.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#497'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#528'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1880,7 +1893,7 @@ Returns true if the message has been successfully trace, otherwise false.</p></d
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#290'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#321'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1979,9 +1992,125 @@ Returns the cut path.</p></div>
   <div class="item_list">
   <a href='source-SmartFactory.ErrorHandler.php.html#141'>SmartFactory/ErrorHandler.php</a>
   </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="truncate_argument">
+  
+  <h1>Method: ErrorHandler::truncate_argument()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> truncate_argument(string <span class="php-var">$str</span>, int <span class="php-var">$limit</span>) : string;</div>
+
+  
+  <div class="short-description">
+  <p>This is an auxiliary function for truncating long arguments.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $str
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The string to be truncated.
+The string to be truncated.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $limit
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                int
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The limit of the length after which the string is truncated.
+The limit of the length after which the string is truncated.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the truncated string.
+Returns the truncated string.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ErrorHandler.php.html#225'>SmartFactory/ErrorHandler.php</a>
+  </div>
                     
                     <div id="footer">
-                        Generated on 2024-11-19 13:55 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

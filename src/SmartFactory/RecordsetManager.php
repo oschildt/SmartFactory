@@ -10,10 +10,10 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IRecordsetManager;
+use \SmartFactory\Interfaces\IRecordsetManager;
 
-use SmartFactory\DatabaseWorkers\DBWorker;
-use SmartFactory\DatabaseWorkers\DBWorkerException;
+use \SmartFactory\DatabaseWorkers\DBWorker;
+use \SmartFactory\DatabaseWorkers\DBWorkerException;
 
 /**
  * Class for working with record sets.

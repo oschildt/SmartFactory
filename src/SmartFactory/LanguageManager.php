@@ -10,7 +10,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\ILanguageManager;
+use \SmartFactory\Interfaces\ILanguageManager;
 
 /**
  * Class for working with localization of texts.
@@ -35,7 +35,17 @@ class LanguageManager implements ILanguageManager
      *
      * @author Oleg Schildt
      */
-    protected $additional_localization_files;
+    protected $additional_localization_files = [];
+    
+    /**
+     * Internal variable for storing the fallback language.
+     * If set and a tranlation is missing on a langauge, the translation on this language will be used.
+     *
+     * @var array
+     *
+     * @author Oleg Schildt
+     */
+     protected $use_fallback_language = "";
 
     /**
      * Internal variable for storing the current context.
@@ -49,22 +59,13 @@ class LanguageManager implements ILanguageManager
     static protected $context = "default";
 
     /**
-     * Internal variable for storing the current language.
-     *
-     * @var string
-     *
-     * @author Oleg Schildt
-     */
-    static protected $current_language = "";
-
-    /**
      * Internal variable for storing the state whether the dictionary is loaded or not.
      *
      * @var boolean
      *
      * @author Oleg Schildt
      */
-    static protected $dictionary_loaded = false;
+    protected $dictionary_loaded = false;
 
     /**
      * Internal variable for storing the state whether the APCU should be used.
@@ -76,13 +77,31 @@ class LanguageManager implements ILanguageManager
     protected $use_apcu = false;
 
     /**
+     * Internal variable for storing the state whether the last selected language can be stored to cookie.
+     *
+     * @var boolean
+     *
+     * @author Oleg Schildt
+     */
+    protected $use_cookie = false;
+
+    /**
+     * Internal variable for storing the cookie path.
+     *
+     * @var string
+     *
+     * @author Oleg Schildt
+     */
+    protected $cookie_path = "/";
+
+    /**
      * Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.
      *
      * @var boolean
      *
      * @author Oleg Schildt
      */
-    protected $warn_missing = false;
+    protected $trace_missing = false;
 
     /**
      * Internal array for storing the list of supported languages.
@@ -92,6 +111,15 @@ class LanguageManager implements ILanguageManager
      * @author Oleg Schildt
      */
     static protected $supported_languages = [];
+
+    /**
+     * Internal variable for storing the current language.
+     *
+     * @var array
+     *
+     * @author Oleg Schildt
+     */
+    static protected $current_language = [];
 
     /**
      * Internal array for storing the list of language name translations.
@@ -128,11 +156,15 @@ class LanguageManager implements ILanguageManager
      *
      * - $parameters["localization_path"] - the path where the localization files are stored.
      *
-     * - $parameters["additional_localization_files"] - the paths of the additional localization files.
+     * - $parameters["use_cookie"] - if set to true, the last selected language is stored to cookie.
+     *
+     * - $parameters["use_fallback_language"] - if set and a tranlation is missing on a langauge, the translation on this language will be used.
+     *
+     * - $parameters["cookie_path"] - Cookie path.
      *
      * - $parameters["use_apcu"] - if installed, apcu can be used to cache the translations in the memory.
      *
-     * - $parameters["warn_missing"] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.
+     * - $parameters["trace_missing"] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.
      *
      * @return void
      *
@@ -147,24 +179,49 @@ class LanguageManager implements ILanguageManager
             $this->localization_path = $parameters["localization_path"];
         }
 
-        if (!empty($parameters["additional_localization_files"])) {
-            $this->additional_localization_files = $parameters["additional_localization_files"];
-        }
-
         if (!empty($parameters["use_apcu"])) {
             $this->use_apcu = $parameters["use_apcu"];
         }
 
-        if (!empty($parameters["warn_missing"])) {
-            $this->warn_missing = $parameters["warn_missing"];
+        if (!empty($parameters["use_cookie"])) {
+            $this->use_cookie = $parameters["use_cookie"];
+        }
+
+        if (!empty($parameters["cookie_path"])) {
+            $this->cookie_path = $parameters["cookie_path"];
+        }
+
+        if (!empty($parameters["use_fallback_language"])) {
+            $this->use_fallback_language = $parameters["use_fallback_language"];
+        }
+
+        if (!empty($parameters["trace_missing"])) {
+            $this->trace_missing = $parameters["trace_missing"];
         }
     }
 
     /**
-     * This is internal auxiliary function for loading the translations from the source JSON file.
+     * Adds additional localization files to the dictionary.
      *
-     * @return boolean
-     * It should return true if the dictoinary has been successfully loaded, otherwise false.
+     * @param string $localization_file
+     * The path of the additional localization file.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
+     * @author Oleg Schildt
+     */
+    public function addLocalizationFile($localization_file)
+    {
+        $this->additional_localization_files[] = $localization_file;
+    }
+
+    /**
+     * This is function for loading the translations from the source JSON file.
+     *
+     * @return void
      *
      * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
@@ -175,8 +232,8 @@ class LanguageManager implements ILanguageManager
      */
     public function loadDictionary()
     {
-        if (self::$dictionary_loaded) {
-            return true;
+        if ($this->dictionary_loaded) {
+            return;
         }
 
         if ($this->use_apcu) {
@@ -312,12 +369,7 @@ class LanguageManager implements ILanguageManager
             }
         }
 
-        self::$dictionary_loaded = true;
-
-        foreach (self::$supported_languages as $lng) {
-            self::$current_language = $lng;
-            break;
-        }
+        $this->dictionary_loaded = true;
 
         if ($this->use_apcu) {
             apcu_store("dictionary_supported_languages", self::$supported_languages);
@@ -325,9 +377,31 @@ class LanguageManager implements ILanguageManager
             apcu_store("dictionary_countries", self::$countries);
             apcu_store("dictionary_texts", self::$texts);
         }
-
-        return true;
     } // loadDictionary
+
+    /**
+     * Adds additional translations to the dictionary.
+     *
+     * @param array &$dictionary
+     * The array with additional translations.
+     *
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
+     *
+     * @author Oleg Schildt
+     */
+    public function extendDictionary(&$dictionary)
+    {
+        $this->loadDictionary();
+        
+        foreach ($dictionary as $text_id => &$translations) {
+            foreach ($translations as $lang_code => $translation) {
+                self::$texts[$lang_code][$text_id] = $translation;
+            }
+        }
+    }
 
     /**
      * This function should detect the current language based on cookies, browser languages etc.
@@ -340,9 +414,6 @@ class LanguageManager implements ILanguageManager
      * 4. browser default language.
      * 5. the first one from the supported list.
      * 6. English.
-     *
-     * @param string $context
-     * The context of the application.
      *
      * Some applications may consist of two parts - administration
      * console and public site. A usual example is a CMS system.
@@ -361,10 +432,8 @@ class LanguageManager implements ILanguageManager
      *
      * @author Oleg Schildt
      */
-    public function detectLanguage($context = "default")
+    public function detectLanguage()
     {
-        self::$context = $context;
-
         // Let's go
 
         // 6. English
@@ -413,6 +482,36 @@ class LanguageManager implements ILanguageManager
     } // detectLanguage
 
     /**
+     * Sets the current context.
+     *
+     * Some applications may consist of two parts - administration
+     * console and public site. A usual example is a CMS system.
+     *
+     * For example, you are using administration console in English
+     * and editing the public site for German and French.
+     * When you open the public site for preview in German or French,
+     * you want it to be open in the corresponding language, but
+     * the administration console should remain in English.
+     *
+     * With the help of $context, you are able to maintain different
+     * languages for different parts of your application.
+     * If you do not need the $context, just do not specify it.
+     *
+     * @param string $context
+     * The name of the context.
+     *
+     * @return void
+     *
+     * @see LanguageManager::getContext()
+     *
+     * @author Oleg Schildt
+     */
+    public function setContext($context)
+    {
+        self::$context = $context;
+    } // setContext
+
+    /**
      * Returns the current context.
      *
      * Some applications may consist of two parts - administration
@@ -427,6 +526,8 @@ class LanguageManager implements ILanguageManager
      * With the help of $context, you are able to maintain different
      * languages for different parts of your application.
      * If you do not need the $context, just do not specify it.
+     *
+     * @see LanguageManager::setContext()
      *
      * @return string
      * Returns the current context.
@@ -457,8 +558,7 @@ class LanguageManager implements ILanguageManager
      * @param string $language
      * The language ISO code to be set.
      *
-     * @return boolean
-     * Returns true if the current language has been successfully set, otherwise false.
+     * @return void
      *
      * @see LanguageManager::getCurrentLanguage()
      *
@@ -470,14 +570,28 @@ class LanguageManager implements ILanguageManager
             return false;
         }
 
-        self::$current_language = $language;
+        self::$current_language[self::$context] = $language;
 
-        if (get_cookie("language_cookie_allowed")) {
-            set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, ["samesite" => "strict"]);
+        if ($this->use_cookie) {
+            set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, ["samesite" => "strict", "path" => $this->cookie_path]);
         }
 
         return true;
     } // setCurrentLanguage
+
+    /**
+     * Returns the fallback language. If set and a tranlation 
+     * is missing on a langauge, the translation on this language will be used.
+     *
+     * @return string
+     * Returns the fallback language.
+     *
+     * @author Oleg Schildt
+     */
+    public function getFallbackLanguage()
+    {
+        return $this->use_fallback_language;
+    } // getFallbackLanguage
 
     /**
      * Returns the current language.
@@ -491,7 +605,14 @@ class LanguageManager implements ILanguageManager
      */
     public function getCurrentLanguage()
     {
-        return self::$current_language;
+        if (empty(self::$current_language[self::$context])) {
+            foreach (self::$supported_languages as $lng) {
+                self::$current_language[self::$context] = $lng;
+                break;
+            }
+        }
+
+        return self::$current_language[self::$context];
     } // getCurrentLanguage
 
     /**
@@ -519,12 +640,16 @@ class LanguageManager implements ILanguageManager
             $lng = $this->getCurrentLanguage();
         }
 
-        if (empty(self::$texts[$lng][$text_id])) {
-            if ($this->warn_missing) {
-                trigger_error("No translation for the text '$text_id' in the language [$lng]!", E_USER_NOTICE);
+        if (!$this->hasTranslation($text_id, $lng)) {
+            if ($this->trace_missing) {
+                trigger_error("No translation for the text '$text_id' in the language [$lng]!", E_USER_WARNING);
             }
 
             if (empty($default_text)) {
+                if (!empty($this->use_fallback_language)) {
+                    return $this->try_text($text_id, $this->use_fallback_language);
+                }
+              
                 return $text_id;
             } else {
                 return $default_text;
@@ -533,6 +658,36 @@ class LanguageManager implements ILanguageManager
 
         return self::$texts[$lng][$text_id];
     } // text
+
+    /**
+     * Provides the text translation for the text ID for the given langauge if the translation exists.
+     * Otherwise it returns the text ID and emits no warning.
+     *
+     * @param string $text_id
+     * Text ID
+     *
+     * @param string $lng
+     * The langauge. If it is not specified,
+     * the default langauge is used.
+     *
+     * @return string
+     * Returns the translation text or the $default_text/$text_id if no translation
+     * is found.
+     *
+     * @author Oleg Schildt
+     */
+    public function try_text($text_id, $lng = "")
+    {
+        if (!$this->hasTranslation($text_id, $lng)) {
+            if (!empty($this->use_fallback_language) && $this->hasTranslation($text_id, $this->use_fallback_language)) {
+                return text($text_id, $this->use_fallback_language);
+            }
+            
+            return $text_id;
+        }
+        
+        return text($text_id, $lng);
+    } // try_text
 
     /**
      * Checks whether the text translation for the text ID for the given langauge exists.
@@ -587,8 +742,8 @@ class LanguageManager implements ILanguageManager
         }
 
         if (empty(self::$languages[$lng][$code])) {
-            if ($this->warn_missing) {
-                trigger_error("No translation for the language name [$code] in the language [$lng]!", E_USER_NOTICE);
+            if ($this->trace_missing) {
+                trigger_error("No translation for the language name [$code] in the language [$lng]!", E_USER_WARNING);
             }
             return $code;
         }
@@ -731,8 +886,8 @@ class LanguageManager implements ILanguageManager
         }
 
         if (empty(self::$countries[$lng][$code])) {
-            if ($this->warn_missing) {
-                trigger_error("No translation for the country name [$code] in the language [$lng]!", E_USER_NOTICE);
+            if ($this->trace_missing) {
+                trigger_error("No translation for the country name [$code] in the language [$lng]!", E_USER_WARNING);
             }
             return $code;
         }

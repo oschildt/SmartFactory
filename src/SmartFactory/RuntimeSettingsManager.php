@@ -11,8 +11,8 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\ISettingsManager;
-use SmartFactory\DatabaseWorkers\DBWorker;
+use \SmartFactory\Interfaces\ISettingsManager;
+use \SmartFactory\DatabaseWorkers\DBWorker;
 
 /**
  * Class for management of the application settings.

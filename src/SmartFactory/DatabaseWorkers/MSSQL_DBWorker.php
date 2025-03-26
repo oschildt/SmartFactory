@@ -10,7 +10,7 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use function SmartFactory\debugger;
+use function \SmartFactory\debugger;
 
 /**
  * This is the class for the MS SQL database using the extension sqlsrv.
@@ -345,7 +345,6 @@ class MSSQL_DBWorker extends DBWorker
             $err = $this->sys_get_errors();
             $this->connection = null;
 
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
         }
 
@@ -470,7 +469,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // execute_query
@@ -548,7 +546,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // prepare_query
@@ -606,7 +603,6 @@ class MSSQL_DBWorker extends DBWorker
 
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -619,7 +615,6 @@ class MSSQL_DBWorker extends DBWorker
             $this->statement = null;
             fclose($stream);
 
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -697,7 +692,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!@sqlsrv_execute($this->statement)) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // execute_prepared_query
@@ -844,7 +838,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!@sqlsrv_begin_transaction($this->connection)) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // start_transaction
@@ -869,7 +862,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!@sqlsrv_commit($this->connection)) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // commit_transaction
@@ -894,7 +886,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!@sqlsrv_rollback($this->connection)) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // rollback_transaction
@@ -943,7 +934,6 @@ class MSSQL_DBWorker extends DBWorker
             if (!sqlsrv_next_result($this->statement)) {
                 $err = $this->sys_get_errors();
 
-                trigger_error($err, E_USER_ERROR);
                 throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
             }
 
@@ -960,7 +950,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!$this->statement) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
 
@@ -969,7 +958,6 @@ class MSSQL_DBWorker extends DBWorker
 
             $this->free_result();
 
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
 
@@ -1012,7 +1000,6 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1070,7 +1057,6 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1129,7 +1115,6 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement || !is_resource($this->statement)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1167,7 +1152,6 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1191,7 +1175,6 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1228,7 +1211,7 @@ class MSSQL_DBWorker extends DBWorker
         }
 
         if (!array_key_exists($name, $this->row)) {
-            trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_ERROR);
+            trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_WARNING);
             return null;
         }
 
@@ -1270,7 +1253,7 @@ class MSSQL_DBWorker extends DBWorker
         }
 
         if (!array_key_exists($num, $this->field_names)) {
-            trigger_error("Field with the index $num does not exist in the result set!", E_USER_ERROR);
+            trigger_error("Field with the index $num does not exist in the result set!", E_USER_WARNING);
             return null;
         }
 
@@ -1311,7 +1294,6 @@ class MSSQL_DBWorker extends DBWorker
 
         if (!$this->statement) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1319,7 +1301,6 @@ class MSSQL_DBWorker extends DBWorker
         if (!$info) {
             $err = $this->sys_get_errors();
 
-            trigger_error($err . "\n\n" . $this->get_last_query(), DBWorker::ERR_QUERY_FAILED);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1371,11 +1352,14 @@ class MSSQL_DBWorker extends DBWorker
             if (in_array($field_info["type"], [-5, 3, 6, 4, 2, 7, 5, -6])) {
                 $field_info["numeric"] = 1;
             }
-            if (in_array($field_info["type"], [-2, -4, -3])) {
+            elseif (in_array($field_info["type"], [-2, -4, -3])) {
                 $field_info["binary"] = 1;
             }
-            if (in_array($field_info["type"], [91, 93])) {
+            elseif (in_array($field_info["type"], [91, 93])) {
                 $field_info["datetime"] = 1;
+            }
+            elseif (in_array($field_info["type"], [1, -8, -10, -9, -1, 12])) {
+                $field_info["string"] = 1;
             }
 
             if (isset($sqlsrv_type[$field_info["type"]])) {
@@ -1500,7 +1484,7 @@ class MSSQL_DBWorker extends DBWorker
     function prepare_for_query($value, $type)
     {
         if (empty($value) && (string)$value != "0") {
-            return "NULL";
+            return "null";
         } else {
             return match ($type) {
                 DBWorker::DB_NUMBER => $this->number_or_null($value),

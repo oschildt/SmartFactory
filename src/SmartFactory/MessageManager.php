@@ -10,7 +10,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\IMessageManager;
+use \SmartFactory\Interfaces\IMessageManager;
 
 /**
  * Class for working with messages - errors, warnings etc.

@@ -10,6 +10,7 @@
 
 namespace SmartFactory;
 
+use \SmartFactory\Interfaces\IErrorHandler;
 
 /**
  * Class for handling the JSON API requests.
@@ -127,6 +128,8 @@ abstract class JsonRequestHandler extends RequestHandler
         } catch (SmartException $ex) {
             throw $ex;
         } catch (\Throwable $ex) {
+            singleton(IErrorHandler::class)->handleException($ex, E_USER_ERROR);
+
             throw new SmartException($ex->getMessage(), SmartException::ERR_CODE_JSON_PARSE_ERROR);
         }
     } // parseInput

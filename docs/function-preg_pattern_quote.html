@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="resources/jquery.iviewer.css">
 
         <title>
-            Function: debug_message()
+            Function: preg_pattern_quote()
         </title>
     </head>
 
@@ -81,19 +81,9 @@
                 <ol class="breadcrumb pull-left">
                         
                         
-
-                        <li>
-                            <a href="namespace-SmartFactory.html">SmartFactory</a>
-                        </li>
-
-                        <!-- if separator -->
-                        <li class="backslash">\</li>
-                        <!-- endif separator -->
-
-                        
  
 
-                        <li class="active">debug_message()</li>
+                        <li class="active">preg_pattern_quote()</li>
                 </ol>
                 
             </div>
@@ -105,16 +95,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Function: debug_message()</h1>
+                    <h1>Function: preg_pattern_quote()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> debug_message(string <span class="php-var">$msg</span>) : bool;</div>
+<div class="definition"><span class="php-keyword1">function</span> preg_pattern_quote(string <span class="php-var">$str</span>, string <span class="php-var">$delimiter</span> = <span class="php-quote">&quot;/&quot;</span>) : string;</div>
 
 
 <div class="short-description">
-<p>Short function for writing debug messages to the log.</p>
+<p>Function for escaping the special symbols for putting into the regexp pattern
+as a simple text in the pattern.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>This function escapes all special symbols so that they are treated as a simple text.</p>
+</div>
 
 
 
@@ -133,7 +129,7 @@
       
       <tr>
           <td>
-              $msg
+              $str
           </td>
           <td>
               by value
@@ -145,8 +141,27 @@
               
           </td>
           <td class="description_column">
-              <p>The message to be logged.
-The message to be logged.</p>
+              <p>The string to be escaped.
+The string to be escaped.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $delimiter
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              string
+          </td>
+          <td>
+              &quot;/&quot;
+          </td>
+          <td class="description_column">
+              <p>The string used in the pattern.
+The string used in the pattern.</p>
           </td>
       </tr>
       
@@ -156,29 +171,15 @@ The message to be logged.</p>
 
 <h2>Returns</h2>
 <div class="item_list">
-bool<br>
+string<br>
 
-<div class="item_description"><p>Returns true if the message has been successfully logged, otherwise false.
-Returns true if the message has been successfully logged, otherwise false.</p></div>
-
-</div>
-
-
-<h2>Throws</h2>
-<div class="item_list">
-
-\Exception<br>
-
-<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the check of the classes and interfaces fails.</li>
-<li>if the debug file is not writable.</li>
-</ul></div>
-
+<div class="item_description"><p>The escaped string.
+The escaped string.</p></div>
 
 </div>
+
+
+
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -194,14 +195,23 @@ Returns true if the message has been successfully logged, otherwise false.</p></
 
 <h2>Package</h2>
 <div class="item_list">
-<a href='package-System.html'>System</a>
+<a href='package-Utility Functions.html'>Utility Functions</a>
 </div>
 
 
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-short_functions_inc.php.html#156'>short_functions_inc.php</a>
+<a href='source-global_functions_inc.php.html#29'>global_functions_inc.php</a>
+</div>
+
+
+<h2>See also</h2>
+<div class="item_list">
+
+<a href='function-preg_replacement_quote.html'>\preg_replacement_quote()</a><br>
+
+
 </div>
                     
                     <div id="footer">

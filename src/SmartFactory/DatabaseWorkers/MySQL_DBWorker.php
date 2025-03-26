@@ -10,7 +10,7 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use function SmartFactory\debugger;
+use function \SmartFactory\debugger;
 
 /**
  * This is the class for the MySQL database using the extension mysqli.
@@ -300,7 +300,6 @@ class MySQL_DBWorker extends DBWorker
                 $this->mysqli->real_connect($this->db_server, $this->db_user, $this->db_password, null, $port);
             } catch (\mysqli_sql_exception $ex) {
                 $err = $ex->getMessage();
-                trigger_error($err, E_USER_ERROR);
 
                 switch ($ex->getCode()) {
                     case 2002:
@@ -333,7 +332,6 @@ class MySQL_DBWorker extends DBWorker
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
         }
     } // connect
@@ -363,7 +361,6 @@ class MySQL_DBWorker extends DBWorker
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_DATABASE_NOT_FOUND);
         }
     } // use_database
@@ -427,7 +424,6 @@ class MySQL_DBWorker extends DBWorker
 
         $this->mysqli_result = @$this->mysqli->query($query_string);
         if (!$this->mysqli_result) {
-            trigger_error($this->mysqli->error . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($this->mysqli->error, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // execute_query
@@ -464,7 +460,6 @@ class MySQL_DBWorker extends DBWorker
             $this->statement = $this->mysqli->prepare($query_string);
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // prepare_query
@@ -524,7 +519,6 @@ class MySQL_DBWorker extends DBWorker
             $this->statement->execute();
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         } finally {
             fclose($stream);
@@ -603,17 +597,14 @@ class MySQL_DBWorker extends DBWorker
 
         if (count($args) > 0 && !call_user_func_array([$this->statement, 'bind_param'], $parameters)) {
             $err = "Number of elements in type definition string doesn't match number of bind variables.";
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         if (!$this->statement->execute()) {
-            trigger_error($this->statement->error . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($this->statement->error, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
         if (!$this->statement->store_result()) {
-            trigger_error($this->statement->error . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($this->statement->error, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -708,7 +699,6 @@ class MySQL_DBWorker extends DBWorker
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         } finally {
             $this->statement = null;
@@ -747,7 +737,6 @@ class MySQL_DBWorker extends DBWorker
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err, E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
         } finally {
             $this->statement = null;
@@ -841,10 +830,11 @@ class MySQL_DBWorker extends DBWorker
 
             if ($this->statement) {
                 $this->statement->free_result();
+
+                $this->statement = null;
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         } finally {
             $this->row = null;
@@ -939,7 +929,6 @@ class MySQL_DBWorker extends DBWorker
 
             if (!$this->mysqli_result) {
                 $err = "Result is empty!";
-                trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
                 throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
             }
 
@@ -956,7 +945,6 @@ class MySQL_DBWorker extends DBWorker
             return true;
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // fetch_row
@@ -1074,7 +1062,6 @@ class MySQL_DBWorker extends DBWorker
 
             if (!$this->mysqli_result) {
                 $err = "Result is empty!";
-                trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
                 throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
             }
 
@@ -1110,7 +1097,6 @@ class MySQL_DBWorker extends DBWorker
 
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
     } // fetch_array
@@ -1136,7 +1122,6 @@ class MySQL_DBWorker extends DBWorker
 
         if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1160,7 +1145,6 @@ class MySQL_DBWorker extends DBWorker
 
         if (!$this->mysqli_result) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1189,7 +1173,6 @@ class MySQL_DBWorker extends DBWorker
 
         if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1226,7 +1209,7 @@ class MySQL_DBWorker extends DBWorker
         }
 
         if (!array_key_exists($name, $this->row)) {
-            trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_ERROR);
+            trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_WARNING);
             return null;
         }
 
@@ -1268,7 +1251,7 @@ class MySQL_DBWorker extends DBWorker
         }
 
         if (!array_key_exists($num, $this->field_names)) {
-            trigger_error("Field with the index $num does not exist in the result set!", E_USER_ERROR);
+            trigger_error("Field with the index $num does not exist in the result set!", E_USER_WARNING);
             return null;
         }
 
@@ -1340,7 +1323,6 @@ class MySQL_DBWorker extends DBWorker
 
         if (!$this->mysqli_result) {
             $err = "Result fetch error";
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1348,7 +1330,6 @@ class MySQL_DBWorker extends DBWorker
             $res = @$this->mysqli_result->fetch_field_direct($num);
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
-            trigger_error($err . "\n\n" . $this->get_last_query(), E_USER_ERROR);
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
 
@@ -1398,11 +1379,17 @@ class MySQL_DBWorker extends DBWorker
             if (in_array($field_info["type"], [0, 1, 2, 3, 4, 5, 7, 8, 9, 13, 16, 246])) {
                 $field_info["numeric"] = 1;
             }
-            if (in_array($field_info["type"], [249, 250, 251, 252])) {
+            elseif (in_array($field_info["type"], [252]) && !($res->flags & MYSQLI_BINARY_FLAG)) {
+                $field_info["string"] = 1;
+            } 
+            elseif (in_array($field_info["type"], [249, 250, 251, 252])) {
                 $field_info["binary"] = 1;
             }
-            if (in_array($field_info["type"], [12, 14])) {
+            elseif (in_array($field_info["type"], [12, 14])) {
                 $field_info["datetime"] = 1;
+            }
+            elseif (in_array($field_info["type"], [253, 254])) {
+                $field_info["string"] = 1;
             }
 
             if (isset($mysqli_type[$field_info["type"]])) {
@@ -1498,7 +1485,7 @@ class MySQL_DBWorker extends DBWorker
     function prepare_for_query($value, $type)
     {
         if (empty($value) && (string)$value != "0") {
-            return "NULL";
+            return "null";
         } else {
             return match ($type) {
                 DBWorker::DB_NUMBER => $this->number_or_null($value),

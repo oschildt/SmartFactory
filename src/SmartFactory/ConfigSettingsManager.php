@@ -11,7 +11,7 @@
 
 namespace SmartFactory;
 
-use SmartFactory\Interfaces\ISettingsManager;
+use \SmartFactory\Interfaces\ISettingsManager;
 
 /**
  * Class for management of the config settings stored in a config JSON file.
@@ -140,23 +140,26 @@ class ConfigSettingsManager implements ISettingsManager
             $json = aes_256_encrypt($json, $this->salt_key);
         }
         
+        $semaphore_path = $this->save_path . ".lock";
+        
         if (!is_writable(file_exists($this->save_path) ? $this->save_path : dirname($this->save_path))) {
             throw new \Exception(sprintf("The config file '%s' ot its directory is not accesible for writing!", $this->save_path));
         }
 
         $write_success = false;
         
-        $fp = fopen($this->save_path, "w");
+        $fp = fopen($semaphore_path, "w");
         if (flock($fp, LOCK_EX)) {
-            $write_success = fwrite($fp, $json);
+            if (file_put_contents($this->save_path, $json) === false) {
+                flock($fp, LOCK_UN); 
+                fclose($fp);
+
+                throw new \Exception(sprintf("Writing of the config file '%s' failed!", $this->save_path));
+            }
             flock($fp, LOCK_UN); 
         }        
 
         fclose($fp);
-
-        if ($write_success === false) {
-            throw new \Exception(sprintf("Writing of the config file '%s' failed!", $this->save_path));
-        }
         
         if ($this->use_apcu) {
             apcu_delete("config_settings");
@@ -205,13 +208,18 @@ class ConfigSettingsManager implements ISettingsManager
         
         $json = null;
         
-        $fp = fopen($this->save_path, "r");
-        if (flock($fp, LOCK_SH)) {
-            $json = fread($fp, filesize($this->save_path));
-            flock($fp, LOCK_UN); 
-        }        
+        $semaphore_path = $this->save_path . ".lock";
 
+        $fp = fopen($semaphore_path, "w");
+        if (flock($fp, LOCK_EX)) {
+            $json = file_get_contents($this->save_path);
+            flock($fp, LOCK_UN); 
+        }
         fclose($fp);
+
+        if (file_exists($semaphore_path)) {
+            unlink($semaphore_path);
+        }
         
         if (empty($json)) {
             throw new \Exception(sprintf("Reading of the config file '%s' failed!", $this->save_path));

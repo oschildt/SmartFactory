@@ -9,7 +9,7 @@
 
 namespace SmartFactory\Interfaces;
 
-use SmartFactory\SmartException;
+use \SmartFactory\SmartException;
 
 /**
  * Interface for working with messages.

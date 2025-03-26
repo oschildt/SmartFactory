@@ -10,7 +10,7 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use SmartFactory\Interfaces\IInitable;
+use \SmartFactory\Interfaces\IInitable;
 
 /**
  * This is the abstract base class for all dbworkers for different databases.
@@ -347,7 +347,7 @@ abstract class DBWorker implements IInitable
     public function check_connection() {
         if (!$this->is_connected()) {
             $err = "Database server not connected!";
-            trigger_error($err, E_USER_ERROR);
+            trigger_error($err, E_USER_WARNING);
             throw new DBWorkerException($err, DBWorker::ERR_NOT_CONNECTED);
         }
     } // check_connection
@@ -840,7 +840,7 @@ abstract class DBWorker implements IInitable
      */
     function quotes_or_null($str)
     {
-        return (string)$str === "" ? "NULL" : "'" . $this->escape($str) . "'";
+        return (string)$str === "" ? "null" : "'" . $this->escape($str) . "'";
     }
 
     /**
@@ -865,7 +865,7 @@ abstract class DBWorker implements IInitable
     function number_or_null($str)
     {
         if (empty($str) && (string)$str != "0") {
-            return "NULL";
+            return "null";
         }
 
         if (!is_numeric($str)) {
