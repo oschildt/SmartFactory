@@ -144,7 +144,7 @@ class MessageManager implements IMessageManager
             $line = "";
         }
 
-        $this->messages["errors"][md5($message . implode("#", $details))] = [
+        $this->messages["errors"][md5($message . implode("#", $details) . $related_element)] = [
             "message" => $message,
             "details" => $details,
             "related_element" => $related_element,
@@ -292,7 +292,7 @@ class MessageManager implements IMessageManager
             return;
         }
 
-        $this->messages["warnings"][$message . implode("#", $details)] = [
+        $this->messages["warnings"][md5($message . implode("#", $details) . $related_element)] = [
             "message" => $message,
             "details" => $details,
             "related_element" => $related_element
@@ -418,7 +418,7 @@ class MessageManager implements IMessageManager
             }
         }
 
-        $this->messages["prog_warnings"][$message] = [
+        $this->messages["prog_warnings"][md5($message)] = [
             "message" => $message,
             "file" => $file,
             "line" => $line
@@ -551,7 +551,7 @@ class MessageManager implements IMessageManager
             $line = "";
         }
 
-        $this->messages["debug_messages"][$message] = [
+        $this->messages["debug_messages"][md5($message)] = [
             "message" => $message,
             "file" => $file,
             "line" => $line
@@ -661,7 +661,7 @@ class MessageManager implements IMessageManager
             return;
         }
 
-        $this->messages["info_messages"][$message . implode("#", $details)] = [
+        $this->messages["info_messages"][md5($message . implode("#", $details))] = [
             "message" => $message,
             "details" => $details,
             "autoclose" => $autoclose
@@ -772,7 +772,7 @@ class MessageManager implements IMessageManager
             return;
         }
 
-        $this->messages["bubble_messages"][$message] = [
+        $this->messages["bubble_messages"][md5($message)] = [
             "message" => $message,
             "details" => $details,
             "autoclose" => $autoclose

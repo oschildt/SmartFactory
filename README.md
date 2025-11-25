@@ -10,7 +10,7 @@ For more details see [Presentation](http://php-smart-factory.org/smartfactory_pr
 
 ### Requirements
 
-- PHP 8.4
+- PHP 8.4+
 
 ### Installation
 
@@ -26,7 +26,7 @@ composer require "smartfactory/smartfactory"
 
   "require": {
     "php": ">=8.4",
-    "smartfactory/smartfactory": ">=2.1.24"
+    "smartfactory/smartfactory": ">=2.1.25"
   }
   
   ...

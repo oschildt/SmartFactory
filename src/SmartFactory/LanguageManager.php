@@ -737,7 +737,7 @@ class LanguageManager implements ILanguageManager
      * is found.
      *
      * @see LanguageManager::getLanguageCode()
-     * @see LanguageManager::validateLanguageCode()
+     * @see LanguageManager::hasLanguageName()
      * @see LanguageManager::getLanguageList()
      * @see LanguageManager::getCountryName()
      *
@@ -769,7 +769,7 @@ class LanguageManager implements ILanguageManager
      * Returns the language code if it could be found, otherwise an empty string.
      *
      * @see LanguageManager::getLanguageName()
-     * @see LanguageManager::validateLanguageCode()
+     * @see LanguageManager::hasLanguageName()
      * @see LanguageManager::getLanguageList()
      * @see LanguageManager::getCountryCode()
      *
@@ -808,11 +808,11 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::getLanguageName()
      * @see LanguageManager::getLanguageCode()
      * @see LanguageManager::getLanguageList()
-     * @see LanguageManager::validateCountryCode()
+     * @see LanguageManager::hasCountryName()
      *
      * @author Oleg Schildt
      */
-    public function validateLanguageCode(string $code, string $lng = ""): bool
+    public function hasLanguageName(string $code, string $lng = ""): bool
     {
         if (empty($lng)) {
             $lng = $this->getCurrentLanguage();
@@ -839,7 +839,7 @@ class LanguageManager implements ILanguageManager
      *
      * @see LanguageManager::getLanguageName()
      * @see LanguageManager::getLanguageCode()
-     * @see LanguageManager::validateLanguageCode()
+     * @see LanguageManager::hasLanguageName()
      * @see LanguageManager::getCountryList()
      *
      * @author Oleg Schildt
@@ -881,7 +881,7 @@ class LanguageManager implements ILanguageManager
      * is found.
      *
      * @see LanguageManager::getCountryCode()
-     * @see LanguageManager::validateCountryCode()
+     * @see LanguageManager::hasCountryName()
      * @see LanguageManager::getCountryList()
      * @see LanguageManager::getLanguageName()
      *
@@ -913,7 +913,7 @@ class LanguageManager implements ILanguageManager
      * Returns the country code if it could be found, otherwise an empty string.
      *
      * @see LanguageManager::getCountryName()
-     * @see LanguageManager::validateCountryCode()
+     * @see LanguageManager::hasCountryName()
      * @see LanguageManager::getCountryList()
      * @see LanguageManager::getLanguageCode()
      *
@@ -952,11 +952,11 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::getCountryName()
      * @see LanguageManager::getCountryCode()
      * @see LanguageManager::getCountryList()
-     * @see LanguageManager::validateLanguageCode()
+     * @see LanguageManager::hasLanguageName()
      *
      * @author Oleg Schildt
      */
-    public function validateCountryCode(string $code, string $lng = ""): bool
+    public function hasCountryName(string $code, string $lng = ""): bool
     {
         if (empty($lng)) {
             $lng = $this->getCurrentLanguage();
@@ -983,7 +983,7 @@ class LanguageManager implements ILanguageManager
      *
      * @see LanguageManager::getCountryName()
      * @see LanguageManager::getCountryCode()
-     * @see LanguageManager::validateCountryCode()
+     * @see LanguageManager::hasCountryName()
      * @see LanguageManager::getLanguageList()
      *
      * @author Oleg Schildt

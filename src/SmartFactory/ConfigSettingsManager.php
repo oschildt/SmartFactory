@@ -140,26 +140,27 @@ class ConfigSettingsManager implements ISettingsManager
         if (!empty($this->save_encrypted)) {
             $json = aes_256_encrypt($json, $this->salt_key);
         }
-        
-        $semaphore_path = $this->save_path . ".lock";
-        
+
         if (!is_writable(file_exists($this->save_path) ? $this->save_path : dirname($this->save_path))) {
-            throw new \Exception(sprintf("The config file '%s' ot its directory is not accesible for writing!", $this->save_path));
+            throw new \Exception(sprintf("The config file '%s' ot its directory is not accessible for writing!", $this->save_path));
         }
 
-        $fp = fopen($semaphore_path, "w");
-        if (flock($fp, LOCK_EX)) {
-            if (file_put_contents($this->save_path, $json) === false) {
-                flock($fp, LOCK_UN); 
-                fclose($fp);
+        $semaphore_file = $this->save_path . ".lock";
+        $semaphore_fp = fopen($semaphore_file, "c");
 
-                throw new \Exception(sprintf("Writing of the config file '%s' failed!", $this->save_path));
-            }
-            flock($fp, LOCK_UN); 
-        }        
+        if (flock($semaphore_fp, LOCK_EX)) {
+            $fp = fopen($this->save_path, "w");
+            ftruncate($fp, 0);
+            rewind($fp);
+            fwrite($fp, $json);
+            fflush($fp);
+            fclose($fp);
+            flock($semaphore_fp, LOCK_UN);
+            fclose($semaphore_fp);
+        } else {
+            throw new \Exception(sprintf("Writing of the config file '%s' failed!", $this->save_path));
+        }
 
-        fclose($fp);
-        
         if ($this->use_apcu) {
             apcu_delete("config_settings");
         }
@@ -206,20 +207,19 @@ class ConfigSettingsManager implements ISettingsManager
         }
         
         $json = null;
-        
-        $semaphore_path = $this->save_path . ".lock";
 
-        $fp = fopen($semaphore_path, "w");
-        if (flock($fp, LOCK_EX)) {
-            $json = file_get_contents($this->save_path);
-            flock($fp, LOCK_UN); 
-        }
-        fclose($fp);
+        $semaphore_file = $this->save_path . ".lock";
+        $semaphore_fp = fopen($semaphore_file, "c");
 
-        if (file_exists($semaphore_path)) {
-            unlink($semaphore_path);
+        if (flock($semaphore_fp, LOCK_SH)) {
+            $fp = fopen($this->save_path, "r");
+            $json = stream_get_contents($fp);
+            fclose($fp);
+
+            flock($semaphore_fp, LOCK_UN);
+            fclose($semaphore_fp);
         }
-        
+
         if (empty($json)) {
             throw new \Exception(sprintf("Reading of the config file '%s' failed!", $this->save_path));
         }

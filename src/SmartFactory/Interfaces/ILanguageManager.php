@@ -267,7 +267,7 @@ interface ILanguageManager extends IInitable
      * is found.
      *
      * @see ILanguageManager::getLanguageCode()
-     * @see ILanguageManager::validateLanguageCode()
+     * @see ILanguageManager::hasLanguageName()
      * @see ILanguageManager::getLanguageList()
      * @see ILanguageManager::getCountryName()
      *
@@ -285,7 +285,7 @@ interface ILanguageManager extends IInitable
      * Returns the language code if it could be found, otherwise an empty string.
      *
      * @see ILanguageManager::getLanguageName()
-     * @see ILanguageManager::validateLanguageCode()
+     * @see ILanguageManager::hasLanguageName()
      * @see ILanguageManager::getLanguageList()
      * @see ILanguageManager::getCountryCode()
      *
@@ -309,11 +309,11 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::getLanguageName()
      * @see ILanguageManager::getLanguageCode()
      * @see ILanguageManager::getLanguageList()
-     * @see ILanguageManager::validateCountryCode()
+     * @see ILanguageManager::hasCountryName()
      *
      * @author Oleg Schildt
      */
-    public function validateLanguageCode(string $code, string $lng = ""): bool;
+    public function hasLanguageName(string $code, string $lng = ""): bool;
     
     /**
      * Provides the list of languages for the given language in the form "code" => "translation".
@@ -333,7 +333,7 @@ interface ILanguageManager extends IInitable
      *
      * @see ILanguageManager::getLanguageName()
      * @see ILanguageManager::getLanguageCode()
-     * @see ILanguageManager::validateLanguageCode()
+     * @see ILanguageManager::hasLanguageName()
      * @see ILanguageManager::getCountryList()
      *
      * @author Oleg Schildt
@@ -356,7 +356,7 @@ interface ILanguageManager extends IInitable
      * is found.
      *
      * @see ILanguageManager::getCountryCode()
-     * @see ILanguageManager::validateCountryCode()
+     * @see ILanguageManager::hasCountryName()
      * @see ILanguageManager::getCountryList()
      * @see ILanguageManager::getLanguageName()
      *
@@ -374,7 +374,7 @@ interface ILanguageManager extends IInitable
      * Returns the country code if it could be found, otherwise an empty string.
      *
      * @see ILanguageManager::getCountryName()
-     * @see ILanguageManager::validateCountryCode()
+     * @see ILanguageManager::hasCountryName()
      * @see ILanguageManager::getCountryList()
      * @see ILanguageManager::getLanguageCode()
      *
@@ -398,11 +398,11 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::getCountryName()
      * @see ILanguageManager::getCountryCode()
      * @see ILanguageManager::getCountryList()
-     * @see ILanguageManager::validateLanguageCode()
+     * @see ILanguageManager::hasLanguageName()
      *
      * @author Oleg Schildt
      */
-    public function validateCountryCode(string $code, string $lng = ""): bool;
+    public function hasCountryName(string $code, string $lng = ""): bool;
     
     /**
      * Provides the list of countries for the given language in the form "code" => "translation".
@@ -422,7 +422,7 @@ interface ILanguageManager extends IInitable
      *
      * @see ILanguageManager::getCountryName()
      * @see ILanguageManager::getCountryCode()
-     * @see ILanguageManager::validateCountryCode()
+     * @see ILanguageManager::hasCountryName()
      * @see ILanguageManager::getLanguageList()
      *
      * @author Oleg Schildt

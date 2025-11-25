@@ -233,14 +233,14 @@ class ErrorHandler implements IErrorHandler
      */
     protected function truncate_argument(?string $str, int $limit): string
     {
-        if (empty($str)) {
-            return "";
+        if ($str === null) {
+            return "null";
         }
 
-        $str = preg_replace("/[\r\n\t]+/", " ", $str);
-        
+        $str = trim(preg_replace("/[\r\n\t]+/", " ", $str));
+
         return mb_strlen($str) > $limit
-            ? mb_substr($str, 0, $limit) . "..."
+            ? trim(mb_substr($str, 0, $limit)) . "..."
             : $str;
     }
 
@@ -299,9 +299,11 @@ class ErrorHandler implements IErrorHandler
     protected function make_arg_list(array $args): string
     {
         $list = "";
-        
+
         foreach ($args as $arg) {
-            if (is_array($arg)) {
+            if ($arg === null) {
+                $list .= "null, ";
+            } elseif (is_array($arg)) {
                 $list .= $this->deep_implode($arg) . ", ";
             } elseif (is_object($arg)) {
                 $list .= str_replace("SmartFactory\\", "", get_class($arg)) . ", ";
@@ -309,7 +311,7 @@ class ErrorHandler implements IErrorHandler
                 $list .= $this->truncate_argument($arg, 15) . ", ";
             }
         }
-        
+
         return trim($list, ", ");
     } // make_arg_list
     
