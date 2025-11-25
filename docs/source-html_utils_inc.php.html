@@ -123,7 +123,7 @@
 </span><span class="line" id="28"> 28: </span><span class="php-comment"> *
 </span><span class="line" id="29"> 29: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="30"> 30: </span><span class="php-comment"> */</span>
-<span class="line" id="31"> 31: </span><span class="php-keyword1">function</span> reqvar_value(<span class="php-var">$name</span>)
+<span class="line" id="31"> 31: </span><span class="php-keyword1">function</span> reqvar_value(string <span class="php-var">$name</span>): mixed
 <span class="line" id="32"> 32: </span>{
 <span class="line" id="33"> 33: </span>    <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$name</span>)) {
 <span class="line" id="34"> 34: </span>        <span class="php-keyword1">return</span> <span class="php-quote">&quot;&quot;</span>;
@@ -191,7 +191,7 @@
 </span><span class="line" id="96"> 96: </span><span class="php-comment"> *
 </span><span class="line" id="97"> 97: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="98"> 98: </span><span class="php-comment"> */</span>
-<span class="line" id="99"> 99: </span><span class="php-keyword1">function</span> input_text(<span class="php-var">$parameters</span>, <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="99"> 99: </span><span class="php-keyword1">function</span> input_text(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="100">100: </span>{
 <span class="line" id="101">101: </span>    <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="102">102: </span>    
@@ -286,7 +286,7 @@
 </span><span class="line" id="191">191: </span><span class="php-comment"> *
 </span><span class="line" id="192">192: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="193">193: </span><span class="php-comment"> */</span>
-<span class="line" id="194">194: </span><span class="php-keyword1">function</span> input_password(<span class="php-var">$parameters</span>, <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="194">194: </span><span class="php-keyword1">function</span> input_password(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="195">195: </span>{
 <span class="line" id="196">196: </span>    <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="197">197: </span>    
@@ -380,7 +380,7 @@
 </span><span class="line" id="285">285: </span><span class="php-comment"> *
 </span><span class="line" id="286">286: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="287">287: </span><span class="php-comment"> */</span>
-<span class="line" id="288">288: </span><span class="php-keyword1">function</span> input_hidden(<span class="php-var">$parameters</span>, <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="288">288: </span><span class="php-keyword1">function</span> input_hidden(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="289">289: </span>{
 <span class="line" id="290">290: </span>    <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="291">291: </span>    
@@ -478,7 +478,7 @@
 </span><span class="line" id="383">383: </span><span class="php-comment"> *
 </span><span class="line" id="384">384: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="385">385: </span><span class="php-comment"> */</span>
-<span class="line" id="386">386: </span><span class="php-keyword1">function</span> textarea(<span class="php-var">$parameters</span>, <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="386">386: </span><span class="php-keyword1">function</span> textarea(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="387">387: </span>{
 <span class="line" id="388">388: </span>    <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="389">389: </span>    
@@ -589,7 +589,7 @@
 </span><span class="line" id="494">494: </span><span class="php-comment"> *
 </span><span class="line" id="495">495: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="496">496: </span><span class="php-comment"> */</span>
-<span class="line" id="497">497: </span><span class="php-keyword1">function</span> select(<span class="php-var">$parameters</span>, <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="497">497: </span><span class="php-keyword1">function</span> select(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="498">498: </span>{
 <span class="line" id="499">499: </span>    <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="500">500: </span>    
@@ -708,7 +708,7 @@
 </span><span class="line" id="613">613: </span><span class="php-comment"> *
 </span><span class="line" id="614">614: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="615">615: </span><span class="php-comment"> */</span>
-<span class="line" id="616">616: </span><span class="php-keyword1">function</span> checkbox(<span class="php-var">$parameters</span>, <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="616">616: </span><span class="php-keyword1">function</span> checkbox(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="617">617: </span>{
 <span class="line" id="618">618: </span>    <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="619">619: </span>    
@@ -819,7 +819,7 @@
 </span><span class="line" id="724">724: </span><span class="php-comment"> *
 </span><span class="line" id="725">725: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="726">726: </span><span class="php-comment"> */</span>
-<span class="line" id="727">727: </span><span class="php-keyword1">function</span> radiobutton(<span class="php-var">$parameters</span>, <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="727">727: </span><span class="php-keyword1">function</span> radiobutton(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="728">728: </span>{
 <span class="line" id="729">729: </span>    <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;
 <span class="line" id="730">730: </span>    
@@ -966,7 +966,7 @@
 </span><span class="line" id="871">871: </span><span class="php-comment"> *
 </span><span class="line" id="872">872: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="873">873: </span><span class="php-comment"> */</span>
-<span class="line" id="874">874: </span><span class="php-keyword1">function</span> table(&amp;<span class="php-var">$array</span>, <span class="php-var">$parameters</span> = [], <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>)
+<span class="line" id="874">874: </span><span class="php-keyword1">function</span> table(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = [], bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>
 <span class="line" id="875">875: </span>{
 <span class="line" id="876">876: </span>    <span class="php-keyword1">if</span> (!<span class="php-keyword2">is_array</span>(<span class="php-var">$array</span>)) {
 <span class="line" id="877">877: </span>        <span class="php-keyword2">trigger_error</span>(<span class="php-quote">&quot;An array expected!&quot;</span>, E_WARNING);
@@ -1056,7 +1056,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

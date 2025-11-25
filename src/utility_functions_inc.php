@@ -15,12 +15,12 @@ namespace SmartFactory;
  * @param array &$array
  * Array to be checked.
  *
- * @return boolean
+ * @return bool
  * Returns true if the array is associative, otherwise false.
  *
  * @author Oleg Schildt
  */
-function is_associative(&$array)
+function is_associative(array &$array): bool
 {
     if (!is_array($array) || empty($array)) {
         return false;
@@ -34,12 +34,12 @@ function is_associative(&$array)
 /**
  * Checks whether the session is cmd client or web.
  *
- * @return boolean
+ * @return bool
  * Returns true if the session is web, otherwise false.
  *
  * @author Oleg Schildt
  */
-function is_web()
+function is_web(): bool
 {
     return http_response_code() !== false;
 } // is_web
@@ -61,7 +61,7 @@ function is_web()
  *
  * @author Oleg Schildt
  */
-function common_prefix($s1, $s2, $max = 1000)
+function common_prefix(string $s1, string $s2, $max = 1000): string
 {
     $prefix = "";
     
@@ -103,7 +103,7 @@ function common_prefix($s1, $s2, $max = 1000)
  *
  * @author Oleg Schildt
  */
-function json_to_array(&$json, &$array)
+function json_to_array(string &$json, array &$array): void
 {
     $result = json_decode($json, true);
     if ($result === null) {
@@ -132,7 +132,7 @@ function json_to_array(&$json, &$array)
  *
  * @author Oleg Schildt
  */
-function array_to_json(&$array)
+function array_to_json(array &$array): string
 {
     return json_encode($array, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK | JSON_UNESCAPED_UNICODE);
 } // array_to_json
@@ -156,7 +156,7 @@ function array_to_json(&$array)
  *
  * @author Oleg Schildt
  */
-function array_to_dom(&$node, &$array)
+function array_to_dom(&$node, &$array): void
 {
     $xmldoc = $node->ownerDocument;
     
@@ -196,7 +196,7 @@ function array_to_dom(&$node, &$array)
  *
  * @author Oleg Schildt
  */
-function dom_to_array(&$node, &$array)
+function dom_to_array(\DOMNode &$node, array &$array): void
 {
     if (!$node->hasChildNodes()) {
         return;
@@ -236,60 +236,43 @@ function dom_to_array(&$node, &$array)
 /**
  * Checks whether the text is an empty string.
  *
- * @param string $text
+ * @param ?string $text
  * The text to be checked.
  *
- * @return boolean
+ * @return bool
  * Returns true if the string is an empty string.
  *
  * @author Oleg Schildt
  */
-function string_empty($text)
+function string_empty(?string $text): bool
 {
     if ($text === null) return true;
 
-    if ((string)$text === "") return true;
+    if ($text === "") return true;
     
     return false;
 } // string_empty
 
 /**
- * Echoes the text with escaping of HTML special characters.
- *
- * @param string $text
- * The text to be escaped.
- *
- * @return void
- *
- * @see \SmartFactory\escape_js()
- * @see \SmartFactory\escape_html()
- *
- * @uses \SmartFactory\escape_html()
- *
- * @author Oleg Schildt
- */
-function echo_html($text)
-{
-    echo escape_html($text);
-} // echo_html
-
-/**
  * Escapes the HTML special characters in the text.
  *
- * @param string $text
+ * @param ?string $text
  * The text to be escaped.
  *
- * @return string
+ * @return ?string
  * Returns the text with escaped HTML special characters.
  *
- * @see \SmartFactory\echo_html()
  * @see \SmartFactory\escape_html_array()
  * @see \SmartFactory\escape_js()
  *
  * @author Oleg Schildt
  */
-function escape_html($text)
+function escape_html(?string $text): ?string
 {
+    if (empty($text)) {
+        return $text;
+    }
+
     return htmlspecialchars($text, ENT_QUOTES);
 } // escape_html
 
@@ -308,7 +291,7 @@ function escape_html($text)
  * @author Oleg Schildt
  */
 
-function escape_html_array(&$array)
+function escape_html_array(array &$array): void
 {
     foreach ($array as &$val) {
         if (is_array($val)) {
@@ -328,12 +311,11 @@ function escape_html_array(&$array)
  * @return string
  * Returns the text with escaped JavaScript special characters.
  *
- * @see \SmartFactory\echo_js()
  * @see \SmartFactory\escape_html()
  *
  * @author Oleg Schildt
  */
-function escape_js($text)
+function escape_js(string $text): string
 {
     $text = str_replace("\\", "\\\\", $text);
     $text = str_replace("\n", "\\n", $text);
@@ -347,26 +329,6 @@ function escape_js($text)
 } // escape_js
 
 /**
- * Echoes the text with escaping of JavaScript special characters.
- *
- * @param string $text
- * The text to be escaped.
- *
- * @return void
- *
- * @see \SmartFactory\echo_html()
- * @see \SmartFactory\escape_js()
- *
- * @uses \SmartFactory\escape_js()
- *
- * @author Oleg Schildt
- */
-function echo_js($text)
-{
-    echo escape_js($text);
-} // echo_js
-
-/**
  * Gets the cookie value by name.
  *
  * @param string $name
@@ -377,7 +339,7 @@ function echo_js($text)
  *
  * @author Oleg Schildt
  */
-function get_cookie($name)
+function get_cookie(string $name): string
 {
     return empty($_COOKIE[$name]) ? "" : $_COOKIE[$name];
 } // get_cookie
@@ -393,7 +355,7 @@ function get_cookie($name)
  *
  * @author Oleg Schildt
  */
-function get_header($name) {
+function get_header(string $name): string {
     static $headers;
 
     if(empty($headers)) {
@@ -423,12 +385,12 @@ function get_header($name) {
  * @param array $params
  * Any additional parameters like expires, path, domain, secure, httponly or samesite.
  *
- * @return boolean
+ * @return bool
  * Returns true if the cookie has been set successfully, otherwise false.
  *
  * @author Oleg Schildt
  */
-function set_cookie($name, $value = "", $expires = 0, $params = [])
+function set_cookie(string $name, string $value = "", int $expires = 0, array $params = []): bool
 {
     if (version_compare(phpversion(), "7.3") >= 0) {
         $params["expires"] = $expires;
@@ -459,7 +421,7 @@ function set_cookie($name, $value = "", $expires = 0, $params = [])
  *
  * @author Oleg Schildt
  */
-function preg_p_escape($pattern)
+function preg_p_escape(string $pattern): string
 {
     return preg_replace("/[\\\\\\[\\]\\+\\?\\-\\^\\$\\(\\)\\/\\.\\|\\{\\}\\|]/", "\\\\$0", $pattern);
 } // preg_p_escape
@@ -478,7 +440,7 @@ function preg_p_escape($pattern)
  *
  * @author Oleg Schildt
  */
-function preg_r_escape($pattern)
+function preg_r_escape(string $pattern): string
 {
     return preg_replace("/[\\\\\\$]/", "\\\\$0", $pattern);
 } // preg_r_escape
@@ -494,13 +456,13 @@ function preg_r_escape($pattern)
  * The date format of the date/time string in the PHP systax
  * for the date formats, e.g. "Y.m.d H:i:s".
  *
- * @return int|string
+ * @return int|string|null
  * If the date/time string could be converted, the timestamp is
  * returned, otherwise the string "error" is returned.
  *
  * @author Oleg Schildt
  */
-function timestamp($time_string, $format)
+function timestamp(string $time_string, string $format): int|string|null
 {
     if (empty($time_string)) {
         return null;
@@ -563,7 +525,7 @@ function timestamp($time_string, $format)
  * Formats the number due to the specified settings.
  * It is a wrapper over the system function number_format.
  *
- * @param float $number
+ * @param string $number
  * The number to be formatted.
  *
  * @param int $decimals
@@ -575,13 +537,13 @@ function timestamp($time_string, $format)
  * @param string $thousand_sep
  * The thousand separator.
  *
- * @return string|null
+ * @return ?string
  * If the number is a vialid number, its formatted value is returned. Otherwise,
  * the empty value is returned. It is usefil if we need to distiguish the empty value and 0.
  *
  * @author Oleg Schildt
  */
-function format_number($number, $decimals = 0, $dec_point = ".", $thousand_sep = ",")
+function format_number(string $number, int $decimals = 0, string $dec_point = ".", string $thousand_sep = ","): ?string
 {
     if ($number === null || $number === "") {
         return $number;
@@ -605,12 +567,12 @@ function format_number($number, $decimals = 0, $dec_point = ".", $thousand_sep =
  * @throws \Exception
  * It might throw the exception if the string is not a number
  *
- * @return float|null
+ * @return float|string|null
  * If the string is a vialid number, its numeric value is returned.
  *
  * @author Oleg Schildt
  */
-function string_to_number($str, $dec_point = ".", $thousand_sep = ",") 
+function string_to_number(string $str, string $dec_point = ".", string $thousand_sep = ","): float|string|null
 {
     if ($str === "" || $str === null) {
         return $str;
@@ -639,7 +601,7 @@ function string_to_number($str, $dec_point = ".", $thousand_sep = ",")
  *
  * @author Oleg Schildt
  */
-function aes_256_encrypt($data, $password_key)
+function aes_256_encrypt(string $data, string $password_key): string
 {
     // Set a random salt
     $salt = openssl_random_pseudo_bytes(16);
@@ -675,7 +637,7 @@ function aes_256_encrypt($data, $password_key)
  *
  * @author Oleg Schildt
  */
-function aes_256_decrypt($edata, $password_key)
+function aes_256_decrypt(string $edata, string $password_key): string
 {
     $data = base64_decode($edata);
     $salt = substr($data, 0, 16);

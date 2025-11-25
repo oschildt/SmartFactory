@@ -223,7 +223,7 @@
   
   <h1>Method: ISettingsValidator::validate()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validate(\SmartFactory\Interfaces\ISettingsManager <span class="php-var">$settingsmanager</span>, string <span class="php-var">$context</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validate(\SmartFactory\Interfaces\ISettingsManager <span class="php-var">$settingsmanager</span>, string <span class="php-var">$context</span>): void;</div>
 
   
   <div class="short-description">
@@ -261,8 +261,7 @@
                 
             </td>
             <td class="description_column">
-                <p>The settings manager whose settings should be validated.
-The settings manager whose settings should be validated.</p>
+                <p>The settings manager whose settings should be validated.</p>
             </td>
         </tr>
         
@@ -288,7 +287,6 @@ In this case, only a subset of settings has to be
 saved and validated.
 To be able to write a flexible validator for the subsets,
 the $context is used. It can be - step1, step1, server_settings,
-db_connection_settings etc.
 db_connection_settings etc.</p>
             </td>
         </tr>
@@ -299,15 +297,22 @@ db_connection_settings etc.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>The method should return true upon successful validation, otherwise false.
-The method should return true upon successful validation, otherwise false.</p></div>
+  void<br>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a>|<a href='class-SmartFactory.SmartExceptionCollection.html'>\SmartFactory\SmartExceptionCollection</a><br>
+  
+  <div class="item_description"><ul>
+<li>It might throw an exception in the case of any errors.</li>
+</ul></div>
+  
+  
+  </div>
 
   
 
@@ -325,11 +330,11 @@ The method should return true upon successful validation, otherwise false.</p></
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISettingsValidator.php.html#42'>SmartFactory/Interfaces/ISettingsValidator.php</a>
+  <a href='source-SmartFactory.Interfaces.ISettingsValidator.php.html#44'>SmartFactory/Interfaces/ISettingsValidator.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

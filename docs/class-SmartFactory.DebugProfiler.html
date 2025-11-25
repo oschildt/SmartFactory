@@ -336,6 +336,19 @@ fixProfilePoint.</p>
               <p>Logs a message to a standard profiling output (logs/profile.log)
 and stores the current time.</p>
           </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#trim_path">trim_path()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>This is an auxiliary function that cuts off the common part of the path.</p>
+          </td>
       </tr>
       
   </table>
@@ -346,7 +359,7 @@ and stores the current time.</p>
   
   <h1>Property: DebugProfiler::$log_path</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$log_path</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?string <span class="php-var">$log_path</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -359,7 +372,7 @@ and stores the current time.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  ?string
   </div>
   
 
@@ -384,7 +397,7 @@ and stores the current time.</p>
   
   <h1>Property: DebugProfiler::$profile_time</h1>
 
-  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">static</span> string <span class="php-var">$profile_time</span>;</div>
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">static</span> int <span class="php-var">$profile_time</span>;</div>
 
   
   <div class="short-description">
@@ -397,7 +410,7 @@ and stores the current time.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  int
   </div>
   
 
@@ -434,7 +447,7 @@ and stores the current time.</p>
   
   <h1>Property: DebugProfiler::$write_source_file_and_line_by_debug</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$write_source_file_and_line_by_debug</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$write_source_file_and_line_by_debug</span> = <span class="php-keyword1">false</span>;</div>
 
   
   <div class="short-description">
@@ -448,7 +461,7 @@ line number are written from where it is called.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  bool
   </div>
   
 
@@ -475,7 +488,7 @@ line number are written from where it is called.</p>
   
   <h1>Method: DebugProfiler::clearLogFile()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(string <span class="php-var">$file_name</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(string <span class="php-var">$file_name</span>): void;</div>
 
   
   <div class="short-description">
@@ -513,8 +526,7 @@ line number are written from where it is called.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target file name.
-The target file name.</p>
+                <p>The target file name.</p>
             </td>
         </tr>
         
@@ -524,10 +536,7 @@ The target file name.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the file has been successfully deleted, otherwise false.
-It should return true if the file has been successfully deleted, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -555,7 +564,7 @@ It should return true if the file has been successfully deleted, otherwise false
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#290'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#296'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -583,7 +592,7 @@ It should return true if the file has been successfully deleted, otherwise false
   
   <h1>Method: DebugProfiler::clearLogFiles()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles(): void;</div>
 
   
   <div class="short-description">
@@ -600,10 +609,7 @@ It should return true if the file has been successfully deleted, otherwise false
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the files have been successfully deleted, otherwise false.
-It should return true if the files have been successfully deleted, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -631,7 +637,7 @@ It should return true if the files have been successfully deleted, otherwise fal
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#311'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#314'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -659,7 +665,7 @@ It should return true if the files have been successfully deleted, otherwise fal
   
   <h1>Method: DebugProfiler::debugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>, bool <span class="php-var">$show_callstack</span> = <span class="php-keyword1">false</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, bool <span class="php-var">$write_call_stack</span> = <span class="php-keyword1">false</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>): void;</div>
 
   
   <div class="short-description">
@@ -697,8 +703,25 @@ It should return true if the files have been successfully deleted, otherwise fal
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.
-Message to be logged.</p>
+                <p>Message to be logged.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $write_call_stack
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Flag that defines where the call stack should be written.</p>
             </td>
         </tr>
         
@@ -716,27 +739,7 @@ Message to be logged.</p>
                 &quot;debug.log&quot;
             </td>
             <td class="description_column">
-                <p>The target file name.
-The target file name.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $show_callstack
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                bool
-            </td>
-            <td>
-                false
-            </td>
-            <td class="description_column">
-                <p>The flag that defines whether the callstack should be also traced.
-The flag that defines whether the callstack should be also traced.</p>
+                <p>The target file name.</p>
             </td>
         </tr>
         
@@ -746,10 +749,7 @@ The flag that defines whether the callstack should be also traced.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
-It should return true if the logging was successful, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -788,7 +788,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#182'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#189'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -810,7 +810,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h1>Method: DebugProfiler::enableFileAndLineDetails()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableFileAndLineDetails(bool <span class="php-var">$state</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableFileAndLineDetails(bool <span class="php-var">$state</span>): void;</div>
 
   
   <div class="short-description">
@@ -848,8 +848,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>the flag that defines whether the file name and the line number should be written along with the message.
-the flag that defines whether the file name and the line number should be written along with the message.</p>
+                <p>the flag that defines whether the file name and the line number should be written along with the message.</p>
             </td>
         </tr>
         
@@ -904,7 +903,7 @@ the flag that defines whether the file name and the line number should be writte
   
   <h1>Method: DebugProfiler::extract_call_stack()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>): string;</div>
 
   
   <div class="short-description">
@@ -942,8 +941,7 @@ the flag that defines whether the file name and the line number should be writte
                 
             </td>
             <td class="description_column">
-                <p>The backtrace.
-The backtrace.</p>
+                <p>The backtrace.</p>
             </td>
         </tr>
         
@@ -955,8 +953,7 @@ The backtrace.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the extracted call stack.
-Returns the extracted call stack.</p></div>
+  <div class="item_description"><p>Returns the extracted call stack.</p></div>
   
   </div>
   
@@ -1001,7 +998,7 @@ Returns the extracted call stack.</p></div>
   
   <h1>Method: DebugProfiler::fixProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(string <span class="php-var">$message</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(string <span class="php-var">$message</span>): void;</div>
 
   
   <div class="short-description">
@@ -1041,8 +1038,7 @@ fixProfilePoint.</p>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.
-Message to be logged.</p>
+                <p>Message to be logged.</p>
             </td>
         </tr>
         
@@ -1052,10 +1048,7 @@ Message to be logged.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
-It should return true if the logging was successful, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1094,7 +1087,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#264'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#273'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1122,7 +1115,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h1>Method: DebugProfiler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
@@ -1163,11 +1156,10 @@ It should return true if the logging was successful, otherwise false.</p></div>
                 <p>Settings for logging as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters[&quot;log_path&quot;] - the target file path where the logs should be stored.</p>
+<p>$parameters["log_path"] - the target file path where the logs should be stored.</p>
 </li>
 <li>
-<p>$parameters[&quot;write_source_file_and_line_by_debug&quot;] - the flag that defines whether for each debug output the source file and
-line number are written from where it is called.
+<p>$parameters["write_source_file_and_line_by_debug"] - the flag that defines whether for each debug output the source file and
 line number are written from where it is called.</p>
 </li>
 </ul>
@@ -1242,7 +1234,7 @@ line number are written from where it is called.</p>
   
   <h1>Method: DebugProfiler::startProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(string <span class="php-var">$message</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(string <span class="php-var">$message</span>): void;</div>
 
   
   <div class="short-description">
@@ -1281,8 +1273,7 @@ and stores the current time.</p>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.
-Message to be logged.</p>
+                <p>Message to be logged.</p>
             </td>
         </tr>
         
@@ -1292,10 +1283,7 @@ Message to be logged.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
-It should return true if the logging was successful, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1334,7 +1322,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#235'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-SmartFactory.DebugProfiler.php.html#247'>SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1345,9 +1333,101 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   
   </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="trim_path">
+  
+  <h1>Method: DebugProfiler::trim_path()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trim_path(string <span class="php-var">$path</span>): string;</div>
+
+  
+  <div class="short-description">
+  <p>This is an auxiliary function that cuts off the common part of the path.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $path
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The path.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  string<br>
+  
+  <div class="item_description"><p>Returns the cut path.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.DebugProfiler.php.html#344'>SmartFactory/DebugProfiler.php</a>
+  </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

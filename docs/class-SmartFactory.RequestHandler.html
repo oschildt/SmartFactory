@@ -113,7 +113,7 @@
 
 
 <div class="short-description">
-<p>Abscract class for handling the JSON and XML requests.</p>
+<p>Abstract class for handling the JSON and XML requests.</p>
 </div>
 
 
@@ -468,7 +468,7 @@ to perform some standard action before every API request of your library.</p>
   
   <h1>Method: RequestHandler::addMessagesToResponse()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> addMessagesToResponse() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addMessagesToResponse(): void;</div>
 
   
   <div class="short-description">
@@ -539,7 +539,7 @@ during handling of the request.</p>
   
   <h1>Method: RequestHandler::addResponseHeader()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addResponseHeader(string <span class="php-var">$header</span>, string <span class="php-var">$value</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> addResponseHeader(string <span class="php-var">$header</span>, string <span class="php-var">$value</span>): void;</div>
 
   
   <div class="short-description">
@@ -577,8 +577,7 @@ during handling of the request.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the response header.
-The name of the response header.</p>
+                <p>The name of the response header.</p>
             </td>
         </tr>
         
@@ -596,8 +595,7 @@ The name of the response header.</p>
                 
             </td>
             <td class="description_column">
-                <p>The value of the response header.
-The value of the response header.</p>
+                <p>The value of the response header.</p>
             </td>
         </tr>
         
@@ -652,7 +650,7 @@ The value of the response header.</p>
   
   <h1>Method: RequestHandler::handleRequest()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleRequest() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleRequest(): void;</div>
 
   
   <div class="short-description">
@@ -680,7 +678,15 @@ tries to call the corresponding method for the API action.</p>
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -703,7 +709,7 @@ tries to call the corresponding method for the API action.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RequestHandler.php.html#165'>SmartFactory/RequestHandler.php</a>
+  <a href='source-SmartFactory.RequestHandler.php.html#168'>SmartFactory/RequestHandler.php</a>
   </div>
   
 
@@ -725,7 +731,7 @@ tries to call the corresponding method for the API action.</p>
   
   <h1>Method: RequestHandler::parseInput()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> parseInput() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput(): void;</div>
 
   
   <div class="short-description">
@@ -795,7 +801,7 @@ tries to call the corresponding method for the API action.</p>
   
   <h1>Method: RequestHandler::postprocessRequest()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> postprocessRequest() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> postprocessRequest(): void;</div>
 
   
   <div class="short-description">
@@ -858,7 +864,7 @@ to perform some standard action after every API request of your library.</p>
   
   <h1>Method: RequestHandler::preprocessRequest()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> preprocessRequest() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> preprocessRequest(): void;</div>
 
   
   <div class="short-description">
@@ -927,7 +933,7 @@ the user if it is active.</p>
   
   <h1>Method: RequestHandler::processInputData()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processInputData() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processInputData(): void;</div>
 
   
   <div class="short-description">
@@ -994,7 +1000,7 @@ the user if it is active.</p>
   
   <h1>Method: RequestHandler::sendResponse()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> sendResponse() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse(): void;</div>
 
   
   <div class="short-description">
@@ -1038,7 +1044,7 @@ the user if it is active.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

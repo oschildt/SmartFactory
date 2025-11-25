@@ -272,7 +272,7 @@ to uniquely identify a record.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Commits the transation.</p>
+              <p>Commits the translation.</p>
           </td>
       </tr><tr>
           <td>
@@ -415,7 +415,7 @@ to uniquely identify a record.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; based on a table.</p>
+              <p>Loads a record into an array in the form "field_name" =&gt; "value" based on a table.</p>
           </td>
       </tr><tr>
           <td>
@@ -428,7 +428,7 @@ to uniquely identify a record.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
+              <p>Loads a record into an array in the form "field_name" =&gt; "value".</p>
           </td>
       </tr><tr>
           <td>
@@ -507,7 +507,7 @@ with key field values as array dimensions.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Rolls back the transation.</p>
+              <p>Rolls back the translation.</p>
           </td>
       </tr><tr>
           <td>
@@ -520,7 +520,7 @@ with key field values as array dimensions.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Saves a record from an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; into the table.</p>
+              <p>Saves a record from an array in the form "field_name" =&gt; "value" into the table.</p>
           </td>
       </tr><tr>
           <td>
@@ -534,7 +534,7 @@ with key field values as array dimensions.</p>
           </td>
           <td class="description_column">
               <p>Saves records from an array in the form
-$records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot; into the table.</p>
+$records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.</p>
           </td>
       </tr><tr>
           <td>
@@ -560,7 +560,7 @@ $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;]
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Starts the transation.</p>
+              <p>Starts the translation.</p>
           </td>
       </tr><tr>
           <td>
@@ -574,7 +574,7 @@ $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;]
           </td>
           <td class="description_column">
               <p>This is internal auxiliary function for checking that the recordset manager
-is intialized correctly.</p>
+is initialized correctly.</p>
           </td>
       </tr>
       
@@ -586,7 +586,7 @@ is intialized correctly.</p>
   
   <h1>Property: RecordsetManager::$dbworker</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -599,7 +599,7 @@ is intialized correctly.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>
+  ?\DatabaseWorkers\DBWorker
   </div>
   
 
@@ -624,7 +624,7 @@ is intialized correctly.</p>
   
   <h1>Property: RecordsetManager::$fields</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$fields</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$fields</span> = [];</div>
 
   
   <div class="short-description">
@@ -662,7 +662,7 @@ is intialized correctly.</p>
   
   <h1>Property: RecordsetManager::$key_fields</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span> = [];</div>
 
   
   <div class="short-description">
@@ -701,7 +701,7 @@ to uniquely identify a record.</p>
   
   <h1>Property: RecordsetManager::$table</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$table</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?string <span class="php-var">$table</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -714,7 +714,7 @@ to uniquely identify a record.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  ?string
   </div>
   
 
@@ -741,7 +741,7 @@ to uniquely identify a record.</p>
   
   <h1>Method: RecordsetManager::checkWhereClause()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> checkWhereClause(string|<span class="php-keyword1">array</span> &amp;<span class="php-var">$where_clause</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> checkWhereClause(<span class="php-keyword1">array</span>|string &amp;<span class="php-var">$where_clause</span>): void;</div>
 
   
   <div class="short-description">
@@ -773,14 +773,13 @@ to uniquely identify a record.</p>
                 by reference
             </td>
             <td>
-                string|array
+                array|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
                 <p>The where clause that should be checked. If an array of keys is passed,
-the where clause is build based on it.
 the where clause is build based on it.</p>
             </td>
         </tr>
@@ -845,11 +844,11 @@ by the initialization.</p></div>
   
   <h1>Method: RecordsetManager::commit_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction(): void;</div>
 
   
   <div class="short-description">
-  <p>Commits the transation.</p>
+  <p>Commits the translation.</p>
   </div>
   
 
@@ -898,7 +897,7 @@ by the initialization.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#872'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#879'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -929,7 +928,7 @@ by the initialization.</p></div>
   
   <h1>Method: RecordsetManager::countRecords()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecords(string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : int;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecords(<span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>): int;</div>
 
   
   <div class="short-description">
@@ -961,14 +960,13 @@ by the initialization.</p></div>
                 by value
             </td>
             <td>
-                string|array
+                array|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
                 <p>The where clause that should restrict the result. If an array of keys is passed,
-the where clause is build automatically based on it.
 the where clause is build automatically based on it.</p>
             </td>
         </tr>
@@ -981,13 +979,20 @@ the where clause is build automatically based on it.</p>
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns the number of records.
-Returns the number of records.</p></div>
+  <div class="item_description"><p>Returns the number of records.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -1010,7 +1015,7 @@ Returns the number of records.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#786'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#790'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1044,7 +1049,7 @@ Returns the number of records.</p></div>
   
   <h1>Method: RecordsetManager::countRecordsQuery()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecordsQuery(string <span class="php-var">$query</span>) : int;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecordsQuery(string <span class="php-var">$query</span>): int;</div>
 
   
   <div class="short-description">
@@ -1082,8 +1087,7 @@ Returns the number of records.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The query to be used.
-The query to be used.</p>
+                <p>The query to be used.</p>
             </td>
         </tr>
         
@@ -1095,13 +1099,20 @@ The query to be used.</p>
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns the number of records.
-Returns the number of records.</p></div>
+  <div class="item_description"><p>Returns the number of records.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -1124,7 +1135,7 @@ Returns the number of records.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#820'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#827'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1158,7 +1169,7 @@ Returns the number of records.</p></div>
   
   <h1>Method: RecordsetManager::deleteRecords()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecords(string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecords(<span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>): void;</div>
 
   
   <div class="short-description">
@@ -1190,14 +1201,13 @@ Returns the number of records.</p></div>
                 by value
             </td>
             <td>
-                string|array
+                array|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
                 <p>The where clause that should restrict the result. If an array of keys is passed,
-the where clause is build automatically based on it.
 the where clause is build automatically based on it.</p>
             </td>
         </tr>
@@ -1250,7 +1260,7 @@ the where clause is build automatically based on it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#352'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#353'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1287,7 +1297,7 @@ the where clause is build automatically based on it.</p>
   
   <h1>Method: RecordsetManager::deleteRecordsQuery()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecordsQuery(string <span class="php-var">$query</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecordsQuery(string <span class="php-var">$query</span>): void;</div>
 
   
   <div class="short-description">
@@ -1325,8 +1335,7 @@ the where clause is build automatically based on it.</p>
                 
             </td>
             <td class="description_column">
-                <p>The query to be used.
-The query to be used.</p>
+                <p>The query to be used.</p>
             </td>
         </tr>
         
@@ -1378,7 +1387,7 @@ The query to be used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#387'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#388'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1412,7 +1421,7 @@ The query to be used.</p>
   
   <h1>Method: RecordsetManager::describeTableFields()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFields(string <span class="php-var">$table</span>, <span class="php-keyword1">array</span> <span class="php-var">$fields</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFields(string <span class="php-var">$table</span>, <span class="php-keyword1">array</span> <span class="php-var">$fields</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>): void;</div>
 
   
   <div class="short-description">
@@ -1450,8 +1459,7 @@ The query to be used.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the table.
-The name of the table.</p>
+                <p>The name of the table.</p>
             </td>
         </tr>
         
@@ -1469,8 +1477,7 @@ The name of the table.</p>
                 
             </td>
             <td class="description_column">
-                <p>The array of fields in the form &quot;field name&quot; =&gt; &quot;field type&quot;.
-The array of fields in the form &quot;field name&quot; =&gt; &quot;field type&quot;.</p>
+                <p>The array of fields in the form "field name" =&gt; "field type".</p>
             </td>
         </tr>
         
@@ -1489,7 +1496,6 @@ The array of fields in the form &quot;field name&quot; =&gt; &quot;field type&qu
             </td>
             <td class="description_column">
                 <p>The array of key fields. These are the fields that are used
-to uniquely identify a record.
 to uniquely identify a record.</p>
             </td>
         </tr>
@@ -1541,7 +1547,7 @@ to uniquely identify a record.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#278'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#279'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1569,7 +1575,7 @@ to uniquely identify a record.</p>
   
   <h1>Method: RecordsetManager::describeTableFieldsQuery()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFieldsQuery(<span class="php-keyword1">array</span> <span class="php-var">$fields</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFieldsQuery(<span class="php-keyword1">array</span> <span class="php-var">$fields</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>): void;</div>
 
   
   <div class="short-description">
@@ -1607,8 +1613,7 @@ to uniquely identify a record.</p>
                 
             </td>
             <td class="description_column">
-                <p>The array of fields in the form &quot;field name&quot; =&gt; &quot;field type&quot;.
-The array of fields in the form &quot;field name&quot; =&gt; &quot;field type&quot;.</p>
+                <p>The array of fields in the form "field name" =&gt; "field type".</p>
             </td>
         </tr>
         
@@ -1627,7 +1632,6 @@ The array of fields in the form &quot;field name&quot; =&gt; &quot;field type&qu
             </td>
             <td class="description_column">
                 <p>The array of key fields. These are the fields that are used
-to uniquely identify a record.
 to uniquely identify a record.</p>
             </td>
         </tr>
@@ -1679,7 +1683,7 @@ to uniquely identify a record.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#315'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#316'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1707,7 +1711,7 @@ to uniquely identify a record.</p>
   
   <h1>Method: RecordsetManager::escape()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>): string;</div>
 
   
   <div class="short-description">
@@ -1745,8 +1749,7 @@ to uniquely identify a record.</p>
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.
-The string to be escaped.</p>
+                <p>The string to be escaped.</p>
             </td>
         </tr>
         
@@ -1758,8 +1761,7 @@ The string to be escaped.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the escaped string.
-Returns the escaped string.</p></div>
+  <div class="item_description"><p>Returns the escaped string.</p></div>
   
   </div>
   
@@ -1787,7 +1789,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#915'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#922'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1824,7 +1826,7 @@ Returns the escaped string.</p></div>
   
   <h1>Method: RecordsetManager::format_date()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>): string;</div>
 
   
   <div class="short-description">
@@ -1862,8 +1864,7 @@ Returns the escaped string.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The date value as timestamp.
-The date value as timestamp.</p>
+                <p>The date value as timestamp.</p>
             </td>
         </tr>
         
@@ -1875,8 +1876,7 @@ The date value as timestamp.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.
-Returns the string representation of the date compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.</p></div>
   
   </div>
   
@@ -1904,7 +1904,7 @@ Returns the string representation of the date compatible for the corresponding d
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#981'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#988'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -1941,7 +1941,7 @@ Returns the string representation of the date compatible for the corresponding d
   
   <h1>Method: RecordsetManager::format_datetime()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>): string;</div>
 
   
   <div class="short-description">
@@ -1979,8 +1979,7 @@ Returns the string representation of the date compatible for the corresponding d
                 
             </td>
             <td class="description_column">
-                <p>The date/time value as timestamp.
-The date/time value as timestamp.</p>
+                <p>The date/time value as timestamp.</p>
             </td>
         </tr>
         
@@ -1992,8 +1991,7 @@ The date/time value as timestamp.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.
-Returns the string representation of the date/time compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.</p></div>
   
   </div>
   
@@ -2021,7 +2019,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#1002'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#1009'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -2058,7 +2056,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h1>Method: RecordsetManager::getDBWorker()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getDBWorker() : \SmartFactory\DatabaseWorkers\DBWorker;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getDBWorker(): ?\SmartFactory\DatabaseWorkers\DBWorker;</div>
 
   
   <div class="short-description">
@@ -2075,15 +2073,22 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h2>Returns</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+  ?\SmartFactory\DatabaseWorkers\DBWorker<br>
   
-  <div class="item_description"><p>Returns the dbworker to be used for working with the database.
-Returns the dbworker to be used for working with the database.</p></div>
+  <div class="item_description"><p>Returns the dbworker to be used for working with the database.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -2106,7 +2111,7 @@ Returns the dbworker to be used for working with the database.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#243'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#246'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -2134,11 +2139,11 @@ Returns the dbworker to be used for working with the database.</p></div>
   
   <h1>Method: RecordsetManager::loadRecord()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, <span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>): void;</div>
 
   
   <div class="short-description">
-  <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; based on a table.</p>
+  <p>Loads a record into an array in the form "field_name" =&gt; "value" based on a table.</p>
   </div>
   
 
@@ -2172,8 +2177,7 @@ Returns the dbworker to be used for working with the database.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The target array where the data should be loaded.
-The target array where the data should be loaded.</p>
+                <p>The target array where the data should be loaded.</p>
             </td>
         </tr>
         
@@ -2185,14 +2189,13 @@ The target array where the data should be loaded.</p>
                 by value
             </td>
             <td>
-                string|array
+                array|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
                 <p>The where clause that should restrict the result to one record. If an array of keys is passed,
-the where clause is build automatically based on it.
 the where clause is build automatically based on it.</p>
             </td>
         </tr>
@@ -2245,7 +2248,7 @@ the where clause is build automatically based on it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#424'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#425'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -2285,11 +2288,11 @@ the where clause is build automatically based on it.</p>
   
   <h1>Method: RecordsetManager::loadRecordQuery()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string <span class="php-var">$query</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string <span class="php-var">$query</span>): void;</div>
 
   
   <div class="short-description">
-  <p>Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
+  <p>Loads a record into an array in the form "field_name" =&gt; "value".</p>
   </div>
   
 
@@ -2323,8 +2326,7 @@ the where clause is build automatically based on it.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target array where the data should be loaded.
-The target array where the data should be loaded.</p>
+                <p>The target array where the data should be loaded.</p>
             </td>
         </tr>
         
@@ -2342,8 +2344,7 @@ The target array where the data should be loaded.</p>
                 
             </td>
             <td class="description_column">
-                <p>The query to be used.
-The query to be used.</p>
+                <p>The query to be used.</p>
             </td>
         </tr>
         
@@ -2395,7 +2396,7 @@ The query to be used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#467'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#468'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -2433,7 +2434,7 @@ The query to be used.</p>
   <h1>Method: RecordsetManager::loadRecordSet()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSet(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, 
-                              string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>, 
+                              <span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>, 
                               string <span class="php-var">$order_clause</span> = <span class="php-quote">&quot;&quot;</span>, 
                               int <span class="php-var">$limit</span> = <span class="php-num">0</span>
                              ) : void;
@@ -2448,7 +2449,7 @@ The query to be used.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>$records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot;.</p>
+  <p>$records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value".</p>
 <p>baed on a table.</p>
   </div>
   
@@ -2481,8 +2482,7 @@ The query to be used.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target array where the data should be loaded.
-The target array where the data should be loaded.</p>
+                <p>The target array where the data should be loaded.</p>
             </td>
         </tr>
         
@@ -2494,14 +2494,13 @@ The target array where the data should be loaded.</p>
                 by value
             </td>
             <td>
-                string|array
+                array|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
                 <p>The where clause that should restrict the result. If an array of keys is passed,
-the where clause is build automatically based on it.
 the where clause is build automatically based on it.</p>
             </td>
         </tr>
@@ -2520,8 +2519,7 @@ the where clause is build automatically based on it.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The order clause to sort the results.
-The order clause to sort the results.</p>
+                <p>The order clause to sort the results.</p>
             </td>
         </tr>
         
@@ -2539,8 +2537,7 @@ The order clause to sort the results.</p>
                 0
             </td>
             <td class="description_column">
-                <p>The limit how many records shoud be loaded. 0 for unlimited.
-The limit how many records shoud be loaded. 0 for unlimited.</p>
+                <p>The limit how many records should be loaded. 0 for unlimited.</p>
             </td>
         </tr>
         
@@ -2592,7 +2589,7 @@ The limit how many records shoud be loaded. 0 for unlimited.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#522'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#523'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -2632,7 +2629,7 @@ The limit how many records shoud be loaded. 0 for unlimited.</p>
   
   <h1>Method: RecordsetManager::loadRecordSetQuery()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSetQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string <span class="php-var">$query</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSetQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string <span class="php-var">$query</span>): void;</div>
 
   
   <div class="short-description">
@@ -2643,7 +2640,7 @@ The limit how many records shoud be loaded. 0 for unlimited.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>$records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot;.</p>
+  <p>$records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value".</p>
 <p>baed on a query.</p>
   </div>
   
@@ -2676,8 +2673,7 @@ The limit how many records shoud be loaded. 0 for unlimited.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target array where the data should be loaded.
-The target array where the data should be loaded.</p>
+                <p>The target array where the data should be loaded.</p>
             </td>
         </tr>
         
@@ -2695,8 +2691,7 @@ The target array where the data should be loaded.</p>
                 
             </td>
             <td class="description_column">
-                <p>The query to be used.
-The query to be used.</p>
+                <p>The query to be used.</p>
             </td>
         </tr>
         
@@ -2748,7 +2743,7 @@ The query to be used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#563'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#564'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -2785,7 +2780,7 @@ The query to be used.</p>
   
   <h1>Method: RecordsetManager::number_or_null()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> number_or_null(string <span class="php-var">$str</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> number_or_null(string <span class="php-var">$str</span>): string;</div>
 
   
   <div class="short-description">
@@ -2823,8 +2818,7 @@ The query to be used.</p>
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.
-The string to be escaped.</p>
+                <p>The string to be escaped.</p>
             </td>
         </tr>
         
@@ -2836,8 +2830,7 @@ The string to be escaped.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the escaped string.
-Returns the escaped string.</p></div>
+  <div class="item_description"><p>Returns the escaped string.</p></div>
   
   </div>
   
@@ -2868,7 +2861,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#960'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#967'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -2905,7 +2898,7 @@ Returns the escaped string.</p></div>
   
   <h1>Method: RecordsetManager::processSubarray()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processSubarray(<span class="php-keyword1">array</span> &amp;<span class="php-var">$subarray</span>, 
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processSubarray(<span class="php-keyword1">array</span> <span class="php-var">$subarray</span>, 
                                    <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>, 
                                    <span class="php-keyword1">array</span> &amp;<span class="php-var">$parent_values</span>, 
                                    <span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, 
@@ -2923,7 +2916,7 @@ with key field values as array dimensions.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>It expand this multidimensional
+  <p>It expands this multidimensional
 array into the set of flat records suitable for call <a href='class-SmartFactory.RecordsetManager.html#saveRecord'>\SmartFactory\RecordsetManager::saveRecord()</a>.</p>
   </div>
   
@@ -2947,7 +2940,7 @@ array into the set of flat records suitable for call <a href='class-SmartFactory
                 $subarray
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -2956,8 +2949,7 @@ array into the set of flat records suitable for call <a href='class-SmartFactory
                 
             </td>
             <td class="description_column">
-                <p>The current subarray ro be processed.
-The current subarray ro be processed.</p>
+                <p>The current subarray ro be processed.</p>
             </td>
         </tr>
         
@@ -2976,7 +2968,6 @@ The current subarray ro be processed.</p>
             </td>
             <td class="description_column">
                 <p>The array of the key fields. These are the fields that are used
-to uniquely identify a record.
 to uniquely identify a record.</p>
             </td>
         </tr>
@@ -2996,8 +2987,7 @@ to uniquely identify a record.</p>
             </td>
             <td class="description_column">
                 <p>The array of the values of the foreign keys
-in the form &quot;field_name&quot; =&gt; &quot;value&quot;.
-in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
+in the form "field_name" =&gt; "value".</p>
             </td>
         </tr>
         
@@ -3015,8 +3005,7 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
                 
             </td>
             <td class="description_column">
-                <p>The array where the resulting flat record is built.
-The array where the resulting flat record is built.</p>
+                <p>The array where the resulting flat record is built.</p>
             </td>
         </tr>
         
@@ -3036,8 +3025,7 @@ The array where the resulting flat record is built.</p>
             <td class="description_column">
                 <p>The name of the identity field if exists. If the identity field is specified
 and the record does not exist yet in the table, the source array is extended
-with a pair &quot;identity field&quot; =&gt; &quot;identity value&quot; issued by the database by this
-insert operation.
+with a pair "identity field" =&gt; "identity value" issued by the database by this
 insert operation.</p>
             </td>
         </tr>
@@ -3107,7 +3095,7 @@ insert operation.</p>
   
   <h1>Method: RecordsetManager::quotes_or_null()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> quotes_or_null(string <span class="php-var">$str</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> quotes_or_null(string <span class="php-var">$str</span>): string;</div>
 
   
   <div class="short-description">
@@ -3145,8 +3133,7 @@ insert operation.</p>
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.
-The string to be escaped.</p>
+                <p>The string to be escaped.</p>
             </td>
         </tr>
         
@@ -3158,8 +3145,7 @@ The string to be escaped.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the escaped string.
-Returns the escaped string.</p></div>
+  <div class="item_description"><p>Returns the escaped string.</p></div>
   
   </div>
   
@@ -3182,7 +3168,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#936'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#943'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -3219,11 +3205,11 @@ Returns the escaped string.</p></div>
   
   <h1>Method: RecordsetManager::rollback_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction(): void;</div>
 
   
   <div class="short-description">
-  <p>Rolls back the transation.</p>
+  <p>Rolls back the translation.</p>
   </div>
   
 
@@ -3272,7 +3258,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#892'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#899'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -3303,11 +3289,11 @@ Returns the escaped string.</p></div>
   
   <h1>Method: RecordsetManager::saveRecord()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string|<span class="php-keyword1">array</span> <span class="php-var">$where_clause</span>, string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, <span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>, string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
 
   
   <div class="short-description">
-  <p>Saves a record from an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; into the table.</p>
+  <p>Saves a record from an array in the form "field_name" =&gt; "value" into the table.</p>
   </div>
   
 
@@ -3341,8 +3327,7 @@ Returns the escaped string.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The source array with the data to be saved.
-The source array with the data to be saved.</p>
+                <p>The source array with the data to be saved.</p>
             </td>
         </tr>
         
@@ -3354,14 +3339,13 @@ The source array with the data to be saved.</p>
                 by value
             </td>
             <td>
-                string|array
+                array|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
                 <p>The where clause that should be used to define whether a record should be inserted or updated. If an array of keys is passed,
-the where clause is build automatically based on it.
 the where clause is build automatically based on it.</p>
             </td>
         </tr>
@@ -3382,8 +3366,7 @@ the where clause is build automatically based on it.</p>
             <td class="description_column">
                 <p>The name of the identity field if exists. If the identity field is specified
 and the record does not exist yet in the table, the source array is extended
-with a pair &quot;identity field&quot; =&gt; &quot;identity value&quot; issued by the database by this
-insert operation.
+with a pair "identity field" =&gt; "identity value" issued by the database by this
 insert operation.</p>
             </td>
         </tr>
@@ -3436,7 +3419,7 @@ insert operation.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#639'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#640'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -3473,12 +3456,12 @@ insert operation.</p>
   
   <h1>Method: RecordsetManager::saveRecordSet()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, <span class="php-keyword1">array</span> <span class="php-var">$parent_values</span> = [], string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(<span class="php-keyword1">array</span> <span class="php-var">$records</span>, <span class="php-keyword1">array</span> <span class="php-var">$parent_values</span> = [], string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
 
   
   <div class="short-description">
   <p>Saves records from an array in the form
-$records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot; into the table.</p>
+$records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.</p>
   </div>
   
 
@@ -3503,7 +3486,7 @@ $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;]
                 $records
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -3512,8 +3495,7 @@ $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;]
                 
             </td>
             <td class="description_column">
-                <p>The source array with the data to be saved.
-The source array with the data to be saved.</p>
+                <p>The source array with the data to be saved.</p>
             </td>
         </tr>
         
@@ -3532,8 +3514,7 @@ The source array with the data to be saved.</p>
             </td>
             <td class="description_column">
                 <p>If this recordset is a child subset of data to be saved, you can set the values of the foreign keys
-in the form &quot;field_name&quot; =&gt; &quot;value&quot;.
-in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
+in the form "field_name" =&gt; "value".</p>
             </td>
         </tr>
         
@@ -3553,8 +3534,7 @@ in the form &quot;field_name&quot; =&gt; &quot;value&quot;.</p>
             <td class="description_column">
                 <p>The name of the identity field if exists. If the identity field is specified
 and the record does not exist yet in the table, the source array is extended
-with a pair &quot;identity field&quot; =&gt; &quot;identity value&quot; issued by the database by this
-insert operation.
+with a pair "identity field" =&gt; "identity value" issued by the database by this
 insert operation.</p>
             </td>
         </tr>
@@ -3607,7 +3587,7 @@ insert operation.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#748'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#749'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -3644,7 +3624,7 @@ insert operation.</p>
   
   <h1>Method: RecordsetManager::setDBWorker()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(\SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(\SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>): void;</div>
 
   
   <div class="short-description">
@@ -3682,8 +3662,7 @@ insert operation.</p>
                 
             </td>
             <td class="description_column">
-                <p>The dbworker to be used for working with the database.
-The dbworker to be used for working with the database.</p>
+                <p>The dbworker to be used for working with the database.</p>
             </td>
         </tr>
         
@@ -3749,11 +3728,11 @@ The dbworker to be used for working with the database.</p>
   
   <h1>Method: RecordsetManager::start_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction(): void;</div>
 
   
   <div class="short-description">
-  <p>Starts the transation.</p>
+  <p>Starts the translation.</p>
   </div>
   
 
@@ -3802,7 +3781,7 @@ The dbworker to be used for working with the database.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RecordsetManager.php.html#852'>SmartFactory/RecordsetManager.php</a>
+  <a href='source-SmartFactory.RecordsetManager.php.html#859'>SmartFactory/RecordsetManager.php</a>
   </div>
   
 
@@ -3833,12 +3812,12 @@ The dbworker to be used for working with the database.</p>
   
   <h1>Method: RecordsetManager::validateParameters()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters(string <span class="php-var">$type</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters(string <span class="php-var">$type</span>): void;</div>
 
   
   <div class="short-description">
   <p>This is internal auxiliary function for checking that the recordset manager
-is intialized correctly.</p>
+is initialized correctly.</p>
   </div>
   
 
@@ -3872,8 +3851,7 @@ is intialized correctly.</p>
                 
             </td>
             <td class="description_column">
-                <p>The type of validation - table or query.
-The type of validation - table or query.</p>
+                <p>The type of validation - table or query.</p>
             </td>
         </tr>
         
@@ -3923,7 +3901,7 @@ The type of validation - table or query.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

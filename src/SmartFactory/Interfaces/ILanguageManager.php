@@ -29,7 +29,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function init($parameters);
+    public function init(array $parameters): void;
     
     /**
      * This is function for loading the translations from the source JSON file.
@@ -43,12 +43,12 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function loadDictionary();
+    public function loadDictionary(): void;
 
     /**
      * Adds additional translations to the dictionary.
      *
-     * @param array &$dictionary
+     * @param array $dictionary
      * The array with additional translations.
      *
      * @return void
@@ -58,7 +58,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function extendDictionary(&$dictionary);
+    public function extendDictionary(array $dictionary): void;
 
     /**
      * Adds additional localization files to the dictionary.
@@ -73,7 +73,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function addLocalizationFile($localization_file);
+    public function addLocalizationFile(string $localization_file): void;
 
     /**
      * This function should detect the current language based on cookies, browser languages etc.
@@ -95,7 +95,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function detectLanguage();
+    public function detectLanguage(): void;
     
     /**
      * Sets the current context.
@@ -122,7 +122,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function setContext($context);
+    public function setContext(string $context): void;
 
     /**
      * Returns the current context.
@@ -145,7 +145,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getContext();
+    public function getContext(): string;
     
     /**
      * Returns the list of supported languages.
@@ -155,7 +155,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getSupportedLanguages();
+    public function getSupportedLanguages(): array;
     
     /**
      * Sets the current language.
@@ -169,7 +169,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function setCurrentLanguage($language);
+    public function setCurrentLanguage(string $language): void;
     
     /**
      * Returns the current language.
@@ -181,28 +181,28 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getCurrentLanguage();
+    public function getCurrentLanguage(): string;
     
     /**
-     * Returns the fallback language. If set and a tranlation 
-     * is missing on a langauge, the translation on this language will be used.
+     * Returns the fallback language. If set and a translation
+     * is missing on a language, the translation on this language will be used.
      *
      * @return string
      * Returns the fallback language.
      *
      * @author Oleg Schildt
      */
-    public function getFallbackLanguage();
+    public function getFallbackLanguage(): string;
 
     /**
-     * Provides the text translation for the text ID for the given langauge.
+     * Provides the text translation for the text ID for the given language.
      *
      * @param string $text_id
      * Text ID
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
      * @param string $default_text
      * The default text to be used if there is no translation.
@@ -213,18 +213,18 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function text($text_id, $lng = "", $default_text = "");
+    public function text(string $text_id, string $lng = "", string $default_text = ""): string;
     
     /**
-     * Provides the text translation for the text ID for the given langauge if the translation exists.
-     * Otherwise it returns the text ID and emits no warning.
+     * Provides the text translation for the text ID for the given language if the translation exists.
+     * Otherwise, it returns the text ID and emits no warning.
      *
      * @param string $text_id
      * Text ID
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
      * @return string
      * Returns the translation text or the $default_text/$text_id if no translation
@@ -232,35 +232,35 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function try_text($text_id, $lng = "");
+    public function try_text(string $text_id, string $lng = ""): string;
 
     /**
-     * Checks whether the text translation for the text ID for the given langauge exists.
+     * Checks whether the text translation for the text ID for the given language exists.
      *
      * @param string $text_id
      * Text ID
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the translation exists, otherwise false.
      *
      * @author Oleg Schildt
      */
-    public function hasTranslation($text_id, $lng = "");
+    public function hasTranslation(string $text_id, string $lng = ""): bool;
     
     /**
      * Provides the text translation for the language name by the code
-     * for the given langauge.
+     * for the given language.
      *
      * @param string $code
      * Language ISO code (lowercase, e.g. en, de, fr).
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
      * @return string
      * Returns the translation text for the language name or the $code if no translation
@@ -273,7 +273,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getLanguageName($code, $lng = "");
+    public function getLanguageName(string $code, string $lng = ""): string;
     
     /**
      * Tries to find the language code by the given name.
@@ -291,7 +291,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getLanguageCode($lang_name);
+    public function getLanguageCode(string $lang_name): string;
     
     /**
      * Checks whether the language code is valid (has translation).
@@ -300,11 +300,11 @@ interface ILanguageManager extends IInitable
      * Language ISO code (lowercase, e.g. en, de, fr).
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
-     * @return boolean
-     * Returns true if the langauge code is valid (has translation), otherwise false.
+     * @return bool
+     * Returns true if the language code is valid (has translation), otherwise false.
      *
      * @see ILanguageManager::getLanguageName()
      * @see ILanguageManager::getLanguageCode()
@@ -313,7 +313,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function validateLanguageCode($code, $lng = "");
+    public function validateLanguageCode(string $code, string $lng = ""): bool;
     
     /**
      * Provides the list of languages for the given language in the form "code" => "translation".
@@ -322,14 +322,14 @@ interface ILanguageManager extends IInitable
      * Target array where the language list should be loaded.
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
      * @param array $display_first
      * List of the language codes to be displayed first in the order, they appear in the list.
      *
-     * @return boolean
-     * Returns true if the langauge list is successfully retrieved, otherwise false.
+     * @return bool
+     * Returns true if the language list is successfully retrieved, otherwise false.
      *
      * @see ILanguageManager::getLanguageName()
      * @see ILanguageManager::getLanguageCode()
@@ -338,18 +338,18 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getLanguageList(&$language_list, $lng = "", $display_first = []);
+    public function getLanguageList(array &$language_list, string $lng = "", array $display_first = []): bool;
     
     /**
      * Provides the text translation for the country name by the code
-     * for the given langauge.
+     * for the given language.
      *
      * @param string $code
      * Country ISO code (uppercase, e.g. US, DE, FR).
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
      * @return string
      * Returns the translation text for the country name or the $code if no translation
@@ -362,7 +362,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getCountryName($code, $lng = "");
+    public function getCountryName(string $code, string $lng = ""): string;
     
     /**
      * Tries to find the country code by the given name.
@@ -380,7 +380,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getCountryCode($country_name);
+    public function getCountryCode(string $country_name): string;
     
     /**
      * Checks whether the country code is valid (has translation).
@@ -389,10 +389,10 @@ interface ILanguageManager extends IInitable
      * Country ISO code (uppercase, e.g. US, DE, FR).
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the country code is valid (has translation), otherwise false.
      *
      * @see ILanguageManager::getCountryName()
@@ -402,7 +402,7 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function validateCountryCode($code, $lng = "");
+    public function validateCountryCode(string $code, string $lng = ""): bool;
     
     /**
      * Provides the list of countries for the given language in the form "code" => "translation".
@@ -411,13 +411,13 @@ interface ILanguageManager extends IInitable
      * Target array where the country list should be loaded.
      *
      * @param string $lng
-     * The langauge. If it is not specified,
-     * the default langauge is used.
+     * The language. If it is not specified,
+     * the default language is used.
      *
      * @param array $display_first
      * List of the country codes to be displayed first in the order, they appear in the list.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the country list is successfully retrieved, otherwise false.
      *
      * @see ILanguageManager::getCountryName()
@@ -427,5 +427,5 @@ interface ILanguageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getCountryList(&$country_list, $lng = "", $display_first = []);
+    public function getCountryList(array &$country_list, string $lng = "", array $display_first = []): bool;
 } // ILanguageManager

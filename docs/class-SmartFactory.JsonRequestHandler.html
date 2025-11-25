@@ -346,7 +346,7 @@ of the API actions.</p>
   
   <h1>Method: JsonRequestHandler::parseInput()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput(): void;</div>
 
   
   <div class="short-description">
@@ -376,7 +376,7 @@ of the API actions.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a><br>
+  \Exception|<a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a><br>
   
   <div class="item_description"><p>It might throw an exception if the content type oк JSON data is invalid.</p></div>
   
@@ -404,7 +404,7 @@ of the API actions.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#102'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#105'>SmartFactory/JsonRequestHandler.php</a>
   </div>
   
 
@@ -426,7 +426,7 @@ of the API actions.</p>
   
   <h1>Method: JsonRequestHandler::sendResponse()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse(): void;</div>
 
   
   <div class="short-description">
@@ -438,7 +438,7 @@ of the API actions.</p>
   <div class="long_description">
   <h2>Details</h2>
   <p>It sends the collected response data and the response headers. The header
-&quot;Content-type: application/json; charset=UTF-8&quot; ist sent automatically.</p>
+"Content-type: application/json; charset=UTF-8" ist sent automatically.</p>
   </div>
   
 
@@ -454,7 +454,15 @@ of the API actions.</p>
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a><br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -477,11 +485,11 @@ of the API actions.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.JsonRequestHandler.php.html#69'>SmartFactory/JsonRequestHandler.php</a>
+  <a href='source-SmartFactory.JsonRequestHandler.php.html#72'>SmartFactory/JsonRequestHandler.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

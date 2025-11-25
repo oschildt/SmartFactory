@@ -26,7 +26,7 @@
  *
  * @author Oleg Schildt
  */
-function preg_pattern_quote($str, $delimiter = "/")
+function preg_pattern_quote(string $str, string $delimiter = "/"): string
 {
     return preg_quote($str, $delimiter);
 }
@@ -48,7 +48,7 @@ function preg_pattern_quote($str, $delimiter = "/")
  *
  * @author Oleg Schildt
  */
-function preg_replacement_quote($str)
+function preg_replacement_quote(string $str): string
 {
     return strtr($str, ["\\" => "\\\\", "$" => "\\$"]);
 }

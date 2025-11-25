@@ -25,8 +25,6 @@ use \SmartFactory\DatabaseWorkers\ShardManager;
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(IErrorHandler::class, ErrorHandler::class);
 //-------------------------------------------------------------------
-ObjectFactory::bindClass(ISessionManager::class, SessionManager::class);
-//-------------------------------------------------------------------
 ObjectFactory::bindClass(IEventManager::class, EventManager::class);
 //-------------------------------------------------------------------
 ObjectFactory::bindClass(IMessageManager::class, MessageManager::class, function ($instance) {

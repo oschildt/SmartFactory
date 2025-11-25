@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: SmartExceptionCollection
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">SmartExceptionCollection</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: SmartExceptionCollection</h1>
+
+
+
+<div class="definition"></div>
+
+
+<div class="short-description">
+<p>Class for extended exception collection used in the SmartFactory library. It allows to collect many errors
+and report them at once.</p>
+</div>
+
+
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+\Exception<br>
+
+</div>
+
+
+
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-SmartFactory.SmartExceptionCollection.php.html#25'>SmartFactory/SmartExceptionCollection.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$errors">$errors</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the single errors.</p>
+          </td>
+      </tr>
+      
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+      
+      <tr>
+          <td>
+              <div style='float:left'><a href="#addError">addError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the error to be reported.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getErrors">getErrors()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the array of errors if any have been stored.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#throwIfErrors">throwIfErrors()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Throws itself if any error has been collected.</p>
+          </td>
+      </tr>
+      
+  </table>
+
+
+
+<hr id="$errors">
+  
+  <h1>Property: SmartExceptionCollection::$errors</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$errors</span> = [];</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the single errors.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  array
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.SmartExceptionCollection.php.html#34'>SmartFactory/SmartExceptionCollection.php</a>
+  </div>
+
+<hr id="addError">
+  
+  <h1>Method: SmartExceptionCollection::addError()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addError(string <span class="php-var">$message</span>, 
+                         <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], 
+                         string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$code</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, 
+                         string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>
+                        ) : void;
+</div>
+
+  
+  <div class="short-description">
+  <p>Stores the error to be reported.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The error message to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $details
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                array
+            </td>
+            <td>
+                []
+            </td>
+            <td class="description_column">
+                <p>The details might be useful if the message translations are provided on the client, not
+on the server, and the message should contain some details that may vary from case to case.
+In that case, the servers return the message id instead of final text and the details, the client
+uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $related_element
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The error element associated with the error.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $code
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The error code to be reported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $technical_info
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The technical information for the error. Displaying
+of this part might be controlled over an option
+"debug_mode".</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $file
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file where the error occurred. Per default, the file where the adding error called.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $line
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The source file line where the error occurred. Per default, the file line where the adding error called.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.SmartExceptionCollection.php.html#69'>SmartFactory/SmartExceptionCollection.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getErrors">
+  
+  <h1>Method: SmartExceptionCollection::getErrors()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrors(): <span class="php-keyword1">array</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Returns the array of errors if any have been stored.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  array<br>
+  
+  <div class="item_description"><p>Returns the array of errors if any have been stored.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.SmartExceptionCollection.php.html#123'>SmartFactory/SmartExceptionCollection.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="throwIfErrors">
+  
+  <h1>Method: SmartExceptionCollection::throwIfErrors()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> throwIfErrors(): void;</div>
+
+  
+  <div class="short-description">
+  <p>Throws itself if any error has been collected.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.SmartExceptionCollection.html'>\SmartFactory\SmartExceptionCollection</a><br>
+  
+  <div class="item_description"><p>Throws itself if there are errors.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.SmartExceptionCollection.php.html#108'>SmartFactory/SmartExceptionCollection.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

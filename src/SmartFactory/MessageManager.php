@@ -26,26 +26,26 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    protected $messages = null;
+    protected array $messages = [];
 
     /**
-     * Internal variable for storing the state whether technical details, programmer warnings and debug infromation are also sent to the client.
+     * Internal variable for storing the state whether technical details, programmer warnings and debug information are also sent to the client.
      *
-     * @var boolean
+     * @var bool
      *
      * @author Oleg Schildt
      */
-    protected $debug_mode = false;
+    protected bool $debug_mode = false;
 
     /**
      * Internal variable for storing the flag that defines whether for each debug output the source file and
      * line number are written from where it is called.
      *
-     * @var string
+     * @var bool
      *
      * @author Oleg Schildt
      */
-    protected $write_source_file_and_line_by_debug;
+    protected bool $write_source_file_and_line_by_debug = false;
 
     /**
      * Initializes the message manager.
@@ -53,7 +53,7 @@ class MessageManager implements IMessageManager
      * @param array $parameters
      * Settings for message management as an associative array in the form key => value:
      *
-     * - $parameters["debug_mode"] - if set to True, the technical details, programmer warnings and debug infromation are also sent to the client. Use it only during dubugging!
+     * - $parameters["debug_mode"] - if set to True, the technical details, programmer warnings and debug information are also sent to the client. Use it only during debugging!
      *
      * - $parameters["write_source_file_and_line_by_debug"] - the flag that defines whether for each debug output the source file and
      * line number are written from where it is called.
@@ -65,7 +65,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function init($parameters)
+    public function init(array $parameters): void
     {
         $this->debug_mode = !empty($parameters["debug_mode"]);
 
@@ -85,7 +85,7 @@ class MessageManager implements IMessageManager
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
      * @param string $related_element
-     * The error element accociated with the error.
+     * The error element associated with the error.
      *
      * @param string $code
      * The error code to be reported.
@@ -96,13 +96,14 @@ class MessageManager implements IMessageManager
      * "debug_mode".
      *
      * @param string $file
-     * The source file where the error occured. Per default, the file where the adding error called.
+     * The source file where the error occurred. Per default, the file where the adding error called.
      *
      * @param string $line
-     * The source file line where the error occured. Per default, the file line where the adding error called.
+     * The source file line where the error occurred. Per default, the file line where the adding error called.
      *
      * @return void
      *
+     * @see MessageManager::addErrorFromSmartException()
      * @see MessageManager::addWarning()
      * @see MessageManager::addProgWarning()
      * @see MessageManager::addDebugMessage()
@@ -114,7 +115,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addError($message, $details = [], $related_element = "", $code = "", $technical_info = "", $file = "", $line = "")
+    public function addError(string $message, array $details = [], string $related_element = "", string $code = "", string $technical_info = "", string $file = "", string $line = ""): void
     {
         if (empty($message)) {
             return;
@@ -143,7 +144,7 @@ class MessageManager implements IMessageManager
             $line = "";
         }
 
-        $this->messages["errors"][$message . implode("#", $details)] = [
+        $this->messages["errors"][md5($message . implode("#", $details))] = [
             "message" => $message,
             "details" => $details,
             "related_element" => $related_element,
@@ -153,6 +154,40 @@ class MessageManager implements IMessageManager
             "line" => $line
         ];
     } // addError
+
+    /**
+     * Stores the error to be reported.
+     *
+     * @param SmartException|SmartExceptionCollection $smart_exception
+     * The exception object of collection of exceptions.
+     *
+     * @return void
+     *
+     * @see MessageManager::addError()
+     * @see MessageManager::addWarning()
+     * @see MessageManager::addProgWarning()
+     * @see MessageManager::addDebugMessage()
+     * @see MessageManager::addInfoMessage()
+     * @see MessageManager::addBubbleMessage()
+     * @see MessageManager::getErrors()
+     * @see MessageManager::hasErrors()
+     * @see MessageManager::clearErrors()
+     *
+     * @author Oleg Schildt
+     */
+    public function addErrorFromSmartException(SmartException|SmartExceptionCollection $smart_exception): void
+    {
+        if ($smart_exception instanceof SmartException) {
+            $this->addError($smart_exception->getMessage(), $smart_exception->getErrorDetails(), $smart_exception->getErrorElement(), $smart_exception->getErrorCode(), trim($smart_exception->getTechnicalInfo()), $smart_exception->getFile(), $smart_exception->getLine());
+        } elseif ($smart_exception instanceof SmartExceptionCollection) {
+            $errors = $smart_exception->getErrors();
+            foreach ($errors as $error) {
+                $this->addError($error["message"], $error["details"], $error["related_element"], $error["code"], $error["technical_info"], $error["file"], $error["line"]);
+            }
+        } else {
+            $this->addError($smart_exception->getMessage(), [], "", $smart_exception->getCode());
+        }
+    }
 
     /**
      * Clears the stored error messages.
@@ -169,7 +204,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function clearErrors()
+    public function clearErrors(): void
     {
         unset($this->messages["errors"]);
     } // clearErrors
@@ -177,7 +212,7 @@ class MessageManager implements IMessageManager
     /**
      * Checks whether a stored error message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored error message exists, otherwise false.
      *
      * @see MessageManager::hasWarnings()
@@ -190,7 +225,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return (isset($this->messages["errors"]) && count($this->messages["errors"]) > 0);
     } // hasErrors
@@ -214,7 +249,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         if (!$this->hasErrors()) {
             return [];
@@ -236,7 +271,7 @@ class MessageManager implements IMessageManager
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
      * @param string $related_element
-     * The error element accociated with the warning.
+     * The error element associated with the warning.
      *
      * @return void
      *
@@ -251,7 +286,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addWarning($message, $details = [], $related_element = "")
+    public function addWarning(string $message, array $details = [], string $related_element = ""): void
     {
         if (empty($message)) {
             return;
@@ -279,7 +314,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function clearWarnings()
+    public function clearWarnings(): void
     {
         unset($this->messages["warnings"]);
     } // clearWarnings
@@ -287,7 +322,7 @@ class MessageManager implements IMessageManager
     /**
      * Checks whether a stored error warning exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored warning message exists, otherwise false.
      *
      * @see MessageManager::hasErrors()
@@ -300,7 +335,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function hasWarnings()
+    public function hasWarnings(): bool
     {
         return (isset($this->messages["warnings"]) && count($this->messages["warnings"]) > 0);
     } // hasWarnings
@@ -324,7 +359,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function getWarnings()
+    public function getWarnings(): array
     {
         if (!$this->hasWarnings()) {
             return [];
@@ -343,10 +378,10 @@ class MessageManager implements IMessageManager
      * The programming warning message to be reported.
      *
      * @param string $file
-     * The source file where the error occured. Per default, the file where the adding error called.
+     * The source file where the error occurred. Per default, the file where the adding error called.
      *
      * @param string $line
-     * The source file line where the error occured. Per default, the file line where the adding error called.
+     * The source file line where the error occurred. Per default, the file line where the adding error called.
      *
      * @return void
      *
@@ -361,7 +396,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addProgWarning($message, $file = "", $line = "")
+    public function addProgWarning(string $message, string $file = "", string $line = ""): void
     {
         if (!$this->debug_mode) {
             return;
@@ -405,7 +440,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function clearProgWarnings()
+    public function clearProgWarnings(): void
     {
         unset($this->messages["prog_warnings"]);
     } // clearProgWarnings
@@ -413,7 +448,7 @@ class MessageManager implements IMessageManager
     /**
      * Checks whether a stored programming warning exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored programming warning message exists, otherwise false.
      *
      * @see MessageManager::hasErrors()
@@ -426,7 +461,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function hasProgWarnings()
+    public function hasProgWarnings(): bool
     {
         return (isset($this->messages["prog_warnings"]) && count($this->messages["prog_warnings"]) > 0);
     } // hasProgWarnings
@@ -450,7 +485,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function getProgWarnings()
+    public function getProgWarnings(): array
     {
         if (!$this->hasProgWarnings()) {
             return [];
@@ -470,10 +505,10 @@ class MessageManager implements IMessageManager
      * The debugging message to be reported.
      *
      * @param string $file
-     * The source file where the debug output occured. Per default, the file where the debug output called.
+     * The source file where the debug output occurred. Per default, the file where the debug output called.
      *
      * @param string $line
-     * The source file line where the debug output occured. Per default, the file line where the debug output called.
+     * The source file line where the debug output occurred. Per default, the file line where the debug output called.
      *
      * @return void
      *
@@ -488,7 +523,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addDebugMessage($message, $file = "", $line = "")
+    public function addDebugMessage(string $message, string $file = "", string $line = ""): void
     {
         if (!$this->debug_mode) {
             return;
@@ -538,7 +573,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function clearDebugMessages()
+    public function clearDebugMessages(): void
     {
         unset($this->messages["debug_messages"]);
     } // clearDebugMessages
@@ -546,7 +581,7 @@ class MessageManager implements IMessageManager
     /**
      * Checks whether a stored debugging message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored debugging message exists, otherwise false.
      *
      * @see MessageManager::hasErrors()
@@ -559,7 +594,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function hasDebugMessages()
+    public function hasDebugMessages(): bool
     {
         return (isset($this->messages["debug_messages"]) && count($this->messages["debug_messages"]) > 0);
     } // hasDebugMessages
@@ -583,7 +618,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function getDebugMessages()
+    public function getDebugMessages(): array
     {
         if (!$this->hasDebugMessages()) {
             return [];
@@ -604,7 +639,7 @@ class MessageManager implements IMessageManager
      * In that case, the servers return the message id instead of final text and the details, the client
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
-     * @param boolean $autoclose
+     * @param bool $autoclose
      * The flag that controls whether the message box should be closed automatically after a time.
      *
      * @return void
@@ -620,7 +655,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addInfoMessage($message, $details = [], $autoclose = false)
+    public function addInfoMessage(string $message, array $details = [], bool $autoclose = false): void
     {
         if (empty($message)) {
             return;
@@ -648,7 +683,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function clearInfoMessages()
+    public function clearInfoMessages(): void
     {
         unset($this->messages["info_messages"]);
     } // clearInfoMessages
@@ -656,7 +691,7 @@ class MessageManager implements IMessageManager
     /**
      * Checks whether an information message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the information message exists, otherwise false.
      *
      * @see MessageManager::hasErrors()
@@ -669,7 +704,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function hasInfoMessages()
+    public function hasInfoMessages(): bool
     {
         return (isset($this->messages["info_messages"]) && count($this->messages["info_messages"]) > 0);
     } // hasInfoMessages
@@ -693,7 +728,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function getInfoMessages()
+    public function getInfoMessages(): array
     {
         if (!$this->hasInfoMessages()) {
             return [];
@@ -714,7 +749,7 @@ class MessageManager implements IMessageManager
      * In that case, the servers return the message id instead of final text and the details, the client
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
-     * @param boolean $autoclose
+     * @param bool $autoclose
      * The flag that controls whether the message box should be closed
      * automatically after a time.
      *
@@ -731,7 +766,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addBubbleMessage($message, $details = [], $autoclose = true)
+    public function addBubbleMessage(string $message, array $details = [], bool $autoclose = true): void
     {
         if (empty($message)) {
             return;
@@ -759,7 +794,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function clearBubbleMessages()
+    public function clearBubbleMessages(): void
     {
         unset($this->messages["bubble_messages"]);
     } // clearBubbleMessages
@@ -767,7 +802,7 @@ class MessageManager implements IMessageManager
     /**
      * Checks whether an information message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the information message exists, otherwise false.
      *
      * @see MessageManager::hasErrors()
@@ -780,7 +815,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function hasBubbleMessages()
+    public function hasBubbleMessages(): bool
     {
         return (isset($this->messages["bubble_messages"]) && count($this->messages["bubble_messages"]) > 0);
     } // hasBubbleMessages
@@ -804,7 +839,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function getBubbleMessages()
+    public function getBubbleMessages(): array
     {
         if (!$this->hasBubbleMessages()) {
             return [];
@@ -827,7 +862,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function clearAll()
+    public function clearAll(): void
     {
         $this->clearErrors();
         $this->clearWarnings();
@@ -840,7 +875,7 @@ class MessageManager implements IMessageManager
     /**
      * This auxiliary function returns the messages of the desired type.
      *
-     * @param array &$messages
+     * @param array $messages
      * The messages to be retrieved.
      *
      * @return array
@@ -848,7 +883,7 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    protected function getMessages(&$messages)
+    protected function getMessages(array $messages): array
     {
         return array_values($messages);
     } // getMessages

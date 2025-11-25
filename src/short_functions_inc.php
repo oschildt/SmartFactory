@@ -19,14 +19,14 @@ use \SmartFactory\Interfaces\IShardManager;
 
 /**
  * Short function that provides the text translation for
- * the text ID for the given langauge.
+ * the text ID for the given language.
  *
  * @param string $text_id
  * Text ID
  *
  * @param string $lng
- * The langauge. If it is not specified,
- * the default langauge is used.
+ * The language. If it is not specified,
+ * the default language is used.
  *
  * @param string $default_text
  * The default text to be used if there is no translation.
@@ -44,7 +44,7 @@ use \SmartFactory\Interfaces\IShardManager;
  *
  * @author Oleg Schildt
  */
-function text($text_id, $lng = "", $default_text = "")
+function text(string $text_id, string $lng = "", string $default_text = ""): string
 {
     return singleton(ILanguageManager::class)->text($text_id, $lng, $default_text);
 } // text
@@ -64,55 +64,10 @@ function text($text_id, $lng = "", $default_text = "")
  *
  * @author Oleg Schildt
  */
-function messenger()
+function messenger(): IMessageManager
 {
     return singleton(IMessageManager::class);
 } // messenger
-
-/**
- * Short function for getting the instance of the ISessionManager.
- *
- * @return ISessionManager
- * Returns the instance of the ISessionManager.
- *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
- *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
- *
- * @author Oleg Schildt
- */
-function session()
-{
-    return singleton(ISessionManager::class);
-} // session
-
-/**
- * Short function for getting direct access to the session variables.
- *
- * @return array
- * Returns the reference to the array of the session variables.
- *
- * ```php
- * session_vars()["user"]["name"] = "Alex";
- * session_vars()["user"]["age"] = "22";
- * ```
- *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
- *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
- *
- * @author Oleg Schildt
- */
-function &session_vars()
-{
-    return singleton(ISessionManager::class)->vars();
-} // session
 
 /**
  * Short function for getting the instance of the IDebugProfiler.
@@ -129,7 +84,7 @@ function &session_vars()
  *
  * @author Oleg Schildt
  */
-function debugger()
+function debugger(): IDebugProfiler
 {
     return singleton(IDebugProfiler::class);
 } // debugger
@@ -140,8 +95,7 @@ function debugger()
  * @param string $msg
  * The message to be logged.
  *
- * @return boolean
- * Returns true if the message has been successfully logged, otherwise false.
+ * @return void
  *
  * @throws \Exception
  * It might throw the following exceptions in the case of any errors:
@@ -153,9 +107,9 @@ function debugger()
  *
  * @author Oleg Schildt
  */
-function debug_message($msg)
+function debug_message($msg): void
 {
-    return singleton(IDebugProfiler::class)->debugMessage($msg);
+    singleton(IDebugProfiler::class)->debugMessage($msg);
 } // debug_message
 
 /**
@@ -173,7 +127,7 @@ function debug_message($msg)
  *
  * @author Oleg Schildt
  */
-function event()
+function event(): IEventManager
 {
     return singleton(IEventManager::class);
 } // event
@@ -193,7 +147,7 @@ function event()
  *
  * @author Oleg Schildt
  */
-function config_settings()
+function config_settings(): ConfigSettingsManager
 {
     return singleton(ConfigSettingsManager::class);
 } // config_settings
@@ -213,7 +167,7 @@ function config_settings()
  *
  * @author Oleg Schildt
  */
-function runtime_settings()
+function runtime_settings(): RuntimeSettingsManager
 {
     return singleton(RuntimeSettingsManager::class);
 } // runtime_settings
@@ -233,7 +187,7 @@ function runtime_settings()
  *
  * @author Oleg Schildt
  */
-function user_settings()
+function user_settings(): UserSettingsManager
 {
     return singleton(UserSettingsManager::class);
 } // user_settings
@@ -244,7 +198,7 @@ function user_settings()
  * @param string $shard_name
  * The name of the shard.
  *
- * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+ * @return ?\SmartFactory\DatabaseWorkers\DBWorker
  * returns DBWorker object or null if the object could not be created.
  *
  * @throws \Exception
@@ -261,7 +215,7 @@ function user_settings()
  *
  * @author Oleg Schildt
  */
-function dbshard($shard_name)
+function dbshard(string $shard_name): ?\SmartFactory\DatabaseWorkers\DBWorker
 {
     return singleton(IShardManager::class)->dbshard($shard_name);
 } // dbshard
@@ -273,7 +227,7 @@ function dbshard($shard_name)
  * @param string $load_balancing_group
  * The name of the shard.
  *
- * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+ * @return ?\SmartFactory\DatabaseWorkers\DBWorker
  * returns DBWorker object or null if the object could not be created.
  *
  * @throws \Exception
@@ -285,7 +239,7 @@ function dbshard($shard_name)
  *
  * @author Oleg Schildt
  */
-function randomDBShard($load_balancing_group)
+function randomDBShard(string $load_balancing_group): ?\SmartFactory\DatabaseWorkers\DBWorker
 {
     return singleton(IShardManager::class)->randomDBShard($load_balancing_group);
 } // randomDBShard

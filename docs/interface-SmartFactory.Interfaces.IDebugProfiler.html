@@ -285,7 +285,7 @@ fixProfilePoint.</p>
   
   <h1>Method: IDebugProfiler::clearLogFile()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(string <span class="php-var">$file_name</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(string <span class="php-var">$file_name</span>): void;</div>
 
   
   <div class="short-description">
@@ -323,8 +323,7 @@ fixProfilePoint.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target file name.
-The target file name.</p>
+                <p>The target file name.</p>
             </td>
         </tr>
         
@@ -334,10 +333,7 @@ The target file name.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the file has been successfully deleted, otherwise false.
-It should return true if the file has been successfully deleted, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -360,7 +356,7 @@ It should return true if the file has been successfully deleted, otherwise false
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#104'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#103'>SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
@@ -388,7 +384,7 @@ It should return true if the file has been successfully deleted, otherwise false
   
   <h1>Method: IDebugProfiler::clearLogFiles()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles(): void;</div>
 
   
   <div class="short-description">
@@ -405,10 +401,7 @@ It should return true if the file has been successfully deleted, otherwise false
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the files have been successfully deleted, otherwise false.
-It should return true if the files have been successfully deleted, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -431,7 +424,7 @@ It should return true if the files have been successfully deleted, otherwise fal
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#116'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#114'>SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
@@ -459,7 +452,7 @@ It should return true if the files have been successfully deleted, otherwise fal
   
   <h1>Method: IDebugProfiler::debugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, bool <span class="php-var">$write_call_stack</span> = <span class="php-keyword1">false</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>): void;</div>
 
   
   <div class="short-description">
@@ -497,8 +490,25 @@ It should return true if the files have been successfully deleted, otherwise fal
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.
-Message to be logged.</p>
+                <p>Message to be logged.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $write_call_stack
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                bool
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Flag that defines where the call stack should be written.</p>
             </td>
         </tr>
         
@@ -516,8 +526,7 @@ Message to be logged.</p>
                 &quot;debug.log&quot;
             </td>
             <td class="description_column">
-                <p>The target file name.
-The target file name.</p>
+                <p>The target file name.</p>
             </td>
         </tr>
         
@@ -527,10 +536,7 @@ The target file name.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
-It should return true if the logging was successful, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -561,7 +567,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#51'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#53'>SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
@@ -583,7 +589,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h1>Method: IDebugProfiler::fixProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(string <span class="php-var">$message</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(string <span class="php-var">$message</span>): void;</div>
 
   
   <div class="short-description">
@@ -623,8 +629,7 @@ fixProfilePoint.</p>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.
-Message to be logged.</p>
+                <p>Message to be logged.</p>
             </td>
         </tr>
         
@@ -634,10 +639,7 @@ Message to be logged.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
-It should return true if the logging was successful, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -696,7 +698,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h1>Method: IDebugProfiler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
@@ -734,8 +736,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The parameters may vary for each debug profiler.
-The parameters may vary for each debug profiler.</p>
+                <p>The parameters may vary for each debug profiler.</p>
             </td>
         </tr>
         
@@ -803,7 +804,7 @@ The parameters may vary for each debug profiler.</p>
   
   <h1>Method: IDebugProfiler::startProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(string <span class="php-var">$message</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(string <span class="php-var">$message</span>): void;</div>
 
   
   <div class="short-description">
@@ -841,8 +842,7 @@ The parameters may vary for each debug profiler.</p>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.
-Message to be logged.</p>
+                <p>Message to be logged.</p>
             </td>
         </tr>
         
@@ -852,10 +852,7 @@ Message to be logged.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>It should return true if the logging was successful, otherwise false.
-It should return true if the logging was successful, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -886,7 +883,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#69'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#70'>SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
@@ -899,7 +896,7 @@ It should return true if the logging was successful, otherwise false.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

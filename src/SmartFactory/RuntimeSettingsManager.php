@@ -13,6 +13,7 @@ namespace SmartFactory;
 
 use \SmartFactory\Interfaces\ISettingsManager;
 use \SmartFactory\DatabaseWorkers\DBWorker;
+use SmartFactory\Interfaces\ISettingsValidator;
 
 /**
  * Class for management of the application settings.
@@ -38,11 +39,11 @@ class RuntimeSettingsManager implements ISettingsManager
     /**
      * Internal variable for storing the dbworker.
      *
-     * @var DatabaseWorkers\DBWorker
+     * @var ?DatabaseWorkers\DBWorker
      *
      * @author Oleg Schildt
      */
-    protected $dbworker;
+    protected ?DatabaseWorkers\DBWorker $dbworker = null;
     
     /**
      * Internal variable for storing the target settings table name.
@@ -51,7 +52,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $settings_table;
+    protected string $settings_table;
     
     /**
      * Internal variable for storing the target column.
@@ -60,7 +61,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $settings_column;
+    protected string $settings_column;
     
     /**
      * Internal variable for storing the current context.
@@ -72,19 +73,19 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $context = "default";
+    protected string $context = "default";
     
     /**
      * Internal variable for storing the validator.
      *
-     * @var Interfaces\ISettingsValidator
+     * @var ?Interfaces\ISettingsValidator
      *
      * @see RuntimeSettingsManager::getValidator()
      * @see RuntimeSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
-    protected $validator = null;
+    protected ?Interfaces\ISettingsValidator $validator = null;
     
     /**
      * Internal variable for storing the array of the settings values.
@@ -93,11 +94,11 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $settings = [];
+    protected array $settings = [];
     
     /**
      * This is internal auxiliary function for checking that the settings
-     * manager is intialized correctly.
+     * manager is initialized correctly.
      *
      * @return void
      *
@@ -109,7 +110,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected function validateParameters()
+    protected function validateParameters(): void
     {
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
@@ -130,7 +131,7 @@ class RuntimeSettingsManager implements ISettingsManager
     
     /**
      * This is internal auxiliary function for converting the settings to JSON and storing it
-     * to the target table defined by the iniailization.
+     * to the target table defined by the initialization.
      *
      * @param array &$data
      * The array with the settings values to be saved.
@@ -148,7 +149,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected function saveJSON(&$data)
+    protected function saveJSON(array &$data): void
     {
         $this->validateParameters();
         
@@ -182,7 +183,7 @@ class RuntimeSettingsManager implements ISettingsManager
     
     /**
      * This is internal auxiliary function for loading the settings from the target table
-     * defined by the iniailization.
+     * defined by the initialization.
      *
      * @param array &$data
      * The target array with the settings values to be loaded.
@@ -201,7 +202,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected function loadJSON(&$data)
+    protected function loadJSON(array &$data): void
     {
         $this->validateParameters();
         
@@ -250,7 +251,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function init($parameters)
+    public function init(array $parameters): void
     {
         if (!empty($parameters["dbworker"])) {
             $this->dbworker = $parameters["dbworker"];
@@ -270,7 +271,7 @@ class RuntimeSettingsManager implements ISettingsManager
     /**
      * Sets the validator for the settings.
      *
-     * @param Interfaces\ISettingsValidator $validator
+     * @param ISettingsValidator $validator
      * The settings validator.
      *
      * @return void
@@ -280,7 +281,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setValidator($validator)
+    public function setValidator(ISettingsValidator $validator): void
     {
         $this->validator = $validator;
     } // setValidator
@@ -288,7 +289,7 @@ class RuntimeSettingsManager implements ISettingsManager
     /**
      * Returns the validator for the settings.
      *
-     * @return Interfaces\ISettingsValidator|null
+     * @return ?Interfaces\ISettingsValidator
      * Returns the validator for the settings or null if none is defined.
      *
      * @see RuntimeSettingsManager::setValidator()
@@ -296,7 +297,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getValidator()
+    public function getValidator(): ?Interfaces\ISettingsValidator
     {
         return $this->validator;
     } // getValidator
@@ -322,7 +323,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setContext($context = "default")
+    public function setContext(string $context = "default"): void
     {
         $this->context = $context;
     } // setContext
@@ -346,7 +347,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getContext()
+    public function getContext(): string
     {
         return $this->context;
     } // getContext
@@ -374,7 +375,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setParameter($name, $value)
+    public function setParameter(string $name, mixed $value): void
     {
         if (empty($this->settings)) {
             $this->loadSettings();
@@ -387,10 +388,10 @@ class RuntimeSettingsManager implements ISettingsManager
     /**
      * Sets settings parameters from an array.
      *
-     * @param array &$parameters
+     * @param array $parameters
      * Array of parameters in the form key => value.
      *
-     * @param boolean $force_creation
+     * @param bool $force_creation
      * Flag which defines whether the parameter should be created
      * if not exists. If false, only existing parameters are updated.
      *
@@ -409,7 +410,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setParameters(&$parameters, $force_creation = false)
+    public function setParameters(array $parameters, bool $force_creation = false): void
     {
         if (empty($this->settings)) {
             $this->loadSettings();
@@ -430,9 +431,9 @@ class RuntimeSettingsManager implements ISettingsManager
      * @param string $name
      * The name of the settings parameter.
      *
-     * @param mixed $default
+     * @param mixed|null $default
      * The default value of the settings parameter if it is not set yet.
-     * The parameter is a confortable way to pre-set a parameter
+     * The parameter is a conformable way to pre-set a parameter
      * to a default value if its value is not set yet.
      *
      * @return mixed
@@ -450,7 +451,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $default = null)
+    public function getParameter(string $name, mixed $default = null): mixed
     {
         if (empty($this->settings)) {
             $this->loadSettings();
@@ -469,9 +470,10 @@ class RuntimeSettingsManager implements ISettingsManager
      * It should be called after settings the new values of the parameters
      * and before their saving.
      *
-     * @return boolean
-     * Returns true if there is no validator defined, otherwise lets
-     * the validator validate the settings.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw exceptions in the case of any errors.
      *
      * @uses \SmartFactory\Interfaces\ISettingsValidator
      *
@@ -480,13 +482,13 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function validateSettings()
+    public function validateSettings(): void
     {
         if (empty($this->validator)) {
-            return true;
+            return;
         }
         
-        return $this->validator->validate($this, $this->context);
+        $this->validator->validate($this, $this->context);
     } // validateSettings
     
     /**
@@ -505,7 +507,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function loadSettings()
+    public function loadSettings(): void
     {
         $this->loadJSON($this->settings);
     } // loadSettings
@@ -526,7 +528,7 @@ class RuntimeSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function saveSettings()
+    public function saveSettings(): void
     {
         if (empty($this->settings)) {
             $this->loadSettings();

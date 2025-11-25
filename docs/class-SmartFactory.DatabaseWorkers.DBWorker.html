@@ -130,7 +130,7 @@
 
 <div class="long_description">
 <h2>Details</h2>
-<p>This is a wrapper around the database connectivity. It offers an universal
+<p>This is a wrapper around the database connectivity. It offers a universal
 common way for working with databases of different types. Currently, MySQL and
 MS SQL are supported. If in the future, there will be a better solution, or
 the current solution turns out to be inefficient in a new version of PHP,
@@ -997,7 +997,7 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Initializes the dbworker with connection paramters.</p>
+              <p>Initializes the dbworker with connection parameters.</p>
           </td>
       </tr><tr>
           <td>
@@ -1116,7 +1116,7 @@ and quotation if necessary.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Rolls back the transation.</p>
+              <p>Rolls back the translation.</p>
           </td>
       </tr><tr>
           <td>
@@ -1129,7 +1129,7 @@ and quotation if necessary.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Starts the transation.</p>
+              <p>Starts the translation.</p>
           </td>
       </tr><tr>
           <td>
@@ -2046,7 +2046,7 @@ and quotation if necessary.</p>
   
   <h1>Property: DBWorker::$last_query</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$last_query</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?string <span class="php-var">$last_query</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -2059,7 +2059,7 @@ and quotation if necessary.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  ?string
   </div>
   
 
@@ -2124,7 +2124,7 @@ and quotation if necessary.</p>
   
   <h1>Method: DBWorker::affected_count()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> affected_count() : int;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> affected_count(): int;</div>
 
   
   <div class="short-description">
@@ -2143,8 +2143,7 @@ and quotation if necessary.</p>
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns the number of the rows affected by the last modification query.
-Returns the number of the rows affected by the last modification query.</p></div>
+  <div class="item_description"><p>Returns the number of the rows affected by the last modification query.</p></div>
   
   </div>
   
@@ -2175,7 +2174,7 @@ Returns the number of the rows affected by the last modification query.</p></div
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#697'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#698'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2246,8 +2245,7 @@ Returns the number of the rows affected by the last modification query.</p></div
                 
             </td>
             <td class="description_column">
-                <p>The name of the table.
-The name of the table.</p>
+                <p>The name of the table.</p>
             </td>
         </tr>
         
@@ -2265,8 +2263,7 @@ The name of the table.</p>
                 
             </td>
             <td class="description_column">
-                <p>The list of request fields.
-The list of request fields.</p>
+                <p>The list of request fields.</p>
             </td>
         </tr>
         
@@ -2284,8 +2281,7 @@ The list of request fields.</p>
                 
             </td>
             <td class="description_column">
-                <p>The where clause that should restrict the result.
-The where clause that should restrict the result.</p>
+                <p>The where clause that should restrict the result.</p>
             </td>
         </tr>
         
@@ -2303,8 +2299,7 @@ The where clause that should restrict the result.</p>
                 
             </td>
             <td class="description_column">
-                <p>The order clause to sort the results.
-The order clause to sort the results.</p>
+                <p>The order clause to sort the results.</p>
             </td>
         </tr>
         
@@ -2322,8 +2317,7 @@ The order clause to sort the results.</p>
                 
             </td>
             <td class="description_column">
-                <p>The limit how many records shoud be loaded. 0 for unlimited.
-The limit how many records shoud be loaded. 0 for unlimited.</p>
+                <p>The limit how many records should be loaded. 0 for unlimited.</p>
             </td>
         </tr>
         
@@ -2335,8 +2329,7 @@ The limit how many records shoud be loaded. 0 for unlimited.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the built query.
-Returns the built query.</p></div>
+  <div class="item_description"><p>Returns the built query.</p></div>
   
   </div>
   
@@ -2359,7 +2352,7 @@ Returns the built query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#956'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#957'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2381,7 +2374,7 @@ Returns the built query.</p></div>
   
   <h1>Method: DBWorker::check_connection()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> check_connection() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> check_connection(): void;</div>
 
   
   <div class="short-description">
@@ -2463,7 +2456,7 @@ Returns the built query.</p></div>
   
   <h1>Method: DBWorker::close_connection()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> close_connection() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> close_connection(): void;</div>
 
   
   <div class="short-description">
@@ -2511,7 +2504,7 @@ Returns the built query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#528'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#529'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2545,7 +2538,7 @@ Returns the built query.</p></div>
   
   <h1>Method: DBWorker::commit_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> commit_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction(): void;</div>
 
   
   <div class="short-description">
@@ -2593,7 +2586,7 @@ Returns the built query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#558'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#559'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2624,7 +2617,7 @@ Returns the built query.</p></div>
   
   <h1>Method: DBWorker::connect()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> connect() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect(): void;</div>
 
   
   <div class="short-description">
@@ -2676,7 +2669,7 @@ settings parameters specified by the initialization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#372'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#373'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2710,7 +2703,7 @@ settings parameters specified by the initialization.</p>
   
   <h1>Method: DBWorker::create_clone()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> create_clone() : \SmartFactory\DatabaseWorkers\DBWorker;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone(): \SmartFactory\DatabaseWorkers\DBWorker;</div>
 
   
   <div class="short-description">
@@ -2736,8 +2729,7 @@ queries while iteration through the active results of a select query.</p>
   <div class="item_list">
   <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
   
-  <div class="item_description"><p>Returns the clone of this dbworker.
-Returns the clone of this dbworker.</p></div>
+  <div class="item_description"><p>Returns the clone of this dbworker.</p></div>
   
   </div>
   
@@ -2782,7 +2774,7 @@ Returns the clone of this dbworker.</p></div>
   
   <h1>Method: DBWorker::enable_logging()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> enable_logging(bool <span class="php-var">$state</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">function</span> enable_logging(bool <span class="php-var">$state</span>): void;</div>
 
   
   <div class="short-description">
@@ -2820,8 +2812,7 @@ Returns the clone of this dbworker.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The state of the logging.
-The state of the logging.</p>
+                <p>The state of the logging.</p>
             </td>
         </tr>
         
@@ -2854,7 +2845,7 @@ The state of the logging.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#981'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#982'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2876,7 +2867,7 @@ The state of the logging.</p>
   
   <h1>Method: DBWorker::escape()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>): string;</div>
 
   
   <div class="short-description">
@@ -2914,8 +2905,7 @@ The state of the logging.</p>
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.
-The string to be escaped.</p>
+                <p>The string to be escaped.</p>
             </td>
         </tr>
         
@@ -2927,8 +2917,7 @@ The string to be escaped.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the escaped string.
-Returns the escaped string.</p></div>
+  <div class="item_description"><p>Returns the escaped string.</p></div>
   
   </div>
   
@@ -2951,7 +2940,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#823'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#824'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -2988,7 +2977,7 @@ Returns the escaped string.</p></div>
   
   <h1>Method: DBWorker::execute_prepared_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_prepared_query(mixed ...<span class="php-var">$args</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_prepared_query(mixed ...<span class="php-var">$args</span>): void;</div>
 
   
   <div class="short-description">
@@ -3027,8 +3016,7 @@ Returns the escaped string.</p></div>
             </td>
             <td class="description_column">
                 <p>The number of parameters may vary and be zero. An array can also be passed.
-These are paremeters of the prepared query.
-These are paremeters of the prepared query.</p>
+These are parameters of the prepared query.</p>
             </td>
         </tr>
         
@@ -3069,7 +3057,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#466'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#467'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3100,7 +3088,7 @@ These are paremeters of the prepared query.</p>
   
   <h1>Method: DBWorker::execute_procedure()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_procedure(string <span class="php-var">$procedure</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_procedure(string <span class="php-var">$procedure</span>): void;</div>
 
   
   <div class="short-description">
@@ -3139,8 +3127,7 @@ These are paremeters of the prepared query.</p>
             </td>
             <td class="description_column">
                 <p>The name of the SQL stored procedure.</p>
-<p>All subsequent parameters are the paramteres of the SQL stored procedure.</p>
-<p>All subsequent parameters are the paramteres of the SQL stored procedure.</p>
+<p>All subsequent parameters are the parameters of the SQL stored procedure.</p>
             </td>
         </tr>
         
@@ -3181,7 +3168,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#447'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#448'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3203,7 +3190,7 @@ These are paremeters of the prepared query.</p>
   
   <h1>Method: DBWorker::execute_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> execute_query(string <span class="php-var">$query_string</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_query(string <span class="php-var">$query_string</span>): void;</div>
 
   
   <div class="short-description">
@@ -3241,8 +3228,7 @@ These are paremeters of the prepared query.</p>
                 
             </td>
             <td class="description_column">
-                <p>The SQL query to be executed.
-The SQL query to be executed.</p>
+                <p>The SQL query to be executed.</p>
             </td>
         </tr>
         
@@ -3283,7 +3269,7 @@ The SQL query to be executed.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#430'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#431'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3305,7 +3291,7 @@ The SQL query to be executed.</p>
   
   <h1>Method: DBWorker::fetch_array()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> fetch_array(<span class="php-keyword1">array</span> &amp;<span class="php-var">$rows</span>, <span class="php-keyword1">array</span> <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>) : int|<span class="php-keyword1">false</span>;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_array(<span class="php-keyword1">array</span> &amp;<span class="php-var">$rows</span>, <span class="php-keyword1">array</span>|<span class="php-keyword1">null</span> <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>): int;</div>
 
   
   <div class="short-description">
@@ -3343,8 +3329,7 @@ The SQL query to be executed.</p>
                 
             </td>
             <td class="description_column">
-                <p>Target array for loading the results.
-Target array for loading the results.</p>
+                <p>Target array for loading the results.</p>
             </td>
         </tr>
         
@@ -3356,26 +3341,25 @@ Target array for loading the results.</p>
                 by value
             </td>
             <td>
-                array
+                array|null
             </td>
             <td>
                 null
             </td>
             <td class="description_column">
                 <p>Array of the column names that should be used as dimensions.</p>
-<p>Per default, the rows are fetched as two dimensional array.</p>
+<p>Per default, the rows are fetched as two-dimensional array.</p>
 <p>Example:</p>
 <pre><code class="language-php"><span class="php-var">$rows</span> = [];
 <span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>);
 
-rows[n] = [<span class="php-quote">&quot;col1&quot;</span> =&gt; <span class="php-quote">&quot;val1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span> =&gt; <span class="php-quote">&quot;val2&quot;</span>, , <span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
+rows[n] = [<span class="php-quote">&quot;col1&quot;</span> =&gt; <span class="php-quote">&quot;val1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span> =&gt; <span class="php-quote">&quot;val2&quot;</span>, <span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
 <p>If the dimension columns are specified, their values are used for the dimensions.</p>
 <p>Example:</p>
 <pre><code class="language-php"><span class="php-var">$rows</span> = [];
 <span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>, [<span class="php-quote">&quot;col1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span>]);
 
 rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&quot;val2&quot;</span>] = [<span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
-<pre><code></code></pre>
             </td>
         </tr>
         
@@ -3385,10 +3369,9 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   
   <h2>Returns</h2>
   <div class="item_list">
-  int|false<br>
+  int<br>
   
   <div class="item_description"><p>Returns the number of the fetched rows. It might be also 0. In the case of
-any error returns false.
 any error returns false.</p></div>
   
   </div>
@@ -3420,7 +3403,7 @@ any error returns false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#671'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#672'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3442,7 +3425,7 @@ any error returns false.</p></div>
   
   <h1>Method: DBWorker::fetch_row()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> fetch_row() : bool;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_row(): bool;</div>
 
   
   <div class="short-description">
@@ -3473,8 +3456,7 @@ any error returns false.</p></div>
   <span class="php-keyword1">echo</span> <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;FIRST_NAME&quot;</span>) . <span class="php-quote">&quot; &quot;</span> . <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;LAST_NAME&quot;</span>) . <span class="php-quote">&quot;&lt;br&gt;&quot;</span>;
 }
 
-<span class="php-var">$dbw</span>-&gt;free_result();</code></pre>
-<pre><code></code></pre></div>
+<span class="php-var">$dbw</span>-&gt;free_result();</code></pre></div>
   
   </div>
   
@@ -3505,7 +3487,7 @@ any error returns false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#632'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#633'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3527,7 +3509,7 @@ any error returns false.</p></div>
   
   <h1>Method: DBWorker::fetched_count()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> fetched_count() : int;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetched_count(): int;</div>
 
   
   <div class="short-description">
@@ -3546,8 +3528,7 @@ any error returns false.</p></div>
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns the number of the rows fetched by the last retrieving query.
-Returns the number of the rows fetched by the last retrieving query.</p></div>
+  <div class="item_description"><p>Returns the number of the rows fetched by the last retrieving query.</p></div>
   
   </div>
   
@@ -3578,7 +3559,7 @@ Returns the number of the rows fetched by the last retrieving query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#684'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#685'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3600,7 +3581,7 @@ Returns the number of the rows fetched by the last retrieving query.</p></div>
   
   <h1>Method: DBWorker::field_by_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_by_name(string <span class="php-var">$name</span>, int <span class="php-var">$type</span> = self::DB_AS_IS) : mixed|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(string <span class="php-var">$name</span>, int <span class="php-var">$type</span> = self::DB_AS_IS): mixed;</div>
 
   
   <div class="short-description">
@@ -3638,8 +3619,7 @@ Returns the number of the rows fetched by the last retrieving query.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The name of the field.
-The name of the field.</p>
+                <p>The name of the field.</p>
             </td>
         </tr>
         
@@ -3657,8 +3637,7 @@ The name of the field.</p>
                 self::DB_AS_IS
             </td>
             <td class="description_column">
-                <p>The type of the field.
-The type of the field.</p>
+                <p>The type of the field.</p>
             </td>
         </tr>
         
@@ -3668,10 +3647,9 @@ The type of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  mixed|null<br>
+  mixed<br>
   
   <div class="item_description"><p>Returns the value of a field specified by name. In the case
-of any error returns null.
 of any error returns null.</p></div>
   
   </div>
@@ -3695,7 +3673,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#743'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#744'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3726,7 +3704,7 @@ of any error returns null.</p></div>
   
   <h1>Method: DBWorker::field_by_num()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_by_num(int <span class="php-var">$num</span>, int <span class="php-var">$type</span> = self::DB_AS_IS) : mixed|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(int <span class="php-var">$num</span>, int <span class="php-var">$type</span> = self::DB_AS_IS): mixed;</div>
 
   
   <div class="short-description">
@@ -3764,8 +3742,7 @@ of any error returns null.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The number of the field.
-The number of the field.</p>
+                <p>The number of the field.</p>
             </td>
         </tr>
         
@@ -3783,8 +3760,7 @@ The number of the field.</p>
                 self::DB_AS_IS
             </td>
             <td class="description_column">
-                <p>The type of the field.
-The type of the field.</p>
+                <p>The type of the field.</p>
             </td>
         </tr>
         
@@ -3794,10 +3770,9 @@ The type of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  mixed|null<br>
+  mixed<br>
   
   <div class="item_description"><p>Returns the value of a field specified by number. In the case
-of any error returns null.
 of any error returns null.</p></div>
   
   </div>
@@ -3821,7 +3796,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#764'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#765'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3855,7 +3830,7 @@ of any error returns null.</p></div>
   
   <h1>Method: DBWorker::field_count()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_count() : int;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_count(): int;</div>
 
   
   <div class="short-description">
@@ -3874,8 +3849,7 @@ of any error returns null.</p></div>
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns the number of the fields in the result of the last retrieving query.
-Returns the number of the fields in the result of the last retrieving query.</p></div>
+  <div class="item_description"><p>Returns the number of the fields in the result of the last retrieving query.</p></div>
   
   </div>
   
@@ -3906,7 +3880,7 @@ Returns the number of the fields in the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#710'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#711'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -3928,7 +3902,7 @@ Returns the number of the fields in the result of the last retrieving query.</p>
   
   <h1>Method: DBWorker::field_info_by_num()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_info_by_num(int <span class="php-var">$num</span>) : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(int <span class="php-var">$num</span>): ?<span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -3966,8 +3940,7 @@ Returns the number of the fields in the result of the last retrieving query.</p>
                 
             </td>
             <td class="description_column">
-                <p>The number of the field.
-The number of the field.</p>
+                <p>The number of the field.</p>
             </td>
         </tr>
         
@@ -3977,18 +3950,17 @@ The number of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  ?array<br>
   
   <div class="item_description"><p>Returns the associative array with properties. In the case
 of any error returns null.</p>
 <ul>
-<li>$info[&quot;name&quot;] - name of the field.</li>
-<li>$info[&quot;type&quot;] - type of the field.</li>
-<li>$info[&quot;size&quot;] - size of the field.</li>
-<li>$info[&quot;binary&quot;] - whether the filed is binary.</li>
-<li>$info[&quot;numeric&quot;] - whether the filed is numeric.</li>
-<li>$info[&quot;datetime&quot;] - whether the filed is datetime.</li>
-<li>$info[&quot;datetime&quot;] - whether the filed is datetime.</li>
+<li>$info["name"] - name of the field.</li>
+<li>$info["type"] - type of the field.</li>
+<li>$info["size"] - size of the field.</li>
+<li>$info["binary"] - whether the filed is binary.</li>
+<li>$info["numeric"] - whether the filed is numeric.</li>
+<li>$info["datetime"] - whether the filed is datetime.</li>
 </ul></div>
   
   </div>
@@ -4012,7 +3984,7 @@ of any error returns null.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#788'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#789'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4043,7 +4015,7 @@ of any error returns null.</p>
   
   <h1>Method: DBWorker::field_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> field_name(int <span class="php-var">$num</span>) : object|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(int <span class="php-var">$num</span>): ?string;</div>
 
   
   <div class="short-description">
@@ -4081,8 +4053,7 @@ of any error returns null.</p>
                 
             </td>
             <td class="description_column">
-                <p>The number of the field.
-The number of the field.</p>
+                <p>The number of the field.</p>
             </td>
         </tr>
         
@@ -4092,10 +4063,9 @@ The number of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  object|null<br>
+  ?string<br>
   
   <div class="item_description"><p>Returns the value of a field specified by number as an object with properties. In the case
-of any error returns null.
 of any error returns null.</p></div>
   
   </div>
@@ -4119,7 +4089,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#805'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#806'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4150,7 +4120,7 @@ of any error returns null.</p></div>
   
   <h1>Method: DBWorker::format_date()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>): string;</div>
 
   
   <div class="short-description">
@@ -4188,8 +4158,7 @@ of any error returns null.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The date value as timestamp.
-The date value as timestamp.</p>
+                <p>The date value as timestamp.</p>
             </td>
         </tr>
         
@@ -4201,8 +4170,7 @@ The date value as timestamp.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.
-Returns the string representation of the date compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.</p></div>
   
   </div>
   
@@ -4225,7 +4193,7 @@ Returns the string representation of the date compatible for the corresponding d
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#894'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#895'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4262,7 +4230,7 @@ Returns the string representation of the date compatible for the corresponding d
   
   <h1>Method: DBWorker::format_datetime()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>): string;</div>
 
   
   <div class="short-description">
@@ -4300,8 +4268,7 @@ Returns the string representation of the date compatible for the corresponding d
                 
             </td>
             <td class="description_column">
-                <p>The date/time value as timestamp.
-The date/time value as timestamp.</p>
+                <p>The date/time value as timestamp.</p>
             </td>
         </tr>
         
@@ -4313,8 +4280,7 @@ The date/time value as timestamp.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.
-Returns the string representation of the date/time compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.</p></div>
   
   </div>
   
@@ -4337,7 +4303,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#912'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#913'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4374,7 +4340,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h1>Method: DBWorker::free_prepared_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> free_prepared_query() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_prepared_query(): void;</div>
 
   
   <div class="short-description">
@@ -4427,7 +4393,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#604'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#605'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4458,7 +4424,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h1>Method: DBWorker::free_result()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> free_result() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_result(): void;</div>
 
   
   <div class="short-description">
@@ -4511,7 +4477,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#587'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#588'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4533,7 +4499,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h1>Method: DBWorker::get_extension_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> get_extension_name() : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name(): string;</div>
 
   
   <div class="short-description">
@@ -4552,8 +4518,7 @@ Returns the string representation of the date/time compatible for the correspond
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the name of the required PHP extension.
-Returns the name of the required PHP extension.</p></div>
+  <div class="item_description"><p>Returns the name of the required PHP extension.</p></div>
   
   </div>
   
@@ -4604,7 +4569,7 @@ Returns the name of the required PHP extension.</p></div>
   
   <h1>Method: DBWorker::get_last_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> get_last_query() : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> get_last_query(): string;</div>
 
   
   <div class="short-description">
@@ -4623,8 +4588,7 @@ Returns the name of the required PHP extension.</p></div>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the last executed query.
-Returns the last executed query.</p></div>
+  <div class="item_description"><p>Returns the last executed query.</p></div>
   
   </div>
   
@@ -4647,7 +4611,7 @@ Returns the last executed query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#966'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#967'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4669,7 +4633,7 @@ Returns the last executed query.</p></div>
   
   <h1>Method: DBWorker::get_rdbms_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> get_rdbms_name() : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name(): string;</div>
 
   
   <div class="short-description">
@@ -4688,8 +4652,7 @@ Returns the last executed query.</p></div>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the name of the supported database.
-Returns the name of the supported database.</p></div>
+  <div class="item_description"><p>Returns the name of the supported database.</p></div>
   
   </div>
   
@@ -4734,7 +4697,7 @@ Returns the name of the supported database.</p></div>
   
   <h1>Method: DBWorker::get_schema()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> get_schema() : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_schema(): string;</div>
 
   
   <div class="short-description">
@@ -4753,8 +4716,7 @@ Returns the name of the supported database.</p></div>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the name of the database schema if applicable, or an empty string.
-Returns the name of the database schema if applicable, or an empty string.</p></div>
+  <div class="item_description"><p>Returns the name of the database schema if applicable, or an empty string.</p></div>
   
   </div>
   
@@ -4777,7 +4739,7 @@ Returns the name of the database schema if applicable, or an empty string.</p></
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#399'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#400'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4805,11 +4767,11 @@ Returns the name of the database schema if applicable, or an empty string.</p></
   
   <h1>Method: DBWorker::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
-  <p>Initializes the dbworker with connection paramters.</p>
+  <p>Initializes the dbworker with connection parameters.</p>
   </div>
   
 
@@ -4843,8 +4805,7 @@ Returns the name of the database schema if applicable, or an empty string.</p></
                 
             </td>
             <td class="description_column">
-                <p>The parameters may vary for each database.
-The parameters may vary for each database.</p>
+                <p>The parameters may vary for each database.</p>
             </td>
         </tr>
         
@@ -4912,7 +4873,7 @@ The parameters may vary for each database.</p>
   
   <h1>Method: DBWorker::insert_id()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> insert_id() : int;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> insert_id(): ?int;</div>
 
   
   <div class="short-description">
@@ -4929,10 +4890,9 @@ The parameters may vary for each database.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  int<br>
+  ?int<br>
   
-  <div class="item_description"><p>Returns the value of the auto increment field by the last insertion.
-Returns the value of the auto increment field by the last insertion.</p></div>
+  <div class="item_description"><p>Returns the value of the auto increment field by the last insertion.</p></div>
   
   </div>
   
@@ -4963,7 +4923,7 @@ Returns the value of the auto increment field by the last insertion.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#723'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#724'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -4985,7 +4945,7 @@ Returns the value of the auto increment field by the last insertion.</p></div>
   
   <h1>Method: DBWorker::is_connected()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> is_connected() : bool;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected(): bool;</div>
 
   
   <div class="short-description">
@@ -5004,8 +4964,7 @@ Returns the value of the auto increment field by the last insertion.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the connection is open, otherwise false.
-Returns true if the connection is open, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the connection is open, otherwise false.</p></div>
   
   </div>
   
@@ -5062,7 +5021,7 @@ Returns true if the connection is open, otherwise false.</p></div>
   
   <h1>Method: DBWorker::is_extension_installed()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> is_extension_installed() : bool;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_extension_installed(): bool;</div>
 
   
   <div class="short-description">
@@ -5082,8 +5041,7 @@ the corresponding database.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>The method should return true if the extension is installed, otherwise false.
-The method should return true if the extension is installed, otherwise false.</p></div>
+  <div class="item_description"><p>The method should return true if the extension is installed, otherwise false.</p></div>
   
   </div>
   
@@ -5134,7 +5092,7 @@ The method should return true if the extension is installed, otherwise false.</p
   
   <h1>Method: DBWorker::number_or_null()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> number_or_null(string <span class="php-var">$str</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> number_or_null(string <span class="php-var">$str</span>): float|int|string;</div>
 
   
   <div class="short-description">
@@ -5172,8 +5130,7 @@ The method should return true if the extension is installed, otherwise false.</p
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.
-The string to be escaped.</p>
+                <p>The string to be escaped.</p>
             </td>
         </tr>
         
@@ -5183,10 +5140,9 @@ The string to be escaped.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  float|int|string<br>
   
-  <div class="item_description"><p>Returns the escaped string.
-Returns the escaped string.</p></div>
+  <div class="item_description"><p>Returns the escaped string.</p></div>
   
   </div>
   
@@ -5217,7 +5173,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#865'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#866'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5254,7 +5210,7 @@ Returns the escaped string.</p></div>
   
   <h1>Method: DBWorker::prepare_for_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> prepare_for_query(mixed <span class="php-var">$value</span>, int <span class="php-var">$type</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> prepare_for_query(mixed <span class="php-var">$value</span>, int <span class="php-var">$type</span>): string;</div>
 
   
   <div class="short-description">
@@ -5293,8 +5249,7 @@ and quotation if necessary.</p>
                 
             </td>
             <td class="description_column">
-                <p>The value to be formatted.
-The value to be formatted.</p>
+                <p>The value to be formatted.</p>
             </td>
         </tr>
         
@@ -5312,8 +5267,7 @@ The value to be formatted.</p>
                 
             </td>
             <td class="description_column">
-                <p>The type of the value.
-The type of the value.</p>
+                <p>The type of the value.</p>
             </td>
         </tr>
         
@@ -5325,8 +5279,7 @@ The type of the value.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the prepared value.
-Returns the prepared value.</p></div>
+  <div class="item_description"><p>Returns the prepared value.</p></div>
   
   </div>
   
@@ -5349,7 +5302,7 @@ Returns the prepared value.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#929'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#930'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5371,7 +5324,7 @@ Returns the prepared value.</p></div>
   
   <h1>Method: DBWorker::prepare_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> prepare_query(string <span class="php-var">$query_string</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> prepare_query(string <span class="php-var">$query_string</span>): void;</div>
 
   
   <div class="short-description">
@@ -5409,8 +5362,7 @@ Returns the prepared value.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The SQL query to be prepared.
-The SQL query to be prepared.</p>
+                <p>The SQL query to be prepared.</p>
             </td>
         </tr>
         
@@ -5451,7 +5403,7 @@ The SQL query to be prepared.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#484'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#485'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5482,7 +5434,7 @@ The SQL query to be prepared.</p>
   
   <h1>Method: DBWorker::qualify_name_with_schema()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> qualify_name_with_schema(string <span class="php-var">$name</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> qualify_name_with_schema(string <span class="php-var">$name</span>): string;</div>
 
   
   <div class="short-description">
@@ -5520,8 +5472,7 @@ The SQL query to be prepared.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the database object to be completed with the schema name.
-The name of the database object to be completed with the schema name.</p>
+                <p>The name of the database object to be completed with the schema name.</p>
             </td>
         </tr>
         
@@ -5534,7 +5485,6 @@ The name of the database object to be completed with the schema name.</p>
   string<br>
   
   <div class="item_description"><p>Returns the name of the database object with the schema name if applicable,
-otherwise the name of the database object remains unchanged.
 otherwise the name of the database object remains unchanged.</p></div>
   
   </div>
@@ -5558,7 +5508,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#415'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#416'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5586,7 +5536,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h1>Method: DBWorker::quotes_or_null()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> quotes_or_null(string <span class="php-var">$str</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> quotes_or_null(string <span class="php-var">$str</span>): string;</div>
 
   
   <div class="short-description">
@@ -5624,8 +5574,7 @@ otherwise the name of the database object remains unchanged.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.
-The string to be escaped.</p>
+                <p>The string to be escaped.</p>
             </td>
         </tr>
         
@@ -5637,8 +5586,7 @@ The string to be escaped.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the escaped string.
-Returns the escaped string.</p></div>
+  <div class="item_description"><p>Returns the escaped string.</p></div>
   
   </div>
   
@@ -5661,7 +5609,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#841'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#842'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5698,11 +5646,11 @@ Returns the escaped string.</p></div>
   
   <h1>Method: DBWorker::rollback_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> rollback_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction(): void;</div>
 
   
   <div class="short-description">
-  <p>Rolls back the transation.</p>
+  <p>Rolls back the translation.</p>
   </div>
   
 
@@ -5746,7 +5694,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#573'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#574'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5777,11 +5725,11 @@ Returns the escaped string.</p></div>
   
   <h1>Method: DBWorker::start_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> start_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction(): void;</div>
 
   
   <div class="short-description">
-  <p>Starts the transation.</p>
+  <p>Starts the translation.</p>
   </div>
   
 
@@ -5825,7 +5773,7 @@ Returns the escaped string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#543'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#544'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5856,7 +5804,7 @@ Returns the escaped string.</p></div>
   
   <h1>Method: DBWorker::stream_long_data()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> stream_long_data(string <span class="php-var">$query_string</span>, resource &amp;<span class="php-var">$stream</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> stream_long_data(string <span class="php-var">$query_string</span>, resource <span class="php-var">$stream</span>): void;</div>
 
   
   <div class="short-description">
@@ -5894,8 +5842,7 @@ Returns the escaped string.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The SQL query to be used for stroing the long data.
-The SQL query to be used for stroing the long data.</p>
+                <p>The SQL query to be used for storing the long data.</p>
             </td>
         </tr>
         
@@ -5904,7 +5851,7 @@ The SQL query to be used for stroing the long data.</p>
                 $stream
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 resource
@@ -5913,7 +5860,7 @@ The SQL query to be used for stroing the long data.</p>
                 
             </td>
             <td class="description_column">
-                <p>The opened valid stream for reding the long data.</p>
+                <p>The opened valid stream for reading the long data.</p>
 <p>Example:</p>
 <pre><code class="language-php"><span class="php-var">$stream</span> = <span class="php-keyword2">fopen</span>(<span class="php-quote">&quot;.../large_binary.jpg&quot;</span>, <span class="php-quote">&quot;rb&quot;</span>);
 
@@ -5921,7 +5868,6 @@ The SQL query to be used for stroing the long data.</p>
 {
   error reporting ...;
 }</code></pre>
-<pre><code></code></pre>
             </td>
         </tr>
         
@@ -5962,7 +5908,7 @@ The SQL query to be used for stroing the long data.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#512'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#513'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
   
 
@@ -5984,7 +5930,7 @@ The SQL query to be used for stroing the long data.</p>
   
   <h1>Method: DBWorker::use_database()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">abstract</span> <span class="php-keyword1">function</span> use_database(string <span class="php-var">$db_name</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(string <span class="php-var">$db_name</span>): void;</div>
 
   
   <div class="short-description">
@@ -6022,8 +5968,7 @@ The SQL query to be used for stroing the long data.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the database to be set as working database.
-The name of the database to be set as working database.</p>
+                <p>The name of the database to be set as working database.</p>
             </td>
         </tr>
         
@@ -6064,11 +6009,11 @@ The name of the database to be set as working database.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#387'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.DBWorker.php.html#388'>SmartFactory/DatabaseWorkers/DBWorker.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

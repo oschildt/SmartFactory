@@ -14,7 +14,7 @@ use \SmartFactory\Interfaces\IErrorHandler;
 use \SmartFactory\Interfaces\IRequestHandler;
 
 /**
- * Abscract class for handling the JSON and XML requests.
+ * Abstract class for handling the JSON and XML requests.
  *
  * @author Oleg Schildt
  */
@@ -27,7 +27,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    protected $action = "";
+    protected string $action = "";
 
     /**
      * Internal variable for storing the API parameter string.
@@ -36,7 +36,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    protected $param_string = "";
+    protected string $param_string = "";
 
     /**
      * Internal variable for storing the response headers.
@@ -45,7 +45,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    protected $response_headers = [];
+    protected array $response_headers = [];
 
     /**
      * This is an auxiliary function for getting request headers and parsing the API url.
@@ -56,7 +56,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    protected function processInputData()
+    protected function processInputData(): void
     {
         if (empty($_SERVER['REQUEST_URI'])) {
             return;
@@ -69,7 +69,7 @@ abstract class RequestHandler implements IRequestHandler
             $this->action = $matches[1];
             $this->param_string = urldecode($matches[2]);
         } else {
-            $this->action = reqvar_value("action");
+            $this->action = $_REQUEST["action"] ?? "";
             $this->param_string = urldecode(str_replace(basename($_SERVER['SCRIPT_NAME']), "", $api_request));
         }
     } // processInputData
@@ -81,7 +81,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    abstract protected function sendResponse();
+    abstract protected function sendResponse(): void;
 
     /**
      * Adds a response header to the response.
@@ -96,7 +96,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    protected function addResponseHeader($header, $value)
+    protected function addResponseHeader(string $header, string $value): void
     {
         $this->response_headers[$header] = $value;
     } // addResponseHeader
@@ -111,7 +111,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    abstract protected function parseInput();
+    abstract protected function parseInput(): void;
 
     /**
      * This is an auxiliary function for adding error messages, warnings, info messages to the response which might have been collected
@@ -124,7 +124,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    abstract protected function addMessagesToResponse();
+    abstract protected function addMessagesToResponse(): void;
 
     /**
      * This function is called before the processing of the request. It should be overridden if you want
@@ -136,7 +136,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    protected function preprocessRequest()
+    protected function preprocessRequest(): void
     {
     } // preprocessRequest
 
@@ -148,7 +148,7 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @author Oleg Schildt
      */
-    protected function postprocessRequest()
+    protected function postprocessRequest(): void
     {
     } // postprocessRequest
 
@@ -160,9 +160,12 @@ abstract class RequestHandler implements IRequestHandler
      *
      * @return void
      *
+     * @throws \Exception
+     * It might throw exceptions in the case of any errors.
+     *
      * @author Oleg Schildt
      */
-    public function handleRequest()
+    public function handleRequest(): void
     {
         try {
             $this->processInputData();

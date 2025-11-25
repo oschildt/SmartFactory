@@ -130,7 +130,7 @@
 
 <div class="long_description">
 <h2>Details</h2>
-<p>This is a wrapper around the database connectivity. It offers an universal
+<p>This is a wrapper around the database connectivity. It offers a universal
 common way for working with databases of different types. Currently, MySQL, PostgreSQL and
 MS SQL are supported. If in the future, there will be a better solution, or
 the current solution turns out to be inefficient in a new version of PHP,
@@ -636,7 +636,7 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the name of the required PHP extension - &quot;pgsql&quot;.</p>
+              <p>Returns the name of the required PHP extension - "pgsql".</p>
           </td>
       </tr><tr>
           <td>
@@ -649,7 +649,7 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the name of the supported database - &quot;PostgreSQL Server&quot;.</p>
+              <p>Returns the name of the supported database - "PostgreSQL Server".</p>
           </td>
       </tr><tr>
           <td>
@@ -675,7 +675,7 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Initializes the dbworker with connection paramters.</p>
+              <p>Initializes the dbworker with connection parameters.</p>
           </td>
       </tr><tr>
           <td>
@@ -820,7 +820,7 @@ and quotation if necessary.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Retrieves the last errors ocurend while execution of the query.</p>
+              <p>Retrieves the last errors occurred while execution of the query.</p>
           </td>
       </tr><tr>
           <td>
@@ -845,7 +845,7 @@ and quotation if necessary.</p>
   
   <h1>Property: PostgreSQL_DBWorker::$connection</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \PgSql\Connection <span class="php-var">$connection</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\PgSql\Connection <span class="php-var">$connection</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -858,7 +858,7 @@ and quotation if necessary.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  \PgSql\Connection
+  ?\PgSql\Connection
   </div>
   
 
@@ -883,7 +883,7 @@ and quotation if necessary.</p>
   
   <h1>Property: PostgreSQL_DBWorker::$field_names</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$field_names</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?<span class="php-keyword1">array</span> <span class="php-var">$field_names</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -897,7 +897,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  array
+  ?array
   </div>
   
 
@@ -922,7 +922,7 @@ from the result of the last retrieving query.</p>
   
   <h1>Property: PostgreSQL_DBWorker::$prepared_query</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$prepared_query</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?string <span class="php-var">$prepared_query</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -935,7 +935,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  ?string
   </div>
   
 
@@ -998,7 +998,7 @@ from the result of the last retrieving query.</p>
   
   <h1>Property: PostgreSQL_DBWorker::$result</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \PgSql\Result <span class="php-var">$result</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\PgSql\Result <span class="php-var">$result</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -1011,7 +1011,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  \PgSql\Result
+  ?\PgSql\Result
   </div>
   
 
@@ -1036,7 +1036,7 @@ from the result of the last retrieving query.</p>
   
   <h1>Property: PostgreSQL_DBWorker::$row</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$row</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">null</span>|bool|<span class="php-keyword1">array</span> <span class="php-var">$row</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -1050,7 +1050,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  array
+  null|bool|array
   </div>
   
 
@@ -1075,7 +1075,7 @@ from the result of the last retrieving query.</p>
   
   <h1>Property: PostgreSQL_DBWorker::$statement</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \PgSql\Result <span class="php-var">$statement</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\PgSql\Result <span class="php-var">$statement</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -1088,7 +1088,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  \PgSql\Result
+  ?\PgSql\Result
   </div>
   
 
@@ -1171,7 +1171,7 @@ from the result of the last retrieving query.</p>
   
   <h1>Method: PostgreSQL_DBWorker::__destruct()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __destruct() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __destruct(): void;</div>
 
   
   <div class="short-description">
@@ -1233,7 +1233,7 @@ from the result of the last retrieving query.</p>
   
   <h1>Method: PostgreSQL_DBWorker::affected_count()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> affected_count() : int;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> affected_count(): int;</div>
 
   
   <div class="short-description">
@@ -1252,8 +1252,7 @@ from the result of the last retrieving query.</p>
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns the number of the rows affected by the last modification query.
-Returns the number of the rows affected by the last modification query.</p></div>
+  <div class="item_description"><p>Returns the number of the rows affected by the last modification query.</p></div>
   
   </div>
   
@@ -1289,7 +1288,7 @@ Returns the number of the rows affected by the last modification query.</p></div
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1011'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1012'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1360,8 +1359,7 @@ Returns the number of the rows affected by the last modification query.</p></div
                 
             </td>
             <td class="description_column">
-                <p>The name of the table.
-The name of the table.</p>
+                <p>The name of the table.</p>
             </td>
         </tr>
         
@@ -1379,8 +1377,7 @@ The name of the table.</p>
                 
             </td>
             <td class="description_column">
-                <p>The list of request fields.
-The list of request fields.</p>
+                <p>The list of request fields.</p>
             </td>
         </tr>
         
@@ -1398,8 +1395,7 @@ The list of request fields.</p>
                 
             </td>
             <td class="description_column">
-                <p>The where clause that should restrict the result.
-The where clause that should restrict the result.</p>
+                <p>The where clause that should restrict the result.</p>
             </td>
         </tr>
         
@@ -1417,8 +1413,7 @@ The where clause that should restrict the result.</p>
                 
             </td>
             <td class="description_column">
-                <p>The order clause to sort the results.
-The order clause to sort the results.</p>
+                <p>The order clause to sort the results.</p>
             </td>
         </tr>
         
@@ -1436,8 +1431,7 @@ The order clause to sort the results.</p>
                 
             </td>
             <td class="description_column">
-                <p>The limit how many records shoud be loaded. 0 for unlimited.
-The limit how many records shoud be loaded. 0 for unlimited.</p>
+                <p>The limit how many records should be loaded. 0 for unlimited.</p>
             </td>
         </tr>
         
@@ -1449,8 +1443,7 @@ The limit how many records shoud be loaded. 0 for unlimited.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the built query.
-Returns the built query.</p></div>
+  <div class="item_description"><p>Returns the built query.</p></div>
   
   </div>
   
@@ -1478,7 +1471,7 @@ Returns the built query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1335'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1338'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1500,7 +1493,7 @@ Returns the built query.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::close_connection()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> close_connection() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> close_connection(): void;</div>
 
   
   <div class="short-description">
@@ -1522,15 +1515,7 @@ Returns the built query.</p></div>
   </div>
   
 
-  <h2>Throws</h2>
-  <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
 
   
   <h2>Overrides</h2>
@@ -1553,7 +1538,7 @@ Returns the built query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#694'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#696'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1584,7 +1569,7 @@ Returns the built query.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::commit_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction(): void;</div>
 
   
   <div class="short-description">
@@ -1637,7 +1622,7 @@ Returns the built query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#751'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#753'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1668,7 +1653,7 @@ Returns the built query.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::connect()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect(): void;</div>
 
   
   <div class="short-description">
@@ -1722,7 +1707,7 @@ settings parameters specified by the initialization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#314'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#319'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -1756,7 +1741,7 @@ settings parameters specified by the initialization.</p>
   
   <h1>Method: PostgreSQL_DBWorker::create_clone()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone() : \SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone(): \SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker;</div>
 
   
   <div class="short-description">
@@ -1782,8 +1767,7 @@ queries while iteration through the active results of a select query.</p>
   <div class="item_list">
   <a href='class-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.html'>\SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker</a><br>
   
-  <div class="item_description"><p>Returns the clone of this dbworker.
-Returns the clone of this dbworker.</p></div>
+  <div class="item_description"><p>Returns the clone of this dbworker.</p></div>
   
   </div>
   
@@ -1833,7 +1817,7 @@ Returns the clone of this dbworker.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::escape()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>): string;</div>
 
   
   <div class="short-description">
@@ -1871,8 +1855,7 @@ Returns the clone of this dbworker.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.
-The string to be escaped.</p>
+                <p>The string to be escaped.</p>
             </td>
         </tr>
         
@@ -1884,8 +1867,7 @@ The string to be escaped.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the escaped string.
-Returns the escaped string.</p></div>
+  <div class="item_description"><p>Returns the escaped string.</p></div>
   
   </div>
   
@@ -1944,7 +1926,7 @@ Returns the escaped string.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::execute_prepared_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_prepared_query(mixed ...<span class="php-var">$args</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_prepared_query(mixed ...<span class="php-var">$args</span>): void;</div>
 
   
   <div class="short-description">
@@ -1983,8 +1965,7 @@ Returns the escaped string.</p></div>
             </td>
             <td class="description_column">
                 <p>The number of parameters may vary and be zero. An array can also be passed.
-These are paremeters of the prepared query.
-These are paremeters of the prepared query.</p>
+These are parameters of the prepared query.</p>
             </td>
         </tr>
         
@@ -2002,7 +1983,7 @@ These are paremeters of the prepared query.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  \Exception|<a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
   
   <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
   
@@ -2030,7 +2011,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#570'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#575'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2061,7 +2042,7 @@ These are paremeters of the prepared query.</p>
   
   <h1>Method: PostgreSQL_DBWorker::execute_procedure()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_procedure(string <span class="php-var">$procedure</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_procedure(string <span class="php-var">$procedure</span>): void;</div>
 
   
   <div class="short-description">
@@ -2100,8 +2081,7 @@ These are paremeters of the prepared query.</p>
             </td>
             <td class="description_column">
                 <p>The name of the SQL stored procedure.</p>
-<p>All subsequent parameters are the paramteres of the SQL stored procedure.</p>
-<p>All subsequent parameters are the paramteres of the SQL stored procedure.</p>
+<p>All subsequent parameters are the parameters of the SQL stored procedure.</p>
             </td>
         </tr>
         
@@ -2147,7 +2127,7 @@ These are paremeters of the prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#609'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#614'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2169,7 +2149,7 @@ These are paremeters of the prepared query.</p>
   
   <h1>Method: PostgreSQL_DBWorker::execute_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_query(string <span class="php-var">$query_string</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_query(string <span class="php-var">$query_string</span>): void;</div>
 
   
   <div class="short-description">
@@ -2207,8 +2187,7 @@ These are paremeters of the prepared query.</p>
                 
             </td>
             <td class="description_column">
-                <p>The SQL query to be executed.
-The SQL query to be executed.</p>
+                <p>The SQL query to be executed.</p>
             </td>
         </tr>
         
@@ -2226,7 +2205,7 @@ The SQL query to be executed.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  \Exception|<a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
   
   <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
   
@@ -2254,7 +2233,7 @@ The SQL query to be executed.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#428'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#433'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2276,7 +2255,7 @@ The SQL query to be executed.</p>
   
   <h1>Method: PostgreSQL_DBWorker::fetch_array()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_array(<span class="php-keyword1">array</span> &amp;<span class="php-var">$rows</span>, <span class="php-keyword1">array</span> <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>) : int;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_array(<span class="php-keyword1">array</span> &amp;<span class="php-var">$rows</span>, ?<span class="php-keyword1">array</span> <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>): int;</div>
 
   
   <div class="short-description">
@@ -2314,8 +2293,7 @@ The SQL query to be executed.</p>
                 
             </td>
             <td class="description_column">
-                <p>Target array for loading the results.
-Target array for loading the results.</p>
+                <p>Target array for loading the results.</p>
             </td>
         </tr>
         
@@ -2327,7 +2305,7 @@ Target array for loading the results.</p>
                 by value
             </td>
             <td>
-                array
+                ?array
             </td>
             <td>
                 null
@@ -2339,14 +2317,13 @@ Target array for loading the results.</p>
 <pre><code class="language-php"><span class="php-var">$rows</span> = [];
 <span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>);
 
-rows[n] = [<span class="php-quote">&quot;col1&quot;</span> =&gt; <span class="php-quote">&quot;val1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span> =&gt; <span class="php-quote">&quot;val2&quot;</span>, , <span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
+rows[n] = [<span class="php-quote">&quot;col1&quot;</span> =&gt; <span class="php-quote">&quot;val1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span> =&gt; <span class="php-quote">&quot;val2&quot;</span>, <span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
 <p>If the dimension columns are specified, their values are used for the dimensions.</p>
 <p>Example:</p>
 <pre><code class="language-php"><span class="php-var">$rows</span> = [];
 <span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>, [<span class="php-quote">&quot;col1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span>]);
 
 rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&quot;val2&quot;</span>] = [<span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
-<pre><code></code></pre>
             </td>
         </tr>
         
@@ -2358,8 +2335,7 @@ rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&q
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns the number of the fetched rows. It might be also 0.
-Returns the number of the fetched rows. It might be also 0.</p></div>
+  <div class="item_description"><p>Returns the number of the fetched rows. It might be also 0.</p></div>
   
   </div>
   
@@ -2395,7 +2371,7 @@ Returns the number of the fetched rows. It might be also 0.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#928'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#930'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2417,7 +2393,7 @@ Returns the number of the fetched rows. It might be also 0.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::fetch_row()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_row() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_row(): bool;</div>
 
   
   <div class="short-description">
@@ -2448,8 +2424,7 @@ Returns the number of the fetched rows. It might be also 0.</p></div>
   <span class="php-keyword1">echo</span> <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;FIRST_NAME&quot;</span>) . <span class="php-quote">&quot; &quot;</span> . <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;LAST_NAME&quot;</span>) . <span class="php-quote">&quot;&lt;br&gt;&quot;</span>;
 }
 
-<span class="php-var">$dbw</span>-&gt;free_result();</code></pre>
-<pre><code></code></pre></div>
+<span class="php-var">$dbw</span>-&gt;free_result();</code></pre></div>
   
   </div>
   
@@ -2485,7 +2460,7 @@ Returns the number of the fetched rows. It might be also 0.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#870'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#872'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2507,7 +2482,7 @@ Returns the number of the fetched rows. It might be also 0.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::fetched_count()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetched_count() : int|<span class="php-keyword1">false</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetched_count(): int;</div>
 
   
   <div class="short-description">
@@ -2524,10 +2499,9 @@ Returns the number of the fetched rows. It might be also 0.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  int|false<br>
+  int<br>
   
-  <div class="item_description"><p>Returns the number of the rows fetched by the last retrieving query.
-Returns the number of the rows fetched by the last retrieving query.</p></div>
+  <div class="item_description"><p>Returns the number of the rows fetched by the last retrieving query.</p></div>
   
   </div>
   
@@ -2563,7 +2537,7 @@ Returns the number of the rows fetched by the last retrieving query.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#988'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#989'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -2585,7 +2559,7 @@ Returns the number of the rows fetched by the last retrieving query.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::field_by_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(string <span class="php-var">$name</span>, int <span class="php-var">$type</span> = self::DB_AS_IS) : mixed|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(string <span class="php-var">$name</span>, int <span class="php-var">$type</span> = self::DB_AS_IS): mixed;</div>
 
   
   <div class="short-description">
@@ -2623,8 +2597,7 @@ Returns the number of the rows fetched by the last retrieving query.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The name of the field.
-The name of the field.</p>
+                <p>The name of the field.</p>
             </td>
         </tr>
         
@@ -2642,8 +2615,7 @@ The name of the field.</p>
                 self::DB_AS_IS
             </td>
             <td class="description_column">
-                <p>The type of the field.
-The type of the field.</p>
+                <p>The type of the field.</p>
             </td>
         </tr>
         
@@ -2653,10 +2625,9 @@ The type of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  mixed|null<br>
+  mixed<br>
   
   <div class="item_description"><p>Returns the value of a field specified by name. In the case
-of any error returns null.
 of any error returns null.</p></div>
   
   </div>
@@ -2724,7 +2695,7 @@ of any error returns null.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::field_by_num()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(int <span class="php-var">$num</span>, int <span class="php-var">$type</span> = self::DB_AS_IS) : mixed|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(int <span class="php-var">$num</span>, int <span class="php-var">$type</span> = self::DB_AS_IS): mixed;</div>
 
   
   <div class="short-description">
@@ -2762,8 +2733,7 @@ of any error returns null.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The number of the field.
-The number of the field.</p>
+                <p>The number of the field.</p>
             </td>
         </tr>
         
@@ -2781,8 +2751,7 @@ The number of the field.</p>
                 self::DB_AS_IS
             </td>
             <td class="description_column">
-                <p>The type of the field.
-The type of the field.</p>
+                <p>The type of the field.</p>
             </td>
         </tr>
         
@@ -2792,10 +2761,9 @@ The type of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  mixed|null<br>
+  mixed<br>
   
   <div class="item_description"><p>Returns the value of a field specified by number. In the case
-of any error returns null.
 of any error returns null.</p></div>
   
   </div>
@@ -2866,7 +2834,7 @@ of any error returns null.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::field_count()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_count() : int|<span class="php-keyword1">false</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_count(): int;</div>
 
   
   <div class="short-description">
@@ -2883,11 +2851,9 @@ of any error returns null.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  int|false<br>
+  int<br>
   
-  <div class="item_description"><p>Returns the number of the fields in the result of the last retrieving query. In the case
-of any error returns false.
-of any error returns false.</p></div>
+  <div class="item_description"><p>Returns the number of the fields in the result of the last retrieving query.</p></div>
   
   </div>
   
@@ -2945,7 +2911,7 @@ of any error returns false.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::field_info_by_num()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(int <span class="php-var">$num</span>) : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(int <span class="php-var">$num</span>): ?<span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2983,8 +2949,7 @@ of any error returns false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The number of the field.
-The number of the field.</p>
+                <p>The number of the field.</p>
             </td>
         </tr>
         
@@ -2994,18 +2959,17 @@ The number of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  ?array<br>
   
   <div class="item_description"><p>Returns the associative array with properties. In the case
 of any error returns null.</p>
 <ul>
-<li>$info[&quot;name&quot;] - name of the field.</li>
-<li>$info[&quot;type&quot;] - type of the field.</li>
-<li>$info[&quot;size&quot;] - size of the field.</li>
-<li>$info[&quot;binary&quot;] - whether the filed is binary.</li>
-<li>$info[&quot;numeric&quot;] - whether the filed is numeric.</li>
-<li>$info[&quot;datetime&quot;] - whether the filed is datetime.</li>
-<li>$info[&quot;datetime&quot;] - whether the filed is datetime.</li>
+<li>$info["name"] - name of the field.</li>
+<li>$info["type"] - type of the field.</li>
+<li>$info["size"] - size of the field.</li>
+<li>$info["binary"] - whether the filed is binary.</li>
+<li>$info["numeric"] - whether the filed is numeric.</li>
+<li>$info["datetime"] - whether the filed is datetime.</li>
 </ul></div>
   
   </div>
@@ -3073,7 +3037,7 @@ of any error returns null.</p>
   
   <h1>Method: PostgreSQL_DBWorker::field_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(int <span class="php-var">$num</span>) : object|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(int <span class="php-var">$num</span>): ?string;</div>
 
   
   <div class="short-description">
@@ -3111,8 +3075,7 @@ of any error returns null.</p>
                 
             </td>
             <td class="description_column">
-                <p>The number of the field.
-The number of the field.</p>
+                <p>The number of the field.</p>
             </td>
         </tr>
         
@@ -3122,10 +3085,9 @@ The number of the field.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  object|null<br>
+  ?string<br>
   
   <div class="item_description"><p>Returns the value of a field specified by number as an object with properties. In the case
-of any error returns null.
 of any error returns null.</p></div>
   
   </div>
@@ -3193,7 +3155,7 @@ of any error returns null.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::format_date()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>): string;</div>
 
   
   <div class="short-description">
@@ -3231,8 +3193,7 @@ of any error returns null.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The date value as timestamp.
-The date value as timestamp.</p>
+                <p>The date value as timestamp.</p>
             </td>
         </tr>
         
@@ -3244,8 +3205,7 @@ The date value as timestamp.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.
-Returns the string representation of the date compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.</p></div>
   
   </div>
   
@@ -3304,7 +3264,7 @@ Returns the string representation of the date compatible for the corresponding d
   
   <h1>Method: PostgreSQL_DBWorker::format_datetime()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>): string;</div>
 
   
   <div class="short-description">
@@ -3342,8 +3302,7 @@ Returns the string representation of the date compatible for the corresponding d
                 
             </td>
             <td class="description_column">
-                <p>The date/time value as timestamp.
-The date/time value as timestamp.</p>
+                <p>The date/time value as timestamp.</p>
             </td>
         </tr>
         
@@ -3355,8 +3314,7 @@ The date/time value as timestamp.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.
-Returns the string representation of the date/time compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.</p></div>
   
   </div>
   
@@ -3415,7 +3373,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h1>Method: PostgreSQL_DBWorker::free_prepared_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_prepared_query() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_prepared_query(): void;</div>
 
   
   <div class="short-description">
@@ -3473,7 +3431,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#666'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#671'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3504,7 +3462,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h1>Method: PostgreSQL_DBWorker::free_result()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_result() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_result(): void;</div>
 
   
   <div class="short-description">
@@ -3562,7 +3520,7 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#790'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#792'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3584,11 +3542,11 @@ Returns the string representation of the date/time compatible for the correspond
   
   <h1>Method: PostgreSQL_DBWorker::get_extension_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name(): string;</div>
 
   
   <div class="short-description">
-  <p>Returns the name of the required PHP extension - &quot;pgsql&quot;.</p>
+  <p>Returns the name of the required PHP extension - "pgsql".</p>
   </div>
   
 
@@ -3603,8 +3561,7 @@ Returns the string representation of the date/time compatible for the correspond
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the name of the required PHP extension - &quot;pgsql&quot;.
-Returns the name of the required PHP extension - &quot;pgsql&quot;.</p></div>
+  <div class="item_description"><p>Returns the name of the required PHP extension - "pgsql".</p></div>
   
   </div>
   
@@ -3632,7 +3589,7 @@ Returns the name of the required PHP extension - &quot;pgsql&quot;.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#242'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#245'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3660,11 +3617,11 @@ Returns the name of the required PHP extension - &quot;pgsql&quot;.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::get_rdbms_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name(): string;</div>
 
   
   <div class="short-description">
-  <p>Returns the name of the supported database - &quot;PostgreSQL Server&quot;.</p>
+  <p>Returns the name of the supported database - "PostgreSQL Server".</p>
   </div>
   
 
@@ -3679,8 +3636,7 @@ Returns the name of the required PHP extension - &quot;pgsql&quot;.</p></div>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the name of the supported database - &quot;PostgreSQL Server&quot;.
-Returns the name of the supported database - &quot;PostgreSQL Server&quot;.</p></div>
+  <div class="item_description"><p>Returns the name of the supported database - "PostgreSQL Server".</p></div>
   
   </div>
   
@@ -3708,7 +3664,7 @@ Returns the name of the supported database - &quot;PostgreSQL Server&quot;.</p><
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#255'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#258'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3730,7 +3686,7 @@ Returns the name of the supported database - &quot;PostgreSQL Server&quot;.</p><
   
   <h1>Method: PostgreSQL_DBWorker::get_schema()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_schema() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_schema(): string;</div>
 
   
   <div class="short-description">
@@ -3749,8 +3705,7 @@ Returns the name of the supported database - &quot;PostgreSQL Server&quot;.</p><
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the name of the database schema if applicable, or an empty string.
-Returns the name of the database schema if applicable, or an empty string.</p></div>
+  <div class="item_description"><p>Returns the name of the database schema if applicable, or an empty string.</p></div>
   
   </div>
   
@@ -3778,7 +3733,7 @@ Returns the name of the database schema if applicable, or an empty string.</p></
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#385'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#390'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3806,11 +3761,11 @@ Returns the name of the database schema if applicable, or an empty string.</p></
   
   <h1>Method: PostgreSQL_DBWorker::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
-  <p>Initializes the dbworker with connection paramters.</p>
+  <p>Initializes the dbworker with connection parameters.</p>
   </div>
   
 
@@ -3846,13 +3801,12 @@ Returns the name of the database schema if applicable, or an empty string.</p></
             <td class="description_column">
                 <p>Connection settings as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>$parameters[&quot;db_server&quot;] - server address.</li>
-<li>$parameters[&quot;db_port&quot;] - server port.</li>
-<li>$parameters[&quot;db_name&quot;] - database name.</li>
-<li>$parameters[&quot;db_user&quot;] - user name.</li>
-<li>$parameters[&quot;db_password&quot;] - user password.</li>
-<li>$parameters[&quot;read_only&quot;] - this paramter sets the connection to the read only mode.</li>
-<li>$parameters[&quot;read_only&quot;] - this paramter sets the connection to the read only mode.</li>
+<li>$parameters["db_server"] - server address.</li>
+<li>$parameters["db_port"] - server port.</li>
+<li>$parameters["db_name"] - database name.</li>
+<li>$parameters["db_user"] - user name.</li>
+<li>$parameters["db_password"] - user password.</li>
+<li>$parameters["read_only"] - this parameter sets the connection to the read only mode.</li>
 </ul>
             </td>
         </tr>
@@ -3891,7 +3845,7 @@ Returns the name of the database schema if applicable, or an empty string.</p></
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#194'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#197'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -3913,7 +3867,7 @@ Returns the name of the database schema if applicable, or an empty string.</p></
   
   <h1>Method: PostgreSQL_DBWorker::insert_id()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> insert_id() : int;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> insert_id(): ?int;</div>
 
   
   <div class="short-description">
@@ -3927,7 +3881,7 @@ Returns the name of the database schema if applicable, or an empty string.</p></
   <p>WARNING! This method only works
 if there are no triggers with insertion commands.</p>
 <p>PostgreSQL recommends using the sequences like Oracle. If you want to use sequences,
-generate ID values with passing to <a href='class-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.html#execute_query'>\SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker::execute_query()</a> the sequence geenration commands
+generate ID values with passing to <a href='class-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.html#execute_query'>\SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker::execute_query()</a> the sequence generation commands
 and write your inserts with explicit ID values.</p>
   </div>
   
@@ -3939,10 +3893,9 @@ and write your inserts with explicit ID values.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  int<br>
+  ?int<br>
   
-  <div class="item_description"><p>Returns the value of the auto increment field by the last insertion.
-Returns the value of the auto increment field by the last insertion.</p></div>
+  <div class="item_description"><p>Returns the value of the auto increment field by the last insertion.</p></div>
   
   </div>
   
@@ -3978,7 +3931,7 @@ Returns the value of the auto increment field by the last insertion.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#823'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#825'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4000,7 +3953,7 @@ Returns the value of the auto increment field by the last insertion.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::is_connected()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected(): bool;</div>
 
   
   <div class="short-description">
@@ -4019,8 +3972,7 @@ Returns the value of the auto increment field by the last insertion.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the connection is open, otherwise false.
-Returns true if the connection is open, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the connection is open, otherwise false.</p></div>
   
   </div>
   
@@ -4048,7 +4000,7 @@ Returns true if the connection is open, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#272'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#275'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4082,7 +4034,7 @@ Returns true if the connection is open, otherwise false.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::is_extension_installed()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_extension_installed() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_extension_installed(): bool;</div>
 
   
   <div class="short-description">
@@ -4102,8 +4054,7 @@ the PostreSQL database.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>The method should return true if the extension is installed, otherwise false.
-The method should return true if the extension is installed, otherwise false.</p></div>
+  <div class="item_description"><p>The method should return true if the extension is installed, otherwise false.</p></div>
   
   </div>
   
@@ -4131,7 +4082,7 @@ The method should return true if the extension is installed, otherwise false.</p
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#227'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#230'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4159,7 +4110,7 @@ The method should return true if the extension is installed, otherwise false.</p
   
   <h1>Method: PostgreSQL_DBWorker::prepare_for_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> prepare_for_query(mixed <span class="php-var">$value</span>, int <span class="php-var">$type</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> prepare_for_query(mixed <span class="php-var">$value</span>, int <span class="php-var">$type</span>): string;</div>
 
   
   <div class="short-description">
@@ -4198,8 +4149,7 @@ and quotation if necessary.</p>
                 
             </td>
             <td class="description_column">
-                <p>The value to be formatted.
-The value to be formatted.</p>
+                <p>The value to be formatted.</p>
             </td>
         </tr>
         
@@ -4217,8 +4167,7 @@ The value to be formatted.</p>
                 
             </td>
             <td class="description_column">
-                <p>The type of the value.
-The type of the value.</p>
+                <p>The type of the value.</p>
             </td>
         </tr>
         
@@ -4230,13 +4179,20 @@ The type of the value.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the prepared value.
-Returns the prepared value.</p></div>
+  <div class="item_description"><p>Returns the prepared value.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  
+  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -4259,7 +4215,7 @@ Returns the prepared value.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1296'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#1299'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4281,7 +4237,7 @@ Returns the prepared value.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::prepare_query()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> prepare_query(string <span class="php-var">$query_string</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> prepare_query(string <span class="php-var">$query_string</span>): void;</div>
 
   
   <div class="short-description">
@@ -4319,8 +4275,7 @@ Returns the prepared value.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The SQL query to be prepared.
-The SQL query to be prepared.</p>
+                <p>The SQL query to be prepared.</p>
             </td>
         </tr>
         
@@ -4366,7 +4321,7 @@ The SQL query to be prepared.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#460'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#465'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4397,7 +4352,7 @@ The SQL query to be prepared.</p>
   
   <h1>Method: PostgreSQL_DBWorker::qualify_name_with_schema()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> qualify_name_with_schema(string <span class="php-var">$name</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> qualify_name_with_schema(string <span class="php-var">$name</span>): string;</div>
 
   
   <div class="short-description">
@@ -4435,8 +4390,7 @@ The SQL query to be prepared.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the database object to be completed with the schema name.
-The name of the database object to be completed with the schema name.</p>
+                <p>The name of the database object to be completed with the schema name.</p>
             </td>
         </tr>
         
@@ -4449,7 +4403,6 @@ The name of the database object to be completed with the schema name.</p>
   string<br>
   
   <div class="item_description"><p>Returns the name of the database object with the schema name if applicable,
-otherwise the name of the database object remains unchanged.
 otherwise the name of the database object remains unchanged.</p></div>
   
   </div>
@@ -4478,7 +4431,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#404'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#409'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4506,7 +4459,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::read_large_object()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> read_large_object(int <span class="php-var">$oid</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> read_large_object(int <span class="php-var">$oid</span>): string;</div>
 
   
   <div class="short-description">
@@ -4544,8 +4497,7 @@ otherwise the name of the database object remains unchanged.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The oid of the large object.
-The oid of the large object.</p>
+                <p>The oid of the large object.</p>
             </td>
         </tr>
         
@@ -4557,13 +4509,20 @@ The oid of the large object.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the data read from the largeobject.
-Returns the data read from the largeobject.</p></div>
+  <div class="item_description"><p>Returns the data read from the largeobject.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  
+  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
 
@@ -4581,7 +4540,7 @@ Returns the data read from the largeobject.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#162'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#165'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4603,7 +4562,7 @@ Returns the data read from the largeobject.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::rollback_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction(): void;</div>
 
   
   <div class="short-description">
@@ -4656,7 +4615,7 @@ Returns the data read from the largeobject.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#771'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#773'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4687,7 +4646,7 @@ Returns the data read from the largeobject.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::start_transaction()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction(): void;</div>
 
   
   <div class="short-description">
@@ -4740,7 +4699,7 @@ Returns the data read from the largeobject.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#731'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#733'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4771,7 +4730,7 @@ Returns the data read from the largeobject.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::stream_long_data()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> stream_long_data(string <span class="php-var">$query_string</span>, resource &amp;<span class="php-var">$stream</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> stream_long_data(string <span class="php-var">$query_string</span>, resource <span class="php-var">$stream</span>): void;</div>
 
   
   <div class="short-description">
@@ -4809,8 +4768,7 @@ Returns the data read from the largeobject.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The SQL query to be used for stroing the long data.
-The SQL query to be used for stroing the long data.</p>
+                <p>The SQL query to be used for storing the long data.</p>
             </td>
         </tr>
         
@@ -4819,7 +4777,7 @@ The SQL query to be used for stroing the long data.</p>
                 $stream
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 resource
@@ -4828,7 +4786,7 @@ The SQL query to be used for stroing the long data.</p>
                 
             </td>
             <td class="description_column">
-                <p>The opened valid stream for reding the long data.</p>
+                <p>The opened valid stream for reading the long data.</p>
 <p>Example:</p>
 <pre><code class="language-php"><span class="php-var">$stream</span> = <span class="php-keyword2">fopen</span>(<span class="php-quote">&quot;.../large_binary.jpg&quot;</span>, <span class="php-quote">&quot;rb&quot;</span>);
 
@@ -4836,7 +4794,6 @@ The SQL query to be used for stroing the long data.</p>
 {
   error reporting ...;
 }</code></pre>
-<pre><code></code></pre>
             </td>
         </tr>
         
@@ -4882,7 +4839,7 @@ The SQL query to be used for stroing the long data.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#509'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#514'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4904,11 +4861,11 @@ The SQL query to be used for stroing the long data.</p>
   
   <h1>Method: PostgreSQL_DBWorker::sys_get_errors()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sys_get_errors() : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sys_get_errors(): string;</div>
 
   
   <div class="short-description">
-  <p>Retrieves the last errors ocurend while execution of the query.</p>
+  <p>Retrieves the last errors occurred while execution of the query.</p>
   </div>
   
 
@@ -4923,8 +4880,7 @@ The SQL query to be used for stroing the long data.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the string of errors separated by the new line symbol.
-Returns the string of errors separated by the new line symbol.</p></div>
+  <div class="item_description"><p>Returns the string of errors separated by the new line symbol.</p></div>
   
   </div>
   
@@ -4947,7 +4903,7 @@ Returns the string of errors separated by the new line symbol.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#285'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#288'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
   
 
@@ -4969,7 +4925,7 @@ Returns the string of errors separated by the new line symbol.</p></div>
   
   <h1>Method: PostgreSQL_DBWorker::use_database()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(string <span class="php-var">$db_name</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(string <span class="php-var">$db_name</span>): void;</div>
 
   
   <div class="short-description">
@@ -5007,8 +4963,7 @@ Returns the string of errors separated by the new line symbol.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The name of the database to be set as working database.
-The name of the database to be set as working database.</p>
+                <p>The name of the database to be set as working database.</p>
             </td>
         </tr>
         
@@ -5054,11 +5009,11 @@ The name of the database to be set as working database.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#370'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.php.html#375'>SmartFactory/DatabaseWorkers/PostgreSQL_DBWorker.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

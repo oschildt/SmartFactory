@@ -34,10 +34,12 @@ interface ISettingsValidator
      * the $context is used. It can be - step1, step1, server_settings,
      * db_connection_settings etc.
      *
-     * @return boolean
-     * The method should return true upon successful validation, otherwise false.
+     * @return void
+     *
+     * @throws \SmartFactory\SmartException|\SmartFactory\SmartExceptionCollection
+     * * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
-    public function validate($settingsmanager, $context);
+    public function validate(ISettingsManager $settingsmanager, string $context): void;
 } // ISettingsValidator

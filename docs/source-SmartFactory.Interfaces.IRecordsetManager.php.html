@@ -125,19 +125,19 @@
 </span><span class="line" id="30"> 30: </span><span class="php-comment">     *
 </span><span class="line" id="31"> 31: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="32"> 32: </span><span class="php-comment">     */</span>
-<span class="line" id="33"> 33: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(<span class="php-var">$dbworker</span>);
+<span class="line" id="33"> 33: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(\SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>): void;
 <span class="line" id="34"> 34: </span>    
 <span class="line" id="35"> 35: </span>    <span class="php-comment">/**
 </span><span class="line" id="36"> 36: </span><span class="php-comment">     * Returns the dbworker to be used for working with the database.
 </span><span class="line" id="37"> 37: </span><span class="php-comment">     *
-</span><span class="line" id="38"> 38: </span><span class="php-comment">     * @return \SmartFactory\DatabaseWorkers\DBWorker
+</span><span class="line" id="38"> 38: </span><span class="php-comment">     * @return ?\SmartFactory\DatabaseWorkers\DBWorker
 </span><span class="line" id="39"> 39: </span><span class="php-comment">     * Returns the dbworker to be used for working with the database.
 </span><span class="line" id="40"> 40: </span><span class="php-comment">     *
 </span><span class="line" id="41"> 41: </span><span class="php-comment">     * @see IRecordsetManager::getDBWorker()
 </span><span class="line" id="42"> 42: </span><span class="php-comment">     *
 </span><span class="line" id="43"> 43: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="44"> 44: </span><span class="php-comment">     */</span>
-<span class="line" id="45"> 45: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getDBWorker();
+<span class="line" id="45"> 45: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getDBWorker(): ?\SmartFactory\DatabaseWorkers\DBWorker;
 <span class="line" id="46"> 46: </span>    
 <span class="line" id="47"> 47: </span>    <span class="php-comment">/**
 </span><span class="line" id="48"> 48: </span><span class="php-comment">     * Defines the field mappings for working with record sets based on a table.
@@ -158,7 +158,7 @@
 </span><span class="line" id="63"> 63: </span><span class="php-comment">     *
 </span><span class="line" id="64"> 64: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="65"> 65: </span><span class="php-comment">     */</span>
-<span class="line" id="66"> 66: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFields(<span class="php-var">$table</span>, <span class="php-var">$fields</span>, <span class="php-var">$key_fields</span>);
+<span class="line" id="66"> 66: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFields(string <span class="php-var">$table</span>, <span class="php-keyword1">array</span> <span class="php-var">$fields</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>): void;
 <span class="line" id="67"> 67: </span>
 <span class="line" id="68"> 68: </span>    <span class="php-comment">/**
 </span><span class="line" id="69"> 69: </span><span class="php-comment">     * Defines the field mappings for working with record sets based on a query.
@@ -176,7 +176,7 @@
 </span><span class="line" id="81"> 81: </span><span class="php-comment">     *
 </span><span class="line" id="82"> 82: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="83"> 83: </span><span class="php-comment">     */</span>
-<span class="line" id="84"> 84: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFieldsQuery(<span class="php-var">$fields</span>, <span class="php-var">$key_fields</span>);
+<span class="line" id="84"> 84: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> describeTableFieldsQuery(<span class="php-keyword1">array</span> <span class="php-var">$fields</span>, <span class="php-keyword1">array</span> <span class="php-var">$key_fields</span>): void;
 <span class="line" id="85"> 85: </span>
 <span class="line" id="86"> 86: </span>    <span class="php-comment">/**
 </span><span class="line" id="87"> 87: </span><span class="php-comment">     * Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; based on a table.
@@ -184,7 +184,7 @@
 </span><span class="line" id="89"> 89: </span><span class="php-comment">     * @param array &amp;$record
 </span><span class="line" id="90"> 90: </span><span class="php-comment">     * The target array where the data should be loaded.
 </span><span class="line" id="91"> 91: </span><span class="php-comment">     *
-</span><span class="line" id="92"> 92: </span><span class="php-comment">     * @param string|array $where_clause
+</span><span class="line" id="92"> 92: </span><span class="php-comment">     * @param array|string $where_clause
 </span><span class="line" id="93"> 93: </span><span class="php-comment">     * The where clause that should restrict the result. If an array of keys is passed,
 </span><span class="line" id="94"> 94: </span><span class="php-comment">     * the where clause is build automatically based on it.
 </span><span class="line" id="95"> 95: </span><span class="php-comment">     *
@@ -198,7 +198,7 @@
 </span><span class="line" id="103">103: </span><span class="php-comment">     *
 </span><span class="line" id="104">104: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="105">105: </span><span class="php-comment">     */</span>
-<span class="line" id="106">106: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecord(&amp;<span class="php-var">$record</span>, <span class="php-var">$where_clause</span>);
+<span class="line" id="106">106: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, <span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>): void;
 <span class="line" id="107">107: </span>
 <span class="line" id="108">108: </span>    <span class="php-comment">/**
 </span><span class="line" id="109">109: </span><span class="php-comment">     * Loads a record into an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; based on a query.
@@ -218,12 +218,12 @@
 </span><span class="line" id="123">123: </span><span class="php-comment">     *
 </span><span class="line" id="124">124: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="125">125: </span><span class="php-comment">     */</span>
-<span class="line" id="126">126: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordQuery(&amp;<span class="php-var">$record</span>, <span class="php-var">$query</span>);
+<span class="line" id="126">126: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, string <span class="php-var">$query</span>): void;
 <span class="line" id="127">127: </span>
 <span class="line" id="128">128: </span>    <span class="php-comment">/**
 </span><span class="line" id="129">129: </span><span class="php-comment">     * Deletes records by a given where clause.
 </span><span class="line" id="130">130: </span><span class="php-comment">     *
-</span><span class="line" id="131">131: </span><span class="php-comment">     * @param string|array $where_clause
+</span><span class="line" id="131">131: </span><span class="php-comment">     * @param array|string $where_clause
 </span><span class="line" id="132">132: </span><span class="php-comment">     * The where clause for the records to be deleted. If an array of keys is passed,
 </span><span class="line" id="133">133: </span><span class="php-comment">     * the where clause is build automatically based on it.
 </span><span class="line" id="134">134: </span><span class="php-comment">     *
@@ -236,7 +236,7 @@
 </span><span class="line" id="141">141: </span><span class="php-comment">     *
 </span><span class="line" id="142">142: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="143">143: </span><span class="php-comment">     */</span>
-<span class="line" id="144">144: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecords(<span class="php-var">$where_clause</span>);
+<span class="line" id="144">144: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecords(<span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>): void;
 <span class="line" id="145">145: </span>
 <span class="line" id="146">146: </span>    <span class="php-comment">/**
 </span><span class="line" id="147">147: </span><span class="php-comment">     * Deletes records by a given query.
@@ -252,7 +252,7 @@
 </span><span class="line" id="157">157: </span><span class="php-comment">     *
 </span><span class="line" id="158">158: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="159">159: </span><span class="php-comment">     */</span>
-<span class="line" id="160">160: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecordsQuery(<span class="php-var">$query</span>);
+<span class="line" id="160">160: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteRecordsQuery(string <span class="php-var">$query</span>): void;
 <span class="line" id="161">161: </span>
 <span class="line" id="162">162: </span>    <span class="php-comment">/**
 </span><span class="line" id="163">163: </span><span class="php-comment">     * Saves a record from an array in the form &quot;field_name&quot; =&gt; &quot;value&quot; into the table.
@@ -260,7 +260,7 @@
 </span><span class="line" id="165">165: </span><span class="php-comment">     * @param array &amp;$record
 </span><span class="line" id="166">166: </span><span class="php-comment">     * The source array with the data to be saved.
 </span><span class="line" id="167">167: </span><span class="php-comment">     *
-</span><span class="line" id="168">168: </span><span class="php-comment">     * @param string|array $where_clause
+</span><span class="line" id="168">168: </span><span class="php-comment">     * @param array|string $where_clause
 </span><span class="line" id="169">169: </span><span class="php-comment">     * The where clause that should be used to define whether a record should be inserted or updated. If an array of keys is passed,
 </span><span class="line" id="170">170: </span><span class="php-comment">     * the where clause is build automatically based on it.
 </span><span class="line" id="171">171: </span><span class="php-comment">     *
@@ -280,13 +280,13 @@
 </span><span class="line" id="185">185: </span><span class="php-comment">     *
 </span><span class="line" id="186">186: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="187">187: </span><span class="php-comment">     */</span>
-<span class="line" id="188">188: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecord(&amp;<span class="php-var">$record</span>, <span class="php-var">$where_clause</span>, <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>);
+<span class="line" id="188">188: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecord(<span class="php-keyword1">array</span> &amp;<span class="php-var">$record</span>, <span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>, string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>): void;
 <span class="line" id="189">189: </span>
 <span class="line" id="190">190: </span>    <span class="php-comment">/**
 </span><span class="line" id="191">191: </span><span class="php-comment">     * Saves records from an array in the form
 </span><span class="line" id="192">192: </span><span class="php-comment">     * $records[&quot;key_field1&quot;][&quot;key_field2&quot;][&quot;key_fieldN&quot;][&quot;field_name&quot;] = &quot;value&quot; into the table.
 </span><span class="line" id="193">193: </span><span class="php-comment">     *
-</span><span class="line" id="194">194: </span><span class="php-comment">     * @param array &amp;$records
+</span><span class="line" id="194">194: </span><span class="php-comment">     * @param array $records
 </span><span class="line" id="195">195: </span><span class="php-comment">     * The source array with the data to be saved.
 </span><span class="line" id="196">196: </span><span class="php-comment">     *
 </span><span class="line" id="197">197: </span><span class="php-comment">     * @param array $parent_values
@@ -308,12 +308,12 @@
 </span><span class="line" id="213">213: </span><span class="php-comment">     *
 </span><span class="line" id="214">214: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="215">215: </span><span class="php-comment">     */</span>
-<span class="line" id="216">216: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(&amp;<span class="php-var">$records</span>, <span class="php-var">$parent_values</span> = [], <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>);
+<span class="line" id="216">216: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveRecordSet(<span class="php-keyword1">array</span> <span class="php-var">$records</span>, <span class="php-keyword1">array</span> <span class="php-var">$parent_values</span> = [], string <span class="php-var">$identity_field</span> = <span class="php-quote">&quot;&quot;</span>): void;
 <span class="line" id="217">217: </span>
 <span class="line" id="218">218: </span>    <span class="php-comment">/**
 </span><span class="line" id="219">219: </span><span class="php-comment">     * Counts records based on the where clause.
 </span><span class="line" id="220">220: </span><span class="php-comment">     *
-</span><span class="line" id="221">221: </span><span class="php-comment">     * @param string|array $where_clause
+</span><span class="line" id="221">221: </span><span class="php-comment">     * @param array|string $where_clause
 </span><span class="line" id="222">222: </span><span class="php-comment">     * The where clause that should restrict the result. If an array of keys is passed,
 </span><span class="line" id="223">223: </span><span class="php-comment">     * the where clause is build automatically based on it.
 </span><span class="line" id="224">224: </span><span class="php-comment">     *
@@ -326,7 +326,7 @@
 </span><span class="line" id="231">231: </span><span class="php-comment">     *
 </span><span class="line" id="232">232: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="233">233: </span><span class="php-comment">     */</span>
-<span class="line" id="234">234: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecords(<span class="php-var">$where_clause</span>);
+<span class="line" id="234">234: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecords(<span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>): int;
 <span class="line" id="235">235: </span>
 <span class="line" id="236">236: </span>    <span class="php-comment">/**
 </span><span class="line" id="237">237: </span><span class="php-comment">     * Counts records based on the query.
@@ -343,7 +343,7 @@
 </span><span class="line" id="248">248: </span><span class="php-comment">     *
 </span><span class="line" id="249">249: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="250">250: </span><span class="php-comment">     */</span>
-<span class="line" id="251">251: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecordsQuery(<span class="php-var">$query</span>);
+<span class="line" id="251">251: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> countRecordsQuery(string <span class="php-var">$query</span>): int;
 <span class="line" id="252">252: </span>
 <span class="line" id="253">253: </span>    <span class="php-comment">/**
 </span><span class="line" id="254">254: </span><span class="php-comment">     * Loads records into an array in the form
@@ -355,12 +355,12 @@
 </span><span class="line" id="260">260: </span><span class="php-comment">     * @param array &amp;$records
 </span><span class="line" id="261">261: </span><span class="php-comment">     * The target array where the data should be loaded.
 </span><span class="line" id="262">262: </span><span class="php-comment">     *
-</span><span class="line" id="263">263: </span><span class="php-comment">     * @param string|array $where_clause
+</span><span class="line" id="263">263: </span><span class="php-comment">     * @param array|string $where_clause
 </span><span class="line" id="264">264: </span><span class="php-comment">     * The where clause that should restrict the result. If an array of keys is passed,
 </span><span class="line" id="265">265: </span><span class="php-comment">     * the where clause is build automatically based on it.
 </span><span class="line" id="266">266: </span><span class="php-comment">     *
 </span><span class="line" id="267">267: </span><span class="php-comment">     * @param int $limit
-</span><span class="line" id="268">268: </span><span class="php-comment">     * The limit how many records shoud be loaded. 0 for unlimited.
+</span><span class="line" id="268">268: </span><span class="php-comment">     * The limit how many records should be loaded. 0 for unlimited.
 </span><span class="line" id="269">269: </span><span class="php-comment">     *
 </span><span class="line" id="270">270: </span><span class="php-comment">     * @param string $order_clause
 </span><span class="line" id="271">271: </span><span class="php-comment">     * The order clause to sort the results.
@@ -375,7 +375,7 @@
 </span><span class="line" id="280">280: </span><span class="php-comment">     *
 </span><span class="line" id="281">281: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="282">282: </span><span class="php-comment">     */</span>
-<span class="line" id="283">283: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSet(&amp;<span class="php-var">$records</span>, <span class="php-var">$where_clause</span>, <span class="php-var">$order_clause</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$limit</span> = <span class="php-num">0</span>);
+<span class="line" id="283">283: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSet(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, <span class="php-keyword1">array</span>|string <span class="php-var">$where_clause</span>, string <span class="php-var">$order_clause</span> = <span class="php-quote">&quot;&quot;</span>, int <span class="php-var">$limit</span> = <span class="php-num">0</span>): void;
 <span class="line" id="284">284: </span>
 <span class="line" id="285">285: </span>    <span class="php-comment">/**
 </span><span class="line" id="286">286: </span><span class="php-comment">     * Loads records into an array in the form
@@ -399,10 +399,10 @@
 </span><span class="line" id="304">304: </span><span class="php-comment">     *
 </span><span class="line" id="305">305: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="306">306: </span><span class="php-comment">     */</span>
-<span class="line" id="307">307: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSetQuery(&amp;<span class="php-var">$records</span>, <span class="php-var">$query</span>);
+<span class="line" id="307">307: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadRecordSetQuery(<span class="php-keyword1">array</span> &amp;<span class="php-var">$records</span>, string <span class="php-var">$query</span>): void;
 <span class="line" id="308">308: </span>
 <span class="line" id="309">309: </span>    <span class="php-comment">/**
-</span><span class="line" id="310">310: </span><span class="php-comment">     * Starts the transation.
+</span><span class="line" id="310">310: </span><span class="php-comment">     * Starts the translation.
 </span><span class="line" id="311">311: </span><span class="php-comment">     *
 </span><span class="line" id="312">312: </span><span class="php-comment">     * @return void
 </span><span class="line" id="313">313: </span><span class="php-comment">     *
@@ -414,10 +414,10 @@
 </span><span class="line" id="319">319: </span><span class="php-comment">     *
 </span><span class="line" id="320">320: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="321">321: </span><span class="php-comment">     */</span>
-<span class="line" id="322">322: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction();
+<span class="line" id="322">322: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction(): void;
 <span class="line" id="323">323: </span>
 <span class="line" id="324">324: </span>    <span class="php-comment">/**
-</span><span class="line" id="325">325: </span><span class="php-comment">     * Commits the transation.
+</span><span class="line" id="325">325: </span><span class="php-comment">     * Commits the translation.
 </span><span class="line" id="326">326: </span><span class="php-comment">     *
 </span><span class="line" id="327">327: </span><span class="php-comment">     * @return void
 </span><span class="line" id="328">328: </span><span class="php-comment">     *
@@ -429,10 +429,10 @@
 </span><span class="line" id="334">334: </span><span class="php-comment">     *
 </span><span class="line" id="335">335: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="336">336: </span><span class="php-comment">     */</span>
-<span class="line" id="337">337: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction();
+<span class="line" id="337">337: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction(): void;
 <span class="line" id="338">338: </span>
 <span class="line" id="339">339: </span>    <span class="php-comment">/**
-</span><span class="line" id="340">340: </span><span class="php-comment">     * Rolls back the transation.
+</span><span class="line" id="340">340: </span><span class="php-comment">     * Rolls back the translation.
 </span><span class="line" id="341">341: </span><span class="php-comment">     *
 </span><span class="line" id="342">342: </span><span class="php-comment">     * @throws DBWorkerException
 </span><span class="line" id="343">343: </span><span class="php-comment">     * It might throw an exception in the case of any errors.
@@ -444,7 +444,7 @@
 </span><span class="line" id="349">349: </span><span class="php-comment">     *
 </span><span class="line" id="350">350: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="351">351: </span><span class="php-comment">     */</span>
-<span class="line" id="352">352: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction();
+<span class="line" id="352">352: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction(): void;
 <span class="line" id="353">353: </span>
 <span class="line" id="354">354: </span>    <span class="php-comment">/**
 </span><span class="line" id="355">355: </span><span class="php-comment">     * Escapes the string so that it can be used in the query without causing an error.
@@ -460,7 +460,7 @@
 </span><span class="line" id="365">365: </span><span class="php-comment">     *
 </span><span class="line" id="366">366: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="367">367: </span><span class="php-comment">     */</span>
-<span class="line" id="368">368: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(<span class="php-var">$str</span>);
+<span class="line" id="368">368: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>): string;
 <span class="line" id="369">369: </span>
 <span class="line" id="370">370: </span>    <span class="php-comment">/**
 </span><span class="line" id="371">371: </span><span class="php-comment">     * Formats the date to a string compatible for the corresponding database.
@@ -476,7 +476,7 @@
 </span><span class="line" id="381">381: </span><span class="php-comment">     *
 </span><span class="line" id="382">382: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="383">383: </span><span class="php-comment">     */</span>
-<span class="line" id="384">384: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(<span class="php-var">$date</span>);
+<span class="line" id="384">384: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>): string;
 <span class="line" id="385">385: </span>
 <span class="line" id="386">386: </span>    <span class="php-comment">/**
 </span><span class="line" id="387">387: </span><span class="php-comment">     * Formats the date/time to a string compatible for the corresponding database.
@@ -492,14 +492,14 @@
 </span><span class="line" id="397">397: </span><span class="php-comment">     *
 </span><span class="line" id="398">398: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="399">399: </span><span class="php-comment">     */</span>
-<span class="line" id="400">400: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(<span class="php-var">$datetime</span>);
+<span class="line" id="400">400: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>): string;
 <span class="line" id="401">401: </span>} <span class="php-comment">// IRecordsetManager</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

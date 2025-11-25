@@ -41,67 +41,67 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Flag for setting the connection to read only.
      *
-     * @var boolean $read_only
+     * @var bool $read_only
      *
      * @author Oleg Schildt
      */
-    protected $read_only = false;
+    protected bool $read_only = false;
 
     /**
      * Internal MySQLi object.
      *
-     * @var \MySQLi
+     * @var ?\MySQLi
      *
      * @author Oleg Schildt
      */
-    protected $mysqli = null;
+    protected ?\MySQLi $mysqli = null;
 
     /**
      * Internal mysqli_result object.
      *
-     * @var \mysqli_result
+     * @var bool|null|\mysqli_result
      *
      * @author Oleg Schildt
      */
-    protected $mysqli_result = null;
+    protected bool|null|\mysqli_result $mysqli_result = null;
 
     /**
      * Internal mysqli_stmt object.
      *
-     * @var \mysqli_stmt
+     * @var ?\mysqli_stmt
      *
      * @author Oleg Schildt
      */
-    protected $statement = null;
+    protected ?\mysqli_stmt $statement = null;
 
     /**
      * Internal variable for storing of the last prepared query.
      *
-     * @var string
+     * @var ?string
      *
      * @author Oleg Schildt
      */
-    protected $prepared_query = null;
+    protected ?string $prepared_query = null;
 
     /**
      * Internal variable for storing of the current fetched row
      * from the result of the last retrieving query.
      *
-     * @var array
+     * @var ?array
      *
      * @author Oleg Schildt
      */
-    protected $row = null;
+    protected ?array $row = null;
 
     /**
      * Internal variable for storing of the column names
      * from the result of the last retrieving query.
      *
-     * @var array
+     * @var ?array
      *
      * @author Oleg Schildt
      */
-    protected $field_names = null;
+    protected ?array $field_names = null;
 
     /**
      * Creates a clone of the dbworker that is using the same open
@@ -111,11 +111,13 @@ class MySQL_DBWorker extends DBWorker
      * queries while iteration through the active results of a select query.
      *
      * @return MySQL_DBWorker
+     * It throws an exception in the case of any errors.
+     *
      * Returns the clone of this dbworker.
      *
      * @author Oleg Schildt
      */
-    public function create_clone()
+    public function create_clone(): MySQL_DBWorker
     {
         $cln = new MySQL_DBWorker();
 
@@ -145,6 +147,9 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
+     * @throws DBWorkerException
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
     public function __destruct()
@@ -155,7 +160,7 @@ class MySQL_DBWorker extends DBWorker
     } // __destruct
 
     /**
-     * Initializes the dbworker with connection paramters.
+     * Initializes the dbworker with connection parameters.
      *
      * @param array $parameters
      * Connection settings as an associative array in the form key => value:
@@ -165,13 +170,13 @@ class MySQL_DBWorker extends DBWorker
      * - $parameters["db_name"] - database name.
      * - $parameters["db_user"] - user name.
      * - $parameters["db_password"] - user password.
-     * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
+     * - $parameters["read_only"] - this parameter sets the connection to the read only mode.
      *
      * @return void
      *
      * @author Oleg Schildt
      */
-    public function init($parameters)
+    public function init(array $parameters): void
     {
         if (!empty($parameters["db_server"])) {
             $this->db_server = $parameters["db_server"];
@@ -197,14 +202,14 @@ class MySQL_DBWorker extends DBWorker
      * Checks whether the extension (mysqli) is installed which is required for work with
      * the MySQL database.
      *
-     * @return boolean
+     * @return bool
      * The method should return true if the extension is installed, otherwise false.
      *
      * @see MySQL_DBWorker::get_extension_name()
      *
      * @author Oleg Schildt
      */
-    public function is_extension_installed()
+    public function is_extension_installed(): bool
     {
         if (!class_exists("MySQLi")) {
             return false;
@@ -223,7 +228,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function get_extension_name()
+    public function get_extension_name(): string
     {
         return "mysqli";
     } // get_extension_name
@@ -236,7 +241,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function get_rdbms_name()
+    public function get_rdbms_name(): string
     {
         return "MySQL Server";
     } // get_rdbms_name
@@ -244,7 +249,7 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Returns the connection state.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the connection is open, otherwise false.
      *
      * @see DBWorker::check_connection()
@@ -253,7 +258,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function is_connected()
+    public function is_connected(): bool
     {
         return (!empty($this->mysqli) && empty($this->mysqli->connect_error));
     } // is_connected
@@ -264,7 +269,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws DBWorkerException
+     * @throws \Throwable|DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see DBWorker::check_connection()
@@ -273,7 +278,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function connect()
+    public function connect(): void
     {
         if ($this->is_connected()) {
             return;
@@ -301,16 +306,11 @@ class MySQL_DBWorker extends DBWorker
             } catch (\mysqli_sql_exception $ex) {
                 $err = $ex->getMessage();
 
-                switch ($ex->getCode()) {
-                    case 2002:
-                        throw new DBWorkerException($err, DBWorker::ERR_HOST_UNREACHABLE);
-
-                    case 1045:
-                        throw new DBWorkerException($err, DBWorker::ERR_WRONG_USER_CREDENTIALS);
-
-                    default:
-                        throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
-                }
+                throw match ($ex->getCode()) {
+                    2002 => new DBWorkerException($err, DBWorker::ERR_HOST_UNREACHABLE),
+                    1045 => new DBWorkerException($err, DBWorker::ERR_WRONG_USER_CREDENTIALS),
+                    default => new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED)
+                };
             }
         }
 
@@ -349,7 +349,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function use_database($db_name)
+    public function use_database(string $db_name): void
     {
         $this->check_connection();
 
@@ -375,7 +375,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function get_schema()
+    public function get_schema(): string
     {
         return "";
     } // get_schema
@@ -394,7 +394,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function qualify_name_with_schema($name)
+    public function qualify_name_with_schema(string $name): string
     {
         return $name;
     } // qualify_name_with_schema
@@ -407,12 +407,12 @@ class MySQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws DBWorkerException
+     * @throws \Exception|DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
-    public function execute_query($query_string)
+    public function execute_query(string $query_string): void
     {
         $this->check_connection();
 
@@ -444,7 +444,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function prepare_query($query_string)
+    public function prepare_query(string $query_string): void
     {
         $this->check_connection();
 
@@ -468,10 +468,10 @@ class MySQL_DBWorker extends DBWorker
      * Stores long data from a stream.
      *
      * @param string $query_string
-     * The SQL query to be used for stroing the long data.
+     * The SQL query to be used for storing the long data.
      *
-     * @param resource &$stream
-     * The opened valid stream for reding the long data.
+     * @param resource $stream
+     * The opened valid stream for reading the long data.
      *
      * Example:
      * ```php
@@ -490,7 +490,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function stream_long_data($query_string, &$stream)
+    public function stream_long_data(string $query_string, $stream): void
     {
         $this->check_connection();
 
@@ -535,11 +535,11 @@ class MySQL_DBWorker extends DBWorker
      *
      * @param mixed ...$args
      * The number of parameters may vary and be zero. An array can also be passed.
-     * These are paremeters of the prepared query.
+     * These are parameters of the prepared query.
      *
      * @return void
      *
-     * @throws DBWorkerException
+     * @throws \Exception|DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see MySQL_DBWorker::prepare_query()
@@ -547,7 +547,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function execute_prepared_query(...$args)
+    public function execute_prepared_query(...$args): void
     {
         $this->check_connection();
 
@@ -626,7 +626,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function execute_procedure($procedure /* arg list */)
+    public function execute_procedure(string $procedure /* arg list */): void
     {
         $this->check_connection();
 
@@ -642,7 +642,7 @@ class MySQL_DBWorker extends DBWorker
             $arg_list = "";
 
             $first = true;
-            foreach ($args as $argkey => $argval) {
+            foreach ($args as $argval) {
                 if ($first) {
                     $proc_name = $argval;
                     $first = false;
@@ -662,12 +662,12 @@ class MySQL_DBWorker extends DBWorker
 
             $arg_list = trim($arg_list, ", ");
 
-            $this->last_query = "CALL {$proc_name}({$arg_list});";
+            $this->last_query = "CALL $proc_name($arg_list);";
         }
 
         $this->execute_query($this->last_query);
 
-        if ($this->mysqli_result && is_object($this->mysqli_result) && get_class($this->mysqli_result) == "mysqli_result") {
+        if (is_object($this->mysqli_result) && get_class($this->mysqli_result) == "mysqli_result") {
             $this->mysqli_result->free_result();
 
             $this->mysqli_result = null;
@@ -689,14 +689,12 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function free_prepared_query()
+    public function free_prepared_query(): void
     {
         $this->check_connection();
 
         try {
-            if ($this->statement) {
-                $this->statement->close();
-            }
+            $this->statement?->close();
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
@@ -720,7 +718,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function close_connection()
+    public function close_connection(): void
     {
         $this->last_query = null;
         $this->prepared_query = null;
@@ -746,7 +744,7 @@ class MySQL_DBWorker extends DBWorker
     } // close_connection
 
     /**
-     * Starts the transation.
+     * Starts the translation.
      *
      * @return void
      *
@@ -758,7 +756,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function start_transaction()
+    public function start_transaction(): void
     {
         $this->check_connection();
 
@@ -766,7 +764,7 @@ class MySQL_DBWorker extends DBWorker
     } // start_transaction
 
     /**
-     * Commits the transation.
+     * Commits the translation.
      *
      * @return void
      *
@@ -778,7 +776,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function commit_transaction()
+    public function commit_transaction(): void
     {
         $this->check_connection();
 
@@ -786,7 +784,7 @@ class MySQL_DBWorker extends DBWorker
     } // commit_transaction
 
     /**
-     * Rolls back the transation.
+     * Rolls back the translation.
      *
      * @return void
      *
@@ -798,7 +796,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function rollback_transaction()
+    public function rollback_transaction(): void
     {
         $this->check_connection();
 
@@ -817,21 +815,15 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function free_result()
+    public function free_result(): void
     {
         $this->check_connection();
 
         try {
-            if ($this->mysqli_result && is_object($this->mysqli_result) && get_class($this->mysqli_result) == "mysqli_result") {
+            if (is_object($this->mysqli_result) && get_class($this->mysqli_result) == "mysqli_result") {
                 $this->mysqli_result->free_result();
 
                 $this->mysqli_result = null;
-            }
-
-            if ($this->statement) {
-                $this->statement->free_result();
-
-                $this->statement = null;
             }
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
@@ -846,7 +838,7 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @return int
+     * @return ?int
      * Returns the value of the auto increment field by the last insertion.
      *
      * @throws DBWorkerException
@@ -854,7 +846,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function insert_id()
+    public function insert_id(): ?int
     {
         $this->check_connection();
 
@@ -864,7 +856,7 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Fetches the next row of data from the result of the execution of the retrieving query.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the next row exists and has been successfully fetched, otherwise false.
      *
      * Example:
@@ -887,7 +879,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function fetch_row()
+    public function fetch_row(): bool
     {
         $this->check_connection();
 
@@ -924,7 +916,7 @@ class MySQL_DBWorker extends DBWorker
                     $this->row = null;
                 }
 
-                return $result;
+                return !empty($result);
             } // prepared query
 
             if (!$this->mysqli_result) {
@@ -941,12 +933,12 @@ class MySQL_DBWorker extends DBWorker
             if (!$this->field_names) {
                 $this->field_names = array_keys($this->row);
             }
-
-            return true;
         } catch (\mysqli_sql_exception $ex) {
             $err = $ex->getMessage();
             throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
         }
+
+        return true;
     } // fetch_row
 
     /**
@@ -955,7 +947,7 @@ class MySQL_DBWorker extends DBWorker
      * @param array &$rows
      * Target array for loading the results.
      *
-     * @param array $dimension_keys
+     * @param ?array $dimension_keys
      * Array of the column names that should be used as dimensions.
      *
      * Per default, the rows are fetched as two-dimensional array.
@@ -965,7 +957,7 @@ class MySQL_DBWorker extends DBWorker
      * $rows = [];
      * $dbw->fetch_array($rows);
      *
-     * rows[n] = ["col1" => "val1", "col2" => "val2", , "col3" => "val3", ...]
+     * rows[n] = ["col1" => "val1", "col2" => "val2", "col3" => "val3", ...]
      * ```
      * If the dimension columns are specified, their values are used for the dimensions.
      *
@@ -985,7 +977,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function fetch_array(&$rows, $dimension_keys = null)
+    public function fetch_array(array &$rows, ?array $dimension_keys = null): int
     {
         $this->check_connection();
 
@@ -1028,13 +1020,11 @@ class MySQL_DBWorker extends DBWorker
                 while ($this->statement->fetch()) {
                     $counter++;
 
-                    $rowcpy = [];
-
                     // we must create a copy from $row, because its
                     // items are bound per reference
-                    foreach ($row as $key => $val) {
-                        $rowcpy[$key] = $val;
-                    }
+                    $rowcpy = array_map(function ($val) {
+                        return $val;
+                    }, $row);
 
                     if (empty($dimension_keys)) {
                         $rows[] = $rowcpy;
@@ -1044,7 +1034,7 @@ class MySQL_DBWorker extends DBWorker
 
                         $reference = &$rows;
 
-                        foreach ($dimensions as &$dval) {
+                        foreach ($dimensions as $dval) {
                             if (empty($reference[$dval])) {
                                 $reference[$dval] = [];
                             }
@@ -1080,7 +1070,7 @@ class MySQL_DBWorker extends DBWorker
 
                     $reference = &$rows;
 
-                    foreach ($dimensions as &$dval) {
+                    foreach ($dimensions as $dval) {
                         if (empty($reference[$dval])) {
                             $reference[$dval] = [];
                         }
@@ -1104,7 +1094,7 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Returns the number of the rows fetched by the last retrieving query.
      *
-     * @return int|false
+     * @return int
      * Returns the number of the rows fetched by the last retrieving query.
      *
      * @throws DBWorkerException
@@ -1112,7 +1102,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function fetched_count()
+    public function fetched_count(): int
     {
         $this->check_connection();
 
@@ -1139,7 +1129,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function affected_count()
+    public function affected_count(): int
     {
         $this->check_connection();
 
@@ -1154,16 +1144,15 @@ class MySQL_DBWorker extends DBWorker
     /**
      * Returns the number of the fields in the result of the last retrieving query.
      *
-     * @return int|false
-     * Returns the number of the fields in the result of the last retrieving query. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the number of the fields in the result of the last retrieving query.
      *
      * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
-    public function field_count()
+    public function field_count(): int
     {
         $this->check_connection();
 
@@ -1188,7 +1177,7 @@ class MySQL_DBWorker extends DBWorker
      * @param int $type
      * The type of the field.
      *
-     * @return mixed|null
+     * @return mixed
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
@@ -1200,7 +1189,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_by_name($name, $type = self::DB_AS_IS)
+    public function field_by_name(string $name, int $type = self::DB_AS_IS): mixed
     {
         $this->check_connection();
 
@@ -1229,7 +1218,7 @@ class MySQL_DBWorker extends DBWorker
      * @param int $type
      * The type of the field.
      *
-     * @return mixed|null
+     * @return mixed
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
@@ -1242,7 +1231,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_by_num($num, $type = self::DB_AS_IS)
+    public function field_by_num(int $num, int $type = self::DB_AS_IS): mixed
     {
         $this->check_connection();
 
@@ -1268,7 +1257,7 @@ class MySQL_DBWorker extends DBWorker
      * @param int $num
      * The number of the field.
      *
-     * @return object|null
+     * @return ?string
      * Returns the value of a field specified by number as an object with properties. In the case
      * of any error returns null.
      *
@@ -1280,7 +1269,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_name($num)
+    public function field_name(int $num): ?string
     {
         $this->check_connection();
 
@@ -1298,7 +1287,7 @@ class MySQL_DBWorker extends DBWorker
      * @param int $num
      * The number of the field.
      *
-     * @return array
+     * @return ?array
      * Returns the associative array with properties. In the case
      * of any error returns null.
      *
@@ -1317,7 +1306,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_info_by_num($num)
+    public function field_info_by_num(int $num): ?array
     {
         $this->check_connection();
 
@@ -1416,7 +1405,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function escape($str)
+    public function escape(string $str): string
     {
         return preg_replace("/(['\\\\])/", "\\\\$1", $str);
     } // escape
@@ -1435,7 +1424,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function format_date($date)
+    public function format_date(int $date): string
     {
         if (empty($date)) {
             return $this->quotes_or_null("");
@@ -1458,7 +1447,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function format_datetime($datetime)
+    public function format_datetime(int $datetime): string
     {
         if (empty($datetime)) {
             return $this->quotes_or_null("");
@@ -1480,9 +1469,12 @@ class MySQL_DBWorker extends DBWorker
      * @return string
      * Returns the prepared value.
      *
+     * @throws DBWorkerException
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
-    function prepare_for_query($value, $type)
+    function prepare_for_query(mixed $value, int $type): string
     {
         if (empty($value) && (string)$value != "0") {
             return "null";
@@ -1523,7 +1515,7 @@ class MySQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    function build_select_query($table, $fields, $where_clause, $order_clause, $limit)
+    function build_select_query(string $table, array $fields, string $where_clause, string $order_clause, int $limit): string
     {
         $query = "select\n";
 
@@ -1539,7 +1531,7 @@ class MySQL_DBWorker extends DBWorker
             $query .= $order_clause . "\n";
         }
 
-        if (!empty($limit) && is_numeric($limit)) {
+        if (!empty($limit)) {
             $query .= "limit " . $limit . "\n";
         }
 

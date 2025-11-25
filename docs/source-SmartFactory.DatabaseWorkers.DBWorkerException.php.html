@@ -96,7 +96,7 @@
 <div id="source"><pre class="code"><code><span class="line" id="1"> 1: </span><span class="xlang">&lt;?php</span>
 <span class="line" id="2"> 2: </span><span class="php-comment">/**
 </span><span class="line" id="3"> 3: </span><span class="php-comment"> * This file contains the implementation of the class DBWorkerException. It extends the DBWorkerException
-</span><span class="line" id="4"> 4: </span><span class="php-comment"> * exception to distingusih the database related errors in catches.
+</span><span class="line" id="4"> 4: </span><span class="php-comment"> * exception to distinguish the database related errors in catches.
 </span><span class="line" id="5"> 5: </span><span class="php-comment"> *
 </span><span class="line" id="6"> 6: </span><span class="php-comment"> * @package Database
 </span><span class="line" id="7"> 7: </span><span class="php-comment"> *
@@ -108,7 +108,7 @@
 <span class="line" id="13">13: </span><span class="php-keyword1">use</span> \SmartFactory\SmartException;
 <span class="line" id="14">14: </span>
 <span class="line" id="15">15: </span><span class="php-comment">/**
-</span><span class="line" id="16">16: </span><span class="php-comment"> * Class for DBWorkerException in the smarFactory library.
+</span><span class="line" id="16">16: </span><span class="php-comment"> * Class for DBWorkerException in the SmartFactory library.
 </span><span class="line" id="17">17: </span><span class="php-comment"> *
 </span><span class="line" id="18">18: </span><span class="php-comment"> * @author Oleg Schildt
 </span><span class="line" id="19">19: </span><span class="php-comment"> */</span>
@@ -136,11 +136,11 @@
 </span><span class="line" id="41">41: </span><span class="php-comment">     * uses the message id, gets the final translated text and substitutes the parameters through the details.
 </span><span class="line" id="42">42: </span><span class="php-comment">     *
 </span><span class="line" id="43">43: </span><span class="php-comment">     * @param string $technical_info
-</span><span class="line" id="44">44: </span><span class="php-comment">     * Additional technical infromation. It can be used if it is a programming error and displayed only if the debug mode is active.
+</span><span class="line" id="44">44: </span><span class="php-comment">     * Additional technical information. It can be used if it is a programming error and displayed only if the debug mode is active.
 </span><span class="line" id="45">45: </span><span class="php-comment">     *
 </span><span class="line" id="46">46: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="47">47: </span><span class="php-comment">     */</span>
-<span class="line" id="48">48: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(<span class="php-var">$message</span>, <span class="php-var">$error_code</span>, <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$error_details</span> = [], <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>)
+<span class="line" id="48">48: </span>    <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(string <span class="php-var">$message</span>, string <span class="php-var">$error_code</span>, string <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$error_details</span> = [], string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>)
 <span class="line" id="49">49: </span>    {
 <span class="line" id="50">50: </span>        parent::__construct(<span class="php-var">$message</span>, <span class="php-var">$error_code</span>, <span class="php-var">$error_element</span>, <span class="php-var">$error_details</span>, <span class="php-var">$technical_info</span>);
 <span class="line" id="51">51: </span>    }
@@ -150,7 +150,7 @@
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

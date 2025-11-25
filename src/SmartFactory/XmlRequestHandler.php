@@ -51,7 +51,7 @@ abstract class XmlRequestHandler extends RequestHandler
      *
      * @author Oleg Schildt
      */
-    protected $request_xmldoc;
+    protected \DOMDocument $request_xmldoc;
 
     /**
      * Internal variable for storing the response XML document.
@@ -60,12 +60,12 @@ abstract class XmlRequestHandler extends RequestHandler
      *
      * @author Oleg Schildt
      */
-    protected $response_xmldoc;
+    protected \DOMDocument $response_xmldoc;
 
     /**
      * Constructor.
      *
-     * It ititialize the XML document variables.
+     * It initializes the XML document variables.
      *
      * @author Oleg Schildt
      */
@@ -82,14 +82,14 @@ abstract class XmlRequestHandler extends RequestHandler
      *
      * It validates the content type 'application/xml' and takes the data from RAWDATA.
      *
-     * @throws SmartException
+     * @throws SmartException|\Exception
      * It might throw an exception if the content type oк XML data is invalid.
      *
      * @return void
      *
      * @author Oleg Schildt
      */
-    protected function parseInput()
+    protected function parseInput(): void
     {
         try {
             $content_type = get_header("Content-Type");
@@ -98,7 +98,7 @@ abstract class XmlRequestHandler extends RequestHandler
                 throw new SmartException("Content type header 'Content-Type' is missing, expected 'application/xml; charset=UTF-8'!", SmartException::ERR_CODE_INVALID_CONTENT_TYPE);
             }
 
-            if (!preg_match("/application\/xml.*/", $content_type)) {
+            if (!preg_match("/application\/xml/", $content_type)) {
                 throw new SmartException(sprintf("Content type 'application/xml; charset=UTF-8' is expected, got '%s'!", $content_type), SmartException::ERR_CODE_INVALID_CONTENT_TYPE);
             }
 
@@ -130,9 +130,12 @@ abstract class XmlRequestHandler extends RequestHandler
      *
      * @return void
      *
+     * @throws SmartException
+     * It might throw an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
-    protected function sendResponse()
+    protected function sendResponse(): void
     {
         $this->addResponseHeader("Content-type", "application/xml; charset=UTF-8");
 

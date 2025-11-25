@@ -166,7 +166,7 @@ with a column where the settings data will be saved.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.RuntimeSettingsManager.php.html#36'>SmartFactory/RuntimeSettingsManager.php</a>
+<a href='source-SmartFactory.RuntimeSettingsManager.php.html#37'>SmartFactory/RuntimeSettingsManager.php</a>
 </div>
 
 
@@ -357,7 +357,7 @@ with a column where the settings data will be saved.</p>
           </td>
           <td class="description_column">
               <p>This is internal auxiliary function for loading the settings from the target table
-defined by the iniailization.</p>
+defined by the initialization.</p>
           </td>
       </tr><tr>
           <td>
@@ -384,7 +384,7 @@ defined by the iniailization.</p>
           </td>
           <td class="description_column">
               <p>This is internal auxiliary function for converting the settings to JSON and storing it
-to the target table defined by the iniailization.</p>
+to the target table defined by the initialization.</p>
           </td>
       </tr><tr>
           <td>
@@ -463,7 +463,7 @@ to the target table defined by the iniailization.</p>
           </td>
           <td class="description_column">
               <p>This is internal auxiliary function for checking that the settings
-manager is intialized correctly.</p>
+manager is initialized correctly.</p>
           </td>
       </tr><tr>
           <td>
@@ -521,7 +521,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#75'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#76'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -538,7 +538,7 @@ manager is intialized correctly.</p>
   
   <h1>Property: RuntimeSettingsManager::$dbworker</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -551,7 +551,7 @@ manager is intialized correctly.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>
+  ?\DatabaseWorkers\DBWorker
   </div>
   
 
@@ -571,7 +571,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#45'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#46'>SmartFactory/RuntimeSettingsManager.php</a>
   </div><hr id="$settings">
   
   <h1>Property: RuntimeSettingsManager::$settings</h1>
@@ -609,7 +609,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#96'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#97'>SmartFactory/RuntimeSettingsManager.php</a>
   </div><hr id="$settings_column">
   
   <h1>Property: RuntimeSettingsManager::$settings_column</h1>
@@ -647,7 +647,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#63'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#64'>SmartFactory/RuntimeSettingsManager.php</a>
   </div><hr id="$settings_table">
   
   <h1>Property: RuntimeSettingsManager::$settings_table</h1>
@@ -685,12 +685,12 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#54'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#55'>SmartFactory/RuntimeSettingsManager.php</a>
   </div><hr id="$validator">
   
   <h1>Property: RuntimeSettingsManager::$validator</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\Interfaces\ISettingsValidator <span class="php-var">$validator</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -703,7 +703,7 @@ manager is intialized correctly.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a>
+  ?\Interfaces\ISettingsValidator
   </div>
   
 
@@ -723,7 +723,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#87'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#88'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -742,7 +742,7 @@ manager is intialized correctly.</p>
   
   <h1>Method: RuntimeSettingsManager::getContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext(): string;</div>
 
   
   <div class="short-description">
@@ -773,8 +773,7 @@ db_connection_settings etc.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the current settings context.
-Returns the current settings context.</p></div>
+  <div class="item_description"><p>Returns the current settings context.</p></div>
   
   </div>
   
@@ -802,7 +801,7 @@ Returns the current settings context.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#349'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#350'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -830,7 +829,7 @@ Returns the current settings context.</p></div>
   
   <h1>Method: RuntimeSettingsManager::getParameter()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$default</span> = <span class="php-keyword1">null</span>) : mixed;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getParameter(string <span class="php-var">$name</span>, mixed|<span class="php-keyword1">null</span> <span class="php-var">$default</span> = <span class="php-keyword1">null</span>): mixed;</div>
 
   
   <div class="short-description">
@@ -868,8 +867,7 @@ Returns the current settings context.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The name of the settings parameter.
-The name of the settings parameter.</p>
+                <p>The name of the settings parameter.</p>
             </td>
         </tr>
         
@@ -881,15 +879,14 @@ The name of the settings parameter.</p>
                 by value
             </td>
             <td>
-                mixed
+                mixed|null
             </td>
             <td>
                 null
             </td>
             <td class="description_column">
                 <p>The default value of the settings parameter if it is not set yet.
-The parameter is a confortable way to pre-set a parameter
-to a default value if its value is not set yet.
+The parameter is a conformable way to pre-set a parameter
 to a default value if its value is not set yet.</p>
             </td>
         </tr>
@@ -902,8 +899,7 @@ to a default value if its value is not set yet.</p>
   <div class="item_list">
   mixed<br>
   
-  <div class="item_description"><p>Returns the value of the settings parameter.
-Returns the value of the settings parameter.</p></div>
+  <div class="item_description"><p>Returns the value of the settings parameter.</p></div>
   
   </div>
   
@@ -944,7 +940,7 @@ Returns the value of the settings parameter.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#453'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#454'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -975,7 +971,7 @@ Returns the value of the settings parameter.</p></div>
   
   <h1>Method: RuntimeSettingsManager::getValidator()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getValidator() : \SmartFactory\Interfaces\ISettingsValidator|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getValidator(): ?\Interfaces\ISettingsValidator;</div>
 
   
   <div class="short-description">
@@ -992,10 +988,9 @@ Returns the value of the settings parameter.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a>|null<br>
+  ?\Interfaces\ISettingsValidator<br>
   
-  <div class="item_description"><p>Returns the validator for the settings or null if none is defined.
-Returns the validator for the settings or null if none is defined.</p></div>
+  <div class="item_description"><p>Returns the validator for the settings or null if none is defined.</p></div>
   
   </div>
   
@@ -1023,7 +1018,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#299'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#300'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1054,7 +1049,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h1>Method: RuntimeSettingsManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
@@ -1095,16 +1090,13 @@ Returns the validator for the settings or null if none is defined.</p></div>
                 <p>Settings for saving and loading as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters[&quot;dbworker&quot;] - the dbworker to used for loading and storing settings.</p>
+<p>$parameters["dbworker"] - the dbworker to used for loading and storing settings.</p>
 </li>
 <li>
-<p>$parameters[&quot;settings_table&quot;] - the name of the table for the storing of the settings.</p>
+<p>$parameters["settings_table"] - the name of the table for the storing of the settings.</p>
 </li>
 <li>
-<p>$parameters[&quot;settings_column&quot;] - the name of the column for the storing of the settings.</p>
-</li>
-<li>
-<p>$parameters[&quot;settings_column&quot;] - the name of the column for the storing of the settings.</p>
+<p>$parameters["settings_column"] - the name of the column for the storing of the settings.</p>
 </li>
 </ul>
             </td>
@@ -1156,7 +1148,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#253'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#254'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1178,12 +1170,12 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h1>Method: RuntimeSettingsManager::loadJSON()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): void;</div>
 
   
   <div class="short-description">
   <p>This is internal auxiliary function for loading the settings from the target table
-defined by the iniailization.</p>
+defined by the initialization.</p>
   </div>
   
 
@@ -1217,8 +1209,7 @@ defined by the iniailization.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target array with the settings values to be loaded.
-The target array with the settings values to be loaded.</p>
+                <p>The target array with the settings values to be loaded.</p>
             </td>
         </tr>
         
@@ -1265,7 +1256,7 @@ The target array with the settings values to be loaded.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#204'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#205'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1293,7 +1284,7 @@ The target array with the settings values to be loaded.</p>
   
   <h1>Method: RuntimeSettingsManager::loadSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings(): void;</div>
 
   
   <div class="short-description">
@@ -1351,7 +1342,7 @@ The target array with the settings values to be loaded.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#508'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#510'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1379,12 +1370,12 @@ The target array with the settings values to be loaded.</p>
   
   <h1>Method: RuntimeSettingsManager::saveJSON()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): void;</div>
 
   
   <div class="short-description">
   <p>This is internal auxiliary function for converting the settings to JSON and storing it
-to the target table defined by the iniailization.</p>
+to the target table defined by the initialization.</p>
   </div>
   
 
@@ -1418,8 +1409,7 @@ to the target table defined by the iniailization.</p>
                 
             </td>
             <td class="description_column">
-                <p>The array with the settings values to be saved.
-The array with the settings values to be saved.</p>
+                <p>The array with the settings values to be saved.</p>
             </td>
         </tr>
         
@@ -1465,7 +1455,7 @@ The array with the settings values to be saved.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#151'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#152'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1493,7 +1483,7 @@ The array with the settings values to be saved.</p>
   
   <h1>Method: RuntimeSettingsManager::saveSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings(): void;</div>
 
   
   <div class="short-description">
@@ -1551,7 +1541,7 @@ The array with the settings values to be saved.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#529'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#531'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1579,7 +1569,7 @@ The array with the settings values to be saved.</p>
   
   <h1>Method: RuntimeSettingsManager::setContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): void;</div>
 
   
   <div class="short-description">
@@ -1629,8 +1619,7 @@ db_connection_settings etc.</p>
                 &quot;default&quot;
             </td>
             <td class="description_column">
-                <p>The settings context.
-The settings context.</p>
+                <p>The settings context.</p>
             </td>
         </tr>
         
@@ -1668,7 +1657,7 @@ The settings context.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#325'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#326'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1696,7 +1685,7 @@ The settings context.</p>
   
   <h1>Method: RuntimeSettingsManager::setParameter()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$value</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$value</span>): void;</div>
 
   
   <div class="short-description">
@@ -1734,8 +1723,7 @@ The settings context.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the settings parameter.
-The name of the settings parameter.</p>
+                <p>The name of the settings parameter.</p>
             </td>
         </tr>
         
@@ -1753,8 +1741,7 @@ The name of the settings parameter.</p>
                 
             </td>
             <td class="description_column">
-                <p>The value of the settings parameter.
-The value of the settings parameter.</p>
+                <p>The value of the settings parameter.</p>
             </td>
         </tr>
         
@@ -1805,7 +1792,7 @@ The value of the settings parameter.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#377'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#378'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1836,7 +1823,7 @@ The value of the settings parameter.</p>
   
   <h1>Method: RuntimeSettingsManager::setParameters()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameters(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>, bool <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameters(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>): void;</div>
 
   
   <div class="short-description">
@@ -1865,7 +1852,7 @@ The value of the settings parameter.</p>
                 $parameters
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -1874,8 +1861,7 @@ The value of the settings parameter.</p>
                 
             </td>
             <td class="description_column">
-                <p>Array of parameters in the form key =&gt; value.
-Array of parameters in the form key =&gt; value.</p>
+                <p>Array of parameters in the form key =&gt; value.</p>
             </td>
         </tr>
         
@@ -1894,7 +1880,6 @@ Array of parameters in the form key =&gt; value.</p>
             </td>
             <td class="description_column">
                 <p>Flag which defines whether the parameter should be created
-if not exists. If false, only existing parameters are updated.
 if not exists. If false, only existing parameters are updated.</p>
             </td>
         </tr>
@@ -1947,7 +1932,7 @@ if not exists. If false, only existing parameters are updated.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#412'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#413'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -1978,7 +1963,7 @@ if not exists. If false, only existing parameters are updated.</p>
   
   <h1>Method: RuntimeSettingsManager::setValidator()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setValidator(\SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setValidator(\SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span>): void;</div>
 
   
   <div class="short-description">
@@ -2016,8 +2001,7 @@ if not exists. If false, only existing parameters are updated.</p>
                 
             </td>
             <td class="description_column">
-                <p>The settings validator.
-The settings validator.</p>
+                <p>The settings validator.</p>
             </td>
         </tr>
         
@@ -2055,7 +2039,7 @@ The settings validator.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#283'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#284'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -2086,12 +2070,12 @@ The settings validator.</p>
   
   <h1>Method: RuntimeSettingsManager::validateParameters()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters(): void;</div>
 
   
   <div class="short-description">
   <p>This is internal auxiliary function for checking that the settings
-manager is intialized correctly.</p>
+manager is initialized correctly.</p>
   </div>
   
 
@@ -2139,7 +2123,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#112'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#113'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -2161,7 +2145,7 @@ manager is intialized correctly.</p>
   
   <h1>Method: RuntimeSettingsManager::validateSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateSettings() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateSettings(): void;</div>
 
   
   <div class="short-description">
@@ -2184,16 +2168,20 @@ and before their saving.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if there is no validator defined, otherwise lets
-the validator validate the settings.
-the validator validate the settings.</p></div>
+  void<br>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -2216,7 +2204,7 @@ the validator validate the settings.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#483'>SmartFactory/RuntimeSettingsManager.php</a>
+  <a href='source-SmartFactory.RuntimeSettingsManager.php.html#485'>SmartFactory/RuntimeSettingsManager.php</a>
   </div>
   
 
@@ -2242,7 +2230,7 @@ the validator validate the settings.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

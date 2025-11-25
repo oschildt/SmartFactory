@@ -27,20 +27,20 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Internal variable for storing the dbworker.
      *
-     * @var DatabaseWorkers\DBWorker
+     * @var ?DatabaseWorkers\DBWorker
      *
      * @author Oleg Schildt
      */
-    protected $dbworker = null;
+    protected ?DatabaseWorkers\DBWorker $dbworker = null;
 
     /**
      * Internal variable for storing the target table name.
      *
-     * @var string
+     * @var ?string
      *
      * @author Oleg Schildt
      */
-    protected $table = null;
+    protected ?string $table = null;
 
     /**
      * Internal array for storing the target fields.
@@ -49,7 +49,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected $fields = null;
+    protected array $fields = [];
 
     /**
      * Internal array for storing the key fields. These are the fields that are used
@@ -59,11 +59,11 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected $key_fields = null;
+    protected array $key_fields = [];
 
     /**
      * This is internal auxiliary function for checking that the recordset manager
-     * is intialized correctly.
+     * is initialized correctly.
      *
      * @param string $type
      * The type of validation - table or query.
@@ -79,7 +79,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected function validateParameters($type)
+    protected function validateParameters(string $type): void
     {
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
@@ -109,7 +109,7 @@ class RecordsetManager implements IRecordsetManager
     /**
      * This is internal auxiliary function for converting an array to a where clause.
      *
-     * @param string|array &$where_clause
+     * @param array|string &$where_clause
      * The where clause that should be checked. If an array of keys is passed,
      * the where clause is build based on it.
      *
@@ -121,7 +121,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected function checkWhereClause(&$where_clause)
+    protected function checkWhereClause(array|string &$where_clause): void
     {
         if (!is_array($where_clause)) {
             return;
@@ -147,10 +147,10 @@ class RecordsetManager implements IRecordsetManager
      * This is internal auxiliary function for saving a record set from an array
      * with key field values as array dimensions.
      *
-     * It expand this multidimensional
+     * It expands this multidimensional
      * array into the set of flat records suitable for call {@see RecordsetManager::saveRecord()}.
      *
-     * @param array &$subarray
+     * @param array $subarray
      * The current subarray ro be processed.
      *
      * @param array $key_fields
@@ -182,7 +182,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    protected function processSubarray(&$subarray, $key_fields, &$parent_values, &$record, $identity_field)
+    protected function processSubarray(array $subarray, array $key_fields, array &$parent_values, array &$record, string $identity_field): void
     {
         $current_key = array_shift($key_fields);
 
@@ -216,7 +216,7 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Sets the dbworker to be used for working with the database.
      *
-     * @param DatabaseWorkers\DBWorker $dbworker
+     * @param DBWorker $dbworker
      * The dbworker to be used for working with the database.
      *
      * @return void
@@ -225,7 +225,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function setDBWorker($dbworker)
+    public function setDBWorker(DBWorker $dbworker): void
     {
         $this->dbworker = $dbworker;
     } // setDBWorker
@@ -233,18 +233,19 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Returns the dbworker to be used for working with the database.
      *
-     * @return DatabaseWorkers\DBWorker
+     * @return ?\SmartFactory\DatabaseWorkers\DBWorker
      * Returns the dbworker to be used for working with the database.
      *
-     * @see RecordsetManager::getDBWorker()
+     * @throws DBWorkerException
+     * It might throw exceptions in the case of any errors.
      *
      * @author Oleg Schildt
+     * @see RecordsetManager::getDBWorker()
+     *
      */
-    public function getDBWorker()
+    public function getDBWorker(): ?\SmartFactory\DatabaseWorkers\DBWorker
     {
-        if ($this->dbworker) {
-            $this->dbworker->connect();
-        }    
+        $this->dbworker?->connect();
 
         return $this->dbworker;
     } // getDBWorker
@@ -275,7 +276,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function describeTableFields($table, $fields, $key_fields)
+    public function describeTableFields(string $table, array $fields, array $key_fields): void
     {
         $this->table = $table;
         $this->fields = $fields;
@@ -312,7 +313,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function describeTableFieldsQuery($fields, $key_fields)
+    public function describeTableFieldsQuery(array $fields, array $key_fields): void
     {
         $this->fields = $fields;
 
@@ -328,7 +329,7 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Deletes records by a given where clause.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should restrict the result. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -349,7 +350,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function deleteRecords($where_clause)
+    public function deleteRecords(array|string $where_clause): void
     {
         $this->validateParameters("table");
 
@@ -384,7 +385,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function deleteRecordsQuery($query)
+    public function deleteRecordsQuery(string $query): void
     {
         $this->validateParameters("query");
 
@@ -399,7 +400,7 @@ class RecordsetManager implements IRecordsetManager
      * @param array &$record
      * The target array where the data should be loaded.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should restrict the result to one record. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -421,7 +422,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecord(&$record, $where_clause)
+    public function loadRecord(array &$record, array|string $where_clause): void
     {
         $this->validateParameters("table");
 
@@ -464,7 +465,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecordQuery(&$record, $query)
+    public function loadRecordQuery(array &$record, string $query): void
     {
         $this->validateParameters("query");
 
@@ -491,7 +492,7 @@ class RecordsetManager implements IRecordsetManager
      * @param array &$records
      * The target array where the data should be loaded.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should restrict the result. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -499,7 +500,7 @@ class RecordsetManager implements IRecordsetManager
      * The order clause to sort the results.
      *
      * @param int $limit
-     * The limit how many records shoud be loaded. 0 for unlimited.
+     * The limit how many records should be loaded. 0 for unlimited.
      *
      * @return void
      *
@@ -519,7 +520,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecordSet(&$records, $where_clause, $order_clause = "", $limit = 0)
+    public function loadRecordSet(array &$records, array|string $where_clause, string $order_clause = "", int $limit = 0): void
     {
         $this->validateParameters("table");
 
@@ -560,7 +561,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecordSetQuery(&$records, $query)
+    public function loadRecordSetQuery(array &$records, string $query): void
     {
         $this->validateParameters("query");
 
@@ -585,7 +586,7 @@ class RecordsetManager implements IRecordsetManager
             if (!empty($dimensions)) {
                 $reference = &$records;
 
-                foreach ($dimensions as &$dval) {
+                foreach ($dimensions as $dval) {
                     if (empty($reference[$dval])) {
                         $reference[$dval] = [];
                     }
@@ -609,7 +610,7 @@ class RecordsetManager implements IRecordsetManager
      * @param array &$record
      * The source array with the data to be saved.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should be used to define whether a record should be inserted or updated. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -636,7 +637,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecord(&$record, $where_clause, $identity_field = "")
+    public function saveRecord(array &$record, array|string $where_clause, string $identity_field = ""): void
     {
         $this->validateParameters("table");
 
@@ -715,7 +716,7 @@ class RecordsetManager implements IRecordsetManager
      * Saves records from an array in the form
      * $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.
      *
-     * @param array &$records
+     * @param array $records
      * The source array with the data to be saved.
      *
      * @param array $parent_values
@@ -745,7 +746,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecordSet(&$records, $parent_values = [], $identity_field = "")
+    public function saveRecordSet(array $records, array $parent_values = [], string $identity_field = ""): void
     {
         $this->validateParameters("table");
 
@@ -770,20 +771,23 @@ class RecordsetManager implements IRecordsetManager
     /**
      * Counts records based on the where clause.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should restrict the result. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
      * @return int
      * Returns the number of records.
      *
-     * @see  IRecordsetManager::countRecordsQuery()
+     * @throws \Exception
+     * It might throw exceptions in the case of any errors.
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
      * @author Oleg Schildt
+     * @see  IRecordsetManager::countRecordsQuery()
+     *
      */
-    public function countRecords($where_clause)
+    public function countRecords(array|string $where_clause): int
     {
         $this->validateParameters("table");
 
@@ -811,13 +815,16 @@ class RecordsetManager implements IRecordsetManager
      * @return int
      * Returns the number of records.
      *
+     * @throws \Exception
+     * It might throw exceptions in the case of any errors.
+     *
      * @see  IRecordsetManager::countRecords()
      *
      * @uses \SmartFactory\DatabaseWorkers\DBWorker
      *
      * @author Oleg Schildt
      */
-    public function countRecordsQuery($query)
+    public function countRecordsQuery(string $query): int
     {
         $this->validateParameters("query");
 
@@ -837,7 +844,7 @@ class RecordsetManager implements IRecordsetManager
     } // countRecordsQuery
 
     /**
-     * Starts the transation.
+     * Starts the translation.
      *
      * @return void
      *
@@ -849,7 +856,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function start_transaction()
+    public function start_transaction(): void
     {
         $this->dbworker->connect();
 
@@ -857,7 +864,7 @@ class RecordsetManager implements IRecordsetManager
     }
 
     /**
-     * Commits the transation.
+     * Commits the translation.
      *
      * @return void
      *
@@ -869,7 +876,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function commit_transaction()
+    public function commit_transaction(): void
     {
         $this->dbworker->connect();
 
@@ -877,7 +884,7 @@ class RecordsetManager implements IRecordsetManager
     }
 
     /**
-     * Rolls back the transation.
+     * Rolls back the translation.
      *
      * @return void
      *
@@ -889,7 +896,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function rollback_transaction()
+    public function rollback_transaction(): void
     {
         $this->dbworker->connect();
 
@@ -912,7 +919,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function escape($str)
+    public function escape(string $str): string
     {
         return $this->dbworker->escape($str);
     }
@@ -933,7 +940,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    function quotes_or_null($str)
+    function quotes_or_null(string $str): string
     {
         return $this->dbworker->quotes_or_null($str);
     }
@@ -957,7 +964,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    function number_or_null($str)
+    function number_or_null(string $str): string
     {
         return $this->dbworker->number_or_null($str);
     }
@@ -978,7 +985,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function format_date($date)
+    public function format_date(int $date): string
     {
         return $this->dbworker->format_date($date);
     }
@@ -999,7 +1006,7 @@ class RecordsetManager implements IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function format_datetime($datetime)
+    public function format_datetime(int $datetime): string
     {
         return $this->dbworker->format_datetime($datetime);
     }

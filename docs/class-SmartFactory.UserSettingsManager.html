@@ -123,7 +123,7 @@
 <p>When you introduce a new user setting. You have to create a column for it in the corresponding
 table add it to the initialization and specify the data type.</p>
 <p>The user settings are loaded only once by the start of the session and are kept until the session
-is valid. Saving of the user settings updates both the session and the database. When a settings is
+is valid. Saving of the user settings updates both the session and the database. When a settings are
 requested, it is taken from the session, not from the database.</p>
 </div>
 
@@ -164,7 +164,7 @@ requested, it is taken from the session, not from the database.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.UserSettingsManager.php.html#34'>SmartFactory/UserSettingsManager.php</a>
+<a href='source-SmartFactory.UserSettingsManager.php.html#35'>SmartFactory/UserSettingsManager.php</a>
 </div>
 
 
@@ -247,7 +247,7 @@ requested, it is taken from the session, not from the database.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$no_own_transcation">$no_own_transcation</a></div>
+              <div style='float:left'><a href="#$no_own_transaction">$no_own_transaction</a></div>
 
               <div style='float:right'>
               
@@ -256,7 +256,7 @@ requested, it is taken from the session, not from the database.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the state whether the transcation should be started or commited or
+              <p>Internal variable for storing the state whether the translation should be started or commited or
 no transaction should be used because the saving process is a part of other saving process.</p>
           </td>
       </tr><tr>
@@ -408,7 +408,7 @@ no transaction should be used because the saving process is a part of other savi
           </td>
           <td class="description_column">
               <p>This is internal auxiliary function for loading the settings from the target user table
-defined by the iniailization.</p>
+defined by the initialization.</p>
           </td>
       </tr><tr>
           <td>
@@ -435,7 +435,7 @@ defined by the iniailization.</p>
           </td>
           <td class="description_column">
               <p>This is internal auxiliary function for storing the settings
-to the target user table defined by the iniailization.</p>
+to the target user table defined by the initialization.</p>
           </td>
       </tr><tr>
           <td>
@@ -585,7 +585,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#94'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#95'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -602,7 +602,7 @@ manager is intialized correctly.</p>
   
   <h1>Property: UserSettingsManager::$dbworker</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>;</div>
 
   
   <div class="short-description">
@@ -615,7 +615,7 @@ manager is intialized correctly.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>
+  ?\DatabaseWorkers\DBWorker
   </div>
   
 
@@ -635,7 +635,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#54'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#55'>SmartFactory/UserSettingsManager.php</a>
   </div><hr id="$multichoice_tables">
   
   <h1>Property: UserSettingsManager::$multichoice_tables</h1>
@@ -673,16 +673,16 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#82'>SmartFactory/UserSettingsManager.php</a>
-  </div><hr id="$no_own_transcation">
+  <a href='source-SmartFactory.UserSettingsManager.php.html#83'>SmartFactory/UserSettingsManager.php</a>
+  </div><hr id="$no_own_transaction">
   
-  <h1>Property: UserSettingsManager::$no_own_transcation</h1>
+  <h1>Property: UserSettingsManager::$no_own_transaction</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$no_own_transcation</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$no_own_transaction</span> = <span class="php-keyword1">true</span>;</div>
 
   
   <div class="short-description">
-  <p>Internal variable for storing the state whether the transcation should be started or commited or
+  <p>Internal variable for storing the state whether the translation should be started or commited or
 no transaction should be used because the saving process is a part of other saving process.</p>
   </div>
   
@@ -712,7 +712,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#64'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#65'>SmartFactory/UserSettingsManager.php</a>
   </div><hr id="$settings">
   
   <h1>Property: UserSettingsManager::$settings</h1>
@@ -750,7 +750,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#115'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#116'>SmartFactory/UserSettingsManager.php</a>
   </div><hr id="$settings_tables">
   
   <h1>Property: UserSettingsManager::$settings_tables</h1>
@@ -788,7 +788,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#73'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#74'>SmartFactory/UserSettingsManager.php</a>
   </div><hr id="$user_id">
   
   <h1>Property: UserSettingsManager::$user_id</h1>
@@ -826,7 +826,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#45'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#46'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -840,7 +840,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h1>Property: UserSettingsManager::$validator</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> \SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?\SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -853,7 +853,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h2>Type</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a>
+  ?\SmartFactory\Interfaces\ISettingsValidator
   </div>
   
 
@@ -873,7 +873,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#106'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#107'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -892,7 +892,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h1>Method: UserSettingsManager::getContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext(): string;</div>
 
   
   <div class="short-description">
@@ -923,8 +923,7 @@ db_connection_settings etc.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the current settings context.
-Returns the current settings context.</p></div>
+  <div class="item_description"><p>Returns the current settings context.</p></div>
   
   </div>
   
@@ -952,7 +951,7 @@ Returns the current settings context.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#658'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#662'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -980,7 +979,7 @@ Returns the current settings context.</p></div>
   
   <h1>Method: UserSettingsManager::getParameter()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$default</span> = <span class="php-keyword1">null</span>) : mixed;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getParameter(string <span class="php-var">$name</span>, mixed|<span class="php-keyword1">null</span> <span class="php-var">$default</span> = <span class="php-keyword1">null</span>): mixed;</div>
 
   
   <div class="short-description">
@@ -1018,8 +1017,7 @@ Returns the current settings context.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The name of the settings parameter.
-The name of the settings parameter.</p>
+                <p>The name of the settings parameter.</p>
             </td>
         </tr>
         
@@ -1031,15 +1029,14 @@ The name of the settings parameter.</p>
                 by value
             </td>
             <td>
-                mixed
+                mixed|null
             </td>
             <td>
                 null
             </td>
             <td class="description_column">
                 <p>The default value of the settings parameter if it is not set yet.
-The parameter is a confortable way to pre-set a parameter
-to a default value if its value is not set yet.
+The parameter is a conformable way to pre-set a parameter
 to a default value if its value is not set yet.</p>
             </td>
         </tr>
@@ -1052,8 +1049,7 @@ to a default value if its value is not set yet.</p>
   <div class="item_list">
   mixed<br>
   
-  <div class="item_description"><p>Returns the value of the settings parameter.
-Returns the value of the settings parameter.</p></div>
+  <div class="item_description"><p>Returns the value of the settings parameter.</p></div>
   
   </div>
   
@@ -1095,7 +1091,7 @@ Returns the value of the settings parameter.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#766'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#770'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1126,7 +1122,7 @@ Returns the value of the settings parameter.</p></div>
   
   <h1>Method: UserSettingsManager::getUserID()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getUserID() : int|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getUserID(): int|string|<span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -1143,10 +1139,9 @@ Returns the value of the settings parameter.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  int|null<br>
+  int|string|null<br>
   
-  <div class="item_description"><p>Returns the user id or null if not set.
-Returns the user id or null if not set.</p></div>
+  <div class="item_description"><p>Returns the user id or null if not set.</p></div>
   
   </div>
   
@@ -1169,7 +1164,7 @@ Returns the user id or null if not set.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#885'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#890'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1197,7 +1192,7 @@ Returns the user id or null if not set.</p></div>
   
   <h1>Method: UserSettingsManager::getValidator()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getValidator() : \SmartFactory\Interfaces\ISettingsValidator|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getValidator(): ?\SmartFactory\Interfaces\ISettingsValidator;</div>
 
   
   <div class="short-description">
@@ -1214,10 +1209,9 @@ Returns the user id or null if not set.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.ISettingsValidator.html'>\SmartFactory\Interfaces\ISettingsValidator</a>|null<br>
+  ?\SmartFactory\Interfaces\ISettingsValidator<br>
   
-  <div class="item_description"><p>Returns the validator for the settings or null if none is defined.
-Returns the validator for the settings or null if none is defined.</p></div>
+  <div class="item_description"><p>Returns the validator for the settings or null if none is defined.</p></div>
   
   </div>
   
@@ -1245,7 +1239,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#608'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#612'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1276,7 +1270,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h1>Method: UserSettingsManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
@@ -1316,9 +1310,9 @@ Returns the validator for the settings or null if none is defined.</p></div>
             <td class="description_column">
                 <p>Settings for saving and loading as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>$parameters[&quot;dbworker&quot;] - the dbworker to use for loading and storing settings.</li>
-<li>$parameters[&quot;settings_tables&quot;] - the definitions of the settings tables.</li>
-<li>$parameters[&quot;multichoice_tables&quot;] - the definitions of the auxiliary tables for the multichoice values.</li>
+<li>$parameters["dbworker"] - the dbworker to use for loading and storing settings.</li>
+<li>$parameters["settings_tables"] - the definitions of the settings tables.</li>
+<li>$parameters["multichoice_tables"] - the definitions of the auxiliary tables for the multichoice values.</li>
 </ul>
 <p>Example:</p>
 <pre><code class="language-php">  <span class="php-var">$instance</span>-&gt;init([
@@ -1346,7 +1340,6 @@ Returns the validator for the settings or null if none is defined.</p></div>
                ]
           ]
   ]);</code></pre>
-<pre><code></code></pre>
             </td>
         </tr>
         
@@ -1402,7 +1395,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#520'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#521'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1424,7 +1417,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h1>Method: UserSettingsManager::loadSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings(): void;</div>
 
   
   <div class="short-description">
@@ -1488,7 +1481,7 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#824'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#829'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1516,12 +1509,12 @@ Returns the validator for the settings or null if none is defined.</p></div>
   
   <h1>Method: UserSettingsManager::loadSettingsData()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): void;</div>
 
   
   <div class="short-description">
   <p>This is internal auxiliary function for loading the settings from the target user table
-defined by the iniailization.</p>
+defined by the initialization.</p>
   </div>
   
 
@@ -1555,8 +1548,7 @@ defined by the iniailization.</p>
                 
             </td>
             <td class="description_column">
-                <p>The target array with the settings values to be loaded.
-The target array with the settings values to be loaded.</p>
+                <p>The target array with the settings values to be loaded.</p>
             </td>
         </tr>
         
@@ -1604,7 +1596,7 @@ The target array with the settings values to be loaded.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#380'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#381'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1632,7 +1624,7 @@ The target array with the settings values to be loaded.</p>
   
   <h1>Method: UserSettingsManager::saveSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings(): void;</div>
 
   
   <div class="short-description">
@@ -1657,7 +1649,7 @@ The target array with the settings values to be loaded.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  \Exception|\Throwable<br>
   
   <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
 <ul>
@@ -1691,7 +1683,7 @@ The target array with the settings values to be loaded.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#846'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#851'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1719,12 +1711,12 @@ The target array with the settings values to be loaded.</p>
   
   <h1>Method: UserSettingsManager::saveSettingsData()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveSettingsData(<span class="php-keyword1">array</span> <span class="php-var">$data</span>): void;</div>
 
   
   <div class="short-description">
   <p>This is internal auxiliary function for storing the settings
-to the target user table defined by the iniailization.</p>
+to the target user table defined by the initialization.</p>
   </div>
   
 
@@ -1749,7 +1741,7 @@ to the target user table defined by the iniailization.</p>
                 $data
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -1758,8 +1750,7 @@ to the target user table defined by the iniailization.</p>
                 
             </td>
             <td class="description_column">
-                <p>The array with the settings values to be saved.
-The array with the settings values to be saved.</p>
+                <p>The array with the settings values to be saved.</p>
             </td>
         </tr>
         
@@ -1807,7 +1798,7 @@ The array with the settings values to be saved.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#177'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#178'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1835,7 +1826,7 @@ The array with the settings values to be saved.</p>
   
   <h1>Method: UserSettingsManager::setContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): void;</div>
 
   
   <div class="short-description">
@@ -1885,8 +1876,7 @@ db_connection_settings etc.</p>
                 &quot;default&quot;
             </td>
             <td class="description_column">
-                <p>The settings context.
-The settings context.</p>
+                <p>The settings context.</p>
             </td>
         </tr>
         
@@ -1924,7 +1914,7 @@ The settings context.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#634'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#638'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -1952,7 +1942,7 @@ The settings context.</p>
   
   <h1>Method: UserSettingsManager::setDBWorker()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(\SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>, bool <span class="php-var">$no_own_transcation</span> = <span class="php-keyword1">false</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(\SmartFactory\DatabaseWorkers\DBWorker <span class="php-var">$dbworker</span>, bool <span class="php-var">$no_own_transcation</span> = <span class="php-keyword1">false</span>): void;</div>
 
   
   <div class="short-description">
@@ -1990,8 +1980,7 @@ The settings context.</p>
                 
             </td>
             <td class="description_column">
-                <p>The dbworker to be used for loading and storing settings.
-The dbworker to be used for loading and storing settings.</p>
+                <p>The dbworker to be used for loading and storing settings.</p>
             </td>
         </tr>
         
@@ -2009,8 +1998,7 @@ The dbworker to be used for loading and storing settings.</p>
                 false
             </td>
             <td class="description_column">
-                <p>The state whether the transcation should be started or commited or
-no transaction should be used because the saving process is a part of other saving process.
+                <p>The state whether the translation should be started or commited or
 no transaction should be used because the saving process is a part of other saving process.</p>
             </td>
         </tr>
@@ -2026,7 +2014,15 @@ no transaction should be used because the saving process is a part of other savi
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
 
@@ -2044,7 +2040,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#565'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#569'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2072,7 +2068,7 @@ no transaction should be used because the saving process is a part of other savi
   
   <h1>Method: UserSettingsManager::setParameter()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$value</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameter(string <span class="php-var">$name</span>, mixed <span class="php-var">$value</span>): void;</div>
 
   
   <div class="short-description">
@@ -2110,8 +2106,7 @@ no transaction should be used because the saving process is a part of other savi
                 
             </td>
             <td class="description_column">
-                <p>The name of the settings parameter.
-The name of the settings parameter.</p>
+                <p>The name of the settings parameter.</p>
             </td>
         </tr>
         
@@ -2129,8 +2124,7 @@ The name of the settings parameter.</p>
                 
             </td>
             <td class="description_column">
-                <p>The value of the settings parameter.
-The value of the settings parameter.</p>
+                <p>The value of the settings parameter.</p>
             </td>
         </tr>
         
@@ -2182,7 +2176,7 @@ The value of the settings parameter.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#687'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#691'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2213,7 +2207,7 @@ The value of the settings parameter.</p>
   
   <h1>Method: UserSettingsManager::setParameters()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameters(<span class="php-keyword1">array</span> &amp;<span class="php-var">$parameters</span>, bool <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameters(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>): void;</div>
 
   
   <div class="short-description">
@@ -2242,7 +2236,7 @@ The value of the settings parameter.</p>
                 $parameters
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -2251,8 +2245,7 @@ The value of the settings parameter.</p>
                 
             </td>
             <td class="description_column">
-                <p>Array of parameters in the form key =&gt; value.
-Array of parameters in the form key =&gt; value.</p>
+                <p>Array of parameters in the form key =&gt; value.</p>
             </td>
         </tr>
         
@@ -2272,9 +2265,8 @@ Array of parameters in the form key =&gt; value.</p>
             <td class="description_column">
                 <p>Flag which defines whether the parameter should be created
 if not exists. If false, only existing parameters are updated.
-In the UserSettingsManager, this pflag is ignored, because
-the paramters are mapped to the database fields and cannot be created
-on the fly.
+In the UserSettingsManager, this flag is ignored, because
+the parameters are mapped to the database fields and cannot be created
 on the fly.</p>
             </td>
         </tr>
@@ -2327,7 +2319,7 @@ on the fly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#724'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#728'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2358,7 +2350,7 @@ on the fly.</p>
   
   <h1>Method: UserSettingsManager::setUserID()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setUserID(string <span class="php-var">$user_id</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setUserID(string <span class="php-var">$user_id</span>): void;</div>
 
   
   <div class="short-description">
@@ -2401,8 +2393,7 @@ on the fly.</p>
                 
             </td>
             <td class="description_column">
-                <p>The user ID.
-The user ID.</p>
+                <p>The user ID.</p>
             </td>
         </tr>
         
@@ -2435,7 +2426,7 @@ The user ID.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#870'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#875'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2466,7 +2457,7 @@ The user ID.</p>
   
   <h1>Method: UserSettingsManager::setValidator()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setValidator(\SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setValidator(\SmartFactory\Interfaces\ISettingsValidator <span class="php-var">$validator</span>): void;</div>
 
   
   <div class="short-description">
@@ -2504,8 +2495,7 @@ The user ID.</p>
                 
             </td>
             <td class="description_column">
-                <p>The settings validator.
-The settings validator.</p>
+                <p>The settings validator.</p>
             </td>
         </tr>
         
@@ -2543,7 +2533,7 @@ The settings validator.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#592'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#596'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2574,7 +2564,7 @@ The settings validator.</p>
   
   <h1>Method: UserSettingsManager::validateParameters()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters() : void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters(): void;</div>
 
   
   <div class="short-description">
@@ -2628,7 +2618,7 @@ manager is intialized correctly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#132'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#133'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2650,7 +2640,7 @@ manager is intialized correctly.</p>
   
   <h1>Method: UserSettingsManager::validateSettings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateSettings() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateSettings(): void;</div>
 
   
   <div class="short-description">
@@ -2673,16 +2663,20 @@ and before their saving.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if there is no validator defined, otherwise lets
-the validator validate the settings.
-the validator validate the settings.</p></div>
+  void<br>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -2705,7 +2699,7 @@ the validator validate the settings.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.UserSettingsManager.php.html#796'>SmartFactory/UserSettingsManager.php</a>
+  <a href='source-SmartFactory.UserSettingsManager.php.html#801'>SmartFactory/UserSettingsManager.php</a>
   </div>
   
 
@@ -2731,7 +2725,7 @@ the validator validate the settings.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

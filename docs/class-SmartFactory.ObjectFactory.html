@@ -194,7 +194,7 @@ for binding of class implementations to the interfaces and for creation of objec
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal array for storing the mapping betwen interfaces/classes and the bound classes.</p>
+              <p>Internal array for storing the mapping between interfaces/classes and the bound classes.</p>
           </td>
       </tr><tr>
           <td>
@@ -219,6 +219,19 @@ for binding of class implementations to the interfaces and for creation of objec
       <tr>
           <td>
               <div style='float:left'><a href="#bindClass">bindClass()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Binds a class to an interface or a parent class.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#bindClassContext">bindClassContext()</a></div>
 
               <div style='float:right'>
               <span class="label label-primary">static</span>
@@ -256,7 +269,7 @@ for binding of class implementations to the interfaces and for creation of objec
 
   
   <div class="short-description">
-  <p>Internal array for storing the mapping betwen interfaces/classes and the bound classes.</p>
+  <p>Internal array for storing the mapping between interfaces/classes and the bound classes.</p>
   </div>
   
 
@@ -330,9 +343,9 @@ for binding of class implementations to the interfaces and for creation of objec
   
   <h1>Method: ObjectFactory::bindClass()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> bindClass(string|object <span class="php-var">$interface_or_class</span>, 
-                                 string|object <span class="php-var">$class</span>, 
-                                 <span class="php-keyword1">callable</span> <span class="php-var">$init_function</span> = <span class="php-keyword1">null</span>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> bindClass(object|string <span class="php-var">$interface_or_class</span>, 
+                                 object|string <span class="php-var">$class</span>, 
+                                 ?<span class="php-keyword1">callable</span> <span class="php-var">$init_function</span> = <span class="php-keyword1">null</span>
                                 ) : void;
 </div>
 
@@ -346,11 +359,11 @@ for binding of class implementations to the interfaces and for creation of objec
   <div class="long_description">
   <h2>Details</h2>
   <p>The key point of this approach is the definition common interfaces
-and implementation of them in classes. When an object that supoorts an
+and implementation of them in classes. When an object that supports an
 interface is requested, an instance of the corresponding bound class
 is created. When you want to change the class, you need just bind
 the new class to the interface.</p>
-<p>You can also bind a class to itself and reqest it by own name in factory
+<p>You can also bind a class to itself and request it by own name in factory
 method. And later, you can implement a derived class and change the binding
 without affecting the code in the business logic.</p>
   </div>
@@ -378,14 +391,13 @@ without affecting the code in the business logic.</p>
                 by value
             </td>
             <td>
-                string|object
+                object|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Name of the class/interface as string or the class/interface.
-Name of the class/interface as string or the class/interface.</p>
+                <p>Name of the class/interface as string or the class/interface.</p>
             </td>
         </tr>
         
@@ -397,14 +409,13 @@ Name of the class/interface as string or the class/interface.</p>
                 by value
             </td>
             <td>
-                string|object
+                object|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The class which instance should be created if the object is requested.
-The class which instance should be created if the object is requested.</p>
+                <p>The class which instance should be created if the object is requested.</p>
             </td>
         </tr>
         
@@ -416,14 +427,14 @@ The class which instance should be created if the object is requested.</p>
                 by value
             </td>
             <td>
-                callable
+                ?callable
             </td>
             <td>
                 null
             </td>
             <td class="description_column">
                 <p>The optional initialization function. You can provide it to do some
-custom intialization. The signature of
+custom initialization. The signature of
 this function is:</p>
 <pre><code class="language-php"><span class="php-keyword1">function</span> (object <span class="php-var">$instance</span>) : void;</code></pre>
 <ul>
@@ -437,7 +448,6 @@ this function is:</p>
 ObjectFactory::bindClass(IRecordsetManager::<span class="php-keyword1">class</span>, RecordsetManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
   <span class="php-var">$instance</span>-&gt;setDBWorker(dbworker());
 });</code></pre>
-<pre><code></code></pre>
             </td>
         </tr>
         
@@ -504,11 +514,210 @@ ObjectFactory::bindClass(IRecordsetManager::<span class="php-keyword1">class</sp
 
   
 
+  <hr id="bindClassContext">
+  
+  <h1>Method: ObjectFactory::bindClassContext()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> bindClassContext(string <span class="php-var">$context</span>, 
+                                        object|string <span class="php-var">$interface_or_class</span>, 
+                                        object|string <span class="php-var">$class</span>, 
+                                        ?<span class="php-keyword1">callable</span> <span class="php-var">$init_function</span> = <span class="php-keyword1">null</span>
+                                       ) : void;
+</div>
+
+  
+  <div class="short-description">
+  <p>Binds a class to an interface or a parent class.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The key point of this approach is the definition common interfaces
+and implementation of them in classes. When an object that supports an
+interface is requested, an instance of the corresponding bound class
+is created. When you want to change the class, you need just bind
+the new class to the interface.</p>
+<p>You can also bind a class to itself and request it by own name in factory
+method. And later, you can implement a derived class and change the binding
+without affecting the code in the business logic.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The context of binding. You can introduce a different context, and bind another implementation.
+Then, you can request another instance specifying the context explicitly.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $interface_or_class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                object|string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Name of the class/interface as string or the class/interface.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                object|string
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The class which instance should be created if the object is requested.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $init_function
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                ?callable
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>The optional initialization function. You can provide it to do some
+custom initialization. The signature of
+this function is:</p>
+<pre><code class="language-php"><span class="php-keyword1">function</span> (object <span class="php-var">$instance</span>) : void;</code></pre>
+<ul>
+<li>$instance - the created instance.</li>
+</ul>
+<p>Example:</p>
+<pre><code class="language-php">ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</span>, ILanguageManager::<span class="php-keyword1">class</span>, LanguageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
+  <span class="php-var">$instance</span>-&gt;detectLanguage();
+});
+
+ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</span>, IRecordsetManager::<span class="php-keyword1">class</span>, RecordsetManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
+  <span class="php-var">$instance</span>-&gt;setDBWorker(dbworker());
+});</code></pre>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
+<ul>
+<li>if the interface or bound class is not specified.</li>
+<li>if the interface or class does not exist.</li>
+<li>if the bound class is empty.</li>
+<li>if the bound class does not implement the corresponding interface.</li>
+<li>if the bound class is not instantiable.</li>
+<li>if the check of the classes and interfaces fails.</li>
+</ul></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.ObjectFactory.php.html#162'>SmartFactory/ObjectFactory.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
   <hr id="getInstance">
   
   <h1>Method: ObjectFactory::getInstance()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getInstance(string|object <span class="php-var">$interface_or_class</span>, bool <span class="php-var">$singleton</span>) : object;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getInstance(object|string <span class="php-var">$interface_or_class</span>, 
+                                   bool <span class="php-var">$singleton</span>, 
+                                   string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>
+                                  ) : object;
+</div>
 
   
   <div class="short-description">
@@ -540,14 +749,13 @@ ObjectFactory::bindClass(IRecordsetManager::<span class="php-keyword1">class</sp
                 by value
             </td>
             <td>
-                string|object
+                object|string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Name of the class/interface which instance should be created.
-Name of the class/interface which instance should be created.</p>
+                <p>Name of the class/interface which instance should be created.</p>
             </td>
         </tr>
         
@@ -569,9 +777,25 @@ Name of the class/interface which instance should be created.</p>
 The singleton is a usual patter for the action objects like SessionManager, EventManager,
 DBWorker etc. It makes no sense to produce many instances of such classes,
 it wastes the computer resources and might cause errors.</p>
-<p>If the parameter is false, then, by each request, a new object is created. If you request
-data objects like User, a separate instance must be created for each item.
-data objects like User, a separate instance must be created for each item.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                string
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>The context of binding. You can introduce a different context, and bind another implementation.
+Then, you can request another instance specifying the context explicitly.</p>
             </td>
         </tr>
         
@@ -583,8 +807,7 @@ data objects like User, a separate instance must be created for each item.</p>
   <div class="item_list">
   object<br>
   
-  <div class="item_description"><p>Returns object of the class bound to the interface.
-Returns object of the class bound to the interface.</p></div>
+  <div class="item_description"><p>Returns object of the class bound to the interface.</p></div>
   
   </div>
   
@@ -620,11 +843,11 @@ Returns object of the class bound to the interface.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ObjectFactory.php.html#170'>SmartFactory/ObjectFactory.php</a>
+  <a href='source-SmartFactory.ObjectFactory.php.html#236'>SmartFactory/ObjectFactory.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

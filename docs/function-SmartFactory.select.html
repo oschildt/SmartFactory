@@ -107,7 +107,7 @@
                 <div class="col-md-12">
                     <h1>Function: select()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> select(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>) : string|<span class="php-keyword1">null</span>;</div>
+<div class="definition"><span class="php-keyword1">function</span> select(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>;</div>
 
 
 <div class="short-description">
@@ -154,20 +154,20 @@ the request variable with the corresponding name.</p>
               <p>The array of parameters as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters[&quot;id&quot;] - id of the field.</p>
+<p>$parameters["id"] - id of the field.</p>
 </li>
 <li>
-<p>$parameters[&quot;name&quot;] - name of the field.</p>
+<p>$parameters["name"] - name of the field.</p>
 </li>
 <li>
-<p>$parameters[&quot;value&quot;] - value that should be set for the field. If it is not specified,
+<p>$parameters["value"] - value that should be set for the field. If it is not specified,
 the value of the corresponding request variable is taken.</p>
 </li>
 <li>
-<p>$parameters[&quot;options&quot;] - an associative array of list options in the form &quot;option value&quot; =&gt; &quot;option text&quot;.</p>
+<p>$parameters["options"] - an associative array of list options in the form "option value" =&gt; "option text".</p>
 </li>
 <li>
-<p>$parameters[&quot;multiple&quot;] - set this key &quot;multiple&quot; =&gt; &quot;multiple&quot; if the list should support multichoice.</p>
+<p>$parameters["multiple"] - set this key "multiple" =&gt; "multiple" if the list should support multichoice.</p>
 </li>
 </ul>
 <p>Any other attributes may be specified.</p>
@@ -191,7 +191,6 @@ select([<span class="php-quote">&quot;id&quot;</span> =&gt; <span class="php-quo
         <span class="php-quote">&quot;data-prop&quot;</span> =&gt; <span class="php-quote">&quot;some-prop&quot;</span>,
         <span class="php-quote">&quot;options&quot;</span> =&gt; <span class="php-var">$options</span>
        ]);</code></pre>
-<pre><code></code></pre>
           </td>
       </tr>
       
@@ -211,7 +210,6 @@ select([<span class="php-quote">&quot;id&quot;</span> =&gt; <span class="php-quo
           <td class="description_column">
               <p>If the value of $echo is true, the html code of the field is directly echoed.
 Otherwise it is returned as string. It might be useful to pass this code to
-other rendering functions instead of echoing.
 other rendering functions instead of echoing.</p>
           </td>
       </tr>
@@ -225,7 +223,6 @@ other rendering functions instead of echoing.</p>
 string|null<br>
 
 <div class="item_description"><p>If the paramter $echo is true, the string of the field html
-code is returned, otherwise null.
 code is returned, otherwise null.</p></div>
 
 </div>
@@ -282,7 +279,7 @@ code is returned, otherwise null.</p></div>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

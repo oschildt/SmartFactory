@@ -228,7 +228,7 @@ It ensures that only one connection to a shard is used within a request.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal array for storing the mapping betwen shard names and connection parameters.</p>
+              <p>Internal array for storing the mapping between shard names and connection parameters.</p>
           </td>
       </tr>
       
@@ -329,7 +329,7 @@ for load balancing reason.</p>
 
   
   <div class="short-description">
-  <p>Internal array for storing the mapping betwen shard names and connection parameters.</p>
+  <p>Internal array for storing the mapping between shard names and connection parameters.</p>
   </div>
   
 
@@ -365,7 +365,7 @@ for load balancing reason.</p>
   
   <h1>Method: ShardManager::dbshard()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> dbshard(string <span class="php-var">$shard_name</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> dbshard(string <span class="php-var">$shard_name</span>): ?\SmartFactory\DatabaseWorkers\DBWorker;</div>
 
   
   <div class="short-description">
@@ -411,8 +411,7 @@ If the user passes the parameters explicitly, a new instance of the DBWorker is 
                 
             </td>
             <td class="description_column">
-                <p>The name of the shard.
-The name of the shard.</p>
+                <p>The name of the shard.</p>
             </td>
         </tr>
         
@@ -422,10 +421,9 @@ The name of the shard.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>|null<br>
+  ?\SmartFactory\DatabaseWorkers\DBWorker<br>
   
-  <div class="item_description"><p>returns DBWorker object or null if the object could not be created.
-returns DBWorker object or null if the object could not be created.</p></div>
+  <div class="item_description"><p>returns DBWorker object or null if the object could not be created.</p></div>
   
   </div>
   
@@ -444,7 +442,7 @@ returns DBWorker object or null if the object could not be created.</p></div>
 <li>db_missing_type_error - if the database type is not specified.</li>
 <li>db_conn_data_error - if the connection parameters are incomplete.</li>
 <li>db_server_conn_error - if the database server cannot be connected.</li>
-<li>db_not_exists_error - if database does not exist od inaccesible to the user.</li>
+<li>db_not_exists_error - if database does not exist od inaccessible to the user.</li>
 </ul></div>
   
   
@@ -493,7 +491,7 @@ returns DBWorker object or null if the object could not be created.</p></div>
   
   <h1>Method: ShardManager::randomDBShard()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> randomDBShard(string <span class="php-var">$load_balancing_group</span>) : \SmartFactory\DatabaseWorkers\DBWorker|<span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> randomDBShard(string <span class="php-var">$load_balancing_group</span>): ?\SmartFactory\DatabaseWorkers\DBWorker;</div>
 
   
   <div class="short-description">
@@ -532,8 +530,7 @@ for load balancing reason.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the load balancing group, from which the shard should be randomly picked.
-The name of the load balancing group, from which the shard should be randomly picked.</p>
+                <p>The name of the load balancing group, from which the shard should be randomly picked.</p>
             </td>
         </tr>
         
@@ -543,10 +540,9 @@ The name of the load balancing group, from which the shard should be randomly pi
   
   <h2>Returns</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a>|null<br>
+  ?\SmartFactory\DatabaseWorkers\DBWorker<br>
   
-  <div class="item_description"><p>returns DBWorker object or null if the object could not be created.
-returns DBWorker object or null if the object could not be created.</p></div>
+  <div class="item_description"><p>returns DBWorker object or null if the object could not be created.</p></div>
   
   </div>
   
@@ -587,7 +583,7 @@ returns DBWorker object or null if the object could not be created.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.ShardManager.php.html#172'>SmartFactory/DatabaseWorkers/ShardManager.php</a>
+  <a href='source-SmartFactory.DatabaseWorkers.ShardManager.php.html#171'>SmartFactory/DatabaseWorkers/ShardManager.php</a>
   </div>
   
 
@@ -609,7 +605,7 @@ returns DBWorker object or null if the object could not be created.</p></div>
   
   <h1>Method: ShardManager::registerShard()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerShard(string <span class="php-var">$shard_name</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, string <span class="php-var">$load_balancing_group</span> = <span class="php-quote">&quot;&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerShard(string <span class="php-var">$shard_name</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, string <span class="php-var">$load_balancing_group</span> = <span class="php-quote">&quot;&quot;</span>): bool;</div>
 
   
   <div class="short-description">
@@ -647,8 +643,7 @@ returns DBWorker object or null if the object could not be created.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Unique shard name.
-Unique shard name.</p>
+                <p>Unique shard name.</p>
             </td>
         </tr>
         
@@ -668,14 +663,13 @@ Unique shard name.</p>
             <td class="description_column">
                 <p>The connection parameters to the shard as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>$parameters[&quot;db_type&quot;] - type of the database (MySQL or MSSQL)</li>
-<li>$parameters[&quot;db_server&quot;] - server address</li>
-<li>$parameters[&quot;db_name&quot;] - database name</li>
-<li>$parameters[&quot;db_user&quot;] - user name</li>
-<li>$parameters[&quot;db_password&quot;] - user password</li>
-<li>$parameters[&quot;autoconnect&quot;] - should true if the connection should be established automatically upon creation.</li>
-<li>$parameters[&quot;read_only&quot;] - this paramter sets the connection to the read only mode.</li>
-<li>$parameters[&quot;read_only&quot;] - this paramter sets the connection to the read only mode.</li>
+<li>$parameters["db_type"] - type of the database (MySQL or MSSQL)</li>
+<li>$parameters["db_server"] - server address</li>
+<li>$parameters["db_name"] - database name</li>
+<li>$parameters["db_user"] - user name</li>
+<li>$parameters["db_password"] - user password</li>
+<li>$parameters["autoconnect"] - should true if the connection should be established automatically upon creation.</li>
+<li>$parameters["read_only"] - this parameter sets the connection to the read only mode.</li>
 </ul>
             </td>
         </tr>
@@ -694,8 +688,7 @@ Unique shard name.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The name of the load balancing group, if the shard should be part of it, <a href='class-SmartFactory.DatabaseWorkers.ShardManager.html#randomDBShard'>\SmartFactory\DatabaseWorkers\ShardManager::randomDBShard()</a>.
-The name of the load balancing group, if the shard should be part of it, <a href='class-SmartFactory.DatabaseWorkers.ShardManager.html#randomDBShard'>\SmartFactory\DatabaseWorkers\ShardManager::randomDBShard()</a>.</p>
+                <p>The name of the load balancing group, if the shard should be part of it, <a href='class-SmartFactory.DatabaseWorkers.ShardManager.html#randomDBShard'>\SmartFactory\DatabaseWorkers\ShardManager::randomDBShard()</a>.</p>
             </td>
         </tr>
         
@@ -707,8 +700,7 @@ The name of the load balancing group, if the shard should be part of it, <a href
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>It should return true if the registering was successful, otherwise false.
-It should return true if the registering was successful, otherwise false.</p></div>
+  <div class="item_description"><p>It should return true if the registering was successful, otherwise false.</p></div>
   
   </div>
   
@@ -752,7 +744,7 @@ It should return true if the registering was successful, otherwise false.</p></d
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

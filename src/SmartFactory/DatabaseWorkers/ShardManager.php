@@ -33,16 +33,16 @@ class ShardManager implements IShardManager
      *
      * @author Oleg Schildt
      */
-    protected $load_balancing_groups = [];
+    protected array $load_balancing_groups = [];
     
     /**
-     * Internal array for storing the mapping betwen shard names and connection parameters.
+     * Internal array for storing the mapping between shard names and connection parameters.
      *
      * @var array
      *
      * @author Oleg Schildt
      */
-    protected $shard_table = [];
+    protected array $shard_table = [];
     
     /**
      * Registers a new shard.
@@ -59,12 +59,12 @@ class ShardManager implements IShardManager
      * - $parameters["db_user"] - user name
      * - $parameters["db_password"] - user password
      * - $parameters["autoconnect"] - should true if the connection should be established automatically upon creation.
-     * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
+     * - $parameters["read_only"] - this parameter sets the connection to the read only mode.
      *
      * @param string $load_balancing_group
      * The name of the load balancing group, if the shard should be part of it, {@see ShardManager::randomDBShard()}.
      *
-     * @return boolean
+     * @return bool
      * It should return true if the registering was successful, otherwise false.
      *
      * @throws \Exception
@@ -75,7 +75,7 @@ class ShardManager implements IShardManager
      *
      * @author Oleg Schildt
      */
-    public function registerShard($shard_name, $parameters, $load_balancing_group = "")
+    public function registerShard(string $shard_name, array $parameters, string $load_balancing_group = ""): bool
     {
         if (empty($shard_name)) {
             throw new \Exception("The shard name is not specified!");
@@ -106,7 +106,7 @@ class ShardManager implements IShardManager
      * @param string $shard_name
      * The name of the shard.
      *
-     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+     * @return ?\SmartFactory\DatabaseWorkers\DBWorker
      * returns DBWorker object or null if the object could not be created.
      *
      * @throws \Exception
@@ -119,15 +119,14 @@ class ShardManager implements IShardManager
      * - db_missing_type_error - if the database type is not specified.
      * - db_conn_data_error - if the connection parameters are incomplete.
      * - db_server_conn_error - if the database server cannot be connected.
-     * - db_not_exists_error - if database does not exist od inaccesible to the user.
+     * - db_not_exists_error - if database does not exist od inaccessible to the user.
      *
      * @author Oleg Schildt
      */
-    public function dbshard($shard_name)
+    public function dbshard(string $shard_name): ?\SmartFactory\DatabaseWorkers\DBWorker
     {
         if (empty($shard_name) || empty($this->shard_table[$shard_name])) {
             throw new \Exception("The shard '$shard_name' was not found!");
-            return null;
         }
         
         // Important!
@@ -157,7 +156,7 @@ class ShardManager implements IShardManager
      * @param string $load_balancing_group
      * The name of the load balancing group, from which the shard should be randomly picked.
      *
-     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+     * @return ?\SmartFactory\DatabaseWorkers\DBWorker
      * returns DBWorker object or null if the object could not be created.
      *
      * @throws \Exception
@@ -169,7 +168,7 @@ class ShardManager implements IShardManager
      *
      * @author Oleg Schildt
      */
-    public function randomDBShard($load_balancing_group)
+    public function randomDBShard(string $load_balancing_group): ?\SmartFactory\DatabaseWorkers\DBWorker
     {
         if (empty($this->load_balancing_groups[$load_balancing_group])) {
             throw new \Exception("The group '$load_balancing_group' was not found!");

@@ -28,7 +28,7 @@ namespace SmartFactory;
  *
  * @author Oleg Schildt
  */
-function reqvar_value($name)
+function reqvar_value(string $name): mixed
 {
     if (empty($name)) {
         return "";
@@ -96,7 +96,7 @@ function reqvar_value($name)
  *
  * @author Oleg Schildt
  */
-function input_text($parameters, $echo = true)
+function input_text(array $parameters, bool $echo = true): string|null
 {
     $val = "";
     
@@ -191,7 +191,7 @@ function input_text($parameters, $echo = true)
  *
  * @author Oleg Schildt
  */
-function input_password($parameters, $echo = true)
+function input_password(array $parameters, bool $echo = true): string|null
 {
     $val = "";
     
@@ -285,7 +285,7 @@ function input_password($parameters, $echo = true)
  *
  * @author Oleg Schildt
  */
-function input_hidden($parameters, $echo = true)
+function input_hidden(array $parameters, bool $echo = true): string|null
 {
     $val = "";
     
@@ -383,7 +383,7 @@ function input_hidden($parameters, $echo = true)
  *
  * @author Oleg Schildt
  */
-function textarea($parameters, $echo = true)
+function textarea(array $parameters, bool $echo = true): string|null
 {
     $val = "";
     
@@ -494,7 +494,7 @@ function textarea($parameters, $echo = true)
  *
  * @author Oleg Schildt
  */
-function select($parameters, $echo = true)
+function select(array $parameters, bool $echo = true): string|null
 {
     $val = "";
     
@@ -613,7 +613,7 @@ function select($parameters, $echo = true)
  *
  * @author Oleg Schildt
  */
-function checkbox($parameters, $echo = true)
+function checkbox(array $parameters, bool $echo = true): string|null
 {
     $val = "";
     
@@ -724,7 +724,7 @@ function checkbox($parameters, $echo = true)
  *
  * @author Oleg Schildt
  */
-function radiobutton($parameters, $echo = true)
+function radiobutton(array $parameters, bool $echo = true): string|null
 {
     $val = "";
     
@@ -871,7 +871,7 @@ function radiobutton($parameters, $echo = true)
  *
  * @author Oleg Schildt
  */
-function table(&$array, $parameters = [], $echo = true)
+function table(array &$array, array $parameters = [], bool $echo = true): string|null
 {
     if (!is_array($array)) {
         trigger_error("An array expected!", E_WARNING);

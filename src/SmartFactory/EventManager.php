@@ -31,7 +31,7 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    protected static $event_table = [];
+    protected static array $event_table = [];
     
     /**
      * Internal array for storing the suspended events.
@@ -44,7 +44,7 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    protected static $suspended_events = [];
+    protected static array $suspended_events = [];
     
     /**
      * Adds the handler of an event.
@@ -64,8 +64,7 @@ class EventManager implements IEventManager
      *
      * - $parameters - parameters passed by the firing of the event.
      *
-     * @return boolean
-     * Returns true if the adding was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
@@ -80,7 +79,7 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    public function addHandler($event, $handler)
+    public function addHandler(string $event, callable $handler): void
     {
         if (empty($event)) {
             throw new \Exception("Event is not specified!");
@@ -93,8 +92,6 @@ class EventManager implements IEventManager
         $f = new \ReflectionFunction($handler);
         
         self::$event_table[$event][$f->__toString()] = $f;
-        
-        return true;
     } // addEvent
     
     /**
@@ -106,8 +103,7 @@ class EventManager implements IEventManager
      * @param callable $handler
      * The name or definition of the handler function.
      *
-     * @return boolean
-     * Returns true if the deletion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
@@ -122,7 +118,7 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    public function deleteHandler($event, $handler)
+    public function deleteHandler(string $event, callable $handler): void
     {
         if (empty($event)) {
             throw new \Exception("Event is not specified!");
@@ -137,8 +133,6 @@ class EventManager implements IEventManager
         if (isset(self::$event_table[$event][$f->__toString()])) {
             unset(self::$event_table[$event][$f->__toString()]);
         }
-        
-        return true;
     } // deleteEvent
     
     /**
@@ -147,8 +141,7 @@ class EventManager implements IEventManager
      * @param string $event
      * Event code.
      *
-     * @return boolean
-     * Returns true if the deletion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
@@ -161,7 +154,7 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    public function deleteHandlers($event)
+    public function deleteHandlers(string $event): void
     {
         if (empty($event)) {
             throw new \Exception("Event is not specified!");
@@ -170,15 +163,13 @@ class EventManager implements IEventManager
         if (isset(self::$event_table[$event])) {
             unset(self::$event_table[$event]);
         }
-        
-        return true;
     } // deleteHandlers
     
     /**
      * Deletes all handlers of all events.
      *
-     * @return boolean
-     * Returns true if the deletion was successfull, otherwise false.
+     * @return void
+     * Returns true if the deletion was successful, otherwise false.
      *
      * @see EventManager::addHandler()
      * @see EventManager::deleteHandler()
@@ -186,11 +177,9 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    public function deleteAllHandlers()
+    public function deleteAllHandlers(): void
     {
         self::$event_table = [];
-        
-        return true;
     } // deleteAllHandlers
     
     /**
@@ -201,8 +190,7 @@ class EventManager implements IEventManager
      * @param string $event
      * Event code.
      *
-     * @return boolean
-     * Returns true if the suspesion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
@@ -214,15 +202,13 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    public function suspendEvent($event)
+    public function suspendEvent(string $event): void
     {
         if (empty($event)) {
             throw new \Exception("Event is not specified!");
         }
         
         self::$suspended_events[$event] = $event;
-        
-        return true;
     } // suspendEvent
     
     /**
@@ -231,8 +217,7 @@ class EventManager implements IEventManager
      * @param string $event
      * Event code.
      *
-     * @return boolean
-     * Returns true if the suspesion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw the following exceptions in the case of any errors:
@@ -244,7 +229,7 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    public function resumeEvent($event)
+    public function resumeEvent(string $event): void
     {
         if (empty($event)) {
             throw new \Exception("Event is not specified!");
@@ -253,26 +238,21 @@ class EventManager implements IEventManager
         if (isset(self::$suspended_events[$event])) {
             unset(self::$suspended_events[$event]);
         }
-        
-        return true;
     } // resumeEvent
     
     /**
      * Resumes all previously suspended events.
      *
-     * @return boolean
-     * Returns true if the suspesion was successfull, otherwise false.
+     * @return void
      *
      * @see EventManager::suspendEvent()
      * @see EventManager::resumeEvent()
      *
      * @author Oleg Schildt
      */
-    public function resumeAllEvents()
+    public function resumeAllEvents(): void
     {
         self::$suspended_events = [];
-        
-        return true;
     } // resumeAllEvents
     
     /**
@@ -295,7 +275,7 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    public function fireEvent($event, $parameters)
+    public function fireEvent(string $event, array $parameters): int
     {
         if (empty($event)) {
             throw new \Exception("Event is not specified!");

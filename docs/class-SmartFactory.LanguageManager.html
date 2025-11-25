@@ -314,19 +314,6 @@
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$trace_missing">$trace_missing</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
-          </td>
-      </tr><tr>
-          <td>
               <div style='float:left'><a href="#$use_apcu">$use_apcu</a></div>
 
               <div style='float:right'>
@@ -363,6 +350,19 @@
           </td>
           <td class="description_column">
               <p>Internal variable for storing the fallback language.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$warn_missing">$warn_missing</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
           </td>
       </tr>
       
@@ -447,7 +447,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Provides the list of countries for the given language in the form &quot;code&quot; =&gt; &quot;translation&quot;.</p>
+              <p>Provides the list of countries for the given language in the form "code" =&gt; "translation".</p>
           </td>
       </tr><tr>
           <td>
@@ -461,7 +461,7 @@
           </td>
           <td class="description_column">
               <p>Provides the text translation for the country name by the code
-for the given langauge.</p>
+for the given language.</p>
           </td>
       </tr><tr>
           <td>
@@ -487,8 +487,8 @@ for the given langauge.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the fallback language. If set and a tranlation
-is missing on a langauge, the translation on this language will be used.</p>
+              <p>Returns the fallback language. If set and a translation
+is missing on a language, the translation on this language will be used.</p>
           </td>
       </tr><tr>
           <td>
@@ -514,7 +514,7 @@ is missing on a langauge, the translation on this language will be used.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Provides the list of languages for the given language in the form &quot;code&quot; =&gt; &quot;translation&quot;.</p>
+              <p>Provides the list of languages for the given language in the form "code" =&gt; "translation".</p>
           </td>
       </tr><tr>
           <td>
@@ -528,7 +528,7 @@ is missing on a langauge, the translation on this language will be used.</p>
           </td>
           <td class="description_column">
               <p>Provides the text translation for the language name by the code
-for the given langauge.</p>
+for the given language.</p>
           </td>
       </tr><tr>
           <td>
@@ -554,7 +554,7 @@ for the given langauge.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether the text translation for the text ID for the given langauge exists.</p>
+              <p>Checks whether the text translation for the text ID for the given language exists.</p>
           </td>
       </tr><tr>
           <td>
@@ -619,7 +619,7 @@ for the given langauge.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Provides the text translation for the text ID for the given langauge.</p>
+              <p>Provides the text translation for the text ID for the given language.</p>
           </td>
       </tr><tr>
           <td>
@@ -632,7 +632,7 @@ for the given langauge.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Provides the text translation for the text ID for the given langauge if the translation exists.</p>
+              <p>Provides the text translation for the text ID for the given language if the translation exists.</p>
           </td>
       </tr><tr>
           <td>
@@ -670,7 +670,7 @@ for the given langauge.</p>
   
   <h1>Property: LanguageManager::$additional_localization_files</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$additional_localization_files</span> = [];</div>
+  <div class="definition"><span class="php-keyword1">protected</span> string|<span class="php-keyword1">array</span> <span class="php-var">$additional_localization_files</span> = [];</div>
 
   
   <div class="short-description">
@@ -683,7 +683,7 @@ for the given langauge.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  string|array
   </div>
   
 
@@ -945,7 +945,7 @@ for the given langauge.</p>
   
   <h1>Property: LanguageManager::$localization_path</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$localization_path</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$localization_path</span> = <span class="php-quote">&quot;&quot;</span>;</div>
 
   
   <div class="short-description">
@@ -1055,44 +1055,6 @@ for the given langauge.</p>
   <h2>Source code</h2>
   <div class="item_list">
   <a href='source-SmartFactory.LanguageManager.php.html#149'>SmartFactory/LanguageManager.php</a>
-  </div><hr id="$trace_missing">
-  
-  <h1>Property: LanguageManager::$trace_missing</h1>
-
-  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$trace_missing</span> = <span class="php-keyword1">false</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  bool
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#104'>SmartFactory/LanguageManager.php</a>
   </div><hr id="$use_apcu">
   
   <h1>Property: LanguageManager::$use_apcu</h1>
@@ -1173,7 +1135,7 @@ for the given langauge.</p>
   
   <h1>Property: LanguageManager::$use_fallback_language</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$use_fallback_language</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$use_fallback_language</span> = <span class="php-quote">&quot;&quot;</span>;</div>
 
   
   <div class="short-description">
@@ -1184,14 +1146,14 @@ for the given langauge.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>If set and a tranlation is missing on a langauge, the translation on this language will be used.</p>
+  <p>If set and a translation is missing on a language, the translation on this language will be used.</p>
   </div>
   
 
   
   <h2>Type</h2>
   <div class="item_list">
-  array
+  string
   </div>
   
 
@@ -1212,13 +1174,51 @@ for the given langauge.</p>
   <h2>Source code</h2>
   <div class="item_list">
   <a href='source-SmartFactory.LanguageManager.php.html#48'>SmartFactory/LanguageManager.php</a>
+  </div><hr id="$warn_missing">
+  
+  <h1>Property: LanguageManager::$warn_missing</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$warn_missing</span> = <span class="php-keyword1">true</span>;</div>
+
+  
+  <div class="short-description">
+  <p>Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  bool
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.LanguageManager.php.html#104'>SmartFactory/LanguageManager.php</a>
   </div>
 
 <hr id="addLocalizationFile">
   
   <h1>Method: LanguageManager::addLocalizationFile()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addLocalizationFile(string <span class="php-var">$localization_file</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addLocalizationFile(string <span class="php-var">$localization_file</span>): void;</div>
 
   
   <div class="short-description">
@@ -1256,8 +1256,7 @@ for the given langauge.</p>
                 
             </td>
             <td class="description_column">
-                <p>The path of the additional localization file.
-The path of the additional localization file.</p>
+                <p>The path of the additional localization file.</p>
             </td>
         </tr>
         
@@ -1325,7 +1324,7 @@ The path of the additional localization file.</p>
   
   <h1>Method: LanguageManager::detectLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detectLanguage() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detectLanguage(): void;</div>
 
   
   <div class="short-description">
@@ -1393,7 +1392,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#435'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#439'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1415,7 +1414,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h1>Method: LanguageManager::extendDictionary()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> extendDictionary(<span class="php-keyword1">array</span> &amp;<span class="php-var">$dictionary</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> extendDictionary(<span class="php-keyword1">array</span> <span class="php-var">$dictionary</span>): void;</div>
 
   
   <div class="short-description">
@@ -1444,7 +1443,7 @@ If you do not need the $context, just do not specify it.</p>
                 $dictionary
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -1453,8 +1452,7 @@ If you do not need the $context, just do not specify it.</p>
                 
             </td>
             <td class="description_column">
-                <p>The array with additional translations.
-The array with additional translations.</p>
+                <p>The array with additional translations.</p>
             </td>
         </tr>
         
@@ -1500,7 +1498,7 @@ The array with additional translations.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#395'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#399'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1522,7 +1520,7 @@ The array with additional translations.</p>
   
   <h1>Method: LanguageManager::getContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext(): string;</div>
 
   
   <div class="short-description">
@@ -1555,8 +1553,7 @@ If you do not need the $context, just do not specify it.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the current context.
-Returns the current context.</p></div>
+  <div class="item_description"><p>Returns the current context.</p></div>
   
   </div>
   
@@ -1584,7 +1581,7 @@ Returns the current context.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#537'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#541'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1612,7 +1609,7 @@ Returns the current context.</p></div>
   
   <h1>Method: LanguageManager::getCountryCode()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryCode(string <span class="php-var">$country_name</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryCode(string <span class="php-var">$country_name</span>): string;</div>
 
   
   <div class="short-description">
@@ -1650,8 +1647,7 @@ Returns the current context.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The name of the country in any supported language.
-The name of the country in any supported language.</p>
+                <p>The name of the country in any supported language.</p>
             </td>
         </tr>
         
@@ -1663,8 +1659,7 @@ The name of the country in any supported language.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the country code if it could be found, otherwise an empty string.
-Returns the country code if it could be found, otherwise an empty string.</p></div>
+  <div class="item_description"><p>Returns the country code if it could be found, otherwise an empty string.</p></div>
   
   </div>
   
@@ -1692,7 +1687,7 @@ Returns the country code if it could be found, otherwise an empty string.</p></d
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#914'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#922'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1729,11 +1724,11 @@ Returns the country code if it could be found, otherwise an empty string.</p></d
   
   <h1>Method: LanguageManager::getCountryList()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$country_list</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$country_list</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []): bool;</div>
 
   
   <div class="short-description">
-  <p>Provides the list of countries for the given language in the form &quot;code&quot; =&gt; &quot;translation&quot;.</p>
+  <p>Provides the list of countries for the given language in the form "code" =&gt; "translation".</p>
   </div>
   
 
@@ -1767,8 +1762,7 @@ Returns the country code if it could be found, otherwise an empty string.</p></d
                 
             </td>
             <td class="description_column">
-                <p>Target array where the country list should be loaded.
-Target array where the country list should be loaded.</p>
+                <p>Target array where the country list should be loaded.</p>
             </td>
         </tr>
         
@@ -1786,9 +1780,8 @@ Target array where the country list should be loaded.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -1806,8 +1799,7 @@ the default langauge is used.</p>
                 []
             </td>
             <td class="description_column">
-                <p>List of the country codes to be displayed first in the order, they appear in the list.
-List of the country codes to be displayed first in the order, they appear in the list.</p>
+                <p>List of the country codes to be displayed first in the order, they appear in the list.</p>
             </td>
         </tr>
         
@@ -1819,8 +1811,7 @@ List of the country codes to be displayed first in the order, they appear in the
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the country list is successfully retrieved, otherwise false.
-Returns true if the country list is successfully retrieved, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the country list is successfully retrieved, otherwise false.</p></div>
   
   </div>
   
@@ -1848,7 +1839,7 @@ Returns true if the country list is successfully retrieved, otherwise false.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#983'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#991'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -1885,12 +1876,12 @@ Returns true if the country list is successfully retrieved, otherwise false.</p>
   
   <h1>Method: LanguageManager::getCountryName()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
 
   
   <div class="short-description">
   <p>Provides the text translation for the country name by the code
-for the given langauge.</p>
+for the given language.</p>
   </div>
   
 
@@ -1924,8 +1915,7 @@ for the given langauge.</p>
                 
             </td>
             <td class="description_column">
-                <p>Country ISO code (uppercase, e.g. US, DE, FR).
-Country ISO code (uppercase, e.g. US, DE, FR).</p>
+                <p>Country ISO code (uppercase, e.g. US, DE, FR).</p>
             </td>
         </tr>
         
@@ -1943,9 +1933,8 @@ Country ISO code (uppercase, e.g. US, DE, FR).</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -1958,7 +1947,6 @@ the default langauge is used.</p>
   string<br>
   
   <div class="item_description"><p>Returns the translation text for the country name or the $code if no translation
-is found.
 is found.</p></div>
   
   </div>
@@ -1987,7 +1975,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#882'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#890'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2024,7 +2012,7 @@ is found.</p></div>
   
   <h1>Method: LanguageManager::getCurrentLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCurrentLanguage() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCurrentLanguage(): string;</div>
 
   
   <div class="short-description">
@@ -2043,8 +2031,7 @@ is found.</p></div>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the current language ISO code.
-Returns the current language ISO code.</p></div>
+  <div class="item_description"><p>Returns the current language ISO code.</p></div>
   
   </div>
   
@@ -2072,7 +2059,7 @@ Returns the current language ISO code.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#606'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#608'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2100,12 +2087,12 @@ Returns the current language ISO code.</p></div>
   
   <h1>Method: LanguageManager::getFallbackLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getFallbackLanguage() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getFallbackLanguage(): string;</div>
 
   
   <div class="short-description">
-  <p>Returns the fallback language. If set and a tranlation
-is missing on a langauge, the translation on this language will be used.</p>
+  <p>Returns the fallback language. If set and a translation
+is missing on a language, the translation on this language will be used.</p>
   </div>
   
 
@@ -2120,8 +2107,7 @@ is missing on a langauge, the translation on this language will be used.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the fallback language.
-Returns the fallback language.</p></div>
+  <div class="item_description"><p>Returns the fallback language.</p></div>
   
   </div>
   
@@ -2149,7 +2135,7 @@ Returns the fallback language.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#591'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#593'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2171,7 +2157,7 @@ Returns the fallback language.</p></div>
   
   <h1>Method: LanguageManager::getLanguageCode()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageCode(string <span class="php-var">$lang_name</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageCode(string <span class="php-var">$lang_name</span>): string;</div>
 
   
   <div class="short-description">
@@ -2209,8 +2195,7 @@ Returns the fallback language.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The name of the language in any supported language.
-The name of the language in any supported language.</p>
+                <p>The name of the language in any supported language.</p>
             </td>
         </tr>
         
@@ -2222,8 +2207,7 @@ The name of the language in any supported language.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the language code if it could be found, otherwise an empty string.
-Returns the language code if it could be found, otherwise an empty string.</p></div>
+  <div class="item_description"><p>Returns the language code if it could be found, otherwise an empty string.</p></div>
   
   </div>
   
@@ -2251,7 +2235,7 @@ Returns the language code if it could be found, otherwise an empty string.</p></
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#770'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#778'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2288,11 +2272,11 @@ Returns the language code if it could be found, otherwise an empty string.</p></
   
   <h1>Method: LanguageManager::getLanguageList()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$language_list</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$language_list</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []): bool;</div>
 
   
   <div class="short-description">
-  <p>Provides the list of languages for the given language in the form &quot;code&quot; =&gt; &quot;translation&quot;.</p>
+  <p>Provides the list of languages for the given language in the form "code" =&gt; "translation".</p>
   </div>
   
 
@@ -2326,8 +2310,7 @@ Returns the language code if it could be found, otherwise an empty string.</p></
                 
             </td>
             <td class="description_column">
-                <p>Target array where the language list should be loaded.
-Target array where the language list should be loaded.</p>
+                <p>Target array where the language list should be loaded.</p>
             </td>
         </tr>
         
@@ -2345,9 +2328,8 @@ Target array where the language list should be loaded.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -2365,8 +2347,7 @@ the default langauge is used.</p>
                 []
             </td>
             <td class="description_column">
-                <p>List of the language codes to be displayed first in the order, they appear in the list.
-List of the language codes to be displayed first in the order, they appear in the list.</p>
+                <p>List of the language codes to be displayed first in the order, they appear in the list.</p>
             </td>
         </tr>
         
@@ -2378,8 +2359,7 @@ List of the language codes to be displayed first in the order, they appear in th
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the langauge list is successfully retrieved, otherwise false.
-Returns true if the langauge list is successfully retrieved, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the language list is successfully retrieved, otherwise false.</p></div>
   
   </div>
   
@@ -2407,7 +2387,7 @@ Returns true if the langauge list is successfully retrieved, otherwise false.</p
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#839'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#847'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2444,12 +2424,12 @@ Returns true if the langauge list is successfully retrieved, otherwise false.</p
   
   <h1>Method: LanguageManager::getLanguageName()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
 
   
   <div class="short-description">
   <p>Provides the text translation for the language name by the code
-for the given langauge.</p>
+for the given language.</p>
   </div>
   
 
@@ -2483,8 +2463,7 @@ for the given langauge.</p>
                 
             </td>
             <td class="description_column">
-                <p>Language ISO code (lowercase, e.g. en, de, fr).
-Language ISO code (lowercase, e.g. en, de, fr).</p>
+                <p>Language ISO code (lowercase, e.g. en, de, fr).</p>
             </td>
         </tr>
         
@@ -2502,9 +2481,8 @@ Language ISO code (lowercase, e.g. en, de, fr).</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -2517,7 +2495,6 @@ the default langauge is used.</p>
   string<br>
   
   <div class="item_description"><p>Returns the translation text for the language name or the $code if no translation
-is found.
 is found.</p></div>
   
   </div>
@@ -2546,7 +2523,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#738'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#746'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2583,7 +2560,7 @@ is found.</p></div>
   
   <h1>Method: LanguageManager::getSupportedLanguages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getSupportedLanguages() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getSupportedLanguages(): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2602,8 +2579,7 @@ is found.</p></div>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the list of supported languages.
-Returns the list of supported languages.</p></div>
+  <div class="item_description"><p>Returns the list of supported languages.</p></div>
   
   </div>
   
@@ -2631,7 +2607,7 @@ Returns the list of supported languages.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#550'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#554'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2653,11 +2629,11 @@ Returns the list of supported languages.</p></div>
   
   <h1>Method: LanguageManager::hasTranslation()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasTranslation(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasTranslation(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): bool;</div>
 
   
   <div class="short-description">
-  <p>Checks whether the text translation for the text ID for the given langauge exists.</p>
+  <p>Checks whether the text translation for the text ID for the given language exists.</p>
   </div>
   
 
@@ -2691,8 +2667,7 @@ Returns the list of supported languages.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Text ID
-Text ID</p>
+                <p>Text ID</p>
             </td>
         </tr>
         
@@ -2710,9 +2685,8 @@ Text ID</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -2724,8 +2698,7 @@ the default langauge is used.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the translation exists, otherwise false.
-Returns true if the translation exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the translation exists, otherwise false.</p></div>
   
   </div>
   
@@ -2753,7 +2726,7 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#707'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#715'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -2775,7 +2748,7 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h1>Method: LanguageManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
@@ -2816,25 +2789,22 @@ Returns true if the translation exists, otherwise false.</p></div>
                 <p>Settings for logging as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters[&quot;localization_path&quot;] - the path where the localization files are stored.</p>
+<p>$parameters["localization_path"] - the path where the localization files are stored.</p>
 </li>
 <li>
-<p>$parameters[&quot;use_cookie&quot;] - if set to true, the last selected language is stored to cookie.</p>
+<p>$parameters["use_cookie"] - if set to true, the last selected language is stored to cookie.</p>
 </li>
 <li>
-<p>$parameters[&quot;use_fallback_language&quot;] - if set and a tranlation is missing on a langauge, the translation on this language will be used.</p>
+<p>$parameters["use_fallback_language"] - if set and a translation is missing on a language, the translation on this language will be used.</p>
 </li>
 <li>
-<p>$parameters[&quot;cookie_path&quot;] - Cookie path.</p>
+<p>$parameters["cookie_path"] - Cookie path.</p>
 </li>
 <li>
-<p>$parameters[&quot;use_apcu&quot;] - if installed, apcu can be used to cache the translations in the memory.</p>
+<p>$parameters["use_apcu"] - if installed, apcu can be used to cache the translations in the memory.</p>
 </li>
 <li>
-<p>$parameters[&quot;trace_missing&quot;] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
-</li>
-<li>
-<p>$parameters[&quot;trace_missing&quot;] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
+<p>$parameters["warn_missing"] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.</p>
 </li>
 </ul>
             </td>
@@ -2904,7 +2874,7 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h1>Method: LanguageManager::loadDictionary()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadDictionary() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadDictionary(): void;</div>
 
   
   <div class="short-description">
@@ -2982,7 +2952,7 @@ Returns true if the translation exists, otherwise false.</p></div>
   
   <h1>Method: LanguageManager::setContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span>): void;</div>
 
   
   <div class="short-description">
@@ -3034,8 +3004,7 @@ If you do not need the $context, just do not specify it.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name of the context.
-The name of the context.</p>
+                <p>The name of the context.</p>
             </td>
         </tr>
         
@@ -3073,7 +3042,7 @@ The name of the context.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#509'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#513'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -3101,7 +3070,7 @@ The name of the context.</p>
   
   <h1>Method: LanguageManager::setCurrentLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setCurrentLanguage(string <span class="php-var">$language</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setCurrentLanguage(string <span class="php-var">$language</span>): void;</div>
 
   
   <div class="short-description">
@@ -3139,8 +3108,7 @@ The name of the context.</p>
                 
             </td>
             <td class="description_column">
-                <p>The language ISO code to be set.
-The language ISO code to be set.</p>
+                <p>The language ISO code to be set.</p>
             </td>
         </tr>
         
@@ -3178,7 +3146,7 @@ The language ISO code to be set.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#567'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#571'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -3206,11 +3174,11 @@ The language ISO code to be set.</p>
   
   <h1>Method: LanguageManager::text()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
 
   
   <div class="short-description">
-  <p>Provides the text translation for the text ID for the given langauge.</p>
+  <p>Provides the text translation for the text ID for the given language.</p>
   </div>
   
 
@@ -3244,8 +3212,7 @@ The language ISO code to be set.</p>
                 
             </td>
             <td class="description_column">
-                <p>Text ID
-Text ID</p>
+                <p>Text ID</p>
             </td>
         </tr>
         
@@ -3263,9 +3230,8 @@ Text ID</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -3283,8 +3249,7 @@ the default langauge is used.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The default text to be used if there is no translation.
-The default text to be used if there is no translation.</p>
+                <p>The default text to be used if there is no translation.</p>
             </td>
         </tr>
         
@@ -3297,13 +3262,20 @@ The default text to be used if there is no translation.</p>
   string<br>
   
   <div class="item_description"><p>Returns the translation text or the $default_text/$text_id if no translation
-is found.
 is found.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -3326,7 +3298,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#637'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#642'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -3348,18 +3320,18 @@ is found.</p></div>
   
   <h1>Method: LanguageManager::try_text()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> try_text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> try_text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
 
   
   <div class="short-description">
-  <p>Provides the text translation for the text ID for the given langauge if the translation exists.</p>
+  <p>Provides the text translation for the text ID for the given language if the translation exists.</p>
   </div>
   
 
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Otherwise it returns the text ID and emits no warning.</p>
+  <p>Otherwise, it returns the text ID and emits no warning.</p>
   </div>
   
 
@@ -3391,8 +3363,7 @@ is found.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Text ID
-Text ID</p>
+                <p>Text ID</p>
             </td>
         </tr>
         
@@ -3410,9 +3381,8 @@ Text ID</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -3425,13 +3395,20 @@ the default langauge is used.</p>
   string<br>
   
   <div class="item_description"><p>Returns the translation text or the $default_text/$text_id if no translation
-is found.
 is found.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw exceptions in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -3454,7 +3431,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#679'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#687'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -3476,7 +3453,7 @@ is found.</p></div>
   
   <h1>Method: LanguageManager::validateCountryCode()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateCountryCode(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateCountryCode(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): bool;</div>
 
   
   <div class="short-description">
@@ -3514,8 +3491,7 @@ is found.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Country ISO code (uppercase, e.g. US, DE, FR).
-Country ISO code (uppercase, e.g. US, DE, FR).</p>
+                <p>Country ISO code (uppercase, e.g. US, DE, FR).</p>
             </td>
         </tr>
         
@@ -3533,9 +3509,8 @@ Country ISO code (uppercase, e.g. US, DE, FR).</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -3547,8 +3522,7 @@ the default langauge is used.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the country code is valid (has translation), otherwise false.
-Returns true if the country code is valid (has translation), otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the country code is valid (has translation), otherwise false.</p></div>
   
   </div>
   
@@ -3576,7 +3550,7 @@ Returns true if the country code is valid (has translation), otherwise false.</p
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#951'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#959'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -3613,7 +3587,7 @@ Returns true if the country code is valid (has translation), otherwise false.</p
   
   <h1>Method: LanguageManager::validateLanguageCode()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateLanguageCode(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateLanguageCode(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): bool;</div>
 
   
   <div class="short-description">
@@ -3651,8 +3625,7 @@ Returns true if the country code is valid (has translation), otherwise false.</p
                 
             </td>
             <td class="description_column">
-                <p>Language ISO code (lowercase, e.g. en, de, fr).
-Language ISO code (lowercase, e.g. en, de, fr).</p>
+                <p>Language ISO code (lowercase, e.g. en, de, fr).</p>
             </td>
         </tr>
         
@@ -3670,9 +3643,8 @@ Language ISO code (lowercase, e.g. en, de, fr).</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The langauge. If it is not specified,
-the default langauge is used.
-the default langauge is used.</p>
+                <p>The language. If it is not specified,
+the default language is used.</p>
             </td>
         </tr>
         
@@ -3684,8 +3656,7 @@ the default langauge is used.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the langauge code is valid (has translation), otherwise false.
-Returns true if the langauge code is valid (has translation), otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the language code is valid (has translation), otherwise false.</p></div>
   
   </div>
   
@@ -3713,7 +3684,7 @@ Returns true if the langauge code is valid (has translation), otherwise false.</
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.LanguageManager.php.html#807'>SmartFactory/LanguageManager.php</a>
+  <a href='source-SmartFactory.LanguageManager.php.html#815'>SmartFactory/LanguageManager.php</a>
   </div>
   
 
@@ -3735,7 +3706,7 @@ Returns true if the langauge code is valid (has translation), otherwise false.</
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

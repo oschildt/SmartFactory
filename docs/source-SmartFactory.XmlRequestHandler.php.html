@@ -146,7 +146,7 @@
 </span><span class="line" id="51"> 51: </span><span class="php-comment">     *
 </span><span class="line" id="52"> 52: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="53"> 53: </span><span class="php-comment">     */</span>
-<span class="line" id="54"> 54: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$request_xmldoc</span>;
+<span class="line" id="54"> 54: </span>    <span class="php-keyword1">protected</span> \DOMDocument <span class="php-var">$request_xmldoc</span>;
 <span class="line" id="55"> 55: </span>
 <span class="line" id="56"> 56: </span>    <span class="php-comment">/**
 </span><span class="line" id="57"> 57: </span><span class="php-comment">     * Internal variable for storing the response XML document.
@@ -155,12 +155,12 @@
 </span><span class="line" id="60"> 60: </span><span class="php-comment">     *
 </span><span class="line" id="61"> 61: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="62"> 62: </span><span class="php-comment">     */</span>
-<span class="line" id="63"> 63: </span>    <span class="php-keyword1">protected</span> <span class="php-var">$response_xmldoc</span>;
+<span class="line" id="63"> 63: </span>    <span class="php-keyword1">protected</span> \DOMDocument <span class="php-var">$response_xmldoc</span>;
 <span class="line" id="64"> 64: </span>
 <span class="line" id="65"> 65: </span>    <span class="php-comment">/**
 </span><span class="line" id="66"> 66: </span><span class="php-comment">     * Constructor.
 </span><span class="line" id="67"> 67: </span><span class="php-comment">     *
-</span><span class="line" id="68"> 68: </span><span class="php-comment">     * It ititialize the XML document variables.
+</span><span class="line" id="68"> 68: </span><span class="php-comment">     * It initializes the XML document variables.
 </span><span class="line" id="69"> 69: </span><span class="php-comment">     *
 </span><span class="line" id="70"> 70: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="71"> 71: </span><span class="php-comment">     */</span>
@@ -177,14 +177,14 @@
 </span><span class="line" id="82"> 82: </span><span class="php-comment">     *
 </span><span class="line" id="83"> 83: </span><span class="php-comment">     * It validates the content type 'application/xml' and takes the data from RAWDATA.
 </span><span class="line" id="84"> 84: </span><span class="php-comment">     *
-</span><span class="line" id="85"> 85: </span><span class="php-comment">     * @throws SmartException
+</span><span class="line" id="85"> 85: </span><span class="php-comment">     * @throws SmartException|\Exception
 </span><span class="line" id="86"> 86: </span><span class="php-comment">     * It might throw an exception if the content type oк XML data is invalid.
 </span><span class="line" id="87"> 87: </span><span class="php-comment">     *
 </span><span class="line" id="88"> 88: </span><span class="php-comment">     * @return void
 </span><span class="line" id="89"> 89: </span><span class="php-comment">     *
 </span><span class="line" id="90"> 90: </span><span class="php-comment">     * @author Oleg Schildt
 </span><span class="line" id="91"> 91: </span><span class="php-comment">     */</span>
-<span class="line" id="92"> 92: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput()
+<span class="line" id="92"> 92: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput(): void
 <span class="line" id="93"> 93: </span>    {
 <span class="line" id="94"> 94: </span>        <span class="php-keyword1">try</span> {
 <span class="line" id="95"> 95: </span>            <span class="php-var">$content_type</span> = get_header(<span class="php-quote">&quot;Content-Type&quot;</span>);
@@ -193,7 +193,7 @@
 <span class="line" id="98"> 98: </span>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;Content type header 'Content-Type' is missing, expected 'application/xml; charset=UTF-8'!&quot;</span>, SmartException::ERR_CODE_INVALID_CONTENT_TYPE);
 <span class="line" id="99"> 99: </span>            }
 <span class="line" id="100">100: </span>
-<span class="line" id="101">101: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword2">preg_match</span>(<span class="php-quote">&quot;/application\/xml.*/&quot;</span>, <span class="php-var">$content_type</span>)) {
+<span class="line" id="101">101: </span>            <span class="php-keyword1">if</span> (!<span class="php-keyword2">preg_match</span>(<span class="php-quote">&quot;/application\/xml/&quot;</span>, <span class="php-var">$content_type</span>)) {
 <span class="line" id="102">102: </span>                <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-keyword2">sprintf</span>(<span class="php-quote">&quot;Content type 'application/xml; charset=UTF-8' is expected, got '%s'!&quot;</span>, <span class="php-var">$content_type</span>), SmartException::ERR_CODE_INVALID_CONTENT_TYPE);
 <span class="line" id="103">103: </span>            }
 <span class="line" id="104">104: </span>
@@ -225,33 +225,36 @@
 </span><span class="line" id="130">130: </span><span class="php-comment">     *
 </span><span class="line" id="131">131: </span><span class="php-comment">     * @return void
 </span><span class="line" id="132">132: </span><span class="php-comment">     *
-</span><span class="line" id="133">133: </span><span class="php-comment">     * @author Oleg Schildt
-</span><span class="line" id="134">134: </span><span class="php-comment">     */</span>
-<span class="line" id="135">135: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse()
-<span class="line" id="136">136: </span>    {
-<span class="line" id="137">137: </span>        <span class="php-var">$this</span>-&gt;addResponseHeader(<span class="php-quote">&quot;Content-type&quot;</span>, <span class="php-quote">&quot;application/xml; charset=UTF-8&quot;</span>);
-<span class="line" id="138">138: </span>
-<span class="line" id="139">139: </span>        <span class="php-keyword2">header</span>(<span class="php-quote">'Content-type: application/xml'</span>);
-<span class="line" id="140">140: </span>
-<span class="line" id="141">141: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;response_headers)) {
-<span class="line" id="142">142: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword2">is_array</span>(<span class="php-var">$this</span>-&gt;response_headers)) {
-<span class="line" id="143">143: </span>                <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;response_headers <span class="php-keyword1">as</span> <span class="php-var">$header</span>) {
-<span class="line" id="144">144: </span>                    <span class="php-keyword2">header</span>(<span class="php-var">$header</span>);
-<span class="line" id="145">145: </span>                }
-<span class="line" id="146">146: </span>            }
-<span class="line" id="147">147: </span>        }
-<span class="line" id="148">148: </span>
-<span class="line" id="149">149: </span>        <span class="php-var">$this</span>-&gt;addMessagesToResponse();
-<span class="line" id="150">150: </span>
-<span class="line" id="151">151: </span>        <span class="php-keyword1">echo</span> <span class="php-var">$this</span>-&gt;response_xmldoc-&gt;saveXML();
-<span class="line" id="152">152: </span>    } <span class="php-comment">// sendResponse</span>
-<span class="line" id="153">153: </span>} <span class="php-comment">// XmlRequestHandler</span>
+</span><span class="line" id="133">133: </span><span class="php-comment">     * @throws SmartException
+</span><span class="line" id="134">134: </span><span class="php-comment">     * It might throw an exception in the case of any errors.
+</span><span class="line" id="135">135: </span><span class="php-comment">     *
+</span><span class="line" id="136">136: </span><span class="php-comment">     * @author Oleg Schildt
+</span><span class="line" id="137">137: </span><span class="php-comment">     */</span>
+<span class="line" id="138">138: </span>    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse(): void
+<span class="line" id="139">139: </span>    {
+<span class="line" id="140">140: </span>        <span class="php-var">$this</span>-&gt;addResponseHeader(<span class="php-quote">&quot;Content-type&quot;</span>, <span class="php-quote">&quot;application/xml; charset=UTF-8&quot;</span>);
+<span class="line" id="141">141: </span>
+<span class="line" id="142">142: </span>        <span class="php-keyword2">header</span>(<span class="php-quote">'Content-type: application/xml'</span>);
+<span class="line" id="143">143: </span>
+<span class="line" id="144">144: </span>        <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$this</span>-&gt;response_headers)) {
+<span class="line" id="145">145: </span>            <span class="php-keyword1">if</span> (<span class="php-keyword2">is_array</span>(<span class="php-var">$this</span>-&gt;response_headers)) {
+<span class="line" id="146">146: </span>                <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;response_headers <span class="php-keyword1">as</span> <span class="php-var">$header</span>) {
+<span class="line" id="147">147: </span>                    <span class="php-keyword2">header</span>(<span class="php-var">$header</span>);
+<span class="line" id="148">148: </span>                }
+<span class="line" id="149">149: </span>            }
+<span class="line" id="150">150: </span>        }
+<span class="line" id="151">151: </span>
+<span class="line" id="152">152: </span>        <span class="php-var">$this</span>-&gt;addMessagesToResponse();
+<span class="line" id="153">153: </span>
+<span class="line" id="154">154: </span>        <span class="php-keyword1">echo</span> <span class="php-var">$this</span>-&gt;response_xmldoc-&gt;saveXML();
+<span class="line" id="155">155: </span>    } <span class="php-comment">// sendResponse</span>
+<span class="line" id="156">156: </span>} <span class="php-comment">// XmlRequestHandler</span>
 </code>
 </pre>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

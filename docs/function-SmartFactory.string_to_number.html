@@ -107,7 +107,7 @@
                 <div class="col-md-12">
                     <h1>Function: string_to_number()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> string_to_number(string <span class="php-var">$str</span>, string <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, string <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>) : float|<span class="php-keyword1">null</span>;</div>
+<div class="definition"><span class="php-keyword1">function</span> string_to_number(string <span class="php-var">$str</span>, string <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, string <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>): float|string|<span class="php-keyword1">null</span>;</div>
 
 
 <div class="short-description">
@@ -145,8 +145,7 @@
               
           </td>
           <td class="description_column">
-              <p>The string to be converted.
-The string to be converted.</p>
+              <p>The string to be converted.</p>
           </td>
       </tr>
       
@@ -164,8 +163,7 @@ The string to be converted.</p>
               &quot;.&quot;
           </td>
           <td class="description_column">
-              <p>The decimal separator.
-The decimal separator.</p>
+              <p>The decimal separator.</p>
           </td>
       </tr>
       
@@ -183,8 +181,7 @@ The decimal separator.</p>
               &quot;,&quot;
           </td>
           <td class="description_column">
-              <p>The thousand separator.
-The thousand separator.</p>
+              <p>The thousand separator.</p>
           </td>
       </tr>
       
@@ -194,10 +191,9 @@ The thousand separator.</p>
 
 <h2>Returns</h2>
 <div class="item_list">
-float|null<br>
+float|string|null<br>
 
-<div class="item_description"><p>If the string is a vialid number, its numeric value is returned.
-If the string is a vialid number, its numeric value is returned.</p></div>
+<div class="item_description"><p>If the string is a vialid number, its numeric value is returned.</p></div>
 
 </div>
 
@@ -233,11 +229,11 @@ If the string is a vialid number, its numeric value is returned.</p></div>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#613'>utility_functions_inc.php</a>
+<a href='source-utility_functions_inc.php.html#575'>utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

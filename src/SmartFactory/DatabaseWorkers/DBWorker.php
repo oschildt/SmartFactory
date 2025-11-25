@@ -15,7 +15,7 @@ use \SmartFactory\Interfaces\IInitable;
 /**
  * This is the abstract base class for all dbworkers for different databases.
  *
- * This is a wrapper around the database connectivity. It offers an universal
+ * This is a wrapper around the database connectivity. It offers a universal
  * common way for working with databases of different types. Currently, MySQL and
  * MS SQL are supported. If in the future, there will be a better solution, or
  * the current solution turns out to be inefficient in a new version of PHP,
@@ -33,7 +33,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_CONNECTION_DATA_INCOMPLETE = "err_connection_data_incomplete";
+    const string ERR_CONNECTION_DATA_INCOMPLETE = "err_connection_data_incomplete";
     
     /**
      * The constant for the error: connection to the server failed.
@@ -42,7 +42,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_CONNECTION_FAILED = "err_connection_failed";
+    const string ERR_CONNECTION_FAILED = "err_connection_failed";
 
     /**
      * The constant for the error: host not reachable.
@@ -51,7 +51,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_HOST_UNREACHABLE = "err_host_unreachable";
+    const string ERR_HOST_UNREACHABLE = "err_host_unreachable";
 
     /**
      * The constant for the error: wrong user credentials.
@@ -60,7 +60,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_WRONG_USER_CREDENTIALS = "err_wrong_user_credentials";
+    const string ERR_WRONG_USER_CREDENTIALS = "err_wrong_user_credentials";
 
     /**
      * The constant for the error: database not found.
@@ -69,7 +69,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_DATABASE_NOT_FOUND = "err_database_not_found";
+    const string ERR_DATABASE_NOT_FOUND = "err_database_not_found";
     
     /**
      * The constant for the error: query failed.
@@ -78,7 +78,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_QUERY_FAILED = "err_query_failed";
+    const string ERR_QUERY_FAILED = "err_query_failed";
 
     /**
      * The constant for the error: not connected.
@@ -87,7 +87,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_NOT_CONNECTED = "err_not_connected";
+    const string ERR_NOT_CONNECTED = "err_not_connected";
 
     /**
      * The constant for the error: stream invalid.
@@ -96,7 +96,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_STREAM_ERROR = "err_stream_error";
+    const string ERR_STREAM_ERROR = "err_stream_error";
 
     /**
      * The constant for the error: wrong data format.
@@ -105,7 +105,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const ERR_WRONG_DATA_FORMAT = "err_data_format";
+    const string ERR_WRONG_DATA_FORMAT = "err_data_format";
 
     /**
      * The constant for the returning field value as is.
@@ -114,7 +114,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_AS_IS = 0;
+    const int DB_AS_IS = 0;
 
     /**
      * The constant for the number type.
@@ -123,7 +123,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_NUMBER = 1;
+    const int DB_NUMBER = 1;
 
     /**
      * The constant for the string type.
@@ -132,7 +132,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_STRING = 2;
+    const int DB_STRING = 2;
 
     /**
      * The constant for the date type.
@@ -141,7 +141,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_DATE = 3;
+    const int DB_DATE = 3;
 
     /**
      * The constant for the date/time type.
@@ -150,7 +150,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_DATETIME = 4;
+    const int DB_DATETIME = 4;
 
     /**
      * The constant for the type geometry SRID 0.
@@ -159,7 +159,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_GEOMETRY = 5;
+    const int DB_GEOMETRY = 5;
     
     /**
      * The constant for the type geometry SRID 4326 (latitude, longitude).
@@ -168,7 +168,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_GEOMETRY_4326 = 6;
+    const int DB_GEOMETRY_4326 = 6;
 
     /**
      * The constant for the large objects.
@@ -179,7 +179,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    const DB_LARGE_OBJECT_STREAM = 7;
+    const int DB_LARGE_OBJECT_STREAM = 7;
 
     /**
      * Name or IP address of the server.
@@ -188,7 +188,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    protected $db_server;
+    protected string $db_server;
 
     /**
      * Port of the server.
@@ -197,7 +197,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    protected $db_port;
+    protected string $db_port;
 
     /**
      * Name of the database.
@@ -206,7 +206,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    protected $db_name;
+    protected string $db_name;
     
     /**
      * Name of the database user.
@@ -215,7 +215,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    protected $db_user;
+    protected string $db_user;
     
     /**
      * Password of the database user.
@@ -224,36 +224,36 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    protected $db_password;
+    protected string $db_password;
     
     /**
      * This variable stores the last executed query.
      *
-     * @var string $last_query
+     * @var ?string $last_query
      *
      * @author Oleg Schildt
      */
-    protected $last_query = null;
+    protected ?string $last_query = null;
     
     /**
      * This variable stores the logging flag.
      *
-     * @var boolean $logging
+     * @var bool $logging
      *
      * @author Oleg Schildt
      */
-    protected $logging = false;
+    protected bool $logging = false;
     /**
      * Flag property for storing the state whether it is clone or not.
      *
-     * @var boolean $is_clone
+     * @var bool $is_clone
      *
      * @author Oleg Schildt
      */
-    protected $is_clone = false;
+    protected bool $is_clone = false;
     
     /**
-     * Initializes the dbworker with connection paramters.
+     * Initializes the dbworker with connection parameters.
      *
      * @param array $parameters
      * The parameters may vary for each database.
@@ -265,20 +265,20 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function init($parameters);
+    abstract public function init(array $parameters): void;
     
     /**
      * Checks whether the extension is installed which is required for work with
      * the corresponding database.
      *
-     * @return boolean
+     * @return bool
      * The method should return true if the extension is installed, otherwise false.
      *
      * @see DBWorker::get_extension_name()
      *
      * @author Oleg Schildt
      */
-    abstract public function is_extension_installed();
+    abstract public function is_extension_installed(): bool;
     
     /**
      * Returns the name of the required PHP extension.
@@ -290,7 +290,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function get_extension_name();
+    abstract public function get_extension_name(): string;
     
     /**
      * Returns the name of the supported database.
@@ -300,7 +300,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function get_rdbms_name();
+    abstract public function get_rdbms_name(): string;
     
     /**
      * Creates a clone of the dbworker that is using the same open
@@ -314,12 +314,12 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function create_clone();
+    abstract public function create_clone(): DBWorker;
     
     /**
      * Returns the connection state.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the connection is open, otherwise false.
      *
      * @see DBWorker::check_connection()
@@ -328,7 +328,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function is_connected();
+    abstract public function is_connected(): bool;
 
     /**
      * Check whether the connection exists and throws an exceptions if not.
@@ -344,7 +344,8 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    public function check_connection() {
+    public function check_connection(): void
+    {
         if (!$this->is_connected()) {
             $err = "Database server not connected!";
             trigger_error($err, E_USER_WARNING);
@@ -369,7 +370,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function connect();
+    abstract public function connect(): void;
     
     /**
      * Sets the database as working database.
@@ -384,7 +385,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function use_database($db_name);
+    abstract public function use_database(string $db_name): void;
     
     /**
      * Returns the name of the database schema if applicable.
@@ -396,7 +397,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function get_schema();
+    abstract public function get_schema(): string;
     
     /**
      * Completes the name of a database object with the schema name if applicable.
@@ -412,7 +413,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function qualify_name_with_schema($name);
+    abstract public function qualify_name_with_schema(string $name): string;
     
     /**
      * Executes the SQL query.
@@ -427,7 +428,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function execute_query($query_string);
+    abstract public function execute_query(string $query_string): void;
     
     /**
      * Executes the SQL stored procedure.
@@ -435,7 +436,7 @@ abstract class DBWorker implements IInitable
      * @param string $procedure
      * The name of the SQL stored procedure.
      *
-     * All subsequent parameters are the paramteres of the SQL stored procedure.
+     * All subsequent parameters are the parameters of the SQL stored procedure.
      *
      * @return void
      *
@@ -444,14 +445,14 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function execute_procedure($procedure /* arg list */);
+    abstract public function execute_procedure(string $procedure /* arg list */): void;
     
     /**
      * Executes the prepared SQL query.
      *
      * @param mixed ...$args
      * The number of parameters may vary and be zero. An array can also be passed.
-     * These are paremeters of the prepared query.
+     * These are parameters of the prepared query.
      *
      * @return void
      *
@@ -463,7 +464,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function execute_prepared_query(...$args);
+    abstract public function execute_prepared_query(...$args): void;
     
     /**
      * Prepares the SQL query with bindable variables.
@@ -481,16 +482,16 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function prepare_query($query_string);
+    abstract public function prepare_query(string $query_string): void;
     
     /**
      * Stores long data from a stream.
      *
      * @param string $query_string
-     * The SQL query to be used for stroing the long data.
+     * The SQL query to be used for storing the long data.
      *
-     * @param resource &$stream
-     * The opened valid stream for reding the long data.
+     * @param resource $stream
+     * The opened valid stream for reading the long data.
      *
      * Example:
      * ```php
@@ -509,7 +510,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function stream_long_data($query_string, &$stream);
+    abstract public function stream_long_data(string $query_string, $stream): void;
     
     /**
      * Closes the currently opened connection.
@@ -525,10 +526,10 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function close_connection();
+    abstract public function close_connection(): void;
     
     /**
-     * Starts the transation.
+     * Starts the translation.
      *
      * @return void
      *
@@ -540,7 +541,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function start_transaction();
+    abstract public function start_transaction(): void;
     
     /**
      * Commits the transation.
@@ -555,10 +556,10 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function commit_transaction();
+    abstract public function commit_transaction(): void;
     
     /**
-     * Rolls back the transation.
+     * Rolls back the translation.
      *
      * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
@@ -570,7 +571,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function rollback_transaction();
+    abstract public function rollback_transaction(): void;
     
     /**
      * Frees the result of the previously executed retrieving query.
@@ -584,7 +585,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function free_result();
+    abstract public function free_result(): void;
     
     /**
      * Frees the prepared query.
@@ -601,12 +602,12 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function free_prepared_query();
+    abstract public function free_prepared_query(): void;
     
     /**
      * Fetches the next row of data from the result of the execution of the retrieving query.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the next row exists and has been successfully fetched, otherwise false.
      *
      * Example:
@@ -629,7 +630,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function fetch_row();
+    abstract public function fetch_row(): bool;
     
     /**
      * Fetches all rows from the result into an array.
@@ -637,17 +638,17 @@ abstract class DBWorker implements IInitable
      * @param array &$rows
      * Target array for loading the results.
      *
-     * @param array $dimension_keys
+     * @param array|null $dimension_keys
      * Array of the column names that should be used as dimensions.
      *
-     * Per default, the rows are fetched as two dimensional array.
+     * Per default, the rows are fetched as two-dimensional array.
      *
      * Example:
      * ```php
      * $rows = [];
      * $dbw->fetch_array($rows);
      *
-     * rows[n] = ["col1" => "val1", "col2" => "val2", , "col3" => "val3", ...]
+     * rows[n] = ["col1" => "val1", "col2" => "val2", "col3" => "val3", ...]
      * ```
      * If the dimension columns are specified, their values are used for the dimensions.
      *
@@ -659,7 +660,7 @@ abstract class DBWorker implements IInitable
      * rows["val1"]["val2"] = ["col3" => "val3", ...]
      * ```
      *
-     * @return int|false
+     * @return int
      * Returns the number of the fetched rows. It might be also 0. In the case of
      * any error returns false.
      *
@@ -668,7 +669,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function fetch_array(&$rows, $dimension_keys = null);
+    abstract public function fetch_array(array &$rows, ?array $dimension_keys = null): int;
     
     /**
      * Returns the number of the rows fetched by the last retrieving query.
@@ -681,7 +682,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function fetched_count();
+    abstract public function fetched_count(): int;
     
     /**
      * Returns the number of the rows affected by the last modification query.
@@ -694,7 +695,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function affected_count();
+    abstract public function affected_count(): int;
     
     /**
      * Returns the number of the fields in the result of the last retrieving query.
@@ -707,12 +708,12 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_count();
+    abstract public function field_count(): int;
     
     /**
      * Returns the value of the auto increment field by the last insertion.
      *
-     * @return int
+     * @return ?int
      * Returns the value of the auto increment field by the last insertion.
      *
      * @throws DBWorkerException
@@ -720,7 +721,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function insert_id();
+    abstract public function insert_id(): ?int;
     
     /**
      * Returns the value of a field specified by name.
@@ -731,7 +732,7 @@ abstract class DBWorker implements IInitable
      * @param int $type
      * The type of the field.
      *
-     * @return mixed|null
+     * @return mixed
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
@@ -740,7 +741,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_by_name($name, $type = self::DB_AS_IS);
+    abstract public function field_by_name(string $name, int $type = self::DB_AS_IS): mixed;
 
     /**
      * Returns the value of a field specified by number.
@@ -751,7 +752,7 @@ abstract class DBWorker implements IInitable
      * @param int $type
      * The type of the field.
      *
-     * @return mixed|null
+     * @return mixed
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
@@ -761,7 +762,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_by_num($num, $type = self::DB_AS_IS);
+    abstract public function field_by_num(int $num, int $type = self::DB_AS_IS): mixed;
     
     /**
      * Returns the meta information about the field as an object with properties.
@@ -769,7 +770,7 @@ abstract class DBWorker implements IInitable
      * @param int $num
      * The number of the field.
      *
-     * @return array
+     * @return ?array
      * Returns the associative array with properties. In the case
      * of any error returns null.
      *
@@ -785,7 +786,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_info_by_num($num);
+    abstract public function field_info_by_num(int $num): ?array;
     
     /**
      * Returns the name of the field by number.
@@ -793,7 +794,7 @@ abstract class DBWorker implements IInitable
      * @param int $num
      * The number of the field.
      *
-     * @return object|null
+     * @return ?string
      * Returns the value of a field specified by number as an object with properties. In the case
      * of any error returns null.
      *
@@ -802,7 +803,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function field_name($num);
+    abstract public function field_name(int $num): ?string;
     
     /**
      * Escapes the string so that it can be used in the query without causing an error.
@@ -820,7 +821,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function escape($str);
+    abstract public function escape(string $str): string;
 
     /**
      * Escapes the string so that it can be used in the query without causing an error or returns the string NULL if the string is empty.
@@ -838,9 +839,9 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    function quotes_or_null($str)
+    function quotes_or_null(string $str): string
     {
-        return (string)$str === "" ? "null" : "'" . $this->escape($str) . "'";
+        return $str === "" ? "null" : "'" . $this->escape($str) . "'";
     }
 
     /**
@@ -849,7 +850,7 @@ abstract class DBWorker implements IInitable
      * @param string $str
      * The string to be escaped.
      *
-     * @return string
+     * @return float|int|string
      * Returns the escaped string.
      *
      * @throws DBWorkerException
@@ -862,9 +863,9 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    function number_or_null($str)
+    function number_or_null(string $str): float|int|string
     {
-        if (empty($str) && (string)$str != "0") {
+        if (empty($str) && $str != "0") {
             return "null";
         }
 
@@ -891,7 +892,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function format_date($date);
+    abstract public function format_date(int $date): string;
     
     /**
      * Formats the date/time to a string compatible for the corresponding database.
@@ -909,7 +910,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract public function format_datetime($datetime);
+    abstract public function format_datetime(int $datetime): string;
     
     /**
      * Prepares the value for putting to a query depending on its type. It does escaping, formatting
@@ -926,7 +927,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    abstract function prepare_for_query($value, $type);
+    abstract function prepare_for_query(mixed $value, int $type): string;
 
     /**
      * Builds simple select query based on parameters.
@@ -946,14 +947,14 @@ abstract class DBWorker implements IInitable
      * The order clause to sort the results.
      *
      * @param int $limit
-     * The limit how many records shoud be loaded. 0 for unlimited.
+     * The limit how many records should be loaded. 0 for unlimited.
      *
      * @return string
      * Returns the built query.
      *
      * @author Oleg Schildt
      */
-    abstract function build_select_query($table, $fields, $where_clause, $order_clause, $limit);
+    abstract function build_select_query(string $table, array $fields, string $where_clause, string $order_clause, int $limit): string;
 
     /**
      * Returns the last executed query.
@@ -963,7 +964,7 @@ abstract class DBWorker implements IInitable
      *
      * @author Oleg Schildt
      */
-    function get_last_query()
+    function get_last_query(): string
     {
         return trim($this->last_query);
     } // get_last_query
@@ -971,14 +972,14 @@ abstract class DBWorker implements IInitable
     /**
      * Sets the logging flag. If set, query is logged to a log file.
      *
-     * @param boolean $state
+     * @param bool $state
      * The state of the logging.
      *
      * @return void
      *
      * @author Oleg Schildt
      */
-    function enable_logging($state)
+    function enable_logging(bool $state): void
     {
         $this->logging = $state;
     } // enable_logging

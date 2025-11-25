@@ -22,6 +22,10 @@ use \SmartFactory\DatabaseWorkers\DBWorker;
  * @param string|object $interface_or_class
  * Name of the class/interface as string or the class/interface.
  *
+ * @param string $context
+ * The context of binding. You can introduce a different context, and bind another implementation.
+ * Then, you can request another instance specifying the context explicitly.
+ *
  * @return object
  * Returns object of the class bound to the interfase.
  *
@@ -36,9 +40,9 @@ use \SmartFactory\DatabaseWorkers\DBWorker;
  *
  * @author Oleg Schildt
  */
-function singleton($interface_or_class)
+function singleton(string|object $interface_or_class, string $context = "default"): object
 {
-    return ObjectFactory::getInstance($interface_or_class, true);
+    return ObjectFactory::getInstance($interface_or_class, true, $context);
 } // singleton
 
 /**
@@ -49,6 +53,10 @@ function singleton($interface_or_class)
  *
  * @param string|object $interface_or_class
  * Name of the class/interface as string or the class/interface.
+ *
+ * @param string $context
+ * The context of binding. You can introduce a different context, and bind another implementation.
+ * Then, you can request another instance specifying the context explicitly.
  *
  * @return object
  * Returns object of the class bound to the interface.
@@ -64,9 +72,9 @@ function singleton($interface_or_class)
  *
  * @author Oleg Schildt
  */
-function instance($interface_or_class)
+function instance(string|object $interface_or_class, string  $context = "default"): object
 {
-    return ObjectFactory::getInstance($interface_or_class, false);
+    return ObjectFactory::getInstance($interface_or_class, false, $context);
 } // instance
 
 /**
@@ -103,10 +111,10 @@ function instance($interface_or_class)
  *                 ]);
  * ```
  *
- * @param boolean $singleton
+ * @param bool $singleton
  * If the parameter is true, it ensures that only one instance of this object exists.
  *
- * @return DatabaseWorkers\DBWorker|null
+ * @return ?DatabaseWorkers\DBWorker
  * returns DBWorker object or null if the object could not be created.
  *
  * @throws \Exception
@@ -114,25 +122,25 @@ function instance($interface_or_class)
  *
  * @author Oleg Schildt
  */
-function dbworker($parameters = [], $singleton = true)
+function dbworker(array $parameters = [], bool $singleton = true) : ?DatabaseWorkers\DBWorker
 {
     if (empty($parameters["db_type"])) {
         throw new \Exception("Database type is not specified!");
     }
-    
+
     $class_name = "SmartFactory\\DatabaseWorkers\\" . $parameters["db_type"] . "_DBWorker";
-    
+
     $dbworker = ObjectFactory::getInstance($class_name, $singleton);
-    
+
     if (!$dbworker->is_extension_installed()) {
         throw new \Exception(sprintf("PHP extension '%s' is not installed or is too old. Work with the database '%s' is not possible!", $dbworker->get_extension_name(), $dbworker->get_rdbms_name()));
     }
-    
+
     // instance already connected
     if ($dbworker->is_connected()) {
         return $dbworker;
     }
-    
+
     $dbworker->init($parameters);
 
     // do not connect, only object required
@@ -140,9 +148,9 @@ function dbworker($parameters = [], $singleton = true)
     if (empty($parameters["autoconnect"])) {
         return $dbworker;
     }
-    
+
     $dbworker->connect();
-    
+
     return $dbworker;
 } // dbworker
 

@@ -45,7 +45,7 @@ abstract class JsonRequestHandler extends RequestHandler
      *
      * @author Oleg Schildt
      */
-    protected $request_data = [];
+    protected array $request_data = [];
 
     /**
      * Internal variable for storing the response data.
@@ -54,7 +54,7 @@ abstract class JsonRequestHandler extends RequestHandler
      *
      * @author Oleg Schildt
      */
-    protected $response_data = [];
+    protected array $response_data = [];
 
     /**
      * This is an auxiliary function for sending the response in JSON format.
@@ -64,9 +64,12 @@ abstract class JsonRequestHandler extends RequestHandler
      *
      * @return void
      *
+     * @throws SmartException
+     * It might throw exceptions in the case of any errors.
+     *
      * @author Oleg Schildt
      */
-    protected function sendResponse()
+    protected function sendResponse(): void
     {
         $this->addResponseHeader("Content-type", "application/json; charset=UTF-8");
 
@@ -94,12 +97,12 @@ abstract class JsonRequestHandler extends RequestHandler
      *
      * @return void
      *
-     * @throws SmartException
+     * @throws \Exception|SmartException
      * It might throw an exception if the content type oк JSON data is invalid.
      *
      * @author Oleg Schildt
      */
-    protected function parseInput()
+    protected function parseInput(): void
     {
         try {
             $content_type = get_header("Content-Type");

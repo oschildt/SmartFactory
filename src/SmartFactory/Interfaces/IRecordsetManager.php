@@ -30,19 +30,19 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function setDBWorker($dbworker);
+    public function setDBWorker(\SmartFactory\DatabaseWorkers\DBWorker $dbworker): void;
     
     /**
      * Returns the dbworker to be used for working with the database.
      *
-     * @return \SmartFactory\DatabaseWorkers\DBWorker
+     * @return ?\SmartFactory\DatabaseWorkers\DBWorker
      * Returns the dbworker to be used for working with the database.
      *
      * @see IRecordsetManager::getDBWorker()
      *
      * @author Oleg Schildt
      */
-    public function getDBWorker();
+    public function getDBWorker(): ?\SmartFactory\DatabaseWorkers\DBWorker;
     
     /**
      * Defines the field mappings for working with record sets based on a table.
@@ -63,7 +63,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function describeTableFields($table, $fields, $key_fields);
+    public function describeTableFields(string $table, array $fields, array $key_fields): void;
 
     /**
      * Defines the field mappings for working with record sets based on a query.
@@ -81,7 +81,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function describeTableFieldsQuery($fields, $key_fields);
+    public function describeTableFieldsQuery(array $fields, array $key_fields): void;
 
     /**
      * Loads a record into an array in the form "field_name" => "value" based on a table.
@@ -89,7 +89,7 @@ interface IRecordsetManager
      * @param array &$record
      * The target array where the data should be loaded.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should restrict the result. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -103,7 +103,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecord(&$record, $where_clause);
+    public function loadRecord(array &$record, array|string $where_clause): void;
 
     /**
      * Loads a record into an array in the form "field_name" => "value" based on a query.
@@ -123,12 +123,12 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecordQuery(&$record, $query);
+    public function loadRecordQuery(array &$record, string $query): void;
 
     /**
      * Deletes records by a given where clause.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause for the records to be deleted. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -141,7 +141,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function deleteRecords($where_clause);
+    public function deleteRecords(array|string $where_clause): void;
 
     /**
      * Deletes records by a given query.
@@ -157,7 +157,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function deleteRecordsQuery($query);
+    public function deleteRecordsQuery(string $query): void;
 
     /**
      * Saves a record from an array in the form "field_name" => "value" into the table.
@@ -165,7 +165,7 @@ interface IRecordsetManager
      * @param array &$record
      * The source array with the data to be saved.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should be used to define whether a record should be inserted or updated. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -185,13 +185,13 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecord(&$record, $where_clause, $identity_field = "");
+    public function saveRecord(array &$record, array|string $where_clause, string $identity_field = ""): void;
 
     /**
      * Saves records from an array in the form
      * $records["key_field1"]["key_field2"]["key_fieldN"]["field_name"] = "value" into the table.
      *
-     * @param array &$records
+     * @param array $records
      * The source array with the data to be saved.
      *
      * @param array $parent_values
@@ -213,12 +213,12 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function saveRecordSet(&$records, $parent_values = [], $identity_field = "");
+    public function saveRecordSet(array $records, array $parent_values = [], string $identity_field = ""): void;
 
     /**
      * Counts records based on the where clause.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should restrict the result. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
@@ -231,7 +231,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function countRecords($where_clause);
+    public function countRecords(array|string $where_clause): int;
 
     /**
      * Counts records based on the query.
@@ -248,7 +248,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function countRecordsQuery($query);
+    public function countRecordsQuery(string $query): int;
 
     /**
      * Loads records into an array in the form
@@ -260,12 +260,12 @@ interface IRecordsetManager
      * @param array &$records
      * The target array where the data should be loaded.
      *
-     * @param string|array $where_clause
+     * @param array|string $where_clause
      * The where clause that should restrict the result. If an array of keys is passed,
      * the where clause is build automatically based on it.
      *
      * @param int $limit
-     * The limit how many records shoud be loaded. 0 for unlimited.
+     * The limit how many records should be loaded. 0 for unlimited.
      *
      * @param string $order_clause
      * The order clause to sort the results.
@@ -280,7 +280,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecordSet(&$records, $where_clause, $order_clause = "", $limit = 0);
+    public function loadRecordSet(array &$records, array|string $where_clause, string $order_clause = "", int $limit = 0): void;
 
     /**
      * Loads records into an array in the form
@@ -304,10 +304,10 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function loadRecordSetQuery(&$records, $query);
+    public function loadRecordSetQuery(array &$records, string $query): void;
 
     /**
-     * Starts the transation.
+     * Starts the translation.
      *
      * @return void
      *
@@ -319,10 +319,10 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function start_transaction();
+    public function start_transaction(): void;
 
     /**
-     * Commits the transation.
+     * Commits the translation.
      *
      * @return void
      *
@@ -334,10 +334,10 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function commit_transaction();
+    public function commit_transaction(): void;
 
     /**
-     * Rolls back the transation.
+     * Rolls back the translation.
      *
      * @throws DBWorkerException
      * It might throw an exception in the case of any errors.
@@ -349,7 +349,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function rollback_transaction();
+    public function rollback_transaction(): void;
 
     /**
      * Escapes the string so that it can be used in the query without causing an error.
@@ -365,7 +365,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function escape($str);
+    public function escape(string $str): string;
 
     /**
      * Formats the date to a string compatible for the corresponding database.
@@ -381,7 +381,7 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function format_date($date);
+    public function format_date(int $date): string;
 
     /**
      * Formats the date/time to a string compatible for the corresponding database.
@@ -397,5 +397,5 @@ interface IRecordsetManager
      *
      * @author Oleg Schildt
      */
-    public function format_datetime($datetime);
+    public function format_datetime(int $datetime): string;
 } // IRecordsetManager

@@ -318,7 +318,7 @@ function arguments from the standard PHP backtrace (debug_backtrace).</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>This is the function for handling of the PHP errors. It is set a the
+              <p>This is the function for handling of the PHP errors. It is set in the
 error handler.</p>
           </td>
       </tr><tr>
@@ -333,7 +333,7 @@ error handler.</p>
           </td>
           <td class="description_column">
               <p>This is the function for handling of the PHP exceptions. It should
-be called in the catch block to trace detailed infromation
+be called in the catch block to trace detailed information
 if an exception is thrown.</p>
           </td>
       </tr><tr>
@@ -438,7 +438,7 @@ standard PHP backtrace (debug_backtrace).</p>
   
   <h1>Property: ErrorHandler::$last_error</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> string <span class="php-var">$last_error</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> string <span class="php-var">$last_error</span> = <span class="php-quote">&quot;&quot;</span>;</div>
 
   
   <div class="short-description">
@@ -488,7 +488,7 @@ standard PHP backtrace (debug_backtrace).</p>
   
   <h1>Property: ErrorHandler::$log_path</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$log_path</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?string <span class="php-var">$log_path</span> = <span class="php-keyword1">null</span>;</div>
 
   
   <div class="short-description">
@@ -501,7 +501,7 @@ standard PHP backtrace (debug_backtrace).</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  ?string
   </div>
   
 
@@ -581,7 +581,7 @@ standard PHP backtrace (debug_backtrace).</p>
   
   <h1>Method: ErrorHandler::deep_implode()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> deep_implode(<span class="php-keyword1">array</span> &amp;<span class="php-var">$arr</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> deep_implode(<span class="php-keyword1">array</span> &amp;<span class="php-var">$arr</span>): string;</div>
 
   
   <div class="short-description">
@@ -620,8 +620,7 @@ function arguments from the standard PHP backtrace (debug_backtrace).</p>
                 
             </td>
             <td class="description_column">
-                <p>The array of the function arguments.
-The array of the function arguments.</p>
+                <p>The array of the function arguments.</p>
             </td>
         </tr>
         
@@ -633,8 +632,7 @@ The array of the function arguments.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the detailed string from the function arguments.
-Returns the detailed string from the function arguments.</p></div>
+  <div class="item_description"><p>Returns the detailed string from the function arguments.</p></div>
   
   </div>
   
@@ -657,7 +655,7 @@ Returns the detailed string from the function arguments.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#247'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#261'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -679,7 +677,7 @@ Returns the detailed string from the function arguments.</p></div>
   
   <h1>Method: ErrorHandler::disableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace(): void;</div>
 
   
   <div class="short-description">
@@ -690,7 +688,7 @@ Returns the detailed string from the function arguments.</p></div>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>If the trace is active, any eror, warning or notice is traced to
+  <p>If the trace is active, any error, warning or notice is traced to
 the standard file.</p>
   </div>
   
@@ -730,7 +728,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#564'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#582'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -761,7 +759,7 @@ the standard file.</p>
   
   <h1>Method: ErrorHandler::enableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace(): void;</div>
 
   
   <div class="short-description">
@@ -772,7 +770,7 @@ the standard file.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>If the trace is active, any eror, warning or notice is traced to
+  <p>If the trace is active, any error, warning or notice is traced to
 the standard file.</p>
   </div>
   
@@ -812,7 +810,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#546'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#564'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -843,7 +841,7 @@ the standard file.</p>
   
   <h1>Method: ErrorHandler::extract_call_stack()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>): string;</div>
 
   
   <div class="short-description">
@@ -881,8 +879,7 @@ the standard file.</p>
                 
             </td>
             <td class="description_column">
-                <p>The backtrace.
-The backtrace.</p>
+                <p>The backtrace.</p>
             </td>
         </tr>
         
@@ -894,8 +891,7 @@ The backtrace.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the extracted call stack.
-Returns the extracted call stack.</p></div>
+  <div class="item_description"><p>Returns the extracted call stack.</p></div>
   
   </div>
   
@@ -918,7 +914,7 @@ Returns the extracted call stack.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#159'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#160'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -940,7 +936,7 @@ Returns the extracted call stack.</p></div>
   
   <h1>Method: ErrorHandler::format_backtrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> format_backtrace(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">function</span> format_backtrace(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>): string;</div>
 
   
   <div class="short-description">
@@ -978,8 +974,7 @@ Returns the extracted call stack.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The backtrace.
-The backtrace.</p>
+                <p>The backtrace.</p>
             </td>
         </tr>
         
@@ -991,8 +986,7 @@ The backtrace.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the formatted backtrace.
-Returns the formatted backtrace.</p></div>
+  <div class="item_description"><p>Returns the formatted backtrace.</p></div>
   
   </div>
   
@@ -1037,7 +1031,7 @@ Returns the formatted backtrace.</p></div>
   
   <h1>Method: ErrorHandler::getLastError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError() : string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError(): string;</div>
 
   
   <div class="short-description">
@@ -1056,8 +1050,7 @@ Returns the formatted backtrace.</p></div>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the last error or an empty string if no error occured so far.
-Returns the last error or an empty string if no error occured so far.</p></div>
+  <div class="item_description"><p>Returns the last error or an empty string if no error occurred so far.</p></div>
   
   </div>
   
@@ -1085,7 +1078,7 @@ Returns the last error or an empty string if no error occured so far.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#473'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#491'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1107,11 +1100,11 @@ Returns the last error or an empty string if no error occured so far.</p></div>
   
   <h1>Method: ErrorHandler::handleError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(int <span class="php-var">$errno</span>, string <span class="php-var">$errstr</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(int <span class="php-var">$errno</span>, string <span class="php-var">$errstr</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>): void;</div>
 
   
   <div class="short-description">
-  <p>This is the function for handling of the PHP errors. It is set a the
+  <p>This is the function for handling of the PHP errors. It is set in the
 error handler.</p>
   </div>
   
@@ -1146,8 +1139,7 @@ error handler.</p>
                 
             </td>
             <td class="description_column">
-                <p>Error code.
-Error code.</p>
+                <p>Error code.</p>
             </td>
         </tr>
         
@@ -1165,8 +1157,7 @@ Error code.</p>
                 
             </td>
             <td class="description_column">
-                <p>Error text.
-Error text.</p>
+                <p>Error text.</p>
             </td>
         </tr>
         
@@ -1184,8 +1175,7 @@ Error text.</p>
                 
             </td>
             <td class="description_column">
-                <p>Source file where the error occured.
-Source file where the error occured.</p>
+                <p>Source file where the error occurred.</p>
             </td>
         </tr>
         
@@ -1203,8 +1193,7 @@ Source file where the error occured.</p>
                 
             </td>
             <td class="description_column">
-                <p>Line number where the error occured.
-Line number where the error occured.</p>
+                <p>Line number where the error occurred.</p>
             </td>
         </tr>
         
@@ -1219,7 +1208,15 @@ Line number where the error occured.</p>
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -1242,7 +1239,7 @@ Line number where the error occured.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#382'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#399'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1264,12 +1261,12 @@ Line number where the error occured.</p>
   
   <h1>Method: ErrorHandler::handleException()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, int <span class="php-var">$errno</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, int <span class="php-var">$errno</span>): void;</div>
 
   
   <div class="short-description">
   <p>This is the function for handling of the PHP exceptions. It should
-be called in the catch block to trace detailed infromation
+be called in the catch block to trace detailed information
 if an exception is thrown.</p>
   </div>
   
@@ -1304,8 +1301,7 @@ if an exception is thrown.</p>
                 
             </td>
             <td class="description_column">
-                <p>Thrown exception.
-Thrown exception.</p>
+                <p>Thrown exception.</p>
             </td>
         </tr>
         
@@ -1323,8 +1319,7 @@ Thrown exception.</p>
                 
             </td>
             <td class="description_column">
-                <p>Error code.
-Error code.</p>
+                <p>Error code.</p>
             </td>
         </tr>
         
@@ -1339,7 +1334,15 @@ Error code.</p>
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  \Exception<br>
+  
+  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
@@ -1362,7 +1365,7 @@ Error code.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#432'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#451'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1384,7 +1387,7 @@ Error code.</p>
   
   <h1>Method: ErrorHandler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
@@ -1424,12 +1427,7 @@ Error code.</p>
             <td class="description_column">
                 <p>Settings for logging as an associative array in the form key =&gt; value:</p>
 <ul>
-<li>
-<p>$parameters[&quot;log_path&quot;] - the target file path where the logs should be stored.</p>
-</li>
-<li>
-<p>$parameters[&quot;log_path&quot;] - the target file path where the logs should be stored.</p>
-</li>
+<li>$parameters["log_path"] - the target file path where the logs should be stored.</li>
 </ul>
             </td>
         </tr>
@@ -1502,7 +1500,7 @@ Error code.</p>
   
   <h1>Method: ErrorHandler::make_arg_list()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> make_arg_list(<span class="php-keyword1">array</span> &amp;<span class="php-var">$args</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> make_arg_list(<span class="php-keyword1">array</span> <span class="php-var">$args</span>): string;</div>
 
   
   <div class="short-description">
@@ -1532,7 +1530,7 @@ standard PHP backtrace (debug_backtrace).</p>
                 $args
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -1541,8 +1539,7 @@ standard PHP backtrace (debug_backtrace).</p>
                 
             </td>
             <td class="description_column">
-                <p>The array of the function arguments.
-The array of the function arguments.</p>
+                <p>The array of the function arguments.</p>
             </td>
         </tr>
         
@@ -1554,8 +1551,7 @@ The array of the function arguments.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the detailed string from the function arguments.
-Returns the detailed string from the function arguments.</p></div>
+  <div class="item_description"><p>Returns the detailed string from the function arguments.</p></div>
   
   </div>
   
@@ -1578,7 +1574,7 @@ Returns the detailed string from the function arguments.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#285'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#299'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1600,7 +1596,7 @@ Returns the detailed string from the function arguments.</p></div>
   
   <h1>Method: ErrorHandler::setLastError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(string <span class="php-var">$error</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(string <span class="php-var">$error</span>): void;</div>
 
   
   <div class="short-description">
@@ -1638,8 +1634,7 @@ Returns the detailed string from the function arguments.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The error text to be stored.
-The error text to be stored.</p>
+                <p>The error text to be stored.</p>
             </td>
         </tr>
         
@@ -1677,7 +1672,7 @@ The error text to be stored.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#504'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#522'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1699,7 +1694,7 @@ The error text to be stored.</p>
   
   <h1>Method: ErrorHandler::traceActive()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive(): bool;</div>
 
   
   <div class="short-description">
@@ -1710,7 +1705,7 @@ The error text to be stored.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>If the trace is active, any eror, warning or notice is traced to
+  <p>If the trace is active, any error, warning or notice is traced to
 the standard file.</p>
 <p>The trace is generally managed over the setting tracing_enabled.
 But you can also temporarily disable tracing, e.g. to keep the
@@ -1728,8 +1723,7 @@ entry, but it is a controlled noticed and should not clutter the trace.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns the state whether the trace is active or not.
-Returns the state whether the trace is active or not.</p></div>
+  <div class="item_description"><p>Returns the state whether the trace is active or not.</p></div>
   
   </div>
   
@@ -1757,7 +1751,7 @@ Returns the state whether the trace is active or not.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#528'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#546'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1788,7 +1782,7 @@ Returns the state whether the trace is active or not.</p></div>
   
   <h1>Method: ErrorHandler::trace_message()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trace_message(string <span class="php-var">$etype</span>, string <span class="php-var">$message</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trace_message(string <span class="php-var">$etype</span>, string <span class="php-var">$message</span>): bool;</div>
 
   
   <div class="short-description">
@@ -1826,8 +1820,7 @@ Returns the state whether the trace is active or not.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The type of the message to be traced.
-The type of the message to be traced.</p>
+                <p>The type of the message to be traced.</p>
             </td>
         </tr>
         
@@ -1845,8 +1838,7 @@ The type of the message to be traced.</p>
                 
             </td>
             <td class="description_column">
-                <p>The message to be traced.
-The message to be traced.</p>
+                <p>The message to be traced.</p>
             </td>
         </tr>
         
@@ -1858,8 +1850,7 @@ The message to be traced.</p>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the message has been successfully trace, otherwise false.
-Returns true if the message has been successfully trace, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the message has been successfully trace, otherwise false.</p></div>
   
   </div>
   
@@ -1893,7 +1884,7 @@ Returns true if the message has been successfully trace, otherwise false.</p></d
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#321'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#335'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -1915,7 +1906,7 @@ Returns true if the message has been successfully trace, otherwise false.</p></d
   
   <h1>Method: ErrorHandler::trim_path()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trim_path(string <span class="php-var">$path</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trim_path(string <span class="php-var">$path</span>): string;</div>
 
   
   <div class="short-description">
@@ -1953,8 +1944,7 @@ Returns true if the message has been successfully trace, otherwise false.</p></d
                 
             </td>
             <td class="description_column">
-                <p>The path.
-The path.</p>
+                <p>The path.</p>
             </td>
         </tr>
         
@@ -1966,8 +1956,7 @@ The path.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the cut path.
-Returns the cut path.</p></div>
+  <div class="item_description"><p>Returns the cut path.</p></div>
   
   </div>
   
@@ -1990,7 +1979,7 @@ Returns the cut path.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#141'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#142'>SmartFactory/ErrorHandler.php</a>
   </div>
   
 
@@ -2012,7 +2001,7 @@ Returns the cut path.</p></div>
   
   <h1>Method: ErrorHandler::truncate_argument()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> truncate_argument(string <span class="php-var">$str</span>, int <span class="php-var">$limit</span>) : string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> truncate_argument(?string <span class="php-var">$str</span>, int <span class="php-var">$limit</span>): string;</div>
 
   
   <div class="short-description">
@@ -2044,14 +2033,13 @@ Returns the cut path.</p></div>
                 by value
             </td>
             <td>
-                string
+                ?string
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The string to be truncated.
-The string to be truncated.</p>
+                <p>The string to be truncated.</p>
             </td>
         </tr>
         
@@ -2069,8 +2057,7 @@ The string to be truncated.</p>
                 
             </td>
             <td class="description_column">
-                <p>The limit of the length after which the string is truncated.
-The limit of the length after which the string is truncated.</p>
+                <p>The limit of the length after which the string is truncated.</p>
             </td>
         </tr>
         
@@ -2082,8 +2069,7 @@ The limit of the length after which the string is truncated.</p>
   <div class="item_list">
   string<br>
   
-  <div class="item_description"><p>Returns the truncated string.
-Returns the truncated string.</p></div>
+  <div class="item_description"><p>Returns the truncated string.</p></div>
   
   </div>
   
@@ -2106,11 +2092,11 @@ Returns the truncated string.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ErrorHandler.php.html#225'>SmartFactory/ErrorHandler.php</a>
+  <a href='source-SmartFactory.ErrorHandler.php.html#234'>SmartFactory/ErrorHandler.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

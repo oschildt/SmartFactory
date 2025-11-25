@@ -38,12 +38,12 @@ interface IShardManager
      * - $parameters["autoconnect"] - should true if the connection should be established automatically
      *                 upon creation.
      *
-     * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
+     * - $parameters["read_only"] - this parameter sets the connection to the read only mode.
      *
      * @param string $load_balancing_group
      * The name of the load balancing group, if the shard should be part of it.
      *
-     * @return boolean
+     * @return bool
      * It should return true if the registering was successful, otherwise false.
      *
      * @throws \Exception
@@ -51,7 +51,7 @@ interface IShardManager
      *
      * @author Oleg Schildt
      */
-    public function registerShard($shard_name, $parameters, $load_balancing_group = "");
+    public function registerShard(string $shard_name, array $parameters, string $load_balancing_group = ""): bool;
     
     /**
      * The method provides the DBWorker object for working with the shard.
@@ -65,7 +65,7 @@ interface IShardManager
      * @param string $shard_name
      * The name of the shard.
      *
-     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+     * @return ?\SmartFactory\DatabaseWorkers\DBWorker
      * returns DBWorker object or null if the object could not be created.
      *
      * @throws \Exception
@@ -73,7 +73,7 @@ interface IShardManager
      *
      * @author Oleg Schildt
      */
-    public function dbshard($shard_name);
+    public function dbshard(string $shard_name): ?\SmartFactory\DatabaseWorkers\DBWorker;
     
     /**
      * The method provides the DBWorker object for working with the shard, that is chosen randomly
@@ -82,7 +82,7 @@ interface IShardManager
      * @param string $load_balancing_group
      * The name of the load balancing group, from which the shard should be randomly picked.
      *
-     * @return \SmartFactory\DatabaseWorkers\DBWorker|null
+     * @return ?\SmartFactory\DatabaseWorkers\DBWorker
      * returns DBWorker object or null if the object could not be created.
      *
      * @throws \Exception
@@ -90,5 +90,5 @@ interface IShardManager
      *
      * @author Oleg Schildt
      */
-    public function randomDBShard($load_balancing_group);
+    public function randomDBShard(string $load_balancing_group): ?\SmartFactory\DatabaseWorkers\DBWorker;
 } // IShardManager

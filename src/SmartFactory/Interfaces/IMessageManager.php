@@ -9,8 +9,6 @@
 
 namespace SmartFactory\Interfaces;
 
-use \SmartFactory\SmartException;
-
 /**
  * Interface for working with messages.
  *
@@ -31,7 +29,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function init($parameters);
+    public function init(array $parameters): void;
 
     /**
      * Stores the error to be reported.
@@ -46,7 +44,7 @@ interface IMessageManager extends IInitable
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
      * @param string $related_element
-     * The error element acciciated with the error.
+     * The error element vaccinated with the error.
      *
      * @param string $code
      * The error code to be reported.
@@ -57,13 +55,14 @@ interface IMessageManager extends IInitable
      * "debug_mode".
      *
      * @param string $file
-     * The source file where the error occured. Per default, the file where the adding error called.
+     * The source file where the error occurred. Per default, the file where the adding error called.
      *
      * @param string $line
-     * The source file line where the error occured. Per default, the file line where the adding error called.
+     * The source file line where the error occurred. Per default, the file line where the adding error called.
      *
      * @return void
      *
+     * @see IMessageManager::addErrorFromSmartException()
      * @see IMessageManager::addWarning()
      * @see IMessageManager::addProgWarning()
      * @see IMessageManager::addDebugMessage()
@@ -75,7 +74,29 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function addError($message, $details = [], $related_element = "", $code = "", $technical_info = "", $file = "", $line = "");
+    public function addError(string $message, array $details = [], string $related_element = "", string $code = "", string $technical_info = "", string $file = "", string $line = ""): void;
+
+    /**
+     * Stores the error to be reported.
+     *
+     * @param \SmartFactory\SmartException $smart_exception
+     * The exception object of collection of exceptions.
+     *
+     * @return void
+     *
+     * @see IMessageManager::addError()
+     * @see IMessageManager::addWarning()
+     * @see IMessageManager::addProgWarning()
+     * @see IMessageManager::addDebugMessage()
+     * @see IMessageManager::addInfoMessage()
+     * @see IMessageManager::addBubbleMessage()
+     * @see IMessageManager::getErrors()
+     * @see IMessageManager::hasErrors()
+     * @see IMessageManager::clearErrors()
+     *
+     * @author Oleg Schildt
+     */
+    public function addErrorFromSmartException(\SmartFactory\SmartException $smart_exception): void;
 
     /**
      * Clears the stored error messages.
@@ -92,12 +113,12 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function clearErrors();
+    public function clearErrors(): void;
     
     /**
      * Checks whether a stored error message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored error message exists, otherwise false.
      *
      * @see IMessageManager::hasWarnings()
@@ -110,7 +131,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function hasErrors();
+    public function hasErrors(): bool;
     
     /**
      * Returns the array of errors if any have been stored.
@@ -128,7 +149,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getErrors();
+    public function getErrors(): array;
     
     /**
      * Stores the warning to be reported.
@@ -143,7 +164,7 @@ interface IMessageManager extends IInitable
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
      * @param string $related_element
-     * The error element accociated with the warning.
+     * The error element associated with the warning.
      *
      * @return void
      *
@@ -158,7 +179,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function addWarning($message, $details = [], $related_element = "");
+    public function addWarning(string $message, array $details = [], string $related_element = ""): void;
     
     /**
      * Clears the stored warning messages.
@@ -175,12 +196,12 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function clearWarnings();
+    public function clearWarnings(): void;
     
     /**
      * Checks whether a stored error warning exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored warning message exists, otherwise false.
      *
      * @see IMessageManager::hasErrors()
@@ -193,7 +214,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function hasWarnings();
+    public function hasWarnings(): bool;
     
     /**
      * Returns the array of warnings if any have been stored.
@@ -211,7 +232,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getWarnings();
+    public function getWarnings(): array;
     
     /**
      * Stores the programming warning to be reported.
@@ -223,10 +244,10 @@ interface IMessageManager extends IInitable
      * The programming warning message to be reported.
      *
      * @param string $file
-     * The source file where the error occured. Per default, the file where the adding error called.
+     * The source file where the error occurred. Per default, the file where the adding error called.
      *
      * @param string $line
-     * The source file line where the error occured. Per default, the file line where the adding error called.
+     * The source file line where the error occurred. Per default, the file line where the adding error called.
      *
      * @return void
      *
@@ -241,7 +262,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function addProgWarning($message, $file = "", $line = "");
+    public function addProgWarning(string $message, string $file = "", string $line = ""): void;
     
     /**
      * Clears the stored programming warning messages.
@@ -258,12 +279,12 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function clearProgWarnings();
+    public function clearProgWarnings(): void;
     
     /**
      * Checks whether a stored programming warning exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored programming warning message exists, otherwise false.
      *
      * @see IMessageManager::hasErrors()
@@ -276,7 +297,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function hasProgWarnings();
+    public function hasProgWarnings(): bool;
     
     /**
      * Returns the array of programming warnings if any have been stored.
@@ -294,7 +315,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getProgWarnings();
+    public function getProgWarnings(): array;
     
     /**
      * Stores the debugging message to be reported.
@@ -307,10 +328,10 @@ interface IMessageManager extends IInitable
      * The debugging message to be reported.
      *
      * @param string $file
-     * The source file where the debug output occured. Per default, the file where the debug output called.
+     * The source file where the debug output occurred. Per default, the file where the debug output called.
      *
      * @param string $line
-     * The source file line where the debug output occured. Per default, the file line where the debug output called.
+     * The source file line where the debug output occurred. Per default, the file line where the debug output called.
      * 
      * @return void
      *
@@ -325,7 +346,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function addDebugMessage($message, $file = "", $line = "");
+    public function addDebugMessage(string $message, string $file = "", string $line = ""): void;
     
     /**
      * Clears the stored debugging messages.
@@ -342,12 +363,12 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function clearDebugMessages();
+    public function clearDebugMessages(): void;
     
     /**
      * Checks whether a stored debugging message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the stored debugging message exists, otherwise false.
      *
      * @see IMessageManager::hasErrors()
@@ -360,7 +381,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function hasDebugMessages();
+    public function hasDebugMessages(): bool;
     
     /**
      * Returns the array of debugging messages if any have been stored.
@@ -378,7 +399,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getDebugMessages();
+    public function getDebugMessages(): array;
     
     /**
      * Stores the information message to be reported.
@@ -392,7 +413,7 @@ interface IMessageManager extends IInitable
      * In that case, the servers return the message id instead of final text and the details, the client
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
-     * @param boolean $autoclose
+     * @param bool $autoclose
      * The flag that controls whether the message box should be closed
      * automatically after a time.
      *
@@ -409,7 +430,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function addInfoMessage($message, $details = [], $autoclose = false);
+    public function addInfoMessage(string $message, array $details = [], bool $autoclose = false): void;
     
     /**
      * Clears the stored information messages.
@@ -426,12 +447,12 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function clearInfoMessages();
+    public function clearInfoMessages(): void;
     
     /**
      * Checks whether an information message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the information message exists, otherwise false.
      *
      * @see IMessageManager::hasErrors()
@@ -444,7 +465,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function hasInfoMessages();
+    public function hasInfoMessages(): bool;
     
     /**
      * Returns the array of information messages if any have been stored.
@@ -462,7 +483,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getInfoMessages();
+    public function getInfoMessages(): array;
 
     /**
      * Stores the information message to be reported.
@@ -476,7 +497,7 @@ interface IMessageManager extends IInitable
      * In that case, the servers return the message id instead of final text and the details, the client
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
-     * @param boolean $autoclose
+     * @param bool $autoclose
      * The flag that controls whether the message box should be closed
      * automatically after a time.
      *
@@ -493,7 +514,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function addBubbleMessage($message, $details = [], $autoclose = true);
+    public function addBubbleMessage(string $message, array $details = [], bool $autoclose = true): void;
 
     /**
      * Clears the stored information messages.
@@ -510,12 +531,12 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function clearBubbleMessages();
+    public function clearBubbleMessages(): void;
 
     /**
      * Checks whether an information message exist.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the information message exists, otherwise false.
      *
      * @see IMessageManager::hasErrors()
@@ -528,7 +549,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function hasBubbleMessages();
+    public function hasBubbleMessages(): bool;
 
     /**
      * Returns the array of information messages if any have been stored.
@@ -546,7 +567,7 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getBubbleMessages();
+    public function getBubbleMessages(): array;
 
     /**
      * Clears all stored messages and active elements.
@@ -562,5 +583,5 @@ interface IMessageManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function clearAll();
+    public function clearAll(): void;
 } // IMessageManager

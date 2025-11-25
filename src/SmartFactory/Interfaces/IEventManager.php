@@ -33,8 +33,7 @@ interface IEventManager
      * - $event - the event code.
      * - $parameters - parameters passed by the firing of the event.
      *
-     * @return boolean
-     * Should return true if the adding was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -45,8 +44,8 @@ interface IEventManager
      *
      * @author Oleg Schildt
      */
-    public function addHandler($event, $handler);
-    
+    public function addHandler(string $event, callable $handler): void;
+
     /**
      * Deletes the handler of an event.
      *
@@ -54,10 +53,9 @@ interface IEventManager
      * Event code.
      *
      * @param callable $handler
-     * The name or definition of the handler function. therwise false.
+     * The name or definition of the handler function. otherwise false.
      *
-     * @return boolean
-     * Should return true if the deletion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -68,16 +66,15 @@ interface IEventManager
      *
      * @author Oleg Schildt
      */
-    public function deleteHandler($event, $handler);
-    
+    public function deleteHandler(string $event, callable $handler): void;
+
     /**
      * Deletes all handlers of an event.
      *
      * @param string $event
      * Event code.
      *
-     * @return boolean
-     * Should return true if the deletion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -88,13 +85,12 @@ interface IEventManager
      *
      * @author Oleg Schildt
      */
-    public function deleteHandlers($event);
-    
+    public function deleteHandlers(string $event): void;
+
     /**
      * Deletes all handlers of all events.
      *
-     * @return boolean
-     * Should return true if the deletion was successfull, otherwise false.
+     * @return void
      *
      * @see IEventManager::addHandler()
      * @see IEventManager::deleteHandler()
@@ -102,8 +98,8 @@ interface IEventManager
      *
      * @author Oleg Schildt
      */
-    public function deleteAllHandlers();
-    
+    public function deleteAllHandlers(): void;
+
     /**
      * Suspends an event.
      *
@@ -112,8 +108,7 @@ interface IEventManager
      * @param string $event
      * Event code.
      *
-     * @return boolean
-     * Should return true if the suspesion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -123,16 +118,15 @@ interface IEventManager
      *
      * @author Oleg Schildt
      */
-    public function suspendEvent($event);
-    
+    public function suspendEvent(string $event): void;
+
     /**
      * Resumes a previously suspended event.
      *
      * @param string $event
      * Event code.
      *
-     * @return boolean
-     * Should return true if the suspesion was successfull, otherwise false.
+     * @return void
      *
      * @throws \Exception
      * It might throw an exception in the case of any errors.
@@ -142,21 +136,20 @@ interface IEventManager
      *
      * @author Oleg Schildt
      */
-    public function resumeEvent($event);
-    
+    public function resumeEvent(string $event): void;
+
     /**
      * Resumes all previously suspended events.
      *
-     * @return boolean
-     * Should return true if the suspesion was successfull, otherwise false.
+     * @return void
      *
      * @see IEventManager::suspendEvent()
      * @see IEventManager::resumeEvent()
      *
      * @author Oleg Schildt
      */
-    public function resumeAllEvents();
-    
+    public function resumeAllEvents(): void;
+
     /**
      * Fires and event.
      *
@@ -174,5 +167,5 @@ interface IEventManager
      *
      * @author Oleg Schildt
      */
-    public function fireEvent($event, $parameters);
+    public function fireEvent(string $event, array $parameters): int;
 } // IEventManager

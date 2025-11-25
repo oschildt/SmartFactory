@@ -132,12 +132,7 @@
 
 
 
-<h2>Known inheritances</h2>
-<div class="item_list">
 
-<a href='class-SmartFactory.SessionMessageManager.html'>\SmartFactory\SessionMessageManager</a><br>
-
-</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -198,7 +193,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the state whether technical details, programmer warnings and debug infromation are also sent to the client.</p>
+              <p>Internal variable for storing the state whether technical details, programmer warnings and debug information are also sent to the client.</p>
           </td>
       </tr><tr>
           <td>
@@ -263,6 +258,19 @@ line number are written from where it is called.</p>
       </tr><tr>
           <td>
               <div style='float:left'><a href="#addError">addError()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the error to be reported.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#addErrorFromSmartException">addErrorFromSmartException()</a></div>
 
               <div style='float:right'>
               
@@ -599,7 +607,7 @@ line number are written from where it is called.</p>
 
   
   <div class="short-description">
-  <p>Internal variable for storing the state whether technical details, programmer warnings and debug infromation are also sent to the client.</p>
+  <p>Internal variable for storing the state whether technical details, programmer warnings and debug information are also sent to the client.</p>
   </div>
   
 
@@ -633,7 +641,7 @@ line number are written from where it is called.</p>
   
   <h1>Property: MessageManager::$messages</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$messages</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$messages</span> = [];</div>
 
   
   <div class="short-description">
@@ -671,7 +679,7 @@ line number are written from where it is called.</p>
   
   <h1>Property: MessageManager::$write_source_file_and_line_by_debug</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$write_source_file_and_line_by_debug</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$write_source_file_and_line_by_debug</span> = <span class="php-keyword1">false</span>;</div>
 
   
   <div class="short-description">
@@ -685,7 +693,7 @@ line number are written from where it is called.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  bool
   </div>
   
 
@@ -712,7 +720,7 @@ line number are written from where it is called.</p>
   
   <h1>Method: MessageManager::addBubbleMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addBubbleMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">true</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addBubbleMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">true</span>): void;</div>
 
   
   <div class="short-description">
@@ -750,8 +758,7 @@ line number are written from where it is called.</p>
                 
             </td>
             <td class="description_column">
-                <p>The information message to be reported.
-The information message to be reported.</p>
+                <p>The information message to be reported.</p>
             </td>
         </tr>
         
@@ -772,7 +779,6 @@ The information message to be reported.</p>
                 <p>The details might be useful if the message translations are provided on the client, not
 on the server, and the message should contain some details that may vary from case to case.
 In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.
 uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
             </td>
         </tr>
@@ -792,7 +798,6 @@ uses the message id, gets the final translated text and substitutes the paramete
             </td>
             <td class="description_column">
                 <p>The flag that controls whether the message box should be closed
-automatically after a time.
 automatically after a time.</p>
             </td>
         </tr>
@@ -831,7 +836,7 @@ automatically after a time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#734'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#769'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -880,7 +885,7 @@ automatically after a time.</p>
   
   <h1>Method: MessageManager::addDebugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addDebugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addDebugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
 
   
   <div class="short-description">
@@ -925,8 +930,7 @@ e.g. to the browser console or in a lightbox.</p>
                 
             </td>
             <td class="description_column">
-                <p>The debugging message to be reported.
-The debugging message to be reported.</p>
+                <p>The debugging message to be reported.</p>
             </td>
         </tr>
         
@@ -944,8 +948,7 @@ The debugging message to be reported.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file where the debug output occured. Per default, the file where the debug output called.
-The source file where the debug output occured. Per default, the file where the debug output called.</p>
+                <p>The source file where the debug output occurred. Per default, the file where the debug output called.</p>
             </td>
         </tr>
         
@@ -963,8 +966,7 @@ The source file where the debug output occured. Per default, the file where the 
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file line where the debug output occured. Per default, the file line where the debug output called.
-The source file line where the debug output occured. Per default, the file line where the debug output called.</p>
+                <p>The source file line where the debug output occurred. Per default, the file line where the debug output called.</p>
             </td>
         </tr>
         
@@ -1002,7 +1004,7 @@ The source file line where the debug output occured. Per default, the file line 
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#491'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#526'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -1097,8 +1099,7 @@ The source file line where the debug output occured. Per default, the file line 
                 
             </td>
             <td class="description_column">
-                <p>The error message to be reported.
-The error message to be reported.</p>
+                <p>The error message to be reported.</p>
             </td>
         </tr>
         
@@ -1119,7 +1120,6 @@ The error message to be reported.</p>
                 <p>The details might be useful if the message translations are provided on the client, not
 on the server, and the message should contain some details that may vary from case to case.
 In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.
 uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
             </td>
         </tr>
@@ -1138,8 +1138,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The error element accociated with the error.
-The error element accociated with the error.</p>
+                <p>The error element associated with the error.</p>
             </td>
         </tr>
         
@@ -1157,8 +1156,7 @@ The error element accociated with the error.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The error code to be reported.
-The error code to be reported.</p>
+                <p>The error code to be reported.</p>
             </td>
         </tr>
         
@@ -1178,8 +1176,7 @@ The error code to be reported.</p>
             <td class="description_column">
                 <p>The technical information for the error. Displaying
 of this part might be controlled over an option
-&quot;debug_mode&quot;.
-&quot;debug_mode&quot;.</p>
+"debug_mode".</p>
             </td>
         </tr>
         
@@ -1197,8 +1194,7 @@ of this part might be controlled over an option
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file where the error occured. Per default, the file where the adding error called.
-The source file where the error occured. Per default, the file where the adding error called.</p>
+                <p>The source file where the error occurred. Per default, the file where the adding error called.</p>
             </td>
         </tr>
         
@@ -1216,8 +1212,7 @@ The source file where the error occured. Per default, the file where the adding 
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file line where the error occured. Per default, the file line where the adding error called.
-The source file line where the error occured. Per default, the file line where the adding error called.</p>
+                <p>The source file line where the error occurred. Per default, the file line where the adding error called.</p>
             </td>
         </tr>
         
@@ -1255,12 +1250,145 @@ The source file line where the error occured. Per default, the file line where t
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#117'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#118'>SmartFactory/MessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addErrorFromSmartException'>\SmartFactory\MessageManager::addErrorFromSmartException()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addProgWarning'>\SmartFactory\MessageManager::addProgWarning()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addDebugMessage'>\SmartFactory\MessageManager::addDebugMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addInfoMessage'>\SmartFactory\MessageManager::addInfoMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#addBubbleMessage'>\SmartFactory\MessageManager::addBubbleMessage()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#getErrors'>\SmartFactory\MessageManager::getErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#hasErrors'>\SmartFactory\MessageManager::hasErrors()</a><br>
+  
+  
+  <a href='class-SmartFactory.MessageManager.html#clearErrors'>\SmartFactory\MessageManager::clearErrors()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addErrorFromSmartException">
+  
+  <h1>Method: MessageManager::addErrorFromSmartException()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addErrorFromSmartException(\SmartFactory\SmartException|\SmartFactory\SmartExceptionCollection <span class="php-var">$smart_exception</span>
+                                          ) : void;
+</div>
+
+  
+  <div class="short-description">
+  <p>Stores the error to be reported.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                $smart_exception
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a>|<a href='class-SmartFactory.SmartExceptionCollection.html'>\SmartFactory\SmartExceptionCollection</a>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The exception object of collection of exceptions.</p>
+            </td>
+        </tr>
+        
+        
+    </table>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  void<br>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addErrorFromSmartException'>\SmartFactory\Interfaces\IMessageManager::addErrorFromSmartException()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-SmartFactory.MessageManager.php.html#178'>SmartFactory/MessageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href='class-SmartFactory.MessageManager.html#addError'>\SmartFactory\MessageManager::addError()</a><br>
+  
   
   <a href='class-SmartFactory.MessageManager.html#addWarning'>\SmartFactory\MessageManager::addWarning()</a><br>
   
@@ -1304,7 +1432,7 @@ The source file line where the error occured. Per default, the file line where t
   
   <h1>Method: MessageManager::addInfoMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addInfoMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">false</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addInfoMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">false</span>): void;</div>
 
   
   <div class="short-description">
@@ -1342,8 +1470,7 @@ The source file line where the error occured. Per default, the file line where t
                 
             </td>
             <td class="description_column">
-                <p>The information message to be reported.
-The information message to be reported.</p>
+                <p>The information message to be reported.</p>
             </td>
         </tr>
         
@@ -1364,7 +1491,6 @@ The information message to be reported.</p>
                 <p>The details might be useful if the message translations are provided on the client, not
 on the server, and the message should contain some details that may vary from case to case.
 In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.
 uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
             </td>
         </tr>
@@ -1383,8 +1509,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 false
             </td>
             <td class="description_column">
-                <p>The flag that controls whether the message box should be closed automatically after a time.
-The flag that controls whether the message box should be closed automatically after a time.</p>
+                <p>The flag that controls whether the message box should be closed automatically after a time.</p>
             </td>
         </tr>
         
@@ -1422,7 +1547,7 @@ The flag that controls whether the message box should be closed automatically af
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#623'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#658'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -1471,7 +1596,7 @@ The flag that controls whether the message box should be closed automatically af
   
   <h1>Method: MessageManager::addProgWarning()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addProgWarning(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addProgWarning(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
 
   
   <div class="short-description">
@@ -1483,7 +1608,7 @@ The flag that controls whether the message box should be closed automatically af
   <div class="long_description">
   <h2>Details</h2>
   <p>Programming warnings are shown only if the option
-&quot;show programming warning&quot; is active.</p>
+"show programming warning" is active.</p>
   </div>
   
 
@@ -1515,8 +1640,7 @@ The flag that controls whether the message box should be closed automatically af
                 
             </td>
             <td class="description_column">
-                <p>The programming warning message to be reported.
-The programming warning message to be reported.</p>
+                <p>The programming warning message to be reported.</p>
             </td>
         </tr>
         
@@ -1534,8 +1658,7 @@ The programming warning message to be reported.</p>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file where the error occured. Per default, the file where the adding error called.
-The source file where the error occured. Per default, the file where the adding error called.</p>
+                <p>The source file where the error occurred. Per default, the file where the adding error called.</p>
             </td>
         </tr>
         
@@ -1553,8 +1676,7 @@ The source file where the error occured. Per default, the file where the adding 
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file line where the error occured. Per default, the file line where the adding error called.
-The source file line where the error occured. Per default, the file line where the adding error called.</p>
+                <p>The source file line where the error occurred. Per default, the file line where the adding error called.</p>
             </td>
         </tr>
         
@@ -1592,7 +1714,7 @@ The source file line where the error occured. Per default, the file line where t
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#364'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#399'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -1641,7 +1763,7 @@ The source file line where the error occured. Per default, the file line where t
   
   <h1>Method: MessageManager::addWarning()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addWarning(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addWarning(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
 
   
   <div class="short-description">
@@ -1679,8 +1801,7 @@ The source file line where the error occured. Per default, the file line where t
                 
             </td>
             <td class="description_column">
-                <p>The warning message to be reported.
-The warning message to be reported.</p>
+                <p>The warning message to be reported.</p>
             </td>
         </tr>
         
@@ -1701,7 +1822,6 @@ The warning message to be reported.</p>
                 <p>The details might be useful if the message translations are provided on the client, not
 on the server, and the message should contain some details that may vary from case to case.
 In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.
 uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
             </td>
         </tr>
@@ -1720,8 +1840,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The error element accociated with the warning.
-The error element accociated with the warning.</p>
+                <p>The error element associated with the warning.</p>
             </td>
         </tr>
         
@@ -1759,7 +1878,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#254'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#289'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -1808,7 +1927,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::clearAll()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearAll() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearAll(): void;</div>
 
   
   <div class="short-description">
@@ -1853,7 +1972,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#830'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#865'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -1896,7 +2015,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::clearBubbleMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearBubbleMessages() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearBubbleMessages(): void;</div>
 
   
   <div class="short-description">
@@ -1941,7 +2060,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#762'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#797'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -1987,7 +2106,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::clearDebugMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearDebugMessages() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearDebugMessages(): void;</div>
 
   
   <div class="short-description">
@@ -2032,7 +2151,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#541'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#576'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2078,7 +2197,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::clearErrors()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearErrors() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearErrors(): void;</div>
 
   
   <div class="short-description">
@@ -2123,7 +2242,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#172'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#207'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2169,7 +2288,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::clearInfoMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearInfoMessages() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearInfoMessages(): void;</div>
 
   
   <div class="short-description">
@@ -2214,7 +2333,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#651'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#686'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2260,7 +2379,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::clearProgWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearProgWarnings() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearProgWarnings(): void;</div>
 
   
   <div class="short-description">
@@ -2305,7 +2424,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#408'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#443'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2351,7 +2470,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::clearWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearWarnings() : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearWarnings(): void;</div>
 
   
   <div class="short-description">
@@ -2396,7 +2515,7 @@ The error element accociated with the warning.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#282'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#317'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2442,7 +2561,7 @@ The error element accociated with the warning.</p>
   
   <h1>Method: MessageManager::getBubbleMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getBubbleMessages() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getBubbleMessages(): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2467,8 +2586,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of information messages if any have been stored.
-Returns the array of information messages if any have been stored.</p></div>
+  <div class="item_description"><p>Returns the array of information messages if any have been stored.</p></div>
   
   </div>
   
@@ -2496,7 +2614,7 @@ Returns the array of information messages if any have been stored.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#807'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#842'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2542,7 +2660,7 @@ Returns the array of information messages if any have been stored.</p></div>
   
   <h1>Method: MessageManager::getDebugMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getDebugMessages() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getDebugMessages(): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2567,8 +2685,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of debugging messages if any have been stored.
-Returns the array of debugging messages if any have been stored.</p></div>
+  <div class="item_description"><p>Returns the array of debugging messages if any have been stored.</p></div>
   
   </div>
   
@@ -2596,7 +2713,7 @@ Returns the array of debugging messages if any have been stored.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#586'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#621'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2642,7 +2759,7 @@ Returns the array of debugging messages if any have been stored.</p></div>
   
   <h1>Method: MessageManager::getErrors()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrors() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrors(): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2667,8 +2784,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of errors if any have been stored.
-Returns the array of errors if any have been stored.</p></div>
+  <div class="item_description"><p>Returns the array of errors if any have been stored.</p></div>
   
   </div>
   
@@ -2696,7 +2812,7 @@ Returns the array of errors if any have been stored.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#217'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#252'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2742,7 +2858,7 @@ Returns the array of errors if any have been stored.</p></div>
   
   <h1>Method: MessageManager::getInfoMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getInfoMessages() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getInfoMessages(): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2767,8 +2883,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of information messages if any have been stored.
-Returns the array of information messages if any have been stored.</p></div>
+  <div class="item_description"><p>Returns the array of information messages if any have been stored.</p></div>
   
   </div>
   
@@ -2796,7 +2911,7 @@ Returns the array of information messages if any have been stored.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#696'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#731'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2842,7 +2957,7 @@ Returns the array of information messages if any have been stored.</p></div>
   
   <h1>Method: MessageManager::getMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getMessages(<span class="php-keyword1">array</span> &amp;<span class="php-var">$messages</span>) : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getMessages(<span class="php-keyword1">array</span> <span class="php-var">$messages</span>): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2871,7 +2986,7 @@ Returns the array of information messages if any have been stored.</p></div>
                 $messages
             </td>
             <td>
-                by reference
+                by value
             </td>
             <td>
                 array
@@ -2880,8 +2995,7 @@ Returns the array of information messages if any have been stored.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>The messages to be retrieved.
-The messages to be retrieved.</p>
+                <p>The messages to be retrieved.</p>
             </td>
         </tr>
         
@@ -2893,8 +3007,7 @@ The messages to be retrieved.</p>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of messages.
-Returns the array of messages.</p></div>
+  <div class="item_description"><p>Returns the array of messages.</p></div>
   
   </div>
   
@@ -2917,7 +3030,7 @@ Returns the array of messages.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#851'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#886'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -2939,7 +3052,7 @@ Returns the array of messages.</p></div>
   
   <h1>Method: MessageManager::getProgWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getProgWarnings() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getProgWarnings(): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -2964,8 +3077,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of programming warnings if any have been stored.
-Returns the array of programming warnings if any have been stored.</p></div>
+  <div class="item_description"><p>Returns the array of programming warnings if any have been stored.</p></div>
   
   </div>
   
@@ -2993,7 +3105,7 @@ Returns the array of programming warnings if any have been stored.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#453'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#488'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3039,7 +3151,7 @@ Returns the array of programming warnings if any have been stored.</p></div>
   
   <h1>Method: MessageManager::getWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getWarnings() : <span class="php-keyword1">array</span>;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getWarnings(): <span class="php-keyword1">array</span>;</div>
 
   
   <div class="short-description">
@@ -3064,8 +3176,7 @@ the message array is cleared to avoid displaying of the same messages twice.</p>
   <div class="item_list">
   array<br>
   
-  <div class="item_description"><p>Returns the array of warnings if any have been stored.
-Returns the array of warnings if any have been stored.</p></div>
+  <div class="item_description"><p>Returns the array of warnings if any have been stored.</p></div>
   
   </div>
   
@@ -3093,7 +3204,7 @@ Returns the array of warnings if any have been stored.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#327'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#362'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3139,7 +3250,7 @@ Returns the array of warnings if any have been stored.</p></div>
   
   <h1>Method: MessageManager::hasBubbleMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasBubbleMessages() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasBubbleMessages(): bool;</div>
 
   
   <div class="short-description">
@@ -3158,8 +3269,7 @@ Returns the array of warnings if any have been stored.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the information message exists, otherwise false.
-Returns true if the information message exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the information message exists, otherwise false.</p></div>
   
   </div>
   
@@ -3187,7 +3297,7 @@ Returns true if the information message exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#783'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#818'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3233,7 +3343,7 @@ Returns true if the information message exists, otherwise false.</p></div>
   
   <h1>Method: MessageManager::hasDebugMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasDebugMessages() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasDebugMessages(): bool;</div>
 
   
   <div class="short-description">
@@ -3252,8 +3362,7 @@ Returns true if the information message exists, otherwise false.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the stored debugging message exists, otherwise false.
-Returns true if the stored debugging message exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the stored debugging message exists, otherwise false.</p></div>
   
   </div>
   
@@ -3281,7 +3390,7 @@ Returns true if the stored debugging message exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#562'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#597'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3327,7 +3436,7 @@ Returns true if the stored debugging message exists, otherwise false.</p></div>
   
   <h1>Method: MessageManager::hasErrors()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasErrors() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasErrors(): bool;</div>
 
   
   <div class="short-description">
@@ -3346,8 +3455,7 @@ Returns true if the stored debugging message exists, otherwise false.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the stored error message exists, otherwise false.
-Returns true if the stored error message exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the stored error message exists, otherwise false.</p></div>
   
   </div>
   
@@ -3375,7 +3483,7 @@ Returns true if the stored error message exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#193'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#228'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3421,7 +3529,7 @@ Returns true if the stored error message exists, otherwise false.</p></div>
   
   <h1>Method: MessageManager::hasInfoMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasInfoMessages() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasInfoMessages(): bool;</div>
 
   
   <div class="short-description">
@@ -3440,8 +3548,7 @@ Returns true if the stored error message exists, otherwise false.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the information message exists, otherwise false.
-Returns true if the information message exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the information message exists, otherwise false.</p></div>
   
   </div>
   
@@ -3469,7 +3576,7 @@ Returns true if the information message exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#672'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#707'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3515,7 +3622,7 @@ Returns true if the information message exists, otherwise false.</p></div>
   
   <h1>Method: MessageManager::hasProgWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasProgWarnings() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasProgWarnings(): bool;</div>
 
   
   <div class="short-description">
@@ -3534,8 +3641,7 @@ Returns true if the information message exists, otherwise false.</p></div>
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the stored programming warning message exists, otherwise false.
-Returns true if the stored programming warning message exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the stored programming warning message exists, otherwise false.</p></div>
   
   </div>
   
@@ -3563,7 +3669,7 @@ Returns true if the stored programming warning message exists, otherwise false.<
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#429'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#464'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3609,7 +3715,7 @@ Returns true if the stored programming warning message exists, otherwise false.<
   
   <h1>Method: MessageManager::hasWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasWarnings() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasWarnings(): bool;</div>
 
   
   <div class="short-description">
@@ -3628,8 +3734,7 @@ Returns true if the stored programming warning message exists, otherwise false.<
   <div class="item_list">
   bool<br>
   
-  <div class="item_description"><p>Returns true if the stored warning message exists, otherwise false.
-Returns true if the stored warning message exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the stored warning message exists, otherwise false.</p></div>
   
   </div>
   
@@ -3657,7 +3762,7 @@ Returns true if the stored warning message exists, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.MessageManager.php.html#303'>SmartFactory/MessageManager.php</a>
+  <a href='source-SmartFactory.MessageManager.php.html#338'>SmartFactory/MessageManager.php</a>
   </div>
   
 
@@ -3703,7 +3808,7 @@ Returns true if the stored warning message exists, otherwise false.</p></div>
   
   <h1>Method: MessageManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
 
   
   <div class="short-description">
@@ -3744,11 +3849,10 @@ Returns true if the stored warning message exists, otherwise false.</p></div>
                 <p>Settings for message management as an associative array in the form key =&gt; value:</p>
 <ul>
 <li>
-<p>$parameters[&quot;debug_mode&quot;] - if set to True, the technical details, programmer warnings and debug infromation are also sent to the client. Use it only during dubugging!</p>
+<p>$parameters["debug_mode"] - if set to True, the technical details, programmer warnings and debug information are also sent to the client. Use it only during debugging!</p>
 </li>
 <li>
-<p>$parameters[&quot;write_source_file_and_line_by_debug&quot;] - the flag that defines whether for each debug output the source file and
-line number are written from where it is called.
+<p>$parameters["write_source_file_and_line_by_debug"] - the flag that defines whether for each debug output the source file and
 line number are written from where it is called.</p>
 </li>
 </ul>
@@ -3801,7 +3905,7 @@ line number are written from where it is called.</p>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

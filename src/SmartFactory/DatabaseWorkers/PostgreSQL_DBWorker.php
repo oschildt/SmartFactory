@@ -15,7 +15,7 @@ use function \SmartFactory\debugger;
 /**
  * This is the class for the PostreSQL database using the extension pgsql.
  *
- * This is a wrapper around the database connectivity. It offers an universal
+ * This is a wrapper around the database connectivity. It offers a universal
  * common way for working with databases of different types. Currently, MySQL, PostgreSQL and
  * MS SQL are supported. If in the future, there will be a better solution, or
  * the current solution turns out to be inefficient in a new version of PHP,
@@ -32,67 +32,67 @@ class PostgreSQL_DBWorker extends DBWorker
     /**
      * Flag for setting the connection to read only.
      *
-     * @var boolean $read_only
+     * @var bool $read_only
      *
      * @author Oleg Schildt
      */
-    protected $read_only = false;
+    protected bool $read_only = false;
 
     /**
      * Internal PgSql\Connection object.
      *
-     * @var \PgSql\Connection
+     * @var ?\PgSql\Connection
      *
      * @author Oleg Schildt
      */
-    protected $connection = null;
+    protected ?\PgSql\Connection $connection = null;
 
     /**
      * Internal \PgSql\Result object.
      *
-     * @var \PgSql\Result
+     * @var ?\PgSql\Result
      *
      * @author Oleg Schildt
      */
-    protected $result = null;
+    protected ?\PgSql\Result $result = null;
 
     /**
      * Internal \PgSql\Result object for statements.
      *
-     * @var \PgSql\Result
+     * @var ?\PgSql\Result
      *
      * @author Oleg Schildt
      */
-    protected $statement = null;
+    protected ?\PgSql\Result $statement = null;
 
     /**
      * Internal variable for storing of the last prepared query.
      *
-     * @var string
+     * @var ?string
      *
      * @author Oleg Schildt
      */
-    protected $prepared_query = null;
+    protected ?string $prepared_query = null;
 
     /**
      * Internal variable for storing of the current fetched row
      * from the result of the last retrieving query.
      *
-     * @var array
+     * @var null|bool|array
      *
      * @author Oleg Schildt
      */
-    protected $row = null;
+    protected null|bool|array $row = null;
 
     /**
      * Internal variable for storing of the column names
      * from the result of the last retrieving query.
      *
-     * @var array
+     * @var ?array
      *
      * @author Oleg Schildt
      */
-    protected $field_names = null;
+    protected ?array $field_names = null;
 
     /**
      * Creates a clone of the dbworker that is using the same open
@@ -106,7 +106,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function create_clone()
+    public function create_clone(): PostgreSQL_DBWorker
     {
         $cln = new PostgreSQL_DBWorker();
 
@@ -157,9 +157,12 @@ class PostgreSQL_DBWorker extends DBWorker
      * @used_by PostgreSQL_DBWorker::field_by_name()
      * @used_by PostgreSQL_DBWorker::field_by_num()
      *
+     * @throws DBWorkerException
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
-    protected function read_large_object($oid)
+    protected function read_large_object(int $oid): string
     {
         $ohandle = @pg_lo_open($this->connection, $oid, "r");
         if (empty($ohandle)) {
@@ -167,7 +170,7 @@ class PostgreSQL_DBWorker extends DBWorker
         }
 
         $data = "";
-        while ($chunk = @pg_lo_read($ohandle, 8192)) {
+        while ($chunk = @pg_lo_read($ohandle)) {
             $data .= $chunk;
         }
 
@@ -175,7 +178,7 @@ class PostgreSQL_DBWorker extends DBWorker
     } // read_large_object
 
     /**
-     * Initializes the dbworker with connection paramters.
+     * Initializes the dbworker with connection parameters.
      *
      * @param array $parameters
      * Connection settings as an associative array in the form key => value:
@@ -185,13 +188,13 @@ class PostgreSQL_DBWorker extends DBWorker
      * - $parameters["db_name"] - database name.
      * - $parameters["db_user"] - user name.
      * - $parameters["db_password"] - user password.
-     * - $parameters["read_only"] - this paramter sets the connection to the read only mode.
+     * - $parameters["read_only"] - this parameter sets the connection to the read only mode.
      *
      * @return void
      *
      * @author Oleg Schildt
      */
-    public function init($parameters)
+    public function init(array $parameters): void
     {
         if (!empty($parameters["db_server"])) {
             $this->db_server = $parameters["db_server"];
@@ -217,14 +220,14 @@ class PostgreSQL_DBWorker extends DBWorker
      * Checks whether the extension (pgsql) is installed which is required for work with
      * the PostreSQL database.
      *
-     * @return boolean
+     * @return bool
      * The method should return true if the extension is installed, otherwise false.
      *
      * @see PostgreSQL_DBWorker::get_extension_name()
      *
      * @author Oleg Schildt
      */
-    public function is_extension_installed()
+    public function is_extension_installed(): bool
     {
         return function_exists("pg_connect");
     } // is_extension_installed
@@ -239,7 +242,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function get_extension_name()
+    public function get_extension_name(): string
     {
         return "pgsql";
     } // get_extension_name
@@ -252,7 +255,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function get_rdbms_name()
+    public function get_rdbms_name(): string
     {
         return "PostgreSQL Server";
     } // get_rdbms_name
@@ -260,7 +263,7 @@ class PostgreSQL_DBWorker extends DBWorker
     /**
      * Returns the connection state.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the connection is open, otherwise false.
      *
      * @see DBWorker::check_connection()
@@ -269,25 +272,27 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function is_connected()
+    public function is_connected(): bool
     {
         return (!empty($this->connection) && pg_connection_status($this->connection) == PGSQL_CONNECTION_OK);
     } // is_connected
 
     /**
-     * Retrieves the last errors ocurend while execution of the query.
+     * Retrieves the last errors occurred while execution of the query.
      *
      * @return string
      * Returns the string of errors separated by the new line symbol.
      *
      * @author Oleg Schildt
      */
-    protected function sys_get_errors()
+    protected function sys_get_errors(): string
     {
         $errors = error_get_last();
         if (empty($errors)) {
             return "";
         }
+
+        $message_array = [];
 
         foreach ($errors as $error) {
             $message_array[$error['message']] = $error['message'];
@@ -311,7 +316,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function connect()
+    public function connect(): void
     {
         if ($this->is_connected()) {
             return;
@@ -367,7 +372,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function use_database($db_name)
+    public function use_database(string $db_name): void
     {
         throw new DBWorkerException("The database must be specified immediately by the connection!", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
     } // use_database
@@ -382,7 +387,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function get_schema()
+    public function get_schema(): string
     {
         return "public";
     } // get_schema
@@ -401,7 +406,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function qualify_name_with_schema($name)
+    public function qualify_name_with_schema(string $name): string
     {
         $schema = $this->get_schema();
 
@@ -420,12 +425,12 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws DBWorkerException
+     * @throws \Exception|DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
-    public function execute_query($query_string)
+    public function execute_query(string $query_string): void
     {
         $this->check_connection();
 
@@ -457,7 +462,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function prepare_query($query_string)
+    public function prepare_query(string $query_string): void
     {
         $this->check_connection();
 
@@ -467,7 +472,7 @@ class PostgreSQL_DBWorker extends DBWorker
         }
 
         $counter = 1;
-        $query_string = preg_replace_callback("/\\?/", function ($matches) use (&$counter) {
+        $query_string = preg_replace_callback("/\\?/", function () use (&$counter) {
             return "$" . ($counter++);
         }, $query_string);
 
@@ -484,10 +489,10 @@ class PostgreSQL_DBWorker extends DBWorker
      * Stores long data from a stream.
      *
      * @param string $query_string
-     * The SQL query to be used for stroing the long data.
+     * The SQL query to be used for storing the long data.
      *
-     * @param resource &$stream
-     * The opened valid stream for reding the long data.
+     * @param resource $stream
+     * The opened valid stream for reading the long data.
      *
      * Example:
      * ```php
@@ -506,7 +511,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function stream_long_data($query_string, &$stream)
+    public function stream_long_data(string $query_string, $stream): void
     {
         $this->check_connection();
 
@@ -555,11 +560,11 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @param mixed ...$args
      * The number of parameters may vary and be zero. An array can also be passed.
-     * These are paremeters of the prepared query.
+     * These are parameters of the prepared query.
      *
      * @return void
      *
-     * @throws DBWorkerException
+     * @throws \Exception|DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @see PostgreSQL_DBWorker::prepare_query()
@@ -567,7 +572,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function execute_prepared_query(...$args)
+    public function execute_prepared_query(...$args): void
     {
         $this->check_connection();
 
@@ -597,7 +602,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @param string $procedure
      * The name of the SQL stored procedure.
      *
-     * All subsequent parameters are the paramteres of the SQL stored procedure.
+     * All subsequent parameters are the parameters of the SQL stored procedure.
      *
      * @return void
      *
@@ -606,7 +611,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function execute_procedure($procedure /* arg list */)
+    public function execute_procedure(string $procedure /* arg list */): void
     {
         $this->check_connection();
 
@@ -622,7 +627,7 @@ class PostgreSQL_DBWorker extends DBWorker
             $arg_list = "";
 
             $first = true;
-            foreach ($args as $argkey => $argval) {
+            foreach ($args as $argval) {
                 if ($first) {
                     $proc_name = $argval;
                     $first = false;
@@ -642,7 +647,7 @@ class PostgreSQL_DBWorker extends DBWorker
 
             $arg_list = trim($arg_list, ", ");
 
-            $this->last_query = "CALL {$proc_name}({$arg_list});";
+            $this->last_query = "CALL $proc_name($arg_list);";
         }
 
         $this->execute_query($this->last_query);
@@ -663,7 +668,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function free_prepared_query()
+    public function free_prepared_query(): void
     {
         $this->check_connection();
 
@@ -683,15 +688,12 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @return void
      *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
      * @see PostgreSQL_DBWorker::is_connected()
      * @see PostgreSQL_DBWorker::connect()
      *
      * @author Oleg Schildt
      */
-    public function close_connection()
+    public function close_connection(): void
     {
         $this->last_query = null;
         $this->prepared_query = null;
@@ -728,7 +730,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function start_transaction()
+    public function start_transaction(): void
     {
         $this->check_connection();
 
@@ -748,7 +750,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function commit_transaction()
+    public function commit_transaction(): void
     {
         $this->check_connection();
 
@@ -768,7 +770,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function rollback_transaction()
+    public function rollback_transaction(): void
     {
         $this->check_connection();
 
@@ -787,7 +789,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function free_result()
+    public function free_result(): void
     {
         $this->check_connection();
 
@@ -809,10 +811,10 @@ class PostgreSQL_DBWorker extends DBWorker
      * if there are no triggers with insertion commands.
      *
      * PostgreSQL recommends using the sequences like Oracle. If you want to use sequences,
-     * generate ID values with passing to {@see PostgreSQL_DBWorker::execute_query()} the sequence geenration commands
+     * generate ID values with passing to {@see PostgreSQL_DBWorker::execute_query()} the sequence generation commands
      * and write your inserts with explicit ID values.
      *
-     * @return int
+     * @return ?int
      * Returns the value of the auto increment field by the last insertion.
      *
      * @throws DBWorkerException
@@ -820,7 +822,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function insert_id()
+    public function insert_id(): ?int
     {
         $this->check_connection();
 
@@ -844,7 +846,7 @@ class PostgreSQL_DBWorker extends DBWorker
     /**
      * Fetches the next row of data from the result of the execution of the retrieving query.
      *
-     * @return boolean
+     * @return bool
      * Returns true if the next row exists and has been successfully fetched, otherwise false.
      *
      * Example:
@@ -867,7 +869,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function fetch_row()
+    public function fetch_row(): bool
     {
         $this->check_connection();
 
@@ -895,7 +897,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @param array &$rows
      * Target array for loading the results.
      *
-     * @param array $dimension_keys
+     * @param ?array $dimension_keys
      * Array of the column names that should be used as dimensions.
      *
      * Per default, the rows are fetched as two-dimensional array.
@@ -905,7 +907,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * $rows = [];
      * $dbw->fetch_array($rows);
      *
-     * rows[n] = ["col1" => "val1", "col2" => "val2", , "col3" => "val3", ...]
+     * rows[n] = ["col1" => "val1", "col2" => "val2", "col3" => "val3", ...]
      * ```
      * If the dimension columns are specified, their values are used for the dimensions.
      *
@@ -925,7 +927,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function fetch_array(&$rows, $dimension_keys = null)
+    public function fetch_array(array &$rows, ?array $dimension_keys = null): int
     {
         $this->check_connection();
 
@@ -936,7 +938,6 @@ class PostgreSQL_DBWorker extends DBWorker
         }
 
         $counter = 0;
-        $row = [];
 
         if (!$this->result) {
             $err = "Result is empty!";
@@ -958,7 +959,7 @@ class PostgreSQL_DBWorker extends DBWorker
 
                 $reference = &$rows;
 
-                foreach ($dimensions as &$dval) {
+                foreach ($dimensions as $dval) {
                     if (empty($reference[$dval])) {
                         $reference[$dval] = [];
                     }
@@ -977,7 +978,7 @@ class PostgreSQL_DBWorker extends DBWorker
     /**
      * Returns the number of the rows fetched by the last retrieving query.
      *
-     * @return int|false
+     * @return int
      * Returns the number of the rows fetched by the last retrieving query.
      *
      * @throws DBWorkerException
@@ -985,7 +986,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function fetched_count()
+    public function fetched_count(): int
     {
         $this->check_connection();
 
@@ -1008,7 +1009,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function affected_count()
+    public function affected_count(): int
     {
         $this->check_connection();
 
@@ -1023,16 +1024,15 @@ class PostgreSQL_DBWorker extends DBWorker
     /**
      * Returns the number of the fields in the result of the last retrieving query.
      *
-     * @return int|false
-     * Returns the number of the fields in the result of the last retrieving query. In the case
-     * of any error returns false.
+     * @return int
+     * Returns the number of the fields in the result of the last retrieving query.
      *
      * @throws DBWorkerException
      * It throws an exception in the case of any errors.
      *
      * @author Oleg Schildt
      */
-    public function field_count()
+    public function field_count(): int
     {
         $this->check_connection();
 
@@ -1053,7 +1053,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @param int $type
      * The type of the field.
      *
-     * @return mixed|null
+     * @return mixed
      * Returns the value of a field specified by name. In the case
      * of any error returns null.
      *
@@ -1065,7 +1065,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_by_name($name, $type = self::DB_AS_IS)
+    public function field_by_name(string $name, int $type = self::DB_AS_IS): mixed
     {
         $this->check_connection();
 
@@ -1098,7 +1098,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @param int $type
      * The type of the field.
      *
-     * @return mixed|null
+     * @return mixed
      * Returns the value of a field specified by number. In the case
      * of any error returns null.
      *
@@ -1111,7 +1111,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_by_num($num, $type = self::DB_AS_IS)
+    public function field_by_num(int $num, int $type = self::DB_AS_IS): mixed
     {
         $this->check_connection();
 
@@ -1141,7 +1141,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @param int $num
      * The number of the field.
      *
-     * @return object|null
+     * @return ?string
      * Returns the value of a field specified by number as an object with properties. In the case
      * of any error returns null.
      *
@@ -1153,7 +1153,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_name($num)
+    public function field_name(int $num): ?string
     {
         $this->check_connection();
 
@@ -1171,7 +1171,7 @@ class PostgreSQL_DBWorker extends DBWorker
      * @param int $num
      * The number of the field.
      *
-     * @return array
+     * @return ?array
      * Returns the associative array with properties. In the case
      * of any error returns null.
      *
@@ -1190,7 +1190,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function field_info_by_num($num)
+    public function field_info_by_num(int $num): ?array
     {
         $this->check_connection();
 
@@ -1227,7 +1227,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function escape($str)
+    public function escape(string $str): string
     {
         return pg_escape_string($this->connection, $str);
     } // escape
@@ -1246,7 +1246,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function format_date($date)
+    public function format_date(int $date): string
     {
         if (empty($date)) {
             return $this->quotes_or_null("");
@@ -1269,7 +1269,7 @@ class PostgreSQL_DBWorker extends DBWorker
      *
      * @author Oleg Schildt
      */
-    public function format_datetime($datetime)
+    public function format_datetime(int $datetime): string
     {
         if (empty($datetime)) {
             return $this->quotes_or_null("");
@@ -1291,9 +1291,12 @@ class PostgreSQL_DBWorker extends DBWorker
      * @return string
      * Returns the prepared value.
      *
+     * @throws DBWorkerException
+     * It throws an exception in the case of any errors.
+     *
      * @author Oleg Schildt
      */
-    function prepare_for_query($value, $type)
+    function prepare_for_query(mixed $value, int $type): string
     {
         if (empty($value) && (string)$value != "0") {
             return "null";
@@ -1325,14 +1328,14 @@ class PostgreSQL_DBWorker extends DBWorker
      * The order clause to sort the results.
      *
      * @param int $limit
-     * The limit how many records shoud be loaded. 0 for unlimited.
+     * The limit how many records should be loaded. 0 for unlimited.
      *
      * @return string
      * Returns the built query.
      *
      * @author Oleg Schildt
      */
-    function build_select_query($table, $fields, $where_clause, $order_clause, $limit)
+    function build_select_query(string $table, array $fields, string $where_clause, string $order_clause, int $limit): string
     {
         $query = "select\n";
 
@@ -1348,7 +1351,7 @@ class PostgreSQL_DBWorker extends DBWorker
             $query .= $order_clause . "\n";
         }
 
-        if (!empty($limit) && is_numeric($limit)) {
+        if (!empty($limit)) {
             $query .= "limit " . $limit . "\n";
         }
 

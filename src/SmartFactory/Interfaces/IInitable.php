@@ -33,5 +33,5 @@ interface IInitable
      *
      * @author Oleg Schildt
      */
-    public function init($parameters);
+    public function init(array $parameters): void;
 } // IInitable

@@ -440,7 +440,7 @@
   
   <h1>Method: EventManager::addHandler()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>): void;</div>
 
   
   <div class="short-description">
@@ -478,8 +478,7 @@
                 
             </td>
             <td class="description_column">
-                <p>Event code.
-Event code.</p>
+                <p>Event code.</p>
             </td>
         </tr>
         
@@ -507,9 +506,6 @@ this function is:</p>
 <li>
 <p>$parameters - parameters passed by the firing of the event.</p>
 </li>
-<li>
-<p>$parameters - parameters passed by the firing of the event.</p>
-</li>
 </ul>
             </td>
         </tr>
@@ -520,10 +516,7 @@ this function is:</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the adding was successfull, otherwise false.
-Returns true if the adding was successfull, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -564,7 +557,7 @@ Returns true if the adding was successfull, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#83'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#82'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -598,7 +591,7 @@ Returns true if the adding was successfull, otherwise false.</p></div>
   
   <h1>Method: EventManager::deleteAllHandlers()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteAllHandlers() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteAllHandlers(): void;</div>
 
   
   <div class="short-description">
@@ -615,10 +608,9 @@ Returns true if the adding was successfull, otherwise false.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  void<br>
   
-  <div class="item_description"><p>Returns true if the deletion was successfull, otherwise false.
-Returns true if the deletion was successfull, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the deletion was successful, otherwise false.</p></div>
   
   </div>
   
@@ -646,7 +638,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#189'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#180'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -680,7 +672,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
   
   <h1>Method: EventManager::deleteHandler()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>): void;</div>
 
   
   <div class="short-description">
@@ -718,8 +710,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Event code.
-Event code.</p>
+                <p>Event code.</p>
             </td>
         </tr>
         
@@ -737,8 +728,7 @@ Event code.</p>
                 
             </td>
             <td class="description_column">
-                <p>The name or definition of the handler function.
-The name or definition of the handler function.</p>
+                <p>The name or definition of the handler function.</p>
             </td>
         </tr>
         
@@ -748,10 +738,7 @@ The name or definition of the handler function.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the deletion was successfull, otherwise false.
-Returns true if the deletion was successfull, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -792,7 +779,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#125'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#121'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -826,7 +813,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
   
   <h1>Method: EventManager::deleteHandlers()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandlers(string <span class="php-var">$event</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandlers(string <span class="php-var">$event</span>): void;</div>
 
   
   <div class="short-description">
@@ -864,8 +851,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Event code.
-Event code.</p>
+                <p>Event code.</p>
             </td>
         </tr>
         
@@ -875,10 +861,7 @@ Event code.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the deletion was successfull, otherwise false.
-Returns true if the deletion was successfull, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -917,7 +900,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#164'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#157'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -951,7 +934,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
   
   <h1>Method: EventManager::fireEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fireEvent(string <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : int;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fireEvent(string <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): int;</div>
 
   
   <div class="short-description">
@@ -989,8 +972,7 @@ Returns true if the deletion was successfull, otherwise false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Event code.
-Event code.</p>
+                <p>Event code.</p>
             </td>
         </tr>
         
@@ -1008,8 +990,7 @@ Event code.</p>
                 
             </td>
             <td class="description_column">
-                <p>Event code.
-Event code.</p>
+                <p>Event code.</p>
             </td>
         </tr>
         
@@ -1021,8 +1002,7 @@ Event code.</p>
   <div class="item_list">
   int<br>
   
-  <div class="item_description"><p>Returns number of the handlers called for this event.
-Returns number of the handlers called for this event.</p></div>
+  <div class="item_description"><p>Returns number of the handlers called for this event.</p></div>
   
   </div>
   
@@ -1062,7 +1042,7 @@ Returns number of the handlers called for this event.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#298'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#278'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -1084,7 +1064,7 @@ Returns number of the handlers called for this event.</p></div>
   
   <h1>Method: EventManager::resumeAllEvents()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeAllEvents() : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeAllEvents(): void;</div>
 
   
   <div class="short-description">
@@ -1101,10 +1081,7 @@ Returns number of the handlers called for this event.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the suspesion was successfull, otherwise false.
-Returns true if the suspesion was successfull, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1132,7 +1109,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#271'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#253'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -1163,7 +1140,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
   
   <h1>Method: EventManager::resumeEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeEvent(string <span class="php-var">$event</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeEvent(string <span class="php-var">$event</span>): void;</div>
 
   
   <div class="short-description">
@@ -1201,8 +1178,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Event code.
-Event code.</p>
+                <p>Event code.</p>
             </td>
         </tr>
         
@@ -1212,10 +1188,7 @@ Event code.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the suspesion was successfull, otherwise false.
-Returns true if the suspesion was successfull, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1254,7 +1227,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#247'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#232'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -1285,7 +1258,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
   
   <h1>Method: EventManager::suspendEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> suspendEvent(string <span class="php-var">$event</span>) : bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> suspendEvent(string <span class="php-var">$event</span>): void;</div>
 
   
   <div class="short-description">
@@ -1328,8 +1301,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
                 
             </td>
             <td class="description_column">
-                <p>Event code.
-Event code.</p>
+                <p>Event code.</p>
             </td>
         </tr>
         
@@ -1339,10 +1311,7 @@ Event code.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the suspesion was successfull, otherwise false.
-Returns true if the suspesion was successfull, otherwise false.</p></div>
+  void<br>
   
   </div>
   
@@ -1381,7 +1350,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.EventManager.php.html#217'>SmartFactory/EventManager.php</a>
+  <a href='source-SmartFactory.EventManager.php.html#205'>SmartFactory/EventManager.php</a>
   </div>
   
 
@@ -1397,7 +1366,7 @@ Returns true if the suspesion was successfull, otherwise false.</p></div>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-03-26 06:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

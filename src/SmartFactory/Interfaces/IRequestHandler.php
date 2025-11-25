@@ -23,5 +23,5 @@ interface IRequestHandler
      *
      * @author Oleg Schildt
      */
-    function handleRequest();
+    function handleRequest(): void;
 } // IRequestHandler

@@ -29,7 +29,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function init($parameters);
+    public function init(array $parameters): void;
     
     /**
      * Sets the validator for the settings.
@@ -44,12 +44,12 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function setValidator($validator);
+    public function setValidator(ISettingsValidator $validator): void;
     
     /**
      * Returns the validator for the settings.
      *
-     * @return ISettingsValidator|null
+     * @return ?ISettingsValidator
      * Returns the validator for the settings or null if none is defined.
      *
      * @see ISettingsManager::setValidator()
@@ -57,7 +57,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getValidator();
+    public function getValidator(): ?ISettingsValidator;
     
     /**
      * Sets a settings parameter.
@@ -75,15 +75,15 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function setParameter($name, $value);
+    public function setParameter(string $name, mixed $value): void;
     
     /**
      * Sets settings parameters from an array.
      *
-     * @param array &$parameters
+     * @param array $parameters
      * Array of parameters in the form key => value.
      *
-     * @param boolean $force_creation
+     * @param bool $force_creation
      * Flag which defines whether the parameter should be created
      * if not exists. If false, only existing parameters are updated.
      *
@@ -94,7 +94,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function setParameters(&$parameters, $force_creation = false);
+    public function setParameters(array $parameters, bool $force_creation = false): void;
 
     /**
      * Returns the value of a settings parameter.
@@ -102,13 +102,13 @@ interface ISettingsManager extends IInitable
      * @param string $name
      * The name of the settings parameter.
      *
-     * @param mixed $default
+     * @param mixed|null $default
      * The default value of the settings parameter if it is not set yet.
-     * The parameter is a confortable way to pre-set a parameter
+     * The parameter is a conformable way to pre-set a parameter
      * to a default value if its value is not set yet.
      * However, if the status of the data is dirty and the unsaved
      * last entered value is requested, then always the actual
-     * last entered value is returned and this paramter is ignored.
+     * last entered value is returned and this parameter is ignored.
      *
      * @return mixed
      * Returns the value of the settings parameter.
@@ -118,7 +118,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $default = null);
+    public function getParameter(string $name, mixed $default = null): mixed;
     
     /**
      * Sets the settings context.
@@ -141,7 +141,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function setContext($context = "default");
+    public function setContext(string $context = "default"): void;
     
     /**
      * Returns the current settings context.
@@ -162,7 +162,7 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function getContext();
+    public function getContext(): string;
     
     /**
      * Validates the current settings values.
@@ -170,11 +170,10 @@ interface ISettingsManager extends IInitable
      * It should be called after settings the new values of the parameters
      * and before their saving.
      *
-     * @return boolean
-     * Returns true if there is no validator defined, otherwise lets
-     * the validator validate the settings.
+     * @return void
      *
-     * It is not based on exceptions in order to allow catch many errors at once.
+     * @throws \SmartFactory\SmartException|\SmartFactory\SmartExceptionCollection
+     * It might throw an exception if the content type oк JSON data is invalid.
      *
      * @uses ISettingsValidator
      *
@@ -183,10 +182,10 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function validateSettings();
+    public function validateSettings(): void;
     
     /**
-     * Loads the settings from the persitence source.
+     * Loads the settings from the persistence source.
      *
      * @return void
      *
@@ -197,10 +196,10 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function loadSettings();
+    public function loadSettings(): void;
     
     /**
-     * Saves the settings from to the persitence target.
+     * Saves the settings from to the persistence target.
      *
      * @return void
      *
@@ -211,5 +210,5 @@ interface ISettingsManager extends IInitable
      *
      * @author Oleg Schildt
      */
-    public function saveSettings();
+    public function saveSettings(): void;
 } // ISettingsManager

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file contains the implementation of the class DBWorkerException. It extends the DBWorkerException
- * exception to distingusih the database related errors in catches.
+ * exception to distinguish the database related errors in catches.
  *
  * @package Database
  *
@@ -13,7 +13,7 @@ namespace SmartFactory\DatabaseWorkers;
 use \SmartFactory\SmartException;
 
 /**
- * Class for DBWorkerException in the smarFactory library.
+ * Class for DBWorkerException in the SmartFactory library.
  *
  * @author Oleg Schildt
  */
@@ -41,11 +41,11 @@ class DBWorkerException extends SmartException
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
      * @param string $technical_info
-     * Additional technical infromation. It can be used if it is a programming error and displayed only if the debug mode is active.
+     * Additional technical information. It can be used if it is a programming error and displayed only if the debug mode is active.
      *
      * @author Oleg Schildt
      */
-    public function __construct($message, $error_code, $error_element = "", $error_details = [], $technical_info = "")
+    public function __construct(string $message, string $error_code, string $error_element = "", array $error_details = [], string $technical_info = "")
     {
         parent::__construct($message, $error_code, $error_element, $error_details, $technical_info);
     }

@@ -30,7 +30,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_SYSTEM_ERROR = "system_error";
+    const string ERR_CODE_SYSTEM_ERROR = "system_error";
 
     /**
      * Constant for the error code "config_error".
@@ -39,7 +39,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_CONFIG_ERROR = "config_error";
+    const string ERR_CODE_CONFIG_ERROR = "config_error";
 
     /**
      * Constant for the error code "missing_request_data".
@@ -48,7 +48,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_MISSING_REQUEST_DATA = "missing_request_data";
+    const string ERR_CODE_MISSING_REQUEST_DATA = "missing_request_data";
 
     /**
      * Constant for the error code "invalid_request_data".
@@ -57,7 +57,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_INVALID_REQUEST_DATA = "invalid_request_data";
+    const string ERR_CODE_INVALID_REQUEST_DATA = "invalid_request_data";
 
     /**
      * Constant for the error code "invalid_content_type".
@@ -66,7 +66,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_INVALID_CONTENT_TYPE = "invalid_content_type";
+    const string ERR_CODE_INVALID_CONTENT_TYPE = "invalid_content_type";
 
     /**
      * Constant for the error code "json_parse_error".
@@ -75,7 +75,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_JSON_PARSE_ERROR = "json_parse_error";
+    const string ERR_CODE_JSON_PARSE_ERROR = "json_parse_error";
 
     /**
      * Constant for the error code "xml_parse_error".
@@ -84,7 +84,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_XML_PARSE_ERROR = "xml_parse_error";
+    const string ERR_CODE_XML_PARSE_ERROR = "xml_parse_error";
 
     /**
      * Constant for the error code "path_access_error".
@@ -93,7 +93,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_PATH_ACCESS_ERROR = "path_access_error";
+    const string ERR_CODE_PATH_ACCESS_ERROR = "path_access_error";
 
     /**
      * Constant for the error code "file_write_error".
@@ -102,7 +102,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_FILE_WRITE_ERROR = "file_write_error";
+    const string ERR_CODE_FILE_WRITE_ERROR = "file_write_error";
 
     /**
      * Constant for the error code "not_found".
@@ -111,7 +111,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    const ERR_CODE_NOT_FOUND = "not_found";
+    const string ERR_CODE_NOT_FOUND = "not_found";
 
     /**
      * Internal variable for storing the error element.
@@ -122,7 +122,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    protected $error_element = "";
+    protected string $error_element = "";
 
     /**
      * Internal variable for storing the error.
@@ -133,7 +133,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    protected $error_code = SmartException::ERR_CODE_SYSTEM_ERROR;
+    protected string $error_code = SmartException::ERR_CODE_SYSTEM_ERROR;
 
     /**
      * Internal variable for storing the error details.
@@ -149,10 +149,10 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    protected $error_details = [];
+    protected array $error_details = [];
 
     /**
-     * Internal variable for storing the additional technical infromation.
+     * Internal variable for storing the additional technical information.
      *
      * @var string
      *
@@ -160,7 +160,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    protected $technical_info = "";
+    protected string $technical_info = "";
 
     /**
      * Constructor.
@@ -184,11 +184,11 @@ class SmartException extends \Exception
      * uses the message id, gets the final translated text and substitutes the parameters through the details.
      *
      * @param string $technical_info
-     * Additional technical infromation. It can be used if it is a programming error and displayed only if the debug mode is active.
+     * Additional technical information. It can be used if it is a programming error and displayed only if the debug mode is active.
      *
      * @author Oleg Schildt
      */
-    public function __construct($message, $error_code = SmartException::ERR_CODE_SYSTEM_ERROR, $error_element = "", $error_details = [], $technical_info = "")
+    public function __construct(string $message, string $error_code = SmartException::ERR_CODE_SYSTEM_ERROR, string $error_element = "", array $error_details = [], string $technical_info = "")
     {
         parent::__construct($message);
 
@@ -213,7 +213,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    public function getErrorCode()
+    public function getErrorCode(): string
     {
         return $this->error_code;
     }
@@ -230,7 +230,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    public function setErrorElement($error_element)
+    public function setErrorElement(string $error_element): void
     {
         $this->error_element = $error_element;
     }
@@ -248,7 +248,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    public function getErrorElement()
+    public function getErrorElement(): string
     {
         return $this->error_element;
     }
@@ -270,16 +270,16 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    public function getErrorDetails()
+    public function getErrorDetails(): array
     {
         return $this->error_details;
     }
 
     /**
-     * Returns the technical infromation for the error.
+     * Returns the technical information for the error.
      *
      * @return string
-     * Returns the technical infromation for the error.
+     * Returns the technical information for the error.
      *
      * @see SmartException::getErrorCode()
      * @see SmartException::getErrorElement()
@@ -287,7 +287,7 @@ class SmartException extends \Exception
      *
      * @author Oleg Schildt
      */
-    public function getTechnicalInfo()
+    public function getTechnicalInfo(): string
     {
         return $this->technical_info;
     }

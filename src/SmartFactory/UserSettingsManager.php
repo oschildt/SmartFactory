@@ -13,6 +13,7 @@ namespace SmartFactory;
 use \SmartFactory\Interfaces\ISettingsManager;
 use \SmartFactory\Interfaces\IErrorHandler;
 use \SmartFactory\DatabaseWorkers\DBWorker;
+use SmartFactory\Interfaces\ISettingsValidator;
 
 /**
  * Class for management of the user settings.
@@ -21,7 +22,7 @@ use \SmartFactory\DatabaseWorkers\DBWorker;
  * table add it to the initialization and specify the data type.
  *
  * The user settings are loaded only once by the start of the session and are kept until the session
- * is valid. Saving of the user settings updates both the session and the database. When a settings is
+ * is valid. Saving of the user settings updates both the session and the database. When a settings are
  * requested, it is taken from the session, not from the database.
  *
  * @see  ConfigSettingsManager
@@ -42,26 +43,26 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $user_id = "";
+    protected string $user_id = "";
 
     /**
      * Internal variable for storing the dbworker.
      *
-     * @var DatabaseWorkers\DBWorker
+     * @var ?DatabaseWorkers\DBWorker
      *
      * @author Oleg Schildt
      */
-    protected $dbworker;
+    protected ?DatabaseWorkers\DBWorker $dbworker;
 
     /**
-     * Internal variable for storing the state whether the transcation should be started or commited or
+     * Internal variable for storing the state whether the translation should be started or commited or
      * no transaction should be used because the saving process is a part of other saving process.
      *
-     * @var boolean
+     * @var bool
      *
      * @author Oleg Schildt
      */
-    protected $no_own_transcation;
+    protected bool $no_own_transaction = true;
 
     /**
      * Internal array for storing the settings tables.
@@ -70,7 +71,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $settings_tables = [];
+    protected array $settings_tables = [];
 
     /**
      * Internal array for storing the auxiliary tables for storing the multichoce values.
@@ -79,7 +80,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $multichoice_tables = [];
+    protected array $multichoice_tables = [];
 
     /**
      * Internal variable for storing the current context.
@@ -91,19 +92,19 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $context = "default";
+    protected string $context = "default";
 
     /**
      * Internal variable for storing the validator.
      *
-     * @var \SmartFactory\Interfaces\ISettingsValidator
+     * @var ?\SmartFactory\Interfaces\ISettingsValidator
      *
      * @see UserSettingsManager::getValidator()
      * @see UserSettingsManager::setValidator()
      *
      * @author Oleg Schildt
      */
-    protected $validator = null;
+    protected ?\SmartFactory\Interfaces\ISettingsValidator $validator = null;
 
     /**
      * Internal variable for storing the array of the settings values.
@@ -112,7 +113,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected $settings = [];
+    protected array $settings = [];
 
     /**
      * This is internal auxiliary function for checking that the settings
@@ -129,7 +130,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected function validateParameters()
+    protected function validateParameters(): void
     {
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
@@ -154,9 +155,9 @@ class UserSettingsManager implements ISettingsManager
 
     /**
      * This is internal auxiliary function for storing the settings
-     * to the target user table defined by the iniailization.
+     * to the target user table defined by the initialization.
      *
-     * @param array &$data
+     * @param array $data
      * The array with the settings values to be saved.
      *
      * @return void
@@ -174,13 +175,13 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected function saveSettingsData(&$data)
+    protected function saveSettingsData(array $data): void
     {
         $this->validateParameters();
 
         $this->dbworker->connect();
 
-        if (empty($this->no_own_transcation)) {
+        if (empty($this->no_own_transaction)) {
             $this->dbworker->start_transaction();
         }
 
@@ -341,7 +342,7 @@ class UserSettingsManager implements ISettingsManager
                 $this->dbworker->execute_query($query);
             }
         } catch (\Throwable $ex) {
-            if (empty($this->no_own_transcation)) {
+            if (empty($this->no_own_transaction)) {
                 $this->dbworker->rollback_transaction();
             }
 
@@ -350,14 +351,14 @@ class UserSettingsManager implements ISettingsManager
             throw $ex;
         }
 
-        if (empty($this->no_own_transcation)) {
+        if (empty($this->no_own_transaction)) {
             $this->dbworker->commit_transaction();
         }
     } // saveSettingsData
 
     /**
      * This is internal auxiliary function for loading the settings from the target user table
-     * defined by the iniailization.
+     * defined by the initialization.
      *
      * @param array &$data
      * The target array with the settings values to be loaded.
@@ -377,7 +378,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    protected function loadSettingsData(&$data)
+    protected function loadSettingsData(array &$data): void
     {
         $this->validateParameters();
 
@@ -517,7 +518,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function init($parameters)
+    public function init(array $parameters): void
     {
         if (!empty($parameters["dbworker"])) {
             $this->dbworker = $parameters["dbworker"];
@@ -552,20 +553,23 @@ class UserSettingsManager implements ISettingsManager
      * @param DatabaseWorkers\DBWorker $dbworker
      * The dbworker to be used for loading and storing settings.
      *
-     * @param boolean $no_own_transcation
-     * The state whether the transcation should be started or commited or
+     * @param bool $no_own_transcation
+     * The state whether the translation should be started or commited or
      * no transaction should be used because the saving process is a part of other saving process.
      *
      * @return void
      *
-     * @see RecordsetManager::getDBWorker()
+     * @throws \Exception
+     * It might throw an exception in the case of any errors.
      *
      * @author Oleg Schildt
+     * @see RecordsetManager::getDBWorker()
+     *
      */
-    public function setDBWorker($dbworker, $no_own_transcation = false)
+    public function setDBWorker(DatabaseWorkers\DBWorker $dbworker, bool $no_own_transcation = false): void
     {
         $this->dbworker = $dbworker;
-        $this->no_own_transcation = $no_own_transcation;
+        $this->no_own_transaction = $no_own_transcation;
 
         if (empty($this->dbworker)) {
             throw new \Exception("The 'dbworker' is not specified!");
@@ -579,7 +583,7 @@ class UserSettingsManager implements ISettingsManager
     /**
      * Sets the validator for the settings.
      *
-     * @param \SmartFactory\Interfaces\ISettingsValidator $validator
+     * @param ISettingsValidator $validator
      * The settings validator.
      *
      * @return void
@@ -589,7 +593,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setValidator($validator)
+    public function setValidator(ISettingsValidator $validator): void
     {
         $this->validator = $validator;
     } // setValidator
@@ -597,7 +601,7 @@ class UserSettingsManager implements ISettingsManager
     /**
      * Returns the validator for the settings.
      *
-     * @return \SmartFactory\Interfaces\ISettingsValidator|null
+     * @return ?\SmartFactory\Interfaces\ISettingsValidator
      * Returns the validator for the settings or null if none is defined.
      *
      * @see UserSettingsManager::setValidator()
@@ -605,7 +609,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getValidator()
+    public function getValidator(): ?\SmartFactory\Interfaces\ISettingsValidator
     {
         return $this->validator;
     } // getValidator
@@ -631,7 +635,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setContext($context = "default")
+    public function setContext(string $context = "default"): void
     {
         $this->context = $context;
     } // setContext
@@ -655,7 +659,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getContext()
+    public function getContext(): string
     {
         return $this->context;
     } // getContext
@@ -684,7 +688,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setParameter($name, $value)
+    public function setParameter(string $name, mixed $value): void
     {
         if (empty($this->settings)) {
             $this->loadSettings();
@@ -696,14 +700,14 @@ class UserSettingsManager implements ISettingsManager
     /**
      * Sets settings parameters from an array.
      *
-     * @param array &$parameters
+     * @param array $parameters
      * Array of parameters in the form key => value.
      *
-     * @param boolean $force_creation
+     * @param bool $force_creation
      * Flag which defines whether the parameter should be created
      * if not exists. If false, only existing parameters are updated.
-     * In the UserSettingsManager, this pflag is ignored, because
-     * the paramters are mapped to the database fields and cannot be created
+     * In the UserSettingsManager, this flag is ignored, because
+     * the parameters are mapped to the database fields and cannot be created
      * on the fly.
      *
      * @return void
@@ -721,7 +725,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function setParameters(&$parameters, $force_creation = false)
+    public function setParameters(array $parameters, bool $force_creation = false): void
     {
         if (empty($this->settings)) {
             $this->loadSettings();
@@ -742,9 +746,9 @@ class UserSettingsManager implements ISettingsManager
      * @param string $name
      * The name of the settings parameter.
      *
-     * @param mixed $default
+     * @param mixed|null $default
      * The default value of the settings parameter if it is not set yet.
-     * The parameter is a confortable way to pre-set a parameter
+     * The parameter is a conformable way to pre-set a parameter
      * to a default value if its value is not set yet.
      *
      * @return mixed
@@ -763,7 +767,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function getParameter($name, $default = null)
+    public function getParameter(string $name, mixed $default = null): mixed
     {
         if (empty($this->settings)) {
             $this->loadSettings();
@@ -782,9 +786,10 @@ class UserSettingsManager implements ISettingsManager
      * It should be called after settings the new values of the parameters
      * and before their saving.
      *
-     * @return boolean
-     * Returns true if there is no validator defined, otherwise lets
-     * the validator validate the settings.
+     * @return void
+     *
+     * @throws \Exception
+     * It might throw exceptions in the case of any errors.
      *
      * @uses Interfaces\ISettingsValidator
      *
@@ -793,13 +798,13 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function validateSettings()
+    public function validateSettings(): void
     {
         if (empty($this->validator)) {
-            return true;
+            return;
         }
 
-        return $this->validator->validate($this, $this->context);
+        $this->validator->validate($this, $this->context);
     } // validateSettings
 
     /**
@@ -821,7 +826,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function loadSettings()
+    public function loadSettings(): void
     {
         $this->loadSettingsData($this->settings);
     } // loadSettings
@@ -831,7 +836,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws \Exception|\Throwable
      * It might throw an exception in the case of any errors:
      *
      * - if some parameters are missing.
@@ -843,7 +848,7 @@ class UserSettingsManager implements ISettingsManager
      *
      * @author Oleg Schildt
      */
-    public function saveSettings()
+    public function saveSettings(): void
     {
         if (empty($this->settings)) {
             $this->loadSettings();
@@ -867,7 +872,7 @@ class UserSettingsManager implements ISettingsManager
      * @see UserSettingsManager::getUserID()
      * @author Oleg Schildt
      */
-    public function setUserID($user_id)
+    public function setUserID(string $user_id): void
     {
         $this->user_id = $user_id;
     } // setUserID
@@ -875,14 +880,14 @@ class UserSettingsManager implements ISettingsManager
     /**
      * Gets the user id to be used for loading settings.
      *
-     * @return int|null
+     * @return int|string|null
      * Returns the user id or null if not set.
      *
      * @see UserSettingsManager::setUserID()
      *
      * @author Oleg Schildt
      */
-    public function getUserID()
+    public function getUserID(): int|string|null
     {
         return $this->user_id;
     } // getUserID
