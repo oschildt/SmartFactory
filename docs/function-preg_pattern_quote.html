@@ -97,27 +97,23 @@
                 <div class="col-md-12">
                     <h1>Function: preg_pattern_quote()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> preg_pattern_quote(string <span class="php-var">$str</span>, string <span class="php-var">$delimiter</span> = <span class="php-quote">&quot;/&quot;</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> preg_pattern_quote(<span class="php-keyword1">string</span> <span class="php-var">$str</span>, <span class="php-keyword1">string</span> <span class="php-var">$delimiter</span> = <span class="php-quote">&quot;/&quot;</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Function for escaping the special symbols for putting into the regexp pattern
-as a simple text in the pattern.</p>
+<p>Escapes regular expression metacharacters so a string is matched as literal text.</p>
 </div>
 
 
-
-<div class="long_description">
-<h2>Details</h2>
-<p>This function escapes all special symbols so that they are treated as a simple text.</p>
-</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -135,7 +131,7 @@ as a simple text in the pattern.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
@@ -153,23 +149,24 @@ as a simple text in the pattern.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;/&quot;
           </td>
           <td class="description_column">
-              <p>The string used in the pattern.</p>
+              <p>The regular expression delimiter to escape in addition to regex metacharacters.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
 <div class="item_description"><p>The escaped string.</p></div>
 
@@ -199,20 +196,20 @@ string<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-global_functions_inc.php.html#29'>global_functions_inc.php</a>
+<a href='source-src.global_functions_inc.php.html#26'>src/global_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-preg_replacement_quote.html'>\preg_replacement_quote()</a><br>
+<a href="function-preg_replacement_quote.html">\preg_replacement_quote()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

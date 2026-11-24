@@ -1,7 +1,7 @@
 <?php
+
 /**
- * This file contains the implementation of the abstract base class DBWorker
- * for the PostreSQL database using the extension pgsql.
+ * This file contains the implementation of the class PostgreSQL_DBWorker.
  *
  * @package Database
  *
@@ -10,1351 +10,1400 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use function \SmartFactory\debugger;
-
 /**
- * This is the class for the PostreSQL database using the extension pgsql.
+ * Database worker for PostgreSQL using the pgsql extension.
  *
- * This is a wrapper around the database connectivity. It offers a universal
- * common way for working with databases of different types. Currently, MySQL, PostgreSQL and
- * MS SQL are supported. If in the future, there will be a better solution, or
- * the current solution turns out to be inefficient in a new version of PHP,
- * we can easily reimplement the DB wrapper without touching the business logic code.
- * Adding support for new database types is also much easier with this wrapping approach.
+ * Uses uniquely named native prepared statements so workers sharing one connection
+ * do not replace each other's statements. BlobValue binds bytea, while stream_long_data()
+ * uses PostgreSQL large objects referenced by OID columns. Large-object reads and writes
+ * are performed in an existing or internally owned transaction. SELECT results use forward-only
+ * server cursors and fetch one row at a time. Outside an explicit transaction, a read transaction
+ * remains open until all shared cursors reach EOF or are freed. Complete these reads before
+ * starting an explicit transaction or modifying data on the shared connection.
  *
- * @see PostgreSQL_DBWorker
- * @see MSSQL_DBWorker
+ * @see DBWorker
  *
  * @author Oleg Schildt
  */
 class PostgreSQL_DBWorker extends DBWorker
 {
     /**
-     * Flag for setting the connection to read only.
+     * Stores the SQL used to declare a cursor for a prepared SELECT.
      *
-     * @var bool $read_only
-     *
-     * @author Oleg Schildt
-     */
-    protected bool $read_only = false;
-
-    /**
-     * Internal PgSql\Connection object.
-     *
-     * @var ?\PgSql\Connection
+     * @var string|null
      *
      * @author Oleg Schildt
      */
-    protected ?\PgSql\Connection $connection = null;
+    private ?string $cursor_sql = null;
 
     /**
-     * Internal \PgSql\Result object.
+     * Stores this worker's open forward-only server cursor name.
      *
-     * @var ?\PgSql\Result
+     * @var string|null
      *
      * @author Oleg Schildt
      */
-    protected ?\PgSql\Result $result = null;
+    private ?string $cursor_name = null;
 
     /**
-     * Internal \PgSql\Result object for statements.
+     * Stores the unique server-side PostgreSQL prepared-statement name owned by this worker.
      *
-     * @var ?\PgSql\Result
+     * @var string|null
      *
      * @author Oleg Schildt
      */
-    protected ?\PgSql\Result $statement = null;
+    private ?string $statement_name = null;
 
     /**
-     * Internal variable for storing of the last prepared query.
+     * Stores the identity/serial column expected in an automatically extended PostgreSQL INSERT result.
      *
-     * @var ?string
+     * @var string|null
      *
      * @author Oleg Schildt
      */
-    protected ?string $prepared_query = null;
+    private ?string $identity_column = null;
 
     /**
-     * Internal variable for storing of the current fetched row
-     * from the result of the last retrieving query.
-     *
-     * @var null|bool|array
-     *
-     * @author Oleg Schildt
-     */
-    protected null|bool|array $row = null;
-
-    /**
-     * Internal variable for storing of the column names
-     * from the result of the last retrieving query.
-     *
-     * @var ?array
-     *
-     * @author Oleg Schildt
-     */
-    protected ?array $field_names = null;
-
-    /**
-     * Creates a clone of the dbworker that is using the same open
-     * connection.
-     *
-     * This might be useful if you want to execute some additional
-     * queries while iteration through the active results of a select query.
-     *
-     * @return PostgreSQL_DBWorker
-     * Returns the clone of this dbworker.
-     *
-     * @author Oleg Schildt
-     */
-    public function create_clone(): PostgreSQL_DBWorker
-    {
-        $cln = new PostgreSQL_DBWorker();
-
-        $cln->is_clone = true;
-
-        $cln->db_server = $this->db_server;
-        $cln->db_port = $this->db_port;
-        $cln->db_name = $this->db_name;
-        $cln->db_user = $this->db_user;
-        $cln->db_password = $this->db_password;
-        $cln->read_only = $this->read_only;
-
-        return $cln;
-    } // create_clone
-
-    /**
-     * Constructor.
-     *
-     * @author Oleg Schildt
-     */
-    public function __construct()
-    {
-    } // __construct
-
-    /**
-     * Destructor.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    public function __destruct()
-    {
-        if (!$this->is_clone) {
-            $this->close_connection();
-        }
-    } // __destruct
-
-    /**
-     * This auxiliary function reads the data from large object.
-     *
-     * @param int $oid
-     * The oid of the large object.
+     * Returns the SQL dialect used by the placeholder compiler.
      *
      * @return string
-     * Returns the data read from the largeobject.
+     * Returns "postgres".
      *
-     * @used_by PostgreSQL_DBWorker::field_by_name()
-     * @used_by PostgreSQL_DBWorker::field_by_num()
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * @see PreparedQuery::compile()
      *
      * @author Oleg Schildt
      */
-    protected function read_large_object(int $oid): string
+    protected function dialect(): string
     {
-        $ohandle = @pg_lo_open($this->connection, $oid, "r");
-        if (empty($ohandle)) {
-            throw new DBWorkerException("Large object id is invalid!", DBWorker::ERR_STREAM_ERROR);
-        }
-
-        $data = "";
-        while ($chunk = @pg_lo_read($ohandle)) {
-            $data .= $chunk;
-        }
-
-        return $data;
-    } // read_large_object
-
-    /**
-     * Initializes the dbworker with connection parameters.
-     *
-     * @param array $parameters
-     * Connection settings as an associative array in the form key => value:
-     *
-     * - $parameters["db_server"] - server address.
-     * - $parameters["db_port"] - server port.
-     * - $parameters["db_name"] - database name.
-     * - $parameters["db_user"] - user name.
-     * - $parameters["db_password"] - user password.
-     * - $parameters["read_only"] - this parameter sets the connection to the read only mode.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    public function init(array $parameters): void
-    {
-        if (!empty($parameters["db_server"])) {
-            $this->db_server = $parameters["db_server"];
-        }
-        if (!empty($parameters["db_port"])) {
-            $this->db_name = $parameters["db_port"];
-        }
-        if (!empty($parameters["db_name"])) {
-            $this->db_name = $parameters["db_name"];
-        }
-        if (!empty($parameters["db_user"])) {
-            $this->db_user = $parameters["db_user"];
-        }
-        if (!empty($parameters["db_password"])) {
-            $this->db_password = $parameters["db_password"];
-        }
-        if (!empty($parameters["read_only"])) {
-            $this->read_only = $parameters["read_only"];
-        }
-    } // init
-
-    /**
-     * Checks whether the extension (pgsql) is installed which is required for work with
-     * the PostreSQL database.
-     *
-     * @return bool
-     * The method should return true if the extension is installed, otherwise false.
-     *
-     * @see PostgreSQL_DBWorker::get_extension_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function is_extension_installed(): bool
-    {
-        return function_exists("pg_connect");
-    } // is_extension_installed
+        // Keep marker translation independent of the human-readable database name.
+        return 'postgres';
+    } // dialect
 
     /**
      * Returns the name of the required PHP extension - "pgsql".
      *
      * @return string
-     * Returns the name of the required PHP extension - "pgsql".
+     * Returns "pgsql".
      *
-     * @see PostgreSQL_DBWorker::is_extension_installed()
+     * @see DBWorker::is_extension_installed()
      *
      * @author Oleg Schildt
      */
     public function get_extension_name(): string
     {
-        return "pgsql";
+        // Expose the extension identifier used by extension_loaded() and the factory.
+        return 'pgsql';
     } // get_extension_name
 
     /**
      * Returns the name of the supported database - "PostgreSQL Server".
      *
      * @return string
-     * Returns the name of the supported database - "PostgreSQL Server".
+     * Returns "PostgreSQL Server".
      *
      * @author Oleg Schildt
      */
     public function get_rdbms_name(): string
     {
-        return "PostgreSQL Server";
+        // Expose the database name for diagnostics and application messages.
+        return 'PostgreSQL Server';
     } // get_rdbms_name
 
     /**
-     * Returns the connection state.
+     * Creates a clone of the DBWorker that uses the same open connection.
+     *
+     * This is useful for additional queries while iterating over an active result set.
+     * Closing one worker does not close the shared connection while another worker owns it.
+     * Native driver restrictions on concurrent results still apply.
+     *
+     * @return PostgreSQL_DBWorker
+     * Returns a worker sharing the connection and transaction state, with independent statements and results.
+     *
+     * @author Oleg Schildt
+     */
+    public function create_clone(): PostgreSQL_DBWorker
+    {
+        // Use the base clone hook to separate per-worker handles while retaining shared connection ownership.
+        return clone $this;
+    } // create_clone
+
+    /**
+     * Returns the state of this worker's native connection.
      *
      * @return bool
-     * Returns true if the connection is open, otherwise false.
+     * Returns true if a connection object is attached and its status is PGSQL_CONNECTION_OK;
+     * otherwise returns false.
      *
      * @see DBWorker::check_connection()
      * @see PostgreSQL_DBWorker::connect()
-     * @see PostgreSQL_DBWorker::close_connection()
+     * @see DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
     public function is_connected(): bool
     {
-        return (!empty($this->connection) && pg_connection_status($this->connection) == PGSQL_CONNECTION_OK);
+        // Inspect the attached native handle without opening another connection.
+        return $this->connection_state?->handle instanceof \PgSql\Connection
+            && pg_connection_status($this->connection_state->handle) === PGSQL_CONNECTION_OK;
     } // is_connected
 
     /**
-     * Retrieves the last errors occurred while execution of the query.
+     * Resets driver-specific state after cloning or statement cleanup.
      *
-     * @return string
-     * Returns the string of errors separated by the new line symbol.
+     * Detaches the copied server-side statement, cursor names, SQL and identity hint.
+     * The original worker remains responsible for its prepared statement.
+     *
+     * @return void
+     * Does not return a value.
      *
      * @author Oleg Schildt
      */
-    protected function sys_get_errors(): string
+    protected function reset_driver_state(): void
     {
-        $errors = error_get_last();
-        if (empty($errors)) {
-            return "";
-        }
-
-        $message_array = [];
-
-        foreach ($errors as $error) {
-            $message_array[$error['message']] = $error['message'];
-        }
-
-        return implode("\n", $message_array);
-    } // sys_get_errors
+        // Reset only worker-owned native state; shared connection attributes remain intact.
+        $this->statement_name = $this->identity_column = null;
+        $this->cursor_sql = $this->cursor_name = null;
+    } // reset_driver_state
 
     /**
-     * Establishes the connection to the database using the connection
-     * settings parameters specified by the initialization.
+     * Establishes the database connection using the initialized settings.
+     *
+     * Opens a new native connection instead of silently reusing a matching connection string.
+     * Configures UTF-8, ISO date formatting, the search path and supported session options.
+     * An already connected worker keeps its existing connection.
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If connection settings are incomplete, the isolation level is invalid, or connection or session
+     * initialization fails.
      *
-     * @see DBWorker::check_connection()
+     * @see DBWorker::init()
      * @see PostgreSQL_DBWorker::is_connected()
-     * @see PostgreSQL_DBWorker::close_connection()
+     * @see DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
     public function connect(): void
     {
+        // Reuse an attached connection and validate the settings before creating a new native handle.
         if ($this->is_connected()) {
             return;
         }
 
-        if (!$this->connection) {
-            if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                throw new DBWorkerException("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
-            }
-
-            if (empty($this->db_name)) {
-                throw new DBWorkerException("The database must be specified immediately by the connection!", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
-            }
-
-            $connection_string = "connect_timeout=20 options='--client_encoding=UTF8' ";
-            if (!empty($this->db_server)) {
-                $connection_string .= " host=" . $this->db_server;
-            }
-            if (!empty($this->db_port)) {
-                $connection_string .= " port=" . $this->db_port;
-            }
-            if (!empty($this->db_user)) {
-                $connection_string .= " user=" . $this->db_user;
-            }
-            if (!empty($this->db_name)) {
-                $connection_string .= " dbname=" . $this->db_name;
-            }
-            if (!empty($this->db_password)) {
-                $connection_string .= " password=" . $this->db_password;
-            }
-
-            $this->connection = pg_connect($connection_string);
+        if ($this->db_server === '' || $this->db_user === '' || $this->db_name === '') {
+            throw new DBWorkerException('Connection data is incomplete.', self::ERR_CONNECTION_DATA_INCOMPLETE);
         }
 
-        if (!$this->connection) {
-            $err = $this->sys_get_errors();
-            $this->connection = null;
+        $quote = static fn(string $value): string => "'" . str_replace(['\\', "'"], ['\\\\', "\\'"], $value) . "'";
+        $parts = [
+            'host=' . $quote($this->db_server),
+            'user=' . $quote($this->db_user),
+            'password=' . $quote($this->db_password),
+            'dbname=' . $quote($this->db_name),
+            'connect_timeout=' . (int) ($this->options['connect_timeout'] ?? 20)
+        ];
 
-            throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
+        if ($this->db_port !== '') {
+            $parts[] = 'port=' . (int) $this->db_port;
+        }
+
+        $db = @pg_connect(implode(' ', $parts), PGSQL_CONNECT_FORCE_NEW);
+
+        if ($db === false) {
+            // Never include the connection string/password in diagnostics.
+            throw new DBWorkerException('Could not connect to PostgreSQL.', self::ERR_CONNECTION_FAILED);
+        }
+
+        $this->connection_state = new DBConnectionState($db, static fn(\PgSql\Connection $db) => pg_close($db));
+
+        try {
+            if (pg_set_client_encoding($db, 'UTF8') !== 0) {
+                throw $this->query_error(pg_last_error($db));
+            }
+
+            $this->control("SET datestyle = 'ISO, YMD'");
+
+            $this->control('SET search_path TO ' . pg_escape_identifier($db, $this->get_schema()));
+
+            $timeout = max(0, (int) ($this->options['query_timeout'] ?? 0));
+
+            if ($timeout > 0) {
+                $this->control('SET statement_timeout = ' . ($timeout * 1000));
+            }
+
+            if (isset($this->options['isolation_level'])) {
+                $level = strtoupper((string) $this->options['isolation_level']);
+
+                if (
+                    !in_array($level, ['READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ', 'SERIALIZABLE'], true)
+                ) {
+                    throw new DBWorkerException('Invalid transaction isolation level.', self::ERR_WRONG_DATA_FORMAT);
+                }
+
+                $this->control('SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL ' . $level);
+            }
+
+            if ($this->read_only) {
+                $this->control('SET default_transaction_read_only = on');
+            }
+        } catch (\Throwable $error) {
+            $this->connection_state = null;
+
+            throw $error;
         }
     } // connect
 
     /**
-     * Sets the database as working database.
+     * Executes an internal SQL command without replacing the public result set.
      *
-     * @param string $db_name
-     * The name of the database to be set as working database.
+     * @param string $sql
+     * The internal session, transaction or savepoint command.
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If the internal command fails.
      *
      * @author Oleg Schildt
      */
-    public function use_database(string $db_name): void
+    private function control(string $sql): void
     {
-        throw new DBWorkerException("The database must be specified immediately by the connection!", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
-    } // use_database
+        // Use a temporary native handle so an internal command cannot replace the caller's active result.
+        $result = @pg_query($this->connection_state->handle, $sql);
 
-    /**
-     * Returns the name of the database schema if applicable.
-     *
-     * @return string
-     * Returns the name of the database schema if applicable, or an empty string.
-     *
-     * @see PostgreSQL_DBWorker::qualify_name_with_schema()
-     *
-     * @author Oleg Schildt
-     */
-    public function get_schema(): string
-    {
-        return "public";
-    } // get_schema
-
-    /**
-     * Completes the name of a database object with the schema name if applicable.
-     *
-     * @param string $name
-     * The name of the database object to be completed with the schema name.
-     *
-     * @return string
-     * Returns the name of the database object with the schema name if applicable,
-     * otherwise the name of the database object remains unchanged.
-     *
-     * @see PostgreSQL_DBWorker::get_schema()
-     *
-     * @author Oleg Schildt
-     */
-    public function qualify_name_with_schema(string $name): string
-    {
-        $schema = $this->get_schema();
-
-        if (!empty($schema)) {
-            $schema .= ".";
+        if ($result === false) {
+            throw $this->query_error(pg_last_error($this->connection_state->handle));
         }
 
-        return $schema . $name;
-    } // qualify_name_with_schema
+        pg_free_result($result);
+    } // control
 
     /**
-     * Executes the SQL query.
+     * Executes SQL and records metadata, using a server cursor for SELECT queries.
      *
-     * @param string $query_string
-     * The SQL query to be executed.
+     * SELECT rows are fetched lazily. The cursor owns a transaction when the caller has not
+     * started one; writes require those internally managed read cursors to be closed first.
+     *
+     * @param string $sql
+     * The SQL query to execute. Driver-specific identity handling may extend it.
      *
      * @return void
-     *
-     * @throws \Exception|DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function execute_query(string $query_string): void
-    {
-        $this->check_connection();
-
-        $this->last_query = $query_string;
-
-        if ($this->logging) {
-            debugger()->debugMessage($this->last_query, "sql.log");
-        }
-
-        $this->result = @pg_query($this->connection, $query_string);
-        if (!$this->result) {
-            throw new DBWorkerException(pg_last_error(), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-    } // execute_query
-
-    /**
-     * Prepares the SQL query with bindable variables.
-     *
-     * @param string $query_string
-     * The SQL query to be prepared.
-     *
-     * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If native query execution fails.
      *
-     * @see PostgreSQL_DBWorker::execute_prepared_query()
-     * @see PostgreSQL_DBWorker::free_prepared_query()
+     * @see DBWorker::execute_query()
      *
      * @author Oleg Schildt
      */
-    public function prepare_query(string $query_string): void
+    protected function native_query(string $sql): void
     {
-        $this->check_connection();
+        // Execute the native statement, then expose its result through the shared result contract.
+        $sql = $this->with_identity($sql);
 
-        if ($this->statement) {
-            @pg_free_result($this->statement);
-            $this->statement = null;
+        if (preg_match('/\A(?:SELECT|WITH)\b/i', $this->sql_body($sql))) {
+            $this->open_cursor($sql, []);
+
+            return;
         }
 
-        $counter = 1;
-        $query_string = preg_replace_callback("/\\?/", function () use (&$counter) {
-            return "$" . ($counter++);
-        }, $query_string);
+        $this->check_cursor_transaction();
 
-        $this->last_query = $query_string;
-        $this->prepared_query = $query_string;
+        $result = @pg_query($this->connection_state->handle, $sql);
 
-        $this->statement = @pg_prepare($this->connection, "", $query_string);
-        if (!$this->statement) {
-            throw new DBWorkerException(pg_last_error($this->connection), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
+        if ($result === false) {
+            throw $this->query_error(pg_last_error($this->connection_state->handle));
         }
-    } // prepare_query
+
+        $this->accept_result($result);
+
+        $this->flush_deallocations();
+    } // native_query
 
     /**
-     * Stores long data from a stream.
+     * Creates a native statement from SQL whose bind markers have already been compiled.
      *
-     * @param string $query_string
-     * The SQL query to be used for storing the long data.
+     * @param string $sql
+     * The SQL query containing native bind markers.
      *
-     * @param resource $stream
-     * The opened valid stream for reading the long data.
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If the native statement cannot be prepared.
+     *
+     * @see DBWorker::prepare_query()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_prepare(string $sql): void
+    {
+        // Keep native statement preparation separate from public placeholder compilation.
+        $this->flush_deallocations();
+
+        $sql = $this->with_identity($sql);
+
+        // Unique names prevent cloned workers from replacing each other's prepared statements.
+        $this->statement_name = 'sf_' . bin2hex(random_bytes(12));
+        $result = @pg_prepare($this->connection_state->handle, $this->statement_name, $sql);
+
+        if ($result === false) {
+            $this->statement_name = null;
+
+            throw $this->query_error(pg_last_error($this->connection_state->handle));
+        }
+
+        $this->statement = $result;
+        $this->cursor_sql = preg_match('/\A(?:SELECT|WITH)\b/i', $this->sql_body($sql)) ? $sql : null;
+    } // native_prepare
+
+    /**
+     * Binds validated values and executes the native prepared statement.
+     *
+     * Repeated application names share one native parameter index. Binary LOB wrappers
+     * are encoded as bytea; text LOB wrappers are materialized as text and reject NUL bytes.
+     * Use stream_long_data() for chunked writes into OID-backed large-object columns.
+     * Prepared SELECT queries declare a new forward-only cursor for each execution.
+     *
+     * @param list<scalar|null|BlobValue|ClobValue> $values
+     * The normalized values in SQL occurrence order, including any explicit LOB wrappers.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If binding, LOB processing or native execution fails.
+     *
+     * @see DBWorker::execute_prepared_query()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_execute(array $values): void
+    {
+        // Bind stable per-position values so repeated application names cannot share a loop variable by accident.
+        $bound = [];
+
+        // Repeated application names share one PostgreSQL native parameter index.
+        $seen = [];
+
+        foreach ($values as $index => $value) {
+            if ($this->compiled_query->named) {
+                $name = $this->compiled_query->names[$index];
+
+                if (isset($seen[$name])) {
+                    continue;
+                }
+
+                $seen[$name] = true;
+            }
+
+            if ($value instanceof BlobValue || $value instanceof ClobValue) {
+                $data = '';
+
+                $this->write_chunks(
+                    $value->value,
+                    static function (string $chunk) use (&$data): void {
+                        $data .= $chunk;
+                    },
+                    $value instanceof ClobValue
+                );
+
+                if ($value instanceof ClobValue && str_contains($data, "\0")) {
+                    throw $this->query_error('PostgreSQL text values cannot contain NUL bytes.');
+                }
+
+                $bound[] = $value instanceof BlobValue
+                    ? pg_escape_bytea($this->connection_state->handle, $data) : $data;
+            } elseif (is_bool($value)) {
+                $bound[] = (int) $value;
+            } else {
+                if (is_string($value) && str_contains($value, "\0")) {
+                    throw $this->query_error('Binary strings containing NUL must be wrapped in BlobValue.');
+                }
+
+                $bound[] = $value;
+            }
+        }
+
+        if ($this->cursor_sql !== null) {
+            $this->open_cursor($this->cursor_sql, $bound);
+
+            return;
+        }
+
+        $this->check_cursor_transaction();
+
+        $result = @pg_execute($this->connection_state->handle, $this->statement_name, $bound);
+
+        if ($result === false) {
+            throw $this->query_error(pg_last_error($this->connection_state->handle));
+        }
+
+        $this->accept_result($result);
+    } // native_execute
+
+    /**
+     * Declares a forward-only server cursor and reads its metadata without fetching rows.
+     *
+     * @param string $sql
+     * The SELECT query with native positional bind markers, if any.
+     *
+     * @param list<scalar|null> $values
+     * The normalized native parameter values.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If starting the read transaction, declaring the cursor or reading metadata fails.
+     *
+     * @author Oleg Schildt
+     */
+    private function open_cursor(string $sql, array $values): void
+    {
+        if (pg_transaction_status($this->connection_state->handle) === PGSQL_TRANSACTION_IDLE) {
+            $this->control('BEGIN');
+
+            $this->connection_state->attributes['cursor_transaction'] = true;
+        }
+
+        $this->cursor_name = 'sf_cursor_' . bin2hex(random_bytes(12));
+        $this->connection_state->attributes['read_cursors'][$this->cursor_name] = true;
+
+        try {
+            $result = @pg_query_params(
+                $this->connection_state->handle,
+                'DECLARE ' . $this->cursor_name . ' NO SCROLL CURSOR FOR ' . rtrim($sql, " \t\r\n;"),
+                $values
+            );
+
+            if ($result === false) {
+                throw $this->query_error(pg_last_error($this->connection_state->handle));
+            }
+
+            pg_free_result($result);
+
+            $result = @pg_query($this->connection_state->handle, 'FETCH FORWARD 0 FROM ' . $this->cursor_name);
+
+            if ($result === false) {
+                throw $this->query_error(pg_last_error($this->connection_state->handle));
+            }
+
+            $this->accept_result($result);
+        } catch (\Throwable $error) {
+            $this->native_free_result();
+
+            throw $error;
+        }
+    } // open_cursor
+
+    /**
+     * Prevents writes and explicit transaction changes inside an internally owned cursor transaction.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If a cursor-owned read transaction is still active on the shared connection.
+     *
+     * @author Oleg Schildt
+     */
+    private function check_cursor_transaction(): void
+    {
+        if ($this->connection_state->attributes['cursor_transaction'] ?? false) {
+            throw $this->query_error('Exhaust or free the active SELECT results before modifying data or changing transactions.');
+        }
+    } // check_cursor_transaction
+
+    /**
+     * Captures PostgreSQL result metadata, affected rows and a returned generated identifier.
+     *
+     * Metadata retains native numeric type names and distinguishes bytea from OID references.
+     *
+     * @param \PgSql\Result $result
+     * The successfully executed pgsql result object.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @author Oleg Schildt
+     */
+    private function accept_result(\PgSql\Result $result): void
+    {
+        // Record metadata without advancing the application row cursor.
+        $this->result = $result;
+        $metadata = [];
+
+        for ($i = 0; $i < pg_num_fields($result); $i++) {
+            $type = pg_field_type($result, $i);
+            $numeric = in_array($type, ['int2', 'int4', 'int8', 'float4', 'float8', 'numeric', 'money'], true);
+            $datetime = in_array($type, ['date', 'time', 'timetz', 'timestamp', 'timestamptz', 'interval'], true);
+            $metadata[] = [
+                'name' => pg_field_name($result, $i),
+                'type' => $type,
+                'size' => pg_field_size($result, $i),
+                'numeric' => (int) $numeric,
+                'datetime' => (int) $datetime,
+                'binary' => (int) ($type === 'bytea'),
+                'string' => (int) in_array($type, ['text', 'varchar', 'bpchar', 'char', 'name', 'json', 'jsonb'], true)
+            ];
+        }
+
+        $this->set_result($metadata, pg_affected_rows($result));
+
+        if ($this->identity_column !== null && pg_num_rows($result) > 0) {
+            $index = pg_field_num($result, $this->identity_column);
+
+            if ($index >= 0) {
+                $id = pg_fetch_result($result, 0, $index);
+
+                if ($id !== null && filter_var($id, FILTER_VALIDATE_INT) !== false) {
+                    $this->last_insert_id = (int) $id;
+                }
+            }
+        }
+    } // accept_result
+
+    /**
+     * Adds RETURNING for a table's discovered serial or identity column.
+     *
+     * Metadata is cached on the shared connection. An actual INSERT result is used instead of lastval().
+     *
+     * @param string $sql
+     * The SQL statement to inspect.
+     *
+     * @return string
+     * Returns SQL extended with RETURNING when one generated column is found and no RETURNING clause is present.
+     *
+     * @throws DBWorkerException
+     * If the identity metadata query fails.
+     *
+     * @author Oleg Schildt
+     */
+    private function with_identity(string $sql): string
+    {
+        // Capture an identifier from the INSERT itself instead of consulting unrelated session sequence state.
+        $this->identity_column = null;
+        $table = $this->insert_table($sql);
+
+        if ($table === null) {
+            return $sql;
+        }
+
+        $db = $this->connection_state->handle;
+        $cache = &$this->connection_state->attributes['identity_columns'];
+        $key = $this->get_schema() . ':' . $table;
+
+        if (!array_key_exists($key, $cache ?? [])) {
+            $result = @pg_query_params(
+                $db,
+                "select a.attname from pg_attribute a where a.attrelid = to_regclass($1) and a.attnum > 0 and not a.attisdropped
+                 and (a.attidentity <> '' or pg_get_serial_sequence($1, a.attname) is not null) order by a.attnum",
+                [$table]
+            );
+
+            if ($result === false) {
+                throw $this->query_error(pg_last_error($db));
+            }
+
+            $cache[$key] = pg_num_rows($result) === 1 ? pg_fetch_row($result)[0] : null;
+
+            pg_free_result($result);
+        }
+
+        $this->identity_column = $cache[$key];
+
+        if ($this->identity_column !== null && !preg_match('/\bRETURNING\b/i', $sql)) {
+            $sql = rtrim($sql, " \t\r\n;") . ' RETURNING ' . pg_escape_identifier($db, $this->identity_column);
+        }
+
+        return $sql;
+    } // with_identity
+
+    /**
+     * Fetches the next row, requesting one row at a time from an active server cursor.
+     *
+     * EOF closes the cursor and completes an internally owned transaction after the last
+     * shared cursor closes. A cursor closed by a caller commit or rollback also returns EOF.
+     *
+     * @return list<mixed>|null
+     * Returns a numerically indexed row, or NULL at the end of the result set.
+     *
+     * @throws DBWorkerException
+     * If fetching the next cursor row fails.
+     *
+     * @see DBWorker::fetch_row()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_fetch(): ?array
+    {
+        if ($this->cursor_name !== null) {
+            if (!isset($this->connection_state->attributes['read_cursors'][$this->cursor_name])) {
+                $this->native_free_result();
+
+                return null;
+            }
+
+            if ($this->result instanceof \PgSql\Result) {
+                pg_free_result($this->result);
+            }
+
+            $this->result = @pg_query($this->connection_state->handle, 'FETCH FORWARD 1 FROM ' . $this->cursor_name);
+
+            if ($this->result === false) {
+                $error = $this->query_error(pg_last_error($this->connection_state->handle));
+
+                $this->native_free_result();
+
+                throw $error;
+            }
+        }
+
+        if (!$this->result instanceof \PgSql\Result) {
+            return null;
+        }
+
+        $row = pg_fetch_row($this->result);
+
+        if ($row === false && $this->cursor_name !== null) {
+            $this->native_free_result();
+        }
+
+        return $row === false ? null : $row;
+    } // native_fetch
+
+    /**
+     * Releases native result resources without discarding a reusable prepared statement.
+     *
+     * Closes the server cursor and completes an internally owned transaction when its last
+     * cursor closes. An aborted internally owned transaction is rolled back. Caller-owned
+     * transactions remain under the caller's control.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If closing a live cursor or completing the internally owned transaction fails.
+     *
+     * @see DBWorker::free_result()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_free_result(): void
+    {
+        // Release result ownership while leaving a reusable prepared statement available.
+        if ($this->result instanceof \PgSql\Result) {
+            pg_free_result($this->result);
+        }
+
+        $this->result = null;
+
+        if ($this->cursor_name !== null) {
+            $name = $this->cursor_name;
+            $this->cursor_name = null;
+
+            // A failed transaction has already invalidated its cursors; rollback releases them.
+            if (
+                isset($this->connection_state->attributes['read_cursors'][$name])
+                && pg_transaction_status($this->connection_state->handle) === PGSQL_TRANSACTION_INTRANS
+            ) {
+                $this->control('CLOSE ' . $name);
+            }
+
+            unset($this->connection_state->attributes['read_cursors'][$name]);
+
+            if (
+                empty($this->connection_state->attributes['read_cursors'])
+                && ($this->connection_state->attributes['cursor_transaction'] ?? false)
+            ) {
+                $this->connection_state->attributes['cursor_transaction'] = false;
+                $failed = pg_transaction_status($this->connection_state->handle) === PGSQL_TRANSACTION_INERROR;
+
+                $this->control($failed ? 'ROLLBACK' : 'COMMIT');
+            }
+        }
+    } // native_free_result
+
+    /**
+     * Releases the native prepared statement and its driver-specific bind state.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @see DBWorker::free_prepared_query()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_free_statement(): void
+    {
+        // Release native statement ownership and clear driver-specific bind state.
+        if ($this->statement instanceof \PgSql\Result) {
+            pg_free_result($this->statement);
+        }
+
+        $this->statement = null;
+
+        if ($this->statement_name !== null && $this->connection_state !== null) {
+            $this->connection_state->attributes['pending_deallocations'][] = $this->statement_name;
+            $this->statement_name = null;
+
+            $this->flush_deallocations();
+        }
+
+        $this->identity_column = null;
+        $this->cursor_sql = null;
+    } // native_free_statement
+
+    /**
+     * Deallocates queued PostgreSQL prepared statements when the connection can execute SQL.
+     *
+     * Deallocation is postponed while the connection is in an aborted transaction.
+     * The queue belongs to the shared connection so clones do not overwrite each other's prepared statements.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @author Oleg Schildt
+     */
+    private function flush_deallocations(): void
+    {
+        // An aborted PostgreSQL transaction cannot execute DEALLOCATE; keep names queued until recovery.
+        if (
+            $this->connection_state === null
+            || pg_transaction_status($this->connection_state->handle) === PGSQL_TRANSACTION_INERROR
+        ) {
+            return;
+        }
+
+        foreach ($this->connection_state->attributes['pending_deallocations'] ?? [] as $name) {
+            $result = @pg_query(
+                $this->connection_state->handle,
+                'DEALLOCATE ' . pg_escape_identifier($this->connection_state->handle, $name)
+            );
+
+            if ($result !== false) {
+                pg_free_result($result);
+            }
+        }
+
+        $this->connection_state->attributes['pending_deallocations'] = [];
+    } // flush_deallocations
+
+    /**
+     * Performs a native transaction operation on the shared connection.
+     *
+     * The base class updates the shared transaction flag only after this operation succeeds.
+     *
+     * @param string $action
+     * The operation: begin, commit or rollback.
+     *
+     * @param string $isolation_level
+     * The validated isolation level applied by BEGIN; ignored for commit and rollback.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If a cursor-owned read transaction is active or the native transaction operation fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_transaction(string $action, string $isolation_level = self::ISOLATION_READ_COMMITTED): void
+    {
+        // Do not let BEGIN silently join the transaction owned by an unfinished cursor.
+        $this->check_cursor_transaction();
+
+        $this->control(match ($action) {
+            'begin' => 'BEGIN ISOLATION LEVEL ' . $isolation_level,
+            'commit' => 'COMMIT',
+            'rollback' => 'ROLLBACK'
+        });
+
+        if ($action !== 'begin') {
+            // PostgreSQL closes non-holdable cursors when their transaction ends.
+            $this->connection_state->attributes['read_cursors'] = [];
+        }
+
+        $this->flush_deallocations();
+    } // native_transaction
+
+    /**
+     * Stores large data from an input stream using one unique bind parameter.
      *
      * Example:
      * ```php
      * $stream = fopen(".../large_binary.jpg", "rb");
      *
-     * if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
-     * {
-     *   error reporting ...;
+     * try {
+     *     $dbw->stream_long_data("UPDATE large_data SET blob_data = ? WHERE id = 1", $stream);
+     * } finally {
+     *     fclose($stream);
      * }
      * ```
      *
+     * The new large object and the row update use one transaction. An existing transaction
+     * is protected by a savepoint; otherwise this method owns the transaction. Failed uploads
+     * are rolled back. Replacing an existing OID does not unlink the old object.
+     *
+     * @param string $query_string
+     * The INSERT or UPDATE query containing one positional marker or one unique named marker.
+     * A named marker may occur in multiple positions.
+     *
+     * @param resource $stream
+     * An open readable stream. Reading starts at its current position.
+     * The caller retains ownership and must close it. A seekable stream is restored to its initial position.
+     *
+     * @param int $type
+     * DB_AS_IS selects a binary BLOB; DB_STRING selects UTF-8 text.
+     * For PostgreSQL this method writes a large object and stores its OID in the target column.
+     *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If no connection is open, the stream or type is invalid, the query does not contain exactly one
+     * unique parameter, or preparing, transferring, updating, or completing the transaction fails.
+     *
+     * @see DBWorker::copy_field_to_stream()
+     * @see DBWorker::execute_prepared_query()
+     * @see PostgreSQL_DBWorker::unlink_large_object()
      *
      * @author Oleg Schildt
      */
-    public function stream_long_data(string $query_string, $stream): void
+    public function stream_long_data(string $query_string, $stream, int $type = self::DB_AS_IS): void
     {
+        // Keep the new large object and the row's OID assignment in the same transaction or savepoint.
         $this->check_connection();
 
-        if (!is_resource($stream)) {
-            throw new DBWorkerException("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
+        $this->assert_stream($stream);
+
+        if (!in_array($type, [self::DB_AS_IS, self::DB_STRING], true)) {
+            throw new DBWorkerException(
+                'Stream type must be DB_AS_IS (binary) or DB_STRING (UTF-8 text).',
+                self::ERR_WRONG_DATA_FORMAT
+            );
         }
 
-        if ($this->statement) {
-            @pg_free_result($this->statement);
-            $this->statement = null;
+        $this->prepare_query($query_string);
+
+        $names = array_unique($this->compiled_query->names);
+
+        if (count($names) !== 1) {
+            $this->free_prepared_query();
+
+            throw new DBWorkerException(
+                'stream_long_data requires exactly one unique parameter.',
+                self::ERR_WRONG_DATA_FORMAT
+            );
         }
 
-        $this->last_query = $query_string;
-        $this->prepared_query = $query_string;
+        $own = !$this->connection_state->transaction;
 
-        $oid = pg_lo_create($this->connection);
+        // A savepoint protects an existing caller transaction from a failed upload.
+        $savepoint = 'sf_lob_' . bin2hex(random_bytes(6));
 
-        $this->statement = @pg_prepare($this->connection, "", $query_string);
-        if (!$this->statement) {
-            throw new DBWorkerException(pg_last_error($this->connection), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
+        if ($own) {
+            $this->start_transaction();
+        } else {
+            $this->control('SAVEPOINT ' . $savepoint);
         }
 
-        $this->result = @pg_execute($this->connection, "", [$oid]);
-        if (!$this->result) {
-            throw new DBWorkerException(pg_last_error(), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
+        $handle = null;
 
-        $ohandle = @pg_lo_open($this->connection, $oid, "w");
-        if (empty($ohandle)) {
-            throw new DBWorkerException("Error writing from stream to PG large object!", DBWorker::ERR_STREAM_ERROR);
-        }
+        try {
+            $oid = @pg_lo_create($this->connection_state->handle);
 
-        while (!feof($stream)) {
-            if (!@pg_lo_write($ohandle, fread($stream, 8192))) {
-                fclose($stream);
-                @pg_lo_close($ohandle);
-                throw new DBWorkerException("Error writing from stream to PG large object!", DBWorker::ERR_STREAM_ERROR);
+            if ($oid === false) {
+                throw $this->stream_error('Cannot create PostgreSQL large object.');
             }
-        }
 
-        @pg_lo_close($ohandle);
+            $offset = 0;
+
+            $this->write_chunks(
+                $stream,
+                function (string $chunk) use ($oid, &$offset): void {
+                    // lo_put is binary-safe even on PHP builds whose pg_lo_write rejects NUL.
+                    $result = @pg_query_params(
+                        $this->connection_state->handle,
+                        'select lo_put($1::oid, $2::bigint, $3::bytea)',
+                        [$oid, $offset, pg_escape_bytea($this->connection_state->handle, $chunk)]
+                    );
+
+                    if ($result === false) {
+                        throw $this->stream_error(pg_last_error($this->connection_state->handle));
+                    }
+
+                    pg_free_result($result);
+
+                    $offset += strlen($chunk);
+                },
+                $type === self::DB_STRING
+            );
+
+            // Assign the OID only after all chunks have been written successfully.
+            $this->execute_prepared_query($this->compiled_query->named ? [$names[0] => $oid] : [$oid]);
+
+            if ($own) {
+                $this->commit_transaction();
+            } else {
+                $this->control('RELEASE SAVEPOINT ' . $savepoint);
+            }
+        } catch (\Throwable $error) {
+            if ($handle !== null && $handle !== false) {
+                @pg_lo_close($handle);
+            }
+
+            if ($own) {
+                $this->rollback_transaction();
+            } else {
+                $this->control('ROLLBACK TO SAVEPOINT ' . $savepoint);
+
+                $this->control('RELEASE SAVEPOINT ' . $savepoint);
+            }
+
+            throw $error;
+        } finally {
+            $this->free_prepared_query();
+        }
     } // stream_long_data
 
     /**
-     * Executes the prepared SQL query.
+     * Converts a native field value into a value exposed by the public field accessors.
      *
-     * @param mixed ...$args
-     * The number of parameters may vary and be zero. An array can also be passed.
-     * These are parameters of the prepared query.
+     * Date conversion is performed by field_by_num() after native value decoding.
      *
-     * @return void
-     *
-     * @throws \Exception|DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::prepare_query()
-     * @see PostgreSQL_DBWorker::free_prepared_query()
-     *
-     * @author Oleg Schildt
-     */
-    public function execute_prepared_query(...$args): void
-    {
-        $this->check_connection();
-
-        if (empty($this->prepared_query) || empty($this->statement)) {
-            throw new DBWorkerException("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
-        }
-
-        if (count($args) == 1 && is_array($args[0])) {
-            $args = $args[0];
-        }
-
-        $this->last_query = $this->prepared_query;
-
-        if ($this->logging) {
-            debugger()->debugMessage($this->last_query, "sql.log");
-        }
-
-        $this->result = @pg_execute($this->connection, "", $args);
-        if (!$this->result) {
-            throw new DBWorkerException(pg_last_error(), DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-    } // execute_prepared_query
-
-    /**
-     * Executes the SQL stored procedure.
-     *
-     * @param string $procedure
-     * The name of the SQL stored procedure.
-     *
-     * All subsequent parameters are the parameters of the SQL stored procedure.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function execute_procedure(string $procedure /* arg list */): void
-    {
-        $this->check_connection();
-
-        $args = func_get_args();
-
-        // prepare the arguments for placing in eval()
-        // escape single quotes
-
-        $this->last_query = "";
-
-        if (count($args) > 0) {
-            $proc_name = "";
-            $arg_list = "";
-
-            $first = true;
-            foreach ($args as $argval) {
-                if ($first) {
-                    $proc_name = $argval;
-                    $first = false;
-                    continue;
-                }
-
-                if ($argval === null) {
-                    $arg_list .= "null, ";
-                } elseif (is_int($argval)) {
-                    $arg_list .= "$argval, ";
-                } elseif (is_float($argval)) {
-                    $arg_list .= "$argval, ";
-                } else {
-                    $arg_list .= "'" . $this->escape($argval) . "', ";
-                }
-            }
-
-            $arg_list = trim($arg_list, ", ");
-
-            $this->last_query = "CALL $proc_name($arg_list);";
-        }
-
-        $this->execute_query($this->last_query);
-    } // execute_procedure
-
-    /**
-     * Frees the prepared query.
-     *
-     * It should be called after all executions of the prepared query.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::prepare_query()
-     * @see PostgreSQL_DBWorker::execute_prepared_query()
-     *
-     * @author Oleg Schildt
-     */
-    public function free_prepared_query(): void
-    {
-        $this->check_connection();
-
-        if ($this->statement) {
-            @pg_free_result($this->statement);
-
-            $this->statement = null;
-        }
-
-        $this->statement = null;
-        $this->last_query = null;
-        $this->prepared_query = null;
-    } // free_prepared_query
-
-    /**
-     * Closes the currently opened connection.
-     *
-     * @return void
-     *
-     * @see PostgreSQL_DBWorker::is_connected()
-     * @see PostgreSQL_DBWorker::connect()
-     *
-     * @author Oleg Schildt
-     */
-    public function close_connection(): void
-    {
-        $this->last_query = null;
-        $this->prepared_query = null;
-        $this->row = null;
-        $this->field_names = null;
-
-        if ($this->statement) {
-            @pg_free_result($this->statement);
-        }
-
-        if ($this->result) {
-            @pg_free_result($this->result);
-        }
-
-        if ($this->connection) {
-            @pg_close($this->connection);
-        }
-
-        $this->statement = null;
-        $this->connection = null;
-        $this->result = null;
-    } // close_connection
-
-    /**
-     * Starts the transation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::commit_transaction()
-     * @see PostgreSQL_DBWorker::rollback_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function start_transaction(): void
-    {
-        $this->check_connection();
-
-        $this->execute_query("BEGIN");
-    } // start_transaction
-
-    /**
-     * Commits the transation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::start_transaction()
-     * @see PostgreSQL_DBWorker::rollback_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function commit_transaction(): void
-    {
-        $this->check_connection();
-
-        $this->execute_query("COMMIT");
-    } // commit_transaction
-
-    /**
-     * Rolls back the transation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::start_transaction()
-     * @see PostgreSQL_DBWorker::commit_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function rollback_transaction(): void
-    {
-        $this->check_connection();
-
-        $this->execute_query("ROLLBACK");
-    } // rollback_transaction
-
-    /**
-     * Frees the result of the previously executed retrieving query.
-     *
-     * It should be called only for the retrieving queries.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function free_result(): void
-    {
-        $this->check_connection();
-
-        if ($this->result) {
-            @pg_free_result($this->result);
-
-            $this->result = null;
-        }
-
-        $this->row = null;
-        $this->field_names = null;
-        $this->last_query = null;
-    } // free_result
-
-    /**
-     * Returns the value of the auto increment field by the last insertion.
-     *
-     * WARNING! This method only works
-     * if there are no triggers with insertion commands.
-     *
-     * PostgreSQL recommends using the sequences like Oracle. If you want to use sequences,
-     * generate ID values with passing to {@see PostgreSQL_DBWorker::execute_query()} the sequence generation commands
-     * and write your inserts with explicit ID values.
-     *
-     * @return ?int
-     * Returns the value of the auto increment field by the last insertion.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function insert_id(): ?int
-    {
-        $this->check_connection();
-
-        $this->execute_query("select lastval() as iid");
-
-        if (!$this->fetch_row()) {
-            $err = "Identity field cannot be retrieved";
-
-            $this->free_result();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], "select lastval() as iid");
-        }
-
-        $id = $this->field_by_name("iid");
-
-        $this->free_result();
-
-        return $id;
-    } // insert_id
-
-    /**
-     * Fetches the next row of data from the result of the execution of the retrieving query.
-     *
-     * @return bool
-     * Returns true if the next row exists and has been successfully fetched, otherwise false.
-     *
-     * Example:
-     * ```php
-     * if(!$dbw->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
-     * {
-     *   error reporting ...;
-     * }
-     *
-     * while($dbw->fetch_row())
-     * {
-     *   echo $dbw->field_by_name("FIRST_NAME") . " " . $dbw->field_by_name("LAST_NAME") . "<br>";
-     * }
-     *
-     * $dbw->free_result();
-     * ```
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetch_row(): bool
-    {
-        $this->check_connection();
-
-        if (!$this->result) {
-            $err = "Result is empty!";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        $this->row = @pg_fetch_array($this->result, null, PGSQL_ASSOC);
-
-        if (!$this->row) {
-            return false;
-        }
-
-        if (!$this->field_names) {
-            $this->field_names = array_keys($this->row);
-        }
-
-        return true;
-    } // fetch_row
-
-    /**
-     * Fetches all rows from the result into an array.
-     *
-     * @param array &$rows
-     * Target array for loading the results.
-     *
-     * @param ?array $dimension_keys
-     * Array of the column names that should be used as dimensions.
-     *
-     * Per default, the rows are fetched as two-dimensional array.
-     *
-     * Example:
-     * ```php
-     * $rows = [];
-     * $dbw->fetch_array($rows);
-     *
-     * rows[n] = ["col1" => "val1", "col2" => "val2", "col3" => "val3", ...]
-     * ```
-     * If the dimension columns are specified, their values are used for the dimensions.
-     *
-     * Example:
-     * ```php
-     * $rows = [];
-     * $dbw->fetch_array($rows, ["col1", "col2"]);
-     *
-     * rows["val1"]["val2"] = ["col3" => "val3", ...]
-     * ```
-     *
-     * @return int
-     * Returns the number of the fetched rows. It might be also 0.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetch_array(array &$rows, ?array $dimension_keys = null): int
-    {
-        $this->check_connection();
-
-        $rows = [];
-
-        if (!empty($dimension_keys)) {
-            $dimension_keys = array_flip($dimension_keys);
-        }
-
-        $counter = 0;
-
-        if (!$this->result) {
-            $err = "Result is empty!";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        while ($row = @pg_fetch_array($this->result, null, PGSQL_ASSOC)) {
-            $counter++;
-
-            if (!$this->field_names) {
-                $this->field_names = array_keys($row);
-            }
-
-            if (empty($dimension_keys)) {
-                $rows[] = $row;
-            } else {
-                $dimensions = array_intersect_key($row, $dimension_keys);
-                $row = array_diff_key($row, $dimension_keys);
-
-                $reference = &$rows;
-
-                foreach ($dimensions as $dval) {
-                    if (empty($reference[$dval])) {
-                        $reference[$dval] = [];
-                    }
-                    $reference = &$reference[$dval];
-                }
-
-                $reference = $row;
-
-                unset($reference);
-            }
-        }
-
-        return $counter;
-    } // fetch_array
-
-    /**
-     * Returns the number of the rows fetched by the last retrieving query.
-     *
-     * @return int
-     * Returns the number of the rows fetched by the last retrieving query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetched_count(): int
-    {
-        $this->check_connection();
-
-        if (!$this->result || !is_object($this->result)) {
-            $err = "Result is empty!";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return pg_affected_rows($this->result);
-    } // fetched_count
-
-    /**
-     * Returns the number of the rows affected by the last modification query.
-     *
-     * @return int
-     * Returns the number of the rows affected by the last modification query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function affected_count(): int
-    {
-        $this->check_connection();
-
-        if (!$this->result || !is_object($this->result)) {
-            $err = "Result is empty!";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return pg_affected_rows($this->result);
-    } // affected_count
-
-    /**
-     * Returns the number of the fields in the result of the last retrieving query.
-     *
-     * @return int
-     * Returns the number of the fields in the result of the last retrieving query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function field_count(): int
-    {
-        $this->check_connection();
-
-        if (!$this->result || !is_object($this->result)) {
-            $err = "Result is empty!";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return pg_num_fields($this->result);
-    } // field_count
-
-    /**
-     * Returns the value of a field specified by name.
-     *
-     * @param string $name
-     * The name of the field.
+     * @param int $index
+     * The zero-based index of a field in the current row.
      *
      * @param int $type
-     * The type of the field.
+     * The requested DBWorker conversion type.
      *
      * @return mixed
-     * Returns the value of a field specified by name. In the case
-     * of any error returns null.
+     * Returns decoded bytea data, complete OID large-object contents when requested,
+     * or the native field value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::field_by_num()
-     * @see PostgreSQL_DBWorker::field_name()
+     * If a stream is invalid or a read/write operation fails.
      *
      * @author Oleg Schildt
      */
-    public function field_by_name(string $name, int $type = self::DB_AS_IS): mixed
+    protected function decode_value(int $index, int $type): mixed
     {
-        $this->check_connection();
-
-        if (!$this->row) {
+        // Decode bytea bytes explicitly and materialize an OID only when the legacy LOB flag requests it.
+        if ($this->row[$index] === null) {
             return null;
         }
 
-        if (!array_key_exists($name, $this->row)) {
-            trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_WARNING);
-            return null;
+        if ($type === self::DB_LARGE_OBJECT_STREAM && $this->metadata[$index]['type'] === 'oid') {
+            $stream = fopen('php://temp/maxmemory:1048576', 'w+b');
+
+            try {
+                $this->copy_value_to_stream($index, $stream);
+
+                rewind($stream);
+
+                $value = stream_get_contents($stream);
+
+                if ($value === false) {
+                    throw $this->stream_error('Cannot read LOB contents.');
+                }
+
+                return $value;
+            } finally {
+                fclose($stream);
+            }
         }
 
-        if ($type == DBWorker::DB_LARGE_OBJECT_STREAM) {
-            return $this->read_large_object($this->row[$name]);
-        }
-
-        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$name])) {
-            return strtotime($this->row[$name]);
-        }
-
-        return $this->row[$name];
-    } // field_by_name
+        return $this->metadata[$index]['type'] === 'bytea' ? pg_unescape_bytea($this->row[$index]) : $this->row[$index];
+    } // decode_value
 
     /**
-     * Returns the value of a field specified by number.
+     * Copies one native field value to the destination stream.
      *
-     * @param int $num
-     * The number of the field.
+     * Drivers override this hook to read native LOB objects without first materializing their contents.
      *
-     * @param int $type
-     * The type of the field.
+     * @param int $index
+     * The zero-based index of the field in the current row.
      *
-     * @return mixed
-     * Returns the value of a field specified by number. In the case
-     * of any error returns null.
+     * @param resource $stream
+     * The caller-owned writable destination stream.
+     *
+     * @return int
+     * Returns the number of bytes written; NULL fields produce zero bytes.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::field_by_name()
-     * @see PostgreSQL_DBWorker::field_info_by_num()
-     * @see PostgreSQL_DBWorker::field_name()
+     * If a stream is invalid or a read/write operation fails.
      *
      * @author Oleg Schildt
      */
-    public function field_by_num(int $num, int $type = self::DB_AS_IS): mixed
+    protected function copy_value_to_stream(int $index, $stream): int
     {
-        $this->check_connection();
-
-        if (!$this->row) {
-            return null;
+        // Distinguish OID large objects from ordinary text/bytea fields before choosing the read path.
+        if ($this->row[$index] === null) {
+            return 0;
         }
 
-        if (!array_key_exists($num, $this->field_names)) {
-            trigger_error("Field with the index $num does not exist in the result set!", E_USER_WARNING);
-            return null;
+        if ($this->metadata[$index]['type'] !== 'oid') {
+            $count = 0;
+
+            $this->write_chunks(
+                (string) $this->decode_value($index, self::DB_AS_IS),
+                function (string $chunk) use ($stream, &$count): void {
+                    $count += $this->write_all($stream, $chunk);
+                }
+            );
+
+            return $count;
         }
 
-        if ($type == DBWorker::DB_LARGE_OBJECT_STREAM) {
-            return $this->read_large_object($this->row[$this->field_names[$num]]);
+        $own = !$this->connection_state->transaction
+            && !($this->connection_state->attributes['cursor_transaction'] ?? false);
+
+        if ($own) {
+            $this->start_transaction();
         }
 
-        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$this->field_names[$num]])) {
-            return strtotime($this->row[$this->field_names[$num]]);
-        }
+        $handle = null;
 
-        return $this->row[$this->field_names[$num]];
-    } // field_by_num
+        try {
+            $handle = @pg_lo_open($this->connection_state->handle, $this->row[$index], 'r');
+
+            if ($handle === false) {
+                throw $this->stream_error('Cannot open PostgreSQL large object.');
+            }
+
+            $count = 0;
+
+            while (true) {
+                $chunk = @pg_lo_read($handle, 65536);
+
+                if ($chunk === false) {
+                    throw $this->stream_error('Cannot read PostgreSQL large object.');
+                }
+
+                if ($chunk === '') {
+                    break;
+                }
+
+                $count += $this->write_all($stream, $chunk);
+            }
+
+            pg_lo_close($handle);
+
+            $handle = null;
+
+            if ($own) {
+                $this->commit_transaction();
+            }
+
+            return $count;
+        } catch (\Throwable $error) {
+            if ($handle !== null && $handle !== false) {
+                @pg_lo_close($handle);
+            }
+
+            if ($own) {
+                $this->rollback_transaction();
+            }
+
+            throw $error;
+        }
+    } // copy_value_to_stream
 
     /**
-     * Returns the name of the field by number.
+     * Deletes a PostgreSQL large object that is no longer referenced by any row.
      *
-     * @param int $num
-     * The number of the field.
+     * Replacing or deleting an OID reference does not automatically unlink the large object.
+     * This operation uses the existing transaction or starts and completes its own.
      *
-     * @return ?string
-     * Returns the value of a field specified by number as an object with properties. In the case
-     * of any error returns null.
+     * @param int $oid
+     * The OID of the unreferenced large object.
+     *
+     * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::field_by_num()
-     * @see PostgreSQL_DBWorker::field_info_by_num()
+     * If no connection is open, PostgreSQL cannot unlink the object, or starting or completing
+     * the transaction fails.
      *
      * @author Oleg Schildt
      */
-    public function field_name(int $num): ?string
+    public function unlink_large_object(int $oid): void
     {
+        // Use the caller's transaction when present; otherwise own the transaction around deletion.
         $this->check_connection();
 
-        $info = $this->field_info_by_num($num);
-        if (!$info) {
-            return null;
+        $own = !$this->connection_state->transaction;
+
+        if ($own) {
+            $this->start_transaction();
         }
 
-        return $info["name"] ?? "";
-    } // field_name
+        try {
+            if (!@pg_lo_unlink($this->connection_state->handle, $oid)) {
+                throw $this->stream_error('Cannot unlink PostgreSQL large object.');
+            }
 
-    /**
-     * Returns the meta information about the field as an object with properties.
-     *
-     * @param int $num
-     * The number of the field.
-     *
-     * @return ?array
-     * Returns the associative array with properties. In the case
-     * of any error returns null.
-     *
-     * - $info["name"] - name of the field.
-     * - $info["type"] - type of the field.
-     * - $info["size"] - size of the field.
-     * - $info["binary"] - whether the filed is binary.
-     * - $info["numeric"] - whether the filed is numeric.
-     * - $info["datetime"] - whether the filed is datetime.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see PostgreSQL_DBWorker::field_by_num()
-     * @see PostgreSQL_DBWorker::field_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_info_by_num(int $num): ?array
-    {
-        $this->check_connection();
+            if ($own) {
+                $this->commit_transaction();
+            }
+        } catch (\Throwable $error) {
+            if ($own) {
+                $this->rollback_transaction();
+            }
 
-        if (!$this->result) {
-            $err = "Result is empty!";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
+            throw $error;
         }
-
-        $field_info = [];
-
-        $field_info["name"] = pg_field_name($this->result, $num);
-        $field_info["type"] = pg_field_type($this->result, $num);
-        $field_info["size"] = pg_field_size($this->result, $num);
-
-        $field_info["string"] = in_array($field_info["type"], ["text", "varchar", "char"]) ? 1 : 0;
-        $field_info["binary"] = ($field_info["type"] == "bytea") ? 1 : 0;
-        $field_info["numeric"] = ($field_info["type"] == "int" || $field_info["type"] == "float" || $field_info["type"] == "numeric") ? 1 : 0;
-        $field_info["datetime"] = ($field_info["type"] == "timestamp" || $field_info["type"] == "date") ? 1 : 0;
-
-        return $field_info;
-    } // field_info_by_num
+    } // unlink_large_object
 
     /**
-     * Escapes the string so that it can be used in the query without causing an error.
+     * Escapes a string for inclusion in an SQL string literal without adding quotation marks.
+     *
+     * The result is intended for string literals, not SQL identifiers.
+     * Prefer bound parameters when supplying application values to a query.
      *
      * @param string $str
-     * The string to be escaped.
+     * The string to escape.
      *
      * @return string
      * Returns the escaped string.
      *
-     * @see PostgreSQL_DBWorker::format_date()
-     * @see PostgreSQL_DBWorker::format_datetime()
+     * @throws DBWorkerException
+     * If no database connection is open.
+     *
+     * @see DBWorker::quotes_or_null()
+     * @see DBWorker::prepare_query()
      *
      * @author Oleg Schildt
      */
     public function escape(string $str): string
     {
-        return pg_escape_string($this->connection, $str);
+        // Pass the actual connection so escaping uses its character encoding.
+        $this->check_connection();
+
+        return pg_escape_string($this->connection_state->handle, $str);
     } // escape
-
     /**
-     * Formats the date to a string compatible for the corresponding database.
-     *
-     * @param int $date
-     * The date value as timestamp.
-     *
-     * @return string
-     * Returns the string representation of the date compatible for the corresponding database.
-     *
-     * @see PostgreSQL_DBWorker::escape()
-     * @see PostgreSQL_DBWorker::format_datetime()
-     *
-     * @author Oleg Schildt
-     */
-    public function format_date(int $date): string
-    {
-        if (empty($date)) {
-            return $this->quotes_or_null("");
-        }
-
-        return $this->quotes_or_null(date("Y-m-d", $date));
-    } // format_date
-
-    /**
-     * Formats the date/time to a string compatible for the corresponding database.
-     *
-     * @param int $datetime
-     * The date/time value as timestamp.
-     *
-     * @return string
-     * Returns the string representation of the date/time compatible for the corresponding database.
-     *
-     * @see PostgreSQL_DBWorker::escape()
-     * @see PostgreSQL_DBWorker::format_date()
-     *
-     * @author Oleg Schildt
-     */
-    public function format_datetime(int $datetime): string
-    {
-        if (empty($datetime)) {
-            return $this->quotes_or_null("");
-        }
-
-        return $this->quotes_or_null(date("Y-m-d H:i:s", $datetime));
-    } // format_datetime
-
-    /**
-     * Prepares the value for putting to a query depending on its type. It does escaping, formatting
-     * and quotation if necessary.
-     *
-     * @param mixed $value
-     * The value to be formatted.
-     *
-     * @param int $type
-     * The type of the value.
-     *
-     * @return string
-     * Returns the prepared value.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    function prepare_for_query(mixed $value, int $type): string
-    {
-        if (empty($value) && (string)$value != "0") {
-            return "null";
-        } else {
-            return match ($type) {
-                DBWorker::DB_NUMBER => $this->number_or_null($value),
-                DBWorker::DB_DATETIME => $this->format_datetime($value),
-                DBWorker::DB_DATE => $this->format_date($value),
-                default => $this->quotes_or_null($value)
-            };
-        }
-    } // prepare_for_query
-
-    /**
-     * Builds simple select query based on parameters.
-     *
-     * It is used for building queries with limits.
+     * Resolves PostgreSQL relation names, typed keys, collations and serial or identity sequences.
      *
      * @param string $table
-     * The name of the table.
+     * The unquoted table name resolved through the current search path.
      *
-     * @param array $fields
-     * The list of request fields.
+     * @return array
+     * Returns canonical relation and native column metadata.
      *
-     * @param string $where_clause
-     * The where clause that should restrict the result.
-     *
-     * @param string $order_clause
-     * The order clause to sort the results.
-     *
-     * @param int $limit
-     * The limit how many records should be loaded. 0 for unlimited.
-     *
-     * @return string
-     * Returns the built query.
+     * @throws DBWorkerException
+     * If the target cannot be resolved or its column metadata cannot be read.
      *
      * @author Oleg Schildt
      */
-    function build_select_query(string $table, array $fields, string $where_clause, string $order_clause, int $limit): string
+    protected function native_save_table(string $table): array
     {
-        $query = "select\n";
+        $rows = $this->save_sql("SELECT current_database(), n.nspname, c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace "
+            . "WHERE c.oid = to_regclass(?) AND c.relkind IN ('r', 'p')", [$table]);
 
-        $query .= implode(", ", $fields) . "\n";
-
-        $query .= "from " . $table . "\n";
-
-        if (!empty($where_clause)) {
-            $query .= $where_clause . "\n";
+        if (count($rows['rows']) !== 1) {
+            throw $this->query_error('The save_records table was not found.');
         }
 
-        if (!empty($where_clause)) {
-            $query .= $order_clause . "\n";
+        [$database, $schema, $name] = $rows['rows'][0];
+        $quote = static fn(string $name): string => '"' . str_replace('"', '""', $name) . '"';
+        $qualified = $quote($schema) . '.' . $quote($name);
+        $rows = $this->save_sql("SELECT a.attname, format_type(a.atttypid, a.atttypmod), cn.nspname, co.collname, "
+            . "pg_get_serial_sequence(?, a.attname), a.attidentity FROM pg_attribute a "
+            . 'LEFT JOIN pg_collation co ON co.oid = a.attcollation LEFT JOIN pg_namespace cn ON cn.oid = co.collnamespace '
+            . 'WHERE a.attrelid = to_regclass(?) AND a.attnum > 0 AND NOT a.attisdropped', [$qualified, $qualified]);
+        $context = [
+            'table' => $qualified,
+            'lock_table' => 'public.dbworker_locks',
+            'resource' => [$database, $schema, $name],
+            'columns' => []
+        ];
+
+        foreach ($rows['rows'] as [$field, $type, $collation_schema, $collation, $sequence, $identity]) {
+            $cast = 'CAST(? AS ' . $type . ')' . ($collation === null ? '' : ' COLLATE ' . $quote($collation_schema) . '.' . $quote($collation));
+            $context['columns'][strtolower($field)] = [
+                'name' => $field,
+                'cast' => $cast,
+                'sequence' => $sequence,
+                'identity' => $sequence !== null,
+                'always' => false,
+                'override' => $identity === 'a'
+            ];
         }
 
-        if (!empty($limit)) {
-            $query .= "limit " . $limit . "\n";
+        return $context;
+    } // native_save_table
+
+    /**
+     * Uses PostgreSQL type-aware hashing, including nondeterministic collation support.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param array<string, scalar|null> $keys
+     * The supplied key values, ordered by canonical column name.
+     *
+     * @return array
+     * Returns the equality-compatible record fingerprint.
+     *
+     * @throws DBWorkerException
+     * If a key type is unsupported or converting a supplied key fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_key(array $context, array $keys): array
+    {
+        $expressions = [];
+
+        foreach ($keys as $field => $value) {
+            $expressions[] = $this->save_column($context, $field)['cast'];
         }
 
-        return $query;
-    } // build_select_query
+        // PostgreSQL's record hash dispatches to each type's equality-compatible hash support function.
+        $result = $this->save_sql('SELECT hash_record_extended(ROW(' . implode(', ', $expressions) . '), 0)::text', array_values($keys));
+
+        return $result['rows'][0];
+    } // native_save_key
+
+    /**
+     * Creates or locks a PostgreSQL service row without aborting the transaction on a duplicate.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param string $key
+     * The SHA-256 resource key.
+     *
+     * @param string $name
+     * The diagnostic description, or allocator watermark for an identity resource.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If service-row creation or lock acquisition fails; expected primary-key duplicates are handled internally.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_lock(array $context, string $key, string $name): void
+    {
+        $this->save_sql('INSERT INTO ' . $context['lock_table'] . ' (resource_key, resource_name) VALUES (?, ?) '
+            . 'ON CONFLICT (resource_key) DO NOTHING', [$key, $name]);
+
+        // A separate READ COMMITTED statement sees a competing creator after its transaction commits.
+        $this->save_sql('SELECT resource_key FROM ' . $context['lock_table'] . ' WHERE resource_key = ? FOR UPDATE', [$key]);
+    } // native_save_lock
+
+    /**
+     * Requires a usable PostgreSQL transaction with fresh snapshots after service-lock waits.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If the transaction is aborted or uses a fixed-snapshot isolation level.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_check(): void
+    {
+        parent::native_save_check();
+
+        if (pg_transaction_status($this->connection_state->handle) === PGSQL_TRANSACTION_INERROR) {
+            throw $this->query_error('Roll back the aborted PostgreSQL transaction before saving records.');
+        }
+
+        // An internally owned save always starts READ COMMITTED, regardless of the session default.
+        $level = $this->connection_state->transaction
+            ? strtolower($this->save_sql('SHOW transaction_isolation')['rows'][0][0]) : 'read committed';
+
+        if (!in_array($level, ['read committed', 'read uncommitted'], true)) {
+            throw new DBWorkerException('save_records() requires READ COMMITTED in PostgreSQL.', self::ERR_WRONG_DATA_FORMAT);
+        }
+    } // native_save_check
+
+    /**
+     * Obtains a native PostgreSQL sequence value for the coordinated identity allocator.
+     *
+     * @param string $sequence
+     * The metadata-resolved sequence name.
+     *
+     * @return int
+     * Returns the allocated native sequence value.
+     *
+     * @throws DBWorkerException
+     * If querying the sequence fails or its value exceeds the PHP integer range.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_next_identity(string $sequence): int
+    {
+        $result = $this->save_sql('SELECT nextval(CAST(? AS regclass))::text', [$sequence]);
+
+        return $this->save_identity_value($result['rows'][0][0]);
+    } // native_save_next_identity
+
+    /**
+     * Preserves explicit PostgreSQL identities and coordinates generated IDs above the service watermark.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param array $values
+     * The field values.
+     *
+     * @param array $expressions
+     * The positional SQL expressions.
+     *
+     * @param string $identity_field
+     * The identity field, or an empty string.
+     *
+     * @return int|null
+     * Returns the stored identity, or NULL when none is configured.
+     *
+     * @throws DBWorkerException
+     * If identity handling or inserting the record fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_insert(array $context, array $values, array $expressions, string $identity_field): ?int
+    {
+        if ($identity_field === '') {
+            return parent::native_save_insert($context, $values, $expressions, $identity_field);
+        }
+
+        $column = $this->save_column($context, $identity_field);
+        $explicit = $values[$identity_field] ?? null;
+
+        do {
+            $identity = $this->save_allocate_identity($context, $identity_field, $explicit);
+            [$key, $name] = $this->save_resource($context, [strtolower($identity_field) => $identity]);
+
+            $this->native_save_lock($context, $key, $name);
+
+            // A concurrent explicit-ID save may have committed this formerly free candidate while we waited.
+            $occupied = $explicit === null
+                && $this->native_save_exists($context, $identity_field . ' = ' . $column['cast'], [$identity]);
+        } while ($occupied);
+
+        $values[$identity_field] = $identity;
+        $expressions[$identity_field] = '?';
+        $sql = 'INSERT INTO ' . $context['table'] . ' (' . implode(', ', array_keys($values)) . ')'
+            . ($column['override'] ? ' OVERRIDING SYSTEM VALUE' : '')
+            . ' VALUES (' . implode(', ', $expressions) . ') RETURNING ' . $identity_field;
+
+        $result = $this->save_sql($sql, array_values($values));
+        $this->affected_rows = $result['affected'];
+
+        return $identity;
+    } // native_save_insert
+
+
 } // PostgreSQL_DBWorker
+

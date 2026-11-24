@@ -107,11 +107,12 @@
                 <div class="col-md-12">
                     <h1>Function: is_associative()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> is_associative(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): bool;</div>
+<div class="definition"><span class="php-keyword1">function</span> is_associative(<span class="php-keyword1">array</span> <span class="php-var">$array</span>): <span class="php-keyword1">bool</span>;</div>
+
 
 
 <div class="short-description">
-<p>Checks whether the array $array is associative.</p>
+<p>Checks whether an array has keys other than consecutive integers starting at zero.</p>
 </div>
 
 
@@ -121,7 +122,8 @@
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -136,28 +138,29 @@
               $array
           </td>
           <td>
-              by reference
+              by value
           </td>
           <td>
-              array
+              <code class="php-type">array&lt;array-key, mixed&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>Array to be checked.</p>
+              <p>The array to check.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-bool<br>
+<code class="php-type">bool</code><br>
 
-<div class="item_description"><p>Returns true if the array is associative, otherwise false.</p></div>
+<div class="item_description"><p>Returns false for lists, including an empty array, and true for all other arrays.</p></div>
 
 </div>
 
@@ -185,11 +188,11 @@ bool<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#23'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#23'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the implementation of the auxiliary global fuctions.
+ * This file contains the implementation of the auxiliary global functions.
  *
  * @package Utility Functions
  *
@@ -8,16 +8,13 @@
  */
 
 /**
- * Function for escaping the special symbols for putting into the regexp pattern 
- * as a simple text in the pattern.
- *
- * This function escapes all special symbols so that they are treated as a simple text.
+ * Escapes regular expression metacharacters so a string is matched as literal text.
  *
  * @param string $str
  * The string to be escaped.
  *
  * @param string $delimiter
- * The string used in the pattern.
+ * The regular expression delimiter to escape in addition to regex metacharacters.
  *
  * @return string
  * The escaped string.
@@ -29,14 +26,13 @@
 function preg_pattern_quote(string $str, string $delimiter = "/"): string
 {
     return preg_quote($str, $delimiter);
-}
+} // preg_pattern_quote
 
 /**
- * Function for escaping the special symbols for putting into the regexp pattern 
- * as a simple text.
+ * Escapes dollar signs and backslashes for a literal preg_replace() replacement.
  *
- * This function escapes all special symbols so that they are treated as a 
- * simple text in the replacement.
+ * Backreferences such as $1, ${1} and \\1 are preserved as literal text rather than
+ * expanded. This function escapes replacement strings, not regular expression patterns.
  *
  * @param string $str
  * The string to be escaped.
@@ -51,5 +47,4 @@ function preg_pattern_quote(string $str, string $delimiter = "/"): string
 function preg_replacement_quote(string $str): string
 {
     return strtr($str, ["\\" => "\\\\", "$" => "\\$"]);
-}
-?>
+} // preg_replacement_quote

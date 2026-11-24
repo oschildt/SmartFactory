@@ -107,22 +107,28 @@
                 <div class="col-md-12">
                     <h1>Function: randomDBShard()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> randomDBShard(string <span class="php-var">$load_balancing_group</span>): ?\SmartFactory\DatabaseWorkers\DBWorker;</div>
+<div class="definition"><span class="php-keyword1">function</span> randomDBShard(<span class="php-keyword1">string</span> <span class="php-var">$load_balancing_group</span>): ?\SmartFactory\DatabaseWorkers\DBWorker;</div>
+
 
 
 <div class="short-description">
-<p>Short function for requesting the dbworker connected to the specified shard,
-that is chosen randomly for load balancing reason.</p>
+<p>Returns a randomly selected shard worker through the shared shard manager.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Uses deterministic client affinity when enabled in the manager.</p>
+</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -140,25 +146,26 @@ that is chosen randomly for load balancing reason.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The name of the shard.</p>
+              <p>The name of a nonempty registered load-balancing group.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-?\SmartFactory\DatabaseWorkers\DBWorker<br>
+<code class="php-type">?<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a></code><br>
 
-<div class="item_description"><p>returns DBWorker object or null if the object could not be created.</p></div>
+<div class="item_description"><p>Returns the selected shard's worker, or null if a custom shard manager returns no worker.</p></div>
 
 </div>
 
@@ -166,14 +173,16 @@ that is chosen randomly for load balancing reason.</p>
 <h2>Throws</h2>
 <div class="item_list">
 
-\Exception<br>
+<code class="php-type">\Exception</code><br>
 
-<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the load balancing group was not found.</li>
-<li>db_server_conn_error - if the database server cannot be connected.</li>
-<li>db_not_exists_error - if database does not exists od inaccesible to the user.</li>
-</ul></div>
+<div class="item_description"><p>If the manager cannot be resolved, the group is unknown, worker initialization fails,
+or the required client identity is unavailable or invalid.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If creating a custom manager or worker, or calling the configured identifier getter,
+throws an exception or error, it is propagated unchanged.</p></div>
 
 
 </div>
@@ -199,11 +208,11 @@ that is chosen randomly for load balancing reason.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-short_functions_inc.php.html#242'>short_functions_inc.php</a>
+<a href='source-src.short_functions_inc.php.html#274'>src/short_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

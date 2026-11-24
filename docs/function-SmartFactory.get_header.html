@@ -107,21 +107,29 @@
                 <div class="col-md-12">
                     <h1>Function: get_header()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> get_header(string <span class="php-var">$name</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> get_header(<span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Gets the header by its name.</p>
+<p>Gets a request header by its case-insensitive name in web and CLI environments.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Native request headers take precedence over CGI-style server variables. Values
+are read on each call so a persistent worker cannot reuse a previous request's headers.</p>
+</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -139,7 +147,7 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
@@ -151,13 +159,14 @@
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
-<div class="item_description"><p>Returns the header value of empty string if the header is not set.</p></div>
+<div class="item_description"><p>Returns the string value, including "0", or an empty string if no scalar header is available.</p></div>
 
 </div>
 
@@ -185,11 +194,11 @@ string<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#358'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#434'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

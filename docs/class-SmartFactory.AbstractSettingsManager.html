@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: AbstractSettingsManager
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">AbstractSettingsManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: AbstractSettingsManager</h1>
+
+<span class="label label-primary">abstract</span>
+
+<div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">class</span> AbstractSettingsManager <span class="php-keyword1">implements</span> ISettingsManager
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Provides lazy loading, parameter access, change tracking and contextual validation.</p>
+</div>
+
+
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Values are cached in the object, including empty settings and explicit NULL values.
+Context selects validation rules; it does not persist wizard drafts between requests.
+Call loadSettings() explicitly to discard local edits and reload persisted values.</p>
+</div>
+
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.ISettingsManager.html">\SmartFactory\Interfaces\ISettingsManager</a><br>
+
+</div>
+
+
+
+<h2>Known inheritances</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.AbstractDatabaseSettingsManager.html">\SmartFactory\AbstractDatabaseSettingsManager</a><br>
+
+<a href="class-SmartFactory.ConfigSettingsManager.html">\SmartFactory\ConfigSettingsManager</a><br>
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.AbstractSettingsManager.php.html#17'>src/SmartFactory/AbstractSettingsManager.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$changed">$changed</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Names explicitly assigned since the last successful load or save.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$context">$context</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The context passed to the optional settings validator.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$loaded">$loaded</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Whether loading has completed successfully, even when no settings exist.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$settings">$settings</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Settings indexed by their canonical parameter names.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$validator">$validator</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The validator used by validateSettings().</p>
+          </td>
+      </tr>
+
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#ensureLoaded">ensureLoaded()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Loads settings on demand, including a legitimately empty source.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getContext">getContext()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the selected validation context.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getParameter">getParameter()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns a parameter, loading the settings once on first access.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getValidator">getValidator()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the optional settings validator.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#isParameterDefined">isParameterDefined()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether a parameter may be assigned without forcing its creation.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadSettings">loadSettings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reloads persisted values and discards local edits only after loading succeeds.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadSettingsData">loadSettingsData()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reads settings into a temporary snapshot.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#normalizeParameterName">normalizeParameterName()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resolves a public name to its internal representation.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#resetSettings">resetSettings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Invalidates the current snapshot after changing its storage or owner.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#saveSettings">saveSettings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Persists local changes and accepts the resulting snapshot after a successful save.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#saveSettingsData">saveSettingsData()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Writes local edits, optionally merging them with the latest persisted snapshot.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setContext">setContext()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Selects the validation context, such as a form name or wizard step.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setParameter">setParameter()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Loads settings if necessary and assigns one parameter.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setParameters">setParameters()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Assigns parameters in bulk, optionally introducing new names.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setValidator">setValidator()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sets the validator without changing the current values or context.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#validateParameterValue">validateParameterValue()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Allows subclasses to reject assignments before mutating the snapshot.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#validateSettings">validateSettings()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Validates current values using the optional validator and selected context.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<hr id="$changed">
+
+  <h1>Property: AbstractSettingsManager::$changed</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$changed</span> = [];</div>
+  
+
+  
+  <div class="short-description">
+  <p>Names explicitly assigned since the last successful load or save.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">array&lt;string, true&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#62'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div><hr id="$context">
+
+  <h1>Property: AbstractSettingsManager::$context</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>The context passed to the optional settings validator.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">string</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#26'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div><hr id="$loaded">
+
+  <h1>Property: AbstractSettingsManager::$loaded</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">bool</span> <span class="php-var">$loaded</span> = <span class="php-keyword1">false</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Whether loading has completed successfully, even when no settings exist.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#53'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div><hr id="$settings">
+
+  <h1>Property: AbstractSettingsManager::$settings</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$settings</span> = [];</div>
+  
+
+  
+  <div class="short-description">
+  <p>Settings indexed by their canonical parameter names.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">array&lt;string, mixed&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#44'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div><hr id="$validator">
+
+  <h1>Property: AbstractSettingsManager::$validator</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> ?ISettingsValidator <span class="php-var">$validator</span> = <span class="php-keyword1">null</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>The validator used by validateSettings().</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">(<a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">ISettingsValidator</a> | null)</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#35'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+
+<hr id="ensureLoaded">
+
+  <h1>Method: AbstractSettingsManager::ensureLoaded()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> ensureLoaded(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Loads settings on demand, including a legitimately empty source.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Leaves an already loaded snapshot unchanged.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If the concrete storage cannot be loaded.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#285'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getContext">
+
+  <h1>Method: AbstractSettingsManager::getContext()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the selected validation context.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the current context, initially "default".</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getContext">\SmartFactory\Interfaces\ISettingsManager::getContext()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#117'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getParameter">
+
+  <h1>Method: AbstractSettingsManager::getParameter()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getParameter(<span class="php-keyword1">string</span> <span class="php-var">$name</span>, <span class="php-keyword1">mixed</span> <span class="php-var">$default</span> = <span class="php-keyword1">null</span>): <span class="php-keyword1">mixed</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns a parameter, loading the settings once on first access.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The parameter name, resolved by the concrete manager.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $default
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">mixed</code>
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>The value returned only when the parameter is absent.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">mixed</code><br>
+  
+  <div class="item_description"><p>Returns the current value, including NULL, or the supplied default for an absent name.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If loading fails or the parameter name is invalid or ambiguous.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getParameter">\SmartFactory\Interfaces\ISettingsManager::getParameter()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#201'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getValidator">
+
+  <h1>Method: AbstractSettingsManager::getValidator()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getValidator(): ?ISettingsValidator;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the optional settings validator.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">(<a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">ISettingsValidator</a> | null)</code><br>
+  
+  <div class="item_description"><p>Returns NULL when no validator has been assigned.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#getValidator">\SmartFactory\Interfaces\ISettingsManager::getValidator()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#88'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="isParameterDefined">
+
+  <h1>Method: AbstractSettingsManager::isParameterDefined()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> isParameterDefined(<span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">bool</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Checks whether a parameter may be assigned without forcing its creation.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The canonical parameter name.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code><br>
+  
+  <div class="item_description"><p>Returns whether the current snapshot contains the parameter, including NULL values.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#334'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="loadSettings">
+
+  <h1>Method: AbstractSettingsManager::loadSettings()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadSettings(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Reloads persisted values and discards local edits only after loading succeeds.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Replaces the entire cached snapshot, including when the source is empty.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If configuration, storage access or decoding fails; the current snapshot is retained.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#loadSettings">\SmartFactory\Interfaces\ISettingsManager::loadSettings()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#239'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="loadSettingsData">
+
+  <h1>Method: AbstractSettingsManager::loadSettingsData()</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Reads settings into a temporary snapshot.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $data
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Receives the complete settings snapshot.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not modify the manager's currently loaded values.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If the source cannot be read or decoded.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#371'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="normalizeParameterName">
+
+  <h1>Method: AbstractSettingsManager::normalizeParameterName()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> normalizeParameterName(<span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Resolves a public name to its internal representation.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The requested parameter name.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the name unchanged unless a subclass implements aliases.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#318'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="resetSettings">
+
+  <h1>Method: AbstractSettingsManager::resetSettings()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> resetSettings(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Invalidates the current snapshot after changing its storage or owner.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Discards loaded values and unsaved changes.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#300'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="saveSettings">
+
+  <h1>Method: AbstractSettingsManager::saveSettings()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> saveSettings(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Persists local changes and accepts the resulting snapshot after a successful save.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Clears change tracking after success. With an external database transaction,
+the caller must commit or roll back and reload settings after a rollback.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If loading, encoding or writing fails; local edits remain available for retry.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#saveSettings">\SmartFactory\Interfaces\ISettingsManager::saveSettings()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#262'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="saveSettingsData">
+
+  <h1>Method: AbstractSettingsManager::saveSettingsData()</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Writes local edits, optionally merging them with the latest persisted snapshot.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $data
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The local snapshot, replaced with the saved snapshot only after success.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not clear change tracking; the public save method does so after success.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If encoding, locking or writing fails.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#387'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setContext">
+
+  <h1>Method: AbstractSettingsManager::setContext()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(<span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Selects the validation context, such as a form name or wizard step.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>The context forwarded unchanged to the validator.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not reload settings or save drafts between requests.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setContext">\SmartFactory\Interfaces\ISettingsManager::setContext()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#104'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setParameter">
+
+  <h1>Method: AbstractSettingsManager::setParameter()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameter(<span class="php-keyword1">string</span> <span class="php-var">$name</span>, <span class="php-keyword1">mixed</span> <span class="php-var">$value</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Loads settings if necessary and assigns one parameter.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The parameter name, resolved by the concrete manager.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $value
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">mixed</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The new value; NULL is a stored value, not an absent parameter.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Marks the parameter as changed even when its value equals the loaded value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If loading fails or the concrete manager rejects the name or value.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameter">\SmartFactory\Interfaces\ISettingsManager::setParameter()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#139'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setParameters">
+
+  <h1>Method: AbstractSettingsManager::setParameters()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setParameters(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$force_creation</span> = <span class="php-keyword1">false</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Assigns parameters in bulk, optionally introducing new names.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Parameter names and their new values.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $force_creation
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">bool</code>
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Whether names absent from the current settings may be introduced. Managers
+with a fixed schema accept configured parameters even when their rows are absent.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Leaves parameters outside the supplied array unchanged.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If loading fails or a supplied parameter name or value is invalid.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setParameters">\SmartFactory\Interfaces\ISettingsManager::setParameters()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#169'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setValidator">
+
+  <h1>Method: AbstractSettingsManager::setValidator()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setValidator(ISettingsValidator <span class="php-var">$validator</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Sets the validator without changing the current values or context.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $validator
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type"><a href="interface-SmartFactory.Interfaces.ISettingsValidator.html">ISettingsValidator</a></code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The settings validator.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not validate the settings immediately.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#setValidator">\SmartFactory\Interfaces\ISettingsManager::setValidator()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#75'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="validateParameterValue">
+
+  <h1>Method: AbstractSettingsManager::validateParameterValue()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameterValue(<span class="php-keyword1">string</span> <span class="php-var">$name</span>, <span class="php-keyword1">mixed</span> <span class="php-var">$value</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Allows subclasses to reject assignments before mutating the snapshot.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The canonical parameter name.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $value
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">mixed</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The proposed value.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>The base manager accepts all values; storage encoding is checked during saving.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#353'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="validateSettings">
+
+  <h1>Method: AbstractSettingsManager::validateSettings()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateSettings(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Validates current values using the optional validator and selected context.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does nothing when no validator is configured. Saving does not implicitly validate.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If the validator rejects a setting or accessing settings during validation fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings">\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractSettingsManager.php.html#221'>src/SmartFactory/AbstractSettingsManager.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

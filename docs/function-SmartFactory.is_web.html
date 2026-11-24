@@ -107,11 +107,12 @@
                 <div class="col-md-12">
                     <h1>Function: is_web()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> is_web(): bool;</div>
+<div class="definition"><span class="php-keyword1">function</span> is_web(): <span class="php-keyword1">bool</span>;</div>
+
 
 
 <div class="short-description">
-<p>Checks whether the session is cmd client or web.</p>
+<p>Checks whether PHP is running through a web SAPI rather than CLI or phpdbg.</p>
 </div>
 
 
@@ -124,9 +125,9 @@
 
 <h2>Returns</h2>
 <div class="item_list">
-bool<br>
+<code class="php-type">bool</code><br>
 
-<div class="item_description"><p>Returns true if the session is web, otherwise false.</p></div>
+<div class="item_description"><p>Returns false for CLI and phpdbg, otherwise true, including the built-in web server.</p></div>
 
 </div>
 
@@ -154,11 +155,11 @@ bool<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#42'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#36'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

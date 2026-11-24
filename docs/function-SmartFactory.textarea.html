@@ -107,7 +107,8 @@
                 <div class="col-md-12">
                     <h1>Function: textarea()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> textarea(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>;</div>
+<div class="definition"><span class="php-keyword1">function</span> textarea(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span>;</div>
+
 
 
 <div class="short-description">
@@ -127,7 +128,8 @@ the request variable with the corresponding name.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -145,7 +147,7 @@ the request variable with the corresponding name.</p>
               by value
           </td>
           <td>
-              array
+              <code class="php-type">array</code>
           </td>
           <td>
               
@@ -173,7 +175,7 @@ the value of the corresponding request variable is taken.</p>
           <span class="php-quote">&quot;placeholder&quot;</span> =&gt; <span class="php-quote">&quot;enter the text&quot;</span>,
           <span class="php-quote">&quot;title&quot;</span> =&gt; <span class="php-quote">&quot;enter the text&quot;</span>,
           <span class="php-quote">&quot;data-prop&quot;</span> =&gt; <span class="php-quote">&quot;some-prop&quot;</span>,
-          <span class="php-quote">&quot;onblur&quot;</span> =&gt; <span class="php-quote">&quot;alert('Hello &amp; Buy!')&quot;</span>
+          <span class="php-quote">&quot;onblur&quot;</span> =&gt; <span class="php-quote">&quot;alert(&#039;Hello &amp; Buy!&#039;)&quot;</span>
          ]);</code></pre>
           </td>
       </tr>
@@ -186,25 +188,26 @@ the value of the corresponding request variable is taken.</p>
               by value
           </td>
           <td>
-              bool
+              <code class="php-type">boolean</code>
           </td>
           <td>
               true
           </td>
           <td class="description_column">
               <p>If the value of $echo is true, the html code of the field is directly echoed.
-Otherwise it is returned as string. It might be useful to pass this code to
+Otherwise, it is returned as string. It might be useful to pass this code to
 other rendering functions instead of echoing.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string|null<br>
+<code class="php-type">(string | null)</code><br>
 
 <div class="item_description"><p>If the paramter $echo is true, the string of the field html
 code is returned, otherwise null.</p></div>
@@ -235,35 +238,35 @@ code is returned, otherwise null.</p></div>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-html_utils_inc.php.html#386'>html_utils_inc.php</a>
+<a href='source-src.html_utils_inc.php.html#386'>src/html_utils_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.input_text.html'>\SmartFactory\input_text()</a><br>
+<a href="function-SmartFactory.input_text.html">\SmartFactory\input_text()</a><br>
 
 
-<a href='function-SmartFactory.input_password.html'>\SmartFactory\input_password()</a><br>
+<a href="function-SmartFactory.input_password.html">\SmartFactory\input_password()</a><br>
 
 
-<a href='function-SmartFactory.input_hidden.html'>\SmartFactory\input_hidden()</a><br>
+<a href="function-SmartFactory.input_hidden.html">\SmartFactory\input_hidden()</a><br>
 
 
-<a href='function-SmartFactory.select.html'>\SmartFactory\select()</a><br>
+<a href="function-SmartFactory.select.html">\SmartFactory\select()</a><br>
 
 
-<a href='function-SmartFactory.checkbox.html'>\SmartFactory\checkbox()</a><br>
+<a href="function-SmartFactory.checkbox.html">\SmartFactory\checkbox()</a><br>
 
 
-<a href='function-SmartFactory.radiobutton.html'>\SmartFactory\radiobutton()</a><br>
+<a href="function-SmartFactory.radiobutton.html">\SmartFactory\radiobutton()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

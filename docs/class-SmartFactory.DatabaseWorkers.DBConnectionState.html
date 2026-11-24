@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: DBConnectionState
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.DatabaseWorkers.html">DatabaseWorkers</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">DBConnectionState</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: DBConnectionState</h1>
+
+<span class="label label-danger">final</span>
+
+<div class="definition"><span class="php-keyword1">final</span> <span class="php-keyword1">class</span> DBConnectionState
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Stores native connection ownership and transaction state shared by cloned workers.</p>
+</div>
+
+
+
+<div class="long_description">
+<h2>Details</h2>
+<p>The native connection is closed when the last reference to this object is released.
+Statements and result sets remain owned by their individual workers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-Database.html'>Database</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.DatabaseWorkers.DBConnectionState.php.html#19'>src/SmartFactory/DatabaseWorkers/DBConnectionState.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$attributes">$attributes</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores connection-wide schema settings, native mode flags and identity/deallocation caches.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$closer">$closer</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the driver callback that closes the native connection handle.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$handle">$handle</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the native database connection handle until its last owner releases it.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$transaction">$transaction</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Indicates whether workers sharing the connection have an active managed transaction.</p>
+          </td>
+      </tr>
+
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#__construct">__construct()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Creates the shared owner of a native database connection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#__destruct">__destruct()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Closes the native connection when its last shared owner is released.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<hr id="$attributes">
+
+  <h1>Property: DBConnectionState::$attributes</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">array</span> <span class="php-var">$attributes</span> = [];</div>
+  
+
+  
+  <div class="short-description">
+  <p>Stores connection-wide schema settings, native mode flags and identity/deallocation caches.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Active transaction isolation and any session isolation to restore are shared by all clones.</p>
+  </div>
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">array</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.DBConnectionState.php.html#38'>src/SmartFactory/DatabaseWorkers/DBConnectionState.php</a>
+  </div><hr id="$closer">
+
+  <h1>Property: DBConnectionState::$closer</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">readonly</span> \Closure <span class="php-var">$closer</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Stores the driver callback that closes the native connection handle.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">\Closure</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.DBConnectionState.php.html#68'>src/SmartFactory/DatabaseWorkers/DBConnectionState.php</a>
+  </div><hr id="$handle">
+
+  <h1>Property: DBConnectionState::$handle</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">mixed</span> <span class="php-var">$handle</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Stores the native database connection handle until its last owner releases it.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">mixed</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.DBConnectionState.php.html#59'>src/SmartFactory/DatabaseWorkers/DBConnectionState.php</a>
+  </div><hr id="$transaction">
+
+  <h1>Property: DBConnectionState::$transaction</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">bool</span> <span class="php-var">$transaction</span> = <span class="php-keyword1">false</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Indicates whether workers sharing the connection have an active managed transaction.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.DBConnectionState.php.html#28'>src/SmartFactory/DatabaseWorkers/DBConnectionState.php</a>
+  </div>
+
+<hr id="__construct">
+
+  <h1>Method: DBConnectionState::__construct()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(
+    <span class="php-comment">/**</span>
+<span class="php-comment">     * Stores the native database connection handle until its last owner releases it.</span>
+<span class="php-comment">     *</span>
+<span class="php-comment">     * @var mixed</span>
+<span class="php-comment">     *</span>
+<span class="php-comment">     * @author Oleg Schildt</span>
+<span class="php-comment">     */</span>
+    <span class="php-keyword1">public</span> <span class="php-keyword1">mixed</span> <span class="php-var">$handle</span>,
+    <span class="php-comment">/**</span>
+<span class="php-comment">     * Stores the driver callback that closes the native connection handle.</span>
+<span class="php-comment">     *</span>
+<span class="php-comment">     * @var \Closure</span>
+<span class="php-comment">     *</span>
+<span class="php-comment">     * @author Oleg Schildt</span>
+<span class="php-comment">     */</span>
+    <span class="php-keyword1">private</span> <span class="php-keyword1">readonly</span> \Closure <span class="php-var">$closer</span>,
+);</div>
+  
+
+  
+  <div class="short-description">
+  <p>Creates the shared owner of a native database connection.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $handle
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">mixed</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The open native connection object or resource.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $closer
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">\Closure</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The driver callback that receives and closes the native handle when its last owner is released.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.DBConnectionState.php.html#51'>src/SmartFactory/DatabaseWorkers/DBConnectionState.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="__destruct">
+
+  <h1>Method: DBConnectionState::__destruct()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __destruct();</div>
+  
+
+  
+  <div class="short-description">
+  <p>Closes the native connection when its last shared owner is released.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.DBConnectionState.php.html#80'>src/SmartFactory/DatabaseWorkers/DBConnectionState.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

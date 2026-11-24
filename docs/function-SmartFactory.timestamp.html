@@ -107,22 +107,30 @@
                 <div class="col-md-12">
                     <h1>Function: timestamp()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> timestamp(string <span class="php-var">$time_string</span>, string <span class="php-var">$format</span>): int|string|<span class="php-keyword1">null</span>;</div>
+<div class="definition"><span class="php-keyword1">function</span> timestamp(<span class="php-keyword1">string</span> <span class="php-var">$time_string</span>, <span class="php-keyword1">string</span> <span class="php-var">$format</span>): <span class="php-keyword1">int</span>|<span class="php-keyword1">string</span>|<span class="php-keyword1">null</span>;</div>
+
 
 
 <div class="short-description">
-<p>Converts the string representing the date/time in the
-specified format to the timestap.</p>
+<p>Parses a complete date/time string using PHP's DateTime format syntax.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Missing date/time fields are initialized to the Unix epoch's calendar fields
+in the default timezone, rather than inherited from the current clock. Format
+reset markers and timezone fields retain their native DateTime semantics.</p>
+</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -140,13 +148,13 @@ specified format to the timestap.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The date/time string.</p>
+              <p>The date/time string, or an empty string for an absent value.</p>
           </td>
       </tr>
       
@@ -158,27 +166,27 @@ specified format to the timestap.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The date format of the date/time string in the PHP systax
-for the date formats, e.g. "Y.m.d H:i:s".</p>
+              <p>The DateTime::createFromFormat() format, for example "Y.m.d H:i:s".</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-int|string|null<br>
+<code class="php-type">(int | string | null)</code><br>
 
-<div class="item_description"><p>If the date/time string could be converted, the timestamp is
-returned, otherwise the string "error" is returned.</p></div>
+<div class="item_description"><p>Returns the timestamp on success, null for an empty input, or "error" if parsing
+fails, emits a warning, or encounters a null byte. Trailing data is rejected.</p></div>
 
 </div>
 
@@ -206,11 +214,11 @@ returned, otherwise the string "error" is returned.</p></div>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#465'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#552'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Source Code: src/html_utils_inc.php - SmartFactory Library
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+ 
+
+                        <li class="active"></li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Source Code: src/html_utils_inc.php</h2>
+
+<div id="source"><pre class="code"><code><span class="source-line" id="line-1"><a class="line" id="1" href="#1">1:</a> <span class="xlang">&lt;?php</span></span>
+<span class="source-line" id="line-2"><a class="line" id="2" href="#2">2:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-3"><a class="line" id="3" href="#3">3:</a> <span class="php-comment"> * This file contains the implementation of the auxiliary functions</span></span>
+<span class="source-line" id="line-4"><a class="line" id="4" href="#4">4:</a> <span class="php-comment"> * for placement of the form fields values of which can be automatically bound to</span></span>
+<span class="source-line" id="line-5"><a class="line" id="5" href="#5">5:</a> <span class="php-comment"> * the request variables with the corresponding name.</span></span>
+<span class="source-line" id="line-6"><a class="line" id="6" href="#6">6:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-7"><a class="line" id="7" href="#7">7:</a> <span class="php-comment"> * Furthermore, it provides the function for creating a table from an array.</span></span>
+<span class="source-line" id="line-8"><a class="line" id="8" href="#8">8:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-9"><a class="line" id="9" href="#9">9:</a> <span class="php-comment"> * @package HTML Utils</span></span>
+<span class="source-line" id="line-10"><a class="line" id="10" href="#10">10:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-11"><a class="line" id="11" href="#11">11:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-12"><a class="line" id="12" href="#12">12:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-13"><a class="line" id="13" href="#13">13:</a> </span>
+<span class="source-line" id="line-14"><a class="line" id="14" href="#14">14:</a> <span class="php-keyword1">namespace</span> SmartFactory;</span>
+<span class="source-line" id="line-15"><a class="line" id="15" href="#15">15:</a> </span>
+<span class="source-line" id="line-16"><a class="line" id="16" href="#16">16:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-17"><a class="line" id="17" href="#17">17:</a> <span class="php-comment"> * Function for getting value of a request variable.</span></span>
+<span class="source-line" id="line-18"><a class="line" id="18" href="#18">18:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-19"><a class="line" id="19" href="#19">19:</a> <span class="php-comment"> * This function checks weather the request variable exists and</span></span>
+<span class="source-line" id="line-20"><a class="line" id="20" href="#20">20:</a> <span class="php-comment"> * returns its value. If the request variable does not exist,</span></span>
+<span class="source-line" id="line-21"><a class="line" id="21" href="#21">21:</a> <span class="php-comment"> * an empty value is returned.</span></span>
+<span class="source-line" id="line-22"><a class="line" id="22" href="#22">22:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-23"><a class="line" id="23" href="#23">23:</a> <span class="php-comment"> * @param string $name</span></span>
+<span class="source-line" id="line-24"><a class="line" id="24" href="#24">24:</a> <span class="php-comment"> * Name of the request variable how it is written in the form fields.</span></span>
+<span class="source-line" id="line-25"><a class="line" id="25" href="#25">25:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-26"><a class="line" id="26" href="#26">26:</a> <span class="php-comment"> * @return mixed</span></span>
+<span class="source-line" id="line-27"><a class="line" id="27" href="#27">27:</a> <span class="php-comment"> * The value of the request variable or an empty string.</span></span>
+<span class="source-line" id="line-28"><a class="line" id="28" href="#28">28:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-29"><a class="line" id="29" href="#29">29:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-30"><a class="line" id="30" href="#30">30:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-31"><a class="line" id="31" href="#31">31:</a> <span class="php-keyword1">function</span> reqvar_value(<span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">mixed</span></span>
+<span class="source-line" id="line-32"><a class="line" id="32" href="#32">32:</a> {</span>
+<span class="source-line" id="line-33"><a class="line" id="33" href="#33">33:</a>     <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$name</span>)) {</span>
+<span class="source-line" id="line-34"><a class="line" id="34" href="#34">34:</a>         <span class="php-keyword1">return</span> <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-35"><a class="line" id="35" href="#35">35:</a>     }</span>
+<span class="source-line" id="line-36"><a class="line" id="36" href="#36">36:</a> </span>
+<span class="source-line" id="line-37"><a class="line" id="37" href="#37">37:</a>     <span class="php-var">$name</span> = preg_replace(<span class="php-quote">&quot;/([^\[\]]+)(.*)/i&quot;</span>, <span class="php-quote">&quot;\$_REQUEST[\\1]\\2&quot;</span>, <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-38"><a class="line" id="38" href="#38">38:</a>     <span class="php-var">$name</span> = preg_replace(<span class="php-quote">&quot;/\[([^\[\]]+)\]/i&quot;</span>, <span class="php-quote">&quot;[\&quot;\\1\&quot;]&quot;</span>, <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-39"><a class="line" id="39" href="#39">39:</a>     <span class="php-var">$name</span> = str_replace(<span class="php-quote">&quot;[]&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-40"><a class="line" id="40" href="#40">40:</a> </span>
+<span class="source-line" id="line-41"><a class="line" id="41" href="#41">41:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-42"><a class="line" id="42" href="#42">42:</a>     <span class="php-comment">// protection against the php injection</span></span>
+<span class="source-line" id="line-43"><a class="line" id="43" href="#43">43:</a>     <span class="php-var">$name</span> = preg_replace(<span class="php-quote">&quot;/[;,\\(\\)\\?]+/&quot;</span>, <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-44"><a class="line" id="44" href="#44">44:</a> </span>
+<span class="source-line" id="line-45"><a class="line" id="45" href="#45">45:</a>     <span class="php-keyword1">eval</span>(&quot;<span class="php-quote">\$val = isset(</span><span class="php-var">$name</span><span class="php-quote">) ? </span><span class="php-var">$name</span><span class="php-quote"> : &#039;&#039;;</span>&quot;);</span>
+<span class="source-line" id="line-46"><a class="line" id="46" href="#46">46:</a> </span>
+<span class="source-line" id="line-47"><a class="line" id="47" href="#47">47:</a>     <span class="php-keyword1">return</span> <span class="php-var">$val</span>;</span>
+<span class="source-line" id="line-48"><a class="line" id="48" href="#48">48:</a> } <span class="php-comment">// reqvar_value</span></span>
+<span class="source-line" id="line-49"><a class="line" id="49" href="#49">49:</a> </span>
+<span class="source-line" id="line-50"><a class="line" id="50" href="#50">50:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-51"><a class="line" id="51" href="#51">51:</a> <span class="php-comment"> * Function for rendering the text input field.</span></span>
+<span class="source-line" id="line-52"><a class="line" id="52" href="#52">52:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-53"><a class="line" id="53" href="#53">53:</a> <span class="php-comment"> * This function renders a text input field that is bound to</span></span>
+<span class="source-line" id="line-54"><a class="line" id="54" href="#54">54:</a> <span class="php-comment"> * the request variable with the corresponding name.</span></span>
+<span class="source-line" id="line-55"><a class="line" id="55" href="#55">55:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-56"><a class="line" id="56" href="#56">56:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-57"><a class="line" id="57" href="#57">57:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-58"><a class="line" id="58" href="#58">58:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-59"><a class="line" id="59" href="#59">59:</a> <span class="php-comment"> * - $parameters[&quot;id&quot;] - id of the field.</span></span>
+<span class="source-line" id="line-60"><a class="line" id="60" href="#60">60:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-61"><a class="line" id="61" href="#61">61:</a> <span class="php-comment"> * - $parameters[&quot;name&quot;] - name of the field.</span></span>
+<span class="source-line" id="line-62"><a class="line" id="62" href="#62">62:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-63"><a class="line" id="63" href="#63">63:</a> <span class="php-comment"> * - $parameters[&quot;value&quot;] - value that should be set for the field. If it is not specified,</span></span>
+<span class="source-line" id="line-64"><a class="line" id="64" href="#64">64:</a> <span class="php-comment"> * the value of the corresponding request variable is taken.</span></span>
+<span class="source-line" id="line-65"><a class="line" id="65" href="#65">65:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-66"><a class="line" id="66" href="#66">66:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-67"><a class="line" id="67" href="#67">67:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-68"><a class="line" id="68" href="#68">68:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-69"><a class="line" id="69" href="#69">69:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-70"><a class="line" id="70" href="#70">70:</a> <span class="php-comment"> * input_text([&quot;id&quot; =&gt; &quot;data_input_text&quot;,</span></span>
+<span class="source-line" id="line-71"><a class="line" id="71" href="#71">71:</a> <span class="php-comment"> *             &quot;name&quot; =&gt; &quot;data[input_text]&quot;,</span></span>
+<span class="source-line" id="line-72"><a class="line" id="72" href="#72">72:</a> <span class="php-comment"> *             &quot;class&quot; =&gt; &quot;my_class&quot;,</span></span>
+<span class="source-line" id="line-73"><a class="line" id="73" href="#73">73:</a> <span class="php-comment"> *             &quot;style&quot; =&gt; &quot;width: 300px&quot;,</span></span>
+<span class="source-line" id="line-74"><a class="line" id="74" href="#74">74:</a> <span class="php-comment"> *             &quot;placeholder&quot; =&gt; &quot;enter the data&quot;,</span></span>
+<span class="source-line" id="line-75"><a class="line" id="75" href="#75">75:</a> <span class="php-comment"> *             &quot;title&quot; =&gt; &quot;enter the data&quot;,</span></span>
+<span class="source-line" id="line-76"><a class="line" id="76" href="#76">76:</a> <span class="php-comment"> *             &quot;data-prop&quot; =&gt; &quot;some-prop&quot;,</span></span>
+<span class="source-line" id="line-77"><a class="line" id="77" href="#77">77:</a> <span class="php-comment"> *             &quot;onblur&quot; =&gt; &quot;alert(&#039;Hello &amp; Buy!&#039;)&quot;</span></span>
+<span class="source-line" id="line-78"><a class="line" id="78" href="#78">78:</a> <span class="php-comment"> *            ]);</span></span>
+<span class="source-line" id="line-79"><a class="line" id="79" href="#79">79:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-80"><a class="line" id="80" href="#80">80:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-81"><a class="line" id="81" href="#81">81:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-82"><a class="line" id="82" href="#82">82:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the field is directly echoed.</span></span>
+<span class="source-line" id="line-83"><a class="line" id="83" href="#83">83:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-84"><a class="line" id="84" href="#84">84:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-85"><a class="line" id="85" href="#85">85:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-86"><a class="line" id="86" href="#86">86:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-87"><a class="line" id="87" href="#87">87:</a> <span class="php-comment"> * If the parameter $echo is true, the string of the field html</span></span>
+<span class="source-line" id="line-88"><a class="line" id="88" href="#88">88:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-89"><a class="line" id="89" href="#89">89:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-90"><a class="line" id="90" href="#90">90:</a> <span class="php-comment"> * @see \SmartFactory\input_password()</span></span>
+<span class="source-line" id="line-91"><a class="line" id="91" href="#91">91:</a> <span class="php-comment"> * @see \SmartFactory\input_hidden()</span></span>
+<span class="source-line" id="line-92"><a class="line" id="92" href="#92">92:</a> <span class="php-comment"> * @see \SmartFactory\textarea()</span></span>
+<span class="source-line" id="line-93"><a class="line" id="93" href="#93">93:</a> <span class="php-comment"> * @see \SmartFactory\select()</span></span>
+<span class="source-line" id="line-94"><a class="line" id="94" href="#94">94:</a> <span class="php-comment"> * @see \SmartFactory\checkbox()</span></span>
+<span class="source-line" id="line-95"><a class="line" id="95" href="#95">95:</a> <span class="php-comment"> * @see \SmartFactory\radiobutton()</span></span>
+<span class="source-line" id="line-96"><a class="line" id="96" href="#96">96:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-97"><a class="line" id="97" href="#97">97:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-98"><a class="line" id="98" href="#98">98:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-99"><a class="line" id="99" href="#99">99:</a> <span class="php-keyword1">function</span> input_text(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-100"><a class="line" id="100" href="#100">100:</a> {</span>
+<span class="source-line" id="line-101"><a class="line" id="101" href="#101">101:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-102"><a class="line" id="102" href="#102">102:</a> </span>
+<span class="source-line" id="line-103"><a class="line" id="103" href="#103">103:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;input type=\&quot;text\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-104"><a class="line" id="104" href="#104">104:</a> </span>
+<span class="source-line" id="line-105"><a class="line" id="105" href="#105">105:</a>     <span class="php-var">$sys_fields</span> = [<span class="php-quote">&quot;id&quot;</span>, <span class="php-quote">&quot;name&quot;</span>, <span class="php-quote">&quot;value&quot;</span>, <span class="php-quote">&quot;formatter&quot;</span>];</span>
+<span class="source-line" id="line-106"><a class="line" id="106" href="#106">106:</a> </span>
+<span class="source-line" id="line-107"><a class="line" id="107" href="#107">107:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>])) {</span>
+<span class="source-line" id="line-108"><a class="line" id="108" href="#108">108:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; id=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-109"><a class="line" id="109" href="#109">109:</a>     }</span>
+<span class="source-line" id="line-110"><a class="line" id="110" href="#110">110:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>])) {</span>
+<span class="source-line" id="line-111"><a class="line" id="111" href="#111">111:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; name=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-112"><a class="line" id="112" href="#112">112:</a>         <span class="php-var">$val</span> = reqvar_value(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]);</span>
+<span class="source-line" id="line-113"><a class="line" id="113" href="#113">113:</a>     }</span>
+<span class="source-line" id="line-114"><a class="line" id="114" href="#114">114:</a> </span>
+<span class="source-line" id="line-115"><a class="line" id="115" href="#115">115:</a>     <span class="php-comment">// Value setting logic:</span></span>
+<span class="source-line" id="line-116"><a class="line" id="116" href="#116">116:</a>     <span class="php-comment">//</span></span>
+<span class="source-line" id="line-117"><a class="line" id="117" href="#117">117:</a>     <span class="php-comment">// If explicitly set in value, then take it, otherwise take it from the request variable with that name.</span></span>
+<span class="source-line" id="line-118"><a class="line" id="118" href="#118">118:</a> </span>
+<span class="source-line" id="line-119"><a class="line" id="119" href="#119">119:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>])) {</span>
+<span class="source-line" id="line-120"><a class="line" id="120" href="#120">120:</a>         <span class="php-var">$val</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>];</span>
+<span class="source-line" id="line-121"><a class="line" id="121" href="#121">121:</a>     }</span>
+<span class="source-line" id="line-122"><a class="line" id="122" href="#122">122:</a> </span>
+<span class="source-line" id="line-123"><a class="line" id="123" href="#123">123:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>]) &amp;&amp; is_callable(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>])) {</span>
+<span class="source-line" id="line-124"><a class="line" id="124" href="#124">124:</a>         <span class="php-var">$val</span> = call_user_func(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>], <span class="php-var">$val</span>);</span>
+<span class="source-line" id="line-125"><a class="line" id="125" href="#125">125:</a>     }</span>
+<span class="source-line" id="line-126"><a class="line" id="126" href="#126">126:</a> </span>
+<span class="source-line" id="line-127"><a class="line" id="127" href="#127">127:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot; value=\&quot;&quot;</span> . escape_html(<span class="php-var">$val</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-128"><a class="line" id="128" href="#128">128:</a> </span>
+<span class="source-line" id="line-129"><a class="line" id="129" href="#129">129:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$data</span>) {</span>
+<span class="source-line" id="line-130"><a class="line" id="130" href="#130">130:</a>         <span class="php-keyword1">if</span> (in_array(<span class="php-var">$name</span>, <span class="php-var">$sys_fields</span>)) {</span>
+<span class="source-line" id="line-131"><a class="line" id="131" href="#131">131:</a>             <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-132"><a class="line" id="132" href="#132">132:</a>         }</span>
+<span class="source-line" id="line-133"><a class="line" id="133" href="#133">133:</a> </span>
+<span class="source-line" id="line-134"><a class="line" id="134" href="#134">134:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; &quot;</span> . escape_html(<span class="php-var">$name</span>) . <span class="php-quote">&quot;=\&quot;&quot;</span> . escape_html(<span class="php-var">$data</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-135"><a class="line" id="135" href="#135">135:</a>     }</span>
+<span class="source-line" id="line-136"><a class="line" id="136" href="#136">136:</a> </span>
+<span class="source-line" id="line-137"><a class="line" id="137" href="#137">137:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span>;</span>
+<span class="source-line" id="line-138"><a class="line" id="138" href="#138">138:</a> </span>
+<span class="source-line" id="line-139"><a class="line" id="139" href="#139">139:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-140"><a class="line" id="140" href="#140">140:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-141"><a class="line" id="141" href="#141">141:</a>     }</span>
+<span class="source-line" id="line-142"><a class="line" id="142" href="#142">142:</a> </span>
+<span class="source-line" id="line-143"><a class="line" id="143" href="#143">143:</a>     <span class="php-comment">//echo(&quot;&lt;pre&gt;&quot; . escape_html($html) . &quot;&lt;/pre&gt;&quot;);</span></span>
+<span class="source-line" id="line-144"><a class="line" id="144" href="#144">144:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-145"><a class="line" id="145" href="#145">145:</a> </span>
+<span class="source-line" id="line-146"><a class="line" id="146" href="#146">146:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-147"><a class="line" id="147" href="#147">147:</a> } <span class="php-comment">// input_text</span></span>
+<span class="source-line" id="line-148"><a class="line" id="148" href="#148">148:</a> </span>
+<span class="source-line" id="line-149"><a class="line" id="149" href="#149">149:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-150"><a class="line" id="150" href="#150">150:</a> <span class="php-comment"> * Function for rendering the password input field.</span></span>
+<span class="source-line" id="line-151"><a class="line" id="151" href="#151">151:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-152"><a class="line" id="152" href="#152">152:</a> <span class="php-comment"> * This function renders a password input field that is bound to</span></span>
+<span class="source-line" id="line-153"><a class="line" id="153" href="#153">153:</a> <span class="php-comment"> * the request variable with the corresponding name.</span></span>
+<span class="source-line" id="line-154"><a class="line" id="154" href="#154">154:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-155"><a class="line" id="155" href="#155">155:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-156"><a class="line" id="156" href="#156">156:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-157"><a class="line" id="157" href="#157">157:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-158"><a class="line" id="158" href="#158">158:</a> <span class="php-comment"> * - $parameters[&quot;id&quot;] - id of the field.</span></span>
+<span class="source-line" id="line-159"><a class="line" id="159" href="#159">159:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-160"><a class="line" id="160" href="#160">160:</a> <span class="php-comment"> * - $parameters[&quot;name&quot;] - name of the field.</span></span>
+<span class="source-line" id="line-161"><a class="line" id="161" href="#161">161:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-162"><a class="line" id="162" href="#162">162:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-163"><a class="line" id="163" href="#163">163:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-164"><a class="line" id="164" href="#164">164:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-165"><a class="line" id="165" href="#165">165:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-166"><a class="line" id="166" href="#166">166:</a> <span class="php-comment"> * input_password([&quot;id&quot; =&gt; &quot;data_input_password&quot;,</span></span>
+<span class="source-line" id="line-167"><a class="line" id="167" href="#167">167:</a> <span class="php-comment"> *                 &quot;name&quot; =&gt; &quot;data[input_password]&quot;,</span></span>
+<span class="source-line" id="line-168"><a class="line" id="168" href="#168">168:</a> <span class="php-comment"> *                 &quot;class&quot; =&gt; &quot;my_class&quot;,</span></span>
+<span class="source-line" id="line-169"><a class="line" id="169" href="#169">169:</a> <span class="php-comment"> *                 &quot;style&quot; =&gt; &quot;width: 300px&quot;,</span></span>
+<span class="source-line" id="line-170"><a class="line" id="170" href="#170">170:</a> <span class="php-comment"> *                 &quot;placeholder&quot; =&gt; &quot;enter the password&quot;,</span></span>
+<span class="source-line" id="line-171"><a class="line" id="171" href="#171">171:</a> <span class="php-comment"> *                 &quot;title&quot; =&gt; &quot;enter the password&quot;,</span></span>
+<span class="source-line" id="line-172"><a class="line" id="172" href="#172">172:</a> <span class="php-comment"> *                 &quot;data-prop&quot; =&gt; &quot;some-prop&quot;</span></span>
+<span class="source-line" id="line-173"><a class="line" id="173" href="#173">173:</a> <span class="php-comment"> *                ]);</span></span>
+<span class="source-line" id="line-174"><a class="line" id="174" href="#174">174:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-175"><a class="line" id="175" href="#175">175:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-176"><a class="line" id="176" href="#176">176:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-177"><a class="line" id="177" href="#177">177:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the field is directly echoed.</span></span>
+<span class="source-line" id="line-178"><a class="line" id="178" href="#178">178:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-179"><a class="line" id="179" href="#179">179:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-180"><a class="line" id="180" href="#180">180:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-181"><a class="line" id="181" href="#181">181:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-182"><a class="line" id="182" href="#182">182:</a> <span class="php-comment"> * If the parameter $echo is true, the string of the field html</span></span>
+<span class="source-line" id="line-183"><a class="line" id="183" href="#183">183:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-184"><a class="line" id="184" href="#184">184:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-185"><a class="line" id="185" href="#185">185:</a> <span class="php-comment"> * @see \SmartFactory\input_text()</span></span>
+<span class="source-line" id="line-186"><a class="line" id="186" href="#186">186:</a> <span class="php-comment"> * @see \SmartFactory\input_hidden()</span></span>
+<span class="source-line" id="line-187"><a class="line" id="187" href="#187">187:</a> <span class="php-comment"> * @see \SmartFactory\textarea()</span></span>
+<span class="source-line" id="line-188"><a class="line" id="188" href="#188">188:</a> <span class="php-comment"> * @see \SmartFactory\select()</span></span>
+<span class="source-line" id="line-189"><a class="line" id="189" href="#189">189:</a> <span class="php-comment"> * @see \SmartFactory\checkbox()</span></span>
+<span class="source-line" id="line-190"><a class="line" id="190" href="#190">190:</a> <span class="php-comment"> * @see \SmartFactory\radiobutton()</span></span>
+<span class="source-line" id="line-191"><a class="line" id="191" href="#191">191:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-192"><a class="line" id="192" href="#192">192:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-193"><a class="line" id="193" href="#193">193:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-194"><a class="line" id="194" href="#194">194:</a> <span class="php-keyword1">function</span> input_password(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-195"><a class="line" id="195" href="#195">195:</a> {</span>
+<span class="source-line" id="line-196"><a class="line" id="196" href="#196">196:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-197"><a class="line" id="197" href="#197">197:</a> </span>
+<span class="source-line" id="line-198"><a class="line" id="198" href="#198">198:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;input type=\&quot;password\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-199"><a class="line" id="199" href="#199">199:</a> </span>
+<span class="source-line" id="line-200"><a class="line" id="200" href="#200">200:</a>     <span class="php-var">$sys_fields</span> = [<span class="php-quote">&quot;id&quot;</span>, <span class="php-quote">&quot;name&quot;</span>, <span class="php-quote">&quot;value&quot;</span>, <span class="php-quote">&quot;formatter&quot;</span>];</span>
+<span class="source-line" id="line-201"><a class="line" id="201" href="#201">201:</a> </span>
+<span class="source-line" id="line-202"><a class="line" id="202" href="#202">202:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>])) {</span>
+<span class="source-line" id="line-203"><a class="line" id="203" href="#203">203:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; id=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-204"><a class="line" id="204" href="#204">204:</a>     }</span>
+<span class="source-line" id="line-205"><a class="line" id="205" href="#205">205:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>])) {</span>
+<span class="source-line" id="line-206"><a class="line" id="206" href="#206">206:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; name=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-207"><a class="line" id="207" href="#207">207:</a>         <span class="php-var">$val</span> = reqvar_value(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]);</span>
+<span class="source-line" id="line-208"><a class="line" id="208" href="#208">208:</a>     }</span>
+<span class="source-line" id="line-209"><a class="line" id="209" href="#209">209:</a> </span>
+<span class="source-line" id="line-210"><a class="line" id="210" href="#210">210:</a>     <span class="php-comment">// Value setting logic:</span></span>
+<span class="source-line" id="line-211"><a class="line" id="211" href="#211">211:</a>     <span class="php-comment">//</span></span>
+<span class="source-line" id="line-212"><a class="line" id="212" href="#212">212:</a>     <span class="php-comment">// If explicitly set in value, then take it, otherwise take it from the request variable with that name.</span></span>
+<span class="source-line" id="line-213"><a class="line" id="213" href="#213">213:</a> </span>
+<span class="source-line" id="line-214"><a class="line" id="214" href="#214">214:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>])) {</span>
+<span class="source-line" id="line-215"><a class="line" id="215" href="#215">215:</a>         <span class="php-var">$val</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>];</span>
+<span class="source-line" id="line-216"><a class="line" id="216" href="#216">216:</a>     }</span>
+<span class="source-line" id="line-217"><a class="line" id="217" href="#217">217:</a> </span>
+<span class="source-line" id="line-218"><a class="line" id="218" href="#218">218:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>]) &amp;&amp; is_callable(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>])) {</span>
+<span class="source-line" id="line-219"><a class="line" id="219" href="#219">219:</a>         <span class="php-var">$val</span> = call_user_func(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>], <span class="php-var">$val</span>);</span>
+<span class="source-line" id="line-220"><a class="line" id="220" href="#220">220:</a>     }</span>
+<span class="source-line" id="line-221"><a class="line" id="221" href="#221">221:</a> </span>
+<span class="source-line" id="line-222"><a class="line" id="222" href="#222">222:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot; value=\&quot;&quot;</span> . escape_html(<span class="php-var">$val</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-223"><a class="line" id="223" href="#223">223:</a> </span>
+<span class="source-line" id="line-224"><a class="line" id="224" href="#224">224:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$data</span>) {</span>
+<span class="source-line" id="line-225"><a class="line" id="225" href="#225">225:</a>         <span class="php-keyword1">if</span> (in_array(<span class="php-var">$name</span>, <span class="php-var">$sys_fields</span>)) {</span>
+<span class="source-line" id="line-226"><a class="line" id="226" href="#226">226:</a>             <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-227"><a class="line" id="227" href="#227">227:</a>         }</span>
+<span class="source-line" id="line-228"><a class="line" id="228" href="#228">228:</a> </span>
+<span class="source-line" id="line-229"><a class="line" id="229" href="#229">229:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; &quot;</span> . escape_html(<span class="php-var">$name</span>) . <span class="php-quote">&quot;=\&quot;&quot;</span> . escape_html(<span class="php-var">$data</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-230"><a class="line" id="230" href="#230">230:</a>     }</span>
+<span class="source-line" id="line-231"><a class="line" id="231" href="#231">231:</a> </span>
+<span class="source-line" id="line-232"><a class="line" id="232" href="#232">232:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span>;</span>
+<span class="source-line" id="line-233"><a class="line" id="233" href="#233">233:</a> </span>
+<span class="source-line" id="line-234"><a class="line" id="234" href="#234">234:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-235"><a class="line" id="235" href="#235">235:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-236"><a class="line" id="236" href="#236">236:</a>     }</span>
+<span class="source-line" id="line-237"><a class="line" id="237" href="#237">237:</a> </span>
+<span class="source-line" id="line-238"><a class="line" id="238" href="#238">238:</a>     <span class="php-comment">//echo(&quot;&lt;pre&gt;&quot; . escape_html($html) . &quot;&lt;/pre&gt;&quot;);</span></span>
+<span class="source-line" id="line-239"><a class="line" id="239" href="#239">239:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-240"><a class="line" id="240" href="#240">240:</a> </span>
+<span class="source-line" id="line-241"><a class="line" id="241" href="#241">241:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-242"><a class="line" id="242" href="#242">242:</a> } <span class="php-comment">// input_password</span></span>
+<span class="source-line" id="line-243"><a class="line" id="243" href="#243">243:</a> </span>
+<span class="source-line" id="line-244"><a class="line" id="244" href="#244">244:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-245"><a class="line" id="245" href="#245">245:</a> <span class="php-comment"> * Function for rendering the hidden input field.</span></span>
+<span class="source-line" id="line-246"><a class="line" id="246" href="#246">246:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-247"><a class="line" id="247" href="#247">247:</a> <span class="php-comment"> * This function renders a text hidden field that is bound to</span></span>
+<span class="source-line" id="line-248"><a class="line" id="248" href="#248">248:</a> <span class="php-comment"> * the request variable with the corresponding name.</span></span>
+<span class="source-line" id="line-249"><a class="line" id="249" href="#249">249:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-250"><a class="line" id="250" href="#250">250:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-251"><a class="line" id="251" href="#251">251:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-252"><a class="line" id="252" href="#252">252:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-253"><a class="line" id="253" href="#253">253:</a> <span class="php-comment"> * - $parameters[&quot;id&quot;] - id of the field.</span></span>
+<span class="source-line" id="line-254"><a class="line" id="254" href="#254">254:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-255"><a class="line" id="255" href="#255">255:</a> <span class="php-comment"> * - $parameters[&quot;name&quot;] - name of the field.</span></span>
+<span class="source-line" id="line-256"><a class="line" id="256" href="#256">256:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-257"><a class="line" id="257" href="#257">257:</a> <span class="php-comment"> * - $parameters[&quot;value&quot;] - value that should be set for the field. If it is not specified,</span></span>
+<span class="source-line" id="line-258"><a class="line" id="258" href="#258">258:</a> <span class="php-comment"> * the value of the corresponding request variable is taken.</span></span>
+<span class="source-line" id="line-259"><a class="line" id="259" href="#259">259:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-260"><a class="line" id="260" href="#260">260:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-261"><a class="line" id="261" href="#261">261:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-262"><a class="line" id="262" href="#262">262:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-263"><a class="line" id="263" href="#263">263:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-264"><a class="line" id="264" href="#264">264:</a> <span class="php-comment"> * input_hidden([&quot;id&quot; =&gt; &quot;data_input_hidden&quot;,</span></span>
+<span class="source-line" id="line-265"><a class="line" id="265" href="#265">265:</a> <span class="php-comment"> *               &quot;name&quot; =&gt; &quot;data[input_hidden]&quot;,</span></span>
+<span class="source-line" id="line-266"><a class="line" id="266" href="#266">266:</a> <span class="php-comment"> *               &quot;data-prop&quot; =&gt; &quot;some-prop&quot;</span></span>
+<span class="source-line" id="line-267"><a class="line" id="267" href="#267">267:</a> <span class="php-comment"> *              ]);</span></span>
+<span class="source-line" id="line-268"><a class="line" id="268" href="#268">268:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-269"><a class="line" id="269" href="#269">269:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-270"><a class="line" id="270" href="#270">270:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-271"><a class="line" id="271" href="#271">271:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the field is directly echoed.</span></span>
+<span class="source-line" id="line-272"><a class="line" id="272" href="#272">272:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-273"><a class="line" id="273" href="#273">273:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-274"><a class="line" id="274" href="#274">274:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-275"><a class="line" id="275" href="#275">275:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-276"><a class="line" id="276" href="#276">276:</a> <span class="php-comment"> * If the parameter $echo is true, the string of the field html</span></span>
+<span class="source-line" id="line-277"><a class="line" id="277" href="#277">277:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-278"><a class="line" id="278" href="#278">278:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-279"><a class="line" id="279" href="#279">279:</a> <span class="php-comment"> * @see \SmartFactory\input_text()</span></span>
+<span class="source-line" id="line-280"><a class="line" id="280" href="#280">280:</a> <span class="php-comment"> * @see \SmartFactory\input_password()</span></span>
+<span class="source-line" id="line-281"><a class="line" id="281" href="#281">281:</a> <span class="php-comment"> * @see \SmartFactory\textarea()</span></span>
+<span class="source-line" id="line-282"><a class="line" id="282" href="#282">282:</a> <span class="php-comment"> * @see \SmartFactory\select()</span></span>
+<span class="source-line" id="line-283"><a class="line" id="283" href="#283">283:</a> <span class="php-comment"> * @see \SmartFactory\checkbox()</span></span>
+<span class="source-line" id="line-284"><a class="line" id="284" href="#284">284:</a> <span class="php-comment"> * @see \SmartFactory\radiobutton()</span></span>
+<span class="source-line" id="line-285"><a class="line" id="285" href="#285">285:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-286"><a class="line" id="286" href="#286">286:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-287"><a class="line" id="287" href="#287">287:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-288"><a class="line" id="288" href="#288">288:</a> <span class="php-keyword1">function</span> input_hidden(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-289"><a class="line" id="289" href="#289">289:</a> {</span>
+<span class="source-line" id="line-290"><a class="line" id="290" href="#290">290:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-291"><a class="line" id="291" href="#291">291:</a> </span>
+<span class="source-line" id="line-292"><a class="line" id="292" href="#292">292:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;input type=\&quot;hidden\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-293"><a class="line" id="293" href="#293">293:</a> </span>
+<span class="source-line" id="line-294"><a class="line" id="294" href="#294">294:</a>     <span class="php-var">$sys_fields</span> = [<span class="php-quote">&quot;id&quot;</span>, <span class="php-quote">&quot;name&quot;</span>, <span class="php-quote">&quot;value&quot;</span>, <span class="php-quote">&quot;formatter&quot;</span>];</span>
+<span class="source-line" id="line-295"><a class="line" id="295" href="#295">295:</a> </span>
+<span class="source-line" id="line-296"><a class="line" id="296" href="#296">296:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>])) {</span>
+<span class="source-line" id="line-297"><a class="line" id="297" href="#297">297:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; id=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-298"><a class="line" id="298" href="#298">298:</a>     }</span>
+<span class="source-line" id="line-299"><a class="line" id="299" href="#299">299:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>])) {</span>
+<span class="source-line" id="line-300"><a class="line" id="300" href="#300">300:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; name=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-301"><a class="line" id="301" href="#301">301:</a>         <span class="php-var">$val</span> = reqvar_value(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]);</span>
+<span class="source-line" id="line-302"><a class="line" id="302" href="#302">302:</a>     }</span>
+<span class="source-line" id="line-303"><a class="line" id="303" href="#303">303:</a> </span>
+<span class="source-line" id="line-304"><a class="line" id="304" href="#304">304:</a>     <span class="php-comment">// Value setting logic:</span></span>
+<span class="source-line" id="line-305"><a class="line" id="305" href="#305">305:</a>     <span class="php-comment">//</span></span>
+<span class="source-line" id="line-306"><a class="line" id="306" href="#306">306:</a>     <span class="php-comment">// If explicitly set in value, then take it, otherwise take it from the request variable with that name.</span></span>
+<span class="source-line" id="line-307"><a class="line" id="307" href="#307">307:</a> </span>
+<span class="source-line" id="line-308"><a class="line" id="308" href="#308">308:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>])) {</span>
+<span class="source-line" id="line-309"><a class="line" id="309" href="#309">309:</a>         <span class="php-var">$val</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>];</span>
+<span class="source-line" id="line-310"><a class="line" id="310" href="#310">310:</a>     }</span>
+<span class="source-line" id="line-311"><a class="line" id="311" href="#311">311:</a> </span>
+<span class="source-line" id="line-312"><a class="line" id="312" href="#312">312:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>]) &amp;&amp; is_callable(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>])) {</span>
+<span class="source-line" id="line-313"><a class="line" id="313" href="#313">313:</a>         <span class="php-var">$val</span> = call_user_func(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>], <span class="php-var">$val</span>);</span>
+<span class="source-line" id="line-314"><a class="line" id="314" href="#314">314:</a>     }</span>
+<span class="source-line" id="line-315"><a class="line" id="315" href="#315">315:</a> </span>
+<span class="source-line" id="line-316"><a class="line" id="316" href="#316">316:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot; value=\&quot;&quot;</span> . escape_html(<span class="php-var">$val</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-317"><a class="line" id="317" href="#317">317:</a> </span>
+<span class="source-line" id="line-318"><a class="line" id="318" href="#318">318:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$data</span>) {</span>
+<span class="source-line" id="line-319"><a class="line" id="319" href="#319">319:</a>         <span class="php-keyword1">if</span> (in_array(<span class="php-var">$name</span>, <span class="php-var">$sys_fields</span>)) {</span>
+<span class="source-line" id="line-320"><a class="line" id="320" href="#320">320:</a>             <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-321"><a class="line" id="321" href="#321">321:</a>         }</span>
+<span class="source-line" id="line-322"><a class="line" id="322" href="#322">322:</a> </span>
+<span class="source-line" id="line-323"><a class="line" id="323" href="#323">323:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; &quot;</span> . escape_html(<span class="php-var">$name</span>) . <span class="php-quote">&quot;=\&quot;&quot;</span> . escape_html(<span class="php-var">$data</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-324"><a class="line" id="324" href="#324">324:</a>     }</span>
+<span class="source-line" id="line-325"><a class="line" id="325" href="#325">325:</a> </span>
+<span class="source-line" id="line-326"><a class="line" id="326" href="#326">326:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span>;</span>
+<span class="source-line" id="line-327"><a class="line" id="327" href="#327">327:</a> </span>
+<span class="source-line" id="line-328"><a class="line" id="328" href="#328">328:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-329"><a class="line" id="329" href="#329">329:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-330"><a class="line" id="330" href="#330">330:</a>     }</span>
+<span class="source-line" id="line-331"><a class="line" id="331" href="#331">331:</a> </span>
+<span class="source-line" id="line-332"><a class="line" id="332" href="#332">332:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-333"><a class="line" id="333" href="#333">333:</a> </span>
+<span class="source-line" id="line-334"><a class="line" id="334" href="#334">334:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-335"><a class="line" id="335" href="#335">335:</a> } <span class="php-comment">// input_hidden</span></span>
+<span class="source-line" id="line-336"><a class="line" id="336" href="#336">336:</a> </span>
+<span class="source-line" id="line-337"><a class="line" id="337" href="#337">337:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-338"><a class="line" id="338" href="#338">338:</a> <span class="php-comment"> * Function for rendering the text area field.</span></span>
+<span class="source-line" id="line-339"><a class="line" id="339" href="#339">339:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-340"><a class="line" id="340" href="#340">340:</a> <span class="php-comment"> * This function renders a text area field that is bound to</span></span>
+<span class="source-line" id="line-341"><a class="line" id="341" href="#341">341:</a> <span class="php-comment"> * the request variable with the corresponding name.</span></span>
+<span class="source-line" id="line-342"><a class="line" id="342" href="#342">342:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-343"><a class="line" id="343" href="#343">343:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-344"><a class="line" id="344" href="#344">344:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-345"><a class="line" id="345" href="#345">345:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-346"><a class="line" id="346" href="#346">346:</a> <span class="php-comment"> * - $parameters[&quot;id&quot;] - id of the field.</span></span>
+<span class="source-line" id="line-347"><a class="line" id="347" href="#347">347:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-348"><a class="line" id="348" href="#348">348:</a> <span class="php-comment"> * - $parameters[&quot;name&quot;] - name of the field.</span></span>
+<span class="source-line" id="line-349"><a class="line" id="349" href="#349">349:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-350"><a class="line" id="350" href="#350">350:</a> <span class="php-comment"> * - $parameters[&quot;value&quot;] - value that should be set for the field. If it is not specified,</span></span>
+<span class="source-line" id="line-351"><a class="line" id="351" href="#351">351:</a> <span class="php-comment"> * the value of the corresponding request variable is taken.</span></span>
+<span class="source-line" id="line-352"><a class="line" id="352" href="#352">352:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-353"><a class="line" id="353" href="#353">353:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-354"><a class="line" id="354" href="#354">354:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-355"><a class="line" id="355" href="#355">355:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-356"><a class="line" id="356" href="#356">356:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-357"><a class="line" id="357" href="#357">357:</a> <span class="php-comment"> * textarea([&quot;id&quot; =&gt; &quot;data_textarea&quot;,</span></span>
+<span class="source-line" id="line-358"><a class="line" id="358" href="#358">358:</a> <span class="php-comment"> *           &quot;name&quot; =&gt; &quot;data[textarea]&quot;,</span></span>
+<span class="source-line" id="line-359"><a class="line" id="359" href="#359">359:</a> <span class="php-comment"> *           &quot;class&quot; =&gt; &quot;my_class&quot;,</span></span>
+<span class="source-line" id="line-360"><a class="line" id="360" href="#360">360:</a> <span class="php-comment"> *           &quot;style&quot; =&gt; &quot;width: 300px; height: 150px;&quot;,</span></span>
+<span class="source-line" id="line-361"><a class="line" id="361" href="#361">361:</a> <span class="php-comment"> *           &quot;placeholder&quot; =&gt; &quot;enter the text&quot;,</span></span>
+<span class="source-line" id="line-362"><a class="line" id="362" href="#362">362:</a> <span class="php-comment"> *           &quot;title&quot; =&gt; &quot;enter the text&quot;,</span></span>
+<span class="source-line" id="line-363"><a class="line" id="363" href="#363">363:</a> <span class="php-comment"> *           &quot;data-prop&quot; =&gt; &quot;some-prop&quot;,</span></span>
+<span class="source-line" id="line-364"><a class="line" id="364" href="#364">364:</a> <span class="php-comment"> *           &quot;onblur&quot; =&gt; &quot;alert(&#039;Hello &amp; Buy!&#039;)&quot;</span></span>
+<span class="source-line" id="line-365"><a class="line" id="365" href="#365">365:</a> <span class="php-comment"> *          ]);</span></span>
+<span class="source-line" id="line-366"><a class="line" id="366" href="#366">366:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-367"><a class="line" id="367" href="#367">367:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-368"><a class="line" id="368" href="#368">368:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-369"><a class="line" id="369" href="#369">369:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the field is directly echoed.</span></span>
+<span class="source-line" id="line-370"><a class="line" id="370" href="#370">370:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-371"><a class="line" id="371" href="#371">371:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-372"><a class="line" id="372" href="#372">372:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-373"><a class="line" id="373" href="#373">373:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-374"><a class="line" id="374" href="#374">374:</a> <span class="php-comment"> * If the paramter $echo is true, the string of the field html</span></span>
+<span class="source-line" id="line-375"><a class="line" id="375" href="#375">375:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-376"><a class="line" id="376" href="#376">376:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-377"><a class="line" id="377" href="#377">377:</a> <span class="php-comment"> * @see \SmartFactory\input_text()</span></span>
+<span class="source-line" id="line-378"><a class="line" id="378" href="#378">378:</a> <span class="php-comment"> * @see \SmartFactory\input_password()</span></span>
+<span class="source-line" id="line-379"><a class="line" id="379" href="#379">379:</a> <span class="php-comment"> * @see \SmartFactory\input_hidden()</span></span>
+<span class="source-line" id="line-380"><a class="line" id="380" href="#380">380:</a> <span class="php-comment"> * @see \SmartFactory\select()</span></span>
+<span class="source-line" id="line-381"><a class="line" id="381" href="#381">381:</a> <span class="php-comment"> * @see \SmartFactory\checkbox()</span></span>
+<span class="source-line" id="line-382"><a class="line" id="382" href="#382">382:</a> <span class="php-comment"> * @see \SmartFactory\radiobutton()</span></span>
+<span class="source-line" id="line-383"><a class="line" id="383" href="#383">383:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-384"><a class="line" id="384" href="#384">384:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-385"><a class="line" id="385" href="#385">385:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-386"><a class="line" id="386" href="#386">386:</a> <span class="php-keyword1">function</span> textarea(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-387"><a class="line" id="387" href="#387">387:</a> {</span>
+<span class="source-line" id="line-388"><a class="line" id="388" href="#388">388:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-389"><a class="line" id="389" href="#389">389:</a> </span>
+<span class="source-line" id="line-390"><a class="line" id="390" href="#390">390:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;textarea&quot;</span>;</span>
+<span class="source-line" id="line-391"><a class="line" id="391" href="#391">391:</a> </span>
+<span class="source-line" id="line-392"><a class="line" id="392" href="#392">392:</a>     <span class="php-var">$sys_fields</span> = [<span class="php-quote">&quot;id&quot;</span>, <span class="php-quote">&quot;name&quot;</span>, <span class="php-quote">&quot;value&quot;</span>, <span class="php-quote">&quot;formatter&quot;</span>];</span>
+<span class="source-line" id="line-393"><a class="line" id="393" href="#393">393:</a> </span>
+<span class="source-line" id="line-394"><a class="line" id="394" href="#394">394:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>])) {</span>
+<span class="source-line" id="line-395"><a class="line" id="395" href="#395">395:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; id=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-396"><a class="line" id="396" href="#396">396:</a>     }</span>
+<span class="source-line" id="line-397"><a class="line" id="397" href="#397">397:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>])) {</span>
+<span class="source-line" id="line-398"><a class="line" id="398" href="#398">398:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; name=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-399"><a class="line" id="399" href="#399">399:</a>         <span class="php-var">$val</span> = reqvar_value(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]);</span>
+<span class="source-line" id="line-400"><a class="line" id="400" href="#400">400:</a>     }</span>
+<span class="source-line" id="line-401"><a class="line" id="401" href="#401">401:</a> </span>
+<span class="source-line" id="line-402"><a class="line" id="402" href="#402">402:</a>     <span class="php-comment">// Value setting logic:</span></span>
+<span class="source-line" id="line-403"><a class="line" id="403" href="#403">403:</a>     <span class="php-comment">//</span></span>
+<span class="source-line" id="line-404"><a class="line" id="404" href="#404">404:</a>     <span class="php-comment">// If explicitly set in value, then take it, otherwise take it from the request variable with that name.</span></span>
+<span class="source-line" id="line-405"><a class="line" id="405" href="#405">405:</a> </span>
+<span class="source-line" id="line-406"><a class="line" id="406" href="#406">406:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>])) {</span>
+<span class="source-line" id="line-407"><a class="line" id="407" href="#407">407:</a>         <span class="php-var">$val</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>];</span>
+<span class="source-line" id="line-408"><a class="line" id="408" href="#408">408:</a>     }</span>
+<span class="source-line" id="line-409"><a class="line" id="409" href="#409">409:</a> </span>
+<span class="source-line" id="line-410"><a class="line" id="410" href="#410">410:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>]) &amp;&amp; is_callable(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>])) {</span>
+<span class="source-line" id="line-411"><a class="line" id="411" href="#411">411:</a>         <span class="php-var">$val</span> = call_user_func(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>], <span class="php-var">$val</span>);</span>
+<span class="source-line" id="line-412"><a class="line" id="412" href="#412">412:</a>     }</span>
+<span class="source-line" id="line-413"><a class="line" id="413" href="#413">413:</a> </span>
+<span class="source-line" id="line-414"><a class="line" id="414" href="#414">414:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$data</span>) {</span>
+<span class="source-line" id="line-415"><a class="line" id="415" href="#415">415:</a>         <span class="php-keyword1">if</span> (in_array(<span class="php-var">$name</span>, <span class="php-var">$sys_fields</span>)) {</span>
+<span class="source-line" id="line-416"><a class="line" id="416" href="#416">416:</a>             <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-417"><a class="line" id="417" href="#417">417:</a>         }</span>
+<span class="source-line" id="line-418"><a class="line" id="418" href="#418">418:</a> </span>
+<span class="source-line" id="line-419"><a class="line" id="419" href="#419">419:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; &quot;</span> . escape_html(<span class="php-var">$name</span>) . <span class="php-quote">&quot;=\&quot;&quot;</span> . escape_html(<span class="php-var">$data</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-420"><a class="line" id="420" href="#420">420:</a>     }</span>
+<span class="source-line" id="line-421"><a class="line" id="421" href="#421">421:</a> </span>
+<span class="source-line" id="line-422"><a class="line" id="422" href="#422">422:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span> . escape_html(<span class="php-var">$val</span>);</span>
+<span class="source-line" id="line-423"><a class="line" id="423" href="#423">423:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;/textarea&gt;&quot;</span>;</span>
+<span class="source-line" id="line-424"><a class="line" id="424" href="#424">424:</a> </span>
+<span class="source-line" id="line-425"><a class="line" id="425" href="#425">425:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-426"><a class="line" id="426" href="#426">426:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-427"><a class="line" id="427" href="#427">427:</a>     }</span>
+<span class="source-line" id="line-428"><a class="line" id="428" href="#428">428:</a> </span>
+<span class="source-line" id="line-429"><a class="line" id="429" href="#429">429:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-430"><a class="line" id="430" href="#430">430:</a> </span>
+<span class="source-line" id="line-431"><a class="line" id="431" href="#431">431:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-432"><a class="line" id="432" href="#432">432:</a> } <span class="php-comment">// textarea</span></span>
+<span class="source-line" id="line-433"><a class="line" id="433" href="#433">433:</a> </span>
+<span class="source-line" id="line-434"><a class="line" id="434" href="#434">434:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-435"><a class="line" id="435" href="#435">435:</a> <span class="php-comment"> * Function for rendering the select field.</span></span>
+<span class="source-line" id="line-436"><a class="line" id="436" href="#436">436:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-437"><a class="line" id="437" href="#437">437:</a> <span class="php-comment"> * This function renders a select field that is bound to</span></span>
+<span class="source-line" id="line-438"><a class="line" id="438" href="#438">438:</a> <span class="php-comment"> * the request variable with the corresponding name.</span></span>
+<span class="source-line" id="line-439"><a class="line" id="439" href="#439">439:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-440"><a class="line" id="440" href="#440">440:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-441"><a class="line" id="441" href="#441">441:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-442"><a class="line" id="442" href="#442">442:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-443"><a class="line" id="443" href="#443">443:</a> <span class="php-comment"> * - $parameters[&quot;id&quot;] - id of the field.</span></span>
+<span class="source-line" id="line-444"><a class="line" id="444" href="#444">444:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-445"><a class="line" id="445" href="#445">445:</a> <span class="php-comment"> * - $parameters[&quot;name&quot;] - name of the field.</span></span>
+<span class="source-line" id="line-446"><a class="line" id="446" href="#446">446:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-447"><a class="line" id="447" href="#447">447:</a> <span class="php-comment"> * - $parameters[&quot;value&quot;] - value that should be set for the field. If it is not specified,</span></span>
+<span class="source-line" id="line-448"><a class="line" id="448" href="#448">448:</a> <span class="php-comment"> * the value of the corresponding request variable is taken.</span></span>
+<span class="source-line" id="line-449"><a class="line" id="449" href="#449">449:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-450"><a class="line" id="450" href="#450">450:</a> <span class="php-comment"> * - $parameters[&quot;options&quot;] - an associative array of list options in the form &quot;option value&quot; =&gt; &quot;option text&quot;.</span></span>
+<span class="source-line" id="line-451"><a class="line" id="451" href="#451">451:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-452"><a class="line" id="452" href="#452">452:</a> <span class="php-comment"> * - $parameters[&quot;multiple&quot;] - set this key &quot;multiple&quot; =&gt; &quot;multiple&quot; if the list should support multichoice.</span></span>
+<span class="source-line" id="line-453"><a class="line" id="453" href="#453">453:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-454"><a class="line" id="454" href="#454">454:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-455"><a class="line" id="455" href="#455">455:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-456"><a class="line" id="456" href="#456">456:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-457"><a class="line" id="457" href="#457">457:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-458"><a class="line" id="458" href="#458">458:</a> <span class="php-comment"> * $options = [</span></span>
+<span class="source-line" id="line-459"><a class="line" id="459" href="#459">459:</a> <span class="php-comment"> *   &quot;yellow&quot; =&gt; &quot;Yellow&quot;,</span></span>
+<span class="source-line" id="line-460"><a class="line" id="460" href="#460">460:</a> <span class="php-comment"> *   &quot;blue&quot; =&gt; &quot;Blue&quot;,</span></span>
+<span class="source-line" id="line-461"><a class="line" id="461" href="#461">461:</a> <span class="php-comment"> *   &quot;red&quot; =&gt; &quot;Red&quot;,</span></span>
+<span class="source-line" id="line-462"><a class="line" id="462" href="#462">462:</a> <span class="php-comment"> *   &quot;brown&quot; =&gt; &quot;Brown&quot;,</span></span>
+<span class="source-line" id="line-463"><a class="line" id="463" href="#463">463:</a> <span class="php-comment"> *   &quot;black&quot; =&gt; &quot;Black&quot;,</span></span>
+<span class="source-line" id="line-464"><a class="line" id="464" href="#464">464:</a> <span class="php-comment"> *   &quot;white&quot; =&gt; &quot;White&quot;,</span></span>
+<span class="source-line" id="line-465"><a class="line" id="465" href="#465">465:</a> <span class="php-comment"> *   &quot;green&quot; =&gt; &quot;Green&quot;</span></span>
+<span class="source-line" id="line-466"><a class="line" id="466" href="#466">466:</a> <span class="php-comment"> * ];</span></span>
+<span class="source-line" id="line-467"><a class="line" id="467" href="#467">467:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-468"><a class="line" id="468" href="#468">468:</a> <span class="php-comment"> * select([&quot;id&quot; =&gt; &quot;data_multiselect&quot;,</span></span>
+<span class="source-line" id="line-469"><a class="line" id="469" href="#469">469:</a> <span class="php-comment"> *         &quot;name&quot; =&gt; &quot;data[multiselect][]&quot;,</span></span>
+<span class="source-line" id="line-470"><a class="line" id="470" href="#470">470:</a> <span class="php-comment"> *         &quot;multiple&quot; =&gt; &quot;multiple&quot;,</span></span>
+<span class="source-line" id="line-471"><a class="line" id="471" href="#471">471:</a> <span class="php-comment"> *         &quot;class&quot; =&gt; &quot;my_class&quot;,</span></span>
+<span class="source-line" id="line-472"><a class="line" id="472" href="#472">472:</a> <span class="php-comment"> *         &quot;style&quot; =&gt; &quot;width: 300px; height: 180px&quot;,</span></span>
+<span class="source-line" id="line-473"><a class="line" id="473" href="#473">473:</a> <span class="php-comment"> *         &quot;title&quot; =&gt; &quot;select multi value&quot;,</span></span>
+<span class="source-line" id="line-474"><a class="line" id="474" href="#474">474:</a> <span class="php-comment"> *         &quot;data-prop&quot; =&gt; &quot;some-prop&quot;,</span></span>
+<span class="source-line" id="line-475"><a class="line" id="475" href="#475">475:</a> <span class="php-comment"> *         &quot;options&quot; =&gt; $options</span></span>
+<span class="source-line" id="line-476"><a class="line" id="476" href="#476">476:</a> <span class="php-comment"> *        ]);</span></span>
+<span class="source-line" id="line-477"><a class="line" id="477" href="#477">477:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-478"><a class="line" id="478" href="#478">478:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-479"><a class="line" id="479" href="#479">479:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-480"><a class="line" id="480" href="#480">480:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the field is directly echoed.</span></span>
+<span class="source-line" id="line-481"><a class="line" id="481" href="#481">481:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-482"><a class="line" id="482" href="#482">482:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-483"><a class="line" id="483" href="#483">483:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-484"><a class="line" id="484" href="#484">484:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-485"><a class="line" id="485" href="#485">485:</a> <span class="php-comment"> * If the parameter $echo is true, the string of the field html</span></span>
+<span class="source-line" id="line-486"><a class="line" id="486" href="#486">486:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-487"><a class="line" id="487" href="#487">487:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-488"><a class="line" id="488" href="#488">488:</a> <span class="php-comment"> * @see \SmartFactory\input_text()</span></span>
+<span class="source-line" id="line-489"><a class="line" id="489" href="#489">489:</a> <span class="php-comment"> * @see \SmartFactory\input_password()</span></span>
+<span class="source-line" id="line-490"><a class="line" id="490" href="#490">490:</a> <span class="php-comment"> * @see \SmartFactory\input_hidden()</span></span>
+<span class="source-line" id="line-491"><a class="line" id="491" href="#491">491:</a> <span class="php-comment"> * @see \SmartFactory\textarea()</span></span>
+<span class="source-line" id="line-492"><a class="line" id="492" href="#492">492:</a> <span class="php-comment"> * @see \SmartFactory\checkbox()</span></span>
+<span class="source-line" id="line-493"><a class="line" id="493" href="#493">493:</a> <span class="php-comment"> * @see \SmartFactory\radiobutton()</span></span>
+<span class="source-line" id="line-494"><a class="line" id="494" href="#494">494:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-495"><a class="line" id="495" href="#495">495:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-496"><a class="line" id="496" href="#496">496:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-497"><a class="line" id="497" href="#497">497:</a> <span class="php-keyword1">function</span> select(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-498"><a class="line" id="498" href="#498">498:</a> {</span>
+<span class="source-line" id="line-499"><a class="line" id="499" href="#499">499:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-500"><a class="line" id="500" href="#500">500:</a> </span>
+<span class="source-line" id="line-501"><a class="line" id="501" href="#501">501:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;select&quot;</span>;</span>
+<span class="source-line" id="line-502"><a class="line" id="502" href="#502">502:</a> </span>
+<span class="source-line" id="line-503"><a class="line" id="503" href="#503">503:</a>     <span class="php-var">$sys_fields</span> = [<span class="php-quote">&quot;id&quot;</span>, <span class="php-quote">&quot;name&quot;</span>, <span class="php-quote">&quot;value&quot;</span>, <span class="php-quote">&quot;options&quot;</span>, <span class="php-quote">&quot;multiple&quot;</span>];</span>
+<span class="source-line" id="line-504"><a class="line" id="504" href="#504">504:</a> </span>
+<span class="source-line" id="line-505"><a class="line" id="505" href="#505">505:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>])) {</span>
+<span class="source-line" id="line-506"><a class="line" id="506" href="#506">506:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; id=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-507"><a class="line" id="507" href="#507">507:</a>     }</span>
+<span class="source-line" id="line-508"><a class="line" id="508" href="#508">508:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>])) {</span>
+<span class="source-line" id="line-509"><a class="line" id="509" href="#509">509:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; name=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-510"><a class="line" id="510" href="#510">510:</a>         <span class="php-var">$val</span> = reqvar_value(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]);</span>
+<span class="source-line" id="line-511"><a class="line" id="511" href="#511">511:</a>     }</span>
+<span class="source-line" id="line-512"><a class="line" id="512" href="#512">512:</a> </span>
+<span class="source-line" id="line-513"><a class="line" id="513" href="#513">513:</a>     <span class="php-comment">// Value setting logic:</span></span>
+<span class="source-line" id="line-514"><a class="line" id="514" href="#514">514:</a>     <span class="php-comment">//</span></span>
+<span class="source-line" id="line-515"><a class="line" id="515" href="#515">515:</a>     <span class="php-comment">// If explicitly set in value, then take it, otherwise take it from the request variable with that name.</span></span>
+<span class="source-line" id="line-516"><a class="line" id="516" href="#516">516:</a> </span>
+<span class="source-line" id="line-517"><a class="line" id="517" href="#517">517:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>])) {</span>
+<span class="source-line" id="line-518"><a class="line" id="518" href="#518">518:</a>         <span class="php-var">$val</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>];</span>
+<span class="source-line" id="line-519"><a class="line" id="519" href="#519">519:</a>     }</span>
+<span class="source-line" id="line-520"><a class="line" id="520" href="#520">520:</a> </span>
+<span class="source-line" id="line-521"><a class="line" id="521" href="#521">521:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$data</span>) {</span>
+<span class="source-line" id="line-522"><a class="line" id="522" href="#522">522:</a>         <span class="php-keyword1">if</span> (in_array(<span class="php-var">$name</span>, <span class="php-var">$sys_fields</span>)) {</span>
+<span class="source-line" id="line-523"><a class="line" id="523" href="#523">523:</a>             <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-524"><a class="line" id="524" href="#524">524:</a>         }</span>
+<span class="source-line" id="line-525"><a class="line" id="525" href="#525">525:</a> </span>
+<span class="source-line" id="line-526"><a class="line" id="526" href="#526">526:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; &quot;</span> . escape_html(<span class="php-var">$name</span>) . <span class="php-quote">&quot;=\&quot;&quot;</span> . escape_html(<span class="php-var">$data</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-527"><a class="line" id="527" href="#527">527:</a>     }</span>
+<span class="source-line" id="line-528"><a class="line" id="528" href="#528">528:</a> </span>
+<span class="source-line" id="line-529"><a class="line" id="529" href="#529">529:</a>     <span class="php-keyword1">if</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;multiple&quot;</span>])) {</span>
+<span class="source-line" id="line-530"><a class="line" id="530" href="#530">530:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; multiple&quot;</span>;</span>
+<span class="source-line" id="line-531"><a class="line" id="531" href="#531">531:</a>     }</span>
+<span class="source-line" id="line-532"><a class="line" id="532" href="#532">532:</a> </span>
+<span class="source-line" id="line-533"><a class="line" id="533" href="#533">533:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-534"><a class="line" id="534" href="#534">534:</a> </span>
+<span class="source-line" id="line-535"><a class="line" id="535" href="#535">535:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;options&quot;</span>])) {</span>
+<span class="source-line" id="line-536"><a class="line" id="536" href="#536">536:</a>         <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;options&quot;</span>])) {</span>
+<span class="source-line" id="line-537"><a class="line" id="537" href="#537">537:</a>             trigger_error(<span class="php-quote">&quot;The parameter options must be an array val =&gt; text!&quot;</span>, E_USER_WARNING);</span>
+<span class="source-line" id="line-538"><a class="line" id="538" href="#538">538:</a>         } <span class="php-keyword1">else</span> {</span>
+<span class="source-line" id="line-539"><a class="line" id="539" href="#539">539:</a>             <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span>[<span class="php-quote">&quot;options&quot;</span>] <span class="php-keyword1">as</span> <span class="php-var">$optval</span> =&gt; <span class="php-var">$text</span>) {</span>
+<span class="source-line" id="line-540"><a class="line" id="540" href="#540">540:</a>                 <span class="php-var">$selected</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-541"><a class="line" id="541" href="#541">541:</a> </span>
+<span class="source-line" id="line-542"><a class="line" id="542" href="#542">542:</a>                 <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$val</span>) &amp;&amp; <span class="php-var">$optval</span> == <span class="php-var">$val</span>) {</span>
+<span class="source-line" id="line-543"><a class="line" id="543" href="#543">543:</a>                     <span class="php-var">$selected</span> = <span class="php-quote">&quot;selected&quot;</span>;</span>
+<span class="source-line" id="line-544"><a class="line" id="544" href="#544">544:</a>                 }</span>
+<span class="source-line" id="line-545"><a class="line" id="545" href="#545">545:</a>                 <span class="php-keyword1">if</span> (is_array(<span class="php-var">$val</span>) &amp;&amp; in_array(<span class="php-var">$optval</span>, <span class="php-var">$val</span>)) {</span>
+<span class="source-line" id="line-546"><a class="line" id="546" href="#546">546:</a>                     <span class="php-var">$selected</span> = <span class="php-quote">&quot;selected&quot;</span>;</span>
+<span class="source-line" id="line-547"><a class="line" id="547" href="#547">547:</a>                 }</span>
+<span class="source-line" id="line-548"><a class="line" id="548" href="#548">548:</a> </span>
+<span class="source-line" id="line-549"><a class="line" id="549" href="#549">549:</a>                 <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;option value=\&quot;&quot;</span> . escape_html(<span class="php-var">$optval</span>) . &quot;<span class="php-quote">\&quot; </span><span class="php-var">$selected</span><span class="php-quote">&gt;</span>&quot; . escape_html(<span class="php-var">$text</span>) . <span class="php-quote">&quot;&lt;/option&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-550"><a class="line" id="550" href="#550">550:</a>             }</span>
+<span class="source-line" id="line-551"><a class="line" id="551" href="#551">551:</a>         }</span>
+<span class="source-line" id="line-552"><a class="line" id="552" href="#552">552:</a>     }</span>
+<span class="source-line" id="line-553"><a class="line" id="553" href="#553">553:</a> </span>
+<span class="source-line" id="line-554"><a class="line" id="554" href="#554">554:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;/select&gt;&quot;</span>;</span>
+<span class="source-line" id="line-555"><a class="line" id="555" href="#555">555:</a> </span>
+<span class="source-line" id="line-556"><a class="line" id="556" href="#556">556:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-557"><a class="line" id="557" href="#557">557:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-558"><a class="line" id="558" href="#558">558:</a>     }</span>
+<span class="source-line" id="line-559"><a class="line" id="559" href="#559">559:</a> </span>
+<span class="source-line" id="line-560"><a class="line" id="560" href="#560">560:</a>     <span class="php-comment">//echo(&quot;&lt;pre&gt;&quot; . escape_html($html) . &quot;&lt;/pre&gt;&quot;);</span></span>
+<span class="source-line" id="line-561"><a class="line" id="561" href="#561">561:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-562"><a class="line" id="562" href="#562">562:</a> </span>
+<span class="source-line" id="line-563"><a class="line" id="563" href="#563">563:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-564"><a class="line" id="564" href="#564">564:</a> } <span class="php-comment">// select</span></span>
+<span class="source-line" id="line-565"><a class="line" id="565" href="#565">565:</a> </span>
+<span class="source-line" id="line-566"><a class="line" id="566" href="#566">566:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-567"><a class="line" id="567" href="#567">567:</a> <span class="php-comment"> * Function for rendering the checkbox field.</span></span>
+<span class="source-line" id="line-568"><a class="line" id="568" href="#568">568:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-569"><a class="line" id="569" href="#569">569:</a> <span class="php-comment"> * This function renders a checkbox field that is bound to</span></span>
+<span class="source-line" id="line-570"><a class="line" id="570" href="#570">570:</a> <span class="php-comment"> * the request variable with the corresponding name.</span></span>
+<span class="source-line" id="line-571"><a class="line" id="571" href="#571">571:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-572"><a class="line" id="572" href="#572">572:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-573"><a class="line" id="573" href="#573">573:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-574"><a class="line" id="574" href="#574">574:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-575"><a class="line" id="575" href="#575">575:</a> <span class="php-comment"> * - $parameters[&quot;id&quot;] - id of the field.</span></span>
+<span class="source-line" id="line-576"><a class="line" id="576" href="#576">576:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-577"><a class="line" id="577" href="#577">577:</a> <span class="php-comment"> * - $parameters[&quot;name&quot;] - name of the field.</span></span>
+<span class="source-line" id="line-578"><a class="line" id="578" href="#578">578:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-579"><a class="line" id="579" href="#579">579:</a> <span class="php-comment"> * - $parameters[&quot;value&quot;] - the value of the request variable that should be submitted</span></span>
+<span class="source-line" id="line-580"><a class="line" id="580" href="#580">580:</a> <span class="php-comment"> * if the checkbox is checked.</span></span>
+<span class="source-line" id="line-581"><a class="line" id="581" href="#581">581:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-582"><a class="line" id="582" href="#582">582:</a> <span class="php-comment"> * - $parameters[&quot;checked&quot;] - checked state that should be set for the field. If it is not specified,</span></span>
+<span class="source-line" id="line-583"><a class="line" id="583" href="#583">583:</a> <span class="php-comment"> * the value of the corresponding request variable is used to set the checked state.</span></span>
+<span class="source-line" id="line-584"><a class="line" id="584" href="#584">584:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-585"><a class="line" id="585" href="#585">585:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-586"><a class="line" id="586" href="#586">586:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-587"><a class="line" id="587" href="#587">587:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-588"><a class="line" id="588" href="#588">588:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-589"><a class="line" id="589" href="#589">589:</a> <span class="php-comment"> * checkbox([&quot;id&quot; =&gt; &quot;data_checkbox&quot;,</span></span>
+<span class="source-line" id="line-590"><a class="line" id="590" href="#590">590:</a> <span class="php-comment"> *           &quot;name&quot; =&gt; &quot;data[checkbox]&quot;,</span></span>
+<span class="source-line" id="line-591"><a class="line" id="591" href="#591">591:</a> <span class="php-comment"> *           &quot;class&quot; =&gt; &quot;my_class&quot;,</span></span>
+<span class="source-line" id="line-592"><a class="line" id="592" href="#592">592:</a> <span class="php-comment"> *           &quot;value&quot; =&gt; &quot;1&quot;,</span></span>
+<span class="source-line" id="line-593"><a class="line" id="593" href="#593">593:</a> <span class="php-comment"> *           &quot;title&quot; =&gt; &quot;select checkbox&quot;,</span></span>
+<span class="source-line" id="line-594"><a class="line" id="594" href="#594">594:</a> <span class="php-comment"> *           &quot;data-prop&quot; =&gt; &quot;some-prop&quot;</span></span>
+<span class="source-line" id="line-595"><a class="line" id="595" href="#595">595:</a> <span class="php-comment"> *          ]);</span></span>
+<span class="source-line" id="line-596"><a class="line" id="596" href="#596">596:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-597"><a class="line" id="597" href="#597">597:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-598"><a class="line" id="598" href="#598">598:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-599"><a class="line" id="599" href="#599">599:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the field is directly echoed.</span></span>
+<span class="source-line" id="line-600"><a class="line" id="600" href="#600">600:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-601"><a class="line" id="601" href="#601">601:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-602"><a class="line" id="602" href="#602">602:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-603"><a class="line" id="603" href="#603">603:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-604"><a class="line" id="604" href="#604">604:</a> <span class="php-comment"> * If the parameter $echo is true, the string of the field html</span></span>
+<span class="source-line" id="line-605"><a class="line" id="605" href="#605">605:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-606"><a class="line" id="606" href="#606">606:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-607"><a class="line" id="607" href="#607">607:</a> <span class="php-comment"> * @see \SmartFactory\input_text()</span></span>
+<span class="source-line" id="line-608"><a class="line" id="608" href="#608">608:</a> <span class="php-comment"> * @see \SmartFactory\input_password()</span></span>
+<span class="source-line" id="line-609"><a class="line" id="609" href="#609">609:</a> <span class="php-comment"> * @see \SmartFactory\input_hidden()</span></span>
+<span class="source-line" id="line-610"><a class="line" id="610" href="#610">610:</a> <span class="php-comment"> * @see \SmartFactory\textarea()</span></span>
+<span class="source-line" id="line-611"><a class="line" id="611" href="#611">611:</a> <span class="php-comment"> * @see \SmartFactory\select()</span></span>
+<span class="source-line" id="line-612"><a class="line" id="612" href="#612">612:</a> <span class="php-comment"> * @see \SmartFactory\radiobutton()</span></span>
+<span class="source-line" id="line-613"><a class="line" id="613" href="#613">613:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-614"><a class="line" id="614" href="#614">614:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-615"><a class="line" id="615" href="#615">615:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-616"><a class="line" id="616" href="#616">616:</a> <span class="php-keyword1">function</span> checkbox(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-617"><a class="line" id="617" href="#617">617:</a> {</span>
+<span class="source-line" id="line-618"><a class="line" id="618" href="#618">618:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-619"><a class="line" id="619" href="#619">619:</a> </span>
+<span class="source-line" id="line-620"><a class="line" id="620" href="#620">620:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;input type=\&quot;checkbox\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-621"><a class="line" id="621" href="#621">621:</a> </span>
+<span class="source-line" id="line-622"><a class="line" id="622" href="#622">622:</a>     <span class="php-var">$sys_fields</span> = [<span class="php-quote">&quot;id&quot;</span>, <span class="php-quote">&quot;name&quot;</span>, <span class="php-quote">&quot;value&quot;</span>, <span class="php-quote">&quot;checked&quot;</span>];</span>
+<span class="source-line" id="line-623"><a class="line" id="623" href="#623">623:</a> </span>
+<span class="source-line" id="line-624"><a class="line" id="624" href="#624">624:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>])) {</span>
+<span class="source-line" id="line-625"><a class="line" id="625" href="#625">625:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; id=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-626"><a class="line" id="626" href="#626">626:</a>     }</span>
+<span class="source-line" id="line-627"><a class="line" id="627" href="#627">627:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>])) {</span>
+<span class="source-line" id="line-628"><a class="line" id="628" href="#628">628:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; name=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-629"><a class="line" id="629" href="#629">629:</a>         <span class="php-var">$val</span> = reqvar_value(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]);</span>
+<span class="source-line" id="line-630"><a class="line" id="630" href="#630">630:</a>     }</span>
+<span class="source-line" id="line-631"><a class="line" id="631" href="#631">631:</a> </span>
+<span class="source-line" id="line-632"><a class="line" id="632" href="#632">632:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>])) {</span>
+<span class="source-line" id="line-633"><a class="line" id="633" href="#633">633:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; value=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-634"><a class="line" id="634" href="#634">634:</a>     }</span>
+<span class="source-line" id="line-635"><a class="line" id="635" href="#635">635:</a> </span>
+<span class="source-line" id="line-636"><a class="line" id="636" href="#636">636:</a>     <span class="php-comment">// Checked setting logic:</span></span>
+<span class="source-line" id="line-637"><a class="line" id="637" href="#637">637:</a>     <span class="php-comment">//</span></span>
+<span class="source-line" id="line-638"><a class="line" id="638" href="#638">638:</a>     <span class="php-comment">// If explicitly set in checked, then take it, otherwise take it from the request variable with that name.</span></span>
+<span class="source-line" id="line-639"><a class="line" id="639" href="#639">639:</a> </span>
+<span class="source-line" id="line-640"><a class="line" id="640" href="#640">640:</a>     <span class="php-var">$checked</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-641"><a class="line" id="641" href="#641">641:</a> </span>
+<span class="source-line" id="line-642"><a class="line" id="642" href="#642">642:</a>     <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$val</span>) &amp;&amp; !<span class="php-keyword1">empty</span>(<span class="php-var">$val</span>)) {</span>
+<span class="source-line" id="line-643"><a class="line" id="643" href="#643">643:</a>         <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;</span>
+<span class="source-line" id="line-644"><a class="line" id="644" href="#644">644:</a>     }</span>
+<span class="source-line" id="line-645"><a class="line" id="645" href="#645">645:</a>     <span class="php-keyword1">if</span> (is_array(<span class="php-var">$val</span>) &amp;&amp; in_array(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>] ?? <span class="php-quote">&quot;&quot;</span>, <span class="php-var">$val</span>)) {</span>
+<span class="source-line" id="line-646"><a class="line" id="646" href="#646">646:</a>         <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;</span>
+<span class="source-line" id="line-647"><a class="line" id="647" href="#647">647:</a>     }</span>
+<span class="source-line" id="line-648"><a class="line" id="648" href="#648">648:</a> </span>
+<span class="source-line" id="line-649"><a class="line" id="649" href="#649">649:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;checked&quot;</span>])) {</span>
+<span class="source-line" id="line-650"><a class="line" id="650" href="#650">650:</a>         <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;</span>
+<span class="source-line" id="line-651"><a class="line" id="651" href="#651">651:</a>     }</span>
+<span class="source-line" id="line-652"><a class="line" id="652" href="#652">652:</a> </span>
+<span class="source-line" id="line-653"><a class="line" id="653" href="#653">653:</a>     <span class="php-var">$html</span> .= <span class="php-var">$checked</span>;</span>
+<span class="source-line" id="line-654"><a class="line" id="654" href="#654">654:</a> </span>
+<span class="source-line" id="line-655"><a class="line" id="655" href="#655">655:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$data</span>) {</span>
+<span class="source-line" id="line-656"><a class="line" id="656" href="#656">656:</a>         <span class="php-keyword1">if</span> (in_array(<span class="php-var">$name</span>, <span class="php-var">$sys_fields</span>)) {</span>
+<span class="source-line" id="line-657"><a class="line" id="657" href="#657">657:</a>             <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-658"><a class="line" id="658" href="#658">658:</a>         }</span>
+<span class="source-line" id="line-659"><a class="line" id="659" href="#659">659:</a> </span>
+<span class="source-line" id="line-660"><a class="line" id="660" href="#660">660:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; &quot;</span> . escape_html(<span class="php-var">$name</span>) . <span class="php-quote">&quot;=\&quot;&quot;</span> . escape_html(<span class="php-var">$data</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-661"><a class="line" id="661" href="#661">661:</a>     }</span>
+<span class="source-line" id="line-662"><a class="line" id="662" href="#662">662:</a> </span>
+<span class="source-line" id="line-663"><a class="line" id="663" href="#663">663:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span>;</span>
+<span class="source-line" id="line-664"><a class="line" id="664" href="#664">664:</a> </span>
+<span class="source-line" id="line-665"><a class="line" id="665" href="#665">665:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-666"><a class="line" id="666" href="#666">666:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-667"><a class="line" id="667" href="#667">667:</a>     }</span>
+<span class="source-line" id="line-668"><a class="line" id="668" href="#668">668:</a> </span>
+<span class="source-line" id="line-669"><a class="line" id="669" href="#669">669:</a>     <span class="php-comment">//echo(&quot;&lt;pre&gt;&quot; . escape_html($html) . &quot;&lt;/pre&gt;&quot;);</span></span>
+<span class="source-line" id="line-670"><a class="line" id="670" href="#670">670:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-671"><a class="line" id="671" href="#671">671:</a> </span>
+<span class="source-line" id="line-672"><a class="line" id="672" href="#672">672:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-673"><a class="line" id="673" href="#673">673:</a> } <span class="php-comment">// checkbox</span></span>
+<span class="source-line" id="line-674"><a class="line" id="674" href="#674">674:</a> </span>
+<span class="source-line" id="line-675"><a class="line" id="675" href="#675">675:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-676"><a class="line" id="676" href="#676">676:</a> <span class="php-comment"> * Function for rendering the radiobutton field.</span></span>
+<span class="source-line" id="line-677"><a class="line" id="677" href="#677">677:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-678"><a class="line" id="678" href="#678">678:</a> <span class="php-comment"> * This function renders a radiobutton field that is bound to</span></span>
+<span class="source-line" id="line-679"><a class="line" id="679" href="#679">679:</a> <span class="php-comment"> * the request variable with the corresponding name.</span></span>
+<span class="source-line" id="line-680"><a class="line" id="680" href="#680">680:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-681"><a class="line" id="681" href="#681">681:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-682"><a class="line" id="682" href="#682">682:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-683"><a class="line" id="683" href="#683">683:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-684"><a class="line" id="684" href="#684">684:</a> <span class="php-comment"> * - $parameters[&quot;id&quot;] - id of the field.</span></span>
+<span class="source-line" id="line-685"><a class="line" id="685" href="#685">685:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-686"><a class="line" id="686" href="#686">686:</a> <span class="php-comment"> * - $parameters[&quot;name&quot;] - name of the field.</span></span>
+<span class="source-line" id="line-687"><a class="line" id="687" href="#687">687:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-688"><a class="line" id="688" href="#688">688:</a> <span class="php-comment"> * - $parameters[&quot;value&quot;] - the value of the request variable that should be submitted</span></span>
+<span class="source-line" id="line-689"><a class="line" id="689" href="#689">689:</a> <span class="php-comment"> * if the radiobutton is checked.</span></span>
+<span class="source-line" id="line-690"><a class="line" id="690" href="#690">690:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-691"><a class="line" id="691" href="#691">691:</a> <span class="php-comment"> * - $parameters[&quot;checked&quot;] - checked state that should be set for the field. If it is not specified,</span></span>
+<span class="source-line" id="line-692"><a class="line" id="692" href="#692">692:</a> <span class="php-comment"> * the value of the corresponding request variable is used to set the checked state.</span></span>
+<span class="source-line" id="line-693"><a class="line" id="693" href="#693">693:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-694"><a class="line" id="694" href="#694">694:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-695"><a class="line" id="695" href="#695">695:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-696"><a class="line" id="696" href="#696">696:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-697"><a class="line" id="697" href="#697">697:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-698"><a class="line" id="698" href="#698">698:</a> <span class="php-comment"> * radiobutton([&quot;id&quot; =&gt; &quot;data_radiocolor_red&quot;,</span></span>
+<span class="source-line" id="line-699"><a class="line" id="699" href="#699">699:</a> <span class="php-comment"> *              &quot;name&quot; =&gt; &quot;data[radiocolor]&quot;,</span></span>
+<span class="source-line" id="line-700"><a class="line" id="700" href="#700">700:</a> <span class="php-comment"> *              &quot;value&quot; =&gt; &quot;red&quot;</span></span>
+<span class="source-line" id="line-701"><a class="line" id="701" href="#701">701:</a> <span class="php-comment"> *             ]);</span></span>
+<span class="source-line" id="line-702"><a class="line" id="702" href="#702">702:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-703"><a class="line" id="703" href="#703">703:</a> <span class="php-comment"> * radiobutton([&quot;id&quot; =&gt; &quot;data_radiocolor_green&quot;,</span></span>
+<span class="source-line" id="line-704"><a class="line" id="704" href="#704">704:</a> <span class="php-comment"> *              &quot;name&quot; =&gt; &quot;data[radiocolor]&quot;,</span></span>
+<span class="source-line" id="line-705"><a class="line" id="705" href="#705">705:</a> <span class="php-comment"> *              &quot;value&quot; =&gt; &quot;green&quot;</span></span>
+<span class="source-line" id="line-706"><a class="line" id="706" href="#706">706:</a> <span class="php-comment"> *             ]);</span></span>
+<span class="source-line" id="line-707"><a class="line" id="707" href="#707">707:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-708"><a class="line" id="708" href="#708">708:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-709"><a class="line" id="709" href="#709">709:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-710"><a class="line" id="710" href="#710">710:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the field is directly echoed.</span></span>
+<span class="source-line" id="line-711"><a class="line" id="711" href="#711">711:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-712"><a class="line" id="712" href="#712">712:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-713"><a class="line" id="713" href="#713">713:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-714"><a class="line" id="714" href="#714">714:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-715"><a class="line" id="715" href="#715">715:</a> <span class="php-comment"> * If the parameter $echo is true, the string of the field html</span></span>
+<span class="source-line" id="line-716"><a class="line" id="716" href="#716">716:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-717"><a class="line" id="717" href="#717">717:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-718"><a class="line" id="718" href="#718">718:</a> <span class="php-comment"> * @see \SmartFactory\input_text()</span></span>
+<span class="source-line" id="line-719"><a class="line" id="719" href="#719">719:</a> <span class="php-comment"> * @see \SmartFactory\input_password()</span></span>
+<span class="source-line" id="line-720"><a class="line" id="720" href="#720">720:</a> <span class="php-comment"> * @see \SmartFactory\input_hidden()</span></span>
+<span class="source-line" id="line-721"><a class="line" id="721" href="#721">721:</a> <span class="php-comment"> * @see \SmartFactory\textarea()</span></span>
+<span class="source-line" id="line-722"><a class="line" id="722" href="#722">722:</a> <span class="php-comment"> * @see \SmartFactory\select()</span></span>
+<span class="source-line" id="line-723"><a class="line" id="723" href="#723">723:</a> <span class="php-comment"> * @see \SmartFactory\checkbox()</span></span>
+<span class="source-line" id="line-724"><a class="line" id="724" href="#724">724:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-725"><a class="line" id="725" href="#725">725:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-726"><a class="line" id="726" href="#726">726:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-727"><a class="line" id="727" href="#727">727:</a> <span class="php-keyword1">function</span> radiobutton(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>, <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-728"><a class="line" id="728" href="#728">728:</a> {</span>
+<span class="source-line" id="line-729"><a class="line" id="729" href="#729">729:</a>     <span class="php-var">$val</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-730"><a class="line" id="730" href="#730">730:</a> </span>
+<span class="source-line" id="line-731"><a class="line" id="731" href="#731">731:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;input type=\&quot;radio\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-732"><a class="line" id="732" href="#732">732:</a> </span>
+<span class="source-line" id="line-733"><a class="line" id="733" href="#733">733:</a>     <span class="php-var">$sys_fields</span> = [<span class="php-quote">&quot;id&quot;</span>, <span class="php-quote">&quot;name&quot;</span>, <span class="php-quote">&quot;value&quot;</span>, <span class="php-quote">&quot;checked&quot;</span>];</span>
+<span class="source-line" id="line-734"><a class="line" id="734" href="#734">734:</a> </span>
+<span class="source-line" id="line-735"><a class="line" id="735" href="#735">735:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>])) {</span>
+<span class="source-line" id="line-736"><a class="line" id="736" href="#736">736:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; id=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;id&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-737"><a class="line" id="737" href="#737">737:</a>     }</span>
+<span class="source-line" id="line-738"><a class="line" id="738" href="#738">738:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>])) {</span>
+<span class="source-line" id="line-739"><a class="line" id="739" href="#739">739:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; name=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-740"><a class="line" id="740" href="#740">740:</a>         <span class="php-var">$val</span> = reqvar_value(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;name&quot;</span>]);</span>
+<span class="source-line" id="line-741"><a class="line" id="741" href="#741">741:</a>     }</span>
+<span class="source-line" id="line-742"><a class="line" id="742" href="#742">742:</a> </span>
+<span class="source-line" id="line-743"><a class="line" id="743" href="#743">743:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>])) {</span>
+<span class="source-line" id="line-744"><a class="line" id="744" href="#744">744:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; value=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-745"><a class="line" id="745" href="#745">745:</a>     }</span>
+<span class="source-line" id="line-746"><a class="line" id="746" href="#746">746:</a> </span>
+<span class="source-line" id="line-747"><a class="line" id="747" href="#747">747:</a>     <span class="php-comment">// Checked setting logic:</span></span>
+<span class="source-line" id="line-748"><a class="line" id="748" href="#748">748:</a>     <span class="php-comment">//</span></span>
+<span class="source-line" id="line-749"><a class="line" id="749" href="#749">749:</a>     <span class="php-comment">// If explicitly set in checked, then take it, otherwise take it from the request variable with that name.</span></span>
+<span class="source-line" id="line-750"><a class="line" id="750" href="#750">750:</a> </span>
+<span class="source-line" id="line-751"><a class="line" id="751" href="#751">751:</a>     <span class="php-var">$checked</span> = <span class="php-quote">&quot;&quot;</span>;</span>
+<span class="source-line" id="line-752"><a class="line" id="752" href="#752">752:</a> </span>
+<span class="source-line" id="line-753"><a class="line" id="753" href="#753">753:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$val</span>) &amp;&amp; (<span class="php-var">$parameters</span>[<span class="php-quote">&quot;value&quot;</span>] ?? <span class="php-quote">&quot;&quot;</span>) == <span class="php-var">$val</span>) {</span>
+<span class="source-line" id="line-754"><a class="line" id="754" href="#754">754:</a>         <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;</span>
+<span class="source-line" id="line-755"><a class="line" id="755" href="#755">755:</a>     }</span>
+<span class="source-line" id="line-756"><a class="line" id="756" href="#756">756:</a> </span>
+<span class="source-line" id="line-757"><a class="line" id="757" href="#757">757:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;checked&quot;</span>])) {</span>
+<span class="source-line" id="line-758"><a class="line" id="758" href="#758">758:</a>         <span class="php-var">$checked</span> = <span class="php-quote">&quot; checked&quot;</span>;</span>
+<span class="source-line" id="line-759"><a class="line" id="759" href="#759">759:</a>     }</span>
+<span class="source-line" id="line-760"><a class="line" id="760" href="#760">760:</a> </span>
+<span class="source-line" id="line-761"><a class="line" id="761" href="#761">761:</a>     <span class="php-var">$html</span> .= <span class="php-var">$checked</span>;</span>
+<span class="source-line" id="line-762"><a class="line" id="762" href="#762">762:</a> </span>
+<span class="source-line" id="line-763"><a class="line" id="763" href="#763">763:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$data</span>) {</span>
+<span class="source-line" id="line-764"><a class="line" id="764" href="#764">764:</a>         <span class="php-keyword1">if</span> (in_array(<span class="php-var">$name</span>, <span class="php-var">$sys_fields</span>)) {</span>
+<span class="source-line" id="line-765"><a class="line" id="765" href="#765">765:</a>             <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-766"><a class="line" id="766" href="#766">766:</a>         }</span>
+<span class="source-line" id="line-767"><a class="line" id="767" href="#767">767:</a> </span>
+<span class="source-line" id="line-768"><a class="line" id="768" href="#768">768:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; &quot;</span> . escape_html(<span class="php-var">$name</span>) . <span class="php-quote">&quot;=\&quot;&quot;</span> . escape_html(<span class="php-var">$data</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-769"><a class="line" id="769" href="#769">769:</a>     }</span>
+<span class="source-line" id="line-770"><a class="line" id="770" href="#770">770:</a> </span>
+<span class="source-line" id="line-771"><a class="line" id="771" href="#771">771:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span>;</span>
+<span class="source-line" id="line-772"><a class="line" id="772" href="#772">772:</a> </span>
+<span class="source-line" id="line-773"><a class="line" id="773" href="#773">773:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-774"><a class="line" id="774" href="#774">774:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-775"><a class="line" id="775" href="#775">775:</a>     }</span>
+<span class="source-line" id="line-776"><a class="line" id="776" href="#776">776:</a> </span>
+<span class="source-line" id="line-777"><a class="line" id="777" href="#777">777:</a>     <span class="php-comment">//echo(&quot;&lt;pre&gt;&quot; . escape_html($html) . &quot;&lt;/pre&gt;&quot;);</span></span>
+<span class="source-line" id="line-778"><a class="line" id="778" href="#778">778:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-779"><a class="line" id="779" href="#779">779:</a> </span>
+<span class="source-line" id="line-780"><a class="line" id="780" href="#780">780:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-781"><a class="line" id="781" href="#781">781:</a> } <span class="php-comment">// radiobutton</span></span>
+<span class="source-line" id="line-782"><a class="line" id="782" href="#782">782:</a> </span>
+<span class="source-line" id="line-783"><a class="line" id="783" href="#783">783:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-784"><a class="line" id="784" href="#784">784:</a> <span class="php-comment"> * Function for rendering tables.</span></span>
+<span class="source-line" id="line-785"><a class="line" id="785" href="#785">785:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-786"><a class="line" id="786" href="#786">786:</a> <span class="php-comment"> * This function renders a tables based on the values of an array.</span></span>
+<span class="source-line" id="line-787"><a class="line" id="787" href="#787">787:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-788"><a class="line" id="788" href="#788">788:</a> <span class="php-comment"> * @param array $array</span></span>
+<span class="source-line" id="line-789"><a class="line" id="789" href="#789">789:</a> <span class="php-comment"> * The array of the rows.</span></span>
+<span class="source-line" id="line-790"><a class="line" id="790" href="#790">790:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-791"><a class="line" id="791" href="#791">791:</a> <span class="php-comment"> * @param array $parameters</span></span>
+<span class="source-line" id="line-792"><a class="line" id="792" href="#792">792:</a> <span class="php-comment"> * The array of parameters as an associative array in the form key =&gt; value:</span></span>
+<span class="source-line" id="line-793"><a class="line" id="793" href="#793">793:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-794"><a class="line" id="794" href="#794">794:</a> <span class="php-comment"> * - $parameters[&quot;captions&quot;] - the associative array of column captions. If</span></span>
+<span class="source-line" id="line-795"><a class="line" id="795" href="#795">795:</a> <span class="php-comment"> * it is not specified, the table is rendered without captions.</span></span>
+<span class="source-line" id="line-796"><a class="line" id="796" href="#796">796:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-797"><a class="line" id="797" href="#797">797:</a> <span class="php-comment"> * - $parameters[&quot;col_class_from_keys&quot;] - if it is specified and set to true,</span></span>
+<span class="source-line" id="line-798"><a class="line" id="798" href="#798">798:</a> <span class="php-comment"> * the keys of the captions are used as the class names.</span></span>
+<span class="source-line" id="line-799"><a class="line" id="799" href="#799">799:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-800"><a class="line" id="800" href="#800">800:</a> <span class="php-comment"> * - $parameters[&quot;no_escape_html&quot;] - if it is specified and set to true,</span></span>
+<span class="source-line" id="line-801"><a class="line" id="801" href="#801">801:</a> <span class="php-comment"> * the values of the data array are not escaped and passed as is. It is useful</span></span>
+<span class="source-line" id="line-802"><a class="line" id="802" href="#802">802:</a> <span class="php-comment"> * when html codes of other elements are passed. Per default, the table data</span></span>
+<span class="source-line" id="line-803"><a class="line" id="803" href="#803">803:</a> <span class="php-comment"> * is escaped for html.</span></span>
+<span class="source-line" id="line-804"><a class="line" id="804" href="#804">804:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-805"><a class="line" id="805" href="#805">805:</a> <span class="php-comment"> * - $parameters[&quot;formatter&quot;] - this function is used for the value formatting</span></span>
+<span class="source-line" id="line-806"><a class="line" id="806" href="#806">806:</a> <span class="php-comment"> * if specified. It is called for every cell of the table. The signature of</span></span>
+<span class="source-line" id="line-807"><a class="line" id="807" href="#807">807:</a> <span class="php-comment"> * this function is:</span></span>
+<span class="source-line" id="line-808"><a class="line" id="808" href="#808">808:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-809"><a class="line" id="809" href="#809">809:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-810"><a class="line" id="810" href="#810">810:</a> <span class="php-comment"> * function ($rownum, $colnum, $colname, $val) : string;</span></span>
+<span class="source-line" id="line-811"><a class="line" id="811" href="#811">811:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-812"><a class="line" id="812" href="#812">812:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-813"><a class="line" id="813" href="#813">813:</a> <span class="php-comment"> * - $rownum - the row number.</span></span>
+<span class="source-line" id="line-814"><a class="line" id="814" href="#814">814:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-815"><a class="line" id="815" href="#815">815:</a> <span class="php-comment"> * - $colnum - the column number.</span></span>
+<span class="source-line" id="line-816"><a class="line" id="816" href="#816">816:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-817"><a class="line" id="817" href="#817">817:</a> <span class="php-comment"> * - $colname - the column name if the $parameters[&quot;captions&quot;] are provided.</span></span>
+<span class="source-line" id="line-818"><a class="line" id="818" href="#818">818:</a> <span class="php-comment"> * The keys of the caption array are used. If the $parameters[&quot;captions&quot;]</span></span>
+<span class="source-line" id="line-819"><a class="line" id="819" href="#819">819:</a> <span class="php-comment"> * are not provided, $colname is equal to $column.</span></span>
+<span class="source-line" id="line-820"><a class="line" id="820" href="#820">820:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-821"><a class="line" id="821" href="#821">821:</a> <span class="php-comment"> * - $val - original value of the table cell.</span></span>
+<span class="source-line" id="line-822"><a class="line" id="822" href="#822">822:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-823"><a class="line" id="823" href="#823">823:</a> <span class="php-comment"> * If necessary, format the original value and return it. Otherwise,</span></span>
+<span class="source-line" id="line-824"><a class="line" id="824" href="#824">824:</a> <span class="php-comment"> * return the original value without changes.</span></span>
+<span class="source-line" id="line-825"><a class="line" id="825" href="#825">825:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-826"><a class="line" id="826" href="#826">826:</a> <span class="php-comment"> * Any other attributes may be specified.</span></span>
+<span class="source-line" id="line-827"><a class="line" id="827" href="#827">827:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-828"><a class="line" id="828" href="#828">828:</a> <span class="php-comment"> * Example:</span></span>
+<span class="source-line" id="line-829"><a class="line" id="829" href="#829">829:</a> <span class="php-comment"> * ```php</span></span>
+<span class="source-line" id="line-830"><a class="line" id="830" href="#830">830:</a> <span class="php-comment"> * $rows = [</span></span>
+<span class="source-line" id="line-831"><a class="line" id="831" href="#831">831:</a> <span class="php-comment"> *    [&quot;name&quot; =&gt; &quot;DB design&quot;, &quot;employee&quot; =&gt; &quot;Alex&quot;, ... ],</span></span>
+<span class="source-line" id="line-832"><a class="line" id="832" href="#832">832:</a> <span class="php-comment"> *    [&quot;name&quot; =&gt; &quot;Mask implementation&quot;, &quot;employee&quot; =&gt; &quot;Boris&quot;, ... ],</span></span>
+<span class="source-line" id="line-833"><a class="line" id="833" href="#833">833:</a> <span class="php-comment"> *    [&quot;name&quot; =&gt; &quot;Validation&quot;, &quot;employee&quot; =&gt; &quot;Alex&quot;, ... ],</span></span>
+<span class="source-line" id="line-834"><a class="line" id="834" href="#834">834:</a> <span class="php-comment"> *    [&quot;name&quot; =&gt; &quot;Settings&quot;, &quot;employee&quot; =&gt; &quot;Boris&quot;, ... ],</span></span>
+<span class="source-line" id="line-835"><a class="line" id="835" href="#835">835:</a> <span class="php-comment"> *    [&quot;name&quot; =&gt; &quot;About&quot;, &quot;employee&quot; =&gt; &quot;Robert&quot;, ... ],</span></span>
+<span class="source-line" id="line-836"><a class="line" id="836" href="#836">836:</a> <span class="php-comment"> *    [&quot;name&quot; =&gt; &quot;Initialization&quot;, &quot;employee&quot; =&gt; &quot;Alon&quot;, ... ]</span></span>
+<span class="source-line" id="line-837"><a class="line" id="837" href="#837">837:</a> <span class="php-comment"> * ];</span></span>
+<span class="source-line" id="line-838"><a class="line" id="838" href="#838">838:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-839"><a class="line" id="839" href="#839">839:</a> <span class="php-comment"> * $captions = [</span></span>
+<span class="source-line" id="line-840"><a class="line" id="840" href="#840">840:</a> <span class="php-comment"> *   &quot;name&quot; =&gt; &quot;Task name&quot;,</span></span>
+<span class="source-line" id="line-841"><a class="line" id="841" href="#841">841:</a> <span class="php-comment"> *   &quot;employee&quot; =&gt; &quot;Employee&quot;,</span></span>
+<span class="source-line" id="line-842"><a class="line" id="842" href="#842">842:</a> <span class="php-comment"> *   &quot;time_estimation&quot; =&gt; &quot;Time estimation&quot;,</span></span>
+<span class="source-line" id="line-843"><a class="line" id="843" href="#843">843:</a> <span class="php-comment"> *   &quot;deadline&quot; =&gt; &quot;Deadline&quot;,</span></span>
+<span class="source-line" id="line-844"><a class="line" id="844" href="#844">844:</a> <span class="php-comment"> *   &quot;comments&quot; =&gt; &quot;Comments&quot;</span></span>
+<span class="source-line" id="line-845"><a class="line" id="845" href="#845">845:</a> <span class="php-comment"> * ];</span></span>
+<span class="source-line" id="line-846"><a class="line" id="846" href="#846">846:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-847"><a class="line" id="847" href="#847">847:</a> <span class="php-comment"> * $formatter = function ($rownum, $colnum, $colname, $val) {</span></span>
+<span class="source-line" id="line-848"><a class="line" id="848" href="#848">848:</a> <span class="php-comment"> *   if($colname == &quot;time_estimation&quot;) return format_number($val, 2);</span></span>
+<span class="source-line" id="line-849"><a class="line" id="849" href="#849">849:</a> <span class="php-comment"> *   if($colname == &quot;deadline&quot;) return date(&quot;Y-m-d H:i&quot;, $val);</span></span>
+<span class="source-line" id="line-850"><a class="line" id="850" href="#850">850:</a> <span class="php-comment"> *   return $val;</span></span>
+<span class="source-line" id="line-851"><a class="line" id="851" href="#851">851:</a> <span class="php-comment"> * };</span></span>
+<span class="source-line" id="line-852"><a class="line" id="852" href="#852">852:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-853"><a class="line" id="853" href="#853">853:</a> <span class="php-comment"> * table($rows,</span></span>
+<span class="source-line" id="line-854"><a class="line" id="854" href="#854">854:</a> <span class="php-comment"> *       [&quot;captions&quot; =&gt; $captions,</span></span>
+<span class="source-line" id="line-855"><a class="line" id="855" href="#855">855:</a> <span class="php-comment"> *        &quot;class&quot; =&gt; &quot;my_table&quot;,</span></span>
+<span class="source-line" id="line-856"><a class="line" id="856" href="#856">856:</a> <span class="php-comment"> *        &quot;style&quot; =&gt; &quot;background-color: #dddddd&quot;,</span></span>
+<span class="source-line" id="line-857"><a class="line" id="857" href="#857">857:</a> <span class="php-comment"> *        &quot;col_class_from_keys&quot; =&gt; true,</span></span>
+<span class="source-line" id="line-858"><a class="line" id="858" href="#858">858:</a> <span class="php-comment"> *        &quot;no_escape_html&quot; =&gt; false,</span></span>
+<span class="source-line" id="line-859"><a class="line" id="859" href="#859">859:</a> <span class="php-comment"> *        &quot;formatter&quot; =&gt; $formatter</span></span>
+<span class="source-line" id="line-860"><a class="line" id="860" href="#860">860:</a> <span class="php-comment"> *       ]);</span></span>
+<span class="source-line" id="line-861"><a class="line" id="861" href="#861">861:</a> <span class="php-comment"> * ```</span></span>
+<span class="source-line" id="line-862"><a class="line" id="862" href="#862">862:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-863"><a class="line" id="863" href="#863">863:</a> <span class="php-comment"> * @param boolean $echo</span></span>
+<span class="source-line" id="line-864"><a class="line" id="864" href="#864">864:</a> <span class="php-comment"> * If the value of $echo is true, the html code of the table is directly echoed.</span></span>
+<span class="source-line" id="line-865"><a class="line" id="865" href="#865">865:</a> <span class="php-comment"> * Otherwise, it is returned as string. It might be useful to pass this code to</span></span>
+<span class="source-line" id="line-866"><a class="line" id="866" href="#866">866:</a> <span class="php-comment"> * other rendering functions instead of echoing.</span></span>
+<span class="source-line" id="line-867"><a class="line" id="867" href="#867">867:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-868"><a class="line" id="868" href="#868">868:</a> <span class="php-comment"> * @return string|null</span></span>
+<span class="source-line" id="line-869"><a class="line" id="869" href="#869">869:</a> <span class="php-comment"> * If the parameter $echo is true, the string of the table html</span></span>
+<span class="source-line" id="line-870"><a class="line" id="870" href="#870">870:</a> <span class="php-comment"> * code is returned, otherwise null.</span></span>
+<span class="source-line" id="line-871"><a class="line" id="871" href="#871">871:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-872"><a class="line" id="872" href="#872">872:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-873"><a class="line" id="873" href="#873">873:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-874"><a class="line" id="874" href="#874">874:</a> <span class="php-keyword1">function</span> table(<span class="php-keyword1">array</span> <span class="php-var">$array</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = [], <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-875"><a class="line" id="875" href="#875">875:</a> {</span>
+<span class="source-line" id="line-876"><a class="line" id="876" href="#876">876:</a>     <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$array</span>)) {</span>
+<span class="source-line" id="line-877"><a class="line" id="877" href="#877">877:</a>         trigger_error(<span class="php-quote">&quot;An array expected!&quot;</span>, E_USER_WARNING);</span>
+<span class="source-line" id="line-878"><a class="line" id="878" href="#878">878:</a>     }</span>
+<span class="source-line" id="line-879"><a class="line" id="879" href="#879">879:</a> </span>
+<span class="source-line" id="line-880"><a class="line" id="880" href="#880">880:</a>     <span class="php-var">$html</span> = <span class="php-quote">&quot;&lt;table&quot;</span>;</span>
+<span class="source-line" id="line-881"><a class="line" id="881" href="#881">881:</a> </span>
+<span class="source-line" id="line-882"><a class="line" id="882" href="#882">882:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;class&quot;</span>])) {</span>
+<span class="source-line" id="line-883"><a class="line" id="883" href="#883">883:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; class=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;class&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-884"><a class="line" id="884" href="#884">884:</a>     }</span>
+<span class="source-line" id="line-885"><a class="line" id="885" href="#885">885:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;style&quot;</span>])) {</span>
+<span class="source-line" id="line-886"><a class="line" id="886" href="#886">886:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot; style=\&quot;&quot;</span> . escape_html(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;style&quot;</span>]) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-887"><a class="line" id="887" href="#887">887:</a>     }</span>
+<span class="source-line" id="line-888"><a class="line" id="888" href="#888">888:</a> </span>
+<span class="source-line" id="line-889"><a class="line" id="889" href="#889">889:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-890"><a class="line" id="890" href="#890">890:</a> </span>
+<span class="source-line" id="line-891"><a class="line" id="891" href="#891">891:</a>     <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;captions&quot;</span>])) {</span>
+<span class="source-line" id="line-892"><a class="line" id="892" href="#892">892:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;tr&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-893"><a class="line" id="893" href="#893">893:</a> </span>
+<span class="source-line" id="line-894"><a class="line" id="894" href="#894">894:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$parameters</span>[<span class="php-quote">&quot;captions&quot;</span>] <span class="php-keyword1">as</span> <span class="php-var">$key</span> =&gt; <span class="php-var">$value</span>) {</span>
+<span class="source-line" id="line-895"><a class="line" id="895" href="#895">895:</a>             <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;th&quot;</span>;</span>
+<span class="source-line" id="line-896"><a class="line" id="896" href="#896">896:</a> </span>
+<span class="source-line" id="line-897"><a class="line" id="897" href="#897">897:</a>             <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;col_class_from_keys&quot;</span>])) {</span>
+<span class="source-line" id="line-898"><a class="line" id="898" href="#898">898:</a>                 <span class="php-var">$html</span> .= <span class="php-quote">&quot; class=\&quot;&quot;</span> . escape_html(<span class="php-var">$key</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-899"><a class="line" id="899" href="#899">899:</a>             }</span>
+<span class="source-line" id="line-900"><a class="line" id="900" href="#900">900:</a> </span>
+<span class="source-line" id="line-901"><a class="line" id="901" href="#901">901:</a>             <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-902"><a class="line" id="902" href="#902">902:</a> </span>
+<span class="source-line" id="line-903"><a class="line" id="903" href="#903">903:</a>             <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;no_escape_html&quot;</span>])) {</span>
+<span class="source-line" id="line-904"><a class="line" id="904" href="#904">904:</a>                 <span class="php-var">$value</span> = escape_html(<span class="php-var">$value</span>);</span>
+<span class="source-line" id="line-905"><a class="line" id="905" href="#905">905:</a>             }</span>
+<span class="source-line" id="line-906"><a class="line" id="906" href="#906">906:</a> </span>
+<span class="source-line" id="line-907"><a class="line" id="907" href="#907">907:</a>             <span class="php-var">$html</span> .= <span class="php-var">$value</span>;</span>
+<span class="source-line" id="line-908"><a class="line" id="908" href="#908">908:</a> </span>
+<span class="source-line" id="line-909"><a class="line" id="909" href="#909">909:</a>             <span class="php-var">$html</span> .= PHP_EOL . <span class="php-quote">&quot;&lt;/th&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-910"><a class="line" id="910" href="#910">910:</a>         }</span>
+<span class="source-line" id="line-911"><a class="line" id="911" href="#911">911:</a> </span>
+<span class="source-line" id="line-912"><a class="line" id="912" href="#912">912:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;/tr&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-913"><a class="line" id="913" href="#913">913:</a>     }</span>
+<span class="source-line" id="line-914"><a class="line" id="914" href="#914">914:</a> </span>
+<span class="source-line" id="line-915"><a class="line" id="915" href="#915">915:</a>     <span class="php-var">$rownum</span> = <span class="php-num">0</span>;</span>
+<span class="source-line" id="line-916"><a class="line" id="916" href="#916">916:</a>     <span class="php-keyword1">foreach</span> (<span class="php-var">$array</span> <span class="php-keyword1">as</span> <span class="php-var">$row</span>) {</span>
+<span class="source-line" id="line-917"><a class="line" id="917" href="#917">917:</a>         <span class="php-var">$rownum</span>++;</span>
+<span class="source-line" id="line-918"><a class="line" id="918" href="#918">918:</a> </span>
+<span class="source-line" id="line-919"><a class="line" id="919" href="#919">919:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;tr&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-920"><a class="line" id="920" href="#920">920:</a> </span>
+<span class="source-line" id="line-921"><a class="line" id="921" href="#921">921:</a>         <span class="php-var">$colnum</span> = <span class="php-num">0</span>;</span>
+<span class="source-line" id="line-922"><a class="line" id="922" href="#922">922:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$row</span> <span class="php-keyword1">as</span> <span class="php-var">$key</span> =&gt; <span class="php-var">$value</span>) {</span>
+<span class="source-line" id="line-923"><a class="line" id="923" href="#923">923:</a>             <span class="php-var">$colnum</span>++;</span>
+<span class="source-line" id="line-924"><a class="line" id="924" href="#924">924:</a> </span>
+<span class="source-line" id="line-925"><a class="line" id="925" href="#925">925:</a>             <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;td&quot;</span>;</span>
+<span class="source-line" id="line-926"><a class="line" id="926" href="#926">926:</a> </span>
+<span class="source-line" id="line-927"><a class="line" id="927" href="#927">927:</a>             <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;col_class_from_keys&quot;</span>])) {</span>
+<span class="source-line" id="line-928"><a class="line" id="928" href="#928">928:</a>                 <span class="php-var">$html</span> .= <span class="php-quote">&quot; class=\&quot;&quot;</span> . escape_html(<span class="php-var">$key</span>) . <span class="php-quote">&quot;\&quot;&quot;</span>;</span>
+<span class="source-line" id="line-929"><a class="line" id="929" href="#929">929:</a>             }</span>
+<span class="source-line" id="line-930"><a class="line" id="930" href="#930">930:</a> </span>
+<span class="source-line" id="line-931"><a class="line" id="931" href="#931">931:</a>             <span class="php-var">$html</span> .= <span class="php-quote">&quot;&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-932"><a class="line" id="932" href="#932">932:</a> </span>
+<span class="source-line" id="line-933"><a class="line" id="933" href="#933">933:</a>             <span class="php-keyword1">if</span> (!<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>]) &amp;&amp; is_callable(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>])) {</span>
+<span class="source-line" id="line-934"><a class="line" id="934" href="#934">934:</a>                 <span class="php-var">$value</span> = call_user_func(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;formatter&quot;</span>], <span class="php-var">$rownum</span>, <span class="php-var">$colnum</span>, <span class="php-var">$key</span>, <span class="php-var">$value</span>);</span>
+<span class="source-line" id="line-935"><a class="line" id="935" href="#935">935:</a>             }</span>
+<span class="source-line" id="line-936"><a class="line" id="936" href="#936">936:</a> </span>
+<span class="source-line" id="line-937"><a class="line" id="937" href="#937">937:</a>             <span class="php-keyword1">if</span> (<span class="php-keyword1">empty</span>(<span class="php-var">$parameters</span>[<span class="php-quote">&quot;no_escape_html&quot;</span>])) {</span>
+<span class="source-line" id="line-938"><a class="line" id="938" href="#938">938:</a>                 <span class="php-var">$value</span> = escape_html(<span class="php-var">$value</span>);</span>
+<span class="source-line" id="line-939"><a class="line" id="939" href="#939">939:</a>             }</span>
+<span class="source-line" id="line-940"><a class="line" id="940" href="#940">940:</a> </span>
+<span class="source-line" id="line-941"><a class="line" id="941" href="#941">941:</a>             <span class="php-var">$html</span> .= <span class="php-var">$value</span>;</span>
+<span class="source-line" id="line-942"><a class="line" id="942" href="#942">942:</a> </span>
+<span class="source-line" id="line-943"><a class="line" id="943" href="#943">943:</a>             <span class="php-var">$html</span> .= PHP_EOL . <span class="php-quote">&quot;&lt;/td&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-944"><a class="line" id="944" href="#944">944:</a>         }</span>
+<span class="source-line" id="line-945"><a class="line" id="945" href="#945">945:</a> </span>
+<span class="source-line" id="line-946"><a class="line" id="946" href="#946">946:</a>         <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;/tr&gt;&quot;</span> . PHP_EOL;</span>
+<span class="source-line" id="line-947"><a class="line" id="947" href="#947">947:</a>     }</span>
+<span class="source-line" id="line-948"><a class="line" id="948" href="#948">948:</a> </span>
+<span class="source-line" id="line-949"><a class="line" id="949" href="#949">949:</a>     <span class="php-var">$html</span> .= <span class="php-quote">&quot;&lt;/table&gt;&quot;</span>;</span>
+<span class="source-line" id="line-950"><a class="line" id="950" href="#950">950:</a> </span>
+<span class="source-line" id="line-951"><a class="line" id="951" href="#951">951:</a>     <span class="php-keyword1">if</span> (!<span class="php-var">$echo</span>) {</span>
+<span class="source-line" id="line-952"><a class="line" id="952" href="#952">952:</a>         <span class="php-keyword1">return</span> <span class="php-var">$html</span>;</span>
+<span class="source-line" id="line-953"><a class="line" id="953" href="#953">953:</a>     }</span>
+<span class="source-line" id="line-954"><a class="line" id="954" href="#954">954:</a> </span>
+<span class="source-line" id="line-955"><a class="line" id="955" href="#955">955:</a>     <span class="php-keyword1">echo</span>(<span class="php-var">$html</span>);</span>
+<span class="source-line" id="line-956"><a class="line" id="956" href="#956">956:</a> </span>
+<span class="source-line" id="line-957"><a class="line" id="957" href="#957">957:</a>     <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-958"><a class="line" id="958" href="#958">958:</a> } <span class="php-comment">// table</span></span>
+<span class="source-line" id="line-959"><a class="line" id="959" href="#959">959:</a> </span>
+</code>
+</pre>
+</div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

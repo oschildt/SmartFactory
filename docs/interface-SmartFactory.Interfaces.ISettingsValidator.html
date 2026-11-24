@@ -119,7 +119,10 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> ISettingsValidator
+{
+}</div>
+
 
 
 <div class="short-description">
@@ -158,7 +161,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.ISettingsValidator.php.html#17'>SmartFactory/Interfaces/ISettingsValidator.php</a>
+<a href='source-src.SmartFactory.Interfaces.ISettingsValidator.php.html#17'>src/SmartFactory/Interfaces/ISettingsValidator.php</a>
 </div>
 
 
@@ -168,22 +171,7 @@
 
 
 
-<h2>Used by</h2>
-<div class="item_list">
 
-<a href='class-SmartFactory.ConfigSettingsManager.html#validateSettings'>\SmartFactory\ConfigSettingsManager::validateSettings()</a><br>
-
-
-<a href='class-SmartFactory.RuntimeSettingsManager.html#validateSettings'>\SmartFactory\RuntimeSettingsManager::validateSettings()</a><br>
-
-
-<a href='class-SmartFactory.UserSettingsManager.html#validateSettings'>\SmartFactory\UserSettingsManager::validateSettings()</a><br>
-
-
-<a href='interface-SmartFactory.Interfaces.ISettingsManager.html#validateSettings'>\SmartFactory\Interfaces\ISettingsManager::validateSettings()</a><br>
-
-
-</div>
 
 
 
@@ -197,9 +185,11 @@
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#validate">validate()</a></div>
@@ -214,16 +204,19 @@
               <p>Validates the settings of a settings manager.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
+
+
 <hr id="validate">
-  
+
   <h1>Method: ISettingsValidator::validate()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validate(\SmartFactory\Interfaces\ISettingsManager <span class="php-var">$settingsmanager</span>, string <span class="php-var">$context</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validate(ISettingsManager <span class="php-var">$settingsmanager</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -237,7 +230,8 @@
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -245,7 +239,7 @@
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -255,7 +249,7 @@
                 by value
             </td>
             <td>
-                <a href='interface-SmartFactory.Interfaces.ISettingsManager.html'>\SmartFactory\Interfaces\ISettingsManager</a>
+                <code class="php-type"><a href="interface-SmartFactory.Interfaces.ISettingsManager.html">ISettingsManager</a></code>
             </td>
             <td>
                 
@@ -273,7 +267,7 @@
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -291,13 +285,14 @@ db_connection_settings etc.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -305,7 +300,7 @@ db_connection_settings etc.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a>|<a href='class-SmartFactory.SmartExceptionCollection.html'>\SmartFactory\SmartExceptionCollection</a><br>
+  <code class="php-type">(<a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a> | <a href="class-SmartFactory.SmartExceptionCollection.html">\SmartFactory\SmartExceptionCollection</a>)</code><br>
   
   <div class="item_description"><ul>
 <li>It might throw an exception in the case of any errors.</li>
@@ -330,11 +325,11 @@ db_connection_settings etc.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ISettingsValidator.php.html#44'>SmartFactory/Interfaces/ISettingsValidator.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ISettingsValidator.php.html#44'>src/SmartFactory/Interfaces/ISettingsValidator.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <?php
 /**
- * Definition of the short functions for the more confortable programming
- * and code elegance.
+ * Provides concise helpers for shared services and explicit database LOB values.
  *
  * @package System
  *
@@ -10,12 +9,49 @@
 
 namespace SmartFactory;
 
-use \SmartFactory\Interfaces\ILanguageManager;
-use \SmartFactory\Interfaces\IMessageManager;
-use \SmartFactory\Interfaces\ISessionManager;
-use \SmartFactory\Interfaces\IDebugProfiler;
-use \SmartFactory\Interfaces\IEventManager;
-use \SmartFactory\Interfaces\IShardManager;
+use SmartFactory\Interfaces\ILanguageManager;
+use SmartFactory\Interfaces\IMessageManager;
+use SmartFactory\Interfaces\IDebugProfiler;
+use SmartFactory\Interfaces\IEventManager;
+use SmartFactory\Interfaces\IShardManager;
+
+/**
+ * Creates an explicit UTF-8 CLOB bind value without consuming its source.
+ *
+ * @param string|resource $value
+ * The UTF-8 string or open caller-owned stream. The stream is not read or closed.
+ *
+ * @return DatabaseWorkers\ClobValue
+ * Returns a wrapper retaining the original string or stream.
+ *
+ * @throws DatabaseWorkers\DBWorkerException
+ * If the value is neither a string nor an open stream.
+ *
+ * @author Oleg Schildt
+ */
+function clob(mixed $value): DatabaseWorkers\ClobValue
+{
+    return new DatabaseWorkers\ClobValue($value);
+} // clob
+
+/**
+ * Creates an explicit binary BLOB bind value without consuming its source.
+ *
+ * @param string|resource $value
+ * The byte string or open caller-owned stream. The stream is not read or closed.
+ *
+ * @return DatabaseWorkers\BlobValue
+ * Returns a wrapper retaining the original string or stream.
+ *
+ * @throws DatabaseWorkers\DBWorkerException
+ * If the value is neither a string nor an open stream.
+ *
+ * @author Oleg Schildt
+ */
+function blob(mixed $value): DatabaseWorkers\BlobValue
+{
+    return new DatabaseWorkers\BlobValue($value);
+} // blob
 
 /**
  * Short function that provides the text translation for
@@ -32,15 +68,15 @@ use \SmartFactory\Interfaces\IShardManager;
  * The default text to be used if there is no translation.
  *
  * @return string
- * Returns the translation text or the $text_id if no translation
+ * Returns the translation text or the $default_text/$text_id if no translation
  * is found.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * @throws ObjectFactoryException
+ * If the service binding is missing, the contract is unknown, a circular dependency
+ * is detected, or the factory result does not satisfy the requested contract.
  *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
+ * @throws \Throwable
+ * If creating the language manager or resolving the requested translation throws.
  *
  * @author Oleg Schildt
  */
@@ -55,12 +91,12 @@ function text(string $text_id, string $lng = "", string $default_text = ""): str
  * @return IMessageManager
  * Returns the instance of the IMessageManager.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * @throws ObjectFactoryException
+ * If the service binding is missing, the contract is unknown, a circular dependency
+ * is detected, or the factory result does not satisfy the requested contract.
  *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
+ * @throws \Throwable
+ * If autoloading the service contract or executing its creation function throws.
  *
  * @author Oleg Schildt
  */
@@ -75,12 +111,12 @@ function messenger(): IMessageManager
  * @return IDebugProfiler
  * Returns the instance of the IDebugProfiler.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * @throws ObjectFactoryException
+ * If the service binding is missing, the contract is unknown, a circular dependency
+ * is detected, or the factory result does not satisfy the requested contract.
  *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
+ * @throws \Throwable
+ * If autoloading the service contract or executing its creation function throws.
  *
  * @author Oleg Schildt
  */
@@ -96,18 +132,18 @@ function debugger(): IDebugProfiler
  * The message to be logged.
  *
  * @return void
+ * Writes the message through the shared profiler.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * @throws ObjectFactoryException
+ * If the service binding is missing, the contract is unknown, a circular dependency
+ * is detected, or the factory result does not satisfy the requested contract.
  *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
- * - if the debug file is not writable.
+ * @throws \Throwable
+ * If creating the profiler or writing its debug message fails, including an unwritable log file.
  *
  * @author Oleg Schildt
  */
-function debug_message($msg): void
+function debug_message(string $msg): void
 {
     singleton(IDebugProfiler::class)->debugMessage($msg);
 } // debug_message
@@ -118,12 +154,12 @@ function debug_message($msg): void
  * @return IEventManager
  * Returns the instance of the IEventManager.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * @throws ObjectFactoryException
+ * If the service binding is missing, the contract is unknown, a circular dependency
+ * is detected, or the factory result does not satisfy the requested contract.
  *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
+ * @throws \Throwable
+ * If autoloading the service contract or executing its creation function throws.
  *
  * @author Oleg Schildt
  */
@@ -138,12 +174,12 @@ function event(): IEventManager
  * @return ConfigSettingsManager
  * Returns the instance of the ConfigSettingsManager.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * @throws ObjectFactoryException
+ * If the service binding is missing, the contract is unknown, a circular dependency
+ * is detected, or the factory result does not satisfy the requested contract.
  *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
+ * @throws \Throwable
+ * If autoloading the service contract or executing its creation function throws.
  *
  * @author Oleg Schildt
  */
@@ -153,24 +189,20 @@ function config_settings(): ConfigSettingsManager
 } // config_settings
 
 /**
- * Short function for getting the instance of the RuntimeSettingsManager.
+ * Returns the shared application settings manager backed by centralized database storage.
  *
- * @return RuntimeSettingsManager
- * Returns the instance of the RuntimeSettingsManager.
+ * @return ApplicationSettingsManager
+ * Returns the configured application settings manager.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
- *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
+ * @throws \Throwable
+ * If the factory binding is missing or creating and initializing the manager fails.
  *
  * @author Oleg Schildt
  */
-function runtime_settings(): RuntimeSettingsManager
+function application_settings(): ApplicationSettingsManager
 {
-    return singleton(RuntimeSettingsManager::class);
-} // runtime_settings
+    return singleton(ApplicationSettingsManager::class);
+} // application_settings
 
 /**
  * Short function for getting the instance of the UserSettingsManager.
@@ -178,12 +210,12 @@ function runtime_settings(): RuntimeSettingsManager
  * @return UserSettingsManager
  * Returns the instance of the UserSettingsManager.
  *
- * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * @throws ObjectFactoryException
+ * If the service binding is missing, the contract is unknown, a circular dependency
+ * is detected, or the factory result does not satisfy the requested contract.
  *
- * - if the interface or class is not specified.
- * - if the interface or class does not exist.
- * - if the check of the classes and interfaces fails.
+ * @throws \Throwable
+ * If autoloading the service contract or executing its creation function throws.
  *
  * @author Oleg Schildt
  */
@@ -199,19 +231,17 @@ function user_settings(): UserSettingsManager
  * The name of the shard.
  *
  * @return ?\SmartFactory\DatabaseWorkers\DBWorker
- * returns DBWorker object or null if the object could not be created.
+ * Returns the shard worker, or null if a custom shard manager returns no worker.
+ *
+ * @throws ObjectFactoryException
+ * If the shard manager binding is missing or resolving its factory fails validation.
  *
  * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * If the shard is unknown, its driver or native extension is unavailable,
+ * connection settings are invalid, or establishing the connection fails.
  *
- * - if the interface or class does not exist.
- * - if the shard was not found.
- * - if the check of the classes and interfaces fails.
- * - if the php extension is not installed.
- * - db_missing_type_error - if the database type is not specified.
- * - db_conn_data_error - if the connection parameters are incomplete.
- * - db_server_conn_error - if the database server cannot be connected.
- * - db_not_exists_error - if database does not exists od inaccesible to the user.
+ * @throws \Throwable
+ * If creating or initializing a custom shard manager or worker throws an exception or error.
  *
  * @author Oleg Schildt
  */
@@ -221,21 +251,23 @@ function dbshard(string $shard_name): ?\SmartFactory\DatabaseWorkers\DBWorker
 } // dbshard
 
 /**
- * Short function for requesting the dbworker connected to the specified shard,
- * that is chosen randomly for load balancing reason.
+ * Returns a randomly selected shard worker through the shared shard manager.
+ *
+ * Uses deterministic client affinity when enabled in the manager.
  *
  * @param string $load_balancing_group
- * The name of the shard.
+ * The name of a nonempty registered load-balancing group.
  *
  * @return ?\SmartFactory\DatabaseWorkers\DBWorker
- * returns DBWorker object or null if the object could not be created.
+ * Returns the selected shard's worker, or null if a custom shard manager returns no worker.
  *
  * @throws \Exception
- * It might throw the following exceptions in the case of any errors:
+ * If the manager cannot be resolved, the group is unknown, worker initialization fails,
+ * or the required client identity is unavailable or invalid.
  *
- * - if the load balancing group was not found.
- * - db_server_conn_error - if the database server cannot be connected.
- * - db_not_exists_error - if database does not exists od inaccesible to the user.
+ * @throws \Throwable
+ * If creating a custom manager or worker, or calling the configured identifier getter,
+ * throws an exception or error, it is propagated unchanged.
  *
  * @author Oleg Schildt
  */

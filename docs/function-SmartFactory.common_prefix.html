@@ -107,21 +107,29 @@
                 <div class="col-md-12">
                     <h1>Function: common_prefix()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> common_prefix(string <span class="php-var">$s1</span>, string <span class="php-var">$s2</span>, int <span class="php-var">$max</span> = <span class="php-num">1000</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> common_prefix(<span class="php-keyword1">string</span> <span class="php-var">$s1</span>, <span class="php-keyword1">string</span> <span class="php-var">$s2</span>, <span class="php-keyword1">int</span> <span class="php-var">$max</span> = <span class="php-num">1000</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Defines the common prefix of two strings.</p>
+<p>Finds the common prefix of two strings without splitting valid UTF-8 characters.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Valid UTF-8 inputs are compared by Unicode code points. If either input is not
+valid UTF-8, both inputs are compared as byte strings instead.</p>
+</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -139,13 +147,13 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>First string to be checked.</p>
+              <p>The first UTF-8 or binary string to compare.</p>
           </td>
       </tr>
       
@@ -157,13 +165,13 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>Second string to be checked.</p>
+              <p>The second UTF-8 or binary string to compare.</p>
           </td>
       </tr>
       
@@ -175,25 +183,26 @@
               by value
           </td>
           <td>
-              int
+              <code class="php-type">int</code>
           </td>
           <td>
               1000
           </td>
           <td class="description_column">
-              <p>The maximal number of charactes to check.</p>
+              <p>The maximum number of code points, or bytes for binary inputs. Nonpositive values return an empty string.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
-<div class="item_description"><p>Returns the common prefix of the passed strings.</p></div>
+<div class="item_description"><p>Returns the common prefix, limited to the requested number of characters or bytes.</p></div>
 
 </div>
 
@@ -221,11 +230,11 @@ string<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#64'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#61'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

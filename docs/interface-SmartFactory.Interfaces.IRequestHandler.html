@@ -119,11 +119,14 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> IRequestHandler <span class="php-keyword1">extends</span> IInitable
+{
+}</div>
+
 
 
 <div class="short-description">
-<p>Interface for handling the API requests.</p>
+<p>Initializes API handlers and optionally supplies a request-throttling service.</p>
 </div>
 
 
@@ -131,14 +134,19 @@
 
 
 
+<h2>Extends</h2>
+<div class="item_list">
 
+<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
+
+</div>
 
 
 
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.RequestHandler.html'>\SmartFactory\RequestHandler</a><br>
+<a href="class-SmartFactory.RequestHandler.html">\SmartFactory\RequestHandler</a><br>
 
 </div>
 
@@ -163,7 +171,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.IRequestHandler.php.html#17'>SmartFactory/Interfaces/IRequestHandler.php</a>
+<a href='source-src.SmartFactory.Interfaces.IRequestHandler.php.html#17'>src/SmartFactory/Interfaces/IRequestHandler.php</a>
 </div>
 
 
@@ -187,10 +195,25 @@
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
+          <td>
+              <div style='float:left'><a href="#getRequestThrottlingManager">getRequestThrottlingManager()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Retrieves the service currently used to limit incoming requests.</p>
+          </td>
+      </tr><tr>
           <td>
               <div style='float:left'><a href="#handleRequest">handleRequest()</a></div>
 
@@ -203,21 +226,50 @@
           <td class="description_column">
               <p>Method that is called to handle the request.</p>
           </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Applies optional dependencies to the request handler.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setRequestThrottlingManager">setRequestThrottlingManager()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Assigns the already initialized service that limits incoming requests.</p>
+          </td>
       </tr>
-      
+
   </table>
 
 
 
-<hr id="handleRequest">
-  
-  <h1>Method: IRequestHandler::handleRequest()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> handleRequest(): void;</div>
+
+<hr id="getRequestThrottlingManager">
+
+  <h1>Method: IRequestHandler::getRequestThrottlingManager()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getRequestThrottlingManager(): ?IRequestThrottlingManager;</div>
+  
 
   
   <div class="short-description">
-  <p>Method that is called to handle the request.</p>
+  <p>Retrieves the service currently used to limit incoming requests.</p>
   </div>
   
 
@@ -230,7 +282,9 @@
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">(<a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">IRequestThrottlingManager</a> | null)</code><br>
+  
+  <div class="item_description"><p>Returns the configured service, or null when throttling is disabled.</p></div>
   
   </div>
   
@@ -253,11 +307,291 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IRequestHandler.php.html#26'>SmartFactory/Interfaces/IRequestHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IRequestHandler.php.html#61'>src/SmartFactory/Interfaces/IRequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="handleRequest">
+
+  <h1>Method: IRequestHandler::handleRequest()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleRequest(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Method that is called to handle the request.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.IRequestHandler.php.html#70'>src/SmartFactory/Interfaces/IRequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="init">
+
+  <h1>Method: IRequestHandler::init()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Applies optional dependencies to the request handler.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array{
+    throttling_manager?: (<a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">IRequestThrottlingManager</a> | null),
+    user_identificator_getter?: (callable(): (string | int | null) | null)
+}</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>An optional throttling manager. Null disables throttling; an omitted entry keeps the current manager.
+The optional zero-argument identity getter is evaluated on each throttled request; a nonempty
+string or integer identifies the user, while null or an empty string falls back to the peer IP.
+Omitted getter settings retain the current getter; null removes it.
+Implementations may support additional application parameters.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Updates the supplied dependencies without requiring initialization for unthrottled requests.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If throttling_manager is neither null nor an IRequestThrottlingManager implementation,
+or user_identificator_getter is neither callable nor null.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.IRequestHandler.php.html#38'>src/SmartFactory/Interfaces/IRequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setRequestThrottlingManager">
+
+  <h1>Method: IRequestHandler::setRequestThrottlingManager()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setRequestThrottlingManager(?IRequestThrottlingManager <span class="php-var">$throttling_manager</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Assigns the already initialized service that limits incoming requests.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $throttling_manager
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(<a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">IRequestThrottlingManager</a> | null)</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The throttling service, or null to disable throttling.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Replaces the manager without reinitializing it or clearing its shared request history.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.IRequestHandler.php.html#51'>src/SmartFactory/Interfaces/IRequestHandler.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

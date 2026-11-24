@@ -107,11 +107,12 @@
                 <div class="col-md-12">
                     <h1>Function: escape_html()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> escape_html(?string <span class="php-var">$text</span>): ?string;</div>
+<div class="definition"><span class="php-keyword1">function</span> escape_html(?<span class="php-keyword1">string</span> <span class="php-var">$text</span>): ?<span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Escapes the HTML special characters in the text.</p>
+<p>Escapes HTML special characters in UTF-8 text while preserving null.</p>
 </div>
 
 
@@ -121,7 +122,8 @@
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -139,25 +141,26 @@
               by value
           </td>
           <td>
-              ?string
+              <code class="php-type">?string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The text to be escaped.</p>
+              <p>The UTF-8 text to escape, or null for an absent value.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-?string<br>
+<code class="php-type">?string</code><br>
 
-<div class="item_description"><p>Returns the text with escaped HTML special characters.</p></div>
+<div class="item_description"><p>Returns escaped text, replacing invalid UTF-8 sequences with U+FFFD, or null.</p></div>
 
 </div>
 
@@ -185,23 +188,23 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#270'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#319'>src/utility_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.escape_html_array.html'>\SmartFactory\escape_html_array()</a><br>
+<a href="function-SmartFactory.escape_html_array.html">\SmartFactory\escape_html_array()</a><br>
 
 
-<a href='function-SmartFactory.escape_js.html'>\SmartFactory\escape_js()</a><br>
+<a href="function-SmartFactory.escape_js.html">\SmartFactory\escape_js()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

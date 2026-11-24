@@ -109,7 +109,10 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">class</span> DebugProfiler <span class="php-keyword1">implements</span> IDebugProfiler
+{
+}</div>
+
 
 
 <div class="short-description">
@@ -126,7 +129,7 @@
 <h2>Implements</h2>
 <div class="item_list">
 
-<a href='interface-SmartFactory.Interfaces.IDebugProfiler.html'>\SmartFactory\Interfaces\IDebugProfiler</a><br>
+<a href="interface-SmartFactory.Interfaces.IDebugProfiler.html">\SmartFactory\Interfaces\IDebugProfiler</a><br>
 
 </div>
 
@@ -155,7 +158,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.DebugProfiler.php.html#20'>SmartFactory/DebugProfiler.php</a>
+<a href='source-src.SmartFactory.DebugProfiler.php.html#20'>src/SmartFactory/DebugProfiler.php</a>
 </div>
 
 
@@ -181,7 +184,7 @@
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Properties</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#$log_path">$log_path</a></div>
@@ -193,11 +196,24 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the log path.</p>
+              <p>Canonical log directory with a trailing slash, or null before initialization.</p>
           </td>
       </tr><tr>
           <td>
               <div style='float:left'><a href="#$profile_time">$profile_time</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Monotonic time in seconds after the previous profile entry was written.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$request_id">$request_id</a></div>
 
               <div style='float:right'>
               <span class="label label-primary">static</span>
@@ -206,7 +222,20 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the time by profiling.</p>
+              <p>Correlation identifier shared by profiler instances in the current PHP request.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$source_root">$source_root</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Canonical source root with a trailing slash, used to shorten source paths.</p>
           </td>
       </tr><tr>
           <td>
@@ -219,16 +248,15 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the flag that defines whether for each debug output the source file and
-line number are written from where it is called.</p>
+              <p>Controls whether diagnostic messages include the calling source file and line.</p>
           </td>
       </tr>
-      
+
   </table>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#clearLogFile">clearLogFile()</a></div>
@@ -240,7 +268,7 @@ line number are written from where it is called.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Clears the specified log file.</p>
+              <p>Deletes the specified log file; an already absent file counts as success.</p>
           </td>
       </tr><tr>
           <td>
@@ -253,7 +281,7 @@ line number are written from where it is called.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Clears all log files.</p>
+              <p>Deletes files with a case-insensitive .log extension in the log directory.</p>
           </td>
       </tr><tr>
           <td>
@@ -266,7 +294,7 @@ line number are written from where it is called.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Logs a message to a standard debug output (logs/debug.log).</p>
+              <p>Appends a timestamped message with a request identifier to the chosen log.</p>
           </td>
       </tr><tr>
           <td>
@@ -279,7 +307,7 @@ line number are written from where it is called.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Sets the flag that defines whether the file name and the line number should be written along with the message.</p>
+              <p>Controls whether subsequent messages include the calling source file and line.</p>
           </td>
       </tr><tr>
           <td>
@@ -292,7 +320,7 @@ line number are written from where it is called.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Extracts the call stack from the standard PHP backtrace (debug_backtrace).</p>
+              <p>Formats backtrace frames with a source file, including methods and closures.</p>
           </td>
       </tr><tr>
           <td>
@@ -305,9 +333,20 @@ line number are written from where it is called.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Logs a message to a standard profiling output (logs/profile.log) and shows
-the time elapsed since the last call startProfilePoint or
-fixProfilePoint.</p>
+              <p>Writes the elapsed interval to profile.log, then starts the next interval.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getLogFilePath">getLogFilePath()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resolves a plain file name within the log directory without following symbolic links.</p>
           </td>
       </tr><tr>
           <td>
@@ -320,7 +359,20 @@ fixProfilePoint.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Initializes the debug profiler with parameters.</p>
+              <p>Validates and stores logging settings, then resets this instance's timer.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#requireLogPath">requireLogPath()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the configured log directory after checking initialization.</p>
           </td>
       </tr><tr>
           <td>
@@ -333,8 +385,7 @@ fixProfilePoint.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Logs a message to a standard profiling output (logs/profile.log)
-and stores the current time.</p>
+              <p>Writes to profile.log and starts a new monotonic interval on this instance.</p>
           </td>
       </tr><tr>
           <td>
@@ -347,23 +398,24 @@ and stores the current time.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>This is an auxiliary function that cuts off the common part of the path.</p>
+              <p>Removes the configured source root only from the beginning of a source path.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
 <hr id="$log_path">
-  
+
   <h1>Property: DebugProfiler::$log_path</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> ?string <span class="php-var">$log_path</span> = <span class="php-keyword1">null</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> ?<span class="php-keyword1">string</span> <span class="php-var">$log_path</span> = <span class="php-keyword1">null</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing the log path.</p>
+  <p>Canonical log directory with a trailing slash, or null before initialization.</p>
   </div>
   
 
@@ -372,7 +424,7 @@ and stores the current time.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  ?string
+  <code class="php-type">(string | null)</code>
   </div>
   
 
@@ -392,25 +444,31 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#29'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#29'>src/SmartFactory/DebugProfiler.php</a>
   </div><hr id="$profile_time">
-  
+
   <h1>Property: DebugProfiler::$profile_time</h1>
 
-  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">static</span> int <span class="php-var">$profile_time</span>;</div>
+  <div class="definition"><span class="php-keyword1">private</span> ?<span class="php-keyword1">float</span> <span class="php-var">$profile_time</span> = <span class="php-keyword1">null</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing the time by profiling.</p>
+  <p>Monotonic time in seconds after the previous profile entry was written.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Null means that no interval has been started on this instance.</p>
+  </div>
   
 
   
   <h2>Type</h2>
   <div class="item_list">
-  int
+  <code class="php-type">(float | null)</code>
   </div>
   
 
@@ -430,29 +488,29 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#51'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#51'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DebugProfiler.html#startProfilePoint'>\SmartFactory\DebugProfiler::startProfilePoint()</a><br>
+  <a href="class-SmartFactory.DebugProfiler.html#startProfilePoint">\SmartFactory\DebugProfiler::startProfilePoint()</a><br>
   
   
-  <a href='class-SmartFactory.DebugProfiler.html#fixProfilePoint'>\SmartFactory\DebugProfiler::fixProfilePoint()</a><br>
+  <a href="class-SmartFactory.DebugProfiler.html#fixProfilePoint">\SmartFactory\DebugProfiler::fixProfilePoint()</a><br>
   
   
-  </div><hr id="$write_source_file_and_line_by_debug">
-  
-  <h1>Property: DebugProfiler::$write_source_file_and_line_by_debug</h1>
+  </div><hr id="$request_id">
 
-  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$write_source_file_and_line_by_debug</span> = <span class="php-keyword1">false</span>;</div>
+  <h1>Property: DebugProfiler::$request_id</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">static</span> ?<span class="php-keyword1">string</span> <span class="php-var">$request_id</span> = <span class="php-keyword1">null</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing the flag that defines whether for each debug output the source file and
-line number are written from where it is called.</p>
+  <p>Correlation identifier shared by profiler instances in the current PHP request.</p>
   </div>
   
 
@@ -461,7 +519,7 @@ line number are written from where it is called.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  bool
+  <code class="php-type">(string | null)</code>
   </div>
   
 
@@ -481,18 +539,97 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#39'>SmartFactory/DebugProfiler.php</a>
-  </div>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#69'>src/SmartFactory/DebugProfiler.php</a>
+  </div><hr id="$source_root">
 
-<hr id="clearLogFile">
+  <h1>Property: DebugProfiler::$source_root</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$source_root</span> = <span class="php-quote">&quot;&quot;</span>;</div>
   
-  <h1>Method: DebugProfiler::clearLogFile()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(string <span class="php-var">$file_name</span>): void;</div>
 
   
   <div class="short-description">
-  <p>Clears the specified log file.</p>
+  <p>Canonical source root with a trailing slash, used to shorten source paths.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">string</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#60'>src/SmartFactory/DebugProfiler.php</a>
+  </div><hr id="$write_source_file_and_line_by_debug">
+
+  <h1>Property: DebugProfiler::$write_source_file_and_line_by_debug</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">bool</span> <span class="php-var">$write_source_file_and_line_by_debug</span> = <span class="php-keyword1">false</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Controls whether diagnostic messages include the calling source file and line.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#38'>src/SmartFactory/DebugProfiler.php</a>
+  </div>
+
+<hr id="clearLogFile">
+
+  <h1>Method: DebugProfiler::clearLogFile()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(<span class="php-keyword1">string</span> <span class="php-var">$file_name</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Deletes the specified log file; an already absent file counts as success.</p>
   </div>
   
 
@@ -502,7 +639,8 @@ line number are written from where it is called.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -510,7 +648,7 @@ line number are written from where it is called.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -520,33 +658,54 @@ line number are written from where it is called.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The target file name.</p>
+                <p>A plain file name subject to the same restrictions as debugMessage().</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes when the file is absent, including removal by another process.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not completed successfully.</p></div>
+  
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If the file name is empty, a special directory name, or contains forbidden characters.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the target is a symbolic link or nonregular file, or deletion fails and it still exists.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFile'>\SmartFactory\Interfaces\IDebugProfiler::clearLogFile()</a>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFile">\SmartFactory\Interfaces\IDebugProfiler::clearLogFile()</a>
   </div>
   
 
@@ -564,14 +723,14 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#296'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#332'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DebugProfiler.html#clearLogFiles'>\SmartFactory\DebugProfiler::clearLogFiles()</a><br>
+  <a href="class-SmartFactory.DebugProfiler.html#clearLogFiles">\SmartFactory\DebugProfiler::clearLogFiles()</a><br>
   
   
   </div>
@@ -589,17 +748,23 @@ line number are written from where it is called.</p>
   
 
   <hr id="clearLogFiles">
-  
+
   <h1>Method: DebugProfiler::clearLogFiles()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Clears all log files.</p>
+  <p>Deletes files with a case-insensitive .log extension in the log directory.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Subdirectories and files with other extensions are preserved.</p>
+  </div>
   
 
   
@@ -609,17 +774,38 @@ line number are written from where it is called.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes after matching files have been removed; absent files are accepted.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not completed successfully.</p></div>
+  
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If a matching directory entry has a file name rejected by clearLogFile().</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the directory cannot be listed, or a matching file is a symbolic link,
+is nonregular, or cannot be deleted while it still exists.</p></div>
+  
+  
+  </div>
 
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFiles'>\SmartFactory\Interfaces\IDebugProfiler::clearLogFiles()</a>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFiles">\SmartFactory\Interfaces\IDebugProfiler::clearLogFiles()</a>
   </div>
   
 
@@ -637,14 +823,14 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#314'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#370'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DebugProfiler.html#clearLogFile'>\SmartFactory\DebugProfiler::clearLogFile()</a><br>
+  <a href="class-SmartFactory.DebugProfiler.html#clearLogFile">\SmartFactory\DebugProfiler::clearLogFile()</a><br>
   
   
   </div>
@@ -662,24 +848,31 @@ line number are written from where it is called.</p>
   
 
   <hr id="debugMessage">
-  
+
   <h1>Method: DebugProfiler::debugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, bool <span class="php-var">$write_call_stack</span> = <span class="php-keyword1">false</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">bool</span> <span class="php-var">$write_call_stack</span> = <span class="php-keyword1">false</span>, <span class="php-keyword1">string</span> <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Logs a message to a standard debug output (logs/debug.log).</p>
+  <p>Appends a timestamped message with a request identifier to the chosen log.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Source details and the call stack are collected only when requested.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -687,7 +880,7 @@ line number are written from where it is called.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -697,13 +890,13 @@ line number are written from where it is called.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Message to be logged.</p>
+                <p>Message to log; surrounding whitespace is removed.</p>
             </td>
         </tr>
         
@@ -715,13 +908,13 @@ line number are written from where it is called.</p>
                 by value
             </td>
             <td>
-                bool
+                <code class="php-type">bool</code>
             </td>
             <td>
                 false
             </td>
             <td class="description_column">
-                <p>Flag that defines where the call stack should be written.</p>
+                <p>Whether to include the full call stack without arguments or object contents.</p>
             </td>
         </tr>
         
@@ -733,23 +926,28 @@ line number are written from where it is called.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;debug.log&quot;
             </td>
             <td class="description_column">
-                <p>The target file name.</p>
+                <p>A plain file name within the configured log directory, defaulting to debug.log.
+Separators, colons, control characters and trailing dots or spaces are rejected.
+Existing symbolic links and nonregular files are also rejected.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes after the entire entry has been appended under an exclusive lock.</p></div>
   
   </div>
   
@@ -757,12 +955,19 @@ line number are written from where it is called.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\LogicException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
-<ul>
-<li>if the debug file is not writable.</li>
-</ul></div>
+  <div class="item_description"><p>If init() has not completed successfully.</p></div>
+  
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If the file name is empty, a special directory name, or contains forbidden characters.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the target is a symbolic link or nonregular file, or the complete entry cannot be written.</p></div>
   
   
   </div>
@@ -770,7 +975,7 @@ line number are written from where it is called.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#debugMessage'>\SmartFactory\Interfaces\IDebugProfiler::debugMessage()</a>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#debugMessage">\SmartFactory\Interfaces\IDebugProfiler::debugMessage()</a>
   </div>
   
 
@@ -788,7 +993,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#189'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#208'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -807,14 +1012,15 @@ line number are written from where it is called.</p>
   
 
   <hr id="enableFileAndLineDetails">
-  
+
   <h1>Method: DebugProfiler::enableFileAndLineDetails()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableFileAndLineDetails(bool <span class="php-var">$state</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableFileAndLineDetails(<span class="php-keyword1">bool</span> <span class="php-var">$state</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Sets the flag that defines whether the file name and the line number should be written along with the message.</p>
+  <p>Controls whether subsequent messages include the calling source file and line.</p>
   </div>
   
 
@@ -824,7 +1030,8 @@ line number are written from where it is called.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -832,7 +1039,7 @@ line number are written from where it is called.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -842,23 +1049,26 @@ line number are written from where it is called.</p>
                 by value
             </td>
             <td>
-                bool
+                <code class="php-type">bool</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>the flag that defines whether the file name and the line number should be written along with the message.</p>
+                <p>Whether source details should be included.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Updates the source details flag.</p></div>
   
   </div>
   
@@ -881,7 +1091,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#99'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#137'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -900,14 +1110,15 @@ line number are written from where it is called.</p>
   
 
   <hr id="extract_call_stack">
-  
+
   <h1>Method: DebugProfiler::extract_call_stack()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> extract_call_stack(<span class="php-keyword1">array</span> <span class="php-var">$btrace</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Extracts the call stack from the standard PHP backtrace (debug_backtrace).</p>
+  <p>Formats backtrace frames with a source file, including methods and closures.</p>
   </div>
   
 
@@ -917,7 +1128,8 @@ line number are written from where it is called.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -925,7 +1137,7 @@ line number are written from where it is called.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -935,25 +1147,34 @@ line number are written from where it is called.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">list&lt;
+    array{
+        file?: string,
+        line?: int,
+        function?: string,
+        class?: string,
+        type?: string
+    }
+&gt;</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The backtrace.</p>
+                <p>Backtrace frames; arguments and objects are not needed.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the extracted call stack.</p></div>
+  <div class="item_description"><p>Returns the formatted stack, or an empty string if no frame has a source file.</p></div>
   
   </div>
   
@@ -976,7 +1197,7 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#115'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#153'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -995,26 +1216,32 @@ line number are written from where it is called.</p>
   
 
   <hr id="fixProfilePoint">
-  
+
   <h1>Method: DebugProfiler::fixProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(string <span class="php-var">$message</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(<span class="php-keyword1">string</span> <span class="php-var">$message</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Logs a message to a standard profiling output (logs/profile.log) and shows
-the time elapsed since the last call startProfilePoint or
-fixProfilePoint.</p>
+  <p>Writes the elapsed interval to profile.log, then starts the next interval.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>If no interval has been started, writes only the message and starts the timer.
+Timers are independent per instance; log writing is excluded from intervals.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1022,7 +1249,7 @@ fixProfilePoint.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1032,7 +1259,7 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1042,13 +1269,16 @@ fixProfilePoint.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Resets the timer after the entry has been written successfully.</p></div>
   
   </div>
   
@@ -1056,12 +1286,14 @@ fixProfilePoint.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\LogicException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
-<ul>
-<li>if the profile file is not writable.</li>
-</ul></div>
+  <div class="item_description"><p>If init() has not completed successfully.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If profile.log is a symbolic link or nonregular file, or its entry cannot be fully written.</p></div>
   
   
   </div>
@@ -1069,7 +1301,7 @@ fixProfilePoint.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#fixProfilePoint'>\SmartFactory\Interfaces\IDebugProfiler::fixProfilePoint()</a>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#fixProfilePoint">\SmartFactory\Interfaces\IDebugProfiler::fixProfilePoint()</a>
   </div>
   
 
@@ -1087,17 +1319,133 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#273'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#298'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DebugProfiler.html#startProfilePoint'>\SmartFactory\DebugProfiler::startProfilePoint()</a><br>
+  <a href="class-SmartFactory.DebugProfiler.html#startProfilePoint">\SmartFactory\DebugProfiler::startProfilePoint()</a><br>
   
   
   </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getLogFilePath">
+
+  <h1>Method: DebugProfiler::getLogFilePath()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getLogFilePath(<span class="php-keyword1">string</span> <span class="php-var">$file_name</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Resolves a plain file name within the log directory without following symbolic links.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $file_name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A nonempty file name without separators, colons, control characters or trailing dots or spaces.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the path within the configured directory; no extension is required.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not completed successfully.</p></div>
+  
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If the file name is empty, a special directory name, or contains forbidden characters.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the target is a symbolic link or an existing nonregular file.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#428'>src/SmartFactory/DebugProfiler.php</a>
+  </div>
+  
+
+  
 
   
 
@@ -1112,24 +1460,31 @@ fixProfilePoint.</p>
   
 
   <hr id="init">
-  
+
   <h1>Method: DebugProfiler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Initializes the debug profiler with parameters.</p>
+  <p>Validates and stores logging settings, then resets this instance's timer.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Failed initialization preserves the previous settings and timer.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1137,7 +1492,7 @@ fixProfilePoint.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1147,32 +1502,32 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array{
+    log_path: string,
+    source_root?: (string | null),
+    write_source_file_and_line_by_debug?: mixed
+}</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Settings for logging as an associative array in the form key =&gt; value:</p>
-<ul>
-<li>
-<p>$parameters["log_path"] - the target file path where the logs should be stored.</p>
-</li>
-<li>
-<p>$parameters["write_source_file_and_line_by_debug"] - the flag that defines whether for each debug output the source file and
-line number are written from where it is called.</p>
-</li>
-</ul>
+                <p>The existing writable log directory, optional existing source directory, and
+optional source details flag interpreted using PHP's empty-value semantics.
+An omitted or null source root defaults to the working directory at initialization.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes when all settings have been accepted.</p></div>
   
   </div>
   
@@ -1180,13 +1535,20 @@ line number are written from where it is called.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any system errors:</p>
-<ul>
-<li>if the log path is not specified.</li>
-<li>if the trace file is not writable.</li>
-</ul></div>
+  <div class="item_description"><p>If a directory setting is missing, empty, not a string, or contains a null byte.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the log directory does not exist or is not writable, or the source root
+cannot be resolved to an existing directory.</p></div>
+  
+  
+  <code class="php-type">\Random\RandomException</code><br>
+  
+  <div class="item_description"><p>If generating the request identifier fails because the system random source fails.</p></div>
   
   
   </div>
@@ -1194,7 +1556,7 @@ line number are written from where it is called.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#init'>\SmartFactory\Interfaces\IDebugProfiler::init()</a>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#init">\SmartFactory\Interfaces\IDebugProfiler::init()</a>
   </div>
   
 
@@ -1212,7 +1574,80 @@ line number are written from where it is called.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#74'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#95'>src/SmartFactory/DebugProfiler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="requireLogPath">
+
+  <h1>Method: DebugProfiler::requireLogPath()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> requireLogPath(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the configured log directory after checking initialization.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the canonical directory with a trailing slash.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not completed successfully.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#399'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
@@ -1231,25 +1666,31 @@ line number are written from where it is called.</p>
   
 
   <hr id="startProfilePoint">
-  
+
   <h1>Method: DebugProfiler::startProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(string <span class="php-var">$message</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(<span class="php-keyword1">string</span> <span class="php-var">$message</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Logs a message to a standard profiling output (logs/profile.log)
-and stores the current time.</p>
+  <p>Writes to profile.log and starts a new monotonic interval on this instance.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Time spent writing the entry is excluded from the following interval.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1257,7 +1698,7 @@ and stores the current time.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1267,7 +1708,7 @@ and stores the current time.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1277,13 +1718,16 @@ and stores the current time.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Resets the timer after the entry has been written successfully.</p></div>
   
   </div>
   
@@ -1291,12 +1735,14 @@ and stores the current time.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\LogicException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors:</p>
-<ul>
-<li>if the profile file is not writable.</li>
-</ul></div>
+  <div class="item_description"><p>If init() has not completed successfully.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If profile.log is a symbolic link or nonregular file, or its entry cannot be fully written.</p></div>
   
   
   </div>
@@ -1304,7 +1750,7 @@ and stores the current time.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#startProfilePoint'>\SmartFactory\Interfaces\IDebugProfiler::startProfilePoint()</a>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#startProfilePoint">\SmartFactory\Interfaces\IDebugProfiler::startProfilePoint()</a>
   </div>
   
 
@@ -1322,14 +1768,14 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#247'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#270'>src/SmartFactory/DebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DebugProfiler.html#fixProfilePoint'>\SmartFactory\DebugProfiler::fixProfilePoint()</a><br>
+  <a href="class-SmartFactory.DebugProfiler.html#fixProfilePoint">\SmartFactory\DebugProfiler::fixProfilePoint()</a><br>
   
   
   </div>
@@ -1347,24 +1793,31 @@ and stores the current time.</p>
   
 
   <hr id="trim_path">
-  
+
   <h1>Method: DebugProfiler::trim_path()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trim_path(string <span class="php-var">$path</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> trim_path(<span class="php-keyword1">string</span> <span class="php-var">$path</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>This is an auxiliary function that cuts off the common part of the path.</p>
+  <p>Removes the configured source root only from the beginning of a source path.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Paths outside that root are preserved, with backslashes normalized to slashes.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1372,7 +1825,7 @@ and stores the current time.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1382,25 +1835,26 @@ and stores the current time.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The path.</p>
+                <p>Source path to shorten.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the cut path.</p></div>
+  <div class="item_description"><p>Returns a relative path within source_root, or the normalized original path.</p></div>
   
   </div>
   
@@ -1423,11 +1877,11 @@ and stores the current time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DebugProfiler.php.html#344'>SmartFactory/DebugProfiler.php</a>
+  <a href='source-src.SmartFactory.DebugProfiler.php.html#462'>src/SmartFactory/DebugProfiler.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

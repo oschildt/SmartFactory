@@ -107,21 +107,31 @@
                 <div class="col-md-12">
                     <h1>Function: aes_256_encrypt()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> aes_256_encrypt(string <span class="php-var">$data</span>, string <span class="php-var">$password_key</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> aes_256_encrypt(<span class="php-keyword1">string</span> <span class="php-var">$data</span>, <span class="php-keyword1">string</span> <span class="php-var">$password_key</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Encrypts the text with the AES 256 using a password key.</p>
+<p>Encrypts binary or UTF-8 data using a versioned, authenticated AES-256-GCM format.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Version 1 derives a 32-byte key with PBKDF2-HMAC-SHA256 and 600,000 iterations.
+Each message has a random 16-byte salt and 12-byte nonce. The output is the
+prefix "SF-AES256-GCM:1:" followed by base64(salt || nonce || tag || ciphertext),
+with a 16-byte authentication tag. The prefix is authenticated as additional data.</p>
+</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -139,13 +149,13 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The data to be encrypted.</p>
+              <p>The plaintext bytes to encrypt, including an empty string.</p>
           </td>
       </tr>
       
@@ -157,30 +167,44 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The password key used for the encryption.</p>
+              <p>The password bytes from which the encryption key is derived.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
-<div class="item_description"><p>Returns the encrypted text.</p></div>
+<div class="item_description"><p>Returns the versioned ASCII envelope, using fresh salt and nonce values on every call.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+<code class="php-type">\RuntimeException</code><br>
+
+<div class="item_description"><p>If OpenSSL is unavailable or AES-256-GCM encryption fails.</p></div>
+
+
+<code class="php-type">\Random\RandomException</code><br>
+
+<div class="item_description"><p>If the operating system cannot supply cryptographically secure random bytes.</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -203,20 +227,20 @@ string<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#604'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#671'>src/utility_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.aes_256_decrypt.html'>\SmartFactory\aes_256_decrypt()</a><br>
+<a href="function-SmartFactory.aes_256_decrypt.html">\SmartFactory\aes_256_decrypt()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

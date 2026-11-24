@@ -119,7 +119,10 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> IMessageManager <span class="php-keyword1">extends</span> IInitable
+{
+}</div>
+
 
 
 <div class="short-description">
@@ -134,7 +137,7 @@
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href='interface-SmartFactory.Interfaces.IInitable.html'>\SmartFactory\Interfaces\IInitable</a><br>
+<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
 
 </div>
 
@@ -143,7 +146,7 @@
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.MessageManager.html'>\SmartFactory\MessageManager</a><br>
+<a href="class-SmartFactory.MessageManager.html">\SmartFactory\MessageManager</a><br>
 
 </div>
 
@@ -168,7 +171,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.IMessageManager.php.html#17'>SmartFactory/Interfaces/IMessageManager.php</a>
+<a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#17'>src/SmartFactory/Interfaces/IMessageManager.php</a>
 </div>
 
 
@@ -192,9 +195,11 @@
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#addBubbleMessage">addBubbleMessage()</a></div>
@@ -206,7 +211,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the information message to be reported.</p>
+              <p>Appends a bubble message without deduplication, preserving structured details and their types.</p>
           </td>
       </tr><tr>
           <td>
@@ -219,7 +224,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the debugging message to be reported.</p>
+              <p>Appends a debugging message without deduplication when debug mode is enabled.</p>
           </td>
       </tr><tr>
           <td>
@@ -232,7 +237,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the error to be reported.</p>
+              <p>Appends an error without deduplication, preserving structured details and their types.</p>
           </td>
       </tr><tr>
           <td>
@@ -245,7 +250,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the error to be reported.</p>
+              <p>Appends a structured exception or every error in a collection using the current debug settings.</p>
           </td>
       </tr><tr>
           <td>
@@ -258,7 +263,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the information message to be reported.</p>
+              <p>Appends a information message without deduplication, preserving structured details and their types.</p>
           </td>
       </tr><tr>
           <td>
@@ -271,7 +276,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the programming warning to be reported.</p>
+              <p>Appends a programming warning without deduplication when debug mode is enabled.</p>
           </td>
       </tr><tr>
           <td>
@@ -284,7 +289,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the warning to be reported.</p>
+              <p>Appends a warning without deduplication, preserving structured details and their types.</p>
           </td>
       </tr><tr>
           <td>
@@ -297,7 +302,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Clears all stored messages and active elements.</p>
+              <p>Clears all stored messages.</p>
           </td>
       </tr><tr>
           <td>
@@ -310,7 +315,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Clears the stored information messages.</p>
+              <p>Clears the stored bubble messages.</p>
           </td>
       </tr><tr>
           <td>
@@ -388,7 +393,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the array of information messages if any have been stored.</p>
+              <p>Returns stored bubble messages in insertion order and clears that category.</p>
           </td>
       </tr><tr>
           <td>
@@ -401,7 +406,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the array of debugging messages if any have been stored.</p>
+              <p>Returns stored debugging messages in insertion order and clears that category.</p>
           </td>
       </tr><tr>
           <td>
@@ -414,7 +419,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the array of errors if any have been stored.</p>
+              <p>Returns stored errors in insertion order and clears that category.</p>
           </td>
       </tr><tr>
           <td>
@@ -427,7 +432,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the array of information messages if any have been stored.</p>
+              <p>Returns stored information messages in insertion order and clears that category.</p>
           </td>
       </tr><tr>
           <td>
@@ -440,7 +445,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the array of programming warnings if any have been stored.</p>
+              <p>Returns stored programming warnings in insertion order and clears that category.</p>
           </td>
       </tr><tr>
           <td>
@@ -453,7 +458,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the array of warnings if any have been stored.</p>
+              <p>Returns stored warnings in insertion order and clears that category.</p>
           </td>
       </tr><tr>
           <td>
@@ -466,7 +471,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether an information message exist.</p>
+              <p>Checks whether any bubble messages are stored.</p>
           </td>
       </tr><tr>
           <td>
@@ -479,7 +484,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether a stored debugging message exist.</p>
+              <p>Checks whether any debugging messages are stored.</p>
           </td>
       </tr><tr>
           <td>
@@ -492,7 +497,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether a stored error message exist.</p>
+              <p>Checks whether any errors are stored.</p>
           </td>
       </tr><tr>
           <td>
@@ -505,7 +510,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether an information message exist.</p>
+              <p>Checks whether any information messages are stored.</p>
           </td>
       </tr><tr>
           <td>
@@ -518,7 +523,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether a stored programming warning exist.</p>
+              <p>Checks whether any programming warnings are stored.</p>
           </td>
       </tr><tr>
           <td>
@@ -531,7 +536,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Checks whether a stored error warning exist.</p>
+              <p>Checks whether any warnings are stored.</p>
           </td>
       </tr><tr>
           <td>
@@ -544,23 +549,26 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Initializes the message manager with parameters.</p>
+              <p>Applies debug settings to new and stored messages without clearing public messages.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
+
+
 <hr id="addBubbleMessage">
-  
+
   <h1>Method: IMessageManager::addBubbleMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addBubbleMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">true</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addBubbleMessage(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], <span class="php-keyword1">bool</span> <span class="php-var">$autoclose</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the information message to be reported.</p>
+  <p>Appends a bubble message without deduplication, preserving structured details and their types.</p>
   </div>
   
 
@@ -570,7 +578,8 @@
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -578,7 +587,7 @@
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -588,13 +597,13 @@
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The information message to be reported.</p>
+                <p>The message or localization identifier. Only an empty string is ignored; "0" is retained.</p>
             </td>
         </tr>
         
@@ -606,16 +615,13 @@
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, mixed&gt;</code>
             </td>
             <td>
                 []
             </td>
             <td class="description_column">
-                <p>The details might be useful if the message translations are provided on the client, not
-on the server, and the message should contain some details that may vary from case to case.
-In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+                <p>Structured localization details. Keys, value types, nested arrays and objects are preserved.</p>
             </td>
         </tr>
         
@@ -627,7 +633,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                bool
+                <code class="php-type">bool</code>
             </td>
             <td>
                 true
@@ -638,13 +644,16 @@ automatically after a time.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Retains the message unless its text is empty. Repeated messages are retained.</p></div>
   
   </div>
   
@@ -667,35 +676,35 @@ automatically after a time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#517'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#530'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages">\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages">\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages">\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
   
   
   </div>
@@ -713,23 +722,22 @@ automatically after a time.</p>
   
 
   <hr id="addDebugMessage">
-  
+
   <h1>Method: IMessageManager::addDebugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addDebugMessage(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addDebugMessage(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">string</span> <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">int</span>|<span class="php-keyword1">string</span>|<span class="php-keyword1">null</span> <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the debugging message to be reported.</p>
+  <p>Appends a debugging message without deduplication when debug mode is enabled.</p>
   </div>
   
 
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Displaying of the debugging messages might be
-implemented to simplify the debugging process,
-e.g. to the browser console or in a lightbox.</p>
+  <p>Source locations are retained only when source output is enabled.</p>
   </div>
   
 
@@ -737,7 +745,8 @@ e.g. to the browser console or in a lightbox.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -745,7 +754,7 @@ e.g. to the browser console or in a lightbox.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -755,13 +764,13 @@ e.g. to the browser console or in a lightbox.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The debugging message to be reported.</p>
+                <p>The message to report. Only an empty string is ignored; "0" is retained.</p>
             </td>
         </tr>
         
@@ -773,13 +782,13 @@ e.g. to the browser console or in a lightbox.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file where the debug output occurred. Per default, the file where the debug output called.</p>
+                <p>The source file. An empty string uses the caller's file when source output is enabled.</p>
             </td>
         </tr>
         
@@ -791,23 +800,27 @@ e.g. to the browser console or in a lightbox.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">(int | string | null)</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file line where the debug output occurred. Per default, the file line where the debug output called.</p>
+                <p>The source line as an integer or a numeric string. Null, an empty string or a value
+converting to a nonpositive integer uses the caller's line when source output is enabled.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Retains the message unless debug mode is disabled or the message is empty.</p></div>
   
   </div>
   
@@ -830,35 +843,35 @@ e.g. to the browser console or in a lightbox.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#349'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#365'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages'>\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages">\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages">\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages'>\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages">\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
   
   
   </div>
@@ -876,22 +889,15 @@ e.g. to the browser console or in a lightbox.</p>
   
 
   <hr id="addError">
-  
+
   <h1>Method: IMessageManager::addError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addError(string <span class="php-var">$message</span>, 
-                         <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], 
-                         string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$code</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>
-                        ) : void;
-</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addError(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], <span class="php-keyword1">string</span> <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$code</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">int</span>|<span class="php-keyword1">string</span>|<span class="php-keyword1">null</span> <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the error to be reported.</p>
+  <p>Appends an error without deduplication, preserving structured details and their types.</p>
   </div>
   
 
@@ -901,7 +907,8 @@ e.g. to the browser console or in a lightbox.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -909,7 +916,7 @@ e.g. to the browser console or in a lightbox.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -919,13 +926,13 @@ e.g. to the browser console or in a lightbox.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The error message to be reported.</p>
+                <p>The error message or localization identifier. Only an empty string is ignored; "0" is retained.</p>
             </td>
         </tr>
         
@@ -937,7 +944,7 @@ e.g. to the browser console or in a lightbox.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, mixed&gt;</code>
             </td>
             <td>
                 []
@@ -945,8 +952,8 @@ e.g. to the browser console or in a lightbox.</p>
             <td class="description_column">
                 <p>The details might be useful if the message translations are provided on the client, not
 on the server, and the message should contain some details that may vary from case to case.
-In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+The server can return a message identifier and details so the client can translate the message
+and substitute its parameters. Keys, value types and nested data are preserved without conversion.</p>
             </td>
         </tr>
         
@@ -958,13 +965,13 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The error element vaccinated with the error.</p>
+                <p>The element associated with the error.</p>
             </td>
         </tr>
         
@@ -976,7 +983,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -994,15 +1001,13 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The technical information for the error. Displaying
-of this part might be controlled over an option
-"debug_mode".</p>
+                <p>Technical diagnostics, retained only when debug mode is enabled.</p>
             </td>
         </tr>
         
@@ -1014,13 +1019,13 @@ of this part might be controlled over an option
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file where the error occurred. Per default, the file where the adding error called.</p>
+                <p>The source file where the error occurred. An empty string uses the caller's file, if available.</p>
             </td>
         </tr>
         
@@ -1032,23 +1037,28 @@ of this part might be controlled over an option
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">(int | string | null)</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file line where the error occurred. Per default, the file line where the adding error called.</p>
+                <p>The source line as an integer or a numeric string, retained for compatibility with existing callers.
+Null, an empty string or a value converting to a nonpositive integer uses the caller's line.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Retains the error unless its message is empty. Technical information and source locations
+are filtered according to the debug settings.</p></div>
   
   </div>
   
@@ -1071,38 +1081,38 @@ of this part might be controlled over an option
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#77'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#82'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addErrorFromSmartException'>\SmartFactory\Interfaces\IMessageManager::addErrorFromSmartException()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addErrorFromSmartException">\SmartFactory\Interfaces\IMessageManager::addErrorFromSmartException()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
   </div>
@@ -1120,14 +1130,15 @@ of this part might be controlled over an option
   
 
   <hr id="addErrorFromSmartException">
-  
+
   <h1>Method: IMessageManager::addErrorFromSmartException()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addErrorFromSmartException(\SmartFactory\SmartException <span class="php-var">$smart_exception</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addErrorFromSmartException(\SmartFactory\SmartException|\SmartFactory\SmartExceptionCollection <span class="php-var">$smart_exception</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the error to be reported.</p>
+  <p>Appends a structured exception or every error in a collection using the current debug settings.</p>
   </div>
   
 
@@ -1137,7 +1148,8 @@ of this part might be controlled over an option
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1145,7 +1157,7 @@ of this part might be controlled over an option
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1155,23 +1167,26 @@ of this part might be controlled over an option
                 by value
             </td>
             <td>
-                <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a>
+                <code class="php-type">(<a href="class-SmartFactory.SmartException.html">\SmartFactory\SmartException</a> | <a href="class-SmartFactory.SmartExceptionCollection.html">\SmartFactory\SmartExceptionCollection</a>)</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The exception object of collection of exceptions.</p>
+                <p>The exception or collection to report. Collection entries retain their insertion order.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Adds the exception data without serializing details or deduplicating errors.</p></div>
   
   </div>
   
@@ -1194,38 +1209,38 @@ of this part might be controlled over an option
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#99'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#113'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
   </div>
@@ -1243,14 +1258,15 @@ of this part might be controlled over an option
   
 
   <hr id="addInfoMessage">
-  
+
   <h1>Method: IMessageManager::addInfoMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addInfoMessage(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], bool <span class="php-var">$autoclose</span> = <span class="php-keyword1">false</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addInfoMessage(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], <span class="php-keyword1">bool</span> <span class="php-var">$autoclose</span> = <span class="php-keyword1">false</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the information message to be reported.</p>
+  <p>Appends a information message without deduplication, preserving structured details and their types.</p>
   </div>
   
 
@@ -1260,7 +1276,8 @@ of this part might be controlled over an option
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1268,7 +1285,7 @@ of this part might be controlled over an option
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1278,13 +1295,13 @@ of this part might be controlled over an option
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The information message to be reported.</p>
+                <p>The message or localization identifier. Only an empty string is ignored; "0" is retained.</p>
             </td>
         </tr>
         
@@ -1296,16 +1313,13 @@ of this part might be controlled over an option
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, mixed&gt;</code>
             </td>
             <td>
                 []
             </td>
             <td class="description_column">
-                <p>The details might be useful if the message translations are provided on the client, not
-on the server, and the message should contain some details that may vary from case to case.
-In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+                <p>Structured localization details. Keys, value types, nested arrays and objects are preserved.</p>
             </td>
         </tr>
         
@@ -1317,7 +1331,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                bool
+                <code class="php-type">bool</code>
             </td>
             <td>
                 false
@@ -1328,13 +1342,16 @@ automatically after a time.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Retains the message unless its text is empty. Repeated messages are retained.</p></div>
   
   </div>
   
@@ -1357,35 +1374,35 @@ automatically after a time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#433'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#448'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages">\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages">\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages">\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
   
   
   </div>
@@ -1403,22 +1420,22 @@ automatically after a time.</p>
   
 
   <hr id="addProgWarning">
-  
+
   <h1>Method: IMessageManager::addProgWarning()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addProgWarning(string <span class="php-var">$message</span>, string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addProgWarning(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">string</span> <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">int</span>|<span class="php-keyword1">string</span>|<span class="php-keyword1">null</span> <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the programming warning to be reported.</p>
+  <p>Appends a programming warning without deduplication when debug mode is enabled.</p>
   </div>
   
 
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Programming warnings are shown only if the option
-"show programming warning" is active.</p>
+  <p>Source locations are retained only when source output is enabled.</p>
   </div>
   
 
@@ -1426,7 +1443,8 @@ automatically after a time.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1434,7 +1452,7 @@ automatically after a time.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1444,13 +1462,13 @@ automatically after a time.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The programming warning message to be reported.</p>
+                <p>The message to report. Only an empty string is ignored; "0" is retained.</p>
             </td>
         </tr>
         
@@ -1462,13 +1480,13 @@ automatically after a time.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file where the error occurred. Per default, the file where the adding error called.</p>
+                <p>The source file. An empty string uses the caller's file when source output is enabled.</p>
             </td>
         </tr>
         
@@ -1480,23 +1498,27 @@ automatically after a time.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">(int | string | null)</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file line where the error occurred. Per default, the file line where the adding error called.</p>
+                <p>The source line as an integer or a numeric string. Null, an empty string or a value
+converting to a nonpositive integer uses the caller's line when source output is enabled.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Retains the message unless debug mode is disabled or the message is empty.</p></div>
   
   </div>
   
@@ -1519,35 +1541,35 @@ automatically after a time.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#265'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#280'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings'>\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings">\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings">\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings'>\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings">\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
   
   
   </div>
@@ -1565,14 +1587,15 @@ automatically after a time.</p>
   
 
   <hr id="addWarning">
-  
+
   <h1>Method: IMessageManager::addWarning()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addWarning(string <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addWarning(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], <span class="php-keyword1">string</span> <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the warning to be reported.</p>
+  <p>Appends a warning without deduplication, preserving structured details and their types.</p>
   </div>
   
 
@@ -1582,7 +1605,8 @@ automatically after a time.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1590,7 +1614,7 @@ automatically after a time.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1600,13 +1624,13 @@ automatically after a time.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The warning message to be reported.</p>
+                <p>The message or localization identifier. Only an empty string is ignored; "0" is retained.</p>
             </td>
         </tr>
         
@@ -1618,16 +1642,13 @@ automatically after a time.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, mixed&gt;</code>
             </td>
             <td>
                 []
             </td>
             <td class="description_column">
-                <p>The details might be useful if the message translations are provided on the client, not
-on the server, and the message should contain some details that may vary from case to case.
-In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+                <p>Structured localization details. Keys, value types, nested arrays and objects are preserved.</p>
             </td>
         </tr>
         
@@ -1639,7 +1660,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -1649,13 +1670,16 @@ uses the message id, gets the final translated text and substitutes the paramete
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Retains the message unless its text is empty. Repeated messages are retained.</p></div>
   
   </div>
   
@@ -1678,35 +1702,35 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#182'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#196'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings'>\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings">\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings">\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings'>\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings">\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
   
   
   </div>
@@ -1724,14 +1748,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="clearAll">
-  
+
   <h1>Method: IMessageManager::clearAll()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearAll(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearAll(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Clears all stored messages and active elements.</p>
+  <p>Clears all stored messages.</p>
   </div>
   
 
@@ -1744,7 +1769,9 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Removes all pending messages in every category.</p></div>
   
   </div>
   
@@ -1767,29 +1794,29 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#586'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#601'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings'>\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings">\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings'>\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings">\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages'>\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages">\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages">\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages">\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
   
   
   </div>
@@ -1807,14 +1834,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="clearBubbleMessages">
-  
+
   <h1>Method: IMessageManager::clearBubbleMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearBubbleMessages(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearBubbleMessages(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Clears the stored information messages.</p>
+  <p>Clears the stored bubble messages.</p>
   </div>
   
 
@@ -1827,7 +1855,9 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Removes all pending bubble messages.</p></div>
   
   </div>
   
@@ -1850,32 +1880,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#534'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#548'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings'>\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings">\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings'>\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings">\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages'>\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages">\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages">\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearAll'>\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearAll">\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
   </div>
@@ -1893,10 +1923,11 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="clearDebugMessages">
-  
+
   <h1>Method: IMessageManager::clearDebugMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearDebugMessages(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearDebugMessages(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1913,7 +1944,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -1936,32 +1967,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#366'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#382'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings'>\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings">\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings'>\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings">\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages">\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages">\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearAll'>\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearAll">\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
   </div>
@@ -1979,10 +2010,11 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="clearErrors">
-  
+
   <h1>Method: IMessageManager::clearErrors()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearErrors(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearErrors(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1999,7 +2031,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -2022,32 +2054,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#116'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#130'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings'>\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings">\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings'>\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings">\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages'>\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages">\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages">\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages">\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearAll'>\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearAll">\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
   </div>
@@ -2065,10 +2097,11 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="clearInfoMessages">
-  
+
   <h1>Method: IMessageManager::clearInfoMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearInfoMessages(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearInfoMessages(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -2085,7 +2118,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -2108,32 +2141,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#450'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#465'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings'>\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings">\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings'>\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings">\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages'>\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages">\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages">\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearAll'>\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearAll">\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
   </div>
@@ -2151,10 +2184,11 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="clearProgWarnings">
-  
+
   <h1>Method: IMessageManager::clearProgWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearProgWarnings(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearProgWarnings(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -2171,7 +2205,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -2194,32 +2228,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#282'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#297'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings'>\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearWarnings">\SmartFactory\Interfaces\IMessageManager::clearWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages'>\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages">\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages">\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages">\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearAll'>\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearAll">\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
   </div>
@@ -2237,10 +2271,11 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="clearWarnings">
-  
+
   <h1>Method: IMessageManager::clearWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearWarnings(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearWarnings(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -2257,7 +2292,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -2280,32 +2315,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#199'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#213'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors'>\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearErrors">\SmartFactory\Interfaces\IMessageManager::clearErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings'>\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearProgWarnings">\SmartFactory\Interfaces\IMessageManager::clearProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages'>\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearDebugMessages">\SmartFactory\Interfaces\IMessageManager::clearDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages'>\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearInfoMessages">\SmartFactory\Interfaces\IMessageManager::clearInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearBubbleMessages">\SmartFactory\Interfaces\IMessageManager::clearBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#clearAll'>\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#clearAll">\SmartFactory\Interfaces\IMessageManager::clearAll()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
   </div>
@@ -2323,14 +2358,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="getBubbleMessages">
-  
+
   <h1>Method: IMessageManager::getBubbleMessages()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getBubbleMessages(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the array of information messages if any have been stored.</p>
+  <p>Returns stored bubble messages in insertion order and clears that category.</p>
   </div>
   
 
@@ -2343,9 +2379,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        details: array&lt;array-key, mixed&gt;,
+        autoclose: bool
+    }
+&gt;</code><br>
   
-  <div class="item_description"><p>Returns the array of information messages if any have been stored.</p></div>
+  <div class="item_description"><p>Returns all stored bubble messages, or an empty list. Other categories are unchanged.</p></div>
   
   </div>
   
@@ -2368,32 +2410,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#570'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#584'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings'>\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings">\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings'>\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings">\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages'>\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages">\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages">\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages">\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
   </div>
@@ -2411,14 +2453,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="getDebugMessages">
-  
+
   <h1>Method: IMessageManager::getDebugMessages()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getDebugMessages(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the array of debugging messages if any have been stored.</p>
+  <p>Returns stored debugging messages in insertion order and clears that category.</p>
   </div>
   
 
@@ -2431,9 +2474,16 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        file: string,
+        line: (int | string)
+    }
+&gt;</code><br>
   
-  <div class="item_description"><p>Returns the array of debugging messages if any have been stored.</p></div>
+  <div class="item_description"><p>Returns all stored debugging messages, or an empty list. Other categories are unchanged.
+Source lines are integers when visible, zero when unavailable and empty strings when hidden.</p></div>
   
   </div>
   
@@ -2456,32 +2506,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#402'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#419'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings'>\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings">\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings'>\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings">\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages">\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages">\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages">\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
   </div>
@@ -2499,14 +2549,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="getErrors">
-  
+
   <h1>Method: IMessageManager::getErrors()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrors(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the array of errors if any have been stored.</p>
+  <p>Returns stored errors in insertion order and clears that category.</p>
   </div>
   
 
@@ -2519,9 +2570,20 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        details: array&lt;array-key, mixed&gt;,
+        related_element: string,
+        code: string,
+        technical_info: string,
+        file: string,
+        line: (int | string)
+    }
+&gt;</code><br>
   
-  <div class="item_description"><p>Returns the array of errors if any have been stored.</p></div>
+  <div class="item_description"><p>Returns all stored errors, or an empty list. Other categories are unchanged.
+Source lines are integers when visible, zero when unavailable and empty strings when hidden.</p></div>
   
   </div>
   
@@ -2544,32 +2606,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#152'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#168'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings'>\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings">\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings'>\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings">\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages'>\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages">\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages">\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages">\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
   </div>
@@ -2587,14 +2649,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="getInfoMessages">
-  
+
   <h1>Method: IMessageManager::getInfoMessages()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getInfoMessages(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the array of information messages if any have been stored.</p>
+  <p>Returns stored information messages in insertion order and clears that category.</p>
   </div>
   
 
@@ -2607,9 +2670,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        details: array&lt;array-key, mixed&gt;,
+        autoclose: bool
+    }
+&gt;</code><br>
   
-  <div class="item_description"><p>Returns the array of information messages if any have been stored.</p></div>
+  <div class="item_description"><p>Returns all stored information messages, or an empty list. Other categories are unchanged.</p></div>
   
   </div>
   
@@ -2632,32 +2701,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#486'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#501'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings'>\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings">\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings'>\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings">\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages'>\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages">\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages">\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages">\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
   </div>
@@ -2675,14 +2744,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="getProgWarnings">
-  
+
   <h1>Method: IMessageManager::getProgWarnings()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getProgWarnings(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the array of programming warnings if any have been stored.</p>
+  <p>Returns stored programming warnings in insertion order and clears that category.</p>
   </div>
   
 
@@ -2695,9 +2765,16 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        file: string,
+        line: (int | string)
+    }
+&gt;</code><br>
   
-  <div class="item_description"><p>Returns the array of programming warnings if any have been stored.</p></div>
+  <div class="item_description"><p>Returns all stored programming warnings, or an empty list. Other categories are unchanged.
+Source lines are integers when visible, zero when unavailable and empty strings when hidden.</p></div>
   
   </div>
   
@@ -2720,32 +2797,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#318'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#334'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings'>\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings">\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages'>\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages">\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages">\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages">\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings">\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
   </div>
@@ -2763,14 +2840,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="getWarnings">
-  
+
   <h1>Method: IMessageManager::getWarnings()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getWarnings(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the array of warnings if any have been stored.</p>
+  <p>Returns stored warnings in insertion order and clears that category.</p>
   </div>
   
 
@@ -2783,9 +2861,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        details: array&lt;array-key, mixed&gt;,
+        related_element: string
+    }
+&gt;</code><br>
   
-  <div class="item_description"><p>Returns the array of warnings if any have been stored.</p></div>
+  <div class="item_description"><p>Returns all stored warnings, or an empty list. Other categories are unchanged.</p></div>
   
   </div>
   
@@ -2808,32 +2892,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#235'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#249'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings'>\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings">\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages'>\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages">\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages">\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages">\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings">\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
   </div>
@@ -2851,14 +2935,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="hasBubbleMessages">
-  
+
   <h1>Method: IMessageManager::hasBubbleMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasBubbleMessages(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasBubbleMessages(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Checks whether an information message exist.</p>
+  <p>Checks whether any bubble messages are stored.</p>
   </div>
   
 
@@ -2871,9 +2956,9 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
-  <div class="item_description"><p>Returns true if the information message exists, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if the bubble message exists, otherwise false.</p></div>
   
   </div>
   
@@ -2896,32 +2981,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#552'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#566'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings">\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings">\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages">\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages">\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getBubbleMessages">\SmartFactory\Interfaces\IMessageManager::getBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage'>\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addBubbleMessage">\SmartFactory\Interfaces\IMessageManager::addBubbleMessage()</a><br>
   
   
   </div>
@@ -2939,14 +3024,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="hasDebugMessages">
-  
+
   <h1>Method: IMessageManager::hasDebugMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasDebugMessages(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasDebugMessages(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Checks whether a stored debugging message exist.</p>
+  <p>Checks whether any debugging messages are stored.</p>
   </div>
   
 
@@ -2959,7 +3045,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the stored debugging message exists, otherwise false.</p></div>
   
@@ -2984,32 +3070,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#384'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#400'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings">\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings">\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages">\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages">\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages'>\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getDebugMessages">\SmartFactory\Interfaces\IMessageManager::getDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage'>\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addDebugMessage">\SmartFactory\Interfaces\IMessageManager::addDebugMessage()</a><br>
   
   
   </div>
@@ -3027,14 +3113,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="hasErrors">
-  
+
   <h1>Method: IMessageManager::hasErrors()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasErrors(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasErrors(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Checks whether a stored error message exist.</p>
+  <p>Checks whether any errors are stored.</p>
   </div>
   
 
@@ -3047,7 +3134,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the stored error message exists, otherwise false.</p></div>
   
@@ -3072,32 +3159,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#134'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#148'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings">\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings">\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages">\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages">\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages">\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getErrors'>\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getErrors">\SmartFactory\Interfaces\IMessageManager::getErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addError'>\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addError">\SmartFactory\Interfaces\IMessageManager::addError()</a><br>
   
   
   </div>
@@ -3115,14 +3202,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="hasInfoMessages">
-  
+
   <h1>Method: IMessageManager::hasInfoMessages()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasInfoMessages(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasInfoMessages(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Checks whether an information message exist.</p>
+  <p>Checks whether any information messages are stored.</p>
   </div>
   
 
@@ -3135,7 +3223,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the information message exists, otherwise false.</p></div>
   
@@ -3160,32 +3248,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#468'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#483'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings">\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings">\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages">\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages">\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages'>\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getInfoMessages">\SmartFactory\Interfaces\IMessageManager::getInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage'>\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addInfoMessage">\SmartFactory\Interfaces\IMessageManager::addInfoMessage()</a><br>
   
   
   </div>
@@ -3203,14 +3291,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="hasProgWarnings">
-  
+
   <h1>Method: IMessageManager::hasProgWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasProgWarnings(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasProgWarnings(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Checks whether a stored programming warning exist.</p>
+  <p>Checks whether any programming warnings are stored.</p>
   </div>
   
 
@@ -3223,7 +3312,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the stored programming warning message exists, otherwise false.</p></div>
   
@@ -3248,32 +3337,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#300'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#315'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings'>\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasWarnings">\SmartFactory\Interfaces\IMessageManager::hasWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages">\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages">\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages">\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings'>\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getProgWarnings">\SmartFactory\Interfaces\IMessageManager::getProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning'>\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addProgWarning">\SmartFactory\Interfaces\IMessageManager::addProgWarning()</a><br>
   
   
   </div>
@@ -3291,14 +3380,15 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="hasWarnings">
-  
+
   <h1>Method: IMessageManager::hasWarnings()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasWarnings(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasWarnings(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Checks whether a stored error warning exist.</p>
+  <p>Checks whether any warnings are stored.</p>
   </div>
   
 
@@ -3311,7 +3401,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the stored warning message exists, otherwise false.</p></div>
   
@@ -3336,32 +3426,32 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#217'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#231'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors'>\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasErrors">\SmartFactory\Interfaces\IMessageManager::hasErrors()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings'>\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasProgWarnings">\SmartFactory\Interfaces\IMessageManager::hasProgWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages'>\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasDebugMessages">\SmartFactory\Interfaces\IMessageManager::hasDebugMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages'>\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasInfoMessages">\SmartFactory\Interfaces\IMessageManager::hasInfoMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages'>\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#hasBubbleMessages">\SmartFactory\Interfaces\IMessageManager::hasBubbleMessages()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings'>\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#getWarnings">\SmartFactory\Interfaces\IMessageManager::getWarnings()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IMessageManager.html#addWarning'>\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IMessageManager.html#addWarning">\SmartFactory\Interfaces\IMessageManager::addWarning()</a><br>
   
   
   </div>
@@ -3379,24 +3469,33 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="init">
-  
+
   <h1>Method: IMessageManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Initializes the message manager with parameters.</p>
+  <p>Applies debug settings to new and stored messages without clearing public messages.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Disabling debug mode removes stored programming warnings and debugging messages and
+clears technical information and source locations from errors. Disabling source output
+clears stored source locations. Enabling either option cannot restore removed data.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -3404,7 +3503,7 @@ uses the message id, gets the final translated text and substitutes the paramete
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -3414,41 +3513,41 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array{
+    debug_mode?: mixed,
+    write_source_file_and_line_by_debug?: mixed
+}</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The parameters may vary for each message manager.</p>
+                <p>Options are interpreted using PHP nonempty-value semantics; omitted options are disabled.
+Debug mode enables technical diagnostics. Source output additionally enables file names
+and line numbers for errors, programming warnings and debugging messages.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Updates the settings and removes stored diagnostics that the new settings disallow.</p></div>
   
   </div>
   
 
-  <h2>Throws</h2>
-  <div class="item_list">
   
-  \Exception<br>
-  
-  <div class="item_description"><p>It might throw an exception in the case of any system errors.</p></div>
-  
-  
-  </div>
 
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IInitable.html#init'>\SmartFactory\Interfaces\IInitable::init()</a>
+  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a>
   </div>
   
 
@@ -3466,11 +3565,11 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IMessageManager.php.html#32'>SmartFactory/Interfaces/IMessageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IMessageManager.php.html#36'>src/SmartFactory/Interfaces/IMessageManager.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

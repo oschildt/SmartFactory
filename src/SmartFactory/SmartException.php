@@ -1,13 +1,10 @@
 <?php
 /**
- * This file contains the implementation of the class SmartException. It extends the standard
- * exception by the string code and type of excetion.
+ * Implements SmartException, extending the standard exception with a stable string error code,
+ * a related element, structured localization details and optional technical information.
  *
- * Since the error texts can be localized, the unique code of the error might be important fo using
- * in comparison.
- * The type of the error might be useful for decision how to show the error on the client. If it is a
- * user error, the full error texts should be shown. If it is a programming error, the detailed text should
- * be shown only in the debug mode to prevent that the hackers get sensible information about the system.
+ * String error codes identify errors independently of localized messages. Applications decide which
+ * messages are appropriate for clients and expose technical diagnostics only when debugging is enabled.
  *
  * @package System
  *
@@ -17,7 +14,10 @@
 namespace SmartFactory;
 
 /**
- * Class for extended exception used in the SmartFactory library.
+ * Carries a localized message, a stable string error code and optional structured diagnostics.
+ *
+ * The string code is available through getErrorCode(); the inherited getCode() remains zero.
+ * The original exception or error can be preserved through getPrevious().
  *
  * @author Oleg Schildt
  */
@@ -67,6 +67,15 @@ class SmartException extends \Exception
      * @author Oleg Schildt
      */
     const string ERR_CODE_INVALID_CONTENT_TYPE = "invalid_content_type";
+
+    /**
+     * Identifies requests rejected because an API admission limit has been reached.
+     *
+     * @var string
+     *
+     * @author Oleg Schildt
+     */
+    const string ERR_CODE_TOO_MANY_REQUESTS = "too_many_requests";
 
     /**
      * Constant for the error code "json_parse_error".
@@ -125,7 +134,7 @@ class SmartException extends \Exception
     protected string $error_element = "";
 
     /**
-     * Internal variable for storing the error.
+     * Stores the stable string error code independently of the native integer exception code.
      *
      * @var string
      *
@@ -140,10 +149,10 @@ class SmartException extends \Exception
      *
      * The error details might be useful if the error message translations are provided on the client, not
      * on the server, and the error message should contain some details that may vary from case to case.
-     * In that case, the servers return the error message id instead of final text and the details, the client
-     * uses the error message id, gets the final translated text and substitutes the parameters through the details.
+     * In that case, the server returns a message identifier and details. The client translates the message
+     * and substitutes its parameters using those details. Keys, value types and nested data are preserved.
      *
-     * @var array
+     * @var array<array-key, mixed>
      *
      * @see SmartException::getErrorDetails()
      *
@@ -163,7 +172,7 @@ class SmartException extends \Exception
     protected string $technical_info = "";
 
     /**
-     * Constructor.
+     * Creates an exception with a stable string code, optional diagnostics and an underlying cause.
      *
      * @param string $message
      * Error message.
@@ -171,38 +180,45 @@ class SmartException extends \Exception
      * @param string $error_code
      * Error code.
      *
-     * Since the error texts can be localized, the unique code of the error might be important fo using
-     * in comparison.
+     * The code identifies the error independently of the localized message.
      *
      * @param string $error_element
      * Error element.
      *
-     * @param array $error_details
+     * @param array<array-key, mixed> $error_details
      * The details might be useful if the message translations are provided on the client, not
      * on the server, and the message should contain some details that may vary from case to case.
-     * In that case, the servers return the message id instead of final text and the details, the client
-     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     * The server can return a message identifier and details so the client can translate the message
+     * and substitute its parameters. Keys, value types and nested data are preserved without conversion.
      *
      * @param string $technical_info
-     * Additional technical information. It can be used if it is a programming error and displayed only if the debug mode is active.
+     * Additional technical information. Applications should expose it only when debugging is enabled.
+     *
+     * @param \Throwable|null $previous
+     * The original exception or error, or null when there is no underlying cause.
      *
      * @author Oleg Schildt
      */
-    public function __construct(string $message, string $error_code = SmartException::ERR_CODE_SYSTEM_ERROR, string $error_element = "", array $error_details = [], string $technical_info = "")
-    {
-        parent::__construct($message);
+    public function __construct(
+        string $message,
+        string $error_code = SmartException::ERR_CODE_SYSTEM_ERROR,
+        string $error_element = "",
+        array $error_details = [],
+        string $technical_info = "",
+        ?\Throwable $previous = null
+    ) {
+        parent::__construct($message, 0, $previous);
 
         $this->error_code = $error_code;
         $this->error_element = $error_element;
         $this->error_details = $error_details;
         $this->technical_info = $technical_info;
-    }
+    } // __construct
 
     /**
      * Returns the string error code of the exception.
      *
-     * Since the error texts can be localized, the unique code of the error might be important fo using
-     * in comparison.
+     * The code identifies the error independently of the localized message.
      *
      * @return string
      * Returns the error code.
@@ -216,7 +232,7 @@ class SmartException extends \Exception
     public function getErrorCode(): string
     {
         return $this->error_code;
-    }
+    } // getErrorCode
 
     /**
      * Sets the error element.
@@ -225,6 +241,7 @@ class SmartException extends \Exception
      * Error element.
      *
      * @return void
+     * Updates the related element without changing the other exception data.
      *
      * @see SmartException::getErrorElement()
      *
@@ -233,7 +250,7 @@ class SmartException extends \Exception
     public function setErrorElement(string $error_element): void
     {
         $this->error_element = $error_element;
-    }
+    } // setErrorElement
 
     /**
      * Returns the error element.
@@ -251,18 +268,18 @@ class SmartException extends \Exception
     public function getErrorElement(): string
     {
         return $this->error_element;
-    }
+    } // getErrorElement
 
     /**
      * Returns the error details of the exception.
      *
      * The error details might be useful if the error message translations are provided on the client, not
      * on the server, and the error message should contain some details that may vary from case to case.
-     * In that case, the servers return the error message id instead of final text and the details, the client
-     * uses the error message id, gets the final translated text and substitutes the parameters through the details.
+     * In that case, the server returns a message identifier and details. The client translates the message
+     * and substitutes its parameters using those details.
      *
-     * @return array
-     * Returns the error details.
+     * @return array<array-key, mixed>
+     * Returns the details with their original keys, value types and nested data.
      *
      * @see SmartException::getErrorCode()
      * @see SmartException::getErrorElement()
@@ -273,7 +290,7 @@ class SmartException extends \Exception
     public function getErrorDetails(): array
     {
         return $this->error_details;
-    }
+    } // getErrorDetails
 
     /**
      * Returns the technical information for the error.
@@ -283,12 +300,12 @@ class SmartException extends \Exception
      *
      * @see SmartException::getErrorCode()
      * @see SmartException::getErrorElement()
-     * @see SmartException::getTechnicalInfo()
+     * @see SmartException::getErrorDetails()
      *
      * @author Oleg Schildt
      */
     public function getTechnicalInfo(): string
     {
         return $this->technical_info;
-    }
+    } // getTechnicalInfo
 } // SmartException

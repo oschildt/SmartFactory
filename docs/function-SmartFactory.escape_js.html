@@ -107,21 +107,30 @@
                 <div class="col-md-12">
                     <h1>Function: escape_js()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> escape_js(string <span class="php-var">$text</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> escape_js(<span class="php-keyword1">string</span> <span class="php-var">$text</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Escapes the JavaScript special characters in the text.</p>
+<p>Escapes text inside a single- or double-quoted JavaScript string literal.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>The enclosing quotes are not added. HTML-sensitive characters are escaped for
+inline script content. Template literals and HTML attributes require their own
+context-specific encoding; this function does not provide that encoding.</p>
+</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -139,7 +148,7 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
@@ -151,13 +160,14 @@
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
-<div class="item_description"><p>Returns the text with escaped JavaScript special characters.</p></div>
+<div class="item_description"><p>Returns text with JavaScript delimiters, control characters and HTML delimiters escaped.</p></div>
 
 </div>
 
@@ -185,20 +195,20 @@ string<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#318'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#381'>src/utility_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.escape_html.html'>\SmartFactory\escape_html()</a><br>
+<a href="function-SmartFactory.escape_html.html">\SmartFactory\escape_html()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

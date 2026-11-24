@@ -119,7 +119,10 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> IInitable
+{
+}</div>
+
 
 
 <div class="short-description">
@@ -142,22 +145,28 @@ through the array of parameters.</p>
 <h2>Known inheritances</h2>
 <div class="item_list">
 
-<a href='interface-SmartFactory.Interfaces.IDebugProfiler.html'>\SmartFactory\Interfaces\IDebugProfiler</a><br>
+<a href="interface-SmartFactory.Interfaces.IDebugProfiler.html">\SmartFactory\Interfaces\IDebugProfiler</a><br>
 
-<a href='interface-SmartFactory.Interfaces.IErrorHandler.html'>\SmartFactory\Interfaces\IErrorHandler</a><br>
+<a href="interface-SmartFactory.Interfaces.IErrorHandler.html">\SmartFactory\Interfaces\IErrorHandler</a><br>
 
-<a href='interface-SmartFactory.Interfaces.ILanguageManager.html'>\SmartFactory\Interfaces\ILanguageManager</a><br>
+<a href="interface-SmartFactory.Interfaces.ILanguageManager.html">\SmartFactory\Interfaces\ILanguageManager</a><br>
 
-<a href='interface-SmartFactory.Interfaces.IMessageManager.html'>\SmartFactory\Interfaces\IMessageManager</a><br>
+<a href="interface-SmartFactory.Interfaces.IMessageManager.html">\SmartFactory\Interfaces\IMessageManager</a><br>
 
-<a href='interface-SmartFactory.Interfaces.ISettingsManager.html'>\SmartFactory\Interfaces\ISettingsManager</a><br>
+<a href="interface-SmartFactory.Interfaces.IRequestHandler.html">\SmartFactory\Interfaces\IRequestHandler</a><br>
+
+<a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">\SmartFactory\Interfaces\IRequestThrottlingManager</a><br>
+
+<a href="interface-SmartFactory.Interfaces.ISettingsManager.html">\SmartFactory\Interfaces\ISettingsManager</a><br>
+
+<a href="interface-SmartFactory.Interfaces.IShardManager.html">\SmartFactory\Interfaces\IShardManager</a><br>
 
 </div>
 
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
 
 </div>
 
@@ -182,7 +191,7 @@ through the array of parameters.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.IInitable.php.html#20'>SmartFactory/Interfaces/IInitable.php</a>
+<a href='source-src.SmartFactory.Interfaces.IInitable.php.html#20'>src/SmartFactory/Interfaces/IInitable.php</a>
 </div>
 
 
@@ -206,9 +215,11 @@ through the array of parameters.</p>
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#init">init()</a></div>
@@ -223,16 +234,19 @@ through the array of parameters.</p>
               <p>Initialization method.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
+
+
 <hr id="init">
-  
+
   <h1>Method: IInitable::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -246,7 +260,8 @@ through the array of parameters.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -254,7 +269,7 @@ through the array of parameters.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -264,7 +279,7 @@ through the array of parameters.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array</code>
             </td>
             <td>
                 
@@ -275,13 +290,14 @@ of the objects of your class.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -289,7 +305,7 @@ of the objects of your class.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\Exception</code><br>
   
   <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
   
@@ -312,11 +328,11 @@ of the objects of your class.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IInitable.php.html#36'>SmartFactory/Interfaces/IInitable.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IInitable.php.html#36'>src/SmartFactory/Interfaces/IInitable.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -109,19 +109,28 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">class</span> ObjectFactory
+{
+}</div>
+
 
 
 <div class="short-description">
-<p>Class for creation of the objects.</p>
+<p>Binds implementations to interfaces or parent classes and creates initialized objects.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>The class ObjectFactory is an auxiliary class that empowers the factory methods. It provides the methods
-for binding of class implementations to the interfaces and for creation of objects for the requested interface.</p>
+<p>Bindings can also map a class to itself, allowing a derived implementation to be
+substituted later without changing business logic. Singleton instances are shared
+per context and requested contract, rather than per implementation class.
+Contracts are specified by class/interface names using ::class. Creation functions
+declare a compatible, non-nullable class or interface as their native return type.
+Each binding requires a named function or closure that accepts no arguments and
+constructs, initializes and returns an implementation. The factory never invokes
+constructors directly and validates each result before returning or caching it.</p>
 </div>
 
 
@@ -156,7 +165,7 @@ for binding of class implementations to the interfaces and for creation of objec
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.ObjectFactory.php.html#21'>SmartFactory/ObjectFactory.php</a>
+<a href='source-src.SmartFactory.ObjectFactory.php.html#26'>src/SmartFactory/ObjectFactory.php</a>
 </div>
 
 
@@ -182,7 +191,7 @@ for binding of class implementations to the interfaces and for creation of objec
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Properties</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#$itable">$itable</a></div>
@@ -194,7 +203,33 @@ for binding of class implementations to the interfaces and for creation of objec
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal array for storing the mapping between interfaces/classes and the bound classes.</p>
+              <p>Stores declared return types and required creation functions by context and contract.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$resolution_path">$resolution_path</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the active dependency chain, including contexts, contracts and declared return types.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$resolving">$resolving</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Tracks contracts currently being constructed or initialized in each context.</p>
           </td>
       </tr><tr>
           <td>
@@ -207,31 +242,31 @@ for binding of class implementations to the interfaces and for creation of objec
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal array for storing the singleton instances for re-using.</p>
+              <p>Stores successfully initialized singleton instances by context and contract.</p>
           </td>
       </tr>
-      
+
   </table>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
-              <div style='float:left'><a href="#bindClass">bindClass()</a></div>
+              <div style='float:left'><a href="#assertMutable">assertMutable()</a></div>
 
               <div style='float:right'>
               <span class="label label-primary">static</span>
-              <span class='label label-success'>public</span>
+              <span class='label label-warning'>protected</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Binds a class to an interface or a parent class.</p>
+              <p>Prevents binding and cache mutations that affect an active resolution.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#bindClassContext">bindClassContext()</a></div>
+              <div style='float:left'><a href="#bindFactory">bindFactory()</a></div>
 
               <div style='float:right'>
               <span class="label label-primary">static</span>
@@ -240,7 +275,7 @@ for binding of class implementations to the interfaces and for creation of objec
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Binds a class to an interface or a parent class.</p>
+              <p>Binds a factory function to an interface or class in the specified context.</p>
           </td>
       </tr><tr>
           <td>
@@ -253,23 +288,89 @@ for binding of class implementations to the interfaces and for creation of objec
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Сreates an object that support the interface $interface_or_class.</p>
+              <p>Creates and initializes an implementation of the requested contract.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#reflectClass">reflectClass()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resolves a class/interface name to its canonical reflection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#reflectReturnClass">reflectReturnClass()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resolves the creation function's native return declaration to a class or interface.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#resetAll">resetAll()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Forgets all cached singletons and optionally all bindings.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#resetContext">resetContext()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Forgets cached singletons and optionally bindings in one context.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#resetInstance">resetInstance()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-primary">static</span>
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Forgets one cached singleton while preserving its binding.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
 <hr id="$itable">
-  
+
   <h1>Property: ObjectFactory::$itable</h1>
 
   <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$itable</span> = [];</div>
+  
 
   
   <div class="short-description">
-  <p>Internal array for storing the mapping between interfaces/classes and the bound classes.</p>
+  <p>Stores declared return types and required creation functions by context and contract.</p>
   </div>
   
 
@@ -278,7 +379,16 @@ for binding of class implementations to the interfaces and for creation of objec
   
   <h2>Type</h2>
   <div class="item_list">
-  array
+  <code class="php-type">array&lt;
+    string,
+    array&lt;
+        class-string,
+        array{
+            return_type: class-string,
+            factory_function: \ReflectionFunction
+        }
+    &gt;
+&gt;</code>
   </div>
   
 
@@ -298,16 +408,95 @@ for binding of class implementations to the interfaces and for creation of objec
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ObjectFactory.php.html#39'>SmartFactory/ObjectFactory.php</a>
-  </div><hr id="$singletons">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#44'>src/SmartFactory/ObjectFactory.php</a>
+  </div><hr id="$resolution_path">
+
+  <h1>Property: ObjectFactory::$resolution_path</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$resolution_path</span> = [];</div>
   
+
+  
+  <div class="short-description">
+  <p>Stores the active dependency chain, including contexts, contracts and declared return types.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;string&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#62'>src/SmartFactory/ObjectFactory.php</a>
+  </div><hr id="$resolving">
+
+  <h1>Property: ObjectFactory::$resolving</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$resolving</span> = [];</div>
+  
+
+  
+  <div class="short-description">
+  <p>Tracks contracts currently being constructed or initialized in each context.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">array&lt;string, array&lt;class-string, true&gt;&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#53'>src/SmartFactory/ObjectFactory.php</a>
+  </div><hr id="$singletons">
+
   <h1>Property: ObjectFactory::$singletons</h1>
 
   <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">array</span> <span class="php-var">$singletons</span> = [];</div>
+  
 
   
   <div class="short-description">
-  <p>Internal array for storing the singleton instances for re-using.</p>
+  <p>Stores successfully initialized singleton instances by context and contract.</p>
   </div>
   
 
@@ -316,7 +505,7 @@ for binding of class implementations to the interfaces and for creation of objec
   
   <h2>Type</h2>
   <div class="item_list">
-  array
+  <code class="php-type">array&lt;string, array&lt;class-string, object&gt;&gt;</code>
   </div>
   
 
@@ -336,44 +525,30 @@ for binding of class implementations to the interfaces and for creation of objec
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ObjectFactory.php.html#30'>SmartFactory/ObjectFactory.php</a>
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#35'>src/SmartFactory/ObjectFactory.php</a>
   </div>
 
-<hr id="bindClass">
-  
-  <h1>Method: ObjectFactory::bindClass()</h1>
+<hr id="assertMutable">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> bindClass(object|string <span class="php-var">$interface_or_class</span>, 
-                                 object|string <span class="php-var">$class</span>, 
-                                 ?<span class="php-keyword1">callable</span> <span class="php-var">$init_function</span> = <span class="php-keyword1">null</span>
-                                ) : void;
-</div>
+  <h1>Method: ObjectFactory::assertMutable()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> assertMutable(?<span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-keyword1">null</span>, ?<span class="php-keyword1">string</span> <span class="php-var">$contract_name</span> = <span class="php-keyword1">null</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Binds a class to an interface or a parent class.</p>
+  <p>Prevents binding and cache mutations that affect an active resolution.</p>
   </div>
   
 
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>The key point of this approach is the definition common interfaces
-and implementation of them in classes. When an object that supports an
-interface is requested, an instance of the corresponding bound class
-is created. When you want to change the class, you need just bind
-the new class to the interface.</p>
-<p>You can also bind a class to itself and request it by own name in factory
-method. And later, you can implement a derived class and change the binding
-without affecting the code in the business logic.</p>
-  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -381,183 +556,7 @@ without affecting the code in the business logic.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
-        
-        <tr>
-            <td>
-                $interface_or_class
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                object|string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Name of the class/interface as string or the class/interface.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $class
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                object|string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The class which instance should be created if the object is requested.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $init_function
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                ?callable
-            </td>
-            <td>
-                null
-            </td>
-            <td class="description_column">
-                <p>The optional initialization function. You can provide it to do some
-custom initialization. The signature of
-this function is:</p>
-<pre><code class="language-php"><span class="php-keyword1">function</span> (object <span class="php-var">$instance</span>) : void;</code></pre>
-<ul>
-<li>$instance - the created instance.</li>
-</ul>
-<p>Example:</p>
-<pre><code class="language-php">ObjectFactory::bindClass(ILanguageManager::<span class="php-keyword1">class</span>, LanguageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
-  <span class="php-var">$instance</span>-&gt;detectLanguage();
-});
 
-ObjectFactory::bindClass(IRecordsetManager::<span class="php-keyword1">class</span>, RecordsetManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
-  <span class="php-var">$instance</span>-&gt;setDBWorker(dbworker());
-});</code></pre>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  \Exception<br>
-  
-  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or bound class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the bound class is empty.</li>
-<li>if the bound class does not implement the corresponding interface.</li>
-<li>if the bound class is not instantiable.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul></div>
-  
-  
-  </div>
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.ObjectFactory.php.html#97'>SmartFactory/ObjectFactory.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="bindClassContext">
-  
-  <h1>Method: ObjectFactory::bindClassContext()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> bindClassContext(string <span class="php-var">$context</span>, 
-                                        object|string <span class="php-var">$interface_or_class</span>, 
-                                        object|string <span class="php-var">$class</span>, 
-                                        ?<span class="php-keyword1">callable</span> <span class="php-var">$init_function</span> = <span class="php-keyword1">null</span>
-                                       ) : void;
-</div>
-
-  
-  <div class="short-description">
-  <p>Binds a class to an interface or a parent class.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>The key point of this approach is the definition common interfaces
-and implementation of them in classes. When an object that supports an
-interface is requested, an instance of the corresponding bound class
-is created. When you want to change the class, you need just bind
-the new class to the interface.</p>
-<p>You can also bind a class to itself and request it by own name in factory
-method. And later, you can implement a derived class and change the binding
-without affecting the code in the business logic.</p>
-  </div>
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
         
         <tr>
             <td>
@@ -567,92 +566,44 @@ without affecting the code in the business logic.</p>
                 by value
             </td>
             <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The context of binding. You can introduce a different context, and bind another implementation.
-Then, you can request another instance specifying the context explicitly.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $interface_or_class
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                object|string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Name of the class/interface as string or the class/interface.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $class
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                object|string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The class which instance should be created if the object is requested.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $init_function
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                ?callable
+                <code class="php-type">?string</code>
             </td>
             <td>
                 null
             </td>
             <td class="description_column">
-                <p>The optional initialization function. You can provide it to do some
-custom initialization. The signature of
-this function is:</p>
-<pre><code class="language-php"><span class="php-keyword1">function</span> (object <span class="php-var">$instance</span>) : void;</code></pre>
-<ul>
-<li>$instance - the created instance.</li>
-</ul>
-<p>Example:</p>
-<pre><code class="language-php">ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</span>, ILanguageManager::<span class="php-keyword1">class</span>, LanguageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
-  <span class="php-var">$instance</span>-&gt;detectLanguage();
-});
-
-ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</span>, IRecordsetManager::<span class="php-keyword1">class</span>, RecordsetManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span>(<span class="php-var">$instance</span>) {
-  <span class="php-var">$instance</span>-&gt;setDBWorker(dbworker());
-});</code></pre>
+                <p>The context to check, or null to check all contexts.</p>
             </td>
         </tr>
         
+        <tr>
+            <td>
+                $contract_name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">?string</code>
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>The canonical contract name, or null to check the entire selected context.</p>
+            </td>
+        </tr>
         
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Returns normally when no affected contract is being resolved.</p></div>
   
   </div>
   
@@ -660,17 +611,9 @@ ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</spa
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
   
-  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or bound class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the bound class is empty.</li>
-<li>if the bound class does not implement the corresponding interface.</li>
-<li>if the bound class is not instantiable.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul></div>
+  <div class="item_description"><p>If the requested scope includes a contract currently being constructed or initialized.</p></div>
   
   
   </div>
@@ -691,7 +634,187 @@ ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</spa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ObjectFactory.php.html#162'>SmartFactory/ObjectFactory.php</a>
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#462'>src/SmartFactory/ObjectFactory.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="bindFactory">
+
+  <h1>Method: ObjectFactory::bindFactory()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> bindFactory(<span class="php-keyword1">string</span> <span class="php-var">$interface_or_class</span>, <span class="php-keyword1">callable</span> <span class="php-var">$factory_function</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  <h2>Type parameters</h2><ul class="type-parameters"><li><span class="php-type">T of <code class="php-type">object</code></span></li></ul>
+
+  
+  <div class="short-description">
+  <p>Binds a factory function to an interface or class in the specified context.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Contexts have independent bindings and singleton instances, with no fallback to
+the default context. Specify the requested contract using ::class. Omitting
+the context registers the default binding. The creation function's declared
+return type is checked against the contract without invoking the function.
+Existing bindings can be replaced before a singleton is created. Reset that
+singleton explicitly before replacing its creation function.</p>
+<p>Examples:</p>
+<pre><code>ObjectFactory::bindFactory(ILanguageManager::class, function (): LanguageManager {
+    $instance = new LanguageManager();
+
+    $instance-&gt;detectLanguage();
+
+    return $instance;
+});
+
+ObjectFactory::bindFactory(IRecordsetManager::class, function (): RecordsetManager {
+    $instance = new RecordsetManager();
+
+    $instance-&gt;setDBWorker(singleton(\SmartFactory\DatabaseWorkers\MySQL_DBWorker::class));
+
+    return $instance;
+}, "console");</code></pre>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $interface_or_class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">class-string&lt;T&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The interface or class name of the requested contract, supplied using ::class.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $factory_function
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">callable(): T</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A named function or closure called without arguments when an instance is requested.
+It must declare one non-nullable class or interface return type compatible with
+the contract and return a fully initialized implementation on each call.
+Missing, built-in, union and intersection return types are rejected.
+Method callbacks and invokable objects are not supported.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>The binding context; defaults to "default". Any string, including an empty string, is accepted.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Registers the binding without creating an instance.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
+  
+  <div class="item_description"><p>If the contract or declared return type is unknown, the return declaration is
+missing, unsupported, nullable or incompatible with the contract, the creation
+function is unsupported or requires arguments, or the contract has a cached
+singleton or is currently being resolved.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If autoloading the contract or declared return type throws an exception or error, it is propagated.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#121'>src/SmartFactory/ObjectFactory.php</a>
   </div>
   
 
@@ -710,28 +833,37 @@ ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</spa
   
 
   <hr id="getInstance">
-  
+
   <h1>Method: ObjectFactory::getInstance()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getInstance(object|string <span class="php-var">$interface_or_class</span>, 
-                                   bool <span class="php-var">$singleton</span>, 
-                                   string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>
-                                  ) : object;
-</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> getInstance(<span class="php-keyword1">string</span> <span class="php-var">$interface_or_class</span>, <span class="php-keyword1">bool</span> <span class="php-var">$singleton</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): <span class="php-keyword1">object</span>;</div>
+  <h2>Type parameters</h2><ul class="type-parameters"><li><span class="php-type">T of <code class="php-type">object</code></span></li></ul>
 
   
   <div class="short-description">
-  <p>Сreates an object that support the interface $interface_or_class.</p>
+  <p>Creates and initializes an implementation of the requested contract.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Calls the registered creation function without arguments and verifies that its
+result implements or extends the requested contract.
+A singleton is cached only after successful creation and result validation.
+Failed requests can be retried. Recursive requests for the same contract in
+the same context are rejected throughout the creation function's execution.
+Singleton identity is scoped to the context and contract; different contracts
+bound to the same implementation can have different singleton instances.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -739,7 +871,7 @@ ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</spa
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -749,13 +881,13 @@ ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</spa
                 by value
             </td>
             <td>
-                object|string
+                <code class="php-type">class-string&lt;T&gt;</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Name of the class/interface which instance should be created.</p>
+                <p>The interface or class name of the requested contract, supplied using ::class.</p>
             </td>
         </tr>
         
@@ -767,16 +899,13 @@ ObjectFactory::bindClassContext(<span class="php-quote">&quot;console&quot;</spa
                 by value
             </td>
             <td>
-                bool
+                <code class="php-type">bool</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>If the parameter is true, it ensures that only one instance of this object exists.
-The singleton is a usual patter for the action objects like SessionManager, EventManager,
-DBWorker etc. It makes no sense to produce many instances of such classes,
-it wastes the computer resources and might cause errors.</p>
+                <p>Whether to reuse a cached instance for this context and contract. If false, calls the creation function every time.</p>
             </td>
         </tr>
         
@@ -788,26 +917,26 @@ it wastes the computer resources and might cause errors.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;default&quot;
             </td>
             <td class="description_column">
-                <p>The context of binding. You can introduce a different context, and bind another implementation.
-Then, you can request another instance specifying the context explicitly.</p>
+                <p>The exact binding context, without fallback to the default context.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  object<br>
+  <code class="php-type">T</code><br>
   
-  <div class="item_description"><p>Returns object of the class bound to the interface.</p></div>
+  <div class="item_description"><p>Returns the fully initialized implementation of the contract.</p></div>
   
   </div>
   
@@ -815,14 +944,17 @@ Then, you can request another instance specifying the context explicitly.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
   
-  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul></div>
+  <div class="item_description"><p>If the contract name is missing or unknown, no binding exists in the context,
+a circular dependency is detected, or the creation function returns a value
+that does not implement or extend the requested contract.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If autoloading or the creation function throws an exception or error, it is
+propagated unchanged and the failed instance is not cached.</p></div>
   
   
   </div>
@@ -843,11 +975,670 @@ Then, you can request another instance specifying the context explicitly.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.ObjectFactory.php.html#236'>SmartFactory/ObjectFactory.php</a>
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#196'>src/SmartFactory/ObjectFactory.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="reflectClass">
+
+  <h1>Method: ObjectFactory::reflectClass()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> reflectClass(<span class="php-keyword1">string</span> <span class="php-var">$class</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span>): \ReflectionClass;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Resolves a class/interface name to its canonical reflection.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">class-string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>An existing class/interface name, including aliases and alternate casing.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The operation's context, included in validation errors.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">\ReflectionClass&lt;object&gt;</code><br>
+  
+  <div class="item_description"><p>Returns reflection with the canonical class or interface name.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
+  
+  <div class="item_description"><p>If the name is empty or does not identify an existing class or interface.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If autoloading the class or interface throws an exception or error, it is propagated.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#362'>src/SmartFactory/ObjectFactory.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="reflectReturnClass">
+
+  <h1>Method: ObjectFactory::reflectReturnClass()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> reflectReturnClass(\ReflectionFunction <span class="php-var">$creator</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span>, <span class="php-keyword1">string</span> <span class="php-var">$contract_name</span>): \ReflectionClass;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Resolves the creation function's native return declaration to a class or interface.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Only one non-nullable named object type is accepted. Contextual names self,
+parent and static are resolved using the closure's lexical or called class.
+The creation function is not invoked.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $creator
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">\ReflectionFunction</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The registered named function or closure to inspect.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The binding context, included in validation errors.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $contract_name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">class-string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The canonical requested contract name, included in validation errors.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">\ReflectionClass&lt;object&gt;</code><br>
+  
+  <div class="item_description"><p>Returns reflection for the existing class or interface declared as the return type.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
+  
+  <div class="item_description"><p>If the return declaration is missing, built-in, nullable, a union or intersection,
+names an unknown type, or contains a contextual name without a matching class scope.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If autoloading the declared return type throws an exception or error, it is propagated.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#399'>src/SmartFactory/ObjectFactory.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="resetAll">
+
+  <h1>Method: ObjectFactory::resetAll()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> resetAll(<span class="php-keyword1">bool</span> <span class="php-var">$remove_bindings</span> = <span class="php-keyword1">false</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Forgets all cached singletons and optionally all bindings.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Previously returned objects remain valid and are not disconnected or disposed.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $remove_bindings
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">bool</code>
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Whether to remove every binding as well as all cached instances.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Clears factory state according to the requested scope.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
+  
+  <div class="item_description"><p>If any contract is currently being constructed or initialized.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#331'>src/SmartFactory/ObjectFactory.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="resetContext">
+
+  <h1>Method: ObjectFactory::resetContext()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> resetContext(<span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>, <span class="php-keyword1">bool</span> <span class="php-var">$remove_bindings</span> = <span class="php-keyword1">false</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Forgets cached singletons and optionally bindings in one context.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Previously returned objects remain valid and are not disconnected or disposed.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>The context to reset; an unknown context is ignored.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $remove_bindings
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">bool</code>
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Whether to remove the context's bindings as well as its cached instances.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Clears the selected context while preserving other contexts.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
+  
+  <div class="item_description"><p>If any contract in the context is currently being constructed or initialized.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#304'>src/SmartFactory/ObjectFactory.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="resetInstance">
+
+  <h1>Method: ObjectFactory::resetInstance()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">static</span> <span class="php-keyword1">function</span> resetInstance(<span class="php-keyword1">string</span> <span class="php-var">$interface_or_class</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Forgets one cached singleton while preserving its binding.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Previously returned objects remain valid and are not disconnected or disposed.
+A later singleton request creates and initializes a new object.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $interface_or_class
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">class-string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The interface or class name of the contract to reset, supplied using ::class.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                &quot;default&quot;
+            </td>
+            <td class="description_column">
+                <p>The context whose cached instance should be forgotten.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Removes the cached instance, or does nothing if none exists.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
+  
+  <div class="item_description"><p>If the contract name is missing or unknown, or the contract is currently being resolved.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If autoloading the contract throws an exception or error, it is propagated.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ObjectFactory.php.html#271'>src/SmartFactory/ObjectFactory.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

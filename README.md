@@ -10,7 +10,7 @@ For more details see [Presentation](http://php-smart-factory.org/smartfactory_pr
 
 ### Requirements
 
-- PHP 8.4+
+- PHP 8.5+
 
 ### Installation
 
@@ -25,8 +25,8 @@ composer require "smartfactory/smartfactory"
   ...
 
   "require": {
-    "php": ">=8.4",
-    "smartfactory/smartfactory": ">=2.1.25"
+    "php": ">=8.5",
+    "smartfactory/smartfactory": ">=2.2.0"
   }
   
   ...
@@ -48,13 +48,13 @@ composer require "smartfactory/smartfactory"
 
 3. Implement your classes and functions. 
 
-4. Bind you classes to the interfaces in the file *initialization_inc.php* to be able to use the IoC approach for creating objects offered by the library SmartFactory.
+4. Bind you factory functions to the interfaces in the file *initialization_inc.php* to be able to use the IoC approach for creating objects offered by the library SmartFactory.
 
 5. Implement you business logic in the root directory or any subdirectory. 
 
 7. Implement the API request handlers for JSON or XML requests if necessary.
 
-8. Add translation texts for your application over the *localization/edit.php* or directly into the JSON file *localization/texts.json*. Use the script *localization/check.php* to check your translations for missing translations.
+8. Add translation texts for your application over the *localization/edit.php* or directly into the JSON file *localization/texts.json*. Use the option *Check* to check your translations for missing translations.
 
 ## Directory Structure 
 

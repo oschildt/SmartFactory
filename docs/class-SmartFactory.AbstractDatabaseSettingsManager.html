@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: AbstractDatabaseSettingsManager
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">AbstractDatabaseSettingsManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: AbstractDatabaseSettingsManager</h1>
+
+<span class="label label-primary">abstract</span>
+
+<div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">class</span> AbstractDatabaseSettingsManager <span class="php-keyword1">extends</span> AbstractSettingsManager
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Shares connection isolation and transaction ownership for database settings managers.</p>
+</div>
+
+
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.AbstractSettingsManager.html">\SmartFactory\AbstractSettingsManager</a><br>
+
+</div>
+
+
+
+
+
+<h2>Known inheritances</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.ApplicationSettingsManager.html">\SmartFactory\ApplicationSettingsManager</a><br>
+
+<a href="class-SmartFactory.UserSettingsManager.html">\SmartFactory\UserSettingsManager</a><br>
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.AbstractDatabaseSettingsManager.php.html#12'>src/SmartFactory/AbstractDatabaseSettingsManager.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$dbworker">$dbworker</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The configured worker; statements are executed through connected clones.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$no_own_transaction">$no_own_transaction</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Whether saving requires an existing caller-managed transaction.</p>
+          </td>
+      </tr>
+
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#databaseWorker">databaseWorker()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Obtains a connected clone without replacing the caller's statements or results.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#setDBWorker">setDBWorker()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Selects the worker and transaction policy, discarding the previous snapshot.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#validateIdentifier">validateIdentifier()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Validates an unquoted SQL table or column name before composing a query.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#withTransaction">withTransaction()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Executes one aggregate save inside an owned or caller-managed transaction.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<hr id="$dbworker">
+
+  <h1>Property: AbstractDatabaseSettingsManager::$dbworker</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> ?DBWorker <span class="php-var">$dbworker</span> = <span class="php-keyword1">null</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>The configured worker; statements are executed through connected clones.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">(<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a> | null)</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractDatabaseSettingsManager.php.html#21'>src/SmartFactory/AbstractDatabaseSettingsManager.php</a>
+  </div><hr id="$no_own_transaction">
+
+  <h1>Property: AbstractDatabaseSettingsManager::$no_own_transaction</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">bool</span> <span class="php-var">$no_own_transaction</span> = <span class="php-keyword1">false</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Whether saving requires an existing caller-managed transaction.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractDatabaseSettingsManager.php.html#30'>src/SmartFactory/AbstractDatabaseSettingsManager.php</a>
+  </div>
+
+<hr id="databaseWorker">
+
+  <h1>Method: AbstractDatabaseSettingsManager::databaseWorker()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> databaseWorker(): DBWorker;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Obtains a connected clone without replacing the caller's statements or results.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a></code><br>
+  
+  <div class="item_description"><p>Returns a worker sharing the connection and its transaction state.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If no worker has been configured.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If connecting to the configured database fails.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractDatabaseSettingsManager.php.html#96'>src/SmartFactory/AbstractDatabaseSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="setDBWorker">
+
+  <h1>Method: AbstractDatabaseSettingsManager::setDBWorker()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setDBWorker(DBWorker <span class="php-var">$dbworker</span>, <span class="php-keyword1">bool</span> <span class="php-var">$no_own_transaction</span> = <span class="php-keyword1">false</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Selects the worker and transaction policy, discarding the previous snapshot.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $dbworker
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a></code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The worker used to read and save settings.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $no_own_transaction
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">bool</code>
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>True requires a caller-managed READ COMMITTED transaction. False starts one
+when necessary and joins an existing READ COMMITTED transaction without committing it.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not connect or load settings immediately.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractDatabaseSettingsManager.php.html#47'>src/SmartFactory/AbstractDatabaseSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="validateIdentifier">
+
+  <h1>Method: AbstractDatabaseSettingsManager::validateIdentifier()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateIdentifier(<span class="php-keyword1">string</span> <span class="php-var">$name</span>, <span class="php-keyword1">bool</span> <span class="php-var">$table</span> = <span class="php-keyword1">false</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Validates an unquoted SQL table or column name before composing a query.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The unquoted SQL identifier.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $table
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">bool</code>
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Whether up to three schema-qualified name components are allowed.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Accepts the same identifier syntax as DBWorker::save_records().</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If the name is empty, quoted or contains unsupported SQL syntax.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractDatabaseSettingsManager.php.html#72'>src/SmartFactory/AbstractDatabaseSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="withTransaction">
+
+  <h1>Method: AbstractDatabaseSettingsManager::withTransaction()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> withTransaction(<span class="php-keyword1">callable</span> <span class="php-var">$action</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Executes one aggregate save inside an owned or caller-managed transaction.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $action
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">callable(<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a>): array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The action which locks, merges and saves the complete settings aggregate.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">array&lt;string, mixed&gt;</code><br>
+  
+  <div class="item_description"><p>Returns the saved snapshot after committing an owned transaction.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If a required external transaction is absent or an external transaction does
+not use READ COMMITTED, which is required for fresh reads after acquiring a lock.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If connecting, saving or committing fails. Owned transactions are rolled back;
+callers retain rollback responsibility for external transactions after any failure.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractDatabaseSettingsManager.php.html#128'>src/SmartFactory/AbstractDatabaseSettingsManager.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

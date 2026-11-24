@@ -107,11 +107,12 @@
                 <div class="col-md-12">
                     <h1>Function: set_cookie()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> set_cookie(string <span class="php-var">$name</span>, string <span class="php-var">$value</span> = <span class="php-quote">&quot;&quot;</span>, int <span class="php-var">$expires</span> = <span class="php-num">0</span>, <span class="php-keyword1">array</span> <span class="php-var">$params</span> = []): bool;</div>
+<div class="definition"><span class="php-keyword1">function</span> set_cookie(<span class="php-keyword1">string</span> <span class="php-var">$name</span>, <span class="php-keyword1">string</span> <span class="php-var">$value</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">int</span> <span class="php-var">$expires</span> = <span class="php-num">0</span>, <span class="php-keyword1">array</span> <span class="php-var">$params</span> = []): <span class="php-keyword1">bool</span>;</div>
+
 
 
 <div class="short-description">
-<p>Sets the cookie name=value.</p>
+<p>Queues a cookie response header using the native cookie options.</p>
 </div>
 
 
@@ -121,7 +122,8 @@
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -139,7 +141,7 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
@@ -157,7 +159,7 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;&quot;
@@ -175,13 +177,13 @@
               by value
           </td>
           <td>
-              int
+              <code class="php-type">int</code>
           </td>
           <td>
               0
           </td>
           <td class="description_column">
-              <p>The time the cookie expires.</p>
+              <p>The expiration Unix timestamp; zero creates a session cookie. Overrides params["expires"].</p>
           </td>
       </tr>
       
@@ -193,30 +195,53 @@
               by value
           </td>
           <td>
-              array
+              <code class="php-type">array{
+    expires?: int,
+    path?: string,
+    domain?: string,
+    secure?: bool,
+    httponly?: bool,
+    samesite?: string
+}</code>
           </td>
           <td>
               []
           </td>
           <td class="description_column">
-              <p>Any additional parameters like expires, path, domain, secure, httponly or samesite.</p>
+              <p>Additional native cookie options, such as path, domain, secure, httponly and samesite.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-bool<br>
+<code class="php-type">bool</code><br>
 
-<div class="item_description"><p>Returns true if the cookie has been set successfully, otherwise false.</p></div>
+<div class="item_description"><p>Returns true if the response header was queued, or false if headers were already sent.
+This does not confirm that the client accepted the cookie.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+<code class="php-type">\ValueError</code><br>
+
+<div class="item_description"><p>If the cookie name, path or domain contains forbidden characters, an option is
+unknown, or the expiration timestamp exceeds the native supported range.</p></div>
+
+
+<code class="php-type">\TypeError</code><br>
+
+<div class="item_description"><p>If a cookie option has a type that the native setcookie() function rejects.</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -239,11 +264,11 @@ bool<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#393'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#487'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -1,0 +1,4550 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: Oracle_DBWorker
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.DatabaseWorkers.html">DatabaseWorkers</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">Oracle_DBWorker</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: Oracle_DBWorker</h1>
+
+
+
+<div class="definition"><span class="php-keyword1">class</span> Oracle_DBWorker <span class="php-keyword1">extends</span> DBWorker
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Database worker for Oracle Database 12c and later using the OCI8 extension.</p>
+</div>
+
+
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Uses AL32UTF8 connections, native named binds and explicit temporary BLOB/CLOB descriptors.
+Automatic identity retrieval discovers the actual identity column and appends RETURNING
+only for eligible INSERT VALUES statements. Shared transaction state determines whether
+execution may commit automatically.</p>
+<p>A database service is selected when connecting; use_database() changes CURRENT_SCHEMA.
+LOB fields remain descriptors until read or copied to a stream. Result rows are read
+sequentially without buffering the complete result set.</p>
+</div>
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+
+</div>
+
+
+
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-Database.html'>Database</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#29'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+</div>
+
+
+<h2>See also</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$bound_values">$bound_values</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Keeps native bind variables alive until statement execution has completed.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$lob_descriptors">$lob_descriptors</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Keeps Oracle input LOB descriptors alive while statements or results may reference them.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$return_identity">$return_identity</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Indicates whether an internal RETURNING bind was appended to the Oracle statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$returned_id">$returned_id</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Provides stable storage for the identifier returned by an Oracle output bind.</p>
+          </td>
+      </tr>
+
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#accept_result">accept_result()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Captures Oracle column metadata, DML counts and an automatically returned identity.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#bind_identity">bind_identity()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Binds the output variable used by an automatically appended Oracle RETURNING clause.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#connect">connect()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Establishes the database connection using the initialized settings.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#control">control()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Executes an internal Oracle session or transaction command without replacing the public result.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#copy_value_to_stream">copy_value_to_stream()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Copies one native field value to the destination stream.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#create_clone">create_clone()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Creates a clone of the DBWorker that uses the same open connection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#decode_value">decode_value()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Converts a native field value into a value exposed by the public field accessors.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#dialect">dialect()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the SQL dialect used by the placeholder compiler.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#errors">errors()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the most recent OCI8 error for a specific handle or the global connection operation.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#escape">escape()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Escapes a string for inclusion in an SQL string literal without adding quotation marks.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#execution_mode">execution_mode()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Chooses the Oracle execution mode from the shared transaction state.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#format_date">format_date()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Formats a date as an SQL expression for the selected database.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#format_datetime">format_datetime()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Formats a date/time as an SQL expression for the selected database.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#free_lobs">free_lobs()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Frees temporary Oracle LOB descriptors retained by the prepared statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#get_extension_name">get_extension_name()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the name of the required PHP extension - "oci8".</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#get_rdbms_name">get_rdbms_name()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the name of the supported database - "Oracle Database".</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#get_schema">get_schema()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the Oracle session's selected schema.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#is_connected">is_connected()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the state of this worker's native connection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_execute">native_execute()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Binds validated values and executes the native prepared statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_fetch">native_fetch()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Fetches the next row through the native driver and releases the cursor at EOF.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_free_result">native_free_result()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Releases native result resources without discarding a reusable prepared statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_free_statement">native_free_statement()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Releases the native prepared statement and its driver-specific bind state.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_prepare">native_prepare()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Creates a native statement from SQL whose bind markers have already been compiled.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_query">native_query()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Executes SQL through the native driver and records the resulting metadata.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_check">native_save_check()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Requires fresh Oracle statement snapshots after waiting for a service-row lock.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_insert">native_save_insert()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Preserves BY DEFAULT Oracle identities and allocates new IDs without transactional DDL.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_key">native_save_key()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Normalizes Oracle keys using native numeric representations and linguistic sort keys.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_lock">native_save_lock()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Creates or locks an Oracle service row while handling only its expected primary-key duplicate.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_next_identity">native_save_next_identity()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Obtains an Oracle identity sequence value without altering or committing the target table.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_table">native_save_table()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resolves Oracle table names, native comparison keys and identity sequence metadata.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_transaction">native_transaction()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Performs a native transaction operation on the shared connection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#normalize_sql">normalize_sql()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Normalizes Oracle statement terminators while preserving PL/SQL blocks.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#reset_driver_state">reset_driver_state()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resets driver-specific state after cloning or statement cleanup.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#use_database">use_database()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Changes CURRENT_SCHEMA for the Oracle session.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#with_identity">with_identity()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Adds RETURNING for the discovered identity column of an eligible Oracle INSERT VALUES statement.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<hr id="$bound_values">
+
+  <h1>Property: Oracle_DBWorker::$bound_values</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">array</span> <span class="php-var">$bound_values</span> = [];</div>
+  
+
+  
+  <div class="short-description">
+  <p>Keeps native bind variables alive until statement execution has completed.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">array&lt;int, (int | string | null)&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#56'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div><hr id="$lob_descriptors">
+
+  <h1>Property: Oracle_DBWorker::$lob_descriptors</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">array</span> <span class="php-var">$lob_descriptors</span> = [];</div>
+  
+
+  
+  <div class="short-description">
+  <p>Keeps Oracle input LOB descriptors alive while statements or results may reference them.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">array&lt;int, \OCILob&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#65'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div><hr id="$return_identity">
+
+  <h1>Property: Oracle_DBWorker::$return_identity</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">bool</span> <span class="php-var">$return_identity</span> = <span class="php-keyword1">false</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Indicates whether an internal RETURNING bind was appended to the Oracle statement.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#38'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div><hr id="$returned_id">
+
+  <h1>Property: Oracle_DBWorker::$returned_id</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">mixed</span> <span class="php-var">$returned_id</span> = <span class="php-keyword1">null</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Provides stable storage for the identifier returned by an Oracle output bind.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">(int | string | null)</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#47'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+
+<hr id="accept_result">
+
+  <h1>Method: Oracle_DBWorker::accept_result()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> accept_result(<span class="php-var">$statement</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Captures Oracle column metadata, DML counts and an automatically returned identity.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Ordinary uppercase Oracle column names are exposed in lowercase. Case-distinct quoted
+aliases remain distinct. LOB contents are not loaded while inspecting metadata.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $statement
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">resource</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The successfully executed OCI8 statement resource.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the returned identity exceeds the PHP integer range.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#744'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="bind_identity">
+
+  <h1>Method: Oracle_DBWorker::bind_identity()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> bind_identity(<span class="php-var">$statement</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Binds the output variable used by an automatically appended Oracle RETURNING clause.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The output value is stored in an object property so its storage remains valid through execution.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $statement
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">resource</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The parsed OCI8 statement to receive the generated identifier.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the native bind operation fails.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#714'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="connect">
+
+  <h1>Method: Oracle_DBWorker::connect()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Establishes the database connection using the initialized settings.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Uses AL32UTF8 and deterministic NLS date/time and numeric formats.
+A complete connection_string is used as supplied. Otherwise db_server may contain an
+Easy Connect descriptor, or a host combined with the db_name service. An optional
+db_schema changes CURRENT_SCHEMA. A read-only worker starts a managed read-only transaction.
+An already connected worker keeps its existing connection.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If connection settings are incomplete, connection or session initialization fails, the requested
+call timeout cannot be configured, or a read-only transaction cannot be started.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#connect">\SmartFactory\DatabaseWorkers\DBWorker::connect()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#209'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#init">\SmartFactory\DatabaseWorkers\DBWorker::init()</a><br>
+  
+  
+  <a href="class-SmartFactory.DatabaseWorkers.Oracle_DBWorker.html#is_connected">\SmartFactory\DatabaseWorkers\Oracle_DBWorker::is_connected()</a><br>
+  
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection">\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="control">
+
+  <h1>Method: Oracle_DBWorker::control()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> control(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>, <span class="php-keyword1">int</span> <span class="php-var">$mode</span> = OCI_COMMIT_ON_SUCCESS): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Executes an internal Oracle session or transaction command without replacing the public result.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The temporary OCI8 statement is always released.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The internal SQL command.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $mode
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">int</code>
+            </td>
+            <td>
+                OCI_COMMIT_ON_SUCCESS
+            </td>
+            <td class="description_column">
+                <p>The OCI8 execution mode. The default commits on success; transaction commands can disable automatic commit.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If parsing or executing the command fails.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#303'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="copy_value_to_stream">
+
+  <h1>Method: Oracle_DBWorker::copy_value_to_stream()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> copy_value_to_stream(<span class="php-keyword1">int</span> <span class="php-var">$index</span>, <span class="php-var">$stream</span>): <span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Copies one native field value to the destination stream.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Drivers override this hook to read native LOB objects without first materializing their contents.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $index
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">int</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The zero-based index of the field in the current row.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $stream
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">resource</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The caller-owned writable destination stream.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">int</code><br>
+  
+  <div class="item_description"><p>Returns the number of bytes written; NULL fields produce zero bytes.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If a stream is invalid or a read/write operation fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#copy_value_to_stream">\SmartFactory\DatabaseWorkers\DBWorker::copy_value_to_stream()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1020'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="create_clone">
+
+  <h1>Method: Oracle_DBWorker::create_clone()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone(): Oracle_DBWorker;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Creates a clone of the DBWorker that uses the same open connection.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>This is useful for additional queries while iterating over an active result set.
+Closing one worker does not close the shared connection while another worker owns it.
+Native driver restrictions on concurrent results still apply.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.Oracle_DBWorker.html">Oracle_DBWorker</a></code><br>
+  
+  <div class="item_description"><p>Returns a worker sharing the connection and transaction state, with independent statements and results.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#create_clone">\SmartFactory\DatabaseWorkers\DBWorker::create_clone()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#125'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="decode_value">
+
+  <h1>Method: Oracle_DBWorker::decode_value()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> decode_value(<span class="php-keyword1">int</span> <span class="php-var">$index</span>, <span class="php-keyword1">int</span> <span class="php-var">$type</span>): <span class="php-keyword1">mixed</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Converts a native field value into a value exposed by the public field accessors.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Date conversion is performed by field_by_num() after native value decoding.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $index
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">int</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The zero-based index of a field in the current row.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $type
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">int</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The requested DBWorker conversion type.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">mixed</code><br>
+  
+  <div class="item_description"><p>Returns the native field value, or the complete LOB contents as a string.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If a stream is invalid or a read/write operation fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#decode_value">\SmartFactory\DatabaseWorkers\DBWorker::decode_value()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#975'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="dialect">
+
+  <h1>Method: Oracle_DBWorker::dialect()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> dialect(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the SQL dialect used by the placeholder compiler.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns "oracle".</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#dialect">\SmartFactory\DatabaseWorkers\DBWorker::dialect()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#77'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.PreparedQuery.html#compile">\SmartFactory\DatabaseWorkers\PreparedQuery::compile()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="errors">
+
+  <h1>Method: Oracle_DBWorker::errors()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> errors(<span class="php-keyword1">mixed</span> <span class="php-var">$handle</span> = <span class="php-keyword1">null</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the most recent OCI8 error for a specific handle or the global connection operation.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $handle
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(resource | null)</code>
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>An OCI8 statement/connection resource, or NULL to inspect the global OCI8 error.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the OCI8 message, or a fallback message if no native error is available.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#179'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="escape">
+
+  <h1>Method: Oracle_DBWorker::escape()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(<span class="php-keyword1">string</span> <span class="php-var">$str</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Escapes a string for inclusion in an SQL string literal without adding quotation marks.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The result is intended for string literals, not SQL identifiers.
+Prefer bound parameters when supplying application values to a query.
+This operation does not require an open database connection.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $str
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The string to escape.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the escaped string.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#escape">\SmartFactory\DatabaseWorkers\DBWorker::escape()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1066'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#quotes_or_null">\SmartFactory\DatabaseWorkers\DBWorker::quotes_or_null()</a><br>
+  
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_query">\SmartFactory\DatabaseWorkers\DBWorker::prepare_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="execution_mode">
+
+  <h1>Method: Oracle_DBWorker::execution_mode()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> execution_mode(): <span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Chooses the Oracle execution mode from the shared transaction state.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Read-only workers automatically start another read-only transaction after completion of the previous one.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">int</code><br>
+  
+  <div class="item_description"><p>Returns OCI_NO_AUTO_COMMIT for an active transaction, otherwise OCI_COMMIT_ON_SUCCESS.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If a required read-only transaction cannot be started.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#488'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="format_date">
+
+  <h1>Method: Oracle_DBWorker::format_date()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(<span class="php-keyword1">int</span>|\DateTimeInterface|<span class="php-keyword1">null</span> <span class="php-var">$date</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Formats a date as an SQL expression for the selected database.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $date
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(int | \DateTimeInterface | null)</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A Unix timestamp, a date/time object, or NULL. Timestamp zero is a valid date.
+Objects retain their timezone; integer timestamps use the configured PHP timezone.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the quoted date expression, or the SQL literal null.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_date">\SmartFactory\DatabaseWorkers\DBWorker::format_date()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1086'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_date_bind">\SmartFactory\DatabaseWorkers\DBWorker::format_date_bind()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="format_datetime">
+
+  <h1>Method: Oracle_DBWorker::format_datetime()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(<span class="php-keyword1">int</span>|\DateTimeInterface|<span class="php-keyword1">null</span> <span class="php-var">$datetime</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Formats a date/time as an SQL expression for the selected database.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $datetime
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(int | \DateTimeInterface | null)</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A Unix timestamp, a date/time object, or NULL. Timestamp zero is a valid date.
+Objects retain their timezone; integer timestamps use the configured PHP timezone.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the quoted date expression, or the SQL literal null.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_datetime">\SmartFactory\DatabaseWorkers\DBWorker::format_datetime()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1108'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_datetime_bind">\SmartFactory\DatabaseWorkers\DBWorker::format_datetime_bind()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="free_lobs">
+
+  <h1>Method: Oracle_DBWorker::free_lobs()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> free_lobs(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Frees temporary Oracle LOB descriptors retained by the prepared statement.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Input descriptors are kept alive while the statement and its result may still reference them.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#874'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="get_extension_name">
+
+  <h1>Method: Oracle_DBWorker::get_extension_name()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the name of the required PHP extension - "oci8".</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns "oci8".</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#get_extension_name">\SmartFactory\DatabaseWorkers\DBWorker::get_extension_name()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#93'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#is_extension_installed">\SmartFactory\DatabaseWorkers\DBWorker::is_extension_installed()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="get_rdbms_name">
+
+  <h1>Method: Oracle_DBWorker::get_rdbms_name()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the name of the supported database - "Oracle Database".</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns "Oracle Database".</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#get_rdbms_name">\SmartFactory\DatabaseWorkers\DBWorker::get_rdbms_name()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#107'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="get_schema">
+
+  <h1>Method: Oracle_DBWorker::get_schema()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_schema(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the Oracle session's selected schema.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the shared CURRENT_SCHEMA value, or the configured/default schema before switching.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#get_schema">\SmartFactory\DatabaseWorkers\DBWorker::get_schema()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#331'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.Oracle_DBWorker.html#use_database">\SmartFactory\DatabaseWorkers\Oracle_DBWorker::use_database()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="is_connected">
+
+  <h1>Method: Oracle_DBWorker::is_connected()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected(): <span class="php-keyword1">bool</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the state of this worker's native connection.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code><br>
+  
+  <div class="item_description"><p>Returns true if an open OCI8 connection resource is attached; otherwise returns false.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected">\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#143'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#check_connection">\SmartFactory\DatabaseWorkers\DBWorker::check_connection()</a><br>
+  
+  
+  <a href="class-SmartFactory.DatabaseWorkers.Oracle_DBWorker.html#connect">\SmartFactory\DatabaseWorkers\Oracle_DBWorker::connect()</a><br>
+  
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection">\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_execute">
+
+  <h1>Method: Oracle_DBWorker::native_execute()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_execute(<span class="php-keyword1">array</span> <span class="php-var">$values</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Binds validated values and executes the native prepared statement.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Binds every OCI8 descriptor through its own persistent array entry. Explicit LOB
+wrappers and plain strings longer than 4000 bytes use temporary LOB descriptors.
+Input locators remain alive while the statement or result can reference them.
+Execution mode is chosen from the connection-wide transaction flag.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $values
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">list&lt;(scalar | null | <a href="class-SmartFactory.DatabaseWorkers.BlobValue.html">BlobValue</a> | <a href="class-SmartFactory.DatabaseWorkers.ClobValue.html">ClobValue</a>)&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The normalized values in SQL occurrence order, including any explicit LOB wrappers.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If binding, LOB processing or native execution fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_execute">\SmartFactory\DatabaseWorkers\DBWorker::native_execute()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#593'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::execute_prepared_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_fetch">
+
+  <h1>Method: Oracle_DBWorker::native_fetch()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_fetch(): ?<span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Fetches the next row through the native driver and releases the cursor at EOF.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Repeated calls after EOF return NULL without fetching from an exhausted OCI8 statement.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">(list&lt;mixed&gt; | null)</code><br>
+  
+  <div class="item_description"><p>Returns a numerically indexed row, or NULL at the end of the result set.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the native fetch operation fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_fetch">\SmartFactory\DatabaseWorkers\DBWorker::native_fetch()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#815'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#fetch_row">\SmartFactory\DatabaseWorkers\DBWorker::fetch_row()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_free_result">
+
+  <h1>Method: Oracle_DBWorker::native_free_result()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_free_result(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Releases native result resources without discarding a reusable prepared statement.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Implementations must distinguish a result handle from a statement handle when both refer to the same resource.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_free_result">\SmartFactory\DatabaseWorkers\DBWorker::native_free_result()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#849'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#free_result">\SmartFactory\DatabaseWorkers\DBWorker::free_result()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_free_statement">
+
+  <h1>Method: Oracle_DBWorker::native_free_statement()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_free_statement(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Releases the native prepared statement and its driver-specific bind state.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_free_statement">\SmartFactory\DatabaseWorkers\DBWorker::native_free_statement()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#894'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#free_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::free_prepared_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_prepare">
+
+  <h1>Method: Oracle_DBWorker::native_prepare()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_prepare(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Creates a native statement from SQL whose bind markers have already been compiled.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The SQL query containing native bind markers.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the native statement cannot be prepared.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_prepare">\SmartFactory\DatabaseWorkers\DBWorker::native_prepare()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#559'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_query">\SmartFactory\DatabaseWorkers\DBWorker::prepare_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_query">
+
+  <h1>Method: Oracle_DBWorker::native_query()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_query(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Executes SQL through the native driver and records the resulting metadata.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The SQL query to execute. Driver-specific identity handling may extend it.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If native query execution fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_query">\SmartFactory\DatabaseWorkers\DBWorker::native_query()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#514'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_query">\SmartFactory\DatabaseWorkers\DBWorker::execute_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_check">
+
+  <h1>Method: Oracle_DBWorker::native_save_check()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_check(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Requires fresh Oracle statement snapshots after waiting for a service-row lock.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the caller transaction uses a fixed-snapshot isolation level.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_check">\SmartFactory\DatabaseWorkers\DBWorker::native_save_check()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1264'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_insert">
+
+  <h1>Method: Oracle_DBWorker::native_save_insert()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_insert(<span class="php-keyword1">array</span> <span class="php-var">$context</span>, <span class="php-keyword1">array</span> <span class="php-var">$values</span>, <span class="php-keyword1">array</span> <span class="php-var">$expressions</span>, <span class="php-keyword1">string</span> <span class="php-var">$identity_field</span>): ?<span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Preserves BY DEFAULT Oracle identities and allocates new IDs without transactional DDL.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The resolved table, column metadata and service-table location.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $values
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The field values.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $expressions
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The positional SQL expressions.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $identity_field
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The identity field, or an empty string.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">(int | null)</code><br>
+  
+  <div class="item_description"><p>Returns the stored identity, or NULL when none is configured.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If identity handling or inserting the record fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_insert">\SmartFactory\DatabaseWorkers\DBWorker::native_save_insert()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1321'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_key">
+
+  <h1>Method: Oracle_DBWorker::native_save_key()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_key(<span class="php-keyword1">array</span> <span class="php-var">$context</span>, <span class="php-keyword1">array</span> <span class="php-var">$keys</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Normalizes Oracle keys using native numeric representations and linguistic sort keys.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The resolved table, column metadata and service-table location.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $keys
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, (scalar | null)&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The supplied key values, ordered by canonical column name.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">array</code><br>
+  
+  <div class="item_description"><p>Returns the equality-compatible key fingerprints.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If a key type is unsupported or converting a supplied key fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_key">\SmartFactory\DatabaseWorkers\DBWorker::native_save_key()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1205'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_lock">
+
+  <h1>Method: Oracle_DBWorker::native_save_lock()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_lock(<span class="php-keyword1">array</span> <span class="php-var">$context</span>, <span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Creates or locks an Oracle service row while handling only its expected primary-key duplicate.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The resolved table, column metadata and service-table location.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The SHA-256 resource key.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The diagnostic description, or allocator watermark for an identity resource.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If service-row creation or lock acquisition fails; expected primary-key duplicates are handled internally.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_lock">\SmartFactory\DatabaseWorkers\DBWorker::native_save_lock()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1244'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_next_identity">
+
+  <h1>Method: Oracle_DBWorker::native_save_next_identity()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_next_identity(<span class="php-keyword1">string</span> <span class="php-var">$sequence</span>): <span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Obtains an Oracle identity sequence value without altering or committing the target table.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sequence
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The metadata-resolved quoted sequence name.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">int</code><br>
+  
+  <div class="item_description"><p>Returns the allocated native sequence value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If querying the sequence fails or its value exceeds the PHP integer range.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_next_identity">\SmartFactory\DatabaseWorkers\DBWorker::native_save_next_identity()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1291'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_table">
+
+  <h1>Method: Oracle_DBWorker::native_save_table()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_table(<span class="php-keyword1">string</span> <span class="php-var">$table</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Resolves Oracle table names, native comparison keys and identity sequence metadata.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $table
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The unquoted table name, optionally schema-qualified.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">array</code><br>
+  
+  <div class="item_description"><p>Returns canonical table names and native column metadata.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the target cannot be resolved or its column metadata cannot be read.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_table">\SmartFactory\DatabaseWorkers\DBWorker::native_save_table()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#1129'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_transaction">
+
+  <h1>Method: Oracle_DBWorker::native_transaction()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_transaction(<span class="php-keyword1">string</span> <span class="php-var">$action</span>, <span class="php-keyword1">string</span> <span class="php-var">$isolation_level</span> = <span class="php-keyword1">self</span>::ISOLATION_READ_COMMITTED): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Performs a native transaction operation on the shared connection.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The base class updates the shared transaction flag only after this operation succeeds.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $action
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The operation: begin, commit or rollback.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $isolation_level
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                self::ISOLATION_READ_COMMITTED
+            </td>
+            <td class="description_column">
+                <p>READ COMMITTED or SERIALIZABLE for begin; REPEATABLE READ is rejected.
+Ignored for commit and rollback. Read-only mode retains Oracle's snapshot-read semantics.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If REPEATABLE READ is requested or the native transaction operation fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_transaction">\SmartFactory\DatabaseWorkers\DBWorker::native_transaction()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#929'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="normalize_sql">
+
+  <h1>Method: Oracle_DBWorker::normalize_sql()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> normalize_sql(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Normalizes Oracle statement terminators while preserving PL/SQL blocks.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The application SQL or PL/SQL text.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns SQL without a trailing statement terminator, or PL/SQL with its required semicolons preserved.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#384'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="reset_driver_state">
+
+  <h1>Method: Oracle_DBWorker::reset_driver_state()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> reset_driver_state(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Resets driver-specific state after cloning or statement cleanup.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Detaches copied input descriptors and bind/output state without freeing the original
+worker's resources or changing the shared transaction.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#reset_driver_state">\SmartFactory\DatabaseWorkers\DBWorker::reset_driver_state()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#160'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="use_database">
+
+  <h1>Method: Oracle_DBWorker::use_database()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(<span class="php-keyword1">string</span> <span class="php-var">$db_name</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Changes CURRENT_SCHEMA for the Oracle session.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>This operation does not switch the database service. The selected schema is shared
+by cloned workers, and the shared identity-column cache is invalidated.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $db_name
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The schema name. Unquoted names are converted to uppercase; quoted names preserve their case.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If no connection is open or Oracle cannot parse or execute the schema change.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#use_database">\SmartFactory\DatabaseWorkers\DBWorker::use_database()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#356'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.Oracle_DBWorker.html#get_schema">\SmartFactory\DatabaseWorkers\Oracle_DBWorker::get_schema()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="with_identity">
+
+  <h1>Method: Oracle_DBWorker::with_identity()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> with_identity(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Adds RETURNING for the discovered identity column of an eligible Oracle INSERT VALUES statement.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Respects quoted and schema-qualified table names. Discovery uses ALL_TAB_COLUMNS for
+the actual owner and table. Existing RETURNING clauses and auto_returning =&gt; false
+disable automatic extension; no column named id is assumed.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The normalized SQL statement to inspect.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns SQL extended with an output bind, or the original SQL when automatic handling does not apply.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If identity-column metadata cannot be read.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.Oracle_DBWorker.php.html#415'>src/SmartFactory/DatabaseWorkers/Oracle_DBWorker.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

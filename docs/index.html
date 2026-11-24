@@ -207,7 +207,7 @@
               
           </td>
           <td class="description_column">
-              <p>Decrypts the text previously encrypted with the AES 256 using a password key.</p>
+              <p>Decrypts a versioned AES-256-GCM envelope, optionally accepting legacy AES-CBC data.</p>
           </td>
       </tr>
       
@@ -221,7 +221,21 @@
               
           </td>
           <td class="description_column">
-              <p>Encrypts the text with the AES 256 using a password key.</p>
+              <p>Encrypts binary or UTF-8 data using a versioned, authenticated AES-256-GCM format.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="function-SmartFactory.application_settings.html">application_settings()</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Returns the shared application settings manager backed by centralized database storage.</p>
           </td>
       </tr>
       
@@ -235,7 +249,7 @@
               
           </td>
           <td class="description_column">
-              <p>Converts an array to XML DOM structure.</p>
+              <p>Appends a nested array to an XML element using named item elements.</p>
           </td>
       </tr>
       
@@ -249,7 +263,21 @@
               
           </td>
           <td class="description_column">
-              <p>Converts the array to JSON string.</p>
+              <p>Encodes an array as readable UTF-8 JSON while preserving numeric string values.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="function-SmartFactory.blob.html">blob()</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Creates an explicit binary BLOB bind value without consuming its source.</p>
           </td>
       </tr>
       
@@ -269,6 +297,20 @@
       
       <tr>
           <td>
+              <a href="function-SmartFactory.clob.html">clob()</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Creates an explicit UTF-8 CLOB bind value without consuming its source.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="function-SmartFactory.common_prefix.html">common_prefix()</a>
           </td>
           <td class="namespace_column">
@@ -277,7 +319,7 @@
               
           </td>
           <td class="description_column">
-              <p>Defines the common prefix of two strings.</p>
+              <p>Finds the common prefix of two strings without splitting valid UTF-8 characters.</p>
           </td>
       </tr>
       
@@ -319,7 +361,7 @@
               
           </td>
           <td class="description_column">
-              <p>The method dbworker provides the DBWorker object for working with the database.</p>
+              <p>Creates or retrieves a DBWorker object for working with the database.</p>
           </td>
       </tr>
       
@@ -361,7 +403,7 @@
               
           </td>
           <td class="description_column">
-              <p>Converts a XML DOM structure to an array.</p>
+              <p>Converts XML child elements to a nested array.</p>
           </td>
       </tr>
       
@@ -375,7 +417,7 @@
               
           </td>
           <td class="description_column">
-              <p>Escapes the HTML special characters in the text.</p>
+              <p>Escapes HTML special characters in UTF-8 text while preserving null.</p>
           </td>
       </tr>
       
@@ -389,8 +431,7 @@
               
           </td>
           <td class="description_column">
-              <p>Escapes recursively the HTML special characters in the values
-of the array.</p>
+              <p>Recursively escapes UTF-8 array values for HTML while preserving null entries.</p>
           </td>
       </tr>
       
@@ -404,7 +445,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Escapes the JavaScript special characters in the text.</p>
+              <p>Escapes text inside a single- or double-quoted JavaScript string literal.</p>
           </td>
       </tr>
       
@@ -432,7 +473,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Formats the number due to the specified settings.</p>
+              <p>Formats a numeric string using the specified separators and decimal precision.</p>
           </td>
       </tr>
       
@@ -446,7 +487,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Gets the cookie value by name.</p>
+              <p>Gets a string cookie value without treating the string "0" as missing.</p>
           </td>
       </tr>
       
@@ -460,7 +501,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Gets the header by its name.</p>
+              <p>Gets a request header by its case-insensitive name in web and CLI environments.</p>
           </td>
       </tr>
       
@@ -516,7 +557,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>The method instance creates an object that support the specified interface.</p>
+              <p>Creates a new, fully initialized implementation of the requested contract.</p>
           </td>
       </tr>
       
@@ -530,7 +571,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Checks whether the array $array is associative.</p>
+              <p>Checks whether an array has keys other than consecutive integers starting at zero.</p>
           </td>
       </tr>
       
@@ -544,7 +585,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Checks whether the session is cmd client or web.</p>
+              <p>Checks whether PHP is running through a web SAPI rather than CLI or phpdbg.</p>
           </td>
       </tr>
       
@@ -558,7 +599,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Converts the JSON string to an array.</p>
+              <p>Decodes a JSON object or list and merges it into the target array.</p>
           </td>
       </tr>
       
@@ -586,8 +627,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Escapes the special characters in the text used for the regular
-expression pattern.</p>
+              <p>Escapes literal text for use in a regular expression pattern.</p>
           </td>
       </tr>
       
@@ -601,8 +641,7 @@ expression pattern.</p>
               
           </td>
           <td class="description_column">
-              <p>Function for escaping the special symbols for putting into the regexp pattern
-as a simple text in the pattern.</p>
+              <p>Escapes regular expression metacharacters so a string is matched as literal text.</p>
           </td>
       </tr>
       
@@ -616,8 +655,7 @@ as a simple text in the pattern.</p>
               
           </td>
           <td class="description_column">
-              <p>Escapes the special characters in the text used for the regular
-expression replacement.</p>
+              <p>Escapes dollar signs and backslashes for a literal preg_replace() replacement.</p>
           </td>
       </tr>
       
@@ -631,8 +669,7 @@ expression replacement.</p>
               
           </td>
           <td class="description_column">
-              <p>Function for escaping the special symbols for putting into the regexp pattern
-as a simple text.</p>
+              <p>Escapes dollar signs and backslashes for a literal preg_replace() replacement.</p>
           </td>
       </tr>
       
@@ -660,8 +697,7 @@ as a simple text.</p>
               
           </td>
           <td class="description_column">
-              <p>Short function for requesting the dbworker connected to the specified shard,
-that is chosen randomly for load balancing reason.</p>
+              <p>Returns a randomly selected shard worker through the shared shard manager.</p>
           </td>
       </tr>
       
@@ -676,20 +712,6 @@ that is chosen randomly for load balancing reason.</p>
           </td>
           <td class="description_column">
               <p>Function for getting value of a request variable.</p>
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="function-SmartFactory.runtime_settings.html">runtime_settings()</a>
-          </td>
-          <td class="namespace_column">
-              
-              <a href="namespace-SmartFactory.html">SmartFactory</a>
-              
-          </td>
-          <td class="description_column">
-              <p>Short function for getting the instance of the RuntimeSettingsManager.</p>
           </td>
       </tr>
       
@@ -717,7 +739,7 @@ that is chosen randomly for load balancing reason.</p>
               
           </td>
           <td class="description_column">
-              <p>Sets the cookie name=value.</p>
+              <p>Queues a cookie response header using the native cookie options.</p>
           </td>
       </tr>
       
@@ -731,8 +753,7 @@ that is chosen randomly for load balancing reason.</p>
               
           </td>
           <td class="description_column">
-              <p>The method singleton creates an object that supports the specified interface and ensures
-that only one instance of this object exists.</p>
+              <p>Returns a shared, fully initialized implementation of the requested contract.</p>
           </td>
       </tr>
       
@@ -746,7 +767,7 @@ that only one instance of this object exists.</p>
               
           </td>
           <td class="description_column">
-              <p>Checks whether the text is an empty string.</p>
+              <p>Checks whether text is null or an empty string, preserving "0" as a nonempty value.</p>
           </td>
       </tr>
       
@@ -760,7 +781,7 @@ that only one instance of this object exists.</p>
               
           </td>
           <td class="description_column">
-              <p>Converts the string to number due to the specified settings.</p>
+              <p>Converts a numeric string to a float using the specified separators.</p>
           </td>
       </tr>
       
@@ -817,8 +838,7 @@ the text ID for the given language.</p>
               
           </td>
           <td class="description_column">
-              <p>Converts the string representing the date/time in the
-specified format to the timestap.</p>
+              <p>Parses a complete date/time string using PHP's DateTime format syntax.</p>
           </td>
       </tr>
       
@@ -881,7 +901,7 @@ specified format to the timestap.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for event management.</p>
+              <p>Defines synchronous event dispatch with immediate subscription and suspension changes.</p>
           </td>
       </tr>
       
@@ -930,20 +950,6 @@ through the array of parameters.</p>
       
       <tr>
           <td>
-              <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html">IRecordsetManager</a>
-          </td>
-          <td class="namespace_column">
-              
-              <a href="namespace-SmartFactory.Interfaces.html">SmartFactory\Interfaces</a>
-              
-          </td>
-          <td class="description_column">
-              <p>Interface for working with record sets.</p>
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="interface-SmartFactory.Interfaces.IRequestHandler.html">IRequestHandler</a>
           </td>
           <td class="namespace_column">
@@ -952,7 +958,21 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for handling the API requests.</p>
+              <p>Initializes API handlers and optionally supplies a request-throttling service.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">IRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.Interfaces.html">SmartFactory\Interfaces</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Atomically enforces every configured rolling-window limit for an opaque caller key.</p>
           </td>
       </tr>
       
@@ -966,7 +986,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for working with settings.</p>
+              <p>Provides settings access with explicit validation and persistence operations.</p>
           </td>
       </tr>
       
@@ -994,7 +1014,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for managing connections to the DB shards.</p>
+              <p>Registers database shards and selects their workers directly or through named groups.</p>
           </td>
       </tr>
       
@@ -1007,6 +1027,90 @@ through the array of parameters.</p>
       
       <tr>
           <td>
+              <a href="class-SmartFactory.AbstractDatabaseSettingsManager.html">AbstractDatabaseSettingsManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Shares connection isolation and transaction ownership for database settings managers.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.AbstractRequestThrottlingManager.html">AbstractRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Implements request limits, history expiry and retry delays for interchangeable storage backends.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.AbstractSettingsManager.html">AbstractSettingsManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Provides lazy loading, parameter access, change tracking and contextual validation.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.ApplicationSettingsManager.html">ApplicationSettingsManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Stores application-wide settings centrally in a database as a JSON document.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DatabaseWorkers.BlobValue.html">BlobValue</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Explicit binary bind value for a BLOB or bytea parameter.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DatabaseWorkers.ClobValue.html">ClobValue</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Explicit UTF-8 text bind value for a CLOB or text parameter.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="class-SmartFactory.ConfigSettingsManager.html">ConfigSettingsManager</a>
           </td>
           <td class="namespace_column">
@@ -1015,7 +1119,35 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for management of the config settings stored in a config JSON file.</p>
+              <p>Manages configuration in a local JSON file, optionally encrypted and cached in APCu.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DatabaseWorkers.DBConnectionState.html">DBConnectionState</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Stores native connection ownership and transaction state shared by cloned workers.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DBRequestThrottlingManager.html">DBRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Persists one caller's request history in one database row under a transactional logical-key lock.</p>
           </td>
       </tr>
       
@@ -1029,7 +1161,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>This is the abstract base class for all dbworkers for different databases.</p>
+              <p>Abstract base class for native database workers.</p>
           </td>
       </tr>
       
@@ -1043,7 +1175,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for DBWorkerException in the SmartFactory library.</p>
+              <p>Exception for database worker connection, query, data-format and stream errors.</p>
           </td>
       </tr>
       
@@ -1071,7 +1203,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for error handling.</p>
+              <p>Logs PHP errors and exception chains without implicitly writing to HTTP responses.</p>
           </td>
       </tr>
       
@@ -1085,7 +1217,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for event management.</p>
+              <p>Dispatches events synchronously using subscriptions and suspension state owned by this instance.</p>
           </td>
       </tr>
       
@@ -1099,7 +1231,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for handling the JSON API requests.</p>
+              <p>Handles JSON API requests using public action methods implemented by a subclass.</p>
           </td>
       </tr>
       
@@ -1113,7 +1245,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for working with localization of texts.</p>
+              <p>Manages instance-local localization dictionaries, context selections and optional APCu caching.</p>
           </td>
       </tr>
       
@@ -1127,7 +1259,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>This is the class for the MS SQL database using the extension sqlsrv.</p>
+              <p>Database worker for Microsoft SQL Server using the sqlsrv extension.</p>
           </td>
       </tr>
       
@@ -1155,7 +1287,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>This is the class for the MySQL database using the extension mysqli.</p>
+              <p>Database worker for MySQL using the mysqli extension.</p>
           </td>
       </tr>
       
@@ -1169,7 +1301,35 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for creation of the objects.</p>
+              <p>Binds implementations to interfaces or parent classes and creates initialized objects.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Reports invalid bindings, creation results, missing registrations, circular dependencies and unsafe resets.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DatabaseWorkers.Oracle_DBWorker.html">Oracle_DBWorker</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Database worker for Oracle Database 12c and later using the OCI8 extension.</p>
           </td>
       </tr>
       
@@ -1183,13 +1343,27 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>This is the class for the PostreSQL database using the extension pgsql.</p>
+              <p>Database worker for PostgreSQL using the pgsql extension.</p>
           </td>
       </tr>
       
       <tr>
           <td>
-              <a href="class-SmartFactory.RecordsetManager.html">RecordsetManager</a>
+              <a href="class-SmartFactory.DatabaseWorkers.PreparedQuery.html">PreparedQuery</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Compiles public SQL placeholders and validates prepared-query arguments.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.RedisRequestThrottlingManager.html">RedisRequestThrottlingManager</a>
           </td>
           <td class="namespace_column">
               
@@ -1197,7 +1371,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for working with record sets.</p>
+              <p>Stores each caller's JSON history behind an expiring, owner-checked Redis lock.</p>
           </td>
       </tr>
       
@@ -1211,21 +1385,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Abstract class for handling the JSON and XML requests.</p>
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="class-SmartFactory.RuntimeSettingsManager.html">RuntimeSettingsManager</a>
-          </td>
-          <td class="namespace_column">
-              
-              <a href="namespace-SmartFactory.html">SmartFactory</a>
-              
-          </td>
-          <td class="description_column">
-              <p>Class for management of the application settings.</p>
+              <p>Dispatches API actions to public methods and coordinates parsing, cleanup and responses.</p>
           </td>
       </tr>
       
@@ -1239,7 +1399,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for managing connections to the DB shards.</p>
+              <p>Class for registering database shards and managing their connections.</p>
           </td>
       </tr>
       
@@ -1253,7 +1413,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for extended exception used in the SmartFactory library.</p>
+              <p>Carries a localized message, a stable string error code and optional structured diagnostics.</p>
           </td>
       </tr>
       
@@ -1267,8 +1427,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for extended exception collection used in the SmartFactory library. It allows to collect many errors
-and report them at once.</p>
+              <p>Collects errors in insertion order and reports them together as an exception.</p>
           </td>
       </tr>
       
@@ -1282,7 +1441,7 @@ and report them at once.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for management of the user settings.</p>
+              <p>Manages user settings mapped to database columns and multichoice tables.</p>
           </td>
       </tr>
       
@@ -1296,7 +1455,7 @@ and report them at once.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for handling the XML API requests.</p>
+              <p>Handles XML API requests using public action methods implemented by a subclass.</p>
           </td>
       </tr>
       
@@ -1306,7 +1465,7 @@ and report them at once.</p>
 
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

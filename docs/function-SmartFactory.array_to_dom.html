@@ -107,20 +107,21 @@
                 <div class="col-md-12">
                     <h1>Function: array_to_dom()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> array_to_dom(\DOMNode &amp;<span class="php-var">$node</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): void;</div>
+<div class="definition"><span class="php-keyword1">function</span> array_to_dom(\DOMElement <span class="php-var">$node</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): <span class="php-keyword1">void</span>;</div>
+
 
 
 <div class="short-description">
-<p>Converts an array to XML DOM structure.</p>
+<p>Appends a nested array to an XML element using named item elements.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>This function can convert an array of any dimensions
-to a DOM structure. It might be used for loading and saving
-settings to a config file.</p>
+<p>Nested arrays are marked with array="1". Scalar and Stringable values become
+text, and null becomes an empty string. Scalar types are not preserved by XML.
+This format supports loading and saving settings through dom_to_array().</p>
 </div>
 
 
@@ -128,7 +129,8 @@ settings to a config file.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -143,16 +145,16 @@ settings to a config file.</p>
               $node
           </td>
           <td>
-              by reference
+              by value
           </td>
           <td>
-              \DOMNode
+              <code class="php-type">\DOMElement</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The parent node of the DOM structure.</p>
+              <p>The parent element, which must belong to a DOMDocument.</p>
           </td>
       </tr>
       
@@ -164,28 +166,54 @@ settings to a config file.</p>
               by reference
           </td>
           <td>
-              array
+              <code class="php-type">array&lt;array-key, mixed&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The array to be converted to the DOM structure.</p>
+              <p>The acyclic nested array of scalar, null or Stringable values. It is not modified.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-void<br>
+<code class="php-type">void</code><br>
+
+<div class="item_description"><p>Appends the generated child elements to the parent element.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+<code class="php-type">\LogicException</code><br>
+
+<div class="item_description"><p>If the parent element does not belong to a DOMDocument.</p></div>
+
+
+<code class="php-type">\UnexpectedValueException</code><br>
+
+<div class="item_description"><p>If an entry is a resource or an object that does not implement Stringable.</p></div>
+
+
+<code class="php-type">\DOMException</code><br>
+
+<div class="item_description"><p>If creating or attaching an XML node or attribute fails.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If converting a Stringable object to text throws an exception or error.</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -208,20 +236,20 @@ void<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#159'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#178'>src/utility_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.dom_to_array.html'>\SmartFactory\dom_to_array()</a><br>
+<a href="function-SmartFactory.dom_to_array.html">\SmartFactory\dom_to_array()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

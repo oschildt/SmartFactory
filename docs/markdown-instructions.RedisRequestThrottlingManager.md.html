@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            RedisRequestThrottlingManager - SmartFactory Library
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+ 
+
+                        <li class="active"></li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="markdown-content"><h1>RedisRequestThrottlingManager</h1>
+<p><code>SmartFactory\RedisRequestThrottlingManager</code> extends <code>AbstractRequestThrottlingManager</code>
+and preserves the <code>IRequestThrottlingManager</code> factory contract. It reuses the common
+rolling-window algorithm and provides caller-scoped Redis storage and locking.
+The optional phpredis extension is required only when using this adapter. No PHP
+client package is required through Composer. Redis-compatible Memurai is supported.</p>
+<h2>Initialization</h2>
+<p>Create, connect, authenticate and select the database on the client in application
+initialization. Pass the configured <code>\Redis</code> object to the manager:</p>
+<pre><code class="language-php"><span class="php-var">$redis</span> = <span class="php-keyword1">new</span> \Redis();
+
+<span class="php-var">$redis</span>-&gt;connect(<span class="php-quote">&quot;127.0.0.1&quot;</span>, <span class="php-num">6379</span>, <span class="php-num">3.0</span>);
+
+<span class="php-var">$redis</span>-&gt;setOption(\Redis::OPT_READ_TIMEOUT, <span class="php-num">3.0</span>);
+
+<span class="php-var">$manager</span> = <span class="php-keyword1">new</span> \SmartFactory\RedisRequestThrottlingManager();
+
+<span class="php-var">$manager</span>-&gt;init([
+    <span class="php-quote">&quot;redis&quot;</span> =&gt; <span class="php-var">$redis</span>,
+    <span class="php-quote">&quot;key_prefix&quot;</span> =&gt; <span class="php-quote">&quot;myapplication:api:throttling:&quot;</span>,
+    <span class="php-quote">&quot;limits&quot;</span> =&gt; [[<span class="php-num">3</span>, <span class="php-num">1</span>], [<span class="php-num">15</span>, <span class="php-num">10</span>], [<span class="php-num">1550</span>, <span class="php-num">60</span>], [<span class="php-num">10000</span>, <span class="php-num">500</span>]],
+    <span class="php-quote">&quot;lock_ttl_ms&quot;</span> =&gt; <span class="php-num">10000</span>,
+    <span class="php-quote">&quot;lock_timeout_ms&quot;</span> =&gt; <span class="php-num">3000</span>,
+    <span class="php-quote">&quot;lock_retry_interval_ms&quot;</span> =&gt; <span class="php-num">10</span>,
+]);
+
+<span class="php-var">$handler</span>-&gt;init([
+    <span class="php-quote">&quot;throttling_manager&quot;</span> =&gt; <span class="php-var">$manager</span>,
+    <span class="php-quote">&quot;user_identificator_getter&quot;</span> =&gt; <span class="php-keyword1">static</span> <span class="php-keyword1">fn</span>(): <span class="php-keyword1">string</span>|<span class="php-keyword1">int</span>|<span class="php-keyword1">null</span> =&gt; <span class="php-var">$_SESSION</span>[<span class="php-quote">&quot;user_id&quot;</span>] ?? <span class="php-keyword1">null</span>,
+]);</code></pre>
+<p>Only <code>redis</code> is required. The smallest valid initialization is:</p>
+<pre><code class="language-php"><span class="php-var">$manager</span>-&gt;init([<span class="php-quote">&quot;redis&quot;</span> =&gt; <span class="php-var">$redis</span>]);</code></pre>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Accepted value</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>redis</code></td>
+<td><code>\Redis</code></td>
+<td>Required</td>
+<td>Application-owned phpredis client; connected when admission is requested.</td>
+</tr>
+<tr>
+<td><code>key_prefix</code></td>
+<td>Nonempty string</td>
+<td><code>smartfactory:throttling:</code></td>
+<td>Namespace shared by processes enforcing the same policy. Use different prefixes for independent applications or budgets.</td>
+</tr>
+<tr>
+<td><code>limits</code></td>
+<td>List of <code>[positive integer count, positive integer seconds]</code></td>
+<td><code>[[3, 1], [15, 10], [1550, 60], [10000, 500]]</code></td>
+<td>Rolling-window limits enforced simultaneously. An empty list disables all Redis access.</td>
+</tr>
+<tr>
+<td><code>lock_ttl_ms</code></td>
+<td>Integer from 1 to 2147483647</td>
+<td><code>10000</code></td>
+<td>Lease lifetime and maximum lifetime of an abandoned caller lock.</td>
+</tr>
+<tr>
+<td><code>lock_timeout_ms</code></td>
+<td>Integer from 0 to 2147483647</td>
+<td><code>3000</code></td>
+<td>How long to retry a contended lock. Zero allows one attempt. Individual network calls are bounded by client timeouts, separately.</td>
+</tr>
+<tr>
+<td><code>lock_retry_interval_ms</code></td>
+<td>Integer from 1 to 2147483647</td>
+<td><code>10</code></td>
+<td>Delay between contended acquisition attempts, capped by the remaining wait time.</td>
+</tr>
+</tbody>
+</table>
+<p><code>init()</code> validates settings without connecting, issuing commands, creating keys or
+clearing history. Invalid initialization leaves the previous configuration intact.
+Omitted parameters reset to the defaults above on each successful initialization.</p>
+<p>The manager does not change client options, authenticate, select a database or
+close the connection. Host, port, TLS, credentials and database index belong to
+the client configuration. The adapter accepts <code>\Redis</code>; <code>\RedisCluster</code> and Predis
+objects are not supported. It rejects MULTI and pipeline mode without modifying
+the application's queue. Do not concurrently reconfigure a client or change its
+selected database while admission is running.</p>
+<p>Existing phpredis <code>OPT_PREFIX</code> is honored in addition to <code>key_prefix</code>. Serializer
+and compression settings are preserved: Lua reads and writes raw JSON independent
+of those settings. Inspect such values with an unconfigured client or <code>redis-cli</code>,
+because normal GET on a serializing client may attempt to decode the JSON itself.</p>
+<h2>Factory binding</h2>
+<p>The existing interface remains the binding key. For example, with an application
+function returning a connected client:</p>
+<pre><code class="language-php">ObjectFactory::bindFactory(IRequestThrottlingManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): RedisRequestThrottlingManager {
+    <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> RedisRequestThrottlingManager();
+
+    <span class="php-var">$instance</span>-&gt;init([
+        <span class="php-quote">&quot;redis&quot;</span> =&gt; getApplicationRedis(),
+        <span class="php-quote">&quot;key_prefix&quot;</span> =&gt; <span class="php-quote">&quot;myapplication:api:throttling:&quot;</span>,
+    ]);
+
+    <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;
+});</code></pre>
+<p>Caller identification remains in RequestHandler, including its optional
+<code>user_identificator_getter</code> and IP fallback. The manager receives the resulting
+opaque identity and stores only its SHA-256 hash.</p>
+<h2>Storage and atomic admission</h2>
+<p>For each hashed caller, the manager uses two keys:</p>
+<pre><code class="language-text">&lt;client prefix&gt;&lt;key_prefix&gt;{&lt;SHA-256 caller hash&gt;}:history
+&lt;client prefix&gt;&lt;key_prefix&gt;{&lt;SHA-256 caller hash&gt;}:lock</code></pre>
+<p>History is one JSON array of ordered Unix timestamps with microsecond precision.
+Equal timestamps represent distinct requests and are preserved. Other callers'
+history is never read or rewritten. Redis TIME supplies the common admission clock.
+Server clock rollbacks retain future records conservatively, as in the base class.</p>
+<p>The manager acquires an expiring per-caller lock using a random owner token and
+SET NX PX. Lua checks the token when reading history, writing history with its TTL,
+and releasing the lock. An operation that outlives its lease cannot overwrite newer
+history or delete a replacement owner's lock. Even a rejected request must confirm
+ownership before returning its retry delay. Contention or lost ownership raises a
+storage exception rather than returning admission or HTTP 429.</p>
+<p>The callback executes exactly once after acquisition. There are no automatic
+replays of the admission callback following an ambiguous network response. A write
+may have reached Redis even if its response was lost; that attempt conservatively
+consumes a slot without granting admission. Acquired locks are released on success
+and failure, with TTL as crash recovery. A cleanup failure never replaces an earlier
+failure. Increasing the lock TTL can accommodate larger histories or slower Redis
+connections; it also prolongs recovery from an abandoned lock.</p>
+<p>Inactive history expires automatically after the newest retained timestamp plus
+the longest configured period. TTL is calculated against Redis TIME and rounded
+up with a one-millisecond safety margin. Rejections do not rewrite history or
+extend its TTL. Extremely large retention beyond Redis/Lua's safe millisecond
+range is stored without expiry rather than expiring active history prematurely.
+No database table, schema migration or scheduled cleanup is required for normal limits.</p>
+<p>Missing history starts an empty budget. Existing malformed JSON, non-array data,
+invalid or unordered timestamps and Redis values of another type fail closed and
+are not overwritten. Redis command failures are reported as neutral RuntimeException
+instances; RedisException is retained as the cause when supplied by phpredis.
+Request handlers report these failures as HTTP 500 without executing the action.</p>
+<p>All workers sharing a prefix and Redis database must use the same policy. Increasing
+a period cannot recover timestamps already expired under an earlier policy. Budget
+history needs reliable storage: deleting or evicting a history key, restarting without
+persisted history, or losing writes during asynchronous failover resets that budget.
+Use a suitable persistence policy and a non-evicting Redis deployment for strict limits.
+This adapter coordinates on one writable Redis server; it is not a multi-master lock.</p>
+<h2>Verification</h2>
+<p>Unit tests require phpredis but no Redis server:</p>
+<pre><code class="language-powershell">php -d xdebug.mode=off tools/phpunit.phar --filter RedisRequestThrottlingManagerTest</code></pre>
+<p>The standalone integration runner defaults to <code>127.0.0.1:6379</code>, database zero:</p>
+<pre><code class="language-powershell">php -d xdebug.mode=off tests/Integration/redis_throttling.php
+php -d xdebug.mode=off tests/Integration/redis_throttling.php 127.0.0.1 6379</code></pre>
+<p>It verifies shared policies, exact window boundaries, duplicate timestamps, automatic
+expiry, corrupt and wrong-type history, contention, abandoned-lock recovery, stale
+writers, owner-safe release, client queues, client prefix/serialization settings,
+large histories and eight synchronized processes for shared and independent callers.
+Only a random <code>__sf_redis_test:&lt;random&gt;:</code> namespace is created. The runner removes
+its keys in a finally block and checks that none remain; it never flushes the database
+or changes Redis server settings. An interrupted process can leave test history until
+TTL; deliberately tested enormous retention or replacement-lock fixtures may require
+cleanup of that exact invocation's namespace after a hard interruption.</p>
+<p>The server-side operations follow the official Redis
+<a href="https://redis.io/docs/latest/develop/clients/patterns/distributed-locks/" target="_blank" rel="noopener">single-instance owner-token lock pattern</a>
+and phpredis <a href="https://github.com/phpredis/phpredis#scripting" target="_blank" rel="noopener">Lua scripting behavior</a>.</p></div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

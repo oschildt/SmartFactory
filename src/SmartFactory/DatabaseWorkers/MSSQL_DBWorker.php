@@ -1,7 +1,7 @@
 <?php
+
 /**
- * This file contains the implementation of the abstract base class DBWorker
- * for the MS SQL database using the extension mysqli.
+ * This file contains the implementation of the class MSSQL_DBWorker.
  *
  * @package Database
  *
@@ -10,1531 +10,1418 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use function \SmartFactory\debugger;
-
 /**
- * This is the class for the MS SQL database using the extension sqlsrv.
+ * Database worker for Microsoft SQL Server using the sqlsrv extension.
  *
- * This is a wrapper around the database connectivity. It offers a universal
- * common way for working with databases of different types. Currently, MySQL, PostgreSQL and
- * MS SQL are supported. If in the future, there will be a better solution, or
- * the current solution turns out to be inefficient in a new version of PHP,
- * we can easily reimplement the DB wrapper without touching the business logic code.
- * Adding support for new database types is also much easier with this wrapping approach.
+ * Uses UTF-8 connections with Multiple Active Result Sets disabled.
+ * All queries use forward-only cursors without buffering the complete result set.
+ * An unread forward-only result must be exhausted or freed before another request uses the connection.
+ * Large result fields are spooled to temporary files; Unicode streams are converted
+ * from UTF-16LE without splitting surrogate pairs.
  *
- * @see PostgreSQL_DBWorker
- * @see MySQL_DBWorker
+ * SQL Server has no native read-only transaction mode, so the read_only option is rejected.
+ *
+ * @see DBWorker
+ *
+ * @link markdown:MSSQLNotes.md Important notes
  *
  * @author Oleg Schildt
  */
 class MSSQL_DBWorker extends DBWorker
 {
     /**
-     * Stores the resource handle of the opened connection.
+     * Keeps native bind variables alive until statement execution has completed.
      *
-     * @var resource
-     *
-     * @author Oleg Schildt
-     */
-    protected $connection = null;
-
-    /**
-     * Stores the resource handle of the statement
-     * of the last executed query.
-     *
-     * @var resource
+     * @var array<int, int|float|string|resource|null>
      *
      * @author Oleg Schildt
      */
-    protected $statement = null;
+    private array $bound_values = [];
 
     /**
-     * Internal variable for storing of the last prepared query.
+     * Stores sqlsrv parameter descriptors referencing the persistent bound_values entries.
      *
-     * @var ?string
+     * @var list<list<mixed>>
      *
      * @author Oleg Schildt
      */
-    protected ?string $prepared_query = null;
+    private array $native_parameters = [];
 
     /**
-     * Stores the state whether the last query was an insert or not.
+     * Stores the serialized sqlsrv parameter types used to decide whether rebinding requires preparation.
+     *
+     * @var string|null
+     *
+     * @author Oleg Schildt
+     */
+    private ?string $parameter_signature = null;
+
+    /**
+     * Stores native SQL, including any appended identity query, for sqlsrv re-preparation.
+     *
+     * @var string
+     *
+     * @author Oleg Schildt
+     */
+    private string $prepared_sql = '';
+
+    /**
+     * Indicates whether the SQL Server INSERT batch includes an internal SCOPE_IDENTITY result.
      *
      * @var bool
      *
      * @author Oleg Schildt
      */
-    protected bool $last_query_is_insert = false;
+    private bool $captures_identity = false;
 
     /**
-     * Internal variable for storing of the current fetched row
-     * from the result of the last retrieving query.
+     * Indicates whether a sqlsrv statement has executed and may need its active results canceled.
      *
-     * @var ?array
+     * @var bool
      *
      * @author Oleg Schildt
      */
-    protected ?array $row = null;
+    private bool $executed = false;
 
     /**
-     * Internal variable for storing of the column names
-     * from the result of the last retrieving query.
-     *
-     * @var ?array
-     *
-     * @author Oleg Schildt
-     */
-    protected ?array $field_names = null;
-
-    /**
-     * Internal variable for storing of the parameters
-     * of the last prepared query.
-     *
-     * @var ?array
-     *
-     * @author Oleg Schildt
-     */
-    protected ?array $query_parameters = null;
-
-    /**
-     * Retrieves the last errors occurred while execution of the query.
+     * Returns the SQL dialect used by the placeholder compiler.
      *
      * @return string
-     * Returns the string of errors separated by the new line symbol.
+     * Returns "mssql".
+     *
+     * @see PreparedQuery::compile()
      *
      * @author Oleg Schildt
      */
-    protected function sys_get_errors(): string
+    protected function dialect(): string
     {
-        $errors = sqlsrv_errors(SQLSRV_ERR_ERRORS);
-        if (empty($errors)) {
-            return "";
-        }
-
-        $message_array = [];
-
-        foreach ($errors as $error) {
-            $message_array[$error['message']] = $error['message'];
-        }
-
-        return implode("\n", $message_array);
-    } // sys_get_errors
-
-    /**
-     * Creates a clone of the dbworker that is using the same open
-     * connection.
-     *
-     * This might be useful if you want to execute some additional
-     * queries while iteration through the active results of a select query.
-     *
-     * @return MSSQL_DBWorker
-     * Returns the clone of this dbworker.
-     *
-     * @author Oleg Schildt
-     */
-    public function create_clone(): MSSQL_DBWorker
-    {
-        $cln = new MSSQL_DBWorker();
-
-        $cln->is_clone = true;
-
-        $cln->db_server = $this->db_server;
-        $cln->db_port = $this->db_port;
-        $cln->db_name = $this->db_name;
-        $cln->db_user = $this->db_user;
-        $cln->db_password = $this->db_password;
-
-        return $cln;
-    } // create_clone
-
-    /**
-     * Constructor.
-     *
-     * @author Oleg Schildt
-     */
-    public function __construct()
-    {
-    } // __construct
-
-    /**
-     * Destructor.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    public function __destruct()
-    {
-        if (!$this->is_clone) {
-            $this->close_connection();
-        }
-    } // __destruct
-
-    /**
-     * Initializes the dbworker with connection parameters.
-     *
-     * @param array $parameters
-     * Connection settings as an associative array in the form key => value:
-     *
-     * - $parameters["db_server"] - server address.
-     * - $parameters["db_port"] - server port.
-     * - $parameters["db_name"] - database name.
-     * - $parameters["db_user"] - user name.
-     * - $parameters["db_password"] - user password.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    public function init(array $parameters): void
-    {
-        if (!empty($parameters["db_server"])) {
-            $this->db_server = $parameters["db_server"];
-        }
-        if (!empty($parameters["db_port"])) {
-            $this->db_server = $parameters["db_port"];
-        }
-        if (!empty($parameters["db_name"])) {
-            $this->db_name = $parameters["db_name"];
-        }
-        if (!empty($parameters["db_user"])) {
-            $this->db_user = $parameters["db_user"];
-        }
-        if (!empty($parameters["db_password"])) {
-            $this->db_password = $parameters["db_password"];
-        }
-    } // init
-
-    /**
-     * Checks whether the extension (sqlsrv) is installed which is required for work with
-     * the MySQL database.
-     *
-     * @return bool
-     * The method should return true if the extension is installed, otherwise false.
-     *
-     * @see MSSQL_DBWorker::get_extension_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function is_extension_installed(): bool
-    {
-        return function_exists("sqlsrv_connect");
-    } // is_extension_installed
+        // Keep marker translation independent of the human-readable database name.
+        return 'mssql';
+    } // dialect
 
     /**
      * Returns the name of the required PHP extension - "sqlsrv".
      *
      * @return string
-     * Returns the name of the required PHP extension - "sqlsrv".
+     * Returns "sqlsrv".
      *
-     * @see MSSQL_DBWorker::is_extension_installed()
+     * @see DBWorker::is_extension_installed()
      *
      * @author Oleg Schildt
      */
     public function get_extension_name(): string
     {
-        return "sqlsrv";
+        // Expose the extension identifier used by extension_loaded() and the factory.
+        return 'sqlsrv';
     } // get_extension_name
 
     /**
      * Returns the name of the supported database - "Microsoft SQL Server".
      *
      * @return string
-     * Returns the name of the supported database - "Microsoft SQL Server".
+     * Returns "Microsoft SQL Server".
      *
      * @author Oleg Schildt
      */
     public function get_rdbms_name(): string
     {
-        return "Microsoft SQL Server";
+        // Expose the database name for diagnostics and application messages.
+        return 'Microsoft SQL Server';
     } // get_rdbms_name
 
     /**
-     * Returns the connection state.
+     * Creates a clone of the DBWorker that uses the same open connection.
+     *
+     * Exhaust or free an active result before issuing another query through a clone.
+     * Closing one worker does not close the shared connection while another worker owns it.
+     * A clone shares the same SQL Server session and cannot bypass an unread forward-only result;
+     * consume that result to EOF or call free_result() before sending another request.
+     *
+     * @return MSSQL_DBWorker
+     * Returns a worker sharing the connection and transaction state, with independent statements and results.
+     *
+     * @author Oleg Schildt
+     */
+    public function create_clone(): MSSQL_DBWorker
+    {
+        // Use the base clone hook to separate per-worker handles while retaining shared connection ownership.
+        return clone $this;
+    } // create_clone
+
+    /**
+     * Returns the state of this worker's native connection.
      *
      * @return bool
-     * Returns true if the connection is open, otherwise false.
+     * Returns true if an open native connection resource is attached; otherwise returns false.
      *
      * @see DBWorker::check_connection()
      * @see MSSQL_DBWorker::connect()
-     * @see MSSQL_DBWorker::close_connection()
+     * @see DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
     public function is_connected(): bool
     {
-        return (!empty($this->connection) && is_resource($this->connection));
+        // Inspect the attached native handle without opening another connection.
+        return is_resource($this->connection_state?->handle);
     } // is_connected
 
     /**
-     * Establishes the connection to the database using the connection
-     * settings parameters specified by the initialization.
+     * Resets driver-specific state after cloning or statement cleanup.
+     *
+     * Clears bind arrays, cached parameter types, statement SQL and execution flags.
+     * The shared native connection is retained.
      *
      * @return void
+     * Does not return a value.
+     *
+     * @author Oleg Schildt
+     */
+    protected function reset_driver_state(): void
+    {
+        // Reset only worker-owned native state; shared connection attributes remain intact.
+        $this->bound_values = $this->native_parameters = [];
+        $this->parameter_signature = null;
+        $this->prepared_sql = '';
+        $this->captures_identity = $this->executed = false;
+    } // reset_driver_state
+
+    /**
+     * Returns the most recent native driver error message.
+     *
+     * @return string
+     * Returns the native error text, or a fallback message when no details are available.
+     *
+     * @author Oleg Schildt
+     */
+    private function errors(): string
+    {
+        // Read native diagnostics before another driver call can replace them.
+        $messages = array_column(sqlsrv_errors(SQLSRV_ERR_ERRORS) ?? [], 'message');
+
+        return implode(PHP_EOL, array_unique($messages)) ?: 'SQL Server operation failed.';
+    } // errors
+
+    /**
+     * Establishes the database connection using the initialized settings.
+     *
+     * Uses UTF-8 and string date values with Multiple Active Result Sets disabled.
+     * The read_only option is rejected because SQL Server cannot enforce a read-only transaction.
+     * An already connected worker keeps its existing connection.
+     *
+     * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If connection settings are incomplete, read_only is enabled, the isolation level is invalid,
+     * or connection or session initialization fails.
      *
-     * @see DBWorker::check_connection()
+     * @see DBWorker::init()
      * @see MSSQL_DBWorker::is_connected()
-     * @see MSSQL_DBWorker::close_connection()
+     * @see DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
     public function connect(): void
     {
+        // Reuse an attached connection and validate the settings before creating a new native handle.
         if ($this->is_connected()) {
             return;
         }
 
-        sqlsrv_configure("WarningsReturnAsErrors", 0);
-
-        $this->last_query = null;
-
-        if (!isset($this->connection) || !$this->connection) {
-            if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                throw new DBWorkerException("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
-            }
-
-            /*
-            This new MSSQL dirver has a BIG problem. It sticks to the encoding
-            of the Windows and ignores the database and server collation.
-      
-            If you use the UTF-8, you have two options:
-      
-            1. Use NCHAR etc. types
-            2. Store the UTF-8 strings as is into the 1-byte fields like varchar etc.
-      
-            The variant 1 might be undesirable because of performance.
-      
-            The variant 2 might cause problems in contrast to the old MSSQL drivers.
-            E.g. if you have the Russian locale on your Windows, but the Latin collation
-            in the database, you have no chance for the variant 2. The driver will convert
-            the data, although it should not do that but send this as is!
-      
-            There is the option SQLSRV_ENC_BINARY that prevents any conversion, but it cannot
-            be used globally and it cannot be used for simple queries. It can be used only for
-            prepared queries. It would be so easy just to allow setting SQLSRV_ENC_BINARY
-            on connection level, but they did not do this!
-      
-            Thus, you have only the following choices:
-      
-            1. Store the unicode texts in NCHAR fields and use CharacterSet = UTF-8.
-            2. Store the unicode texts in normal fields and use only parametrized queries.
-               You have always to specify the type SQLSRV_ENC_BINARY for each paramter
-               explicitly.
-            3. Store the unicode texts in normal fields and ensure that the Windows locale
-               and the SQL Server are identical.
-      
-            Beacause of universality of the DBWorker independent of the database type,
-            I use the choise 3.
-            */
-
-            $config = [
-                "UID" => $this->db_user,
-                "PWD" => $this->db_password,
-                //"CharacterSet" => "UTF-8",
-                "ReturnDatesAsStrings" => true,
-                "MultipleActiveResultSets" => false
-            ];
-
-            $this->connection = @sqlsrv_connect($this->db_server, $config);
+        if ($this->db_server === '' || $this->db_user === '') {
+            throw new DBWorkerException('Connection data is incomplete.', self::ERR_CONNECTION_DATA_INCOMPLETE);
         }
 
-        if (!$this->connection) {
-            $err = $this->sys_get_errors();
-            $this->connection = null;
-
-            throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
+        if ($this->read_only) {
+            throw new DBWorkerException(
+                'SQL Server has no read-only transaction mode; enforce read-only access using database permissions.',
+                self::ERR_WRONG_DATA_FORMAT
+            );
         }
 
-        if (!empty($this->db_name)) {
-            try {
-                $this->use_database($this->db_name);
-            } catch (\Throwable $ex) {
-                $this->connection = null;
-                throw $ex;
+        $server = $this->db_server . ($this->db_port === '' ? '' : ',' . (int) $this->db_port);
+        $config = [
+            'UID' => $this->db_user,
+            'PWD' => $this->db_password,
+            'CharacterSet' => 'UTF-8',
+            'ReturnDatesAsStrings' => true,
+            'MultipleActiveResultSets' => false,
+            'LoginTimeout' => (int) ($this->options['connect_timeout'] ?? 20)
+        ];
+
+        if ($this->db_name !== '') {
+            $config['Database'] = $this->db_name;
+        }
+
+        if (array_key_exists('encrypt', $this->options)) {
+            $config['Encrypt'] = (bool) $this->options['encrypt'];
+        }
+
+        if (array_key_exists('trust_server_certificate', $this->options)) {
+            $config['TrustServerCertificate'] = (bool) $this->options['trust_server_certificate'];
+        }
+
+        $db = @sqlsrv_connect($server, $config);
+
+        if ($db === false) {
+            throw new DBWorkerException($this->errors(), self::ERR_CONNECTION_FAILED);
+        }
+
+        $this->connection_state = new DBConnectionState($db, static fn ($db) => sqlsrv_close($db));
+
+        if (isset($this->options['isolation_level'])) {
+            $level = strtoupper((string) $this->options['isolation_level']);
+
+            if (!in_array(
+                    $level,
+                    ['READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ', 'SNAPSHOT', 'SERIALIZABLE'],
+                    true
+                )) {
+                $this->connection_state = null;
+
+                throw new DBWorkerException('Invalid transaction isolation level.', self::ERR_WRONG_DATA_FORMAT);
             }
+
+            $result = @sqlsrv_query($db, 'SET TRANSACTION ISOLATION LEVEL ' . $level);
+
+            if ($result === false) {
+                $message = $this->errors();
+                $this->connection_state = null;
+
+                throw $this->query_error($message);
+            }
+
+            sqlsrv_free_stmt($result);
         }
     } // connect
 
     /**
-     * Sets the database as working database.
+     * Selects another SQL Server database on the current connection.
      *
      * @param string $db_name
-     * The name of the database to be set as working database.
+     * The database name, quoted as an identifier in the USE statement.
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If no connection is open or SQL Server rejects the USE statement.
      *
      * @author Oleg Schildt
      */
     public function use_database(string $db_name): void
     {
-        $this->check_connection();
+        // Quote the database as an identifier; string-literal escaping is not appropriate for USE.
+        $this->execute_query('USE [' . str_replace(']', ']]', $db_name) . ']');
 
         $this->db_name = $db_name;
-
-        $db_name = $this->escape($db_name);
-
-        $this->execute_query("USE " . $db_name);
     } // use_database
 
     /**
-     * Returns the name of the database schema if applicable.
+     * Builds SQL Server statement options for sequential result reading.
+     *
+     * Unread results keep the shared connection busy until EOF or explicit cancellation.
+     *
+     * @return array{QueryTimeout: int, Scrollable: string}
+     * Returns the query timeout and the forward-only cursor setting.
+     *
+     * @author Oleg Schildt
+     */
+    private function statement_options(): array
+    {
+        return [
+            'QueryTimeout' => (int) ($this->options['query_timeout'] ?? 20),
+            'Scrollable' => SQLSRV_CURSOR_FORWARD
+        ];
+    } // statement_options
+
+    /**
+     * Appends an identity query to an eligible SQL Server INSERT batch.
+     *
+     * The internal result is identified by a reserved column alias and consumed by accept_statement().
+     *
+     * @param string $sql
+     * The SQL statement to inspect.
      *
      * @return string
-     * Returns the name of the database schema if applicable, or an empty string.
-     *
-     * @see MSSQL_DBWorker::qualify_name_with_schema()
+     * Returns SQL with SCOPE_IDENTITY() in the same batch, or the original SQL when OUTPUT is already present.
      *
      * @author Oleg Schildt
      */
-    public function get_schema(): string
+    private function with_identity(string $sql): string
     {
-        return "dbo";
-    } // get_schema
+        // Capture an identifier from the INSERT itself instead of consulting unrelated session sequence state.
+        $this->captures_identity = $this->insert_table($sql) !== null && !preg_match('/\bOUTPUT\b/i', $sql);
+
+        return $this->captures_identity ? rtrim($sql, " \t\r\n;")
+            . '; SELECT CAST(SCOPE_IDENTITY() AS bigint) AS smartfactory_insert_id' : $sql;
+    } // with_identity
 
     /**
-     * Completes the name of a database object with the schema name if applicable.
+     * Executes SQL through the native driver and records the resulting metadata.
      *
-     * @param string $name
-     * The name of the database object to be completed with the schema name.
-     *
-     * @return string
-     * Returns the name of the database object with the schema name if applicable,
-     * otherwise the name of the database object remains unchanged.
-     *
-     * @see MSSQL_DBWorker::get_schema()
-     *
-     * @author Oleg Schildt
-     */
-    public function qualify_name_with_schema(string $name): string
-    {
-        $schema = $this->get_schema();
-
-        if (!empty($schema)) {
-            $schema .= ".";
-        }
-
-        return $schema . $name;
-    } // qualify_name_with_schema
-
-    /**
-     * Executes the SQL query.
-     *
-     * @param string $query_string
-     * The SQL query to be executed.
+     * @param string $sql
+     * The SQL query to execute. Driver-specific identity handling may extend it.
      *
      * @return void
-     *
-     * @throws \Exception|DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function execute_query(string $query_string): void
-    {
-        $this->check_connection();
-
-        $this->last_query = $query_string;
-
-        if ($this->logging) {
-            debugger()->debugMessage($this->last_query, "sql.log");
-        }
-
-        $options = [];
-
-        /*
-        If the cursor is SQLSRV_CURSOR_STATIC or other than
-        SQLSRV_CURSOR_FORWARD, retrieving of the data
-        has sometimes very poor performance. Not the query execution,
-        but the data retrieving!
-    
-        The default is SQLSRV_CURSOR_FORWARD, but it is not possible
-        to get fetched_count by this type of cursor. So we sacrifice
-        the possibility to get fetched_count for the performance.
-        The performance is more important.
-    
-        no more relevant in new version of driver
-        */
-
-        if (preg_match("/\s*SELECT/i", $query_string)) {
-            $options = ["Scrollable" => SQLSRV_CURSOR_STATIC];
-        }
-
-        $this->statement = @sqlsrv_query($this->connection, $query_string, [], $options);
-        if (!$this->statement) {
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-    } // execute_query
-
-    /**
-     * Prepares the SQL query with bindable variables.
-     *
-     * @param string $query_string
-     * The SQL query to be prepared.
-     *
-     * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If native execution fails, including when another worker has a pending forward-only result,
+     * or processing the returned results reports a database error.
      *
-     * @see MSSQL_DBWorker::execute_prepared_query()
-     * @see MSSQL_DBWorker::free_prepared_query()
+     * @see DBWorker::execute_query()
      *
      * @author Oleg Schildt
      */
-    public function prepare_query(string $query_string): void
+    protected function native_query(string $sql): void
     {
-        $this->check_connection();
+        // Execute the native statement, then expose its result through the shared result contract.
+        $sql = $this->with_identity($sql);
+        $options = $this->statement_options();
+        $stmt = @sqlsrv_query($this->connection_state->handle, $sql, [], $options);
 
-        if ($this->statement) {
-            if (is_resource($this->statement)) {
-                @sqlsrv_free_stmt($this->statement);
-            }
+        if ($stmt === false) {
+            throw $this->query_error($this->errors());
         }
 
-        $this->last_query = $query_string;
-        $this->prepared_query = $query_string;
+        $this->statement = $stmt;
+        $this->executed = true;
 
-        $params = [];
-        $this->query_parameters = [];
+        try {
+            $this->accept_statement();
+        } catch (\Throwable $error) {
+            $this->free_result();
 
-        $cnt = preg_match_all("/\\?/", $query_string);
-
-        for ($i = 0; $i < $cnt; $i++) {
-            $this->query_parameters[$i] = null;
-            $params[$i] = &$this->query_parameters[$i];
+            throw $error;
         }
-
-        $query_appendix = "";
-
-        // to be able to get the insert id from prepared query
-        // we have to add this appendix
-
-        $this->last_query_is_insert = false;
-        if (preg_match("/\s*INSERT/i", $query_string)) {
-            $this->last_query_is_insert = true;
-
-            $query_appendix = "; SELECT SCOPE_IDENTITY() AS IID";
-        }
-
-        $options = [];
-        /*
-        If the cursor is SQLSRV_CURSOR_STATIC or other than
-        SQLSRV_CURSOR_FORWARD, retrieving of the data
-        has sometimes very poor performance. Not the query execution,
-        but the data retrieving!
-    
-        The default is SQLSRV_CURSOR_FORWARD, but it is not possible
-        to get fetched_count by this type of cursor. So we sacrifice
-        the possibility to get fetched_count for the performance.
-        The performance is more important.
-    
-        if(preg_match("/\s*SELECT/i", $query_string))
-        {
-          $options = ["Scrollable" => SQLSRV_CURSOR_STATIC];
-        }
-        */
-
-        $this->statement = @sqlsrv_prepare($this->connection, $query_string . $query_appendix, $params, $options);
-        if (!$this->statement) {
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-    } // prepare_query
+    } // native_query
 
     /**
-     * Stores long data from a stream.
+     * Creates a native statement from SQL whose bind markers have already been compiled.
      *
-     * @param string $query_string
-     * The SQL query to be used for storing the long data.
-     *
-     * @param resource $stream
-     * The opened valid stream for reading the long data.
-     *
-     * Example:
-     * ```php
-     * $stream = fopen(".../large_binary.jpg", "rb");
-     *
-     * if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
-     * {
-     *   error reporting ...;
-     * }
-     * ```
+     * @param string $sql
+     * The SQL query containing native bind markers.
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If the native statement cannot be prepared.
+     *
+     * @see DBWorker::prepare_query()
      *
      * @author Oleg Schildt
      */
-    public function stream_long_data(string $query_string, $stream): void
+    protected function native_prepare(string $sql): void
     {
-        $this->check_connection();
+        // Keep native statement preparation separate from public placeholder compilation.
+        $this->prepared_sql = $this->with_identity($sql);
+        $this->bound_values = array_fill(0, count($this->compiled_query->names), null);
+        $this->native_parameters = [];
 
-        if (!is_resource($stream)) {
-            throw new DBWorkerException("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
+        foreach ($this->bound_values as $index => &$value) {
+            $this->native_parameters[$index] = [&$value, SQLSRV_PARAM_IN];
         }
 
-        if ($this->statement) {
-            if (is_resource($this->statement)) {
-                @sqlsrv_free_stmt($this->statement);
-            }
+        unset($value);
+
+        $options = $this->statement_options();
+        $stmt = @sqlsrv_prepare(
+            $this->connection_state->handle,
+            $this->prepared_sql,
+            $this->native_parameters,
+            $options
+        );
+
+        if ($stmt === false) {
+            throw $this->query_error($this->errors());
         }
 
-        $this->last_query = $query_string;
-        $this->prepared_query = $query_string;
-
-        $params = array(&$stream);
-
-        $options = array("SendStreamParamsAtExec" => 0);
-
-        $this->statement = @sqlsrv_prepare($this->connection, $query_string, $params, $options);
-        if (!$this->statement) {
-            fclose($stream);
-
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        if (!@sqlsrv_execute($this->statement)) {
-            $err = $this->sys_get_errors();
-
-            if (is_resource($this->statement)) {
-                @sqlsrv_free_stmt($this->statement);
-            }
-            $this->statement = null;
-            fclose($stream);
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        // Send up to 8K of parameter data to the server
-        // with each call to sqlsrv_send_stream_data.
-        while (sqlsrv_send_stream_data($this->statement)) {
-        }
-
-        if (is_resource($this->statement)) {
-            @sqlsrv_free_stmt($this->statement);
-        }
-        $this->statement = null;
-        fclose($stream);
-    } // stream_long_data
+        $this->statement = $stmt;
+        $this->parameter_signature = null;
+    } // native_prepare
 
     /**
-     * Executes the prepared SQL query.
+     * Binds validated values and executes the native prepared statement.
      *
-     * @param mixed ...$args
-     * The number of parameters may vary and be zero. An array can also be passed.
-     * These are parameters of the prepared query.
+     * Uses explicit PHP/SQL parameter types and re-prepares the native statement when its
+     * type signature changes. Caller-owned stream parameters are copied into temporary
+     * seekable streams, sent before result processing, and released in the cleanup path.
      *
-     * @return void
-     *
-     * @throws \Exception|DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::prepare_query()
-     * @see MSSQL_DBWorker::free_prepared_query()
-     *
-     * @author Oleg Schildt
-     */
-    public function execute_prepared_query(...$args): void
-    {
-        $this->check_connection();
-
-        if (empty($this->prepared_query) || empty($this->statement)) {
-            throw new DBWorkerException("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
-        }
-
-        if (count($args) == 1 && is_array($args[0])) {
-            $args = $args[0];
-        }
-
-        $this->last_query = $this->prepared_query;
-
-        $counter = 0;
-        foreach ($args as $argval) {
-            $this->query_parameters[$counter] = $argval;
-            if ($argval === null) {
-                $this->last_query = preg_replace("/\\?/", "null", $this->last_query, 1);
-            } elseif (is_int($argval)) {
-                $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
-            } elseif (is_float($argval)) {
-                $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
-            } else {
-                $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
-            }
-
-            $counter++;
-        }
-
-        if ($this->logging) {
-            debugger()->debugMessage($this->last_query, "sql.log");
-        }
-
-        if (!@sqlsrv_execute($this->statement)) {
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-    } // execute_prepared_query
-
-    /**
-     * Executes the SQL stored procedure.
-     *
-     * @param string $procedure
-     * The name of the SQL stored procedure.
-     *
-     * All subsequent parameters are the parameters of the SQL stored procedure.
+     * @param list<scalar|null|BlobValue|ClobValue> $values
+     * The normalized values in SQL occurrence order, including any explicit LOB wrappers.
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If binding, LOB processing, execution or result completion fails, including when
+     * another worker has a pending forward-only result on the shared connection.
+     *
+     * @see DBWorker::execute_prepared_query()
      *
      * @author Oleg Schildt
      */
-    public function execute_procedure(string $procedure /* arg list */): void
+    protected function native_execute(array $values): void
     {
-        $this->check_connection();
+        // Bind stable per-position values so repeated application names cannot share a loop variable by accident.
+        $temporary = [];
+        $converted = [];
+        $types = [];
 
-        $args = func_get_args();
-        // prepare the arguments for placing in eval()
-        // escape single quotes
+        try {
+            foreach ($values as $index => $value) {
+                if ($value instanceof BlobValue || $value instanceof ClobValue) {
+                    $binary = $value instanceof BlobValue;
 
-        $this->last_query = "";
+                    if (is_resource($value->value)) {
+                        $stream = tmpfile();
 
-        if (count($args) > 0) {
-            $proc_name = "";
-            $arg_list = "";
+                        if ($stream === false) {
+                            throw $this->stream_error('Cannot spool a SQL Server stream parameter.');
+                        }
 
-            $first = true;
-            foreach ($args as $argval) {
-                if ($first) {
-                    $proc_name = $argval;
-                    $first = false;
-                    continue;
-                }
+                        $temporary[] = $stream;
 
-                if ($argval === null) {
-                    $arg_list .= "null, ";
-                } elseif (is_int($argval)) {
-                    $arg_list .= "$argval, ";
-                } elseif (is_float($argval)) {
-                    $arg_list .= "$argval, ";
+                        $this->write_chunks(
+                            $value->value,
+                            fn (string $chunk) => $this->write_all($stream, $chunk),
+                            !$binary
+                        );
+
+                        rewind($stream);
+
+                        $converted[$index] = $stream;
+                        $php = SQLSRV_PHPTYPE_STREAM($binary ? SQLSRV_ENC_BINARY : 'UTF-8');
+                    } else {
+                        $converted[$index] = $value->value;
+                        $php = SQLSRV_PHPTYPE_STRING($binary ? SQLSRV_ENC_BINARY : 'UTF-8');
+                    }
+
+                    $types[$index] = [$php, $binary ? SQLSRV_SQLTYPE_VARBINARY('max') : SQLSRV_SQLTYPE_NVARCHAR('max')];
+                } elseif (is_int($value) || is_bool($value)) {
+                    $converted[$index] = (int) $value;
+                    $types[$index] = [SQLSRV_PHPTYPE_INT, SQLSRV_SQLTYPE_BIGINT];
+                } elseif (is_float($value)) {
+                    $converted[$index] = $value;
+                    $types[$index] = [SQLSRV_PHPTYPE_FLOAT, SQLSRV_SQLTYPE_FLOAT];
                 } else {
-                    $arg_list .= "'" . $this->escape($argval) . "', ";
+                    $converted[$index] = $value;
+                    $types[$index] = [
+                        $value === null ? SQLSRV_PHPTYPE_NULL : SQLSRV_PHPTYPE_STRING('UTF-8'),
+                        SQLSRV_SQLTYPE_NVARCHAR('max')
+                    ];
                 }
             }
 
-            $arg_list = trim($arg_list, ", ");
+            // Re-prepare only when native parameter types change; otherwise update the existing referenced values.
+            $signature = serialize($types);
 
-            $this->last_query = trim("EXEC $proc_name $arg_list");
-        }
+            if ($signature !== $this->parameter_signature) {
+                if (is_resource($this->statement)) {
+                    sqlsrv_free_stmt($this->statement);
+                }
 
-        $this->execute_query($this->last_query);
+                $this->statement = null;
+                $this->parameter_signature = null;
+                $this->bound_values = $converted;
+                $this->native_parameters = [];
 
-        // A stored procedure may generate many result objects.
-        // We clear them, to prevent errors by subsequent select requests.
+                foreach ($types as $index => [$php, $sql]) {
+                    $this->native_parameters[$index] = [&$this->bound_values[$index], SQLSRV_PARAM_IN, $php, $sql];
+                }
 
-        if ($this->statement && is_resource($this->statement)) {
-            @sqlsrv_cancel($this->statement);
-        }
-    } // execute_procedure
+                $options = $this->statement_options();
+                $options['SendStreamParamsAtExec'] = false;
+                $stmt = @sqlsrv_prepare(
+                    $this->connection_state->handle,
+                    $this->prepared_sql,
+                    $this->native_parameters,
+                    $options
+                );
 
-    /**
-     * Frees the prepared query.
-     *
-     * It should be called after all executions of the prepared query.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::prepare_query()
-     * @see MSSQL_DBWorker::execute_prepared_query()
-     *
-     * @author Oleg Schildt
-     */
-    public function free_prepared_query(): void
-    {
-        $this->check_connection();
+                if ($stmt === false) {
+                    throw $this->query_error($this->errors());
+                }
 
-        if ($this->statement && is_resource($this->statement)) {
-            @sqlsrv_free_stmt($this->statement);
-        }
-
-        $this->statement = null;
-        $this->last_query = null;
-        $this->prepared_query = null;
-        $this->query_parameters = null;
-
-        $this->last_query_is_insert = false;
-    } // free_prepared_query
-
-    /**
-     * Closes the currently opened connection.
-     *
-     * @return void
-     *
-     * @see MSSQL_DBWorker::is_connected()
-     * @see MSSQL_DBWorker::connect()
-     *
-     * @author Oleg Schildt
-     */
-    public function close_connection(): void
-    {
-        $this->last_query = null;
-        $this->row = null;
-        $this->field_names = null;
-
-        if (is_resource($this->connection)) {
-            @sqlsrv_close($this->connection);
-        }
-
-        $this->statement = null;
-        $this->connection = null;
-        $this->query_parameters = null;
-    } // close_connection
-
-    /**
-     * Starts the translation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::commit_transaction()
-     * @see MSSQL_DBWorker::rollback_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function start_transaction(): void
-    {
-        $this->check_connection();
-
-        if (!@sqlsrv_begin_transaction($this->connection)) {
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
-        }
-    } // start_transaction
-
-    /**
-     * Commits the translation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::start_transaction()
-     * @see MSSQL_DBWorker::rollback_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function commit_transaction(): void
-    {
-        $this->check_connection();
-
-        if (!@sqlsrv_commit($this->connection)) {
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
-        }
-    } // commit_transaction
-
-    /**
-     * Rolls back the translation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::start_transaction()
-     * @see MSSQL_DBWorker::commit_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function rollback_transaction(): void
-    {
-        $this->check_connection();
-
-        if (!@sqlsrv_rollback($this->connection)) {
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
-        }
-    } // rollback_transaction
-
-    /**
-     * Frees the result of the previously executed retrieving query.
-     *
-     * It should be called only for the retrieving queries.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It might throw an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function free_result(): void
-    {
-        $this->check_connection();
-
-        if ($this->statement && is_resource($this->statement)) {
-            @sqlsrv_cancel($this->statement);
-        }
-
-        $this->row = null;
-        $this->field_names = null;
-    } // free_result
-
-    /**
-     * Returns the value of the auto increment field by the last insertion.
-     *
-     * @return ?int
-     * Returns the value of the auto increment field by the last insertion.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function insert_id(): ?int
-    {
-        $this->check_connection();
-
-        if ($this->last_query_is_insert) {
-            if (!$this->statement) {
-                return null;
+                $this->statement = $stmt;
+                $this->parameter_signature = $signature;
+                    } else {
+                foreach ($converted as $index => $value) {
+                    $this->bound_values[$index] = $value;
+                }
             }
 
-            if (!sqlsrv_next_result($this->statement)) {
-                $err = $this->sys_get_errors();
-
-                throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
+            if (!@sqlsrv_execute($this->statement)) {
+                throw $this->query_error($this->errors());
             }
 
-            $id = null;
+            $this->executed = true;
 
-            if (@sqlsrv_fetch($this->statement)) {
-                $id = sqlsrv_get_field($this->statement, 0);
+            // Send all stream parameters before reading row counts or returned identity values.
+            if ($temporary) {
+                while (@sqlsrv_send_stream_data($this->statement)) {
+                }
+
+                if (sqlsrv_errors(SQLSRV_ERR_ERRORS)) {
+                    throw $this->stream_error($this->errors());
+                }
             }
 
-            return $id;
+            $this->accept_statement();
+        } catch (\Throwable $error) {
+            $this->free_result();
+
+            throw $error;
+        } finally {
+            foreach ($temporary as $stream) {
+                fclose($stream);
+            }
+        }
+    } // native_execute
+
+    /**
+     * Captures SQL Server row counts, identity values and result metadata.
+     *
+     * Consumes leading row-count results and complete result-free batches. An appended
+     * SCOPE_IDENTITY result is consumed internally. The first ordinary row result remains
+     * available for public field access; its cursor is released when reading reaches EOF.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If native result processing fails.
+     *
+     * @author Oleg Schildt
+     */
+    private function accept_statement(): void
+    {
+        if (($this->options['save_records_explicit_identity'] ?? false) && !$this->captures_identity) {
+            // Execute every part of an explicit-ID batch, including its cleanup and deferred error results.
+            $affected = 0;
+
+            do {
+                $count = sqlsrv_rows_affected($this->statement);
+
+                if ($count !== false && $count >= 0) {
+                    $affected = $count;
+                }
+
+                $next = sqlsrv_next_result($this->statement);
+
+                if ($next === false) {
+                    throw $this->query_error($this->errors());
+                }
+            } while ($next === true);
+
+            $this->executed = false;
+
+            $this->set_result([], $affected);
+
+            return;
         }
 
-        $this->statement = @sqlsrv_query($this->connection, "SELECT SCOPE_IDENTITY() AS IID");
-        if (!$this->statement) {
-            $err = $this->sys_get_errors();
+        // Treat DML counts separately from SELECT results and internal identity result sets.
+        $affected = 0;
 
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
+        if ($this->captures_identity) {
+            // SCOPE_IDENTITY must execute in the same batch as INSERT.
+            $identity_result = false;
+
+            do {
+                if (sqlsrv_num_fields($this->statement) === 0) {
+                    $count = sqlsrv_rows_affected($this->statement);
+
+                    if ($count !== false && $count >= 0) {
+                        $affected = $count;
+                    }
+                }
+
+                $fields = sqlsrv_field_metadata($this->statement);
+
+                if ($fields && $fields[0]['Name'] === 'smartfactory_insert_id') {
+                    $identity_result = true;
+                    $status = sqlsrv_fetch($this->statement);
+
+                    if ($status === false) {
+                        throw $this->query_error($this->errors());
+                    }
+
+                    if ($status === true) {
+                        $id = sqlsrv_get_field($this->statement, 0);
+
+                        if ($id !== null && filter_var($id, FILTER_VALIDATE_INT) !== false) {
+                            $this->last_insert_id = (int) $id;
+                        }
+                    }
+
+                    break;
+                }
+
+                $next = sqlsrv_next_result($this->statement);
+
+                if ($next === false) {
+                    throw $this->query_error($this->errors());
+                }
+            } while ($next === true);
+
+            // Fetching the identity value alone leaves its result pending when MARS is disabled.
+            if ($identity_result) {
+                $this->finish_results();
+            } else {
+                $this->executed = false;
+            }
+
+            $this->set_result([], $affected);
+
+            return;
         }
 
-        if (!$this->fetch_row()) {
-            $err = "Identity field cannot be retrieved";
+        while (true) {
+            $field_count = sqlsrv_num_fields($this->statement);
+
+            if ($field_count === false) {
+                throw $this->query_error($this->errors());
+            }
+
+            if ($field_count > 0) {
+                break;
+            }
+
+            $count = sqlsrv_rows_affected($this->statement);
+
+            if ($count === false) {
+                throw $this->query_error($this->errors());
+            }
+
+            if ($count >= 0) {
+                $affected = $count;
+            }
+
+            $next = sqlsrv_next_result($this->statement);
+
+            if ($next === false) {
+                throw $this->query_error($this->errors());
+            }
+
+            if ($next === null) {
+                $this->executed = false;
+
+                $this->set_result([], $affected);
+
+                return;
+            }
+        }
+
+        $fields = sqlsrv_field_metadata($this->statement);
+
+        if ($fields === false && sqlsrv_errors(SQLSRV_ERR_ERRORS)) {
+            throw $this->query_error($this->errors());
+        }
+
+        $types = [
+            -5 => 'bigint',
+            -2 => 'binary',
+            -7 => 'bit',
+            1 => 'char',
+            91 => 'date',
+            93 => 'datetime',
+            -155 => 'datetimeoffset',
+            3 => 'decimal',
+            6 => 'float',
+            -4 => 'image',
+            4 => 'int',
+            -8 => 'nchar',
+            -10 => 'ntext',
+            2 => 'numeric',
+            -9 => 'nvarchar',
+            7 => 'real',
+            5 => 'smallint',
+            -1 => 'text',
+            -154 => 'time',
+            -6 => 'tinyint',
+            -151 => 'udt',
+            -11 => 'uniqueidentifier',
+            -3 => 'varbinary',
+            12 => 'varchar',
+            -152 => 'xml'
+        ];
+        $metadata = [];
+
+        foreach ($fields ?: [] as $field) {
+            $type = $field['Type'];
+            $binary = in_array($type, [-2, -3, -4], true);
+            $numeric = in_array($type, [-5, -7, 3, 6, 4, 2, 7, 5, -6], true);
+            $datetime = in_array($type, [91, 93, -155, -154], true);
+            $metadata[] = [
+                'name' => $field['Name'],
+                'type' => $types[$type] ?? 'undefined',
+                'size' => $field['Size'] ?? 0,
+                'prec' => $field['Precision'] ?? null,
+                'scale' => $field['Scale'] ?? null,
+                'numeric' => (int) $numeric,
+                'binary' => (int) $binary,
+                'datetime' => (int) $datetime,
+                'string' => (int) in_array($type, [1, -8, -10, -9, -1, 12, -152], true)
+            ];
+        }
+
+        $this->set_result($metadata, $affected);
+    } // accept_statement
+
+    /**
+     * Completes the remaining results after the public row result or internal identity is consumed.
+     *
+     * Additional row results are discarded because DBWorker exposes only the first public result.
+     * Advancing through the batch executes trailing commands and reports deferred SQL errors.
+     *
+     * @return void
+     * Releases pending protocol results without freeing a reusable prepared statement.
+     *
+     * @throws DBWorkerException
+     * If advancing to a later result reports a native SQL error.
+     *
+     * @author Oleg Schildt
+     */
+    private function finish_results(): void
+    {
+        do {
+            $next = sqlsrv_next_result($this->statement);
+
+            if ($next === false) {
+                throw $this->query_error($this->errors());
+            }
+        } while ($next === true);
+
+        $this->executed = false;
+    } // finish_results
+
+    /**
+     * Consumes procedure results that the public execute_procedure() convenience method discards.
+     *
+     * @return void
+     * Completes trailing commands and releases pending results before the procedure statement is freed.
+     *
+     * @throws DBWorkerException
+     * If advancing through the remaining results reports a deferred SQL error.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_finish_procedure(): void
+    {
+        if ($this->executed) {
+            $this->finish_results();
+        }
+    } // native_finish_procedure
+
+    /**
+     * Fetches the next row through the native driver.
+     *
+     * @return list<mixed>|null
+     * Returns a numerically indexed row, or NULL at the end of the result set.
+     *
+     * @throws DBWorkerException
+     * If fetching or spooling a field fails, or a trailing batch result reports a deferred SQL error.
+     *
+     * @see DBWorker::fetch_row()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_fetch(): ?array
+    {
+        if (!$this->executed) {
+            return null;
+        }
+
+        // Preserve numeric field positions and distinguish end-of-result from a native error.
+        $status = sqlsrv_fetch($this->statement);
+
+        if ($status === false) {
+            $error = $this->query_error($this->errors());
 
             $this->free_result();
 
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
+            throw $error;
         }
 
-        $id = $this->field_by_name("IID");
+        if ($status === null) {
+            try {
+                $this->finish_results();
+            } catch (\Throwable $error) {
+                $this->free_result();
 
-        $this->free_result();
-
-        return $id;
-    } // insert_id
-
-    /**
-     * Fetches the next row of data from the result of the execution of the retrieving query.
-     *
-     * @return bool
-     * Returns true if the next row exists and has been successfully fetched, otherwise false.
-     *
-     * Example:
-     * ```php
-     * if(!$dbw->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
-     * {
-     *   error reporting ...;
-     * }
-     *
-     * while($dbw->fetch_row())
-     * {
-     *   echo $dbw->field_by_name("FIRST_NAME") . " " . $dbw->field_by_name("LAST_NAME") . "<br>";
-     * }
-     *
-     * $dbw->free_result();
-     * ```
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetch_row(): bool
-    {
-        $this->check_connection();
-
-        if (!$this->statement || !is_resource($this->statement)) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        $this->row = @sqlsrv_fetch_array($this->statement, SQLSRV_FETCH_ASSOC);
-        if (!$this->row) {
-            return false;
-        }
-
-        if (!$this->field_names) {
-            $this->field_names = array_keys($this->row);
-        }
-
-        return true;
-    } // fetch_row
-
-    /**
-     * Fetches all rows from the result into an array.
-     *
-     * @param array &$rows
-     * Target array for loading the results.
-     *
-     * @param ?array $dimension_keys
-     * Array of the column names that should be used as dimensions.
-     *
-     * Per default, the rows are fetched as two-dimensional array.
-     *
-     * Example:
-     * ```php
-     * $rows = [];
-     * $dbw->fetch_array($rows);
-     *
-     * rows[n] = ["col1" => "val1", "col2" => "val2", , "col3" => "val3", ...]
-     * ```
-     * If the dimension columns are specified, their values are used for the dimensions.
-     *
-     * Example:
-     * ```php
-     * $rows = [];
-     * $dbw->fetch_array($rows, ["col1", "col2"]);
-     *
-     * rows["val1"]["val2"] = ["col3" => "val3", ...]
-     * ```
-     *
-     * @return int
-     * Returns the number of the fetched rows. It might be also 0.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetch_array(array &$rows, ?array $dimension_keys = null): int
-    {
-        $this->check_connection();
-
-        if (!$this->statement || !is_resource($this->statement)) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        $rows = [];
-
-        if (!empty($dimension_keys)) {
-            $dimension_keys = array_flip($dimension_keys);
-        }
-
-        $counter = 0;
-        while ($row = @sqlsrv_fetch_array($this->statement, SQLSRV_FETCH_ASSOC)) {
-            $counter++;
-
-            if (!$this->field_names) {
-                $this->field_names = array_keys($row);
+                throw $error;
             }
 
-            if (empty($dimension_keys)) {
-                $rows[] = $row;
-            } else {
-                $dimensions = array_intersect_key($row, $dimension_keys);
-                $row = array_diff_key($row, $dimension_keys);
+            return null;
+        }
 
-                $reference = &$rows;
+        $row = [];
 
-                foreach ($dimensions as $dval) {
-                    if (empty($reference[$dval])) {
-                        $reference[$dval] = [];
+        try {
+            foreach ($this->metadata as $index => $field) {
+                $large = ($field['binary'] || $field['string']) && ($field['size'] <= 0 || $field['size'] > 8192);
+
+                if ($large) {
+                    $unicode = in_array($field['type'], ['nvarchar', 'nchar', 'ntext'], true);
+                    $value = sqlsrv_get_field(
+                        $this->statement,
+                        $index,
+                        SQLSRV_PHPTYPE_STREAM($field['binary'] || $unicode ? SQLSRV_ENC_BINARY : 'UTF-8')
+                    );
+
+                    if ($value === false) {
+                        throw $this->query_error($this->errors());
                     }
-                    $reference = &$reference[$dval];
+
+                    if ($value !== null) {
+                        $spool = tmpfile();
+
+                        if ($spool === false) {
+                            fclose($value);
+
+                            throw $this->stream_error('Cannot spool a SQL Server result field.');
+                        }
+
+                        // Own the spool before copying so the failure path can always close it.
+                        $row[$index] = $spool;
+
+                        try {
+                            // The sqlsrv UTF-8 stream converter can split a UTF-16 surrogate
+                            // pair at its internal buffer boundary. Read Unicode fields as
+                            // raw UTF-16LE and convert complete code points ourselves.
+                            $carry = '';
+
+                            $this->write_chunks(
+                                $value,
+                                function (string $chunk) use ($spool, $unicode, &$carry): void {
+                                    if ($unicode) {
+                                        $chunk = $carry . $chunk;
+                                        $even = strlen($chunk) - strlen($chunk) % 2;
+                                        $carry = substr($chunk, $even);
+                                        $chunk = substr($chunk, 0, $even);
+
+                                        if ($chunk !== '') {
+                                            $last = unpack('v', substr($chunk, -2))[1];
+
+                                            if ($last >= 0xD800 && $last <= 0xDBFF) {
+                                                $carry = substr($chunk, -2) . $carry;
+                                                $chunk = substr($chunk, 0, -2);
+                                            }
+                                        }
+
+                                        if (!mb_check_encoding($chunk, 'UTF-16LE')) {
+                                            throw $this->stream_error('Invalid UTF-16 result data.');
+                                        }
+
+                                        $chunk = mb_convert_encoding($chunk, 'UTF-8', 'UTF-16LE');
+                                    }
+
+                                    $this->write_all($spool, $chunk);
+                                }
+                            );
+
+                            if ($carry !== '') {
+                                throw $this->stream_error('Incomplete UTF-16 result data.');
+                            }
+                        } finally {
+                            fclose($value);
+                        }
+
+                        rewind($spool);
+
+                        continue;
+                    }
+                } else {
+                    $value = sqlsrv_get_field($this->statement, $index);
+
+                    if ($value === false && sqlsrv_errors(SQLSRV_ERR_ERRORS)) {
+                        throw $this->query_error($this->errors());
+                    }
                 }
 
-                $reference = $row;
-
-                unset($reference);
-            }
-        }
-
-        return $counter;
-    } // fetch_array
-
-    /**
-     * Returns the number of the rows fetched by the last retrieving query.
-     *
-     * @return int
-     * Returns the number of the rows fetched by the last retrieving query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetched_count(): int
-    {
-        $this->check_connection();
-
-        if (!$this->statement || !is_resource($this->statement)) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        /*
-        If the cursor is SQLSRV_CURSOR_STATIC or other than
-        SQLSRV_CURSOR_FORWARD, retrieving of the data
-        has sometimes very poor performance. Not the query execution,
-        but the data retrieving!
-
-        The default is SQLSRV_CURSOR_FORWARD, but it is not possible
-        to get fetched_count by this type of cursor. So we sacrifice
-        the possibility to get fetched_count for the performance.
-        The performance is more important.
-
-        no more relevant in new version of driver
-        */
-
-        return @sqlsrv_num_rows($this->statement);
-    } // fetched_count
-
-    /**
-     * Returns the number of the rows affected by the last modification query.
-     *
-     * @return int
-     * Returns the number of the rows affected by the last modification query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function affected_count(): int
-    {
-        $this->check_connection();
-
-        if (!$this->statement) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return @sqlsrv_rows_affected($this->statement);
-    } // affected_count
-
-    /**
-     * Returns the number of the fields in the result of the last retrieving query.
-     *
-     * @return int
-     * Returns the number of the fields in the result of the last retrieving query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function field_count(): int
-    {
-        $this->check_connection();
-
-        if (!$this->statement) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return @sqlsrv_num_fields($this->statement);
-    } // field_count
-
-    /**
-     * Returns the value of a field specified by name.
-     *
-     * @param string $name
-     * The name of the field.
-     *
-     * @param int $type
-     * The type of the field.
-     *
-     * @return mixed
-     * Returns the value of a field specified by name. In the case
-     * of any error returns null.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::field_by_num()
-     * @see MSSQL_DBWorker::field_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_by_name(string $name, int $type = self::DB_AS_IS): mixed
-    {
-        $this->check_connection();
-
-        if (!$this->row) {
-            return null;
-        }
-
-        if (!array_key_exists($name, $this->row)) {
-            trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_WARNING);
-            return null;
-        }
-
-        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$name])) {
-            return strtotime($this->row[$name]);
-        }
-
-        return $this->row[$name];
-    } // field_by_name
-
-    /**
-     * Returns the value of a field specified by number.
-     *
-     * @param int $num
-     * The number of the field.
-     *
-     * @param int $type
-     * The type of the field.
-     *
-     * @return mixed
-     * Returns the value of a field specified by number. In the case
-     * of any error returns null.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::field_by_name()
-     * @see MSSQL_DBWorker::field_info_by_num()
-     * @see MSSQL_DBWorker::field_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_by_num(int $num, int $type = self::DB_AS_IS): mixed
-    {
-        $this->check_connection();
-
-        if (!$this->row) {
-            return null;
-        }
-
-        if (!array_key_exists($num, $this->field_names)) {
-            trigger_error("Field with the index $num does not exist in the result set!", E_USER_WARNING);
-            return null;
-        }
-
-        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$this->field_names[$num]])) {
-            return strtotime($this->row[$this->field_names[$num]]);
-        }
-
-        return $this->row[$this->field_names[$num]];
-    } // field_by_num
-
-    /**
-     * Returns the meta information about the field as an object with properties.
-     *
-     * @param int $num
-     * The number of the field.
-     *
-     * @return ?array
-     * Returns the associative array with properties.
-     *
-     * - $info["name"] - name of the field.
-     * - $info["type"] - type of the field.
-     * - $info["size"] - size of the field.
-     * - $info["binary"] - whether the filed is binary.
-     * - $info["numeric"] - whether the filed is numeric.
-     * - $info["datetime"] - whether the filed is datetime.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::field_by_num()
-     * @see MSSQL_DBWorker::field_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_info_by_num(int $num): ?array
-    {
-        $this->check_connection();
-
-        if (!$this->statement) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        $info = @sqlsrv_field_metadata($this->statement);
-        if (!$info) {
-            $err = $this->sys_get_errors();
-
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        if (empty($info[$num])) {
-            return null;
-        }
-
-        $sqlsrv_type = [];
-
-        $sqlsrv_type[-5] = "bigint";
-        $sqlsrv_type[-2] = "binary";
-        $sqlsrv_type[-7] = "bit";
-        $sqlsrv_type[1] = "char";
-        $sqlsrv_type[91] = "date";
-        $sqlsrv_type[93] = "datetime";
-
-        $sqlsrv_type[-155] = "datetimeoffset";
-        $sqlsrv_type[3] = "decimal";
-        $sqlsrv_type[6] = "float";
-        $sqlsrv_type[-4] = "image";
-        $sqlsrv_type[4] = "int";
-        $sqlsrv_type[-8] = "nchar";
-
-        $sqlsrv_type[-10] = "ntext";
-        $sqlsrv_type[2] = "numeric";
-        $sqlsrv_type[-9] = "nvarchar";
-        $sqlsrv_type[7] = "real";
-        $sqlsrv_type[5] = "smallint";
-        $sqlsrv_type[-1] = "text";
-
-        $sqlsrv_type[-154] = "time";
-        $sqlsrv_type[-6] = "tinyint";
-        $sqlsrv_type[-151] = "udt";
-        $sqlsrv_type[-11] = "uniqueidentifier";
-        $sqlsrv_type[-3] = "varbinary";
-        $sqlsrv_type[12] = "varchar";
-        $sqlsrv_type[-152] = "xml";
-
-        $field_info = [];
-
-        $field_info["name"] = $info[$num]["Name"];
-        $field_info["type"] = $info[$num]["Type"];
-        $field_info["size"] = $info[$num]["Size"];
-
-        $field_info["binary"] = 0;
-        $field_info["numeric"] = 0;
-
-        if (!empty($field_info["type"])) {
-            if (in_array($field_info["type"], [-5, 3, 6, 4, 2, 7, 5, -6])) {
-                $field_info["numeric"] = 1;
-            }
-            elseif (in_array($field_info["type"], [-2, -4, -3])) {
-                $field_info["binary"] = 1;
-            }
-            elseif (in_array($field_info["type"], [91, 93])) {
-                $field_info["datetime"] = 1;
-            }
-            elseif (in_array($field_info["type"], [1, -8, -10, -9, -1, 12])) {
-                $field_info["string"] = 1;
+                $row[$index] = $value;
             }
 
-            if (isset($sqlsrv_type[$field_info["type"]])) {
-                $field_info["type"] = $sqlsrv_type[$field_info["type"]];
-            } else {
-                $field_info["type"] = "undefined";
+            return $row;
+        } catch (\Throwable $error) {
+            // Release any already spooled fields if a later field cannot be read.
+            foreach ($row as $value) {
+                if (is_resource($value)) {
+                    fclose($value);
+                }
             }
-        }
 
-        return $field_info;
-    } // field_info_by_num
+            $this->free_result();
+
+            throw $error;
+        }
+    } // native_fetch
 
     /**
-     * Returns the name of the field by number.
+     * Releases native result resources without discarding a reusable prepared statement.
      *
-     * @param int $num
-     * The number of the field.
+     * Implementations must distinguish a result handle from a statement handle when both refer to the same resource.
      *
-     * @return ?string
-     * Returns the name of the field by number.
+     * @return void
+     * Does not return a value.
      *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MSSQL_DBWorker::field_by_num()
-     * @see MSSQL_DBWorker::field_info_by_num()
+     * @see DBWorker::free_result()
      *
      * @author Oleg Schildt
      */
-    public function field_name(int $num): ?string
+    protected function native_free_result(): void
     {
-        $this->check_connection();
-
-        $info = $this->field_info_by_num($num);
-        if (!$info) {
-            return null;
+        // Release result ownership while leaving a reusable prepared statement available.
+        if (is_resource($this->statement) && $this->executed) {
+            sqlsrv_cancel($this->statement);
         }
 
-        return $info["name"] ?? "";
-    } // field_name
+        $this->executed = false;
+        $this->result = null;
+    } // native_free_result
 
     /**
-     * Escapes the string so that it can be used in the query without causing an error.
+     * Releases the native prepared statement and its driver-specific bind state.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @see DBWorker::free_prepared_query()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_free_statement(): void
+    {
+        // Release native statement ownership and clear driver-specific bind state.
+        if (is_resource($this->statement)) {
+            sqlsrv_free_stmt($this->statement);
+        }
+
+        $this->statement = null;
+
+        $this->reset_driver_state();
+    } // native_free_statement
+
+    /**
+     * Performs a native transaction operation on the shared connection.
+     *
+     * The base class updates the shared transaction flag only after this operation succeeds.
+     *
+     * @param string $action
+     * The operation: begin, commit or rollback.
+     *
+     * @param string $isolation_level
+     * The validated isolation level for begin; ignored for commit and rollback.
+     * The previous session level is restored after the transaction ends.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If reading or applying session isolation, starting, committing or rolling back fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_transaction(string $action, string $isolation_level = self::ISOLATION_READ_COMMITTED): void
+    {
+        // Perform the native operation; the base worker updates the shared flag after success.
+        if ($action === 'begin') {
+            $previous = $this->session_transaction_isolation();
+
+            $this->session_transaction_isolation($isolation_level);
+
+            if (!sqlsrv_begin_transaction($this->connection_state->handle)) {
+                $error = $this->query_error($this->errors());
+
+                $this->session_transaction_isolation($previous);
+
+                throw $error;
+            }
+
+            $this->connection_state->attributes['previous_transaction_isolation'] = $previous;
+
+            return;
+        }
+
+        $success = match ($action) {
+            'commit' => sqlsrv_commit($this->connection_state->handle),
+            'rollback' => sqlsrv_rollback($this->connection_state->handle)
+        };
+
+        if (!$success) {
+            throw $this->query_error($this->errors());
+        }
+    } // native_transaction
+
+    /**
+     * Reads or sets SQL Server session isolation without replacing the worker's public statement.
+     *
+     * @param string|null $isolation_level
+     * A validated native isolation name to apply, or NULL to read the current level.
+     *
+     * @return string
+     * Returns the applied or current native isolation level.
+     *
+     * @throws DBWorkerException
+     * If SQL Server cannot execute the session command or return its isolation setting.
+     *
+     * @author Oleg Schildt
+     */
+    private function session_transaction_isolation(?string $isolation_level = null): string
+    {
+        // Execute SET directly: a setting made inside a prepared RPC can end with that RPC's scope.
+        $sql = $isolation_level === null
+            ? 'SELECT transaction_isolation_level FROM sys.dm_exec_sessions WHERE session_id = @@SPID'
+            : 'SET TRANSACTION ISOLATION LEVEL ' . $isolation_level;
+        $statement = @sqlsrv_query($this->connection_state->handle, $sql);
+
+        if ($statement === false) {
+            throw $this->query_error($this->errors());
+        }
+
+        try {
+            if ($isolation_level === null) {
+                $row = sqlsrv_fetch_array($statement, SQLSRV_FETCH_NUMERIC);
+
+                if (!is_array($row)) {
+                    throw $this->query_error('SQL Server did not return the session isolation level.');
+                }
+
+                // Restore legacy session defaults as well, even though start_transaction() accepts only three levels.
+                $levels = [1 => 'READ UNCOMMITTED', 2 => self::ISOLATION_READ_COMMITTED,
+                    3 => self::ISOLATION_REPEATABLE_READ, 4 => self::ISOLATION_SERIALIZABLE, 5 => 'SNAPSHOT'];
+                $isolation_level = $levels[(int) $row[0]] ?? self::ISOLATION_READ_COMMITTED;
+            }
+
+            return $isolation_level;
+        } finally {
+            sqlsrv_free_stmt($statement);
+        }
+    } // session_transaction_isolation
+
+    /**
+     * Restores the SQL Server session default after a successful commit or rollback.
+     *
+     * @return void
+     * Restores the level recorded when the shared transaction began, including completion through a clone.
+     *
+     * @throws DBWorkerException
+     * If the session setting cannot be restored. The completed transaction remains marked as ended.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_restore_transaction_isolation(): void
+    {
+        $previous = $this->connection_state->attributes['previous_transaction_isolation'] ?? null;
+
+        if ($previous === null) {
+            return;
+        }
+
+        $this->session_transaction_isolation($previous);
+
+        unset($this->connection_state->attributes['previous_transaction_isolation']);
+    } // native_restore_transaction_isolation
+
+    /**
+     * Escapes a string for inclusion in an SQL string literal without adding quotation marks.
+     *
+     * The result is intended for string literals, not SQL identifiers.
+     * Prefer bound parameters when supplying application values to a query.
+     * This operation does not require an open database connection.
      *
      * @param string $str
-     * The string to be escaped.
+     * The string to escape.
      *
      * @return string
      * Returns the escaped string.
      *
-     * @see MSSQL_DBWorker::format_date()
-     * @see MSSQL_DBWorker::format_datetime()
+     * @see DBWorker::quotes_or_null()
+     * @see DBWorker::prepare_query()
      *
      * @author Oleg Schildt
      */
     public function escape(string $str): string
     {
-        return str_replace("'", "''", "$str");
+        // Escape only SQL string-literal quotes; identifiers use a separate quoting path.
+        return str_replace("'", "''", $str);
     } // escape
 
     /**
-     * Formats the date to a string compatible for the corresponding database.
+     * Escapes and quotes a string, or prepares an SQL NULL literal.
      *
-     * @param int $date
-     * The date value as timestamp.
+     * @param string|null $str
+     * The value to quote. NULL and the empty string are represented as SQL NULL.
      *
      * @return string
-     * Returns the string representation of the date compatible for the corresponding database.
+     * Returns a quoted SQL string literal, or the unquoted literal null.
      *
-     * @see MSSQL_DBWorker::escape()
-     * @see MSSQL_DBWorker::format_datetime()
+     * @see DBWorker::escape()
+     * @see DBWorker::number_or_null()
      *
      * @author Oleg Schildt
      */
-    public function format_date(int $date): string
+    public function quotes_or_null(?string $str): string
     {
-        if (empty($date)) {
-            return $this->quotes_or_null("");
-        }
-
-        return $this->quotes_or_null(date("Ymd", $date));
-    } // format_date
+        // Preserve the helper's convention that NULL and an empty string both mean SQL NULL.
+        return $str === null || $str === '' ? 'null' : "N'" . $this->escape($str) . "'";
+    } // quotes_or_null
 
     /**
-     * Formats the date/time to a string compatible for the corresponding database.
+     * Formats a date as a native bind value.
      *
-     * @param int $datetime
-     * The date/time value as timestamp.
+     * @param int|\DateTimeInterface|null $date
+     * A Unix timestamp, a date/time object, or NULL. Timestamp zero is a valid date.
+     * Objects retain their timezone; integer timestamps use the configured PHP timezone.
      *
-     * @return string
-     * Returns the string representation of the date/time compatible for the corresponding database.
+     * @return string|null
+     * Returns an unquoted driver-compatible string, or NULL.
      *
-     * @see MSSQL_DBWorker::escape()
-     * @see MSSQL_DBWorker::format_date()
+     * @see DBWorker::format_date()
      *
      * @author Oleg Schildt
      */
-    public function format_datetime(int $datetime): string
+    public function format_date_bind(int|\DateTimeInterface|null $date): ?string
     {
-        if (empty($datetime)) {
-            return $this->quotes_or_null("");
-        }
-
-        return $this->quotes_or_null(date("Ymd H:i:s", $datetime));
-    } // format_datetime
+        // Use an unambiguous SQL Server date format independent of the session language.
+        return $date === null ? null : ($date instanceof \DateTimeInterface
+            ? $date->format('Ymd') : date('Ymd', $date));
+    } // format_date_bind
 
     /**
-     * Prepares the value for putting to a query depending on its type. It does escaping, formatting
-     * and quotation if necessary.
+     * Formats a date/time as a native bind value.
      *
-     * @param mixed $value
-     * The value to be formatted.
+     * @param int|\DateTimeInterface|null $datetime
+     * A Unix timestamp, a date/time object, or NULL. Timestamp zero is a valid date.
+     * Objects retain their timezone; integer timestamps use the configured PHP timezone.
      *
-     * @param int $type
-     * The type of the value.
+     * @return string|null
+     * Returns an unquoted driver-compatible string, or NULL.
      *
-     * @return string
-     * Returns the prepared value.
-     *
-     * @throws DBWorkerException
-     * It might throw an exception in the case of any errors.
+     * @see DBWorker::format_datetime()
      *
      * @author Oleg Schildt
      */
-    function prepare_for_query(mixed $value, int $type): string
+    public function format_datetime_bind(int|\DateTimeInterface|null $datetime): ?string
     {
-        if (empty($value) && (string)$value != "0") {
-            return "null";
-        } else {
-            return match ($type) {
-                DBWorker::DB_NUMBER => $this->number_or_null($value),
-                DBWorker::DB_DATETIME => $this->format_datetime($value),
-                DBWorker::DB_DATE => $this->format_date($value),
-                default => $this->quotes_or_null($value)
-            };
-        }
-    } // prepare_for_query
-
+        // Use ISO 8601 with a literal T so SQL Server does not reinterpret month and day positions.
+        return $datetime === null ? null : ($datetime instanceof \DateTimeInterface
+            ? $datetime->format('Y-m-d\TH:i:s') : date('Y-m-d\TH:i:s', $datetime));
+    } // format_datetime_bind
     /**
-     * Builds simple select query based on parameters.
-     *
-     * It is used for building queries with limits.
+     * Resolves SQL Server table identity, column types and collation-aware comparison fingerprints.
      *
      * @param string $table
-     * The name of the table.
+     * The unquoted table, schema.table or database.schema.table name.
      *
-     * @param array $fields
-     * The list of request fields.
+     * @return array
+     * Returns canonical table names and native key metadata.
      *
-     * @param string $where_clause
-     * The where clause that should restrict the result.
-     *
-     * @param string $order_clause
-     * The order clause to sort the results.
-     *
-     * @param int $limit
-     * The limit how many records should be loaded. 0 for unlimited.
-     *
-     * @return string
-     * Returns the built query.
+     * @throws DBWorkerException
+     * If the target cannot be resolved or its column metadata cannot be read.
      *
      * @author Oleg Schildt
      */
-    function build_select_query(string $table, array $fields, string $where_clause, string $order_clause, int $limit): string
+    protected function native_save_table(string $table): array
     {
-        $query = "select\n";
+        $parts = explode('.', $table);
+        $name = array_pop($parts);
+        $schema = array_pop($parts);
+        $database = array_pop($parts) ?? $this->save_sql('SELECT DB_NAME()')['rows'][0][0];
+        $database = $this->save_sql('SELECT DB_NAME(DB_ID(?))', [$database])['rows'][0][0];
+        $quote = static fn (string $name): string => '[' . str_replace(']', ']]', $name) . ']';
+        $prefix = $quote($database);
+        $lookup = $prefix . '.' . ($schema === null ? '' : $quote($schema)) . '.' . $quote($name);
+        $result = $this->save_sql('SELECT s.name, t.name FROM ' . $prefix . '.sys.tables t JOIN ' . $prefix
+            . '.sys.schemas s ON s.schema_id = t.schema_id WHERE t.object_id = OBJECT_ID(?)', [$lookup]);
 
-        if (!empty($limit)) {
-            $query .= "top " . $limit . "\n";
+        if (count($result['rows']) !== 1) {
+            throw $this->query_error('The save_records table was not found.');
         }
 
-        $query .= implode(", ", $fields) . "\n";
+        [$schema, $name] = $result['rows'][0];
+        $qualified = $prefix . '.' . $quote($schema) . '.' . $quote($name);
+        $rows = $this->save_sql('SELECT c.name, t.name, c.max_length, c.precision, c.scale, c.collation_name, c.is_identity '
+            . 'FROM ' . $prefix . '.sys.columns c JOIN ' . $prefix . '.sys.types t ON t.user_type_id = c.system_type_id '
+            . 'WHERE c.object_id = OBJECT_ID(?)', [$qualified]);
+        $context = ['table' => $qualified, 'lock_table' => $prefix . '.[dbo].[dbworker_locks]',
+            'resource' => [$database, $schema, $name], 'columns' => []];
 
-        $query .= "from " . $table . "\n";
+        foreach ($rows['rows'] as [$field, $type, $length, $precision, $scale, $collation, $identity]) {
+            $native = match ($type) {
+                'varchar', 'char', 'binary', 'varbinary' => $type . '(' . ($length < 0 ? 'max' : $length) . ')',
+                'nvarchar', 'nchar' => $type . '(' . ($length < 0 ? 'max' : (int) $length / 2) . ')',
+                'decimal', 'numeric' => $type . '(' . $precision . ',' . $scale . ')',
+                'datetime2', 'datetimeoffset', 'time' => $type . '(' . $scale . ')',
+                default => $type
+            };
+            $cast = 'CAST(? AS ' . $native . ')' . ($collation === null ? '' : ' COLLATE ' . $collation);
+            $supported = in_array($type, ['varchar', 'char', 'nvarchar', 'nchar', 'binary', 'varbinary', 'decimal', 'numeric',
+                'bigint', 'int', 'smallint', 'tinyint', 'bit', 'float', 'real', 'money', 'smallmoney', 'date', 'datetime',
+                'smalldatetime', 'datetime2', 'datetimeoffset', 'time', 'uniqueidentifier'], true);
+            // Preserve full numeric entropy; use CHECKSUM only where SQL collation/equality requires it.
+            $fingerprint = 'CHECKSUM(' . $cast . ')';
 
-        if (!empty($where_clause)) {
-            $query .= $where_clause . "\n";
+            if (in_array($type, ['bigint', 'int', 'smallint', 'tinyint', 'bit', 'decimal', 'numeric'], true)) {
+                $fingerprint = 'CONVERT(varchar(100), ' . $cast . ')';
+            } elseif ($collation !== null && preg_match('/_BIN2?\z/i', $collation)) {
+                $fingerprint = 'CONVERT(varchar(max), CONVERT(varbinary(max), RTRIM(' . $cast . ')), 2)';
+            }
+
+            $context['columns'][strtolower($field)] = ['name' => $field, 'cast' => $cast,
+                'fingerprint' => $supported ? $fingerprint : null, 'identity' => (bool) $identity];
         }
 
-        if (!empty($where_clause)) {
-            $query .= $order_clause . "\n";
+        return $context;
+    } // native_save_table
+
+    /**
+     * Hashes typed SQL Server key expressions according to their native equality semantics.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param array<string, scalar|null> $keys
+     * The supplied key values, ordered by canonical column name.
+     *
+     * @return array
+     * Returns equality-compatible fingerprints; hash collisions share a lock but never a row predicate.
+     *
+     * @throws DBWorkerException
+     * If a key type is unsupported or converting a supplied key fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_key(array $context, array $keys): array
+    {
+        $expressions = [];
+
+        foreach ($keys as $field => $value) {
+            $column = $this->save_column($context, $field);
+
+            if ($column['fingerprint'] === null) {
+                throw new DBWorkerException('Unsupported SQL Server record-key type: ' . $field, self::ERR_WRONG_DATA_FORMAT);
+            }
+
+            $expressions[] = $column['fingerprint'];
         }
 
-        return $query;
-    } // build_select_query
+        $result = $this->save_sql('SELECT ' . implode(', ', $expressions), array_values($keys));
+
+        return array_map(static fn (mixed $value): ?string => $value === null ? null : (string) $value, $result['rows'][0]);
+    } // native_save_key
+
+    /**
+     * Creates or exclusively locks a SQL Server service row under serializable key-range protection.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param string $key
+     * The SHA-256 resource key.
+     *
+     * @param string $name
+     * The diagnostic description, or allocator watermark for an identity resource.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If service-row creation or lock acquisition fails; expected primary-key duplicates are handled internally.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_lock(array $context, string $key, string $name): void
+    {
+        // Insert first: range-locking an absent hash could unnecessarily block unrelated resource keys.
+        // XACT_ABORT OFF is scoped to this prepared batch so an expected duplicate remains recoverable.
+        $sql = 'SET XACT_ABORT OFF; BEGIN TRY INSERT INTO ' . $context['lock_table']
+            . ' (resource_key, resource_name) VALUES (?, ?); END TRY BEGIN CATCH '
+            . 'IF ERROR_NUMBER() NOT IN (2601, 2627) THROW; END CATCH; '
+            . 'SELECT resource_key FROM ' . $context['lock_table'] . ' WITH (UPDLOCK, ROWLOCK) WHERE resource_key = ?;';
+
+        $this->save_sql($sql, [$key, $name, $key], false);
+    } // native_save_lock
+
+    /**
+     * Rejects an aborted, externally ended or snapshot-isolated managed SQL Server transaction.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If SQL Server reports an uncommittable or unexpectedly absent transaction, or SNAPSHOT isolation.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_check(): void
+    {
+        parent::native_save_check();
+
+        $status = $this->save_sql('SELECT XACT_STATE(), transaction_isolation_level '
+            . 'FROM sys.dm_exec_sessions WHERE session_id = @@SPID')['rows'][0];
+        $state = (int) $status[0];
+
+        if ($this->connection_state->transaction && (int) $status[1] === 5) {
+            throw new DBWorkerException('save_records() does not support SQL Server SNAPSHOT isolation.', self::ERR_WRONG_DATA_FORMAT);
+        }
+
+        if ($state < 0 || ($this->connection_state->transaction && $state === 0)) {
+            if ($state === 0) {
+                $this->connection_state->transaction = false;
+            }
+
+            throw $this->query_error('The SQL Server transaction cannot be used for save_records().');
+        }
+    } // native_save_check
+
+    /**
+     * Temporarily enables explicit SQL Server identity insertion and restores the session setting.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param array $values
+     * The prepared field values.
+     *
+     * @param array $expressions
+     * The positional SQL expressions.
+     *
+     * @param string $identity_field
+     * The identity field, or an empty string.
+     *
+     * @return int|null
+     * Returns the inserted identity, or NULL when none is configured.
+     *
+     * @throws DBWorkerException
+     * If identity handling or inserting the record fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_insert(array $context, array $values, array $expressions, string $identity_field): ?int
+    {
+        $explicit = $identity_field !== '' && isset($values[$identity_field]);
+
+        if (!$explicit) {
+            return parent::native_save_insert($context, $values, $expressions, $identity_field);
+        }
+
+        // Keep the setting and INSERT in the same prepared batch; RPC-scoped SET alone is insufficient.
+        $insert = 'INSERT INTO ' . $context['table'] . ' (' . implode(', ', array_keys($values))
+            . ') VALUES (' . implode(', ', $expressions) . ');';
+        $off = 'SET IDENTITY_INSERT ' . $context['table'] . ' OFF;';
+        $sql = 'SET IDENTITY_INSERT ' . $context['table'] . ' ON; BEGIN TRY ' . $insert . ' ' . $off
+            . ' END TRY BEGIN CATCH ' . $off . ' THROW; END CATCH;';
+
+        $result = $this->save_sql($sql, array_values($values), false);
+        $this->affected_rows = $result['affected'];
+
+        return $values[$identity_field];
+    } // native_save_insert
+
+
 } // MSSQL_DBWorker

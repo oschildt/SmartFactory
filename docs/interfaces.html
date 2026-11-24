@@ -135,7 +135,7 @@
               
           </td>
           <td class="description_column">
-              <p>Interface for event management.</p>
+              <p>Defines synchronous event dispatch with immediate subscription and suspension changes.</p>
           </td>
       </tr>
       
@@ -184,20 +184,6 @@ through the array of parameters.</p>
       
       <tr>
           <td>
-              <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html">IRecordsetManager</a>
-          </td>
-          <td class="namespace_column">
-              
-              <a href="namespace-SmartFactory.Interfaces.html">SmartFactory\Interfaces</a>
-              
-          </td>
-          <td class="description_column">
-              <p>Interface for working with record sets.</p>
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="interface-SmartFactory.Interfaces.IRequestHandler.html">IRequestHandler</a>
           </td>
           <td class="namespace_column">
@@ -206,7 +192,21 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for handling the API requests.</p>
+              <p>Initializes API handlers and optionally supplies a request-throttling service.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">IRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.Interfaces.html">SmartFactory\Interfaces</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Atomically enforces every configured rolling-window limit for an opaque caller key.</p>
           </td>
       </tr>
       
@@ -220,7 +220,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for working with settings.</p>
+              <p>Provides settings access with explicit validation and persistence operations.</p>
           </td>
       </tr>
       
@@ -248,7 +248,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for managing connections to the DB shards.</p>
+              <p>Registers database shards and selects their workers directly or through named groups.</p>
           </td>
       </tr>
       
@@ -257,7 +257,7 @@ through the array of parameters.</p>
 
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

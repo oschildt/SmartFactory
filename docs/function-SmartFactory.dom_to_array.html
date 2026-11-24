@@ -107,20 +107,23 @@
                 <div class="col-md-12">
                     <h1>Function: dom_to_array()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> dom_to_array(\DOMNode &amp;<span class="php-var">$node</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): void;</div>
+<div class="definition"><span class="php-keyword1">function</span> dom_to_array(\DOMElement <span class="php-var">$node</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): <span class="php-keyword1">void</span>;</div>
+
 
 
 <div class="short-description">
-<p>Converts a XML DOM structure to an array.</p>
+<p>Converts XML child elements to a nested array.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>This function can convert any DOM structure to an array.
-It might be used for loading and saving settings to a
-config file.</p>
+<p>Elements named "item" use their "name" attribute as the array key; other elements
+use their node name. Text and CDATA become string values when no child elements
+exist. An array="1" marker takes precedence over formatting whitespace and
+preserves empty arrays. Comments and processing instructions are ignored.
+Collections may contain formatting whitespace but not mixed text content.</p>
 </div>
 
 
@@ -128,7 +131,8 @@ config file.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -143,16 +147,16 @@ config file.</p>
               $node
           </td>
           <td>
-              by reference
+              by value
           </td>
           <td>
-              \DOMNode
+              <code class="php-type">\DOMElement</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The parent node of the DOM structure to be converted to the array.</p>
+              <p>The parent element whose child elements are converted.</p>
           </td>
       </tr>
       
@@ -164,28 +168,44 @@ config file.</p>
               by reference
           </td>
           <td>
-              array
+              <code class="php-type">array&lt;array-key, mixed&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The tagrget array to be filled from the DOM structure.</p>
+              <p>The target array. Matching scalar entries are replaced and nested arrays are extended.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-void<br>
+<code class="php-type">void</code><br>
+
+<div class="item_description"><p>Updates the target array with the converted child elements.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+<code class="php-type">\TypeError</code><br>
+
+<div class="item_description"><p>If an XML collection matches an existing target entry that is neither an array nor null.</p></div>
+
+
+<code class="php-type">\UnexpectedValueException</code><br>
+
+<div class="item_description"><p>If an XML collection also contains non-whitespace text or CDATA that cannot be represented.</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -208,20 +228,20 @@ void<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#199'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#244'>src/utility_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.array_to_dom.html'>\SmartFactory\array_to_dom()</a><br>
+<a href="function-SmartFactory.array_to_dom.html">\SmartFactory\array_to_dom()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

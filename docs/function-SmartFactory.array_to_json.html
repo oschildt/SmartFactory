@@ -107,28 +107,23 @@
                 <div class="col-md-12">
                     <h1>Function: array_to_json()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> array_to_json(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> array_to_json(<span class="php-keyword1">array</span> <span class="php-var">$array</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Converts the array to JSON string.</p>
+<p>Encodes an array as readable UTF-8 JSON while preserving numeric string values.</p>
 </div>
 
 
-
-<div class="long_description">
-<h2>Details</h2>
-<p>It is a wrapper over the system function json_encode. It
-is introduced to give the ability to overwrite the system
-function if necessary.</p>
-</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -143,33 +138,48 @@ function if necessary.</p>
               $array
           </td>
           <td>
-              by reference
+              by value
           </td>
           <td>
-              array
+              <code class="php-type">array&lt;array-key, mixed&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>Array to be converted.</p>
+              <p>The array of JSON-serializable values to encode.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
-<div class="item_description"><p>Returns the JSON string of the array.</p></div>
+<div class="item_description"><p>Returns the formatted JSON without coercing numeric strings to numbers.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+<code class="php-type">\JsonException</code><br>
+
+<div class="item_description"><p>If a value contains invalid UTF-8, recursion, nonfinite numbers, unsupported types,
+or nesting deeper than the encoding limit.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If a contained JsonSerializable object throws while producing its JSON value.</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -192,11 +202,11 @@ string<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#135'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#141'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

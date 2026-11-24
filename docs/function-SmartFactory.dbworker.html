@@ -107,18 +107,24 @@
                 <div class="col-md-12">
                     <h1>Function: dbworker()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> dbworker(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = [], bool <span class="php-var">$singleton</span> = <span class="php-keyword1">true</span>): ?\DatabaseWorkers\DBWorker;</div>
+<div class="definition"><span class="php-keyword1">function</span> dbworker(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = [], <span class="php-keyword1">bool</span> <span class="php-var">$singleton</span> = <span class="php-keyword1">true</span>): DatabaseWorkers\DBWorker;</div>
+
 
 
 <div class="short-description">
-<p>The method dbworker provides the DBWorker object for working with the database.</p>
+<p>Creates or retrieves a DBWorker object for working with the database.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>Currently supported: MySQL und MS SQL.</p>
+<p>Supported databases: MySQL, MSSQL, PostgreSQL and Oracle.
+An already connected singleton is returned without reinitializing its settings.
+Singletons are shared per driver class in the default factory context, not per
+connection configuration. Use singleton=false or shards for independent connections.
+A worker that fails extension validation, initialization or connection is evicted
+from the singleton cache so a later request can create a clean worker.</p>
 </div>
 
 
@@ -126,7 +132,8 @@
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -144,19 +151,64 @@
               by value
           </td>
           <td>
-              array
+              <code class="php-type">array{
+    db_type: non-empty-string,
+    db_server?: (scalar | \Stringable | null),
+    db_port?: (scalar | \Stringable | null),
+    connection_string?: (scalar | \Stringable | null),
+    db_name?: (scalar | \Stringable | null),
+    db_user?: (scalar | \Stringable | null),
+    db_password?: (scalar | \Stringable | null),
+    db_schema?: (scalar | \Stringable | null),
+    default_isolation_level?: string,
+    isolation_level?: (scalar | \Stringable | null),
+    autoconnect?: mixed,
+    read_only?: mixed,
+    connect_timeout?: (scalar | null),
+    read_timeout?: (scalar | null),
+    query_timeout?: (scalar | null),
+    encrypt?: mixed,
+    trust_server_certificate?: mixed,
+    save_records_explicit_identity?: mixed,
+    auto_returning?: mixed,
+    query_logger?: (
+        callable(
+            array{
+                sql: string,
+                duration_ms: (int | float),
+                parameter_types: array&lt;array-key, string&gt;,
+                failed: bool
+            }
+        ): mixed
+        | null
+    ),
+    ...&lt;string, mixed&gt;
+}</code>
           </td>
           <td>
               []
           </td>
           <td class="description_column">
-              <p>Connection settings as an associative array in the form key =&gt; value:</p>
+              <p>Connection settings and driver options. Only db_type is always required; the
+remaining required values depend on the driver and whether a connection is opened.
+String-valued settings accept scalars, null and Stringable objects because the
+drivers cast them to strings. Boolean options accept mixed values using PHP
+truthiness; actual booleans are recommended. auto_returning is disabled only by false.
+Additional string keys are passed through to the driver for custom options.</p>
 <ul>
 <li>
-<p>$parameters["db_type"] - type of the database (MySQL or MSSQL)</p>
+<p>$parameters["db_type"] - nonempty driver name (MySQL, MSSQL, PostgreSQL or Oracle).
+A custom name must resolve to a registered DatabaseWorkers\&lt;name&gt;_DBWorker subclass.</p>
 </li>
 <li>
 <p>$parameters["db_server"] - server address</p>
+</li>
+<li>
+<p>$parameters["db_port"] - optional server port, usually an integer or digit string
+between 1 and 65535; an empty string or null clears an explicitly configured port.</p>
+</li>
+<li>
+<p>$parameters["connection_string"] - optional complete Oracle Easy Connect/TNS descriptor</p>
 </li>
 <li>
 <p>$parameters["db_name"] - database name</p>
@@ -168,19 +220,51 @@
 <p>$parameters["db_password"] - user password</p>
 </li>
 <li>
-<p>$parameters["autoconnect"] - should true if the connection should be established automatically
-upon creation.</p>
+<p>$parameters["default_isolation_level"] - isolation used by start_transaction() when its argument
+is omitted or NULL; defaults to DBWorker::ISOLATION_READ_COMMITTED.</p>
 </li>
 <li>
-<p>$parameters["read_only"] - this paramter sets the connection to the read only mode.</p>
+<p>$parameters["autoconnect"] - whether to establish the connection automatically upon creation.</p>
+</li>
+<li>
+<p>$parameters["read_only"] - this parameter sets the connection to the read only mode.</p>
+</li>
+<li>
+<p>$parameters["db_schema"] - optional schema name, interpreted by the selected driver.</p>
+</li>
+<li>
+<p>$parameters["isolation_level"] - optional connection-level isolation, with supported
+values depending on the driver; distinct from default_isolation_level for transactions.</p>
+</li>
+<li>
+<p>$parameters["connect_timeout"], $parameters["read_timeout"], $parameters["query_timeout"] -
+timeouts in seconds, where supported by the driver. Scalar values and null are
+cast to integers; integer values or digit strings are recommended.</p>
+</li>
+<li>
+<p>$parameters["encrypt"], $parameters["trust_server_certificate"] - MSSQL TLS options.</p>
+</li>
+<li>
+<p>$parameters["save_records_explicit_identity"] - enables explicit identity handling
+in MySQL and MSSQL save_records() operations.</p>
+</li>
+<li>
+<p>$parameters["auto_returning"] - enables Oracle automatic identity retrieval; defaults to true.</p>
+</li>
+<li>
+<p>$parameters["query_logger"] - optional callback receiving the SQL template,
+duration in milliseconds, parameter type names and failure status. Its return value is ignored.</p>
 </li>
 </ul>
 <p>Example:</p>
-<pre><code class="language-php"><span class="php-var">$dbw</span> = dbworker([<span class="php-quote">&quot;db_type&quot;</span> =&gt; <span class="php-quote">&quot;MySQL&quot;</span>,
+<pre><code class="language-php"><span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\DBWorker;
+
+<span class="php-var">$dbw</span> = dbworker([<span class="php-quote">&quot;db_type&quot;</span> =&gt; <span class="php-quote">&quot;MySQL&quot;</span>,
                  <span class="php-quote">&quot;db_server&quot;</span> =&gt; <span class="php-quote">&quot;localhost&quot;</span>,
                  <span class="php-quote">&quot;db_name&quot;</span> =&gt; <span class="php-quote">&quot;framework_demo&quot;</span>,
                  <span class="php-quote">&quot;db_user&quot;</span> =&gt; <span class="php-quote">&quot;root&quot;</span>,
                  <span class="php-quote">&quot;db_password&quot;</span> =&gt; <span class="php-quote">&quot;root&quot;</span>,
+                 <span class="php-quote">&quot;default_isolation_level&quot;</span> =&gt; DBWorker::ISOLATION_READ_COMMITTED,
                  <span class="php-quote">&quot;autoconnect&quot;</span> =&gt; <span class="php-keyword1">true</span>
                 ]);</code></pre>
           </td>
@@ -194,7 +278,7 @@ upon creation.</p>
               by value
           </td>
           <td>
-              bool
+              <code class="php-type">bool</code>
           </td>
           <td>
               true
@@ -206,13 +290,14 @@ upon creation.</p>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-?\DatabaseWorkers\DBWorker<br>
+<code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DatabaseWorkers\DBWorker</a></code><br>
 
-<div class="item_description"><p>returns DBWorker object or null if the object could not be created.</p></div>
+<div class="item_description"><p>Returns the initialized database worker.</p></div>
 
 </div>
 
@@ -220,9 +305,34 @@ upon creation.</p>
 <h2>Throws</h2>
 <div class="item_list">
 
-\Exception<br>
+<code class="php-type">\InvalidArgumentException</code><br>
 
-<div class="item_description"><p>It might throw the following exceptions in the case of any errors.</p></div>
+<div class="item_description"><p>If the database type is absent, empty or not a string.</p></div>
+
+
+<code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
+
+<div class="item_description"><p>If the driver class is unknown, its factory binding is missing, or resolving it fails validation.</p></div>
+
+
+<code class="php-type">\UnexpectedValueException</code><br>
+
+<div class="item_description"><p>If the resolved driver does not extend DatabaseWorkers\DBWorker.</p></div>
+
+
+<code class="php-type">\Exception</code><br>
+
+<div class="item_description"><p>If the native database extension is unavailable.</p></div>
+
+
+<code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DatabaseWorkers\DBWorkerException</a></code><br>
+
+<div class="item_description"><p>If connection settings or the default isolation level are invalid, or connecting to the database fails.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If autoloading, a custom creation function, or a custom worker method throws an exception or error.</p></div>
 
 
 </div>
@@ -248,11 +358,11 @@ upon creation.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-factory_functions_inc.php.html#125'>factory_functions_inc.php</a>
+<a href='source-src.factory_functions_inc.php.html#205'>src/factory_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

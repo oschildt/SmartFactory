@@ -109,15 +109,22 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">class</span> SmartExceptionCollection <span class="php-keyword1">extends</span> \Exception
+{
+}</div>
+
 
 
 <div class="short-description">
-<p>Class for extended exception collection used in the SmartFactory library. It allows to collect many errors
-and report them at once.</p>
+<p>Collects errors in insertion order and reports them together as an exception.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Repeated errors are retained. Error details are stored without conversion or serialization.</p>
+</div>
 
 
 
@@ -156,7 +163,7 @@ and report them at once.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.SmartExceptionCollection.php.html#25'>SmartFactory/SmartExceptionCollection.php</a>
+<a href='source-src.SmartFactory.SmartExceptionCollection.php.html#22'>src/SmartFactory/SmartExceptionCollection.php</a>
 </div>
 
 
@@ -182,7 +189,7 @@ and report them at once.</p>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Properties</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#$errors">$errors</a></div>
@@ -194,16 +201,29 @@ and report them at once.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the single errors.</p>
+              <p>Errors retained in insertion order without deduplication.</p>
           </td>
       </tr>
-      
+
   </table>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
+          <td>
+              <div style='float:left'><a href="#__construct">__construct()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Creates a collection with a summary for general-purpose exception handlers.</p>
+          </td>
+      </tr><tr>
           <td>
               <div style='float:left'><a href="#addError">addError()</a></div>
 
@@ -214,7 +234,7 @@ and report them at once.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the error to be reported.</p>
+              <p>Appends an error without deduplication, preserving all details and their types.</p>
           </td>
       </tr><tr>
           <td>
@@ -227,7 +247,7 @@ and report them at once.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the array of errors if any have been stored.</p>
+              <p>Returns all retained errors without clearing the collection.</p>
           </td>
       </tr><tr>
           <td>
@@ -243,20 +263,21 @@ and report them at once.</p>
               <p>Throws itself if any error has been collected.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
 <hr id="$errors">
-  
+
   <h1>Property: SmartExceptionCollection::$errors</h1>
 
   <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$errors</span> = [];</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing the single errors.</p>
+  <p>Errors retained in insertion order without deduplication.</p>
   </div>
   
 
@@ -265,7 +286,17 @@ and report them at once.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  array
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        details: array&lt;array-key, mixed&gt;,
+        related_element: string,
+        code: string,
+        technical_info: string,
+        file: string,
+        line: int
+    }
+&gt;</code>
   </div>
   
 
@@ -285,26 +316,19 @@ and report them at once.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartExceptionCollection.php.html#34'>SmartFactory/SmartExceptionCollection.php</a>
+  <a href='source-src.SmartFactory.SmartExceptionCollection.php.html#32'>src/SmartFactory/SmartExceptionCollection.php</a>
   </div>
 
-<hr id="addError">
-  
-  <h1>Method: SmartExceptionCollection::addError()</h1>
+<hr id="__construct">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addError(string <span class="php-var">$message</span>, 
-                         <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], 
-                         string <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$code</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, 
-                         string <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>
-                        ) : void;
-</div>
+  <h1>Method: SmartExceptionCollection::__construct()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(<span class="php-keyword1">string</span> <span class="php-var">$message</span> = <span class="php-quote">&quot;One or more errors occurred.&quot;</span>, <span class="php-keyword1">int</span> <span class="php-var">$code</span> = <span class="php-num">0</span>, ?\Throwable <span class="php-var">$previous</span> = <span class="php-keyword1">null</span>);</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the error to be reported.</p>
+  <p>Creates a collection with a summary for general-purpose exception handlers.</p>
   </div>
   
 
@@ -314,7 +338,8 @@ and report them at once.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -322,7 +347,7 @@ and report them at once.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -332,13 +357,139 @@ and report them at once.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                &quot;One or more errors occurred.&quot;
+            </td>
+            <td class="description_column">
+                <p>The summary message; individual error messages remain available through getErrors().</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $code
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">int</code>
+            </td>
+            <td>
+                0
+            </td>
+            <td class="description_column">
+                <p>The native exception code, independent of the string codes of individual errors.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $previous
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(\Throwable | null)</code>
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>The original exception or error, or null when there is no underlying cause.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.SmartExceptionCollection.php.html#48'>src/SmartFactory/SmartExceptionCollection.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="addError">
+
+  <h1>Method: SmartExceptionCollection::addError()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addError(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">array</span> <span class="php-var">$details</span> = [], <span class="php-keyword1">string</span> <span class="php-var">$related_element</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$code</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$file</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">int</span>|<span class="php-keyword1">string</span>|<span class="php-keyword1">null</span> <span class="php-var">$line</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Appends an error without deduplication, preserving all details and their types.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $message
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The error message to be reported.</p>
+                <p>The error message or localization identifier. Only an empty string is ignored; "0" is retained.</p>
             </td>
         </tr>
         
@@ -350,16 +501,14 @@ and report them at once.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, mixed&gt;</code>
             </td>
             <td>
                 []
             </td>
             <td class="description_column">
-                <p>The details might be useful if the message translations are provided on the client, not
-on the server, and the message should contain some details that may vary from case to case.
-In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+                <p>Structured details for client-side message translation and parameter substitution.
+Keys, value types and nested data are preserved without conversion.</p>
             </td>
         </tr>
         
@@ -371,7 +520,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -389,7 +538,7 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -407,15 +556,14 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The technical information for the error. Displaying
-of this part might be controlled over an option
-"debug_mode".</p>
+                <p>Technical diagnostics retained by the collection. Applications control whether to expose them
+to clients; MessageManager applies its debug settings when importing the collection.</p>
             </td>
         </tr>
         
@@ -427,13 +575,13 @@ of this part might be controlled over an option
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file where the error occurred. Per default, the file where the adding error called.</p>
+                <p>The source file where the error occurred. An empty string uses the caller's file, if available.</p>
             </td>
         </tr>
         
@@ -445,23 +593,27 @@ of this part might be controlled over an option
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">(int | string | null)</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>The source file line where the error occurred. Per default, the file line where the adding error called.</p>
+                <p>The source line as an integer or a numeric string, retained for compatibility with existing callers.
+Null, an empty string or a value converting to a nonpositive integer uses the caller's line.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Retains the error unless its message is an empty string.</p></div>
   
   </div>
   
@@ -484,7 +636,7 @@ of this part might be controlled over an option
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartExceptionCollection.php.html#69'>SmartFactory/SmartExceptionCollection.php</a>
+  <a href='source-src.SmartFactory.SmartExceptionCollection.php.html#88'>src/SmartFactory/SmartExceptionCollection.php</a>
   </div>
   
 
@@ -503,14 +655,15 @@ of this part might be controlled over an option
   
 
   <hr id="getErrors">
-  
+
   <h1>Method: SmartExceptionCollection::getErrors()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrors(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the array of errors if any have been stored.</p>
+  <p>Returns all retained errors without clearing the collection.</p>
   </div>
   
 
@@ -523,9 +676,19 @@ of this part might be controlled over an option
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">list&lt;
+    array{
+        message: string,
+        details: array&lt;array-key, mixed&gt;,
+        related_element: string,
+        code: string,
+        technical_info: string,
+        file: string,
+        line: int
+    }
+&gt;</code><br>
   
-  <div class="item_description"><p>Returns the array of errors if any have been stored.</p></div>
+  <div class="item_description"><p>Returns errors in insertion order, or an empty list. A missing source line is represented by zero.</p></div>
   
   </div>
   
@@ -548,7 +711,7 @@ of this part might be controlled over an option
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartExceptionCollection.php.html#123'>SmartFactory/SmartExceptionCollection.php</a>
+  <a href='source-src.SmartFactory.SmartExceptionCollection.php.html#154'>src/SmartFactory/SmartExceptionCollection.php</a>
   </div>
   
 
@@ -567,10 +730,11 @@ of this part might be controlled over an option
   
 
   <hr id="throwIfErrors">
-  
+
   <h1>Method: SmartExceptionCollection::throwIfErrors()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> throwIfErrors(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> throwIfErrors(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -587,7 +751,9 @@ of this part might be controlled over an option
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Returns normally when the collection is empty.</p></div>
   
   </div>
   
@@ -595,7 +761,7 @@ of this part might be controlled over an option
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartExceptionCollection.html'>\SmartFactory\SmartExceptionCollection</a><br>
+  <code class="php-type"><a href="class-SmartFactory.SmartExceptionCollection.html">SmartExceptionCollection</a></code><br>
   
   <div class="item_description"><p>Throws itself if there are errors.</p></div>
   
@@ -618,11 +784,11 @@ of this part might be controlled over an option
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartExceptionCollection.php.html#108'>SmartFactory/SmartExceptionCollection.php</a>
+  <a href='source-src.SmartFactory.SmartExceptionCollection.php.html#138'>src/SmartFactory/SmartExceptionCollection.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

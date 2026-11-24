@@ -119,7 +119,10 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> IDebugProfiler <span class="php-keyword1">extends</span> IInitable
+{
+}</div>
+
 
 
 <div class="short-description">
@@ -134,7 +137,7 @@
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href='interface-SmartFactory.Interfaces.IInitable.html'>\SmartFactory\Interfaces\IInitable</a><br>
+<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
 
 </div>
 
@@ -143,7 +146,7 @@
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.DebugProfiler.html'>\SmartFactory\DebugProfiler</a><br>
+<a href="class-SmartFactory.DebugProfiler.html">\SmartFactory\DebugProfiler</a><br>
 
 </div>
 
@@ -168,7 +171,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#17'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+<a href='source-src.SmartFactory.Interfaces.IDebugProfiler.php.html#17'>src/SmartFactory/Interfaces/IDebugProfiler.php</a>
 </div>
 
 
@@ -192,9 +195,11 @@
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#clearLogFile">clearLogFile()</a></div>
@@ -206,7 +211,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Clears the specified log file.</p>
+              <p>Deletes the specified log file; an already absent file counts as success.</p>
           </td>
       </tr><tr>
           <td>
@@ -219,7 +224,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Clears all log files.</p>
+              <p>Deletes log files in the configured directory, preserving subdirectories.</p>
           </td>
       </tr><tr>
           <td>
@@ -232,7 +237,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Logs a message to a standard debug output.</p>
+              <p>Appends a diagnostic message to the chosen log file.</p>
           </td>
       </tr><tr>
           <td>
@@ -245,9 +250,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Logs a message to a standard profiling output and shows
-the time elapsed since the last call startProfilePoint or
-fixProfilePoint.</p>
+              <p>Writes the interval since the previous startProfilePoint() or fixProfilePoint().</p>
           </td>
       </tr><tr>
           <td>
@@ -273,23 +276,26 @@ fixProfilePoint.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Logs a message to a standard profiling output and stores the current time.</p>
+              <p>Writes a profiling message and starts a new interval on this instance.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
+
+
 <hr id="clearLogFile">
-  
+
   <h1>Method: IDebugProfiler::clearLogFile()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(string <span class="php-var">$file_name</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFile(<span class="php-keyword1">string</span> <span class="php-var">$file_name</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Clears the specified log file.</p>
+  <p>Deletes the specified log file; an already absent file counts as success.</p>
   </div>
   
 
@@ -299,7 +305,8 @@ fixProfilePoint.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -307,7 +314,7 @@ fixProfilePoint.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -317,28 +324,40 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The target file name.</p>
+                <p>A plain file name within the configured log directory, without directory components.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes when the file is absent.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\Exception</code><br>
+  
+  <div class="item_description"><p>If the profiler is uninitialized, the file name or target is invalid,
+or deletion fails while the file still exists.</p></div>
+  
+  
+  </div>
 
   
 
@@ -356,14 +375,14 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#103'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IDebugProfiler.php.html#112'>src/SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFiles'>\SmartFactory\Interfaces\IDebugProfiler::clearLogFiles()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFiles">\SmartFactory\Interfaces\IDebugProfiler::clearLogFiles()</a><br>
   
   
   </div>
@@ -381,14 +400,15 @@ fixProfilePoint.</p>
   
 
   <hr id="clearLogFiles">
-  
+
   <h1>Method: IDebugProfiler::clearLogFiles()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> clearLogFiles(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Clears all log files.</p>
+  <p>Deletes log files in the configured directory, preserving subdirectories.</p>
   </div>
   
 
@@ -401,12 +421,23 @@ fixProfilePoint.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes when the matching files have been removed; absent files are accepted.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\Exception</code><br>
+  
+  <div class="item_description"><p>If the profiler is uninitialized, the directory cannot be listed,
+or a matching file is invalid or cannot be deleted while it still exists.</p></div>
+  
+  
+  </div>
 
   
 
@@ -424,14 +455,14 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#114'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IDebugProfiler.php.html#128'>src/SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFile'>\SmartFactory\Interfaces\IDebugProfiler::clearLogFile()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#clearLogFile">\SmartFactory\Interfaces\IDebugProfiler::clearLogFile()</a><br>
   
   
   </div>
@@ -449,14 +480,15 @@ fixProfilePoint.</p>
   
 
   <hr id="debugMessage">
-  
+
   <h1>Method: IDebugProfiler::debugMessage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(string <span class="php-var">$message</span>, bool <span class="php-var">$write_call_stack</span> = <span class="php-keyword1">false</span>, string <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> debugMessage(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">bool</span> <span class="php-var">$write_call_stack</span> = <span class="php-keyword1">false</span>, <span class="php-keyword1">string</span> <span class="php-var">$file_name</span> = <span class="php-quote">&quot;debug.log&quot;</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Logs a message to a standard debug output.</p>
+  <p>Appends a diagnostic message to the chosen log file.</p>
   </div>
   
 
@@ -466,7 +498,8 @@ fixProfilePoint.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -474,7 +507,7 @@ fixProfilePoint.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -484,7 +517,7 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -502,13 +535,13 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                bool
+                <code class="php-type">bool</code>
             </td>
             <td>
                 false
             </td>
             <td class="description_column">
-                <p>Flag that defines where the call stack should be written.</p>
+                <p>Whether the call stack should be included.</p>
             </td>
         </tr>
         
@@ -520,23 +553,26 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;debug.log&quot;
             </td>
             <td class="description_column">
-                <p>The target file name.</p>
+                <p>A plain file name within the configured log directory, without directory components.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes when the message has been written.</p></div>
   
   </div>
   
@@ -544,9 +580,9 @@ fixProfilePoint.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\Exception</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the profiler is uninitialized, the file name is invalid, or the message cannot be written.</p></div>
   
   
   </div>
@@ -567,7 +603,7 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#53'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IDebugProfiler.php.html#55'>src/SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
@@ -586,26 +622,32 @@ fixProfilePoint.</p>
   
 
   <hr id="fixProfilePoint">
-  
+
   <h1>Method: IDebugProfiler::fixProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(string <span class="php-var">$message</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fixProfilePoint(<span class="php-keyword1">string</span> <span class="php-var">$message</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Logs a message to a standard profiling output and shows
-the time elapsed since the last call startProfilePoint or
-fixProfilePoint.</p>
+  <p>Writes the interval since the previous startProfilePoint() or fixProfilePoint().</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>If no interval has been started, writes only the message and starts the timer.
+Each instance maintains its own timer; log writing is excluded from intervals.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -613,7 +655,7 @@ fixProfilePoint.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -623,7 +665,7 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -633,13 +675,16 @@ fixProfilePoint.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Starts the next interval after the message has been written successfully.</p></div>
   
   </div>
   
@@ -647,9 +692,9 @@ fixProfilePoint.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\Exception</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the profiler is uninitialized or the profiling message cannot be written.</p></div>
   
   
   </div>
@@ -670,14 +715,14 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#89'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IDebugProfiler.php.html#93'>src/SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#startProfilePoint'>\SmartFactory\Interfaces\IDebugProfiler::startProfilePoint()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#startProfilePoint">\SmartFactory\Interfaces\IDebugProfiler::startProfilePoint()</a><br>
   
   
   </div>
@@ -695,10 +740,11 @@ fixProfilePoint.</p>
   
 
   <hr id="init">
-  
+
   <h1>Method: IDebugProfiler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -712,7 +758,8 @@ fixProfilePoint.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -720,7 +767,7 @@ fixProfilePoint.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -730,7 +777,7 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array</code>
             </td>
             <td>
                 
@@ -740,13 +787,16 @@ fixProfilePoint.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes when the implementation's initialization settings have been accepted.</p></div>
   
   </div>
   
@@ -754,9 +804,9 @@ fixProfilePoint.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\Exception</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any system errors.</p></div>
+  <div class="item_description"><p>If the supplied settings are invalid or the required logging resources cannot be initialized.</p></div>
   
   
   </div>
@@ -764,7 +814,7 @@ fixProfilePoint.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IInitable.html#init'>\SmartFactory\Interfaces\IInitable::init()</a>
+  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a>
   </div>
   
 
@@ -782,7 +832,7 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#32'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IDebugProfiler.php.html#33'>src/SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
@@ -801,14 +851,15 @@ fixProfilePoint.</p>
   
 
   <hr id="startProfilePoint">
-  
+
   <h1>Method: IDebugProfiler::startProfilePoint()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(string <span class="php-var">$message</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> startProfilePoint(<span class="php-keyword1">string</span> <span class="php-var">$message</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Logs a message to a standard profiling output and stores the current time.</p>
+  <p>Writes a profiling message and starts a new interval on this instance.</p>
   </div>
   
 
@@ -818,7 +869,8 @@ fixProfilePoint.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -826,7 +878,7 @@ fixProfilePoint.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -836,7 +888,7 @@ fixProfilePoint.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -846,13 +898,16 @@ fixProfilePoint.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Starts the interval after the message has been written successfully.</p></div>
   
   </div>
   
@@ -860,9 +915,9 @@ fixProfilePoint.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\Exception</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the profiler is uninitialized or the profiling message cannot be written.</p></div>
   
   
   </div>
@@ -883,20 +938,20 @@ fixProfilePoint.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IDebugProfiler.php.html#70'>SmartFactory/Interfaces/IDebugProfiler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IDebugProfiler.php.html#73'>src/SmartFactory/Interfaces/IDebugProfiler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IDebugProfiler.html#fixProfilePoint'>\SmartFactory\Interfaces\IDebugProfiler::fixProfilePoint()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IDebugProfiler.html#fixProfilePoint">\SmartFactory\Interfaces\IDebugProfiler::fixProfilePoint()</a><br>
   
   
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

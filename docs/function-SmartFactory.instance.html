@@ -107,19 +107,20 @@
                 <div class="col-md-12">
                     <h1>Function: instance()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> instance(string|object <span class="php-var">$interface_or_class</span>, string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): object;</div>
+<div class="definition"><span class="php-keyword1">function</span> instance(<span class="php-keyword1">string</span> <span class="php-var">$interface_or_class</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): <span class="php-keyword1">object</span>;</div>
+<h2>Type parameters</h2><ul class="type-parameters"><li><span class="php-type">T of <code class="php-type">object</code></span></li></ul>
 
 
 <div class="short-description">
-<p>The method instance creates an object that support the specified interface.</p>
+<p>Creates a new, fully initialized implementation of the requested contract.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>By each request, a new object is created. If you request data objects like User,
-a separate instance must be created for each item.</p>
+<p>Every request creates a separate object, even if a singleton already exists for
+the same contract. This is suitable for independent data objects such as users.</p>
 </div>
 
 
@@ -127,7 +128,8 @@ a separate instance must be created for each item.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -145,13 +147,13 @@ a separate instance must be created for each item.</p>
               by value
           </td>
           <td>
-              string|object
+              <code class="php-type">class-string&lt;T&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>Name of the class/interface as string or the class/interface.</p>
+              <p>The interface or class name of the requested contract, supplied using ::class.</p>
           </td>
       </tr>
       
@@ -163,26 +165,26 @@ a separate instance must be created for each item.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;default&quot;
           </td>
           <td class="description_column">
-              <p>The context of binding. You can introduce a different context, and bind another implementation.
-Then, you can request another instance specifying the context explicitly.</p>
+              <p>The exact binding context, without fallback to the default context.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-object<br>
+<code class="php-type">T</code><br>
 
-<div class="item_description"><p>Returns object of the class bound to the interface.</p></div>
+<div class="item_description"><p>Returns a new, fully initialized implementation of the contract.</p></div>
 
 </div>
 
@@ -190,14 +192,17 @@ object<br>
 <h2>Throws</h2>
 <div class="item_list">
 
-\Exception<br>
+<code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
 
-<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul></div>
+<div class="item_description"><p>If the contract name is missing or unknown, no binding exists in the context,
+a circular dependency is detected, or the creation function returns a value
+that does not implement or extend the requested contract.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If autoloading or the creation function throws an exception or error,
+it is propagated unchanged.</p></div>
 
 
 </div>
@@ -223,20 +228,20 @@ object<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-factory_functions_inc.php.html#75'>factory_functions_inc.php</a>
+<a href='source-src.factory_functions_inc.php.html#78'>src/factory_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.singleton.html'>\SmartFactory\singleton()</a><br>
+<a href="function-SmartFactory.singleton.html">\SmartFactory\singleton()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

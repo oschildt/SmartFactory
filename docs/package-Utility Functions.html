@@ -131,7 +131,7 @@
               
           </td>
           <td class="description_column">
-              <p>Decrypts the text previously encrypted with the AES 256 using a password key.</p>
+              <p>Decrypts a versioned AES-256-GCM envelope, optionally accepting legacy AES-CBC data.</p>
           </td>
       </tr>
       
@@ -145,7 +145,7 @@
               
           </td>
           <td class="description_column">
-              <p>Encrypts the text with the AES 256 using a password key.</p>
+              <p>Encrypts binary or UTF-8 data using a versioned, authenticated AES-256-GCM format.</p>
           </td>
       </tr>
       
@@ -159,7 +159,7 @@
               
           </td>
           <td class="description_column">
-              <p>Converts an array to XML DOM structure.</p>
+              <p>Appends a nested array to an XML element using named item elements.</p>
           </td>
       </tr>
       
@@ -173,7 +173,7 @@
               
           </td>
           <td class="description_column">
-              <p>Converts the array to JSON string.</p>
+              <p>Encodes an array as readable UTF-8 JSON while preserving numeric string values.</p>
           </td>
       </tr>
       
@@ -187,7 +187,7 @@
               
           </td>
           <td class="description_column">
-              <p>Defines the common prefix of two strings.</p>
+              <p>Finds the common prefix of two strings without splitting valid UTF-8 characters.</p>
           </td>
       </tr>
       
@@ -201,7 +201,7 @@
               
           </td>
           <td class="description_column">
-              <p>Converts a XML DOM structure to an array.</p>
+              <p>Converts XML child elements to a nested array.</p>
           </td>
       </tr>
       
@@ -215,7 +215,7 @@
               
           </td>
           <td class="description_column">
-              <p>Escapes the HTML special characters in the text.</p>
+              <p>Escapes HTML special characters in UTF-8 text while preserving null.</p>
           </td>
       </tr>
       
@@ -229,8 +229,7 @@
               
           </td>
           <td class="description_column">
-              <p>Escapes recursively the HTML special characters in the values
-of the array.</p>
+              <p>Recursively escapes UTF-8 array values for HTML while preserving null entries.</p>
           </td>
       </tr>
       
@@ -244,7 +243,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Escapes the JavaScript special characters in the text.</p>
+              <p>Escapes text inside a single- or double-quoted JavaScript string literal.</p>
           </td>
       </tr>
       
@@ -258,7 +257,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Formats the number due to the specified settings.</p>
+              <p>Formats a numeric string using the specified separators and decimal precision.</p>
           </td>
       </tr>
       
@@ -272,7 +271,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Gets the cookie value by name.</p>
+              <p>Gets a string cookie value without treating the string "0" as missing.</p>
           </td>
       </tr>
       
@@ -286,7 +285,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Gets the header by its name.</p>
+              <p>Gets a request header by its case-insensitive name in web and CLI environments.</p>
           </td>
       </tr>
       
@@ -300,7 +299,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Checks whether the array $array is associative.</p>
+              <p>Checks whether an array has keys other than consecutive integers starting at zero.</p>
           </td>
       </tr>
       
@@ -314,7 +313,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Checks whether the session is cmd client or web.</p>
+              <p>Checks whether PHP is running through a web SAPI rather than CLI or phpdbg.</p>
           </td>
       </tr>
       
@@ -328,7 +327,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Converts the JSON string to an array.</p>
+              <p>Decodes a JSON object or list and merges it into the target array.</p>
           </td>
       </tr>
       
@@ -342,8 +341,7 @@ of the array.</p>
               
           </td>
           <td class="description_column">
-              <p>Escapes the special characters in the text used for the regular
-expression pattern.</p>
+              <p>Escapes literal text for use in a regular expression pattern.</p>
           </td>
       </tr>
       
@@ -357,8 +355,7 @@ expression pattern.</p>
               
           </td>
           <td class="description_column">
-              <p>Function for escaping the special symbols for putting into the regexp pattern
-as a simple text in the pattern.</p>
+              <p>Escapes regular expression metacharacters so a string is matched as literal text.</p>
           </td>
       </tr>
       
@@ -372,8 +369,7 @@ as a simple text in the pattern.</p>
               
           </td>
           <td class="description_column">
-              <p>Escapes the special characters in the text used for the regular
-expression replacement.</p>
+              <p>Escapes dollar signs and backslashes for a literal preg_replace() replacement.</p>
           </td>
       </tr>
       
@@ -387,8 +383,7 @@ expression replacement.</p>
               
           </td>
           <td class="description_column">
-              <p>Function for escaping the special symbols for putting into the regexp pattern
-as a simple text.</p>
+              <p>Escapes dollar signs and backslashes for a literal preg_replace() replacement.</p>
           </td>
       </tr>
       
@@ -402,7 +397,7 @@ as a simple text.</p>
               
           </td>
           <td class="description_column">
-              <p>Sets the cookie name=value.</p>
+              <p>Queues a cookie response header using the native cookie options.</p>
           </td>
       </tr>
       
@@ -416,7 +411,7 @@ as a simple text.</p>
               
           </td>
           <td class="description_column">
-              <p>Checks whether the text is an empty string.</p>
+              <p>Checks whether text is null or an empty string, preserving "0" as a nonempty value.</p>
           </td>
       </tr>
       
@@ -430,7 +425,7 @@ as a simple text.</p>
               
           </td>
           <td class="description_column">
-              <p>Converts the string to number due to the specified settings.</p>
+              <p>Converts a numeric string to a float using the specified separators.</p>
           </td>
       </tr>
       
@@ -444,8 +439,7 @@ as a simple text.</p>
               
           </td>
           <td class="description_column">
-              <p>Converts the string representing the date/time in the
-specified format to the timestap.</p>
+              <p>Parses a complete date/time string using PHP's DateTime format syntax.</p>
           </td>
       </tr>
       
@@ -459,7 +453,7 @@ specified format to the timestap.</p>
 
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

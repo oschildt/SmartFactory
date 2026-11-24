@@ -107,20 +107,21 @@
                 <div class="col-md-12">
                     <h1>Function: json_to_array()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> json_to_array(string &amp;<span class="php-var">$json</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): void;</div>
+<div class="definition"><span class="php-keyword1">function</span> json_to_array(<span class="php-keyword1">string</span> <span class="php-var">$json</span>, <span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): <span class="php-keyword1">void</span>;</div>
+
 
 
 <div class="short-description">
-<p>Converts the JSON string to an array.</p>
+<p>Decodes a JSON object or list and merges it into the target array.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>It is a wrapper over the system function json_decode. It
-is introduced to give the ability to overwrite the system
-function if necessary.</p>
+<p>JSON objects update matching keys without renumbering integer keys. JSON lists
+append their items using array_merge() semantics. Merging is shallow. Integers
+outside PHP's integer range are decoded as strings to preserve their precision.</p>
 </div>
 
 
@@ -128,7 +129,8 @@ function if necessary.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -143,16 +145,16 @@ function if necessary.</p>
               $json
           </td>
           <td>
-              by reference
+              by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>Input JSON string.</p>
+              <p>The UTF-8 JSON object or list to decode.</p>
           </td>
       </tr>
       
@@ -164,23 +166,26 @@ function if necessary.</p>
               by reference
           </td>
           <td>
-              array
+              <code class="php-type">array&lt;array-key, mixed&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>target array.</p>
+              <p>The target array, which remains unchanged if decoding or root validation fails.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-void<br>
+<code class="php-type">void</code><br>
+
+<div class="item_description"><p>Merges the decoded values into the target array.</p></div>
 
 </div>
 
@@ -188,9 +193,14 @@ void<br>
 <h2>Throws</h2>
 <div class="item_list">
 
-\Exception<br>
+<code class="php-type">\JsonException</code><br>
 
-<div class="item_description"><p>It might throw the exception if the JSON cannot be parsed.</p></div>
+<div class="item_description"><p>If the JSON is malformed, is not valid UTF-8, or exceeds the decoding depth limit.</p></div>
+
+
+<code class="php-type">\UnexpectedValueException</code><br>
+
+<div class="item_description"><p>If the JSON root is a scalar value or null instead of an object or list.</p></div>
 
 
 </div>
@@ -216,11 +226,11 @@ void<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#106'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#109'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

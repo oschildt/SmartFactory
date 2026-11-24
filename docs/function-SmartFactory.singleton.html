@@ -107,21 +107,21 @@
                 <div class="col-md-12">
                     <h1>Function: singleton()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> singleton(string|object <span class="php-var">$interface_or_class</span>, string <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): object;</div>
+<div class="definition"><span class="php-keyword1">function</span> singleton(<span class="php-keyword1">string</span> <span class="php-var">$interface_or_class</span>, <span class="php-keyword1">string</span> <span class="php-var">$context</span> = <span class="php-quote">&quot;default&quot;</span>): <span class="php-keyword1">object</span>;</div>
+<h2>Type parameters</h2><ul class="type-parameters"><li><span class="php-type">T of <code class="php-type">object</code></span></li></ul>
 
 
 <div class="short-description">
-<p>The method singleton creates an object that supports the specified interface and ensures
-that only one instance of this object exists.</p>
+<p>Returns a shared, fully initialized implementation of the requested contract.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>The singleton is a usual pattern for the action objects like SessionManager, EventManager,
-DBWorker etc. It makes no sense to produce many instances of such classes,
-it wastes the computer resources and might cause errors.</p>
+<p>Useful for services such as SessionManager, EventManager and DBWorker. Instances
+are shared per context and contract until explicitly reset through ObjectFactory.
+Different contracts bound to the same implementation can have different instances.</p>
 </div>
 
 
@@ -129,7 +129,8 @@ it wastes the computer resources and might cause errors.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -147,13 +148,13 @@ it wastes the computer resources and might cause errors.</p>
               by value
           </td>
           <td>
-              string|object
+              <code class="php-type">class-string&lt;T&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>Name of the class/interface as string or the class/interface.</p>
+              <p>The interface or class name of the requested contract, supplied using ::class.</p>
           </td>
       </tr>
       
@@ -165,26 +166,26 @@ it wastes the computer resources and might cause errors.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;default&quot;
           </td>
           <td class="description_column">
-              <p>The context of binding. You can introduce a different context, and bind another implementation.
-Then, you can request another instance specifying the context explicitly.</p>
+              <p>The exact binding context, without fallback to the default context.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-object<br>
+<code class="php-type">T</code><br>
 
-<div class="item_description"><p>Returns object of the class bound to the interfase.</p></div>
+<div class="item_description"><p>Returns the cached instance or a newly created and initialized implementation.</p></div>
 
 </div>
 
@@ -192,14 +193,17 @@ object<br>
 <h2>Throws</h2>
 <div class="item_list">
 
-\Exception<br>
+<code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
 
-<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul></div>
+<div class="item_description"><p>If the contract name is missing or unknown, no binding exists in the context,
+a circular dependency is detected, or the creation function returns a value
+that does not implement or extend the requested contract.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If autoloading or the creation function throws an exception or error,
+it is propagated unchanged and the failed instance is not cached.</p></div>
 
 
 </div>
@@ -225,20 +229,20 @@ object<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-factory_functions_inc.php.html#43'>factory_functions_inc.php</a>
+<a href='source-src.factory_functions_inc.php.html#43'>src/factory_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.instance.html'>\SmartFactory\instance()</a><br>
+<a href="function-SmartFactory.instance.html">\SmartFactory\instance()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Interface: IRequestThrottlingManager
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="active">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-info">Interface</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.Interfaces.html">Interfaces</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">IRequestThrottlingManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Interface: IRequestThrottlingManager</h1>
+
+
+
+<div class="definition"><span class="php-keyword1">interface</span> IRequestThrottlingManager <span class="php-keyword1">extends</span> IInitable
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Atomically enforces every configured rolling-window limit for an opaque caller key.</p>
+</div>
+
+
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Storage implementations may use files, databases or Redis. Checking limits and recording
+an allowed request must be one atomic operation across all processes sharing the storage.
+A limit is [maximum request count, period in seconds]. All limits apply simultaneously
+to the interval (current time - period, current time]. Rejected requests are not recorded.
+Clock rollbacks may retain future records conservatively instead of resetting budgets.
+The abstract base class provides the shared algorithm for backends that only
+need to implement history reading, persistence and atomic execution.</p>
+</div>
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
+
+</div>
+
+
+
+<h2>Known implementations</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.AbstractRequestThrottlingManager.html">\SmartFactory\AbstractRequestThrottlingManager</a><br>
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.Interfaces.IRequestThrottlingManager.php.html#27'>src/SmartFactory/Interfaces/IRequestThrottlingManager.php</a>
+</div>
+
+
+<h2>See also</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.AbstractRequestThrottlingManager.html">\SmartFactory\AbstractRequestThrottlingManager</a><br>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Constants</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#DEFAULT_LIMITS">DEFAULT_LIMITS</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Provides the demo admission policy when no explicit limits are supplied.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#getLimits">getLimits()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Retrieves all limits currently enforced by the manager.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Initializes the throttling policy and implementation-specific storage settings.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#registerRequest">registerRequest()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Atomically checks every window and records the request only when all windows allow it.</p>
+          </td>
+      </tr>
+
+  </table>
+
+<hr id="DEFAULT_LIMITS">
+
+  <h1>Constant: IRequestThrottlingManager::DEFAULT_LIMITS</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">const</span> <span class="php-keyword1">array</span> DEFAULT_LIMITS = [
+    [
+        <span class="php-num">3</span>,
+        <span class="php-num">1</span>,
+    ],
+    [
+        <span class="php-num">15</span>,
+        <span class="php-num">10</span>,
+    ],
+    [
+        <span class="php-num">1550</span>,
+        <span class="php-num">60</span>,
+    ],
+    [
+        <span class="php-num">10000</span>,
+        <span class="php-num">500</span>,
+    ],
+];</div>
+  
+
+  
+  <div class="short-description">
+  <p>Provides the demo admission policy when no explicit limits are supplied.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;
+    array{
+        0: positive-int,
+        1: positive-int
+    }
+&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.IRequestThrottlingManager.php.html#36'>src/SmartFactory/Interfaces/IRequestThrottlingManager.php</a>
+  </div>
+
+
+
+<hr id="getLimits">
+
+  <h1>Method: IRequestThrottlingManager::getLimits()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLimits(): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Retrieves all limits currently enforced by the manager.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;
+    array{
+        0: positive-int,
+        1: positive-int
+    }
+&gt;</code><br>
+  
+  <div class="item_description"><p>Returns count/period pairs, or an empty list when limits are disabled.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.IRequestThrottlingManager.php.html#67'>src/SmartFactory/Interfaces/IRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="init">
+
+  <h1>Method: IRequestThrottlingManager::init()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Initializes the throttling policy and implementation-specific storage settings.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array{
+    limits?: list&lt;
+        array{
+            0: positive-int,
+            1: positive-int
+        }
+    &gt;
+}</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The limits, using positive integer counts and periods in seconds. Omission selects
+DEFAULT_LIMITS; an empty list disables admission limits. Implementations may require
+additional entries for their storage connection or file path.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Applies the policy without erasing existing shared request history.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If a limit is not an integer pair with positive values or storage settings are invalid.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the implementation initializes its storage eagerly and that storage is unavailable.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.IRequestThrottlingManager.php.html#57'>src/SmartFactory/Interfaces/IRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="registerRequest">
+
+  <h1>Method: IRequestThrottlingManager::registerRequest()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerRequest(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Atomically checks every window and records the request only when all windows allow it.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A nonempty opaque identity, such as a normalized IP address, user ID, API-key identifier
+or one shared key for a global budget. The same key shares limits across API actions.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">int</code><br>
+  
+  <div class="item_description"><p>Returns zero when admitted, or a positive Retry-After delay rounded up to whole seconds
+until every limit permits another request, assuming no other requests are admitted meanwhile.
+A rejection must not change request history.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If the caller key is empty.</p></div>
+  
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If the implementation requires initialization and has not been initialized.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If shared history cannot be read, locked, validated or updated; admission must not be granted.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.IRequestThrottlingManager.php.html#92'>src/SmartFactory/Interfaces/IRequestThrottlingManager.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

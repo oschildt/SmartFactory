@@ -16,7 +16,7 @@ namespace SmartFactory;
 /**
  * Function for getting value of a request variable.
  *
- * This function checks wether the request variable exists and
+ * This function checks weather the request variable exists and
  * returns its value. If the request variable does not exist,
  * an empty value is returned.
  *
@@ -33,17 +33,17 @@ function reqvar_value(string $name): mixed
     if (empty($name)) {
         return "";
     }
-    
+
     $name = preg_replace("/([^\[\]]+)(.*)/i", "\$_REQUEST[\\1]\\2", $name);
     $name = preg_replace("/\[([^\[\]]+)\]/i", "[\"\\1\"]", $name);
     $name = str_replace("[]", "", $name);
-    
+
     $val = "";
     // protection against the php injection
     $name = preg_replace("/[;,\\(\\)\\?]+/", "", $name);
-    
+
     eval("\$val = isset($name) ? $name : '';");
-    
+
     return $val;
 } // reqvar_value
 
@@ -80,11 +80,11 @@ function reqvar_value(string $name): mixed
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the field is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
- * If the paramter $echo is true, the string of the field html
+ * If the parameter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
  * @see \SmartFactory\input_password()
@@ -99,11 +99,11 @@ function reqvar_value(string $name): mixed
 function input_text(array $parameters, bool $echo = true): string|null
 {
     $val = "";
-    
+
     $html = "<input type=\"text\"";
-    
+
     $sys_fields = ["id", "name", "value", "formatter"];
-    
+
     if (!empty($parameters["id"])) {
         $html .= " id=\"" . escape_html($parameters["id"]) . "\"";
     }
@@ -111,38 +111,38 @@ function input_text(array $parameters, bool $echo = true): string|null
         $html .= " name=\"" . escape_html($parameters["name"]) . "\"";
         $val = reqvar_value($parameters["name"]);
     }
-    
+
     // Value setting logic:
     //
-    // If explicitely set in value, than take it, otherwise take it from the request variable with that name.
-    
+    // If explicitly set in value, then take it, otherwise take it from the request variable with that name.
+
     if (!empty($parameters["value"])) {
         $val = $parameters["value"];
     }
-    
+
     if (!empty($parameters["formatter"]) && is_callable($parameters["formatter"])) {
         $val = call_user_func($parameters["formatter"], $val);
     }
-    
+
     $html .= " value=\"" . escape_html($val) . "\"";
-    
+
     foreach ($parameters as $name => $data) {
         if (in_array($name, $sys_fields)) {
             continue;
         }
-        
+
         $html .= " " . escape_html($name) . "=\"" . escape_html($data) . "\"";
     }
-    
+
     $html .= ">";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     //echo("<pre>" . escape_html($html) . "</pre>");
     echo($html);
-    
+
     return null;
 } // input_text
 
@@ -175,11 +175,11 @@ function input_text(array $parameters, bool $echo = true): string|null
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the field is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
- * If the paramter $echo is true, the string of the field html
+ * If the parameter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
  * @see \SmartFactory\input_text()
@@ -194,11 +194,11 @@ function input_text(array $parameters, bool $echo = true): string|null
 function input_password(array $parameters, bool $echo = true): string|null
 {
     $val = "";
-    
+
     $html = "<input type=\"password\"";
-    
+
     $sys_fields = ["id", "name", "value", "formatter"];
-    
+
     if (!empty($parameters["id"])) {
         $html .= " id=\"" . escape_html($parameters["id"]) . "\"";
     }
@@ -206,38 +206,38 @@ function input_password(array $parameters, bool $echo = true): string|null
         $html .= " name=\"" . escape_html($parameters["name"]) . "\"";
         $val = reqvar_value($parameters["name"]);
     }
-    
+
     // Value setting logic:
     //
-    // If explicitely set in value, than take it, otherwise take it from the request variable with that name.
-    
+    // If explicitly set in value, then take it, otherwise take it from the request variable with that name.
+
     if (!empty($parameters["value"])) {
         $val = $parameters["value"];
     }
-    
+
     if (!empty($parameters["formatter"]) && is_callable($parameters["formatter"])) {
         $val = call_user_func($parameters["formatter"], $val);
     }
-    
+
     $html .= " value=\"" . escape_html($val) . "\"";
-    
+
     foreach ($parameters as $name => $data) {
         if (in_array($name, $sys_fields)) {
             continue;
         }
-        
+
         $html .= " " . escape_html($name) . "=\"" . escape_html($data) . "\"";
     }
-    
+
     $html .= ">";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     //echo("<pre>" . escape_html($html) . "</pre>");
     echo($html);
-    
+
     return null;
 } // input_password
 
@@ -269,11 +269,11 @@ function input_password(array $parameters, bool $echo = true): string|null
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the field is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
- * If the paramter $echo is true, the string of the field html
+ * If the parameter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
  * @see \SmartFactory\input_text()
@@ -288,11 +288,11 @@ function input_password(array $parameters, bool $echo = true): string|null
 function input_hidden(array $parameters, bool $echo = true): string|null
 {
     $val = "";
-    
+
     $html = "<input type=\"hidden\"";
-    
+
     $sys_fields = ["id", "name", "value", "formatter"];
-    
+
     if (!empty($parameters["id"])) {
         $html .= " id=\"" . escape_html($parameters["id"]) . "\"";
     }
@@ -300,37 +300,37 @@ function input_hidden(array $parameters, bool $echo = true): string|null
         $html .= " name=\"" . escape_html($parameters["name"]) . "\"";
         $val = reqvar_value($parameters["name"]);
     }
-    
+
     // Value setting logic:
     //
-    // If explicitely set in value, than take it, otherwise take it from the request variable with that name.
-    
+    // If explicitly set in value, then take it, otherwise take it from the request variable with that name.
+
     if (!empty($parameters["value"])) {
         $val = $parameters["value"];
     }
-    
+
     if (!empty($parameters["formatter"]) && is_callable($parameters["formatter"])) {
         $val = call_user_func($parameters["formatter"], $val);
     }
-    
+
     $html .= " value=\"" . escape_html($val) . "\"";
-    
+
     foreach ($parameters as $name => $data) {
         if (in_array($name, $sys_fields)) {
             continue;
         }
-        
+
         $html .= " " . escape_html($name) . "=\"" . escape_html($data) . "\"";
     }
-    
+
     $html .= ">";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     echo($html);
-    
+
     return null;
 } // input_hidden
 
@@ -367,7 +367,7 @@ function input_hidden(array $parameters, bool $echo = true): string|null
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the field is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
@@ -386,11 +386,11 @@ function input_hidden(array $parameters, bool $echo = true): string|null
 function textarea(array $parameters, bool $echo = true): string|null
 {
     $val = "";
-    
+
     $html = "<textarea";
-    
+
     $sys_fields = ["id", "name", "value", "formatter"];
-    
+
     if (!empty($parameters["id"])) {
         $html .= " id=\"" . escape_html($parameters["id"]) . "\"";
     }
@@ -398,36 +398,36 @@ function textarea(array $parameters, bool $echo = true): string|null
         $html .= " name=\"" . escape_html($parameters["name"]) . "\"";
         $val = reqvar_value($parameters["name"]);
     }
-    
+
     // Value setting logic:
     //
-    // If explicitely set in value, than take it, otherwise take it from the request variable with that name.
-    
+    // If explicitly set in value, then take it, otherwise take it from the request variable with that name.
+
     if (!empty($parameters["value"])) {
         $val = $parameters["value"];
     }
-    
+
     if (!empty($parameters["formatter"]) && is_callable($parameters["formatter"])) {
         $val = call_user_func($parameters["formatter"], $val);
     }
-    
+
     foreach ($parameters as $name => $data) {
         if (in_array($name, $sys_fields)) {
             continue;
         }
-        
+
         $html .= " " . escape_html($name) . "=\"" . escape_html($data) . "\"";
     }
-    
+
     $html .= ">" . escape_html($val);
     $html .= "</textarea>";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     echo($html);
-    
+
     return null;
 } // textarea
 
@@ -478,11 +478,11 @@ function textarea(array $parameters, bool $echo = true): string|null
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the field is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
- * If the paramter $echo is true, the string of the field html
+ * If the parameter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
  * @see \SmartFactory\input_text()
@@ -497,11 +497,11 @@ function textarea(array $parameters, bool $echo = true): string|null
 function select(array $parameters, bool $echo = true): string|null
 {
     $val = "";
-    
+
     $html = "<select";
-    
+
     $sys_fields = ["id", "name", "value", "options", "multiple"];
-    
+
     if (!empty($parameters["id"])) {
         $html .= " id=\"" . escape_html($parameters["id"]) . "\"";
     }
@@ -509,57 +509,57 @@ function select(array $parameters, bool $echo = true): string|null
         $html .= " name=\"" . escape_html($parameters["name"]) . "\"";
         $val = reqvar_value($parameters["name"]);
     }
-    
+
     // Value setting logic:
     //
-    // If explicitely set in value, than take it, otherwise take it from the request variable with that name.
-    
+    // If explicitly set in value, then take it, otherwise take it from the request variable with that name.
+
     if (!empty($parameters["value"])) {
         $val = $parameters["value"];
     }
-    
+
     foreach ($parameters as $name => $data) {
         if (in_array($name, $sys_fields)) {
             continue;
         }
-        
+
         $html .= " " . escape_html($name) . "=\"" . escape_html($data) . "\"";
     }
-    
+
     if (isset($parameters["multiple"])) {
         $html .= " multiple";
     }
-    
-    $html .= ">\n";
-    
+
+    $html .= ">" . PHP_EOL;
+
     if (!empty($parameters["options"])) {
         if (!is_array($parameters["options"])) {
-            trigger_error("The parameter options must be an array val => text!", E_USER_ERROR);
+            trigger_error("The parameter options must be an array val => text!", E_USER_WARNING);
         } else {
             foreach ($parameters["options"] as $optval => $text) {
                 $selected = "";
-                
+
                 if (!is_array($val) && $optval == $val) {
                     $selected = "selected";
                 }
                 if (is_array($val) && in_array($optval, $val)) {
                     $selected = "selected";
                 }
-                
-                $html .= "<option value=\"" . escape_html($optval) . "\" $selected>" . escape_html($text) . "</option>\n";
+
+                $html .= "<option value=\"" . escape_html($optval) . "\" $selected>" . escape_html($text) . "</option>" . PHP_EOL;
             }
         }
     }
-    
+
     $html .= "</select>";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     //echo("<pre>" . escape_html($html) . "</pre>");
     echo($html);
-    
+
     return null;
 } // select
 
@@ -597,11 +597,11 @@ function select(array $parameters, bool $echo = true): string|null
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the field is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
- * If the paramter $echo is true, the string of the field html
+ * If the parameter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
  * @see \SmartFactory\input_text()
@@ -616,11 +616,11 @@ function select(array $parameters, bool $echo = true): string|null
 function checkbox(array $parameters, bool $echo = true): string|null
 {
     $val = "";
-    
+
     $html = "<input type=\"checkbox\"";
-    
+
     $sys_fields = ["id", "name", "value", "checked"];
-    
+
     if (!empty($parameters["id"])) {
         $html .= " id=\"" . escape_html($parameters["id"]) . "\"";
     }
@@ -628,47 +628,47 @@ function checkbox(array $parameters, bool $echo = true): string|null
         $html .= " name=\"" . escape_html($parameters["name"]) . "\"";
         $val = reqvar_value($parameters["name"]);
     }
-    
+
     if (!empty($parameters["value"])) {
         $html .= " value=\"" . escape_html($parameters["value"]) . "\"";
     }
-    
+
     // Checked setting logic:
     //
-    // If explicitely set in checked, than take it, otherwise take it from the request variable with that name.
-    
+    // If explicitly set in checked, then take it, otherwise take it from the request variable with that name.
+
     $checked = "";
-    
+
     if (!is_array($val) && !empty($val)) {
         $checked = " checked";
     }
     if (is_array($val) && in_array($parameters["value"] ?? "", $val)) {
         $checked = " checked";
     }
-    
+
     if (!empty($parameters["checked"])) {
         $checked = " checked";
     }
-    
+
     $html .= $checked;
-    
+
     foreach ($parameters as $name => $data) {
         if (in_array($name, $sys_fields)) {
             continue;
         }
-        
+
         $html .= " " . escape_html($name) . "=\"" . escape_html($data) . "\"";
     }
-    
+
     $html .= ">";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     //echo("<pre>" . escape_html($html) . "</pre>");
     echo($html);
-    
+
     return null;
 } // checkbox
 
@@ -708,11 +708,11 @@ function checkbox(array $parameters, bool $echo = true): string|null
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the field is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
- * If the paramter $echo is true, the string of the field html
+ * If the parameter $echo is true, the string of the field html
  * code is returned, otherwise null.
  *
  * @see \SmartFactory\input_text()
@@ -727,11 +727,11 @@ function checkbox(array $parameters, bool $echo = true): string|null
 function radiobutton(array $parameters, bool $echo = true): string|null
 {
     $val = "";
-    
+
     $html = "<input type=\"radio\"";
-    
+
     $sys_fields = ["id", "name", "value", "checked"];
-    
+
     if (!empty($parameters["id"])) {
         $html .= " id=\"" . escape_html($parameters["id"]) . "\"";
     }
@@ -739,44 +739,44 @@ function radiobutton(array $parameters, bool $echo = true): string|null
         $html .= " name=\"" . escape_html($parameters["name"]) . "\"";
         $val = reqvar_value($parameters["name"]);
     }
-    
+
     if (!empty($parameters["value"])) {
         $html .= " value=\"" . escape_html($parameters["value"]) . "\"";
     }
-    
+
     // Checked setting logic:
     //
-    // If explicitely set in checked, than take it, otherwise take it from the request variable with that name.
-    
+    // If explicitly set in checked, then take it, otherwise take it from the request variable with that name.
+
     $checked = "";
-    
+
     if (!empty($val) && ($parameters["value"] ?? "") == $val) {
         $checked = " checked";
     }
-    
+
     if (!empty($parameters["checked"])) {
         $checked = " checked";
     }
-    
+
     $html .= $checked;
-    
+
     foreach ($parameters as $name => $data) {
         if (in_array($name, $sys_fields)) {
             continue;
         }
-        
+
         $html .= " " . escape_html($name) . "=\"" . escape_html($data) . "\"";
     }
-    
+
     $html .= ">";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     //echo("<pre>" . escape_html($html) . "</pre>");
     echo($html);
-    
+
     return null;
 } // radiobutton
 
@@ -785,7 +785,7 @@ function radiobutton(array $parameters, bool $echo = true): string|null
  *
  * This function renders a tables based on the values of an array.
  *
- * @param array &$array
+ * @param array $array
  * The array of the rows.
  *
  * @param array $parameters
@@ -803,7 +803,7 @@ function radiobutton(array $parameters, bool $echo = true): string|null
  * is escaped for html.
  *
  * - $parameters["formatter"] - this function is used for the value formatting
- * if specified. It is called for evelry cell of the table. The signature of
+ * if specified. It is called for every cell of the table. The signature of
  * this function is:
  *
  * ```php
@@ -812,11 +812,11 @@ function radiobutton(array $parameters, bool $echo = true): string|null
  *
  * - $rownum - the row number.
  *
- * - $colnum - the colnum number.
+ * - $colnum - the column number.
  *
  * - $colname - the column name if the $parameters["captions"] are provided.
- * The keys of the cpation array are used. If the $parameters["captions"]
- * are not provided, $colname is equal to $colnum.
+ * The keys of the caption array are used. If the $parameters["captions"]
+ * are not provided, $colname is equal to $column.
  *
  * - $val - original value of the table cell.
  *
@@ -841,7 +841,7 @@ function radiobutton(array $parameters, bool $echo = true): string|null
  *   "employee" => "Employee",
  *   "time_estimation" => "Time estimation",
  *   "deadline" => "Deadline",
- *   "comments" => "Conmments"
+ *   "comments" => "Comments"
  * ];
  *
  * $formatter = function ($rownum, $colnum, $colname, $val) {
@@ -862,97 +862,97 @@ function radiobutton(array $parameters, bool $echo = true): string|null
  *
  * @param boolean $echo
  * If the value of $echo is true, the html code of the table is directly echoed.
- * Otherwise it is returned as string. It might be useful to pass this code to
+ * Otherwise, it is returned as string. It might be useful to pass this code to
  * other rendering functions instead of echoing.
  *
  * @return string|null
- * If the paramter $echo is true, the string of the table html
+ * If the parameter $echo is true, the string of the table html
  * code is returned, otherwise null.
  *
  * @author Oleg Schildt
  */
-function table(array &$array, array $parameters = [], bool $echo = true): string|null
+function table(array $array, array $parameters = [], bool $echo = true): string|null
 {
     if (!is_array($array)) {
-        trigger_error("An array expected!", E_WARNING);
+        trigger_error("An array expected!", E_USER_WARNING);
     }
-    
+
     $html = "<table";
-    
+
     if (!empty($parameters["class"])) {
         $html .= " class=\"" . escape_html($parameters["class"]) . "\"";
     }
     if (!empty($parameters["style"])) {
         $html .= " style=\"" . escape_html($parameters["style"]) . "\"";
     }
-    
-    $html .= ">\n";
-    
+
+    $html .= ">" . PHP_EOL;
+
     if (!empty($parameters["captions"])) {
-        $html .= "<tr>\n";
-        
+        $html .= "<tr>" . PHP_EOL;
+
         foreach ($parameters["captions"] as $key => $value) {
             $html .= "<th";
-            
+
             if (!empty($parameters["col_class_from_keys"])) {
                 $html .= " class=\"" . escape_html($key) . "\"";
             }
-            
-            $html .= ">\n";
-            
+
+            $html .= ">" . PHP_EOL;
+
             if (empty($parameters["no_escape_html"])) {
                 $value = escape_html($value);
             }
-            
+
             $html .= $value;
-            
-            $html .= "\n</th>\n";
+
+            $html .= PHP_EOL . "</th>" . PHP_EOL;
         }
-        
-        $html .= "</tr>\n";
+
+        $html .= "</tr>" . PHP_EOL;
     }
-    
+
     $rownum = 0;
-    foreach ($array as &$row) {
+    foreach ($array as $row) {
         $rownum++;
-        
-        $html .= "<tr>\n";
-        
+
+        $html .= "<tr>" . PHP_EOL;
+
         $colnum = 0;
         foreach ($row as $key => $value) {
             $colnum++;
-            
+
             $html .= "<td";
-            
+
             if (!empty($parameters["col_class_from_keys"])) {
                 $html .= " class=\"" . escape_html($key) . "\"";
             }
-            
-            $html .= ">\n";
-            
+
+            $html .= ">" . PHP_EOL;
+
             if (!empty($parameters["formatter"]) && is_callable($parameters["formatter"])) {
                 $value = call_user_func($parameters["formatter"], $rownum, $colnum, $key, $value);
             }
-            
+
             if (empty($parameters["no_escape_html"])) {
                 $value = escape_html($value);
             }
-            
+
             $html .= $value;
-            
-            $html .= "\n</td>\n";
+
+            $html .= PHP_EOL . "</td>" . PHP_EOL;
         }
-        
-        $html .= "</tr>\n";
+
+        $html .= "</tr>" . PHP_EOL;
     }
-    
+
     $html .= "</table>";
-    
+
     if (!$echo) {
         return $html;
     }
-    
+
     echo($html);
-    
+
     return null;
 } // table

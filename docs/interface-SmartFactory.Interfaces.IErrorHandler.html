@@ -119,7 +119,10 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> IErrorHandler <span class="php-keyword1">extends</span> IInitable
+{
+}</div>
+
 
 
 <div class="short-description">
@@ -134,7 +137,7 @@
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href='interface-SmartFactory.Interfaces.IInitable.html'>\SmartFactory\Interfaces\IInitable</a><br>
+<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
 
 </div>
 
@@ -143,7 +146,7 @@
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.ErrorHandler.html'>\SmartFactory\ErrorHandler</a><br>
+<a href="class-SmartFactory.ErrorHandler.html">\SmartFactory\ErrorHandler</a><br>
 
 </div>
 
@@ -168,7 +171,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#17'>SmartFactory/Interfaces/IErrorHandler.php</a>
+<a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#17'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
 </div>
 
 
@@ -192,9 +195,11 @@
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#disableTrace">disableTrace()</a></div>
@@ -303,16 +308,19 @@ if an exception is thrown.</p>
               <p>Returns the state whether the trace is active or not.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
+
+
 <hr id="disableTrace">
-  
+
   <h1>Method: IErrorHandler::disableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> disableTrace(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -335,7 +343,7 @@ the standard file.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -358,17 +366,17 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#139'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#139'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive'>\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive">\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace'>\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace">\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
   
   
   </div>
@@ -386,10 +394,11 @@ the standard file.</p>
   
 
   <hr id="enableTrace">
-  
+
   <h1>Method: IErrorHandler::enableTrace()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> enableTrace(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -412,7 +421,7 @@ the standard file.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -435,17 +444,17 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#124'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#124'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive'>\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#traceActive">\SmartFactory\Interfaces\IErrorHandler::traceActive()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace'>\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace">\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
   
   
   </div>
@@ -463,10 +472,11 @@ the standard file.</p>
   
 
   <hr id="getLastError">
-  
+
   <h1>Method: IErrorHandler::getLastError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLastError(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -483,7 +493,7 @@ the standard file.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the last error or an empty string if no error occurred so far.</p></div>
   
@@ -508,7 +518,7 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#81'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#81'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
@@ -527,10 +537,11 @@ the standard file.</p>
   
 
   <hr id="handleError">
-  
+
   <h1>Method: IErrorHandler::handleError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(int <span class="php-var">$errno</span>, string <span class="php-var">$errstr</span>, string <span class="php-var">$errfile</span>, int <span class="php-var">$errline</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleError(<span class="php-keyword1">int</span> <span class="php-var">$errno</span>, <span class="php-keyword1">string</span> <span class="php-var">$errstr</span>, <span class="php-keyword1">string</span> <span class="php-var">$errfile</span>, <span class="php-keyword1">int</span> <span class="php-var">$errline</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -545,7 +556,8 @@ error handler.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -553,7 +565,7 @@ error handler.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -563,7 +575,7 @@ error handler.</p>
                 by value
             </td>
             <td>
-                int
+                <code class="php-type">int</code>
             </td>
             <td>
                 
@@ -581,7 +593,7 @@ error handler.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -599,7 +611,7 @@ error handler.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -617,7 +629,7 @@ error handler.</p>
                 by value
             </td>
             <td>
-                int
+                <code class="php-type">int</code>
             </td>
             <td>
                 
@@ -627,13 +639,14 @@ error handler.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -656,7 +669,7 @@ error handler.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#54'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#54'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
@@ -675,10 +688,11 @@ error handler.</p>
   
 
   <hr id="handleException">
-  
+
   <h1>Method: IErrorHandler::handleException()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, int <span class="php-var">$errno</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> handleException(\Throwable <span class="php-var">$ex</span>, <span class="php-keyword1">int</span> <span class="php-var">$errno</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -694,7 +708,8 @@ if an exception is thrown.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -702,7 +717,7 @@ if an exception is thrown.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -712,7 +727,7 @@ if an exception is thrown.</p>
                 by value
             </td>
             <td>
-                \Throwable
+                <code class="php-type">\Throwable</code>
             </td>
             <td>
                 
@@ -730,7 +745,7 @@ if an exception is thrown.</p>
                 by value
             </td>
             <td>
-                int
+                <code class="php-type">int</code>
             </td>
             <td>
                 
@@ -740,13 +755,14 @@ if an exception is thrown.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -769,7 +785,7 @@ if an exception is thrown.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#71'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#71'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
@@ -788,10 +804,11 @@ if an exception is thrown.</p>
   
 
   <hr id="init">
-  
+
   <h1>Method: IErrorHandler::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -805,7 +822,8 @@ if an exception is thrown.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -813,7 +831,7 @@ if an exception is thrown.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -823,7 +841,7 @@ if an exception is thrown.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array</code>
             </td>
             <td>
                 
@@ -833,13 +851,14 @@ if an exception is thrown.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -847,7 +866,7 @@ if an exception is thrown.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\Exception</code><br>
   
   <div class="item_description"><p>It might throw an exception in the case of any system errors.</p></div>
   
@@ -857,7 +876,7 @@ if an exception is thrown.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IInitable.html#init'>\SmartFactory\Interfaces\IInitable::init()</a>
+  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a>
   </div>
   
 
@@ -875,7 +894,7 @@ if an exception is thrown.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#32'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#32'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
@@ -894,10 +913,11 @@ if an exception is thrown.</p>
   
 
   <hr id="setLastError">
-  
+
   <h1>Method: IErrorHandler::setLastError()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(string <span class="php-var">$error</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setLastError(<span class="php-keyword1">string</span> <span class="php-var">$error</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -911,7 +931,8 @@ if an exception is thrown.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -919,7 +940,7 @@ if an exception is thrown.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -929,7 +950,7 @@ if an exception is thrown.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -939,13 +960,14 @@ if an exception is thrown.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -968,7 +990,7 @@ if an exception is thrown.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#93'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#93'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
@@ -987,10 +1009,11 @@ if an exception is thrown.</p>
   
 
   <hr id="traceActive">
-  
+
   <h1>Method: IErrorHandler::traceActive()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> traceActive(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1013,7 +1036,7 @@ the standard file.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns the state whether the trace is active or not.</p></div>
   
@@ -1038,23 +1061,23 @@ the standard file.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IErrorHandler.php.html#109'>SmartFactory/Interfaces/IErrorHandler.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IErrorHandler.php.html#109'>src/SmartFactory/Interfaces/IErrorHandler.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace'>\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#enableTrace">\SmartFactory\Interfaces\IErrorHandler::enableTrace()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace'>\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IErrorHandler.html#disableTrace">\SmartFactory\Interfaces\IErrorHandler::disableTrace()</a><br>
   
   
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

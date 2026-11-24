@@ -127,20 +127,6 @@
       
       <tr>
           <td>
-              <a href="interface-SmartFactory.Interfaces.IRecordsetManager.html">IRecordsetManager</a>
-          </td>
-          <td class="namespace_column">
-              
-              <a href="namespace-SmartFactory.Interfaces.html">SmartFactory\Interfaces</a>
-              
-          </td>
-          <td class="description_column">
-              <p>Interface for working with record sets.</p>
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
               <a href="interface-SmartFactory.Interfaces.IShardManager.html">IShardManager</a>
           </td>
           <td class="namespace_column">
@@ -149,7 +135,7 @@
               
           </td>
           <td class="description_column">
-              <p>Interface for managing connections to the DB shards.</p>
+              <p>Registers database shards and selects their workers directly or through named groups.</p>
           </td>
       </tr>
       
@@ -162,6 +148,48 @@
       
       <tr>
           <td>
+              <a href="class-SmartFactory.DatabaseWorkers.BlobValue.html">BlobValue</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Explicit binary bind value for a BLOB or bytea parameter.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DatabaseWorkers.ClobValue.html">ClobValue</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Explicit UTF-8 text bind value for a CLOB or text parameter.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DatabaseWorkers.DBConnectionState.html">DBConnectionState</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Stores native connection ownership and transaction state shared by cloned workers.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a>
           </td>
           <td class="namespace_column">
@@ -170,7 +198,7 @@
               
           </td>
           <td class="description_column">
-              <p>This is the abstract base class for all dbworkers for different databases.</p>
+              <p>Abstract base class for native database workers.</p>
           </td>
       </tr>
       
@@ -184,7 +212,7 @@
               
           </td>
           <td class="description_column">
-              <p>Class for DBWorkerException in the SmartFactory library.</p>
+              <p>Exception for database worker connection, query, data-format and stream errors.</p>
           </td>
       </tr>
       
@@ -198,7 +226,7 @@
               
           </td>
           <td class="description_column">
-              <p>This is the class for the MS SQL database using the extension sqlsrv.</p>
+              <p>Database worker for Microsoft SQL Server using the sqlsrv extension.</p>
           </td>
       </tr>
       
@@ -212,7 +240,21 @@
               
           </td>
           <td class="description_column">
-              <p>This is the class for the MySQL database using the extension mysqli.</p>
+              <p>Database worker for MySQL using the mysqli extension.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DatabaseWorkers.Oracle_DBWorker.html">Oracle_DBWorker</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Database worker for Oracle Database 12c and later using the OCI8 extension.</p>
           </td>
       </tr>
       
@@ -226,21 +268,21 @@
               
           </td>
           <td class="description_column">
-              <p>This is the class for the PostreSQL database using the extension pgsql.</p>
+              <p>Database worker for PostgreSQL using the pgsql extension.</p>
           </td>
       </tr>
       
       <tr>
           <td>
-              <a href="class-SmartFactory.RecordsetManager.html">RecordsetManager</a>
+              <a href="class-SmartFactory.DatabaseWorkers.PreparedQuery.html">PreparedQuery</a>
           </td>
           <td class="namespace_column">
               
-              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              <a href="namespace-SmartFactory.DatabaseWorkers.html">SmartFactory\DatabaseWorkers</a>
               
           </td>
           <td class="description_column">
-              <p>Class for working with record sets.</p>
+              <p>Compiles public SQL placeholders and validates prepared-query arguments.</p>
           </td>
       </tr>
       
@@ -254,7 +296,7 @@
               
           </td>
           <td class="description_column">
-              <p>Class for managing connections to the DB shards.</p>
+              <p>Class for registering database shards and managing their connections.</p>
           </td>
       </tr>
       
@@ -264,7 +306,7 @@
 
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

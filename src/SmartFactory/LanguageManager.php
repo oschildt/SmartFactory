@@ -10,10 +10,10 @@
 
 namespace SmartFactory;
 
-use \SmartFactory\Interfaces\ILanguageManager;
+use SmartFactory\Interfaces\ILanguageManager;
 
 /**
- * Class for working with localization of texts.
+ * Manages instance-local localization dictionaries, context selections and optional APCu caching.
  *
  * @author Oleg Schildt
  */
@@ -31,12 +31,12 @@ class LanguageManager implements ILanguageManager
     /**
      * Internal variable for storing the paths of the additional localization files.
      *
-     * @var string|array
+     * @var list<string>
      *
      * @author Oleg Schildt
      */
-    protected string|array $additional_localization_files = [];
-    
+    protected array $additional_localization_files = [];
+
     /**
      * Internal variable for storing the fallback language.
      * If set and a translation is missing on a language, the translation on this language will be used.
@@ -45,7 +45,7 @@ class LanguageManager implements ILanguageManager
      *
      * @author Oleg Schildt
      */
-     protected string $use_fallback_language = "";
+    protected string $use_fallback_language = "";
 
     /**
      * Internal variable for storing the current context.
@@ -56,7 +56,7 @@ class LanguageManager implements ILanguageManager
      *
      * @author Oleg Schildt
      */
-    static protected string $context = "default";
+    protected string $context = "default";
 
     /**
      * Internal variable for storing the state whether the dictionary is loaded or not.
@@ -95,7 +95,7 @@ class LanguageManager implements ILanguageManager
     protected string $cookie_path = "/";
 
     /**
-     * Internal variable for storing the state whether the E_USER_NOTICE is triggered in the case of missing translations.
+     * Internal variable for storing the state whether the E_USER_WARNING is triggered in the case of missing translations.
      *
      * @var bool
      *
@@ -106,309 +106,270 @@ class LanguageManager implements ILanguageManager
     /**
      * Internal array for storing the list of supported languages.
      *
-     * @var array
+     * @var array<string, string>
      *
      * @author Oleg Schildt
      */
-    static protected array $supported_languages = [];
+    protected array $supported_languages = [];
 
     /**
      * Internal variable for storing the current language.
      *
-     * @var array
+     * @var array<string, string>
      *
      * @author Oleg Schildt
      */
-    static protected array $current_language = [];
+    protected array $current_language = [];
 
     /**
      * Internal array for storing the list of language name translations.
      *
-     * @var array
+     * @var array<string, array<array-key, string>>
      *
      * @author Oleg Schildt
      */
-    static protected array $languages = [];
+    protected array $languages = [];
 
     /**
      * Internal array for storing the list of country name translations.
      *
-     * @var array
+     * @var array<string, array<array-key, string>>
      *
      * @author Oleg Schildt
      */
-    static protected array $countries = [];
+    protected array $countries = [];
 
     /**
      * Internal array for storing the list of text translations.
      *
-     * @var array
+     * @var array<string, array<array-key, string>>
      *
      * @author Oleg Schildt
      */
-    static protected array $texts = [];
+    protected array $texts = [];
 
     /**
-     * Initializes the language manager with parameters.
+     * Replaces the complete localization configuration and resets all instance state.
      *
-     * @param array $parameters
-     * Settings for logging as an associative array in the form key => value:
-     *
-     * - $parameters["localization_path"] - the path where the localization files are stored.
-     *
-     * - $parameters["use_cookie"] - if set to true, the last selected language is stored to cookie.
-     *
-     * - $parameters["use_fallback_language"] - if set and a translation is missing on a language, the translation on this language will be used.
-     *
-     * - $parameters["cookie_path"] - Cookie path.
-     *
-     * - $parameters["use_apcu"] - if installed, apcu can be used to cache the translations in the memory.
-     *
-     * - $parameters["warn_missing"] - If it is set to true, the E_USER_NOTICE is triggered in the case of missing translations.
+     * @param array{localization_path: string, additional_localization_files?: string|list<string>, use_cookie?: bool, use_fallback_language?: string, cookie_path?: string, use_apcu?: bool, warn_missing?: bool} $parameters
+     * The source directory, optional ordered extra text files, fallback tag and cookie/cache options.
+     * The directory may omit its final separator. Missing options use defaults: cookies and APCu
+     * are disabled, cookie_path is "/", fallback is empty and warn_missing is true.
+     * False values and an empty fallback are respected. Additional files override individual languages.
      *
      * @return void
+     * Commits validated options without reading documents and resets the context to "default".
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * @throws \InvalidArgumentException
+     * If paths or string options are invalid, the fallback tag is malformed, or requested APCu is unavailable.
      *
      * @author Oleg Schildt
      */
     public function init(array $parameters): void
     {
-        if (!empty($parameters["localization_path"])) {
-            $this->localization_path = $parameters["localization_path"];
+        $path = $parameters['localization_path'] ?? null;
+
+        if (!is_string($path) || $path === '' || !is_dir($path)) {
+            throw new \InvalidArgumentException("An existing 'localization_path' directory is required.");
         }
 
-        if (!empty($parameters["use_apcu"])) {
-            $this->use_apcu = $parameters["use_apcu"];
+        $canonical = realpath($path);
+        $files = $this->normalizeLocalizationFiles($parameters['additional_localization_files'] ?? []);
+        $fallback = $parameters['use_fallback_language'] ?? '';
+        $cookie_path = $parameters['cookie_path'] ?? '/';
+        $use_apcu = (bool) ($parameters['use_apcu'] ?? false);
+
+        if ($canonical === false || !is_string($fallback) || !is_string($cookie_path)) {
+            throw new \InvalidArgumentException("Localization paths and the fallback language must be valid strings.");
         }
 
-        if (!empty($parameters["use_cookie"])) {
-            $this->use_cookie = $parameters["use_cookie"];
+        $fallback = $this->normalizeLanguage($fallback);
+
+        if ($fallback !== '' && !$this->isLanguageTag($fallback)) {
+            throw new \InvalidArgumentException("The fallback language must be a language tag or an empty string.");
         }
 
-        if (!empty($parameters["cookie_path"])) {
-            $this->cookie_path = $parameters["cookie_path"];
+        if ($use_apcu && (!function_exists('apcu_enabled') || !apcu_enabled())) {
+            throw new \InvalidArgumentException("APCu is not enabled for this PHP execution mode.");
         }
 
-        if (!empty($parameters["use_fallback_language"])) {
-            $this->use_fallback_language = $parameters["use_fallback_language"];
-        }
-
-        if (!empty($parameters["warn_missing"])) {
-            $this->warn_missing = $parameters["warn_missing"];
-        }
-    }
+        $this->localization_path = rtrim(str_replace('\\', '/', $canonical), '/') . '/';
+        $this->additional_localization_files = $files;
+        $this->use_fallback_language = $fallback;
+        $this->cookie_path = $cookie_path;
+        $this->use_cookie = (bool) ($parameters['use_cookie'] ?? false);
+        $this->use_apcu = $use_apcu;
+        $this->warn_missing = (bool) ($parameters['warn_missing'] ?? true);
+        $this->dictionary_loaded = false;
+        $this->context = 'default';
+        $this->current_language = [];
+        $this->supported_languages = [];
+        $this->languages = [];
+        $this->countries = [];
+        $this->texts = [];
+    } // init
 
     /**
-     * Adds additional localization files to the dictionary.
+     * Registers an additional text document and invalidates the loaded-source flag.
      *
      * @param string $localization_file
-     * The path of the additional localization file.
+     * A file whose individual language values override earlier sources on the next load.
      *
      * @return void
+     * Preserves the file order and selects a cache key specific to the new source list.
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * @throws \InvalidArgumentException
+     * If the path is empty or its parent directory does not exist.
      *
      * @author Oleg Schildt
      */
     public function addLocalizationFile(string $localization_file): void
     {
-        $this->additional_localization_files[] = $localization_file;
-    }
+        $files = $this->normalizeLocalizationFiles([$localization_file]);
+        $this->additional_localization_files[] = $files[0];
+        $this->dictionary_loaded = false;
+    } // addLocalizationFile
 
     /**
-     * This is function for loading the translations from the source JSON file.
+     * Loads a complete validated dictionary from JSON documents or APCu.
+     * Each texts.json is followed by its optional sibling user_texts.json. Only
+     * nonempty user translations replace master values; the string "0" is nonempty.
+     *
+     * @param bool $force_reload
+     * Bypasses instance and APCu snapshots, replaces deleted entries and refreshes APCu after success.
+     * Otherwise source changes require explicit reload or cache eviction. Instance-only additions
+     * from extendDictionary() are discarded by source reload.
      *
      * @return void
+     * Applies all documents together. Read or validation failures preserve the previous snapshot.
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
      *
-     * - if the translation file is invalid.
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
-    public function loadDictionary(): void
+    public function loadDictionary(bool $force_reload = false): void
     {
-        if ($this->dictionary_loaded) {
+        if (!$force_reload && $this->dictionary_loaded) {
             return;
         }
 
-        if ($this->use_apcu) {
-            do {
-                if (!apcu_exists("dictionary_supported_languages")) {
-                    break;
-                }
+        if ($this->localization_path === '') {
+            throw new \LogicException("The localization directory has not been initialized.");
+        }
 
-                self::$supported_languages = apcu_fetch("dictionary_supported_languages");
-                if (empty(self::$supported_languages)) {
-                    break;
-                }
+        $key = $this->cacheKey();
 
-                if (!apcu_exists("dictionary_languages")) {
-                    break;
-                }
-                self::$languages = apcu_fetch("dictionary_languages");
-                if (empty(self::$languages)) {
-                    break;
-                }
+        if (!$force_reload && $this->use_apcu) {
+            $cached = apcu_fetch($key, $success);
 
-                if (!apcu_exists("dictionary_countries")) {
-                    break;
-                }
-                self::$countries = apcu_fetch("dictionary_countries");
-                if (empty(self::$countries)) {
-                    break;
-                }
-
-                if (!apcu_exists("dictionary_texts")) {
-                    break;
-                }
-
-                self::$texts = apcu_fetch("dictionary_texts");
-                if (empty(self::$texts)) {
-                    break;
-                }
+            if ($success && $this->isValidSnapshot($cached)) {
+                $this->applySnapshot($cached);
 
                 return;
-            } while (false);
-        }
-
-        $json_array = [];
-
-        $json = file_get_contents($this->localization_path . "config.json");
-        if ($json === false) {
-            throw new \Exception("Translation file '" . $this->localization_path . "config.json" . "' cannot be loaded or does not exist!");
-        }
-
-        try {
-            json_to_array($json, $json_array);
-        } catch (\Throwable $ex) {
-            throw new \Exception("Translation file '" . $this->localization_path . "config.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
-        }
-
-        $json = file_get_contents($this->localization_path . "languages.json");
-        if ($json === false) {
-            throw new \Exception("Translation file '" . $this->localization_path . "languages.json" . "' cannot be loaded or does not exist!");
-        }
-
-        try {
-            $json_array["languages"] = [];
-            json_to_array($json, $json_array["languages"]);
-        } catch (\Throwable $ex) {
-            throw new \Exception("Translation file '" . $this->localization_path . "languages.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
-        }
-
-        $json = file_get_contents($this->localization_path . "countries.json");
-        if ($json === false) {
-            throw new \Exception("Translation file '" . $this->localization_path . "countries.json" . "' cannot be loaded or does not exist!");
-        }
-
-        try {
-            $json_array["countries"] = [];
-            json_to_array($json, $json_array["countries"]);
-        } catch (\Throwable $ex) {
-            throw new \Exception("Translation file '" . $this->localization_path . "countries.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
-        }
-
-        $json = file_get_contents($this->localization_path . "texts.json");
-        if ($json === false) {
-            throw new \Exception("Translation file '" . $this->localization_path . "texts.json" . "' cannot be loaded or does not exist!");
-        }
-
-        try {
-            $json_array["texts"] = [];
-            json_to_array($json, $json_array["texts"]);
-        } catch (\Throwable $ex) {
-            throw new \Exception("Translation file '" . $this->localization_path . "texts.json" . "' is invalid!" . "\n\n" . $ex->getMessage());
-        }
-
-        if (!empty($this->additional_localization_files)) {
-            foreach ($this->additional_localization_files as $localization_file) {
-                $json = file_get_contents($localization_file);
-                if ($json === false) {
-                    throw new \Exception("Translation file '" . $localization_file . "' cannot be loaded or does not exist!");
-                }
-
-                try {
-                    $translation_texts = [];
-                    json_to_array($json, $translation_texts);
-
-                    $json_array["texts"] = array_merge($json_array["texts"], $translation_texts);
-                } catch (\Throwable $ex) {
-                    throw new \Exception("Translation file '" . $localization_file . "' is invalid!" . "\n\n" . $ex->getMessage());
-                }
             }
         }
 
-        if (!empty($json_array["interface_languages"])) {
-            foreach ($json_array["interface_languages"] as $lang_code) {
-                self::$supported_languages[$lang_code] = $lang_code;
+        $config = $this->readDocument($this->localization_path . 'config.json');
+        $configured = $config['interface_languages'] ?? null;
+
+        if (!is_array($configured) || !array_is_list($configured) || $configured === []) {
+            throw new \UnexpectedValueException("config.json must define a nonempty interface_languages list.");
+        }
+
+        $supported = [];
+
+        foreach ($configured as $language) {
+            if (!is_string($language) || !$this->isLanguageTag($this->normalizeLanguage($language))) {
+                throw new \UnexpectedValueException("Each interface language must be a valid language tag.");
+            }
+
+            $language = $this->normalizeLanguage($language);
+            $supported[$language] = $language;
+        }
+
+        $snapshot = ['supported_languages' => $supported, 'texts' => []];
+
+        foreach (['languages', 'countries'] as $name) {
+            $file = $this->localization_path . $name . '.json';
+            $snapshot[$name] = $this->transposeTranslations($this->readDocument($file), $file);
+        }
+
+        $text_files = [$this->localization_path . 'texts.json', ...$this->additional_localization_files];
+
+        foreach ($text_files as $file) {
+            $additional = $this->transposeTranslations($this->readDocument($file), $file);
+
+            foreach ($additional as $language => $translations) {
+                $snapshot['texts'][$language] = array_replace($snapshot['texts'][$language] ?? [], $translations);
+            }
+
+            $user_file = dirname($file) . '/user_texts.json';
+
+            if (basename($file) !== 'texts.json' || !file_exists($user_file)) {
+                continue;
+            }
+
+            $overrides = $this->transposeTranslations($this->readDocument($user_file), $user_file);
+
+            foreach ($overrides as $language => $translations) {
+                $nonempty = array_filter($translations, static fn(string $value): bool => $value !== '');
+                $snapshot['texts'][$language] = array_replace($snapshot['texts'][$language] ?? [], $nonempty);
             }
         }
 
-        if (!empty($json_array["languages"])) {
-            foreach ($json_array["languages"] as $text_id =>&$translations) {
-                foreach ($translations as $lang_code => $translation) {
-                    self::$languages[$lang_code][$text_id] = $translation;
-                }
-            }
-        }
-
-        if (!empty($json_array["countries"])) {
-            foreach ($json_array["countries"] as $text_id => $translations) {
-                foreach ($translations as $lang_code => $translation) {
-                    self::$countries[$lang_code][$text_id] = $translation;
-                }
-            }
-        }
-
-        if (!empty($json_array["texts"])) {
-            foreach ($json_array["texts"] as $text_id => $translations) {
-                foreach ($translations as $lang_code => $translation) {
-                    self::$texts[$lang_code][$text_id] = $translation;
-                }
-            }
-        }
-
-        $this->dictionary_loaded = true;
+        $this->applySnapshot($snapshot);
 
         if ($this->use_apcu) {
-            apcu_store("dictionary_supported_languages", self::$supported_languages);
-            apcu_store("dictionary_languages", self::$languages);
-            apcu_store("dictionary_countries", self::$countries);
-            apcu_store("dictionary_texts", self::$texts);
+            // Failed cache replacement must not leave an older valid snapshot available.
+            if ($force_reload) {
+                apcu_delete($key);
+            }
+
+            apcu_store($key, $snapshot);
         }
     } // loadDictionary
 
     /**
-     * Adds additional translations to the dictionary.
+     * Adds validated translations to this instance without changing shared APCu data.
      *
-     * @param array $dictionary
-     * The array with additional translations.
+     * @param array<array-key, array<string, string>> $dictionary
+     * Text identifiers mapped to language-to-string maps; numeric identifiers are preserved.
+     * Individual language values override previous values. An explicit source reload discards additions.
      *
      * @return void
+     * Validates the entire addition before changing the dictionary.
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function extendDictionary(array $dictionary): void
     {
+        $additional = $this->transposeTranslations($dictionary, 'extendDictionary()');
+
         $this->loadDictionary();
-        
-        foreach ($dictionary as $text_id => $translations) {
-            foreach ($translations as $lang_code => $translation) {
-                self::$texts[$lang_code][$text_id] = $translation;
-            }
+
+        foreach ($additional as $language => $translations) {
+            $this->texts[$language] = array_replace($this->texts[$language] ?? [], $translations);
         }
-    }
+    } // extendDictionary
 
     /**
-     * This function should detect the current language based on cookies, browser languages etc.
+     * Detects the current language from request parameters, headers and cookies.
      *
      * Priority:
      *
@@ -417,13 +378,12 @@ class LanguageManager implements ILanguageManager
      * 3. last language in the cookie.
      * 4. browser default language.
      * 5. the first one from the supported list.
-     * 6. English.
      *
-     * Some applications may consist of two parts - administration
-     * console and public site. A usual example is a CMS system.
+     * Some applications may consist of two parts: an administration
+     * console and a public site. A usual example is a CMS system.
      *
      * For example, you are using administration console in English
-     * and editing the public site for German and French.
+     * and editing the public site in German and French.
      * When you open the public site for preview in German or French,
      * you want it to be open in the corresponding language, but
      * the administration console should remain in English.
@@ -432,67 +392,58 @@ class LanguageManager implements ILanguageManager
      * languages for different parts of your application.
      * If you do not need the $context, just do not specify it.
      *
+     * Malformed request values are ignored. Accept-Language respects quality weights,
+     * exclusions, wildcard ranges and header order. Tags are normalized and regional tags
+     * may fall back to supported parent tags. A nonempty supported-language list is required.
+     *
      * @return void
+     * Returns without a value.
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
+     * @throws \ValueError
+     * If enabled cookie storage encounters an invalid cookie name or path.
      *
      * @author Oleg Schildt
      */
     public function detectLanguage(): void
     {
-        // Let's go
+        $this->loadDictionary();
 
-        // 6. English
-        $language = "en";
+        $preferences = [
+            $_REQUEST['language'] ?? null,
+            get_header('Content-Language'),
+            get_cookie($this->context . '_language'),
+            $this->browserLanguage(get_header('Accept-Language')),
+            reset($this->supported_languages)
+        ];
 
-        // 5. the first one from the supported list
-        foreach (self::$supported_languages as $lng) {
-            $language = $lng;
-            break;
-        }
+        foreach ($preferences as $preference) {
+            $language = $this->supportedLanguage($preference);
 
-        // 4. browser default language
-        if (isset($_SERVER["HTTP_ACCEPT_LANGUAGE"]) && trim($_SERVER["HTTP_ACCEPT_LANGUAGE"]) != "") {
-            $accepted = explode(',', $_SERVER["HTTP_ACCEPT_LANGUAGE"]);
+            if ($language !== null) {
+                $this->setCurrentLanguage($language);
 
-            foreach ($accepted as $name) {
-                $code = explode(';', $name);
-                // handle the cases like en-ca => en
-                $code = explode("-", $code[0]);
-
-                if (!empty(self::$supported_languages[$code[0]])) {
-                    $language = $code[0];
-                    break;
-                }
+                return;
             }
         }
-
-        // 3. last language in the cookie
-        $tmp = get_cookie(self::$context . "_language");
-        if (!empty($tmp) && !empty(self::$supported_languages[$tmp])) {
-            $language = $tmp;
-        }
-
-        // 2. header 'Content-Language'.
-        $header = get_header("Content-Language");
-        if (!empty($header) && !empty(self::$supported_languages[$header])) {
-            $language = $header;
-        }
-
-        // 1. explicitly set by request parameter language
-        if (!empty($_REQUEST["language"]) && !empty(self::$supported_languages[$_REQUEST["language"]])) {
-            $language = $_REQUEST["language"];
-        }
-
-        $this->setCurrentLanguage($language);
     } // detectLanguage
 
     /**
      * Sets the current context.
      *
-     * Some applications may consist of two parts - administration
-     * console and public site. A usual example is a CMS system.
+     * Some applications may consist of two parts: an administration
+     * console and a public site. A usual example is a CMS system.
      *
      * For example, you are using administration console in English
-     * and editing the public site for German and French.
+     * and editing the public site in German and French.
      * When you open the public site for preview in German or French,
      * you want it to be open in the corresponding language, but
      * the administration console should remain in English.
@@ -512,17 +463,17 @@ class LanguageManager implements ILanguageManager
      */
     public function setContext(string $context): void
     {
-        self::$context = $context;
+        $this->context = $context;
     } // setContext
 
     /**
      * Returns the current context.
      *
-     * Some applications may consist of two parts - administration
-     * console and public site. A usual example is a CMS system.
+     * Some applications may consist of two parts: an administration
+     * console and a public site. A usual example is a CMS system.
      *
      * For example, you are using administration console in English
-     * and editing the public site for German and French.
+     * and editing the public site in German and French.
      * When you open the public site for preview in German or French,
      * you want it to be open in the corresponding language, but
      * the administration console should remain in English.
@@ -531,62 +482,95 @@ class LanguageManager implements ILanguageManager
      * languages for different parts of your application.
      * If you do not need the $context, just do not specify it.
      *
-     * @see LanguageManager::setContext()
-     *
      * @return string
      * Returns the current context.
+     *
+     * @see LanguageManager::setContext()
      *
      * @author Oleg Schildt
      */
     public function getContext(): string
     {
-        return self::$context;
+        return $this->context;
     } // getContext
 
     /**
-     * Returns the list of supported languages.
+     * Returns normalized tags mapped to themselves in their configured order.
      *
-     * @return array
-     * Returns the list of supported languages.
+     * @return array<string, string>
+     * Returns normalized tags mapped to themselves in their configured order.
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function getSupportedLanguages(): array
     {
-        return self::$supported_languages;
+        $this->loadDictionary();
+
+        return $this->supported_languages;
     } // getSupportedLanguages
 
     /**
      * Sets the current language.
      *
+     * Unsupported tags leave the selection unchanged. Matching ignores case and may
+     * fall back from a regional tag to a supported parent tag.
+     *
      * @param string $language
-     * The language ISO code to be set.
+     * The language tag to select.
      *
      * @return void
+     * Returns without a value.
      *
      * @see LanguageManager::getCurrentLanguage()
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
+     * @throws \ValueError
+     * If enabled cookie storage encounters an invalid cookie name or path.
      *
      * @author Oleg Schildt
      */
     public function setCurrentLanguage(string $language): void
     {
-        if (empty(self::$supported_languages[$language])) {
+        $this->loadDictionary();
+
+        $language = $this->supportedLanguage($language);
+
+        if ($language === null) {
             return;
         }
 
-        self::$current_language[self::$context] = $language;
+        $this->current_language[$this->context] = $language;
 
         if ($this->use_cookie) {
-            set_cookie(self::$context . "_language", $language, time() + 365 * 24 * 3600, ["samesite" => "strict", "path" => $this->cookie_path]);
+            set_cookie($this->context . '_language', $language, time() + 365 * 24 * 3600, [
+                'samesite' => 'strict', 'path' => $this->cookie_path
+            ]);
         }
     } // setCurrentLanguage
 
     /**
-     * Returns the fallback language. If set and a translation
+     * Returns the normalized fallback tag, or an empty string when disabled. If set and a translation
      * is missing on a language, the translation on this language will be used.
      *
      * @return string
-     * Returns the fallback language.
+     * Returns the normalized fallback tag, or an empty string when disabled.
      *
      * @author Oleg Schildt
      */
@@ -598,27 +582,37 @@ class LanguageManager implements ILanguageManager
     /**
      * Returns the current language.
      *
+     * Loads the dictionary if necessary. New contexts use the first configured language.
+     *
      * @return string
-     * Returns the current language ISO code.
+     * Returns the normalized supported language tag.
      *
      * @see LanguageManager::setCurrentLanguage()
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function getCurrentLanguage(): string
     {
-        if (empty(self::$current_language[self::$context])) {
-            foreach (self::$supported_languages as $lng) {
-                self::$current_language[self::$context] = $lng;
-                break;
-            }
-        }
+        $this->loadDictionary();
 
-        return self::$current_language[self::$context];
+        return $this->current_language[$this->context] ??= reset($this->supported_languages);
     } // getCurrentLanguage
 
     /**
      * Provides the text translation for the text ID for the given language.
+     *
+     * The string "0" is a valid translation or default; an empty translation is missing.
+     * Resolution order is the requested translation, nonempty default, fallback, then ID.
+     * Configured warnings concern the missing requested translation, even when fallback exists.
      *
      * @param string $text_id
      * Text ID
@@ -631,42 +625,44 @@ class LanguageManager implements ILanguageManager
      * The default text to be used if there is no translation.
      *
      * @return string
-     * Returns the translation text or the $default_text/$text_id if no translation
-     * is found.
+     * Returns the requested translation, nonempty default, fallback translation or text ID.
      *
-     * @throws \Exception
-     * It might throw exceptions in the case of any errors.
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function text(string $text_id, string $lng = "", string $default_text = ""): string
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+
+        if ($this->hasTranslation($text_id, $lng)) {
+            return $this->texts[$lng][$text_id];
         }
 
-        if (!$this->hasTranslation($text_id, $lng)) {
-            if ($this->warn_missing) {
-                trigger_error("No translation for the text '$text_id' in the language [$lng]!", E_USER_WARNING);
-            }
-
-            if (empty($default_text)) {
-                if (!empty($this->use_fallback_language)) {
-                    return $this->try_text($text_id, $this->use_fallback_language);
-                }
-              
-                return $text_id;
-            } else {
-                return $default_text;
-            }
+        if ($this->warn_missing) {
+            trigger_error("No translation for the text '$text_id' in the language [$lng]!", E_USER_WARNING);
         }
 
-        return self::$texts[$lng][$text_id];
+        if ($default_text !== '') {
+            return $default_text;
+        }
+
+        return $this->try_text($text_id, $lng);
     } // text
 
     /**
      * Provides the text translation for the text ID for the given language if the translation exists.
-     * Otherwise, it returns the text ID and emits no warning.
+     * Otherwise, it tries the configured fallback and returns the text ID if that is also missing.
+     *
+     * Uses this instance without accessing the global factory. The configured fallback
+     * is tried before returning the identifier. Empty translations are considered missing.
      *
      * @param string $text_id
      * Text ID
@@ -676,29 +672,39 @@ class LanguageManager implements ILanguageManager
      * the default language is used.
      *
      * @return string
-     * Returns the translation text or the $default_text/$text_id if no translation
-     * is found.
+     * Returns the requested translation, fallback translation or text ID without missing-text warnings.
      *
-     * @throws \Exception
-     * It might throw exceptions in the case of any errors.
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function try_text(string $text_id, string $lng = ""): string
     {
-        if (!$this->hasTranslation($text_id, $lng)) {
-            if (!empty($this->use_fallback_language) && $this->hasTranslation($text_id, $this->use_fallback_language)) {
-                return text($text_id, $this->use_fallback_language);
-            }
-            
-            return $text_id;
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+
+        if ($this->hasTranslation($text_id, $lng)) {
+            return $this->texts[$lng][$text_id];
         }
-        
-        return text($text_id, $lng);
+
+        if ($this->use_fallback_language !== '' && $this->hasTranslation($text_id, $this->use_fallback_language)) {
+            return $this->texts[$this->use_fallback_language][$text_id];
+        }
+
+        return $text_id;
     } // try_text
 
     /**
      * Checks whether the text translation for the text ID for the given language exists.
+     *
+     * Checks only the requested language, without fallback. The string "0" exists;
+     * an empty translation does not.
      *
      * @param string $text_id
      * Text ID
@@ -710,15 +716,24 @@ class LanguageManager implements ILanguageManager
      * @return bool
      * Returns true if the translation exists, otherwise false.
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function hasTranslation(string $text_id, string $lng = ""): bool
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
-        }
+        $this->loadDictionary();
 
-        return !empty(self::$texts[$lng][$text_id]);
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+
+        return isset($this->texts[$lng][$text_id]) && $this->texts[$lng][$text_id] !== '';
     } // hasTranslation
 
     /**
@@ -741,26 +756,37 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::getLanguageList()
      * @see LanguageManager::getCountryName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getLanguageName(string $code, string $lng = ""): string
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+
+        if ($this->hasLanguageName($code, $lng)) {
+            return $this->languages[$lng][$code];
         }
 
-        if (empty(self::$languages[$lng][$code])) {
-            if ($this->warn_missing) {
-                trigger_error("No translation for the language name [$code] in the language [$lng]!", E_USER_WARNING);
-            }
-            return $code;
+        if ($this->warn_missing) {
+            trigger_error("No translation for the language name [$code] in the language [$lng]!", E_USER_WARNING);
         }
 
-        return self::$languages[$lng][$code];
+        return $code;
     } // getLanguageName
 
     /**
      * Tries to find the language code by the given name.
+     *
+     * Name comparison is Unicode case-insensitive and searches supported languages
+     * in their configured order.
      *
      * @param string $lang_name
      * The name of the language in any supported language.
@@ -773,27 +799,40 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::getLanguageList()
      * @see LanguageManager::getCountryCode()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getLanguageCode(string $lang_name): string
     {
-        foreach (self::$supported_languages as $lng) {
-            if (empty(self::$languages[$lng])) {
-                continue;
-            }
+        $this->loadDictionary();
 
-            foreach (self::$languages[$lng] as $code => $translation) {
-                if (strcasecmp($lang_name, $translation) == 0) {
-                    return $code;
+        $needle = mb_strtolower($lang_name, 'UTF-8');
+
+        if ($needle === '') {
+            return '';
+        }
+
+        foreach ($this->supported_languages as $language) {
+            foreach ($this->languages[$language] ?? [] as $code => $translation) {
+                if (mb_strtolower($translation, 'UTF-8') === $needle) {
+                    return (string) $code;
                 }
-            } // foreach
-        } // foreach
+            }
+        }
 
-        return "";
+        return '';
     } // getLanguageCode
 
     /**
-     * Checks whether the language code is valid (has translation).
+     * Checks whether a nonempty localized language name exists.
      *
      * @param string $code
      * Language ISO code (lowercase, e.g. en, de, fr).
@@ -803,35 +842,47 @@ class LanguageManager implements ILanguageManager
      * the default language is used.
      *
      * @return bool
-     * Returns true if the language code is valid (has translation), otherwise false.
+     * Returns true if a nonempty language name exists, otherwise false.
      *
      * @see LanguageManager::getLanguageName()
      * @see LanguageManager::getLanguageCode()
      * @see LanguageManager::getLanguageList()
      * @see LanguageManager::hasCountryName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function hasLanguageName(string $code, string $lng = ""): bool
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
-        }
+        $this->loadDictionary();
 
-        return !empty(self::$languages[$lng][$code]);
-    } // validateLanguageCode
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+
+        return isset($this->languages[$lng][$code]) && $this->languages[$lng][$code] !== '';
+    } // hasLanguageName
 
     /**
      * Provides the list of languages for the given language in the form "code" => "translation".
      *
-     * @param array &$language_list
+     * Unknown preferred codes are ignored. Sorts a copy using the process locale,
+     * leaving dictionary order unchanged. The output is empty when no names are available.
+     *
+     * @param array<array-key, string> &$language_list
      * Target array where the language list should be loaded.
      *
      * @param string $lng
      * The language. If it is not specified,
      * the default language is used.
      *
-     * @param array $display_first
+     * @param list<string> $display_first
      * List of the language codes to be displayed first in the order, they appear in the list.
      *
      * @return bool
@@ -842,27 +893,25 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::hasLanguageName()
      * @see LanguageManager::getCountryList()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getLanguageList(array &$language_list, string $lng = "", array $display_first = []): bool
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
-        }
+        $this->loadDictionary();
 
-        if (empty(self::$languages[$lng])) {
-            return false;
-        }
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+        $language_list = $this->orderedNames($this->languages[$lng] ?? [], $display_first);
 
-        $language_list = array_flip($display_first);
-
-        asort(self::$languages[$lng], SORT_LOCALE_STRING);
-
-        foreach (self::$languages[$lng] as $code => $name) {
-            $language_list[$code] = $name;
-        }
-
-        return true;
+        return $language_list !== [];
     } // getLanguageList
 
     /**
@@ -885,26 +934,37 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::getCountryList()
      * @see LanguageManager::getLanguageName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getCountryName(string $code, string $lng = ""): string
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+
+        if ($this->hasCountryName($code, $lng)) {
+            return $this->countries[$lng][$code];
         }
 
-        if (empty(self::$countries[$lng][$code])) {
-            if ($this->warn_missing) {
-                trigger_error("No translation for the country name [$code] in the language [$lng]!", E_USER_WARNING);
-            }
-            return $code;
+        if ($this->warn_missing) {
+            trigger_error("No translation for the country name [$code] in the language [$lng]!", E_USER_WARNING);
         }
 
-        return self::$countries[$lng][$code];
+        return $code;
     } // getCountryName
 
     /**
      * Tries to find the country code by the given name.
+     *
+     * Name comparison is Unicode case-insensitive and searches supported languages
+     * in their configured order.
      *
      * @param string $country_name
      * The name of the country in any supported language.
@@ -917,27 +977,40 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::getCountryList()
      * @see LanguageManager::getLanguageCode()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getCountryCode(string $country_name): string
     {
-        foreach (self::$supported_languages as $lng) {
-            if (empty(self::$countries[$lng])) {
-                continue;
-            }
+        $this->loadDictionary();
 
-            foreach (self::$countries[$lng] as $code => $translation) {
-                if (strcasecmp($country_name, $translation) == 0) {
-                    return $code;
+        $needle = mb_strtolower($country_name, 'UTF-8');
+
+        if ($needle === '') {
+            return '';
+        }
+
+        foreach ($this->supported_languages as $language) {
+            foreach ($this->countries[$language] ?? [] as $code => $translation) {
+                if (mb_strtolower($translation, 'UTF-8') === $needle) {
+                    return (string) $code;
                 }
-            } // foreach
-        } // foreach
+            }
+        }
 
-        return "";
+        return '';
     } // getCountryCode
 
     /**
-     * Checks whether the country code is valid (has translation).
+     * Checks whether a nonempty localized country name exists.
      *
      * @param string $code
      * Country ISO code (uppercase, e.g. US, DE, FR).
@@ -947,35 +1020,47 @@ class LanguageManager implements ILanguageManager
      * the default language is used.
      *
      * @return bool
-     * Returns true if the country code is valid (has translation), otherwise false.
+     * Returns true if a nonempty country name exists, otherwise false.
      *
      * @see LanguageManager::getCountryName()
      * @see LanguageManager::getCountryCode()
      * @see LanguageManager::getCountryList()
      * @see LanguageManager::hasLanguageName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function hasCountryName(string $code, string $lng = ""): bool
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
-        }
+        $this->loadDictionary();
 
-        return !empty(self::$countries[$lng][$code]);
-    } // validateCountryCode
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+
+        return isset($this->countries[$lng][$code]) && $this->countries[$lng][$code] !== '';
+    } // hasCountryName
 
     /**
      * Provides the list of countries for the given language in the form "code" => "translation".
      *
-     * @param array &$country_list
+     * Unknown preferred codes are ignored. Sorts a copy using the process locale,
+     * leaving dictionary order unchanged. The output is empty when no names are available.
+     *
+     * @param array<array-key, string> &$country_list
      * Target array where the country list should be loaded.
      *
      * @param string $lng
      * The language. If it is not specified,
      * the default language is used.
      *
-     * @param array $display_first
+     * @param list<string> $display_first
      * List of the country codes to be displayed first in the order, they appear in the list.
      *
      * @return bool
@@ -986,26 +1071,405 @@ class LanguageManager implements ILanguageManager
      * @see LanguageManager::hasCountryName()
      * @see LanguageManager::getLanguageList()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getCountryList(array &$country_list, string $lng = "", array $display_first = []): bool
     {
-        if (empty($lng)) {
-            $lng = $this->getCurrentLanguage();
+        $this->loadDictionary();
+
+        $lng = $lng === '' ? $this->getCurrentLanguage() : $this->normalizeLanguage($lng);
+        $country_list = $this->orderedNames($this->countries[$lng] ?? [], $display_first);
+
+        return $country_list !== [];
+    } // getCountryList
+    /**
+     * Canonicalizes ordered additional paths without requiring the files to exist yet.
+     *
+     * @param mixed $files
+     * A single path or a list of paths with existing parent directories.
+     *
+     * @return list<string>
+     * Returns absolute paths in their override order.
+     *
+     * @throws \InvalidArgumentException
+     * If the input is not a path/list, a path is empty, or its parent directory is invalid.
+     *
+     * @author Oleg Schildt
+     */
+    protected function normalizeLocalizationFiles(mixed $files): array
+    {
+        $files = is_string($files) ? [$files] : $files;
+
+        if (!is_array($files) || !array_is_list($files)) {
+            throw new \InvalidArgumentException("Additional localization files must be a path or a list of paths.");
         }
 
-        if (empty(self::$countries[$lng])) {
+        $result = [];
+
+        foreach ($files as $file) {
+            if (!is_string($file) || $file === '' || !is_dir(dirname($file))) {
+                throw new \InvalidArgumentException(
+                    "Each localization file requires a nonempty path and an existing parent directory."
+                );
+            }
+
+            $path = realpath($file) ?: realpath(dirname($file)) . DIRECTORY_SEPARATOR . basename($file);
+            $result[] = str_replace('\\', '/', $path);
+        }
+
+        return $result;
+    } // normalizeLocalizationFiles
+
+    /**
+     * Normalizes tag case, surrounding whitespace and underscore separators.
+     *
+     * @param string $language
+     * Language tag to normalize; an empty tag remains empty.
+     *
+     * @return string
+     * Returns a lowercase tag with hyphen separators.
+     *
+     * @author Oleg Schildt
+     */
+    protected function normalizeLanguage(string $language): string
+    {
+        return strtolower(str_replace('_', '-', trim($language)));
+    } // normalizeLanguage
+
+    /**
+     * Checks the normalized language-tag syntax accepted by source documents.
+     *
+     * @param string $language
+     * Lowercase tag to validate.
+     *
+     * @return bool
+     * True for an alphabetic primary subtag and optional alphanumeric subtags of 1 to 8 characters.
+     *
+     * @author Oleg Schildt
+     */
+    protected function isLanguageTag(string $language): bool
+    {
+        return preg_match('/^[a-z]{1,8}(?:-[a-z0-9]{1,8})*$/D', $language) === 1;
+    } // isLanguageTag
+
+    /**
+     * Resolves a request value to a supported tag, trying regional parent tags in order.
+     *
+     * @param mixed $language
+     * A string tag; malformed or nonstring values are ignored.
+     *
+     * @return string|null
+     * Returns the matching supported tag, or null when none matches.
+     *
+     * @author Oleg Schildt
+     */
+    protected function supportedLanguage(mixed $language): ?string
+    {
+        if (!is_string($language)) {
+            return null;
+        }
+
+        $language = $this->normalizeLanguage($language);
+
+        if (!$this->isLanguageTag($language)) {
+            return null;
+        }
+
+        while (true) {
+            if (isset($this->supported_languages[$language])) {
+                return $language;
+            }
+
+            $separator = strrpos($language, '-');
+
+            if ($separator === false) {
+                return null;
+            }
+
+            $language = substr($language, 0, $separator);
+        }
+    } // supportedLanguage
+
+    /**
+     * Selects a browser language from weighted ranges and explicit exclusions.
+     *
+     * @param string $header
+     * Accept-Language value; malformed ranges and quality values are ignored.
+     *
+     * @return string|null
+     * Returns the best positive-quality supported tag, or null when none matches.
+     * Specific ranges override parent/wildcard ranges; header order breaks quality ties.
+     *
+     * @author Oleg Schildt
+     */
+    protected function browserLanguage(string $header): ?string
+    {
+        $ranges = [];
+
+        foreach (explode(',', $header) as $order => $entry) {
+            $parts = explode(';', $entry);
+            $range = $this->normalizeLanguage(array_shift($parts));
+            $quality = 1.0;
+
+            if ($range !== '*' && !$this->isLanguageTag($range)) {
+                continue;
+            }
+
+            foreach ($parts as $part) {
+                if (preg_match('/^\s*q\s*=\s*(0(?:\.\d{0,3})?|1(?:\.0{0,3})?)\s*$/iD', $part, $match) !== 1) {
+                    continue 2;
+                }
+
+                $quality = (float) $match[1];
+            }
+
+            $ranges[] = ['range' => $range, 'quality' => $quality, 'order' => $order];
+        }
+
+        $best = null;
+        $best_quality = 0.0;
+        $best_order = PHP_INT_MAX;
+
+        foreach ($this->supported_languages as $language) {
+            $match = null;
+            $specificity = -1;
+
+            foreach ($ranges as $range) {
+                $tag = $range['range'];
+                $matches = $tag === '*' || $language === $tag || str_starts_with($language, $tag . '-')
+                    || $this->supportedLanguage($tag) === $language;
+                $length = $tag === '*' ? 0 : substr_count($tag, '-') + 1;
+
+                // Equally specific regional fallbacks compete by quality, not tag length.
+                if (
+                    $matches
+                    && ($length > $specificity || ($length === $specificity && $range['quality'] > $match['quality']))
+                ) {
+                    $match = $range;
+                    $specificity = $length;
+                }
+            }
+
+            if (
+                $match !== null
+                && ($match['quality'] > $best_quality
+                    || ($match['quality'] > 0 && $match['quality'] === $best_quality && $match['order'] < $best_order))
+            ) {
+                $best = $language;
+                $best_quality = $match['quality'];
+                $best_order = $match['order'];
+            }
+        }
+
+        return $best;
+    } // browserLanguage
+
+    /**
+     * Reads a JSON document, preserving a JSON parsing exception as the cause.
+     *
+     * @param string $file
+     * Local source document path.
+     *
+     * @return array<array-key, mixed>
+     * Returns decoded data for document-specific validation.
+     *
+     * @throws \RuntimeException
+     * If the source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON is malformed or its root is a scalar or null.
+     *
+     * @author Oleg Schildt
+     */
+    protected function readDocument(string $file): array
+    {
+        $json = @file_get_contents($file);
+
+        if ($json === false) {
+            throw new \RuntimeException("Translation file cannot be read: " . $file);
+        }
+
+        try {
+            $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR | JSON_BIGINT_AS_STRING);
+        } catch (\JsonException $exception) {
+            throw new \UnexpectedValueException("Translation file contains invalid JSON: " . $file, 0, $exception);
+        }
+
+        if (!is_array($data)) {
+            throw new \UnexpectedValueException("Translation JSON must contain an object or array: " . $file);
+        }
+
+        return $data;
+    } // readDocument
+
+    /**
+     * Validates and transposes identifier-to-language maps without changing identifiers.
+     *
+     * @param array<array-key, mixed> $dictionary
+     * Identifiers mapped to language-to-string maps.
+     *
+     * @param string $source
+     * Document path or operation included in validation errors.
+     *
+     * @return array<string, array<array-key, string>>
+     * Returns normalized tags mapped to identifier-to-string maps.
+     *
+     * @throws \UnexpectedValueException
+     * If an entry is not a map, a language tag is invalid, or a translation is not a string.
+     *
+     * @author Oleg Schildt
+     */
+    protected function transposeTranslations(array $dictionary, string $source): array
+    {
+        $result = [];
+
+        foreach ($dictionary as $identifier => $translations) {
+            if (!is_array($translations)) {
+                throw new \UnexpectedValueException("Translations must be language-to-string maps: " . $source);
+            }
+
+            foreach ($translations as $language => $translation) {
+                if (
+                    !is_string($language)
+                    || !$this->isLanguageTag($this->normalizeLanguage($language))
+                    || !is_string($translation)
+                ) {
+                    throw new \UnexpectedValueException("Invalid language tag or nonstring translation: " . $source);
+                }
+
+                $result[$this->normalizeLanguage($language)][$identifier] = $translation;
+            }
+        }
+
+        return $result;
+    } // transposeTranslations
+
+    /**
+     * Derives a versioned key from the canonical directory and ordered additional files.
+     *
+     * @return string
+     * Returns a key independent of modification times; explicit reload refreshes data.
+     *
+     * @author Oleg Schildt
+     */
+    protected function cacheKey(): string
+    {
+        return 'language_dictionary:v3:' . hash('sha256', serialize([
+            $this->localization_path, $this->additional_localization_files
+        ]));
+    } // cacheKey
+
+    /**
+     * Checks an entire shared snapshot before changing any instance state.
+     *
+     * @param mixed $snapshot
+     * Untrusted APCu value.
+     *
+     * @return bool
+     * True for a nonempty supported-language map and three valid language-indexed tables.
+     * Empty translation tables remain valid and cacheable.
+     *
+     * @author Oleg Schildt
+     */
+    protected function isValidSnapshot(mixed $snapshot): bool
+    {
+        if (
+            !is_array($snapshot)
+            || !isset($snapshot['supported_languages'])
+            || !is_array($snapshot['supported_languages'])
+            || $snapshot['supported_languages'] === []
+        ) {
             return false;
         }
 
-        $country_list = array_flip($display_first);
+        foreach ($snapshot['supported_languages'] as $code => $language) {
+            if (!is_string($language) || $code !== $language || !$this->isLanguageTag($language)) {
+                return false;
+            }
+        }
 
-        asort(self::$countries[$lng], SORT_LOCALE_STRING);
+        foreach (['languages', 'countries', 'texts'] as $name) {
+            if (!isset($snapshot[$name]) || !is_array($snapshot[$name])) {
+                return false;
+            }
 
-        foreach (self::$countries[$lng] as $code => $name) {
-            $country_list[$code] = $name;
+            foreach ($snapshot[$name] as $language => $translations) {
+                if (!is_string($language) || !$this->isLanguageTag($language) || !is_array($translations)) {
+                    return false;
+                }
+
+                foreach ($translations as $translation) {
+                    if (!is_string($translation)) {
+                        return false;
+                    }
+                }
+            }
         }
 
         return true;
-    } // getCountryList
+    } // isValidSnapshot
+
+    /**
+     * Replaces all dictionary tables and drops selections no longer supported.
+     *
+     * @param array{supported_languages: array<string, string>, languages: array<string, array<array-key, string>>, countries: array<string, array<array-key, string>>, texts: array<string, array<array-key, string>>} $snapshot
+     * A complete validated dictionary from source documents or APCu.
+     *
+     * @return void
+     * Marks the source configuration loaded and retains valid context selections.
+     *
+     * @author Oleg Schildt
+     */
+    protected function applySnapshot(array $snapshot): void
+    {
+        $this->supported_languages = $snapshot['supported_languages'];
+        $this->languages = $snapshot['languages'];
+        $this->countries = $snapshot['countries'];
+        $this->texts = $snapshot['texts'];
+        $this->dictionary_loaded = true;
+
+        foreach ($this->current_language as $context => $language) {
+            if (!isset($this->supported_languages[$language])) {
+                unset($this->current_language[$context]);
+            }
+        }
+    } // applySnapshot
+
+    /**
+     * Sorts a copy of localized names and prepends only existing preferred codes.
+     *
+     * @param array<array-key, string> $names
+     * Names to sort using the process locale.
+     *
+     * @param list<string> $display_first
+     * Preferred codes; unknown codes and nonstring entries are ignored.
+     *
+     * @return array<array-key, string>
+     * Returns preferred entries followed by the remaining names without duplicate codes.
+     *
+     * @author Oleg Schildt
+     */
+    protected function orderedNames(array $names, array $display_first): array
+    {
+        $result = [];
+
+        asort($names, SORT_LOCALE_STRING);
+
+        foreach ($display_first as $code) {
+            if (is_string($code) && array_key_exists($code, $names)) {
+                $result[$code] = $names[$code];
+            }
+        }
+
+        return $result + $names;
+    } // orderedNames
 } // LanguageManager

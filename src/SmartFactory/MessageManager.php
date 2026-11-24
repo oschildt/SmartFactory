@@ -10,7 +10,7 @@
 
 namespace SmartFactory;
 
-use \SmartFactory\Interfaces\IMessageManager;
+use SmartFactory\Interfaces\IMessageManager;
 
 /**
  * Class for working with messages - errors, warnings etc.
@@ -20,9 +20,9 @@ use \SmartFactory\Interfaces\IMessageManager;
 class MessageManager implements IMessageManager
 {
     /**
-     * Internal variable for storing the messages.
+     * Stores message lists by category, preserving insertion order and repeated messages.
      *
-     * @var array
+     * @var array<string, list<array<string, mixed>>>
      *
      * @author Oleg Schildt
      */
@@ -48,41 +48,58 @@ class MessageManager implements IMessageManager
     protected bool $write_source_file_and_line_by_debug = false;
 
     /**
-     * Initializes the message manager.
+     * Applies debug settings to new and stored messages without clearing public messages.
      *
-     * @param array $parameters
-     * Settings for message management as an associative array in the form key => value:
+     * Disabling debug mode removes stored programming warnings and debugging messages and
+     * clears technical information and source locations from errors. Disabling source output
+     * clears stored source locations. Enabling either option cannot restore removed data.
      *
-     * - $parameters["debug_mode"] - if set to True, the technical details, programmer warnings and debug information are also sent to the client. Use it only during debugging!
-     *
-     * - $parameters["write_source_file_and_line_by_debug"] - the flag that defines whether for each debug output the source file and
-     * line number are written from where it is called.
+     * @param array{debug_mode?: mixed, write_source_file_and_line_by_debug?: mixed} $parameters
+     * Options are interpreted using PHP nonempty-value semantics; omitted options are disabled.
+     * Debug mode enables technical diagnostics. Source output additionally enables file names
+     * and line numbers for errors, programming warnings and debugging messages.
      *
      * @return void
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * Updates the settings and removes stored diagnostics that the new settings disallow.
      *
      * @author Oleg Schildt
      */
     public function init(array $parameters): void
     {
         $this->debug_mode = !empty($parameters["debug_mode"]);
-
         $this->write_source_file_and_line_by_debug = !empty($parameters["write_source_file_and_line_by_debug"]);
+
+        if (!$this->debug_mode) {
+            $this->clearProgWarnings();
+
+            $this->clearDebugMessages();
+
+            foreach (array_keys($this->messages["errors"] ?? []) as $index) {
+                $this->messages["errors"][$index]["technical_info"] = "";
+            }
+        }
+
+        if (!$this->debug_mode || !$this->write_source_file_and_line_by_debug) {
+            foreach (["errors", "prog_warnings", "debug_messages"] as $category) {
+                foreach (array_keys($this->messages[$category] ?? []) as $index) {
+                    $this->messages[$category][$index]["file"] = "";
+                    $this->messages[$category][$index]["line"] = "";
+                }
+            }
+        }
     } // init
 
     /**
-     * Stores the error to be reported.
+     * Appends an error without deduplication, preserving structured details and their types.
      *
      * @param string $message
-     * The error message to be reported.
+     * The error message or localization identifier. Only an empty string is ignored; "0" is retained.
      *
-     * @param array $details
+     * @param array<array-key, mixed> $details
      * The details might be useful if the message translations are provided on the client, not
      * on the server, and the message should contain some details that may vary from case to case.
-     * In that case, the servers return the message id instead of final text and the details, the client
-     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     * The server can return a message identifier and details so the client can translate the message
+     * and substitute its parameters. Keys, value types and nested data are preserved without conversion.
      *
      * @param string $related_element
      * The error element associated with the error.
@@ -91,17 +108,18 @@ class MessageManager implements IMessageManager
      * The error code to be reported.
      *
      * @param string $technical_info
-     * The technical information for the error. Displaying
-     * of this part might be controlled over an option
-     * "debug_mode".
+     * Technical diagnostics, retained only when debug mode is enabled.
      *
      * @param string $file
-     * The source file where the error occurred. Per default, the file where the adding error called.
+     * The source file where the error occurred. An empty string uses the caller's file, if available.
      *
-     * @param string $line
-     * The source file line where the error occurred. Per default, the file line where the adding error called.
+     * @param int|string|null $line
+     * The source line as an integer or a numeric string, retained for compatibility with existing callers.
+     * Null, an empty string or a value converting to a nonpositive integer uses the caller's line.
      *
      * @return void
+     * Retains the error unless its message is empty. Technical information and source locations
+     * are filtered according to the debug settings.
      *
      * @see MessageManager::addErrorFromSmartException()
      * @see MessageManager::addWarning()
@@ -115,36 +133,44 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addError(string $message, array $details = [], string $related_element = "", string $code = "", string $technical_info = "", string $file = "", string $line = ""): void
-    {
-        if (empty($message)) {
+    public function addError(
+        string $message,
+        array $details = [],
+        string $related_element = "",
+        string $code = "",
+        string $technical_info = "",
+        string $file = "",
+        int|string|null $line = ""
+    ): void {
+        if ($message === "") {
             return;
         }
 
-        if (empty($file) || empty($line)) {
-            $backfiles = debug_backtrace();
+        if ($this->debug_mode && $this->write_source_file_and_line_by_debug) {
+            $line = (int) $line;
 
-            if (empty($file)) {
-                $file = empty($backfiles[0]['file']) ? "" : $backfiles[0]['file'];
-            }
+            if ($file === "" || $line <= 0) {
+                // Only the caller's location is needed; arguments and further stack frames are omitted.
+                $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0] ?? [];
 
-            if (empty($line)) {
-                $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
+                if ($file === "") {
+                    $file = $caller['file'] ?? "";
+                }
+
+                if ($line <= 0) {
+                    $line = $caller['line'] ?? 0;
+                }
             }
-        }
-        
-        if (!$this->write_source_file_and_line_by_debug) {
+        } else {
             $file = "";
             $line = "";
         }
 
         if (!$this->debug_mode) {
             $technical_info = "";
-            $file = "";
-            $line = "";
         }
 
-        $this->messages["errors"][md5($message . implode("#", $details) . $related_element)] = [
+        $this->messages["errors"][] = [
             "message" => $message,
             "details" => $details,
             "related_element" => $related_element,
@@ -156,12 +182,13 @@ class MessageManager implements IMessageManager
     } // addError
 
     /**
-     * Stores the error to be reported.
+     * Appends a structured exception or every error in a collection using the current debug settings.
      *
      * @param SmartException|SmartExceptionCollection $smart_exception
-     * The exception object of collection of exceptions.
+     * The exception or collection to report. Collection entries retain their insertion order.
      *
      * @return void
+     * Adds the exception data without serializing details or deduplicating errors.
      *
      * @see MessageManager::addError()
      * @see MessageManager::addWarning()
@@ -181,13 +208,12 @@ class MessageManager implements IMessageManager
             $this->addError($smart_exception->getMessage(), $smart_exception->getErrorDetails(), $smart_exception->getErrorElement(), $smart_exception->getErrorCode(), trim($smart_exception->getTechnicalInfo()), $smart_exception->getFile(), $smart_exception->getLine());
         } elseif ($smart_exception instanceof SmartExceptionCollection) {
             $errors = $smart_exception->getErrors();
+
             foreach ($errors as $error) {
                 $this->addError($error["message"], $error["details"], $error["related_element"], $error["code"], $error["technical_info"], $error["file"], $error["line"]);
             }
-        } else {
-            $this->addError($smart_exception->getMessage(), [], "", $smart_exception->getCode());
         }
-    }
+    } // addErrorFromSmartException
 
     /**
      * Clears the stored error messages.
@@ -210,7 +236,7 @@ class MessageManager implements IMessageManager
     } // clearErrors
 
     /**
-     * Checks whether a stored error message exist.
+     * Checks whether any errors are stored.
      *
      * @return bool
      * Returns true if the stored error message exists, otherwise false.
@@ -231,13 +257,12 @@ class MessageManager implements IMessageManager
     } // hasErrors
 
     /**
-     * Returns the array of errors if any have been stored.
+     * Returns stored errors in insertion order and clears that category.
      *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * @return array
-     * Returns the array of errors if any have been stored.
+     * @return list<array{message: string, details: array<array-key, mixed>, related_element: string,
+     *     code: string, technical_info: string, file: string, line: int|string}>
+     * Returns all stored errors, or an empty list. Other categories are unchanged.
+     * Source lines are integers when visible, zero when unavailable and empty strings when hidden.
      *
      * @see MessageManager::getWarnings()
      * @see MessageManager::getProgWarnings()
@@ -255,25 +280,27 @@ class MessageManager implements IMessageManager
             return [];
         }
 
-        return $this->getMessages($this->messages["errors"]);
+        $messages = $this->getMessages($this->messages["errors"]);
+
+        $this->clearErrors();
+
+        return $messages;
     } // getErrors
 
     /**
-     * Stores the warning to be reported.
+     * Appends a warning without deduplication, preserving structured details and their types.
      *
      * @param string $message
-     * The warning message to be reported.
+     * The message or localization identifier. Only an empty string is ignored; "0" is retained.
      *
-     * @param array $details
-     * The details might be useful if the message translations are provided on the client, not
-     * on the server, and the message should contain some details that may vary from case to case.
-     * In that case, the servers return the message id instead of final text and the details, the client
-     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     * @param array<array-key, mixed> $details
+     * Structured localization details. Keys, value types, nested arrays and objects are preserved.
      *
      * @param string $related_element
      * The error element associated with the warning.
      *
      * @return void
+     * Retains the message unless its text is empty. Repeated messages are retained.
      *
      * @see MessageManager::addError()
      * @see MessageManager::addProgWarning()
@@ -288,11 +315,11 @@ class MessageManager implements IMessageManager
      */
     public function addWarning(string $message, array $details = [], string $related_element = ""): void
     {
-        if (empty($message)) {
+        if ($message === "") {
             return;
         }
 
-        $this->messages["warnings"][md5($message . implode("#", $details) . $related_element)] = [
+        $this->messages["warnings"][] = [
             "message" => $message,
             "details" => $details,
             "related_element" => $related_element
@@ -320,7 +347,7 @@ class MessageManager implements IMessageManager
     } // clearWarnings
 
     /**
-     * Checks whether a stored error warning exist.
+     * Checks whether any warnings are stored.
      *
      * @return bool
      * Returns true if the stored warning message exists, otherwise false.
@@ -341,13 +368,10 @@ class MessageManager implements IMessageManager
     } // hasWarnings
 
     /**
-     * Returns the array of warnings if any have been stored.
+     * Returns stored warnings in insertion order and clears that category.
      *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * @return array
-     * Returns the array of warnings if any have been stored.
+     * @return list<array{message: string, details: array<array-key, mixed>, related_element: string}>
+     * Returns all stored warnings, or an empty list. Other categories are unchanged.
      *
      * @see MessageManager::getErrors()
      * @see MessageManager::getProgWarnings()
@@ -365,25 +389,30 @@ class MessageManager implements IMessageManager
             return [];
         }
 
-        return $this->getMessages($this->messages["warnings"]);
+        $messages = $this->getMessages($this->messages["warnings"]);
+
+        $this->clearWarnings();
+
+        return $messages;
     } // getWarnings
 
     /**
-     * Stores the programming warning to be reported.
+     * Appends a programming warning without deduplication when debug mode is enabled.
      *
-     * Programming warnings are shown only if the option
-     * "show programming warning" is active.
+     * Source locations are retained only when source output is enabled.
      *
      * @param string $message
-     * The programming warning message to be reported.
+     * The message to report. Only an empty string is ignored; "0" is retained.
      *
      * @param string $file
-     * The source file where the error occurred. Per default, the file where the adding error called.
+     * The source file. An empty string uses the caller's file when source output is enabled.
      *
-     * @param string $line
-     * The source file line where the error occurred. Per default, the file line where the adding error called.
+     * @param int|string|null $line
+     * The source line as an integer or a numeric string. Null, an empty string or a value
+     * converting to a nonpositive integer uses the caller's line when source output is enabled.
      *
      * @return void
+     * Retains the message unless debug mode is disabled or the message is empty.
      *
      * @see MessageManager::addError()
      * @see MessageManager::addWarning()
@@ -396,29 +425,37 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addProgWarning(string $message, string $file = "", string $line = ""): void
+    public function addProgWarning(string $message, string $file = "", int|string|null $line = ""): void
     {
         if (!$this->debug_mode) {
             return;
         }
 
-        if (empty($message)) {
+        if ($message === "") {
             return;
         }
 
-        if (empty($file) || empty($line)) {
-            $backfiles = debug_backtrace();
+        if ($this->write_source_file_and_line_by_debug) {
+            $line = (int) $line;
 
-            if (empty($file)) {
-                $file = empty($backfiles[0]['file']) ? "" : $backfiles[0]['file'];
-            }
+            if ($file === "" || $line <= 0) {
+                // Only the caller's location is needed; arguments and further stack frames are omitted.
+                $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0] ?? [];
 
-            if (empty($line)) {
-                $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
+                if ($file === "") {
+                    $file = $caller['file'] ?? "";
+                }
+
+                if ($line <= 0) {
+                    $line = $caller['line'] ?? 0;
+                }
             }
+        } else {
+            $file = "";
+            $line = "";
         }
 
-        $this->messages["prog_warnings"][md5($message)] = [
+        $this->messages["prog_warnings"][] = [
             "message" => $message,
             "file" => $file,
             "line" => $line
@@ -446,7 +483,7 @@ class MessageManager implements IMessageManager
     } // clearProgWarnings
 
     /**
-     * Checks whether a stored programming warning exist.
+     * Checks whether any programming warnings are stored.
      *
      * @return bool
      * Returns true if the stored programming warning message exists, otherwise false.
@@ -467,13 +504,11 @@ class MessageManager implements IMessageManager
     } // hasProgWarnings
 
     /**
-     * Returns the array of programming warnings if any have been stored.
+     * Returns stored programming warnings in insertion order and clears that category.
      *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * @return array
-     * Returns the array of programming warnings if any have been stored.
+     * @return list<array{message: string, file: string, line: int|string}>
+     * Returns all stored programming warnings, or an empty list. Other categories are unchanged.
+     * Source lines are integers when visible, zero when unavailable and empty strings when hidden.
      *
      * @see MessageManager::getErrors()
      * @see MessageManager::getWarnings()
@@ -491,26 +526,30 @@ class MessageManager implements IMessageManager
             return [];
         }
 
-        return $this->getMessages($this->messages["prog_warnings"]);
+        $messages = $this->getMessages($this->messages["prog_warnings"]);
+
+        $this->clearProgWarnings();
+
+        return $messages;
     } // getProgWarnings
 
     /**
-     * Stores the debugging message to be reported.
+     * Appends a debugging message without deduplication when debug mode is enabled.
      *
-     * Displaying of the debugging messages might be
-     * implemented to simplify the debugging process,
-     * e.g. to the browser console or in a lightbox.
+     * Source locations are retained only when source output is enabled.
      *
      * @param string $message
-     * The debugging message to be reported.
+     * The message to report. Only an empty string is ignored; "0" is retained.
      *
      * @param string $file
-     * The source file where the debug output occurred. Per default, the file where the debug output called.
+     * The source file. An empty string uses the caller's file when source output is enabled.
      *
-     * @param string $line
-     * The source file line where the debug output occurred. Per default, the file line where the debug output called.
+     * @param int|string|null $line
+     * The source line as an integer or a numeric string. Null, an empty string or a value
+     * converting to a nonpositive integer uses the caller's line when source output is enabled.
      *
      * @return void
+     * Retains the message unless debug mode is disabled or the message is empty.
      *
      * @see MessageManager::addError()
      * @see MessageManager::addWarning()
@@ -523,35 +562,37 @@ class MessageManager implements IMessageManager
      *
      * @author Oleg Schildt
      */
-    public function addDebugMessage(string $message, string $file = "", string $line = ""): void
+    public function addDebugMessage(string $message, string $file = "", int|string|null $line = ""): void
     {
         if (!$this->debug_mode) {
             return;
         }
 
-        if (empty($message)) {
+        if ($message === "") {
             return;
         }
 
+        if ($this->write_source_file_and_line_by_debug) {
+            $line = (int) $line;
 
-        if (empty($file) || empty($line)) {
-            $backfiles = debug_backtrace();
+            if ($file === "" || $line <= 0) {
+                // Only the caller's location is needed; arguments and further stack frames are omitted.
+                $caller = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0] ?? [];
 
-            if (empty($file)) {
-                $file = empty($backfiles[0]['file']) ? "" : $backfiles[0]['file'];
+                if ($file === "") {
+                    $file = $caller['file'] ?? "";
+                }
+
+                if ($line <= 0) {
+                    $line = $caller['line'] ?? 0;
+                }
             }
-
-            if (empty($line)) {
-                $line = empty($backfiles[0]['line']) ? "" : $backfiles[0]['line'];
-            }
-        }
-
-        if (!$this->write_source_file_and_line_by_debug) {
+        } else {
             $file = "";
             $line = "";
         }
 
-        $this->messages["debug_messages"][md5($message)] = [
+        $this->messages["debug_messages"][] = [
             "message" => $message,
             "file" => $file,
             "line" => $line
@@ -579,7 +620,7 @@ class MessageManager implements IMessageManager
     } // clearDebugMessages
 
     /**
-     * Checks whether a stored debugging message exist.
+     * Checks whether any debugging messages are stored.
      *
      * @return bool
      * Returns true if the stored debugging message exists, otherwise false.
@@ -600,13 +641,11 @@ class MessageManager implements IMessageManager
     } // hasDebugMessages
 
     /**
-     * Returns the array of debugging messages if any have been stored.
+     * Returns stored debugging messages in insertion order and clears that category.
      *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * @return array
-     * Returns the array of debugging messages if any have been stored.
+     * @return list<array{message: string, file: string, line: int|string}>
+     * Returns all stored debugging messages, or an empty list. Other categories are unchanged.
+     * Source lines are integers when visible, zero when unavailable and empty strings when hidden.
      *
      * @see MessageManager::getErrors()
      * @see MessageManager::getWarnings()
@@ -624,25 +663,27 @@ class MessageManager implements IMessageManager
             return [];
         }
 
-        return $this->getMessages($this->messages["debug_messages"]);
+        $messages = $this->getMessages($this->messages["debug_messages"]);
+
+        $this->clearDebugMessages();
+
+        return $messages;
     } // getDebugMessages
 
     /**
-     * Stores the information message to be reported.
+     * Appends a information message without deduplication, preserving structured details and their types.
      *
      * @param string $message
-     * The information message to be reported.
+     * The message or localization identifier. Only an empty string is ignored; "0" is retained.
      *
-     * @param array $details
-     * The details might be useful if the message translations are provided on the client, not
-     * on the server, and the message should contain some details that may vary from case to case.
-     * In that case, the servers return the message id instead of final text and the details, the client
-     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     * @param array<array-key, mixed> $details
+     * Structured localization details. Keys, value types, nested arrays and objects are preserved.
      *
      * @param bool $autoclose
      * The flag that controls whether the message box should be closed automatically after a time.
      *
      * @return void
+     * Retains the message unless its text is empty. Repeated messages are retained.
      *
      * @see MessageManager::addError()
      * @see MessageManager::addWarning()
@@ -657,11 +698,11 @@ class MessageManager implements IMessageManager
      */
     public function addInfoMessage(string $message, array $details = [], bool $autoclose = false): void
     {
-        if (empty($message)) {
+        if ($message === "") {
             return;
         }
 
-        $this->messages["info_messages"][md5($message . implode("#", $details))] = [
+        $this->messages["info_messages"][] = [
             "message" => $message,
             "details" => $details,
             "autoclose" => $autoclose
@@ -689,7 +730,7 @@ class MessageManager implements IMessageManager
     } // clearInfoMessages
 
     /**
-     * Checks whether an information message exist.
+     * Checks whether any information messages are stored.
      *
      * @return bool
      * Returns true if the information message exists, otherwise false.
@@ -710,13 +751,10 @@ class MessageManager implements IMessageManager
     } // hasInfoMessages
 
     /**
-     * Returns the array of information messages if any have been stored.
+     * Returns stored information messages in insertion order and clears that category.
      *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * @return array
-     * Returns the array of information messages if any have been stored.
+     * @return list<array{message: string, details: array<array-key, mixed>, autoclose: bool}>
+     * Returns all stored information messages, or an empty list. Other categories are unchanged.
      *
      * @see MessageManager::getErrors()
      * @see MessageManager::getWarnings()
@@ -734,26 +772,28 @@ class MessageManager implements IMessageManager
             return [];
         }
 
-        return $this->getMessages($this->messages["info_messages"]);
+        $messages = $this->getMessages($this->messages["info_messages"]);
+
+        $this->clearInfoMessages();
+
+        return $messages;
     } // getInfoMessages
 
     /**
-     * Stores the information message to be reported.
+     * Appends a bubble message without deduplication, preserving structured details and their types.
      *
      * @param string $message
-     * The information message to be reported.
+     * The message or localization identifier. Only an empty string is ignored; "0" is retained.
      *
-     * @param array $details
-     * The details might be useful if the message translations are provided on the client, not
-     * on the server, and the message should contain some details that may vary from case to case.
-     * In that case, the servers return the message id instead of final text and the details, the client
-     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     * @param array<array-key, mixed> $details
+     * Structured localization details. Keys, value types, nested arrays and objects are preserved.
      *
      * @param bool $autoclose
      * The flag that controls whether the message box should be closed
      * automatically after a time.
      *
      * @return void
+     * Retains the message unless its text is empty. Repeated messages are retained.
      *
      * @see MessageManager::addError()
      * @see MessageManager::addWarning()
@@ -768,11 +808,11 @@ class MessageManager implements IMessageManager
      */
     public function addBubbleMessage(string $message, array $details = [], bool $autoclose = true): void
     {
-        if (empty($message)) {
+        if ($message === "") {
             return;
         }
 
-        $this->messages["bubble_messages"][md5($message)] = [
+        $this->messages["bubble_messages"][] = [
             "message" => $message,
             "details" => $details,
             "autoclose" => $autoclose
@@ -780,9 +820,10 @@ class MessageManager implements IMessageManager
     } // addBubbleMessage
 
     /**
-     * Clears the stored information messages.
+     * Clears the stored bubble messages.
      *
      * @return void
+     * Removes all pending bubble messages.
      *
      * @see MessageManager::clearErrors()
      * @see MessageManager::clearWarnings()
@@ -800,10 +841,10 @@ class MessageManager implements IMessageManager
     } // clearBubbleMessages
 
     /**
-     * Checks whether an information message exist.
+     * Checks whether any bubble messages are stored.
      *
      * @return bool
-     * Returns true if the information message exists, otherwise false.
+     * Returns true if the bubble message exists, otherwise false.
      *
      * @see MessageManager::hasErrors()
      * @see MessageManager::hasWarnings()
@@ -821,13 +862,10 @@ class MessageManager implements IMessageManager
     } // hasBubbleMessages
 
     /**
-     * Returns the array of information messages if any have been stored.
+     * Returns stored bubble messages in insertion order and clears that category.
      *
-     * When the messages are requested, it is assumed they will be displayed. Thus,
-     * the message array is cleared to avoid displaying of the same messages twice.
-     *
-     * @return array
-     * Returns the array of information messages if any have been stored.
+     * @return list<array{message: string, details: array<array-key, mixed>, autoclose: bool}>
+     * Returns all stored bubble messages, or an empty list. Other categories are unchanged.
      *
      * @see MessageManager::getErrors()
      * @see MessageManager::getWarnings()
@@ -845,13 +883,18 @@ class MessageManager implements IMessageManager
             return [];
         }
 
-        return $this->getMessages($this->messages["bubble_messages"]);
+        $messages = $this->getMessages($this->messages["bubble_messages"]);
+
+        $this->clearBubbleMessages();
+
+        return $messages;
     } // getBubbleMessages
 
     /**
-     * Clears all stored messages and active elements.
+     * Clears all stored messages.
      *
      * @return void
+     * Removes all pending messages in every category.
      *
      * @see MessageManager::clearErrors()
      * @see MessageManager::clearWarnings()
@@ -865,21 +908,26 @@ class MessageManager implements IMessageManager
     public function clearAll(): void
     {
         $this->clearErrors();
+
         $this->clearWarnings();
+
         $this->clearProgWarnings();
+
         $this->clearDebugMessages();
+
         $this->clearInfoMessages();
+
         $this->clearBubbleMessages();
     } // clearAll
 
     /**
-     * This auxiliary function returns the messages of the desired type.
+     * Normalizes a message snapshot to a list without changing stored messages.
      *
-     * @param array $messages
-     * The messages to be retrieved.
+     * @param array<array-key, array<string, mixed>> $messages
+     * The message snapshot to normalize.
      *
-     * @return array
-     * Returns the array of messages.
+     * @return list<array<string, mixed>>
+     * Returns the messages in their existing iteration order with consecutive integer keys.
      *
      * @author Oleg Schildt
      */
@@ -888,3 +936,4 @@ class MessageManager implements IMessageManager
         return array_values($messages);
     } // getMessages
 } // MessageManager
+

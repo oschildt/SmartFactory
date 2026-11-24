@@ -17,72 +17,105 @@ namespace SmartFactory\Interfaces;
 interface ILanguageManager extends IInitable
 {
     /**
-     * Initializes the language manager with parameters.
+     * Replaces the complete localization configuration and resets all instance state.
      *
-     * @param array $parameters
-     * The parameters may vary for each language manager.
+     * @param array{localization_path: string, additional_localization_files?: string|list<string>, use_cookie?: bool, use_fallback_language?: string, cookie_path?: string, use_apcu?: bool, warn_missing?: bool} $parameters
+     * The source directory, optional ordered extra text files, fallback tag and cookie/cache options.
+     * The directory may omit its final separator. Missing options use defaults: cookies and APCu
+     * are disabled, cookie_path is "/", fallback is empty and warn_missing is true.
+     * False values and an empty fallback are respected. Additional files override individual languages.
      *
      * @return void
+     * Commits validated options without reading documents and resets the context to "default".
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any system errors.
+     * @throws \InvalidArgumentException
+     * If paths or string options are invalid, the fallback tag is malformed, or requested APCu is unavailable.
      *
      * @author Oleg Schildt
      */
     public function init(array $parameters): void;
-    
+
     /**
-     * This is function for loading the translations from the source JSON file.
+     * Loads a complete validated dictionary from JSON documents or APCu.
+     * Each texts.json is followed by its optional sibling user_texts.json. Only
+     * nonempty user translations replace master values; the string "0" is nonempty.
+     *
+     * @param bool $force_reload
+     * Bypasses instance and APCu snapshots, replaces deleted entries and refreshes APCu after success.
+     * Otherwise source changes require explicit reload or cache eviction. Instance-only additions
+     * from extendDictionary() are discarded by source reload.
      *
      * @return void
+     * Applies all documents together. Read or validation failures preserve the previous snapshot.
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
      *
-     * - if the translation file is invalid.
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
-    public function loadDictionary(): void;
+    public function loadDictionary(bool $force_reload = false): void;
 
     /**
-     * Adds additional translations to the dictionary.
+     * Adds validated translations to this instance without changing shared APCu data.
      *
-     * @param array $dictionary
-     * The array with additional translations.
+     * @param array<array-key, array<string, string>> $dictionary
+     * Text identifiers mapped to language-to-string maps; numeric identifiers are preserved.
+     * Individual language values override previous values. An explicit source reload discards additions.
      *
      * @return void
+     * Validates the entire addition before changing the dictionary.
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function extendDictionary(array $dictionary): void;
 
     /**
-     * Adds additional localization files to the dictionary.
+     * Registers an additional text document and invalidates the loaded-source flag.
      *
      * @param string $localization_file
-     * The path of the additional localization file.
+     * A file whose individual language values override earlier sources on the next load.
      *
      * @return void
+     * Preserves the file order and selects a cache key specific to the new source list.
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * @throws \InvalidArgumentException
+     * If the path is empty or its parent directory does not exist.
      *
      * @author Oleg Schildt
      */
     public function addLocalizationFile(string $localization_file): void;
 
     /**
-     * This function should detect the current language based on cookies, browser languages etc.
+     * Detects the current language from request parameters, headers and cookies.
      *
-     * Some applications may consist of two parts - administration
-     * console and public site. A usual example is a CMS system.
+     * Priority:
+     *
+     * 1. explicitly set by the request parameter language.
+     * 2. header 'Content-Language'.
+     * 3. last language in the cookie.
+     * 4. browser default language.
+     * 5. the first one from the supported list.
+     *
+     * Some applications may consist of two parts: an administration
+     * console and a public site. A usual example is a CMS system.
      *
      * For example, you are using administration console in English
-     * and editing the public site for German and French.
+     * and editing the public site in German and French.
      * When you open the public site for preview in German or French,
      * you want it to be open in the corresponding language, but
      * the administration console should remain in English.
@@ -91,20 +124,37 @@ interface ILanguageManager extends IInitable
      * languages for different parts of your application.
      * If you do not need the $context, just do not specify it.
      *
+     * Malformed request values are ignored. Accept-Language respects quality weights,
+     * exclusions, wildcard ranges and header order. Tags are normalized and regional tags
+     * may fall back to supported parent tags. A nonempty supported-language list is required.
+     *
      * @return void
+     * Returns without a value.
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
+     * @throws \ValueError
+     * If enabled cookie storage encounters an invalid cookie name or path.
      *
      * @author Oleg Schildt
      */
     public function detectLanguage(): void;
-    
+
     /**
      * Sets the current context.
      *
-     * Some applications may consist of two parts - administration
-     * console and public site. A usual example is a CMS system.
+     * Some applications may consist of two parts: an administration
+     * console and a public site. A usual example is a CMS system.
      *
      * For example, you are using administration console in English
-     * and editing the public site for German and French.
+     * and editing the public site in German and French.
      * When you open the public site for preview in German or French,
      * you want it to be open in the corresponding language, but
      * the administration console should remain in English.
@@ -118,7 +168,7 @@ interface ILanguageManager extends IInitable
      *
      * @return void
      *
-     * @see LanguageManager::getContext()
+     * @see ILanguageManager::getContext()
      *
      * @author Oleg Schildt
      */
@@ -127,11 +177,11 @@ interface ILanguageManager extends IInitable
     /**
      * Returns the current context.
      *
-     * Some applications may consist of two parts - administration
-     * console and public site. A usual example is a CMS system.
+     * Some applications may consist of two parts: an administration
+     * console and a public site. A usual example is a CMS system.
      *
      * For example, you are using administration console in English
-     * and editing the public site for German and French.
+     * and editing the public site in German and French.
      * When you open the public site for preview in German or French,
      * you want it to be open in the corresponding language, but
      * the administration console should remain in English.
@@ -143,52 +193,90 @@ interface ILanguageManager extends IInitable
      * @return string
      * Returns the current context.
      *
+     * @see ILanguageManager::setContext()
+     *
      * @author Oleg Schildt
      */
     public function getContext(): string;
-    
+
     /**
-     * Returns the list of supported languages.
+     * Returns normalized tags mapped to themselves in their configured order.
      *
-     * @return array
-     * Returns the list of supported languages.
+     * @return array<string, string>
+     * Returns normalized tags mapped to themselves in their configured order.
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function getSupportedLanguages(): array;
-    
+
     /**
      * Sets the current language.
      *
+     * Unsupported tags leave the selection unchanged. Matching ignores case and may
+     * fall back from a regional tag to a supported parent tag.
+     *
      * @param string $language
-     * The language ISO code to be set.
+     * The language tag to select.
      *
      * @return void
+     * Returns without a value.
      *
      * @see ILanguageManager::getCurrentLanguage()
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
+     * @throws \ValueError
+     * If enabled cookie storage encounters an invalid cookie name or path.
      *
      * @author Oleg Schildt
      */
     public function setCurrentLanguage(string $language): void;
-    
+
     /**
      * Returns the current language.
      *
+     * Loads the dictionary if necessary. New contexts use the first configured language.
+     *
      * @return string
-     * Returns the current language ISO code.
+     * Returns the normalized supported language tag.
      *
      * @see ILanguageManager::setCurrentLanguage()
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function getCurrentLanguage(): string;
-    
+
     /**
-     * Returns the fallback language. If set and a translation
+     * Returns the normalized fallback tag, or an empty string when disabled. If set and a translation
      * is missing on a language, the translation on this language will be used.
      *
      * @return string
-     * Returns the fallback language.
+     * Returns the normalized fallback tag, or an empty string when disabled.
      *
      * @author Oleg Schildt
      */
@@ -196,6 +284,10 @@ interface ILanguageManager extends IInitable
 
     /**
      * Provides the text translation for the text ID for the given language.
+     *
+     * The string "0" is a valid translation or default; an empty translation is missing.
+     * Resolution order is the requested translation, nonempty default, fallback, then ID.
+     * Configured warnings concern the missing requested translation, even when fallback exists.
      *
      * @param string $text_id
      * Text ID
@@ -208,16 +300,27 @@ interface ILanguageManager extends IInitable
      * The default text to be used if there is no translation.
      *
      * @return string
-     * Returns the translation text or the $default_text/$text_id if no translation
-     * is found.
+     * Returns the requested translation, nonempty default, fallback translation or text ID.
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
     public function text(string $text_id, string $lng = "", string $default_text = ""): string;
-    
+
     /**
      * Provides the text translation for the text ID for the given language if the translation exists.
-     * Otherwise, it returns the text ID and emits no warning.
+     * Otherwise, it tries the configured fallback and returns the text ID if that is also missing.
+     *
+     * Uses this instance without accessing the global factory. The configured fallback
+     * is tried before returning the identifier. Empty translations are considered missing.
      *
      * @param string $text_id
      * Text ID
@@ -227,8 +330,16 @@ interface ILanguageManager extends IInitable
      * the default language is used.
      *
      * @return string
-     * Returns the translation text or the $default_text/$text_id if no translation
-     * is found.
+     * Returns the requested translation, fallback translation or text ID without missing-text warnings.
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */
@@ -236,6 +347,9 @@ interface ILanguageManager extends IInitable
 
     /**
      * Checks whether the text translation for the text ID for the given language exists.
+     *
+     * Checks only the requested language, without fallback. The string "0" exists;
+     * an empty translation does not.
      *
      * @param string $text_id
      * Text ID
@@ -247,10 +361,19 @@ interface ILanguageManager extends IInitable
      * @return bool
      * Returns true if the translation exists, otherwise false.
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function hasTranslation(string $text_id, string $lng = ""): bool;
-    
+
     /**
      * Provides the text translation for the language name by the code
      * for the given language.
@@ -271,12 +394,24 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::getLanguageList()
      * @see ILanguageManager::getCountryName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getLanguageName(string $code, string $lng = ""): string;
-    
+
     /**
      * Tries to find the language code by the given name.
+     *
+     * Name comparison is Unicode case-insensitive and searches supported languages
+     * in their configured order.
      *
      * @param string $lang_name
      * The name of the language in any supported language.
@@ -289,12 +424,21 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::getLanguageList()
      * @see ILanguageManager::getCountryCode()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getLanguageCode(string $lang_name): string;
-    
+
     /**
-     * Checks whether the language code is valid (has translation).
+     * Checks whether a nonempty localized language name exists.
      *
      * @param string $code
      * Language ISO code (lowercase, e.g. en, de, fr).
@@ -304,28 +448,40 @@ interface ILanguageManager extends IInitable
      * the default language is used.
      *
      * @return bool
-     * Returns true if the language code is valid (has translation), otherwise false.
+     * Returns true if a nonempty language name exists, otherwise false.
      *
      * @see ILanguageManager::getLanguageName()
      * @see ILanguageManager::getLanguageCode()
      * @see ILanguageManager::getLanguageList()
      * @see ILanguageManager::hasCountryName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function hasLanguageName(string $code, string $lng = ""): bool;
-    
+
     /**
      * Provides the list of languages for the given language in the form "code" => "translation".
      *
-     * @param array &$language_list
+     * Unknown preferred codes are ignored. Sorts a copy using the process locale,
+     * leaving dictionary order unchanged. The output is empty when no names are available.
+     *
+     * @param array<array-key, string> &$language_list
      * Target array where the language list should be loaded.
      *
      * @param string $lng
      * The language. If it is not specified,
      * the default language is used.
      *
-     * @param array $display_first
+     * @param list<string> $display_first
      * List of the language codes to be displayed first in the order, they appear in the list.
      *
      * @return bool
@@ -336,10 +492,19 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::hasLanguageName()
      * @see ILanguageManager::getCountryList()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getLanguageList(array &$language_list, string $lng = "", array $display_first = []): bool;
-    
+
     /**
      * Provides the text translation for the country name by the code
      * for the given language.
@@ -360,12 +525,24 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::getCountryList()
      * @see ILanguageManager::getLanguageName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getCountryName(string $code, string $lng = ""): string;
-    
+
     /**
      * Tries to find the country code by the given name.
+     *
+     * Name comparison is Unicode case-insensitive and searches supported languages
+     * in their configured order.
      *
      * @param string $country_name
      * The name of the country in any supported language.
@@ -378,12 +555,21 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::getCountryList()
      * @see ILanguageManager::getLanguageCode()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function getCountryCode(string $country_name): string;
-    
+
     /**
-     * Checks whether the country code is valid (has translation).
+     * Checks whether a nonempty localized country name exists.
      *
      * @param string $code
      * Country ISO code (uppercase, e.g. US, DE, FR).
@@ -393,28 +579,40 @@ interface ILanguageManager extends IInitable
      * the default language is used.
      *
      * @return bool
-     * Returns true if the country code is valid (has translation), otherwise false.
+     * Returns true if a nonempty country name exists, otherwise false.
      *
      * @see ILanguageManager::getCountryName()
      * @see ILanguageManager::getCountryCode()
      * @see ILanguageManager::getCountryList()
      * @see ILanguageManager::hasLanguageName()
      *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
+     *
      * @author Oleg Schildt
      */
     public function hasCountryName(string $code, string $lng = ""): bool;
-    
+
     /**
      * Provides the list of countries for the given language in the form "code" => "translation".
      *
-     * @param array &$country_list
+     * Unknown preferred codes are ignored. Sorts a copy using the process locale,
+     * leaving dictionary order unchanged. The output is empty when no names are available.
+     *
+     * @param array<array-key, string> &$country_list
      * Target array where the country list should be loaded.
      *
      * @param string $lng
      * The language. If it is not specified,
      * the default language is used.
      *
-     * @param array $display_first
+     * @param list<string> $display_first
      * List of the country codes to be displayed first in the order, they appear in the list.
      *
      * @return bool
@@ -424,6 +622,15 @@ interface ILanguageManager extends IInitable
      * @see ILanguageManager::getCountryCode()
      * @see ILanguageManager::hasCountryName()
      * @see ILanguageManager::getLanguageList()
+     *
+     * @throws \LogicException
+     * If init() has not selected a localization directory.
+     *
+     * @throws \RuntimeException
+     * If a source document cannot be read.
+     *
+     * @throws \UnexpectedValueException
+     * If JSON or a document structure is invalid, or the supported-language list is empty.
      *
      * @author Oleg Schildt
      */

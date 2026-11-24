@@ -107,7 +107,8 @@
                 <div class="col-md-12">
                     <h1>Function: config_settings()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> config_settings(): \SmartFactory\ConfigSettingsManager;</div>
+<div class="definition"><span class="php-keyword1">function</span> config_settings(): ConfigSettingsManager;</div>
+
 
 
 <div class="short-description">
@@ -124,7 +125,7 @@
 
 <h2>Returns</h2>
 <div class="item_list">
-<a href='class-SmartFactory.ConfigSettingsManager.html'>\SmartFactory\ConfigSettingsManager</a><br>
+<code class="php-type"><a href="class-SmartFactory.ConfigSettingsManager.html">ConfigSettingsManager</a></code><br>
 
 <div class="item_description"><p>Returns the instance of the ConfigSettingsManager.</p></div>
 
@@ -134,14 +135,15 @@
 <h2>Throws</h2>
 <div class="item_list">
 
-\Exception<br>
+<code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
 
-<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul></div>
+<div class="item_description"><p>If the service binding is missing, the contract is unknown, a circular dependency
+is detected, or the factory result does not satisfy the requested contract.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If autoloading the service contract or executing its creation function throws.</p></div>
 
 
 </div>
@@ -167,11 +169,11 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-short_functions_inc.php.html#150'>short_functions_inc.php</a>
+<a href='source-src.short_functions_inc.php.html#186'>src/short_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

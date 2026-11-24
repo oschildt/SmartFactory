@@ -1,7 +1,6 @@
 <?php
 /**
- * This file contains the implementation of the interface ISettingsManager
- * in the class UserSettingsManager for management of the user settings.
+ * Implements database storage for per-user settings.
  *
  * @package System
  *
@@ -10,371 +9,430 @@
 
 namespace SmartFactory;
 
-use \SmartFactory\Interfaces\ISettingsManager;
-use \SmartFactory\Interfaces\IErrorHandler;
-use \SmartFactory\DatabaseWorkers\DBWorker;
-use SmartFactory\Interfaces\ISettingsValidator;
+use SmartFactory\DatabaseWorkers\DBWorker;
 
 /**
- * Class for management of the user settings.
+ * Manages user settings mapped to database columns and multichoice tables.
  *
- * When you introduce a new user setting. You have to create a column for it in the corresponding
- * table add it to the initialization and specify the data type.
+ * New scalar settings require a column and a field/type definition. Values are cached
+ * in this object, not in the PHP session. Switching users invalidates the snapshot.
+ * Canonical names are table.column; unambiguous short column names remain supported.
+ * Saves write only explicitly assigned parameters in one transaction. The first settings
+ * table identifies the existing owner and provides the aggregate lock for all user settings.
  *
- * The user settings are loaded only once by the start of the session and are kept until the session
- * is valid. Saving of the user settings updates both the session and the database. When a settings are
- * requested, it is taken from the session, not from the database.
- *
- * @see  ConfigSettingsManager
- * @see  RuntimeSettingsManager
- *
- * @uses DatabaseWorkers\DBWorker
+ * @see ConfigSettingsManager
+ * @see ApplicationSettingsManager
  *
  * @author Oleg Schildt
  */
-class UserSettingsManager implements ISettingsManager
+class UserSettingsManager extends AbstractDatabaseSettingsManager
 {
     /**
-     * Internal variable for storing the user id.
+     * The current user identifier; NULL means no user has been selected.
      *
-     * @var string
-     *
-     * @see UserSettingsManager::setUserID()
+     * @var int|null
      *
      * @author Oleg Schildt
      */
-    protected string $user_id = "";
+    protected ?int $user_id = null;
 
     /**
-     * Internal variable for storing the dbworker.
+     * Scalar settings tables; the first field of each definition is the user key.
      *
-     * @var ?DatabaseWorkers\DBWorker
-     *
-     * @author Oleg Schildt
-     */
-    protected ?DatabaseWorkers\DBWorker $dbworker;
-
-    /**
-     * Internal variable for storing the state whether the translation should be started or commited or
-     * no transaction should be used because the saving process is a part of other saving process.
-     *
-     * @var bool
-     *
-     * @author Oleg Schildt
-     */
-    protected bool $no_own_transaction = true;
-
-    /**
-     * Internal array for storing the settings tables.
-     *
-     * @var array
+     * @var array<string, array<string, int>>
      *
      * @author Oleg Schildt
      */
     protected array $settings_tables = [];
 
     /**
-     * Internal array for storing the auxiliary tables for storing the multichoce values.
+     * Multichoice tables; each definition contains the user key followed by the value field.
      *
-     * @var array
+     * @var array<string, array<string, int>>
      *
      * @author Oleg Schildt
      */
     protected array $multichoice_tables = [];
 
     /**
-     * Internal variable for storing the current context.
+     * Generated key columns requiring identity handling by save_records().
      *
-     * @var string
-     *
-     * @see UserSettingsManager::getContext()
-     * @see UserSettingsManager::setContext()
+     * @var array<string, string>
      *
      * @author Oleg Schildt
      */
-    protected string $context = "default";
+    protected array $identity_fields = [];
 
     /**
-     * Internal variable for storing the validator.
+     * Public names mapped to canonical names; NULL marks an ambiguous short alias.
      *
-     * @var ?\SmartFactory\Interfaces\ISettingsValidator
-     *
-     * @see UserSettingsManager::getValidator()
-     * @see UserSettingsManager::setValidator()
+     * @var array<string, string|null>
      *
      * @author Oleg Schildt
      */
-    protected ?\SmartFactory\Interfaces\ISettingsValidator $validator = null;
+    protected array $parameter_names = [];
 
     /**
-     * Internal variable for storing the array of the settings values.
+     * User key parameters that may be read but never assigned as settings.
      *
-     * @var array
+     * @var array<string, true>
      *
      * @author Oleg Schildt
      */
-    protected array $settings = [];
+    protected array $read_only_parameters = [];
 
     /**
-     * This is internal auxiliary function for checking that the settings
-     * manager is intialized correctly.
+     * Configures scalar and multichoice tables without loading a user's settings.
+     *
+     * @param array{dbworker: DBWorker, settings_tables: array<string, array<string, int>>, multichoice_tables?: array<string, array<string, int>>, identity_fields?: array<string, string>, no_own_transaction?: bool} $parameters
+     * Maps tables to ordered field/type definitions. The first field is the user key.
+     * Scalar tables need at least one setting field; multichoice tables need exactly two
+     * fields. The first scalar table must contain the existing owner row. identity_fields
+     * identifies generated keys, for example ["users" => "id"]. Multichoice tables support
+     * scalar, numeric and date values; each parameter is addressed by its table name.
+     * Set no_own_transaction to require an existing caller-managed transaction.
+     *
+     * Example:
+     *
+     * ```php
+     * $instance->init([
+     *     "dbworker" => app_dbworker(),
+     *     "identity_fields" => ["users" => "id"],
+     *     "settings_tables" => [
+     *         "users" => [
+     *             "id" => DBWorker::DB_NUMBER,
+     *             "language" => DBWorker::DB_STRING,
+     *             "time_zone" => DBWorker::DB_STRING
+     *         ],
+     *         "user_forum_settings" => [
+     *             "user_id" => DBWorker::DB_NUMBER,
+     *             "signature" => DBWorker::DB_STRING,
+     *             "status" => DBWorker::DB_STRING,
+     *             "hide_pictures" => DBWorker::DB_NUMBER,
+     *             "hide_signatures" => DBWorker::DB_NUMBER
+     *         ]
+     *     ],
+     *     "multichoice_tables" => [
+     *         "user_colors" => [
+     *             "user_id" => DBWorker::DB_NUMBER,
+     *             "color" => DBWorker::DB_STRING
+     *         ]
+     *     ]
+     * ]);
+     * ```
+     *
+     * Example:
+     *
+     * ```php
+     * $instance->init([
+     *     "dbworker" => app_dbworker(),
+     *     "identity_fields" => ["users" => "id"],
+     *     "settings_tables" => [
+     *         "users" => [
+     *             "id" => DBWorker::DB_NUMBER,
+     *             "language" => DBWorker::DB_STRING,
+     *             "time_zone" => DBWorker::DB_STRING
+     *         ],
+     *         "user_forum_settings" => [
+     *             "user_id" => DBWorker::DB_NUMBER,
+     *             "signature" => DBWorker::DB_STRING,
+     *             "status" => DBWorker::DB_STRING,
+     *             "hide_pictures" => DBWorker::DB_NUMBER,
+     *             "hide_signatures" => DBWorker::DB_NUMBER
+     *         ]
+     *     ],
+     *     "multichoice_tables" => [
+     *         "user_colors" => [
+     *             "user_id" => DBWorker::DB_NUMBER,
+     *             "color" => DBWorker::DB_STRING
+     *         ]
+     *     ]
+     * ]);
+     * ```
      *
      * @return void
+     * Replaces definitions and discards cached values and unsaved edits.
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
+     * @throws \InvalidArgumentException
+     * If the worker, table definitions, field types, identifiers or identity mapping are invalid.
      *
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
+     * @author Oleg Schildt
+     */
+    public function init(array $parameters): void
+    {
+        $worker = $parameters['dbworker'] ?? null;
+        $tables = $parameters['settings_tables'] ?? null;
+        $choices = $parameters['multichoice_tables'] ?? [];
+        $identities = $parameters['identity_fields'] ?? [];
+
+        if (!$worker instanceof DBWorker || !is_array($tables) || $tables === []
+            || !is_array($choices) || !is_array($identities) || array_intersect_key($tables, $choices) !== []) {
+            throw new \InvalidArgumentException("Invalid user settings configuration.");
+        }
+
+        $this->validateTableDefinitions($tables, false);
+
+        $this->validateTableDefinitions($choices, true);
+
+        foreach ($identities as $table => $field) {
+            if (!isset($tables[$table]) || !is_string($field) || array_key_first($tables[$table]) !== $field) {
+                throw new \InvalidArgumentException("An identity field must be the configured user key of a scalar settings table.");
+            }
+        }
+
+        $names = [];
+        $read_only = [];
+
+        foreach ($tables as $table => $fields) {
+            foreach ($fields as $field => $_) {
+                $canonical = $table . "." . $field;
+                $names[$canonical] = $canonical;
+                $names[$field] = array_key_exists($field, $names) ? null : $canonical;
+            }
+
+            $read_only[$table . "." . array_key_first($fields)] = true;
+        }
+
+        foreach ($choices as $table => $_) {
+            if (array_key_exists($table, $names)) {
+                throw new \InvalidArgumentException("A multichoice table name conflicts with a scalar parameter: " . $table);
+            }
+
+            $names[$table] = $table;
+        }
+
+        $this->settings_tables = $tables;
+        $this->multichoice_tables = $choices;
+        $this->identity_fields = $identities;
+        $this->parameter_names = $names;
+        $this->read_only_parameters = $read_only;
+
+        $this->setDBWorker($worker, (bool) ($parameters['no_own_transaction'] ?? false));
+    } // init
+
+    /**
+     * Validates ordered table definitions before using their identifiers in SQL.
+     *
+     * @param array<string, array<string, int>> $tables
+     * The scalar or multichoice table definitions.
+     *
+     * @param bool $multichoice
+     * Whether each definition must have exactly one user key and one scalar value field.
+     *
+     * @return void
+     * Leaves the manager's current configuration unchanged.
+     *
+     * @throws \InvalidArgumentException
+     * If a table has invalid identifiers, an invalid field count or unsupported field types.
+     *
+     * @author Oleg Schildt
+     */
+    protected function validateTableDefinitions(array $tables, bool $multichoice): void
+    {
+        $types = [DBWorker::DB_AS_IS, DBWorker::DB_NUMBER, DBWorker::DB_STRING,
+            DBWorker::DB_DATE, DBWorker::DB_DATETIME, DBWorker::DB_GEOMETRY,
+            DBWorker::DB_GEOMETRY_4326, DBWorker::DB_LARGE_OBJECT_STREAM];
+
+        foreach ($tables as $table => $fields) {
+            if (!is_string($table) || !is_array($fields) || count($fields) < 2
+                || ($multichoice && count($fields) !== 2)) {
+                throw new \InvalidArgumentException("Invalid user settings table definition.");
+            }
+
+            $this->validateIdentifier($table, true);
+
+            foreach ($fields as $field => $type) {
+                if (!is_string($field) || !in_array($type, $types, true)
+                    || ($multichoice && !in_array($type, [DBWorker::DB_AS_IS, DBWorker::DB_NUMBER,
+                        DBWorker::DB_STRING, DBWorker::DB_DATE, DBWorker::DB_DATETIME], true))) {
+                    throw new \InvalidArgumentException("Invalid user settings field definition.");
+                }
+
+                $this->validateIdentifier($field);
+            }
+        }
+    } // validateTableDefinitions
+
+    /**
+     * Checks that table definitions, a worker and a user have been selected.
+     *
+     * @return void
+     * Accepts user identifier zero and rejects only an unset identifier.
+     *
+     * @throws \LogicException
+     * If the manager is uninitialized or setUserID() has not selected a user.
      *
      * @author Oleg Schildt
      */
     protected function validateParameters(): void
     {
-        if (empty($this->dbworker)) {
-            throw new \Exception("The 'dbworker' is not specified!");
+        if ($this->dbworker === null || $this->settings_tables === []) {
+            throw new \LogicException("The user settings manager is not initialized.");
         }
 
-        if (!$this->dbworker instanceof DBWorker) {
-            throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
-        }
-
-        if (empty($this->settings_tables)) {
-            throw new \Exception("The 'settings_tables' are not defined!");
-        }
-
-        if (!is_array($this->settings_tables)) {
-            throw new \Exception("Settings tables 'settings_tables' must be an array!");
-        }
-
-        if (!empty($this->multichoice_tables) && !is_array($this->multichoice_tables)) {
-            throw new \Exception("Multichoice tables 'multichoice_tables' must be an array!");
+        if ($this->user_id === null) {
+            throw new \LogicException("A user ID must be selected before accessing user settings.");
         }
     } // validateParameters
 
     /**
-     * This is internal auxiliary function for storing the settings
-     * to the target user table defined by the initialization.
+     * Resolves short names without creating duplicate copies of column values.
      *
-     * @param array $data
-     * The array with the settings values to be saved.
+     * @param string $name
+     * A qualified column name, unambiguous short name or multichoice table name.
      *
-     * @return void
+     * @return string
+     * Returns the canonical name. Unknown names remain absent when reading.
      *
-     * @throws \Throwable
-     * It might throw an exception in the case of any errors:
-     *
-     * - if the query fails or if some object names are invalid.
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
-     * - if the query fails or if some object names are invalid.
-     *
-     * @see UserSettingsManager::loadSettingsData()
+     * @throws \InvalidArgumentException
+     * If a short name identifies columns in more than one configured table.
      *
      * @author Oleg Schildt
      */
-    protected function saveSettingsData(array $data): void
+    protected function normalizeParameterName(string $name): string
     {
-        $this->validateParameters();
-
-        $this->dbworker->connect();
-
-        if (empty($this->no_own_transaction)) {
-            $this->dbworker->start_transaction();
+        if (array_key_exists($name, $this->parameter_names) && $this->parameter_names[$name] === null) {
+            throw new \InvalidArgumentException("Ambiguous settings name; use table.column: " . $name);
         }
 
-        try {
-            foreach ($this->settings_tables as $table => $fields) {
-                // First field is the ID field
-                $uid_field = "";
-                $uid_field_type = "";
-
-                $update_string = "";
-
-                $insert_fields_string = "";
-                $insert_values_string = "";
-
-                $c = 0;
-                foreach ($fields as $field => $field_type) {
-                    $c++;
-
-                    if ($c == 1) {
-                        $uid_field = $field;
-                        $uid_field_type = $field_type;
-                        continue;
-                    }
-
-                    $value = "";
-
-                    if (!empty($data[$table . "." . $field])) {
-                        $value = $data[$table . "." . $field];
-                    }
-
-                    if (isset($data[$field])) {
-                        $value = $data[$field];
-                    }
-
-                    $value = $this->dbworker->prepare_for_query($value, $field_type);
-
-                    $update_string .= $field . " = " . $value . ",\n";
-
-                    $insert_fields_string .= $field . ", ";
-                    $insert_values_string .= $value . ", ";
-                }
-
-                $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-
-                $insert_fields_string .= $uid_field . ", ";
-                $insert_values_string .= $user_id . ", ";
-
-                $query = "select\n";
-                $query .= "1\n";
-                $query .= "from " . $table . "\n";
-                $query .= "where " . $uid_field . " = " . $user_id;
-
-                $this->dbworker->execute_query($query);
-
-                $must_insert = false;
-                if (!$this->dbworker->fetch_row()) {
-                    $must_insert = true;
-                }
-
-                $this->dbworker->free_result();
-
-                if ($must_insert) {
-                    $query = "insert into " . $table . "\n";
-                    $query .= "(" . trim($insert_fields_string, ", ") . ")\n";
-                    $query .= "values\n";
-                    $query .= "(" . trim($insert_values_string, ", ") . ")\n";
-                } else {
-                    $query = "update " . $table . " set\n";
-                    $query .= trim($update_string, ",\n") . "\n";
-                    $query .= "where " . $uid_field . " = " . $user_id;
-                }
-
-                $this->dbworker->execute_query($query);
-            }
-
-            // update the subtables
-
-            foreach ($this->multichoice_tables as $table => $fields) {
-                // First field is the ID field
-                $uid_field = "";
-                $uid_field_type = "";
-
-                // Second field is the value field
-                $value_field = "";
-                $value_field_type = "";
-
-                $c = 1;
-                foreach ($fields as $field => $field_type) {
-                    if ($c == 1) {
-                        $uid_field = $field;
-                        $uid_field_type = $field_type;
-                    } elseif ($c == 2) {
-                        $value_field = $field;
-                        $value_field_type = $field_type;
-                    } else {
-                        break;
-                    }
-
-                    $c++;
-                }
-
-                if (!empty($data[$table])) {
-                    $value = $data[$table];
-                } else {
-                    $value = [];
-                }
-
-                // insert the values that are in the list but not in the table
-
-                $in_list = "";
-                $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-
-                foreach ($value as $entry) {
-                    if (empty($entry)) {
-                        continue;
-                    }
-
-                    $entry = $this->dbworker->prepare_for_query($entry, $value_field_type);
-
-                    $query = "select 1 from $table where $uid_field = $user_id";
-
-                    if ($value == "NULL") {
-                        $query .= " and $value_field is NULL";
-                    } else {
-                        $query .= " and $value_field = $entry";
-                    }
-
-                    $this->dbworker->execute_query($query);
-
-                    $must_insert = true;
-                    if ($this->dbworker->fetch_row()) {
-                        $must_insert = false;
-                    }
-
-                    $this->dbworker->free_result();
-
-                    if ($must_insert) {
-                        $query = "insert into $table ($uid_field, $value_field) values ($user_id, $entry)";
-
-                        $this->dbworker->execute_query($query);
-                    }
-
-                    $in_list .= $entry . ",\n";
-                }
-
-                $in_list = trim($in_list, " ,\n\r");
-
-                $where = "where " . $uid_field . " = " . $user_id;
-
-                // delete the values that are no more in the new list but still in the table.
-
-                if (empty($in_list)) {
-                    $query = "delete from $table\n" . $where;
-                } else {
-                    $query = "delete from $table\n" . $where . " and " . $value_field . " not in ($in_list)";
-                }
-
-                $this->dbworker->execute_query($query);
-            }
-        } catch (\Throwable $ex) {
-            if (empty($this->no_own_transaction)) {
-                $this->dbworker->rollback_transaction();
-            }
-
-            singleton(IErrorHandler::class)->handleException($ex, E_USER_ERROR);
-
-            throw $ex;
-        }
-
-        if (empty($this->no_own_transaction)) {
-            $this->dbworker->commit_transaction();
-        }
-    } // saveSettingsData
+        return $this->parameter_names[$name] ?? $name;
+    } // normalizeParameterName
 
     /**
-     * This is internal auxiliary function for loading the settings from the target user table
-     * defined by the initialization.
+     * Recognizes configured fields even when their optional database row is absent.
      *
-     * @param array &$data
-     * The target array with the settings values to be loaded.
+     * @param string $name
+     * The canonical parameter name.
+     *
+     * @return bool
+     * Returns whether the parameter belongs to the configured schema.
+     *
+     * @author Oleg Schildt
+     */
+    protected function isParameterDefined(string $name): bool
+    {
+        return isset($this->parameter_names[$name]);
+    } // isParameterDefined
+
+    /**
+     * Rejects unknown fields, user key assignments and invalid multichoice structures.
+     *
+     * @param string $name
+     * The canonical parameter name.
+     *
+     * @param mixed $value
+     * A scalar setting value or an array of scalar/date multichoice values.
      *
      * @return void
+     * Does not change the supplied value or the current settings snapshot.
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
+     * @throws \InvalidArgumentException
+     * If the name is unknown or read-only, a multichoice value is not an array,
+     * or a multichoice entry is neither scalar, NULL nor an accepted date object.
      *
-     * - if the query fails or if some object names are invalid.
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
-     * - if the query fails or if some object names are invalid.
+     * @author Oleg Schildt
+     */
+    protected function validateParameterValue(string $name, mixed $value): void
+    {
+        if (!$this->isParameterDefined($name) || isset($this->read_only_parameters[$name])) {
+            throw new \InvalidArgumentException("Unknown or read-only user setting: " . $name);
+        }
+
+        if (!isset($this->multichoice_tables[$name])) {
+            return;
+        }
+
+        if (!is_array($value)) {
+            throw new \InvalidArgumentException("Multichoice settings must be arrays: " . $name);
+        }
+
+        $type = array_values($this->multichoice_tables[$name])[1];
+
+        foreach ($value as $entry) {
+            if (!is_scalar($entry) && $entry !== null
+                && !(in_array($type, [DBWorker::DB_DATE, DBWorker::DB_DATETIME], true)
+                    && $entry instanceof \DateTimeInterface)) {
+                throw new \InvalidArgumentException("Invalid multichoice entry: " . $name);
+            }
+        }
+    } // validateParameterValue
+
+    /**
+     * Reads all configured tables for the selected user using bound queries.
      *
-     * @see UserSettingsManager::saveSettingsData()
+     * @param DBWorker $worker
+     * A connected worker with isolated statement state.
+     *
+     * @return array<string, mixed>
+     * Returns canonical scalar parameters and arrays indexed by multichoice table names.
+     * Missing scalar rows contribute no parameters; empty multichoice tables contribute [].
+     *
+     * @throws \UnexpectedValueException
+     * If a scalar settings table contains multiple rows for the same user.
+     *
+     * @throws \Throwable
+     * If preparing, executing, fetching or converting a stored value fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function readSettingsData(DBWorker $worker): array
+    {
+        $data = [];
+
+        foreach ($this->settings_tables as $table => $fields) {
+            $key = array_key_first($fields);
+
+            try {
+                $worker->prepare_query('SELECT ' . implode(', ', array_keys($fields))
+                    . ' FROM ' . $table . ' WHERE ' . $key . ' = ?');
+
+                $worker->execute_prepared_query($this->user_id);
+
+                if ($worker->fetch_row()) {
+                    foreach ($fields as $field => $type) {
+                        $data[$table . "." . $field] = $worker->field_by_name($field, $type);
+                    }
+
+                    if ($worker->fetch_row()) {
+                        throw new \UnexpectedValueException("Multiple settings rows for one user in " . $table);
+                    }
+                }
+            } finally {
+                $worker->free_prepared_query();
+            }
+        }
+
+        foreach ($this->multichoice_tables as $table => $fields) {
+            [$key, $value_field] = array_keys($fields);
+            $data[$table] = [];
+
+            try {
+                $worker->prepare_query('SELECT ' . $value_field . ' FROM ' . $table . ' WHERE ' . $key . ' = ?');
+
+                $worker->execute_prepared_query($this->user_id);
+
+                while ($worker->fetch_row()) {
+                    $data[$table][] = $worker->field_by_name($value_field, $fields[$value_field]);
+                }
+            } finally {
+                $worker->free_prepared_query();
+            }
+        }
+
+        return $data;
+    } // readSettingsData
+
+    /**
+     * Loads settings into a temporary canonical snapshot.
+     *
+     * @param array<string, mixed> &$data
+     * Receives the user's complete settings after successful reading.
+     *
+     * @return void
+     * Does not change the currently loaded values on failure.
+     *
+     * @throws \Throwable
+     * If a user or configuration is missing, connecting fails or a query/conversion fails.
      *
      * @author Oleg Schildt
      */
@@ -382,512 +440,218 @@ class UserSettingsManager implements ISettingsManager
     {
         $this->validateParameters();
 
-        $this->dbworker->connect();
-
-        foreach ($this->settings_tables as $table => $fields) {
-            // First field is the ID field
-            $uid_field = "";
-            $uid_field_type = "";
-
-            foreach ($fields as $field => $field_type) {
-                $uid_field = $field;
-                $uid_field_type = $field_type;
-                break;
-            }
-
-            $query = "select\n";
-
-            $query .= implode(", ", array_keys($fields)) . "\n";
-
-            $query .= "from " . $table . "\n";
-
-            $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-            $query .= "where " . $uid_field . " = " . $user_id;
-
-            $this->dbworker->execute_query($query);
-
-            if ($this->dbworker->fetch_row()) {
-                foreach ($fields as $field => $type) {
-                    $data[$field] = $this->dbworker->field_by_name($field, $type); // short name (only field name)
-                    $data[$table . "." . $field] = $data[$field]; // full name (table name and field name)
-
-                }
-            }
-
-            $this->dbworker->free_result();
-        }
-
-        if (empty($this->multichoice_tables)) {
-            return;
-        }
-
-        foreach ($this->multichoice_tables as $table => $fields) {
-            // First field is the ID field
-            $uid_field = "";
-            $uid_field_type = "";
-
-            // Second field is the value field
-            $value_field = "";
-            $value_field_type = "";
-
-            $c = 1;
-            foreach ($fields as $field => $field_type) {
-                if ($c == 1) {
-                    $uid_field = $field;
-                    $uid_field_type = $field_type;
-                } elseif ($c == 2) {
-                    $value_field = $field;
-                    $value_field_type = $field_type;
-                } else {
-                    break;
-                }
-
-                $c++;
-            }
-
-            $query = "select " . $value_field . "\n";
-
-            $query .= "from " . $table . "\n";
-
-            $user_id = $this->dbworker->prepare_for_query($this->user_id, $uid_field_type);
-            $query .= "where " . $uid_field . " = " . $user_id;
-
-            $this->dbworker->execute_query($query);
-
-            $data[$table] = [];
-
-            while ($this->dbworker->fetch_row()) {
-                $data[$table][] = $this->dbworker->field_by_name($value_field, $value_field_type);
-            }
-
-            $this->dbworker->free_result();
-        }
+        $data = $this->readSettingsData($this->databaseWorker());
     } // loadSettingsData
 
     /**
-     * Initializes the settings manager parameters.
+     * Converts a multichoice value to the same unquoted scalar used for bound comparisons.
      *
-     * @param array $parameters
-     * Settings for saving and loading as an associative array in the form key => value:
-     *
-     * - $parameters["dbworker"] - the dbworker to use for loading and storing settings.
-     * - $parameters["settings_tables"] - the definitions of the settings tables.
-     * - $parameters["multichoice_tables"] - the definitions of the auxiliary tables for the multichoice values.
-     *
-     * Example:
-     *
-     * ```php
-     *   $instance->init([
-     *           "dbworker" => app_dbworker(),
-     *
-     *           "settings_tables" => [
-     *                "users" => [
-     *                    "id" => DBWorker::DB_NUMBER,
-     *                    "language" => DBWorker::DB_STRING,
-     *                    "time_zone" => DBWorker::DB_STRING
-     *                ],
-     *                "user_forum_settings" => [
-     *                    "user_id" => DBWorker::DB_NUMBER,
-     *                    "signature" => DBWorker::DB_STRING,
-     *                    "status" => DBWorker::DB_STRING,
-     *                    "hide_pictures" => DBWorker::DB_NUMBER,
-     *                    "hide_signatures" => DBWorker::DB_NUMBER
-     *                ]
-     *           ],
-     *
-     *           "multichoice_tables" => [
-     *                "user_colors" => [
-     *                    "user_id" => DBWorker::DB_NUMBER,
-     *                    "color" => DBWorker::DB_STRING
-     *                ]
-     *           ]
-     *   ]);
-     * ```
-     *
-     * @return void
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
-     *
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function init(array $parameters): void
-    {
-        if (!empty($parameters["dbworker"])) {
-            $this->dbworker = $parameters["dbworker"];
-        }
-
-        if (!empty($parameters["settings_tables"])) {
-            $this->settings_tables = $parameters["settings_tables"];
-        }
-        if (!empty($parameters["multichoice_tables"])) {
-            $this->multichoice_tables = $parameters["multichoice_tables"];
-        }
-
-        $this->validateParameters();
-    } // init
-
-    /**
-     * Sets the dbworker to be used for working with the database.
-     *
-     * @param DatabaseWorkers\DBWorker $dbworker
-     * The dbworker to be used for working with the database.
-     *
-     * @return void
-     *
-     * @see RecordsetManager::getDBWorker()
-     *
-     * @author Oleg Schildt
-     */
-
-    /**
-     * Sets the dbworker to use for loading and storing settings.
-     *
-     * @param DatabaseWorkers\DBWorker $dbworker
-     * The dbworker to be used for loading and storing settings.
-     *
-     * @param bool $no_own_transcation
-     * The state whether the translation should be started or commited or
-     * no transaction should be used because the saving process is a part of other saving process.
-     *
-     * @return void
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     * @see RecordsetManager::getDBWorker()
-     *
-     */
-    public function setDBWorker(DatabaseWorkers\DBWorker $dbworker, bool $no_own_transcation = false): void
-    {
-        $this->dbworker = $dbworker;
-        $this->no_own_transaction = $no_own_transcation;
-
-        if (empty($this->dbworker)) {
-            throw new \Exception("The 'dbworker' is not specified!");
-        }
-
-        if (!$this->dbworker instanceof DBWorker) {
-            throw new \Exception(sprintf("The 'dbworker' does not extends the class '%s'!", DBWorker::class));
-        }
-    } // setDBWorker
-
-    /**
-     * Sets the validator for the settings.
-     *
-     * @param ISettingsValidator $validator
-     * The settings validator.
-     *
-     * @return void
-     *
-     * @see UserSettingsManager::getValidator()
-     * @see UserSettingsManager::validateSettings()
-     *
-     * @author Oleg Schildt
-     */
-    public function setValidator(ISettingsValidator $validator): void
-    {
-        $this->validator = $validator;
-    } // setValidator
-
-    /**
-     * Returns the validator for the settings.
-     *
-     * @return ?\SmartFactory\Interfaces\ISettingsValidator
-     * Returns the validator for the settings or null if none is defined.
-     *
-     * @see UserSettingsManager::setValidator()
-     * @see UserSettingsManager::validateSettings()
-     *
-     * @author Oleg Schildt
-     */
-    public function getValidator(): ?\SmartFactory\Interfaces\ISettingsValidator
-    {
-        return $this->validator;
-    } // getValidator
-
-    /**
-     * Sets the settings context.
-     *
-     * Settings might be edited not in one dialog,
-     * There can be several masks for different type of settings,
-     * or the settings can be configured in a wizard.
-     * In this case, only a subset of settings has to be
-     * saved and validated.
-     * To be able to write a flexible validator for the subsets,
-     * the $context is used. It can be - step1, step1, server_settings,
-     * db_connection_settings etc.
-     *
-     * @param string $context
-     * The settings context.
-     *
-     * @return void
-     *
-     * @see UserSettingsManager::getContext()
-     *
-     * @author Oleg Schildt
-     */
-    public function setContext(string $context = "default"): void
-    {
-        $this->context = $context;
-    } // setContext
-
-    /**
-     * Returns the current settings context.
-     *
-     * Settings might be edited not in one dialog,
-     * There can be several masks for different type of settings,
-     * or the settings can be configured in a wizard.
-     * In this case, only a subset of settings has to be
-     * saved and validated.
-     * To be able to write a flexible validator for the subsets,
-     * the $context is used. It can be - step1, step1, server_settings,
-     * db_connection_settings etc.
-     *
-     * @return string
-     * Returns the current settings context.
-     *
-     * @see UserSettingsManager::setContext()
-     *
-     * @author Oleg Schildt
-     */
-    public function getContext(): string
-    {
-        return $this->context;
-    } // getContext
-
-    /**
-     * Sets a settings parameter.
-     *
-     * @param string $name
-     * The name of the settings parameter.
+     * @param DBWorker $worker
+     * The worker providing database-specific date formatting.
      *
      * @param mixed $value
-     * The value of the settings parameter.
+     * A scalar, NULL or date/time object accepted by the configured field.
      *
-     * @return void
+     * @param int $type
+     * The configured DBWorker field type.
      *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
+     * @return scalar|null
+     * Returns NULL for empty strings and NULL, formatted dates, or the original scalar.
      *
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
-     * - if the query fails or if some object names are invalid.
-     *
-     * @see UserSettingsManager::getParameter()
-     * @see UserSettingsManager::setParameters()
+     * @throws \InvalidArgumentException
+     * If a date is not an integer timestamp, integer timestamp string or date/time object.
      *
      * @author Oleg Schildt
      */
-    public function setParameter(string $name, mixed $value): void
+    protected function comparisonValue(DBWorker $worker, mixed $value, int $type): mixed
     {
-        if (empty($this->settings)) {
-            $this->loadSettings();
+        if ($value === '' || $value === null) {
+            return null;
         }
 
-        $this->settings[$name] = $value;
-    } // setParameter
-
-    /**
-     * Sets settings parameters from an array.
-     *
-     * @param array $parameters
-     * Array of parameters in the form key => value.
-     *
-     * @param bool $force_creation
-     * Flag which defines whether the parameter should be created
-     * if not exists. If false, only existing parameters are updated.
-     * In the UserSettingsManager, this flag is ignored, because
-     * the parameters are mapped to the database fields and cannot be created
-     * on the fly.
-     *
-     * @return void
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
-     *
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if the query fails or if some object names are invalid.
-     * - if the config file is not readable.
-     *
-     * @see UserSettingsManager::getParameter()
-     * @see UserSettingsManager::setParameter()
-     *
-     * @author Oleg Schildt
-     */
-    public function setParameters(array $parameters, bool $force_creation = false): void
-    {
-        if (empty($this->settings)) {
-            $this->loadSettings();
-        }
-
-        foreach ($parameters as $key => $val) {
-            if (!array_key_exists($key, $this->settings)) {
-                continue;
+        if ($type === DBWorker::DB_DATE || $type === DBWorker::DB_DATETIME) {
+            if (is_string($value) && preg_match('/\\A-?\\d+\\z/', $value)) {
+                $value = filter_var($value, FILTER_VALIDATE_INT);
             }
 
-            $this->settings[$key] = $val;
+            if (!is_int($value) && !$value instanceof \DateTimeInterface) {
+                throw new \InvalidArgumentException("A settings date must be a Unix timestamp or date/time object.");
+            }
+
+            return $type === DBWorker::DB_DATE
+                ? $worker->format_date_bind($value) : $worker->format_datetime_bind($value);
         }
-    } // setParameters
+
+        return $type === DBWorker::DB_NUMBER && is_bool($value) ? (int) $value : $value;
+    } // comparisonValue
 
     /**
-     * Returns the value of a settings parameter.
+     * Upserts selected choices and deletes removed choices through a bound query.
      *
-     * @param string $name
-     * The name of the settings parameter.
+     * @param DBWorker $worker
+     * The worker inside the aggregate's transaction and user lock.
      *
-     * @param mixed|null $default
-     * The default value of the settings parameter if it is not set yet.
-     * The parameter is a conformable way to pre-set a parameter
-     * to a default value if its value is not set yet.
+     * @param string $table
+     * The configured multichoice table name.
      *
-     * @return mixed
-     * Returns the value of the settings parameter.
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
-     *
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
-     * - if the query fails or if some object names are invalid.
-     *
-     * @see UserSettingsManager::setParameter()
-     * @see UserSettingsManager::setParameters()
-     *
-     * @author Oleg Schildt
-     */
-    public function getParameter(string $name, mixed $default = null): mixed
-    {
-        if (empty($this->settings)) {
-            $this->loadSettings();
-        }
-
-        if (!isset($this->settings[$name])) {
-            return $default;
-        }
-
-        return $this->settings[$name];
-    } // getParameter
-
-    /**
-     * Validates the current settings values.
-     *
-     * It should be called after settings the new values of the parameters
-     * and before their saving.
+     * @param array<array-key, scalar|\DateTimeInterface|null> $values
+     * The complete desired choice list, including valid zero and NULL values.
      *
      * @return void
+     * Leaves other users and unchanged choice rows intact. An empty list clears this user's choices.
      *
-     * @throws \Exception
-     * It might throw exceptions in the case of any errors.
-     *
-     * @uses Interfaces\ISettingsValidator
-     *
-     * @see  UserSettingsManager::getValidator()
-     * @see  UserSettingsManager::setValidator()
+     * @throws \Throwable
+     * If converting, saving or deleting a choice fails; the enclosing transaction must roll back.
      *
      * @author Oleg Schildt
      */
-    public function validateSettings(): void
+    protected function saveChoices(DBWorker $worker, string $table, array $values): void
     {
-        if (empty($this->validator)) {
+        $fields = $this->multichoice_tables[$table];
+        [$key, $value_field] = array_keys($fields);
+        $type = $fields[$value_field];
+        $bindings = [];
+        $keep_null = false;
+
+        foreach ($values as $value) {
+            $normalized = $this->comparisonValue($worker, $value, $type);
+            $record = [$key => $this->user_id,
+                $value_field => $type === DBWorker::DB_NUMBER && is_bool($value) ? (int) $value : $value];
+
+            $worker->save_records($record, [
+                'table' => $table,
+                'fields' => $fields,
+                'array_dimension_keys' => [],
+                'record_key_fields' => [$key, $value_field]
+            ]);
+
+            if ($normalized === null) {
+                $keep_null = true;
+            } else {
+                $bindings[] = $normalized;
+            }
+        }
+
+        $predicate = '';
+
+        if ($bindings !== []) {
+            $not_in = $value_field . ' NOT IN (' . implode(', ', array_fill(0, count($bindings), '?')) . ')';
+            $predicate = $keep_null ? ' AND ' . $not_in : ' AND (' . $value_field . ' IS NULL OR ' . $not_in . ')';
+        } elseif ($keep_null) {
+            $predicate = ' AND ' . $value_field . ' IS NOT NULL';
+        }
+
+        try {
+            $worker->prepare_query('DELETE FROM ' . $table . ' WHERE ' . $key . ' = ?' . $predicate);
+
+            $worker->execute_prepared_query([$this->user_id, ...$bindings]);
+        } finally {
+            $worker->free_prepared_query();
+        }
+    } // saveChoices
+
+    /**
+     * Saves only assigned parameters and choices in one transaction per user.
+     *
+     * @param array<string, mixed> &$data
+     * The local snapshot, replaced with freshly read database values after success.
+     *
+     * @return void
+     * Does nothing without edits. Missing optional settings rows may be inserted, but
+     * the owner row in the first settings table must already exist.
+     *
+     * @throws \OutOfBoundsException
+     * If the first settings table has no row for the selected user.
+     *
+     * @throws \Throwable
+     * If configuration, locking, saving, deleting, refreshing or committing fails.
+     * External transactions must be rolled back by their caller after a failure.
+     *
+     * @author Oleg Schildt
+     */
+    protected function saveSettingsData(array &$data): void
+    {
+        $this->validateParameters();
+
+        if ($this->changed === []) {
             return;
         }
 
-        $this->validator->validate($this, $this->context);
-    } // validateSettings
+        $data = $this->withTransaction(function (DBWorker $worker) use ($data): array {
+            $owner_table = array_key_first($this->settings_tables);
+            $owner_key = array_key_first($this->settings_tables[$owner_table]);
+
+            // Serialize the whole user aggregate, including requests that only change choice lists.
+            if (!$worker->lock_record($owner_table, [$owner_key => $this->user_id])) {
+                throw new \OutOfBoundsException("The selected user has no owner row in " . $owner_table);
+            }
+
+            foreach ($this->settings_tables as $table => $fields) {
+                $key = array_key_first($fields);
+                $record = [$key => $this->user_id];
+
+                foreach ($fields as $field => $type) {
+                    $name = $table . "." . $field;
+
+                    if ($field !== $key && isset($this->changed[$name])) {
+                        $value = $data[$name];
+                        $record[$field] = $type === DBWorker::DB_NUMBER && is_bool($value) ? (int) $value : $value;
+                    }
+                }
+
+                if (count($record) === 1) {
+                    continue;
+                }
+
+                $worker->save_records($record, [
+                    'table' => $table,
+                    'fields' => $fields,
+                    'array_dimension_keys' => [],
+                    'record_key_fields' => [$key],
+                    'identity_field' => $this->identity_fields[$table] ?? ''
+                ]);
+            }
+
+            foreach ($this->multichoice_tables as $table => $_) {
+                if (isset($this->changed[$table])) {
+                    $this->saveChoices($worker, $table, $data[$table]);
+                }
+            }
+
+            return $this->readSettingsData($worker);
+        });
+    } // saveSettingsData
 
     /**
-     * Loads the settings from the target user table.
+     * Selects a user and invalidates settings when the identifier changes.
      *
-     * The user ID must be set before loading settings, see {@see \SmartFactory\UserSettingsManager::setUserID()}.
+     * @param int|null $user_id
+     * The user identifier, including zero, or NULL to clear the selection.
      *
      * @return void
-     *
-     * @throws \Exception
-     * It might throw an exception in the case of any errors:
-     *
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
-     * - if the query fails or if some object names are invalid.
-     *
-     * @see UserSettingsManager::saveSettings()
+     * Discards the previous user's loaded values and unsaved edits when switching.
+     * Selecting the same user preserves current edits.
      *
      * @author Oleg Schildt
      */
-    public function loadSettings(): void
+    public function setUserID(?int $user_id): void
     {
-        $this->loadSettingsData($this->settings);
-    } // loadSettings
+        if ($this->user_id !== $user_id) {
+            $this->user_id = $user_id;
 
-    /**
-     * Saves the settings from to the target user table.
-     *
-     * @return void
-     *
-     * @throws \Exception|\Throwable
-     * It might throw an exception in the case of any errors:
-     *
-     * - if some parameters are missing.
-     * - if dbworker does not extend {@see \SmartFactory\DatabaseWorkers\DBWorker}.
-     * - if some parameters are not of the proper type.
-     * - if the query fails or if some object names are invalid.
-     *
-     * @see UserSettingsManager::loadSettings()
-     *
-     * @author Oleg Schildt
-     */
-    public function saveSettings(): void
-    {
-        if (empty($this->settings)) {
-            $this->loadSettings();
+            $this->resetSettings();
         }
-
-        $this->saveSettingsData($this->settings);
-    } // saveSettings
-
-    /**
-     * Sets the user id to be used for loading settings.
-     *
-     * The user ID must be set before loading settings, see {@see \SmartFactory\UserSettingsManager::loadSettings()}.
-     *
-     * @param string $user_id
-     * The user ID.
-     *
-     * @return void
-     *
-     * @see UserSettingsManager::loadSettings()
-     *
-     * @see UserSettingsManager::getUserID()
-     * @author Oleg Schildt
-     */
-    public function setUserID(string $user_id): void
-    {
-        $this->user_id = $user_id;
     } // setUserID
 
     /**
-     * Gets the user id to be used for loading settings.
+     * Returns the selected user's identifier without accessing storage.
      *
-     * @return int|string|null
-     * Returns the user id or null if not set.
-     *
-     * @see UserSettingsManager::setUserID()
+     * @return int|null
+     * Returns NULL when no user has been selected.
      *
      * @author Oleg Schildt
      */
-    public function getUserID(): int|string|null
+    public function getUserID(): ?int
     {
         return $this->user_id;
     } // getUserID

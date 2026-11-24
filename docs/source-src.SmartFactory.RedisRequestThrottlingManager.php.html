@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Source Code: src/SmartFactory/RedisRequestThrottlingManager.php - SmartFactory Library
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+ 
+
+                        <li class="active"></li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Source Code: src/SmartFactory/RedisRequestThrottlingManager.php</h2>
+
+<div id="source"><pre class="code"><code><span class="source-line" id="line-1"><a class="line" id="1" href="#1">1:</a> <span class="xlang">&lt;?php</span></span>
+<span class="source-line" id="line-2"><a class="line" id="2" href="#2">2:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-3"><a class="line" id="3" href="#3">3:</a> <span class="php-comment"> * Provides Redis storage for the common rolling-window throttling algorithm.</span></span>
+<span class="source-line" id="line-4"><a class="line" id="4" href="#4">4:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-5"><a class="line" id="5" href="#5">5:</a> <span class="php-comment"> * @package System</span></span>
+<span class="source-line" id="line-6"><a class="line" id="6" href="#6">6:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-7"><a class="line" id="7" href="#7">7:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-8"><a class="line" id="8" href="#8">8:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-9"><a class="line" id="9" href="#9">9:</a> </span>
+<span class="source-line" id="line-10"><a class="line" id="10" href="#10">10:</a> <span class="php-keyword1">namespace</span> SmartFactory;</span>
+<span class="source-line" id="line-11"><a class="line" id="11" href="#11">11:</a> </span>
+<span class="source-line" id="line-12"><a class="line" id="12" href="#12">12:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-13"><a class="line" id="13" href="#13">13:</a> <span class="php-comment"> * Stores each caller&#039;s JSON history behind an expiring, owner-checked Redis lock.</span></span>
+<span class="source-line" id="line-14"><a class="line" id="14" href="#14">14:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-15"><a class="line" id="15" href="#15">15:</a> <span class="php-comment"> * Requires the optional phpredis extension and a configured Redis connection. Lua guards</span></span>
+<span class="source-line" id="line-16"><a class="line" id="16" href="#16">16:</a> <span class="php-comment"> * reads, writes and lock release so an expired owner cannot overwrite another admission.</span></span>
+<span class="source-line" id="line-17"><a class="line" id="17" href="#17">17:</a> <span class="php-comment"> * Uses the Redis server clock and expires inactive history after its longest retained window.</span></span>
+<span class="source-line" id="line-18"><a class="line" id="18" href="#18">18:</a> <span class="php-comment"> * The client remains owned by the application and is never reconfigured or disconnected.</span></span>
+<span class="source-line" id="line-19"><a class="line" id="19" href="#19">19:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-20"><a class="line" id="20" href="#20">20:</a> <span class="php-comment"> * @link markdown:RedisRequestThrottlingManager.md Important notes</span></span>
+<span class="source-line" id="line-21"><a class="line" id="21" href="#21">21:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-22"><a class="line" id="22" href="#22">22:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-23"><a class="line" id="23" href="#23">23:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-24"><a class="line" id="24" href="#24">24:</a> <span class="php-keyword1">class</span> RedisRequestThrottlingManager <span class="php-keyword1">extends</span> AbstractRequestThrottlingManager</span>
+<span class="source-line" id="line-25"><a class="line" id="25" href="#25">25:</a> {</span>
+<span class="source-line" id="line-26"><a class="line" id="26" href="#26">26:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-27"><a class="line" id="27" href="#27">27:</a> <span class="php-comment">     * Stores the application-owned phpredis client.</span></span>
+<span class="source-line" id="line-28"><a class="line" id="28" href="#28">28:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-29"><a class="line" id="29" href="#29">29:</a> <span class="php-comment">     * @var \Redis|null</span></span>
+<span class="source-line" id="line-30"><a class="line" id="30" href="#30">30:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-31"><a class="line" id="31" href="#31">31:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-32"><a class="line" id="32" href="#32">32:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-33"><a class="line" id="33" href="#33">33:</a>     <span class="php-keyword1">protected</span> ?\Redis <span class="php-var">$redis</span> = <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-34"><a class="line" id="34" href="#34">34:</a> </span>
+<span class="source-line" id="line-35"><a class="line" id="35" href="#35">35:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-36"><a class="line" id="36" href="#36">36:</a> <span class="php-comment">     * Separates the application and policy from other Redis data.</span></span>
+<span class="source-line" id="line-37"><a class="line" id="37" href="#37">37:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-38"><a class="line" id="38" href="#38">38:</a> <span class="php-comment">     * @var string</span></span>
+<span class="source-line" id="line-39"><a class="line" id="39" href="#39">39:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-40"><a class="line" id="40" href="#40">40:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-41"><a class="line" id="41" href="#41">41:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-42"><a class="line" id="42" href="#42">42:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$key_prefix</span> = <span class="php-quote">&quot;smartfactory:throttling:&quot;</span>;</span>
+<span class="source-line" id="line-43"><a class="line" id="43" href="#43">43:</a> </span>
+<span class="source-line" id="line-44"><a class="line" id="44" href="#44">44:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-45"><a class="line" id="45" href="#45">45:</a> <span class="php-comment">     * Bounds how long an abandoned caller lock survives, in milliseconds.</span></span>
+<span class="source-line" id="line-46"><a class="line" id="46" href="#46">46:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-47"><a class="line" id="47" href="#47">47:</a> <span class="php-comment">     * @var positive-int</span></span>
+<span class="source-line" id="line-48"><a class="line" id="48" href="#48">48:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-49"><a class="line" id="49" href="#49">49:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-50"><a class="line" id="50" href="#50">50:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-51"><a class="line" id="51" href="#51">51:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">int</span> <span class="php-var">$lock_ttl_ms</span> = <span class="php-num">10000</span>;</span>
+<span class="source-line" id="line-52"><a class="line" id="52" href="#52">52:</a> </span>
+<span class="source-line" id="line-53"><a class="line" id="53" href="#53">53:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-54"><a class="line" id="54" href="#54">54:</a> <span class="php-comment">     * Bounds contention retries, in milliseconds, excluding individual network calls.</span></span>
+<span class="source-line" id="line-55"><a class="line" id="55" href="#55">55:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-56"><a class="line" id="56" href="#56">56:</a> <span class="php-comment">     * @var non-negative-int</span></span>
+<span class="source-line" id="line-57"><a class="line" id="57" href="#57">57:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-58"><a class="line" id="58" href="#58">58:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-59"><a class="line" id="59" href="#59">59:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-60"><a class="line" id="60" href="#60">60:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">int</span> <span class="php-var">$lock_timeout_ms</span> = <span class="php-num">3000</span>;</span>
+<span class="source-line" id="line-61"><a class="line" id="61" href="#61">61:</a> </span>
+<span class="source-line" id="line-62"><a class="line" id="62" href="#62">62:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-63"><a class="line" id="63" href="#63">63:</a> <span class="php-comment">     * Sets the interval between contended lock attempts, in milliseconds.</span></span>
+<span class="source-line" id="line-64"><a class="line" id="64" href="#64">64:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-65"><a class="line" id="65" href="#65">65:</a> <span class="php-comment">     * @var positive-int</span></span>
+<span class="source-line" id="line-66"><a class="line" id="66" href="#66">66:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-67"><a class="line" id="67" href="#67">67:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-68"><a class="line" id="68" href="#68">68:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-69"><a class="line" id="69" href="#69">69:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">int</span> <span class="php-var">$lock_retry_interval_ms</span> = <span class="php-num">10</span>;</span>
+<span class="source-line" id="line-70"><a class="line" id="70" href="#70">70:</a> </span>
+<span class="source-line" id="line-71"><a class="line" id="71" href="#71">71:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-72"><a class="line" id="72" href="#72">72:</a> <span class="php-comment">     * Identifies the caller currently protected by this instance.</span></span>
+<span class="source-line" id="line-73"><a class="line" id="73" href="#73">73:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-74"><a class="line" id="74" href="#74">74:</a> <span class="php-comment">     * @var string|null</span></span>
+<span class="source-line" id="line-75"><a class="line" id="75" href="#75">75:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-76"><a class="line" id="76" href="#76">76:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-77"><a class="line" id="77" href="#77">77:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-78"><a class="line" id="78" href="#78">78:</a>     <span class="php-keyword1">private</span> ?<span class="php-keyword1">string</span> <span class="php-var">$active_key</span> = <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-79"><a class="line" id="79" href="#79">79:</a> </span>
+<span class="source-line" id="line-80"><a class="line" id="80" href="#80">80:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-81"><a class="line" id="81" href="#81">81:</a> <span class="php-comment">     * Identifies the unique owner of the current caller lock.</span></span>
+<span class="source-line" id="line-82"><a class="line" id="82" href="#82">82:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-83"><a class="line" id="83" href="#83">83:</a> <span class="php-comment">     * @var string|null</span></span>
+<span class="source-line" id="line-84"><a class="line" id="84" href="#84">84:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-85"><a class="line" id="85" href="#85">85:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-86"><a class="line" id="86" href="#86">86:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-87"><a class="line" id="87" href="#87">87:</a>     <span class="php-keyword1">private</span> ?<span class="php-keyword1">string</span> <span class="php-var">$active_token</span> = <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-88"><a class="line" id="88" href="#88">88:</a> </span>
+<span class="source-line" id="line-89"><a class="line" id="89" href="#89">89:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-90"><a class="line" id="90" href="#90">90:</a> <span class="php-comment">     * Configures the client, namespace, contention settings and inherited rolling-window policy.</span></span>
+<span class="source-line" id="line-91"><a class="line" id="91" href="#91">91:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-92"><a class="line" id="92" href="#92">92:</a> <span class="php-comment">     * @param array{redis: \Redis, key_prefix?: non-empty-string, limits?: list&lt;array{0: positive-int, 1: positive-int}&gt;, lock_ttl_ms?: positive-int, lock_timeout_ms?: non-negative-int, lock_retry_interval_ms?: positive-int} $parameters</span></span>
+<span class="source-line" id="line-93"><a class="line" id="93" href="#93">93:</a> <span class="php-comment">     * A phpredis client configured by the application. The default prefix is smartfactory:throttling:.</span></span>
+<span class="source-line" id="line-94"><a class="line" id="94" href="#94">94:</a> <span class="php-comment">     * Lock defaults are a 10000 ms lease, 3000 ms contention timeout and 10 ms retry interval.</span></span>
+<span class="source-line" id="line-95"><a class="line" id="95" href="#95">95:</a> <span class="php-comment">     * Each lock setting is an integer no greater than 2147483647. A zero timeout permits one attempt.</span></span>
+<span class="source-line" id="line-96"><a class="line" id="96" href="#96">96:</a> <span class="php-comment">     * Omitted limits use DEFAULT_LIMITS; an empty list disables all storage access.</span></span>
+<span class="source-line" id="line-97"><a class="line" id="97" href="#97">97:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-98"><a class="line" id="98" href="#98">98:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-99"><a class="line" id="99" href="#99">99:</a> <span class="php-comment">     * Applies validated settings without connecting or changing existing history or client options.</span></span>
+<span class="source-line" id="line-100"><a class="line" id="100" href="#100">100:</a> <span class="php-comment">     * Invalid initialization preserves the previous configuration. See RedisRequestThrottlingManager.md.</span></span>
+<span class="source-line" id="line-101"><a class="line" id="101" href="#101">101:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-102"><a class="line" id="102" href="#102">102:</a> <span class="php-comment">     * @throws \InvalidArgumentException</span></span>
+<span class="source-line" id="line-103"><a class="line" id="103" href="#103">103:</a> <span class="php-comment">     * If redis is not a phpredis client, the prefix is empty, a lock setting is outside its range,</span></span>
+<span class="source-line" id="line-104"><a class="line" id="104" href="#104">104:</a> <span class="php-comment">     * or the inherited limit policy is invalid.</span></span>
+<span class="source-line" id="line-105"><a class="line" id="105" href="#105">105:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-106"><a class="line" id="106" href="#106">106:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-107"><a class="line" id="107" href="#107">107:</a> <span class="php-comment">     * If initialization is attempted during an admission operation.</span></span>
+<span class="source-line" id="line-108"><a class="line" id="108" href="#108">108:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-109"><a class="line" id="109" href="#109">109:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-110"><a class="line" id="110" href="#110">110:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-111"><a class="line" id="111" href="#111">111:</a>     <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-112"><a class="line" id="112" href="#112">112:</a>     {</span>
+<span class="source-line" id="line-113"><a class="line" id="113" href="#113">113:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;active_key !== <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-114"><a class="line" id="114" href="#114">114:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;The throttling manager cannot be reinitialized during admission.&quot;</span>);</span>
+<span class="source-line" id="line-115"><a class="line" id="115" href="#115">115:</a>         }</span>
+<span class="source-line" id="line-116"><a class="line" id="116" href="#116">116:</a> </span>
+<span class="source-line" id="line-117"><a class="line" id="117" href="#117">117:</a>         <span class="php-var">$redis</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&quot;redis&quot;</span>] ?? <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-118"><a class="line" id="118" href="#118">118:</a>         <span class="php-var">$prefix</span> = array_key_exists(<span class="php-quote">&quot;key_prefix&quot;</span>, <span class="php-var">$parameters</span>) ? <span class="php-var">$parameters</span>[<span class="php-quote">&quot;key_prefix&quot;</span>] : <span class="php-quote">&quot;smartfactory:throttling:&quot;</span>;</span>
+<span class="source-line" id="line-119"><a class="line" id="119" href="#119">119:</a>         <span class="php-var">$settings</span> = [<span class="php-quote">&quot;lock_ttl_ms&quot;</span> =&gt; <span class="php-num">10000</span>, <span class="php-quote">&quot;lock_timeout_ms&quot;</span> =&gt; <span class="php-num">3000</span>, <span class="php-quote">&quot;lock_retry_interval_ms&quot;</span> =&gt; <span class="php-num">10</span>];</span>
+<span class="source-line" id="line-120"><a class="line" id="120" href="#120">120:</a> </span>
+<span class="source-line" id="line-121"><a class="line" id="121" href="#121">121:</a>         <span class="php-keyword1">if</span> (!<span class="php-var">$redis</span> <span class="php-keyword1">instanceof</span> \Redis) {</span>
+<span class="source-line" id="line-122"><a class="line" id="122" href="#122">122:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;The redis parameter must be a phpredis Redis instance.&quot;</span>);</span>
+<span class="source-line" id="line-123"><a class="line" id="123" href="#123">123:</a>         }</span>
+<span class="source-line" id="line-124"><a class="line" id="124" href="#124">124:</a> </span>
+<span class="source-line" id="line-125"><a class="line" id="125" href="#125">125:</a>         <span class="php-keyword1">if</span> (!is_string(<span class="php-var">$prefix</span>) || <span class="php-var">$prefix</span> === <span class="php-quote">&quot;&quot;</span>) {</span>
+<span class="source-line" id="line-126"><a class="line" id="126" href="#126">126:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;The Redis throttling key prefix must be a nonempty string.&quot;</span>);</span>
+<span class="source-line" id="line-127"><a class="line" id="127" href="#127">127:</a>         }</span>
+<span class="source-line" id="line-128"><a class="line" id="128" href="#128">128:</a> </span>
+<span class="source-line" id="line-129"><a class="line" id="129" href="#129">129:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$settings</span> <span class="php-keyword1">as</span> <span class="php-var">$name</span> =&gt; <span class="php-var">$default</span>) {</span>
+<span class="source-line" id="line-130"><a class="line" id="130" href="#130">130:</a>             <span class="php-var">$value</span> = array_key_exists(<span class="php-var">$name</span>, <span class="php-var">$parameters</span>) ? <span class="php-var">$parameters</span>[<span class="php-var">$name</span>] : <span class="php-var">$default</span>;</span>
+<span class="source-line" id="line-131"><a class="line" id="131" href="#131">131:</a>             <span class="php-var">$minimum</span> = <span class="php-var">$name</span> === <span class="php-quote">&quot;lock_timeout_ms&quot;</span> ? <span class="php-num">0</span> : <span class="php-num">1</span>;</span>
+<span class="source-line" id="line-132"><a class="line" id="132" href="#132">132:</a> </span>
+<span class="source-line" id="line-133"><a class="line" id="133" href="#133">133:</a>             <span class="php-keyword1">if</span> (!is_int(<span class="php-var">$value</span>) || <span class="php-var">$value</span> &lt; <span class="php-var">$minimum</span> || <span class="php-var">$value</span> &gt; <span class="php-num">2147483647</span>) {</span>
+<span class="source-line" id="line-134"><a class="line" id="134" href="#134">134:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;The &quot;</span> . <span class="php-var">$name</span> . <span class="php-quote">&quot; parameter is outside its supported integer range.&quot;</span>);</span>
+<span class="source-line" id="line-135"><a class="line" id="135" href="#135">135:</a>             }</span>
+<span class="source-line" id="line-136"><a class="line" id="136" href="#136">136:</a> </span>
+<span class="source-line" id="line-137"><a class="line" id="137" href="#137">137:</a>             <span class="php-var">$settings</span>[<span class="php-var">$name</span>] = <span class="php-var">$value</span>;</span>
+<span class="source-line" id="line-138"><a class="line" id="138" href="#138">138:</a>         }</span>
+<span class="source-line" id="line-139"><a class="line" id="139" href="#139">139:</a> </span>
+<span class="source-line" id="line-140"><a class="line" id="140" href="#140">140:</a>         <span class="php-keyword1">parent</span>::init(<span class="php-var">$parameters</span>);</span>
+<span class="source-line" id="line-141"><a class="line" id="141" href="#141">141:</a> </span>
+<span class="source-line" id="line-142"><a class="line" id="142" href="#142">142:</a>         <span class="php-var">$this</span>-&gt;redis = <span class="php-var">$redis</span>;</span>
+<span class="source-line" id="line-143"><a class="line" id="143" href="#143">143:</a>         <span class="php-var">$this</span>-&gt;key_prefix = <span class="php-var">$prefix</span>;</span>
+<span class="source-line" id="line-144"><a class="line" id="144" href="#144">144:</a>         <span class="php-var">$this</span>-&gt;lock_ttl_ms = <span class="php-var">$settings</span>[<span class="php-quote">&quot;lock_ttl_ms&quot;</span>];</span>
+<span class="source-line" id="line-145"><a class="line" id="145" href="#145">145:</a>         <span class="php-var">$this</span>-&gt;lock_timeout_ms = <span class="php-var">$settings</span>[<span class="php-quote">&quot;lock_timeout_ms&quot;</span>];</span>
+<span class="source-line" id="line-146"><a class="line" id="146" href="#146">146:</a>         <span class="php-var">$this</span>-&gt;lock_retry_interval_ms = <span class="php-var">$settings</span>[<span class="php-quote">&quot;lock_retry_interval_ms&quot;</span>];</span>
+<span class="source-line" id="line-147"><a class="line" id="147" href="#147">147:</a>     } <span class="php-comment">// init</span></span>
+<span class="source-line" id="line-148"><a class="line" id="148" href="#148">148:</a> </span>
+<span class="source-line" id="line-149"><a class="line" id="149" href="#149">149:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-150"><a class="line" id="150" href="#150">150:</a> <span class="php-comment">     * Verifies that the application client can execute immediate Lua commands safely.</span></span>
+<span class="source-line" id="line-151"><a class="line" id="151" href="#151">151:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-152"><a class="line" id="152" href="#152">152:</a> <span class="php-comment">     * @return \Redis</span></span>
+<span class="source-line" id="line-153"><a class="line" id="153" href="#153">153:</a> <span class="php-comment">     * Returns the connected client in ATOMIC mode. Client prefixes are applied by phpredis to Lua KEYS.</span></span>
+<span class="source-line" id="line-154"><a class="line" id="154" href="#154">154:</a> <span class="php-comment">     * Lua arguments and stored JSON are independent of the client&#039;s serializer and compression options.</span></span>
+<span class="source-line" id="line-155"><a class="line" id="155" href="#155">155:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-156"><a class="line" id="156" href="#156">156:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-157"><a class="line" id="157" href="#157">157:</a> <span class="php-comment">     * If the client is missing, disconnected, or inside MULTI or a pipeline.</span></span>
+<span class="source-line" id="line-158"><a class="line" id="158" href="#158">158:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-159"><a class="line" id="159" href="#159">159:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-160"><a class="line" id="160" href="#160">160:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-161"><a class="line" id="161" href="#161">161:</a>     <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> client(): \Redis</span>
+<span class="source-line" id="line-162"><a class="line" id="162" href="#162">162:</a>     {</span>
+<span class="source-line" id="line-163"><a class="line" id="163" href="#163">163:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;redis === <span class="php-keyword1">null</span> || !<span class="php-var">$this</span>-&gt;redis-&gt;isConnected()) {</span>
+<span class="source-line" id="line-164"><a class="line" id="164" href="#164">164:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;Redis throttling requires a connected phpredis client.&quot;</span>);</span>
+<span class="source-line" id="line-165"><a class="line" id="165" href="#165">165:</a>         }</span>
+<span class="source-line" id="line-166"><a class="line" id="166" href="#166">166:</a> </span>
+<span class="source-line" id="line-167"><a class="line" id="167" href="#167">167:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;redis-&gt;getMode() !== \Redis::ATOMIC) {</span>
+<span class="source-line" id="line-168"><a class="line" id="168" href="#168">168:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;Redis throttling cannot run inside MULTI or a pipeline.&quot;</span>);</span>
+<span class="source-line" id="line-169"><a class="line" id="169" href="#169">169:</a>         }</span>
+<span class="source-line" id="line-170"><a class="line" id="170" href="#170">170:</a> </span>
+<span class="source-line" id="line-171"><a class="line" id="171" href="#171">171:</a>         <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;redis;</span>
+<span class="source-line" id="line-172"><a class="line" id="172" href="#172">172:</a>     } <span class="php-comment">// client</span></span>
+<span class="source-line" id="line-173"><a class="line" id="173" href="#173">173:</a> </span>
+<span class="source-line" id="line-174"><a class="line" id="174" href="#174">174:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-175"><a class="line" id="175" href="#175">175:</a> <span class="php-comment">     * Builds the caller&#039;s history and lock keys in a common Redis hash tag.</span></span>
+<span class="source-line" id="line-176"><a class="line" id="176" href="#176">176:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-177"><a class="line" id="177" href="#177">177:</a> <span class="php-comment">     * @param string $key</span></span>
+<span class="source-line" id="line-178"><a class="line" id="178" href="#178">178:</a> <span class="php-comment">     * The lowercase SHA-256 caller hash supplied by the base algorithm.</span></span>
+<span class="source-line" id="line-179"><a class="line" id="179" href="#179">179:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-180"><a class="line" id="180" href="#180">180:</a> <span class="php-comment">     * @return array{0: string, 1: string}</span></span>
+<span class="source-line" id="line-181"><a class="line" id="181" href="#181">181:</a> <span class="php-comment">     * Returns the lock key followed by the history key, before any phpredis client prefix.</span></span>
+<span class="source-line" id="line-182"><a class="line" id="182" href="#182">182:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-183"><a class="line" id="183" href="#183">183:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-184"><a class="line" id="184" href="#184">184:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-185"><a class="line" id="185" href="#185">185:</a>     <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> keys(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">array</span></span>
+<span class="source-line" id="line-186"><a class="line" id="186" href="#186">186:</a>     {</span>
+<span class="source-line" id="line-187"><a class="line" id="187" href="#187">187:</a>         <span class="php-var">$base</span> = <span class="php-var">$this</span>-&gt;key_prefix . <span class="php-quote">&quot;{&quot;</span> . <span class="php-var">$key</span> . <span class="php-quote">&quot;}&quot;</span>;</span>
+<span class="source-line" id="line-188"><a class="line" id="188" href="#188">188:</a> </span>
+<span class="source-line" id="line-189"><a class="line" id="189" href="#189">189:</a>         <span class="php-keyword1">return</span> [<span class="php-var">$base</span> . <span class="php-quote">&quot;:lock&quot;</span>, <span class="php-var">$base</span> . <span class="php-quote">&quot;:history&quot;</span>];</span>
+<span class="source-line" id="line-190"><a class="line" id="190" href="#190">190:</a>     } <span class="php-comment">// keys</span></span>
+<span class="source-line" id="line-191"><a class="line" id="191" href="#191">191:</a> </span>
+<span class="source-line" id="line-192"><a class="line" id="192" href="#192">192:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-193"><a class="line" id="193" href="#193">193:</a> <span class="php-comment">     * Serializes a caller&#039;s admission and releases only the lock owned by this operation.</span></span>
+<span class="source-line" id="line-194"><a class="line" id="194" href="#194">194:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-195"><a class="line" id="195" href="#195">195:</a> <span class="php-comment">     * @param string $key</span></span>
+<span class="source-line" id="line-196"><a class="line" id="196" href="#196">196:</a> <span class="php-comment">     * The lowercase SHA-256 caller hash supplied by the common algorithm.</span></span>
+<span class="source-line" id="line-197"><a class="line" id="197" href="#197">197:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-198"><a class="line" id="198" href="#198">198:</a> <span class="php-comment">     * @param callable(): int $operation</span></span>
+<span class="source-line" id="line-199"><a class="line" id="199" href="#199">199:</a> <span class="php-comment">     * The clock/read/check/write operation invoked exactly once after lock acquisition.</span></span>
+<span class="source-line" id="line-200"><a class="line" id="200" href="#200">200:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-201"><a class="line" id="201" href="#201">201:</a> <span class="php-comment">     * @return int</span></span>
+<span class="source-line" id="line-202"><a class="line" id="202" href="#202">202:</a> <span class="php-comment">     * Returns admission or retry only after verifying ownership and releasing the lock.</span></span>
+<span class="source-line" id="line-203"><a class="line" id="203" href="#203">203:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-204"><a class="line" id="204" href="#204">204:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-205"><a class="line" id="205" href="#205">205:</a> <span class="php-comment">     * If the client is unavailable, in queued mode, or admission is nested.</span></span>
+<span class="source-line" id="line-206"><a class="line" id="206" href="#206">206:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-207"><a class="line" id="207" href="#207">207:</a> <span class="php-comment">     * @throws \RuntimeException</span></span>
+<span class="source-line" id="line-208"><a class="line" id="208" href="#208">208:</a> <span class="php-comment">     * If Redis commands fail, lock contention exceeds the timeout, or the lease expires.</span></span>
+<span class="source-line" id="line-209"><a class="line" id="209" href="#209">209:</a> <span class="php-comment">     * An expired owner cannot write history or release a replacement owner&#039;s lock.</span></span>
+<span class="source-line" id="line-210"><a class="line" id="210" href="#210">210:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-211"><a class="line" id="211" href="#211">211:</a> <span class="php-comment">     * @throws \Throwable</span></span>
+<span class="source-line" id="line-212"><a class="line" id="212" href="#212">212:</a> <span class="php-comment">     * If token generation or the callback fails. The original failure survives cleanup failures.</span></span>
+<span class="source-line" id="line-213"><a class="line" id="213" href="#213">213:</a> <span class="php-comment">     * A write whose response is lost may consume a slot without granting admission.</span></span>
+<span class="source-line" id="line-214"><a class="line" id="214" href="#214">214:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-215"><a class="line" id="215" href="#215">215:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-216"><a class="line" id="216" href="#216">216:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-217"><a class="line" id="217" href="#217">217:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> executeAtomically(<span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">callable</span> <span class="php-var">$operation</span>): <span class="php-keyword1">int</span></span>
+<span class="source-line" id="line-218"><a class="line" id="218" href="#218">218:</a>     {</span>
+<span class="source-line" id="line-219"><a class="line" id="219" href="#219">219:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;active_key !== <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-220"><a class="line" id="220" href="#220">220:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;Nested throttling admission operations are not supported.&quot;</span>);</span>
+<span class="source-line" id="line-221"><a class="line" id="221" href="#221">221:</a>         }</span>
+<span class="source-line" id="line-222"><a class="line" id="222" href="#222">222:</a> </span>
+<span class="source-line" id="line-223"><a class="line" id="223" href="#223">223:</a>         <span class="php-var">$redis</span> = <span class="php-var">$this</span>-&gt;client();</span>
+<span class="source-line" id="line-224"><a class="line" id="224" href="#224">224:</a>         [<span class="php-var">$lock</span>] = <span class="php-var">$this</span>-&gt;keys(<span class="php-var">$key</span>);</span>
+<span class="source-line" id="line-225"><a class="line" id="225" href="#225">225:</a>         <span class="php-var">$token</span> = bin2hex(random_bytes(<span class="php-num">24</span>));</span>
+<span class="source-line" id="line-226"><a class="line" id="226" href="#226">226:</a>         <span class="php-var">$started</span> = hrtime(<span class="php-keyword1">true</span>);</span>
+<span class="source-line" id="line-227"><a class="line" id="227" href="#227">227:</a>         <span class="php-var">$failure</span> = <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-228"><a class="line" id="228" href="#228">228:</a>         <span class="php-var">$acquired</span> = <span class="php-keyword1">false</span>;</span>
+<span class="source-line" id="line-229"><a class="line" id="229" href="#229">229:</a>         <span class="php-var">$acquire_script</span> = <span class="php-quote">&#039;return redis.call(&quot;SET&quot;, KEYS[1], ARGV[1], &quot;NX&quot;, &quot;PX&quot;, ARGV[2]) and 1 or 0&#039;</span>;</span>
+<span class="source-line" id="line-230"><a class="line" id="230" href="#230">230:</a>         <span class="php-var">$release_script</span> = <span class="php-quote">&#039;if redis.call(&quot;GET&quot;, KEYS[1]) == ARGV[1] then return redis.call(&quot;DEL&quot;, KEYS[1]) end return 0&#039;</span>;</span>
+<span class="source-line" id="line-231"><a class="line" id="231" href="#231">231:</a> </span>
+<span class="source-line" id="line-232"><a class="line" id="232" href="#232">232:</a>         <span class="php-keyword1">try</span> {</span>
+<span class="source-line" id="line-233"><a class="line" id="233" href="#233">233:</a>             <span class="php-keyword1">do</span> {</span>
+<span class="source-line" id="line-234"><a class="line" id="234" href="#234">234:</a>                 <span class="php-var">$result</span> = <span class="php-var">$redis</span>-&gt;eval(<span class="php-var">$acquire_script</span>, [<span class="php-var">$lock</span>, <span class="php-var">$token</span>, <span class="php-var">$this</span>-&gt;lock_ttl_ms], <span class="php-num">1</span>);</span>
+<span class="source-line" id="line-235"><a class="line" id="235" href="#235">235:</a> </span>
+<span class="source-line" id="line-236"><a class="line" id="236" href="#236">236:</a>                 <span class="php-keyword1">if</span> (<span class="php-var">$result</span> === <span class="php-num">1</span>) {</span>
+<span class="source-line" id="line-237"><a class="line" id="237" href="#237">237:</a>                     <span class="php-var">$acquired</span> = <span class="php-keyword1">true</span>;</span>
+<span class="source-line" id="line-238"><a class="line" id="238" href="#238">238:</a> </span>
+<span class="source-line" id="line-239"><a class="line" id="239" href="#239">239:</a>                     <span class="php-keyword1">break</span>;</span>
+<span class="source-line" id="line-240"><a class="line" id="240" href="#240">240:</a>                 }</span>
+<span class="source-line" id="line-241"><a class="line" id="241" href="#241">241:</a> </span>
+<span class="source-line" id="line-242"><a class="line" id="242" href="#242">242:</a>                 <span class="php-keyword1">if</span> (<span class="php-var">$result</span> !== <span class="php-num">0</span>) {</span>
+<span class="source-line" id="line-243"><a class="line" id="243" href="#243">243:</a>                     <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling lock could not be acquired.&quot;</span>);</span>
+<span class="source-line" id="line-244"><a class="line" id="244" href="#244">244:</a>                 }</span>
+<span class="source-line" id="line-245"><a class="line" id="245" href="#245">245:</a> </span>
+<span class="source-line" id="line-246"><a class="line" id="246" href="#246">246:</a>                 <span class="php-var">$remaining_ms</span> = <span class="php-var">$this</span>-&gt;lock_timeout_ms - (hrtime(<span class="php-keyword1">true</span>) - <span class="php-var">$started</span>) / <span class="php-num">1000000</span>;</span>
+<span class="source-line" id="line-247"><a class="line" id="247" href="#247">247:</a> </span>
+<span class="source-line" id="line-248"><a class="line" id="248" href="#248">248:</a>                 <span class="php-keyword1">if</span> (<span class="php-var">$remaining_ms</span> &lt;= <span class="php-num">0</span>) {</span>
+<span class="source-line" id="line-249"><a class="line" id="249" href="#249">249:</a>                     <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling lock wait timed out.&quot;</span>);</span>
+<span class="source-line" id="line-250"><a class="line" id="250" href="#250">250:</a>                 }</span>
+<span class="source-line" id="line-251"><a class="line" id="251" href="#251">251:</a> </span>
+<span class="source-line" id="line-252"><a class="line" id="252" href="#252">252:</a>                 usleep(<span class="php-keyword2">(int)</span> min(<span class="php-var">$remaining_ms</span> * <span class="php-num">1000</span>, <span class="php-var">$this</span>-&gt;lock_retry_interval_ms * <span class="php-num">1000</span>));</span>
+<span class="source-line" id="line-253"><a class="line" id="253" href="#253">253:</a>             } <span class="php-keyword1">while</span> (<span class="php-keyword1">true</span>);</span>
+<span class="source-line" id="line-254"><a class="line" id="254" href="#254">254:</a> </span>
+<span class="source-line" id="line-255"><a class="line" id="255" href="#255">255:</a>             <span class="php-var">$this</span>-&gt;active_key = <span class="php-var">$key</span>;</span>
+<span class="source-line" id="line-256"><a class="line" id="256" href="#256">256:</a>             <span class="php-var">$this</span>-&gt;active_token = <span class="php-var">$token</span>;</span>
+<span class="source-line" id="line-257"><a class="line" id="257" href="#257">257:</a> </span>
+<span class="source-line" id="line-258"><a class="line" id="258" href="#258">258:</a>             <span class="php-keyword1">return</span> <span class="php-var">$operation</span>();</span>
+<span class="source-line" id="line-259"><a class="line" id="259" href="#259">259:</a>         } <span class="php-keyword1">catch</span> (\RedisException <span class="php-var">$exception</span>) {</span>
+<span class="source-line" id="line-260"><a class="line" id="260" href="#260">260:</a>             <span class="php-var">$failure</span> = <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling storage operation failed.&quot;</span>, <span class="php-num">0</span>, <span class="php-var">$exception</span>);</span>
+<span class="source-line" id="line-261"><a class="line" id="261" href="#261">261:</a> </span>
+<span class="source-line" id="line-262"><a class="line" id="262" href="#262">262:</a>             <span class="php-keyword1">throw</span> <span class="php-var">$failure</span>;</span>
+<span class="source-line" id="line-263"><a class="line" id="263" href="#263">263:</a>         } <span class="php-keyword1">catch</span> (\Throwable <span class="php-var">$exception</span>) {</span>
+<span class="source-line" id="line-264"><a class="line" id="264" href="#264">264:</a>             <span class="php-var">$failure</span> = <span class="php-var">$exception</span>;</span>
+<span class="source-line" id="line-265"><a class="line" id="265" href="#265">265:</a> </span>
+<span class="source-line" id="line-266"><a class="line" id="266" href="#266">266:</a>             <span class="php-keyword1">throw</span> <span class="php-var">$exception</span>;</span>
+<span class="source-line" id="line-267"><a class="line" id="267" href="#267">267:</a>         } <span class="php-keyword1">finally</span> {</span>
+<span class="source-line" id="line-268"><a class="line" id="268" href="#268">268:</a>             <span class="php-var">$this</span>-&gt;active_key = <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-269"><a class="line" id="269" href="#269">269:</a>             <span class="php-var">$this</span>-&gt;active_token = <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-270"><a class="line" id="270" href="#270">270:</a> </span>
+<span class="source-line" id="line-271"><a class="line" id="271" href="#271">271:</a>             <span class="php-keyword1">try</span> {</span>
+<span class="source-line" id="line-272"><a class="line" id="272" href="#272">272:</a>                 <span class="php-comment">// Also attempt owner-checked release after an ambiguous acquisition response.</span></span>
+<span class="source-line" id="line-273"><a class="line" id="273" href="#273">273:</a>                 <span class="php-var">$released</span> = <span class="php-var">$redis</span>-&gt;eval(<span class="php-var">$release_script</span>, [<span class="php-var">$lock</span>, <span class="php-var">$token</span>], <span class="php-num">1</span>);</span>
+<span class="source-line" id="line-274"><a class="line" id="274" href="#274">274:</a> </span>
+<span class="source-line" id="line-275"><a class="line" id="275" href="#275">275:</a>                 <span class="php-keyword1">if</span> (<span class="php-var">$acquired</span> &amp;&amp; <span class="php-var">$released</span> !== <span class="php-num">1</span> &amp;&amp; <span class="php-var">$failure</span> === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-276"><a class="line" id="276" href="#276">276:</a>                     <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling lock expired before admission completed.&quot;</span>);</span>
+<span class="source-line" id="line-277"><a class="line" id="277" href="#277">277:</a>                 }</span>
+<span class="source-line" id="line-278"><a class="line" id="278" href="#278">278:</a>             } <span class="php-keyword1">catch</span> (\Throwable <span class="php-var">$cleanup_exception</span>) {</span>
+<span class="source-line" id="line-279"><a class="line" id="279" href="#279">279:</a>                 <span class="php-keyword1">if</span> (<span class="php-var">$failure</span> === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-280"><a class="line" id="280" href="#280">280:</a>                     <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling lock could not be released.&quot;</span>, <span class="php-num">0</span>, <span class="php-var">$cleanup_exception</span>);</span>
+<span class="source-line" id="line-281"><a class="line" id="281" href="#281">281:</a>                 }</span>
+<span class="source-line" id="line-282"><a class="line" id="282" href="#282">282:</a>             }</span>
+<span class="source-line" id="line-283"><a class="line" id="283" href="#283">283:</a>         }</span>
+<span class="source-line" id="line-284"><a class="line" id="284" href="#284">284:</a>     } <span class="php-comment">// executeAtomically</span></span>
+<span class="source-line" id="line-285"><a class="line" id="285" href="#285">285:</a> </span>
+<span class="source-line" id="line-286"><a class="line" id="286" href="#286">286:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-287"><a class="line" id="287" href="#287">287:</a> <span class="php-comment">     * Requires storage hooks to belong to the current locked caller.</span></span>
+<span class="source-line" id="line-288"><a class="line" id="288" href="#288">288:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-289"><a class="line" id="289" href="#289">289:</a> <span class="php-comment">     * @param string $key</span></span>
+<span class="source-line" id="line-290"><a class="line" id="290" href="#290">290:</a> <span class="php-comment">     * The hashed caller selected by the storage hook.</span></span>
+<span class="source-line" id="line-291"><a class="line" id="291" href="#291">291:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-292"><a class="line" id="292" href="#292">292:</a> <span class="php-comment">     * @return string</span></span>
+<span class="source-line" id="line-293"><a class="line" id="293" href="#293">293:</a> <span class="php-comment">     * Returns this operation&#039;s unique owner token.</span></span>
+<span class="source-line" id="line-294"><a class="line" id="294" href="#294">294:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-295"><a class="line" id="295" href="#295">295:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-296"><a class="line" id="296" href="#296">296:</a> <span class="php-comment">     * If no operation is active or the hook requests another caller&#039;s history.</span></span>
+<span class="source-line" id="line-297"><a class="line" id="297" href="#297">297:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-298"><a class="line" id="298" href="#298">298:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-299"><a class="line" id="299" href="#299">299:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-300"><a class="line" id="300" href="#300">300:</a>     <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> token(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">string</span></span>
+<span class="source-line" id="line-301"><a class="line" id="301" href="#301">301:</a>     {</span>
+<span class="source-line" id="line-302"><a class="line" id="302" href="#302">302:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;active_key !== <span class="php-var">$key</span> || <span class="php-var">$this</span>-&gt;active_token === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-303"><a class="line" id="303" href="#303">303:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;Redis storage access requires the active caller&#039;s operation.&quot;</span>);</span>
+<span class="source-line" id="line-304"><a class="line" id="304" href="#304">304:</a>         }</span>
+<span class="source-line" id="line-305"><a class="line" id="305" href="#305">305:</a> </span>
+<span class="source-line" id="line-306"><a class="line" id="306" href="#306">306:</a>         <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;active_token;</span>
+<span class="source-line" id="line-307"><a class="line" id="307" href="#307">307:</a>     } <span class="php-comment">// token</span></span>
+<span class="source-line" id="line-308"><a class="line" id="308" href="#308">308:</a> </span>
+<span class="source-line" id="line-309"><a class="line" id="309" href="#309">309:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-310"><a class="line" id="310" href="#310">310:</a> <span class="php-comment">     * Reads the Redis server&#039;s clock for consistent windows across application servers.</span></span>
+<span class="source-line" id="line-311"><a class="line" id="311" href="#311">311:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-312"><a class="line" id="312" href="#312">312:</a> <span class="php-comment">     * @return float</span></span>
+<span class="source-line" id="line-313"><a class="line" id="313" href="#313">313:</a> <span class="php-comment">     * Returns Unix seconds with microsecond precision.</span></span>
+<span class="source-line" id="line-314"><a class="line" id="314" href="#314">314:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-315"><a class="line" id="315" href="#315">315:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-316"><a class="line" id="316" href="#316">316:</a> <span class="php-comment">     * If the client cannot execute an immediate command.</span></span>
+<span class="source-line" id="line-317"><a class="line" id="317" href="#317">317:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-318"><a class="line" id="318" href="#318">318:</a> <span class="php-comment">     * @throws \RuntimeException</span></span>
+<span class="source-line" id="line-319"><a class="line" id="319" href="#319">319:</a> <span class="php-comment">     * If Redis returns an invalid TIME reply.</span></span>
+<span class="source-line" id="line-320"><a class="line" id="320" href="#320">320:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-321"><a class="line" id="321" href="#321">321:</a> <span class="php-comment">     * @throws \RedisException</span></span>
+<span class="source-line" id="line-322"><a class="line" id="322" href="#322">322:</a> <span class="php-comment">     * If Redis cannot execute TIME; the atomic boundary wraps the storage failure.</span></span>
+<span class="source-line" id="line-323"><a class="line" id="323" href="#323">323:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-324"><a class="line" id="324" href="#324">324:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-325"><a class="line" id="325" href="#325">325:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-326"><a class="line" id="326" href="#326">326:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getCurrentTime(): <span class="php-keyword1">float</span></span>
+<span class="source-line" id="line-327"><a class="line" id="327" href="#327">327:</a>     {</span>
+<span class="source-line" id="line-328"><a class="line" id="328" href="#328">328:</a>         <span class="php-var">$time</span> = <span class="php-var">$this</span>-&gt;client()-&gt;time();</span>
+<span class="source-line" id="line-329"><a class="line" id="329" href="#329">329:</a> </span>
+<span class="source-line" id="line-330"><a class="line" id="330" href="#330">330:</a>         <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$time</span>) || count(<span class="php-var">$time</span>) !== <span class="php-num">2</span> || !is_numeric(<span class="php-var">$time</span>[<span class="php-num">0</span>]) || !is_numeric(<span class="php-var">$time</span>[<span class="php-num">1</span>])) {</span>
+<span class="source-line" id="line-331"><a class="line" id="331" href="#331">331:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling clock returned an invalid reply.&quot;</span>);</span>
+<span class="source-line" id="line-332"><a class="line" id="332" href="#332">332:</a>         }</span>
+<span class="source-line" id="line-333"><a class="line" id="333" href="#333">333:</a> </span>
+<span class="source-line" id="line-334"><a class="line" id="334" href="#334">334:</a>         <span class="php-keyword1">return</span> <span class="php-keyword2">(float)</span> <span class="php-var">$time</span>[<span class="php-num">0</span>] + <span class="php-keyword2">(float)</span> <span class="php-var">$time</span>[<span class="php-num">1</span>] / <span class="php-num">1000000</span>;</span>
+<span class="source-line" id="line-335"><a class="line" id="335" href="#335">335:</a>     } <span class="php-comment">// getCurrentTime</span></span>
+<span class="source-line" id="line-336"><a class="line" id="336" href="#336">336:</a> </span>
+<span class="source-line" id="line-337"><a class="line" id="337" href="#337">337:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-338"><a class="line" id="338" href="#338">338:</a> <span class="php-comment">     * Loads only the selected caller&#039;s ordered JSON history while checking lease ownership.</span></span>
+<span class="source-line" id="line-339"><a class="line" id="339" href="#339">339:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-340"><a class="line" id="340" href="#340">340:</a> <span class="php-comment">     * @param string $key</span></span>
+<span class="source-line" id="line-341"><a class="line" id="341" href="#341">341:</a> <span class="php-comment">     * The lowercase SHA-256 caller hash supplied to executeAtomically().</span></span>
+<span class="source-line" id="line-342"><a class="line" id="342" href="#342">342:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-343"><a class="line" id="343" href="#343">343:</a> <span class="php-comment">     * @return list&lt;float&gt;</span></span>
+<span class="source-line" id="line-344"><a class="line" id="344" href="#344">344:</a> <span class="php-comment">     * Returns finite, nonnegative, ascending timestamps, preserving duplicates. A missing key</span></span>
+<span class="source-line" id="line-345"><a class="line" id="345" href="#345">345:</a> <span class="php-comment">     * returns an empty list. Existing empty, malformed, non-array or unordered history fails closed.</span></span>
+<span class="source-line" id="line-346"><a class="line" id="346" href="#346">346:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-347"><a class="line" id="347" href="#347">347:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-348"><a class="line" id="348" href="#348">348:</a> <span class="php-comment">     * If access does not belong to the active caller or the client cannot execute commands.</span></span>
+<span class="source-line" id="line-349"><a class="line" id="349" href="#349">349:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-350"><a class="line" id="350" href="#350">350:</a> <span class="php-comment">     * @throws \RuntimeException</span></span>
+<span class="source-line" id="line-351"><a class="line" id="351" href="#351">351:</a> <span class="php-comment">     * If the lease was lost, a command reply is invalid, or the stored JSON history is invalid.</span></span>
+<span class="source-line" id="line-352"><a class="line" id="352" href="#352">352:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-353"><a class="line" id="353" href="#353">353:</a> <span class="php-comment">     * @throws \RedisException</span></span>
+<span class="source-line" id="line-354"><a class="line" id="354" href="#354">354:</a> <span class="php-comment">     * If Redis cannot read the key; the atomic boundary wraps the storage failure.</span></span>
+<span class="source-line" id="line-355"><a class="line" id="355" href="#355">355:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-356"><a class="line" id="356" href="#356">356:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-357"><a class="line" id="357" href="#357">357:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-358"><a class="line" id="358" href="#358">358:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadRecords(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">array</span></span>
+<span class="source-line" id="line-359"><a class="line" id="359" href="#359">359:</a>     {</span>
+<span class="source-line" id="line-360"><a class="line" id="360" href="#360">360:</a>         <span class="php-var">$token</span> = <span class="php-var">$this</span>-&gt;token(<span class="php-var">$key</span>);</span>
+<span class="source-line" id="line-361"><a class="line" id="361" href="#361">361:</a>         <span class="php-var">$script</span> = <span class="php-quote">&#039;if redis.call(&quot;GET&quot;, KEYS[1]) ~= ARGV[1] then return {0} end return {1, redis.call(&quot;GET&quot;, KEYS[2])}&#039;</span>;</span>
+<span class="source-line" id="line-362"><a class="line" id="362" href="#362">362:</a>         <span class="php-var">$result</span> = <span class="php-var">$this</span>-&gt;client()-&gt;eval(<span class="php-var">$script</span>, [...<span class="php-var">$this</span>-&gt;keys(<span class="php-var">$key</span>), <span class="php-var">$token</span>], <span class="php-num">2</span>);</span>
+<span class="source-line" id="line-363"><a class="line" id="363" href="#363">363:</a> </span>
+<span class="source-line" id="line-364"><a class="line" id="364" href="#364">364:</a>         <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$result</span>) || count(<span class="php-var">$result</span>) !== <span class="php-num">2</span> || <span class="php-var">$result</span>[<span class="php-num">0</span>] !== <span class="php-num">1</span>) {</span>
+<span class="source-line" id="line-365"><a class="line" id="365" href="#365">365:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling history could not be read under its owner lock.&quot;</span>);</span>
+<span class="source-line" id="line-366"><a class="line" id="366" href="#366">366:</a>         }</span>
+<span class="source-line" id="line-367"><a class="line" id="367" href="#367">367:</a> </span>
+<span class="source-line" id="line-368"><a class="line" id="368" href="#368">368:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$result</span>[<span class="php-num">1</span>] === <span class="php-keyword1">false</span> || <span class="php-var">$result</span>[<span class="php-num">1</span>] === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-369"><a class="line" id="369" href="#369">369:</a>             <span class="php-keyword1">return</span> [];</span>
+<span class="source-line" id="line-370"><a class="line" id="370" href="#370">370:</a>         }</span>
+<span class="source-line" id="line-371"><a class="line" id="371" href="#371">371:</a> </span>
+<span class="source-line" id="line-372"><a class="line" id="372" href="#372">372:</a>         <span class="php-keyword1">if</span> (!is_string(<span class="php-var">$result</span>[<span class="php-num">1</span>]) || <span class="php-var">$result</span>[<span class="php-num">1</span>] === <span class="php-quote">&quot;&quot;</span>) {</span>
+<span class="source-line" id="line-373"><a class="line" id="373" href="#373">373:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The stored Redis throttling history is empty or is not text.&quot;</span>);</span>
+<span class="source-line" id="line-374"><a class="line" id="374" href="#374">374:</a>         }</span>
+<span class="source-line" id="line-375"><a class="line" id="375" href="#375">375:</a> </span>
+<span class="source-line" id="line-376"><a class="line" id="376" href="#376">376:</a>         <span class="php-keyword1">try</span> {</span>
+<span class="source-line" id="line-377"><a class="line" id="377" href="#377">377:</a>             <span class="php-var">$values</span> = json_decode(<span class="php-var">$result</span>[<span class="php-num">1</span>], <span class="php-keyword1">false</span>, <span class="php-num">512</span>, JSON_THROW_ON_ERROR);</span>
+<span class="source-line" id="line-378"><a class="line" id="378" href="#378">378:</a>         } <span class="php-keyword1">catch</span> (\JsonException <span class="php-var">$exception</span>) {</span>
+<span class="source-line" id="line-379"><a class="line" id="379" href="#379">379:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The stored Redis throttling history is invalid JSON.&quot;</span>, <span class="php-num">0</span>, <span class="php-var">$exception</span>);</span>
+<span class="source-line" id="line-380"><a class="line" id="380" href="#380">380:</a>         }</span>
+<span class="source-line" id="line-381"><a class="line" id="381" href="#381">381:</a> </span>
+<span class="source-line" id="line-382"><a class="line" id="382" href="#382">382:</a>         <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$values</span>)) {</span>
+<span class="source-line" id="line-383"><a class="line" id="383" href="#383">383:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The stored Redis throttling history must be a JSON array.&quot;</span>);</span>
+<span class="source-line" id="line-384"><a class="line" id="384" href="#384">384:</a>         }</span>
+<span class="source-line" id="line-385"><a class="line" id="385" href="#385">385:</a> </span>
+<span class="source-line" id="line-386"><a class="line" id="386" href="#386">386:</a>         <span class="php-var">$timestamps</span> = [];</span>
+<span class="source-line" id="line-387"><a class="line" id="387" href="#387">387:</a>         <span class="php-var">$previous</span> = -<span class="php-num">1.0</span>;</span>
+<span class="source-line" id="line-388"><a class="line" id="388" href="#388">388:</a> </span>
+<span class="source-line" id="line-389"><a class="line" id="389" href="#389">389:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$values</span> <span class="php-keyword1">as</span> <span class="php-var">$value</span>) {</span>
+<span class="source-line" id="line-390"><a class="line" id="390" href="#390">390:</a>             <span class="php-keyword1">if</span> ((!is_int(<span class="php-var">$value</span>) &amp;&amp; !is_float(<span class="php-var">$value</span>)) || !is_finite(<span class="php-keyword2">(float)</span> <span class="php-var">$value</span>) || <span class="php-var">$value</span> &lt; <span class="php-num">0</span> || <span class="php-var">$value</span> &lt; <span class="php-var">$previous</span>) {</span>
+<span class="source-line" id="line-391"><a class="line" id="391" href="#391">391:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The stored Redis throttling timestamps are invalid or out of order.&quot;</span>);</span>
+<span class="source-line" id="line-392"><a class="line" id="392" href="#392">392:</a>             }</span>
+<span class="source-line" id="line-393"><a class="line" id="393" href="#393">393:</a> </span>
+<span class="source-line" id="line-394"><a class="line" id="394" href="#394">394:</a>             <span class="php-var">$timestamp</span> = <span class="php-keyword2">(float)</span> <span class="php-var">$value</span>;</span>
+<span class="source-line" id="line-395"><a class="line" id="395" href="#395">395:</a>             <span class="php-var">$timestamps</span>[] = <span class="php-var">$timestamp</span>;</span>
+<span class="source-line" id="line-396"><a class="line" id="396" href="#396">396:</a>             <span class="php-var">$previous</span> = <span class="php-var">$timestamp</span>;</span>
+<span class="source-line" id="line-397"><a class="line" id="397" href="#397">397:</a>         }</span>
+<span class="source-line" id="line-398"><a class="line" id="398" href="#398">398:</a> </span>
+<span class="source-line" id="line-399"><a class="line" id="399" href="#399">399:</a>         <span class="php-keyword1">return</span> <span class="php-var">$timestamps</span>;</span>
+<span class="source-line" id="line-400"><a class="line" id="400" href="#400">400:</a>     } <span class="php-comment">// loadRecords</span></span>
+<span class="source-line" id="line-401"><a class="line" id="401" href="#401">401:</a> </span>
+<span class="source-line" id="line-402"><a class="line" id="402" href="#402">402:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-403"><a class="line" id="403" href="#403">403:</a> <span class="php-comment">     * Replaces only the active caller&#039;s history if the lease is still owned, with atomic expiry.</span></span>
+<span class="source-line" id="line-404"><a class="line" id="404" href="#404">404:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-405"><a class="line" id="405" href="#405">405:</a> <span class="php-comment">     * @param string $key</span></span>
+<span class="source-line" id="line-406"><a class="line" id="406" href="#406">406:</a> <span class="php-comment">     * The lowercase SHA-256 caller hash supplied to executeAtomically().</span></span>
+<span class="source-line" id="line-407"><a class="line" id="407" href="#407">407:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-408"><a class="line" id="408" href="#408">408:</a> <span class="php-comment">     * @param list&lt;float&gt; $timestamps</span></span>
+<span class="source-line" id="line-409"><a class="line" id="409" href="#409">409:</a> <span class="php-comment">     * This caller&#039;s nonempty, ordered history supplied by the common algorithm.</span></span>
+<span class="source-line" id="line-410"><a class="line" id="410" href="#410">410:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-411"><a class="line" id="411" href="#411">411:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-412"><a class="line" id="412" href="#412">412:</a> <span class="php-comment">     * Stores JSON and a millisecond TTL covering the newest timestamp plus the longest window.</span></span>
+<span class="source-line" id="line-413"><a class="line" id="413" href="#413">413:</a> <span class="php-comment">     * Extremely large retention beyond Redis/Lua&#039;s safe millisecond range is stored without expiry</span></span>
+<span class="source-line" id="line-414"><a class="line" id="414" href="#414">414:</a> <span class="php-comment">     * to avoid discarding active history prematurely. Rejections never call this method or renew TTL.</span></span>
+<span class="source-line" id="line-415"><a class="line" id="415" href="#415">415:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-416"><a class="line" id="416" href="#416">416:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-417"><a class="line" id="417" href="#417">417:</a> <span class="php-comment">     * If access is outside the active caller&#039;s operation or the timestamp list is empty.</span></span>
+<span class="source-line" id="line-418"><a class="line" id="418" href="#418">418:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-419"><a class="line" id="419" href="#419">419:</a> <span class="php-comment">     * @throws \RuntimeException</span></span>
+<span class="source-line" id="line-420"><a class="line" id="420" href="#420">420:</a> <span class="php-comment">     * If the lease was lost or Redis did not confirm persistence.</span></span>
+<span class="source-line" id="line-421"><a class="line" id="421" href="#421">421:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-422"><a class="line" id="422" href="#422">422:</a> <span class="php-comment">     * @throws \JsonException</span></span>
+<span class="source-line" id="line-423"><a class="line" id="423" href="#423">423:</a> <span class="php-comment">     * If the supplied history cannot be encoded as JSON.</span></span>
+<span class="source-line" id="line-424"><a class="line" id="424" href="#424">424:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-425"><a class="line" id="425" href="#425">425:</a> <span class="php-comment">     * @throws \RedisException</span></span>
+<span class="source-line" id="line-426"><a class="line" id="426" href="#426">426:</a> <span class="php-comment">     * If Redis cannot persist history; the atomic boundary wraps the storage failure.</span></span>
+<span class="source-line" id="line-427"><a class="line" id="427" href="#427">427:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-428"><a class="line" id="428" href="#428">428:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-429"><a class="line" id="429" href="#429">429:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-430"><a class="line" id="430" href="#430">430:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveRecords(<span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">array</span> <span class="php-var">$timestamps</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-431"><a class="line" id="431" href="#431">431:</a>     {</span>
+<span class="source-line" id="line-432"><a class="line" id="432" href="#432">432:</a>         <span class="php-var">$token</span> = <span class="php-var">$this</span>-&gt;token(<span class="php-var">$key</span>);</span>
+<span class="source-line" id="line-433"><a class="line" id="433" href="#433">433:</a> </span>
+<span class="source-line" id="line-434"><a class="line" id="434" href="#434">434:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$timestamps</span> === []) {</span>
+<span class="source-line" id="line-435"><a class="line" id="435" href="#435">435:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;An admitted throttling request must contain at least one timestamp.&quot;</span>);</span>
+<span class="source-line" id="line-436"><a class="line" id="436" href="#436">436:</a>         }</span>
+<span class="source-line" id="line-437"><a class="line" id="437" href="#437">437:</a> </span>
+<span class="source-line" id="line-438"><a class="line" id="438" href="#438">438:</a>         <span class="php-var">$json</span> = json_encode(<span class="php-var">$timestamps</span>, JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION);</span>
+<span class="source-line" id="line-439"><a class="line" id="439" href="#439">439:</a>         <span class="php-var">$expires</span> = max(<span class="php-var">$timestamps</span>) + max(array_column(<span class="php-var">$this</span>-&gt;limits, <span class="php-num">1</span>));</span>
+<span class="source-line" id="line-440"><a class="line" id="440" href="#440">440:</a>         <span class="php-var">$script</span> = <span class="php-quote">&lt;&lt;&lt;&#039;LUA&#039;</span></span>
+<span class="source-line" id="line-441"><a class="line" id="441" href="#441">441:</a> <span class="php-quote">if redis.call(&quot;GET&quot;, KEYS[1]) ~= ARGV[1] then return 0 end</span></span>
+<span class="source-line" id="line-442"><a class="line" id="442" href="#442">442:</a> <span class="php-quote">local now = redis.call(&quot;TIME&quot;)</span></span>
+<span class="source-line" id="line-443"><a class="line" id="443" href="#443">443:</a> <span class="php-quote">local ttl = math.max(1, math.ceil((tonumber(ARGV[3]) - tonumber(now[1])) * 1000 - tonumber(now[2]) / 1000) + 1)</span></span>
+<span class="source-line" id="line-444"><a class="line" id="444" href="#444">444:</a> <span class="php-quote">if ttl &lt; 9007199254740000 then</span></span>
+<span class="source-line" id="line-445"><a class="line" id="445" href="#445">445:</a> <span class="php-quote">    redis.call(&quot;SET&quot;, KEYS[2], ARGV[2], &quot;PX&quot;, string.format(&quot;%.0f&quot;, ttl))</span></span>
+<span class="source-line" id="line-446"><a class="line" id="446" href="#446">446:</a> <span class="php-quote">else</span></span>
+<span class="source-line" id="line-447"><a class="line" id="447" href="#447">447:</a> <span class="php-quote">    redis.call(&quot;SET&quot;, KEYS[2], ARGV[2])</span></span>
+<span class="source-line" id="line-448"><a class="line" id="448" href="#448">448:</a> <span class="php-quote">end</span></span>
+<span class="source-line" id="line-449"><a class="line" id="449" href="#449">449:</a> <span class="php-quote">return 1</span></span>
+<span class="source-line" id="line-450"><a class="line" id="450" href="#450">450:</a> <span class="php-quote">LUA</span>;</span>
+<span class="source-line" id="line-451"><a class="line" id="451" href="#451">451:</a>         <span class="php-var">$result</span> = <span class="php-var">$this</span>-&gt;client()-&gt;eval(<span class="php-var">$script</span>, [...<span class="php-var">$this</span>-&gt;keys(<span class="php-var">$key</span>), <span class="php-var">$token</span>, <span class="php-var">$json</span>, sprintf(<span class="php-quote">&quot;%.6F&quot;</span>, <span class="php-var">$expires</span>)], <span class="php-num">2</span>);</span>
+<span class="source-line" id="line-452"><a class="line" id="452" href="#452">452:</a> </span>
+<span class="source-line" id="line-453"><a class="line" id="453" href="#453">453:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$result</span> !== <span class="php-num">1</span>) {</span>
+<span class="source-line" id="line-454"><a class="line" id="454" href="#454">454:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \RuntimeException(<span class="php-quote">&quot;The Redis throttling history could not be saved under its owner lock.&quot;</span>);</span>
+<span class="source-line" id="line-455"><a class="line" id="455" href="#455">455:</a>         }</span>
+<span class="source-line" id="line-456"><a class="line" id="456" href="#456">456:</a>     } <span class="php-comment">// saveRecords</span></span>
+<span class="source-line" id="line-457"><a class="line" id="457" href="#457">457:</a> } <span class="php-comment">// RedisRequestThrottlingManager</span></span>
+<span class="source-line" id="line-458"><a class="line" id="458" href="#458">458:</a> </span>
+</code>
+</pre>
+</div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

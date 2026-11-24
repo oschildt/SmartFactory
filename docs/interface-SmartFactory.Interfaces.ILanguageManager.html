@@ -119,7 +119,10 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> ILanguageManager <span class="php-keyword1">extends</span> IInitable
+{
+}</div>
+
 
 
 <div class="short-description">
@@ -134,7 +137,7 @@
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href='interface-SmartFactory.Interfaces.IInitable.html'>\SmartFactory\Interfaces\IInitable</a><br>
+<a href="interface-SmartFactory.Interfaces.IInitable.html">\SmartFactory\Interfaces\IInitable</a><br>
 
 </div>
 
@@ -143,7 +146,7 @@
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.LanguageManager.html'>\SmartFactory\LanguageManager</a><br>
+<a href="class-SmartFactory.LanguageManager.html">\SmartFactory\LanguageManager</a><br>
 
 </div>
 
@@ -168,7 +171,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#17'>SmartFactory/Interfaces/ILanguageManager.php</a>
+<a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#17'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
 </div>
 
 
@@ -192,9 +195,11 @@
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#addLocalizationFile">addLocalizationFile()</a></div>
@@ -206,7 +211,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Adds additional localization files to the dictionary.</p>
+              <p>Registers an additional text document and invalidates the loaded-source flag.</p>
           </td>
       </tr><tr>
           <td>
@@ -219,7 +224,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>This function should detect the current language based on cookies, browser languages etc.</p>
+              <p>Detects the current language from request parameters, headers and cookies.</p>
           </td>
       </tr><tr>
           <td>
@@ -232,7 +237,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Adds additional translations to the dictionary.</p>
+              <p>Adds validated translations to this instance without changing shared APCu data.</p>
           </td>
       </tr><tr>
           <td>
@@ -311,7 +316,7 @@ for the given language.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the fallback language. If set and a translation
+              <p>Returns the normalized fallback tag, or an empty string when disabled. If set and a translation
 is missing on a language, the translation on this language will be used.</p>
           </td>
       </tr><tr>
@@ -365,7 +370,33 @@ for the given language.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the list of supported languages.</p>
+              <p>Returns normalized tags mapped to themselves in their configured order.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#hasCountryName">hasCountryName()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether a nonempty localized country name exists.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#hasLanguageName">hasLanguageName()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Checks whether a nonempty localized language name exists.</p>
           </td>
       </tr><tr>
           <td>
@@ -391,7 +422,7 @@ for the given language.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Initializes the language manager with parameters.</p>
+              <p>Replaces the complete localization configuration and resets all instance state.</p>
           </td>
       </tr><tr>
           <td>
@@ -404,7 +435,7 @@ for the given language.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>This is function for loading the translations from the source JSON file.</p>
+              <p>Loads a complete validated dictionary from JSON documents or APCu.</p>
           </td>
       </tr><tr>
           <td>
@@ -458,47 +489,24 @@ for the given language.</p>
           <td class="description_column">
               <p>Provides the text translation for the text ID for the given language if the translation exists.</p>
           </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#validateCountryCode">validateCountryCode()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Checks whether the country code is valid (has translation).</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#validateLanguageCode">validateLanguageCode()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Checks whether the language code is valid (has translation).</p>
-          </td>
       </tr>
-      
+
   </table>
 
 
 
+
+
 <hr id="addLocalizationFile">
-  
+
   <h1>Method: ILanguageManager::addLocalizationFile()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addLocalizationFile(string <span class="php-var">$localization_file</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addLocalizationFile(<span class="php-keyword1">string</span> <span class="php-var">$localization_file</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Adds additional localization files to the dictionary.</p>
+  <p>Registers an additional text document and invalidates the loaded-source flag.</p>
   </div>
   
 
@@ -508,7 +516,8 @@ for the given language.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -516,7 +525,7 @@ for the given language.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -526,23 +535,26 @@ for the given language.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The path of the additional localization file.</p>
+                <p>A file whose individual language values override earlier sources on the next load.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Preserves the file order and selects a cache key specific to the new source list.</p></div>
   
   </div>
   
@@ -550,9 +562,9 @@ for the given language.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the path is empty or its parent directory does not exist.</p></div>
   
   
   </div>
@@ -573,7 +585,7 @@ for the given language.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#76'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#101'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -592,30 +604,42 @@ for the given language.</p>
   
 
   <hr id="detectLanguage">
-  
+
   <h1>Method: ILanguageManager::detectLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detectLanguage(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> detectLanguage(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>This function should detect the current language based on cookies, browser languages etc.</p>
+  <p>Detects the current language from request parameters, headers and cookies.</p>
   </div>
   
 
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Some applications may consist of two parts - administration
-console and public site. A usual example is a CMS system.</p>
+  <p>Priority:</p>
+<ol>
+<li>explicitly set by the request parameter language.</li>
+<li>header 'Content-Language'.</li>
+<li>last language in the cookie.</li>
+<li>browser default language.</li>
+<li>the first one from the supported list.</li>
+</ol>
+<p>Some applications may consist of two parts: an administration
+console and a public site. A usual example is a CMS system.</p>
 <p>For example, you are using administration console in English
-and editing the public site for German and French.
+and editing the public site in German and French.
 When you open the public site for preview in German or French,
 you want it to be open in the corresponding language, but
 the administration console should remain in English.</p>
 <p>With the help of $context, you are able to maintain different
 languages for different parts of your application.
 If you do not need the $context, just do not specify it.</p>
+<p>Malformed request values are ignored. Accept-Language respects quality weights,
+exclusions, wildcard ranges and header order. Tags are normalized and regional tags
+may fall back to supported parent tags. A nonempty supported-language list is required.</p>
   </div>
   
 
@@ -626,12 +650,37 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Returns without a value.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  <code class="php-type">\ValueError</code><br>
+  
+  <div class="item_description"><p>If enabled cookie storage encounters an invalid cookie name or path.</p></div>
+  
+  
+  </div>
 
   
 
@@ -649,7 +698,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#98'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#148'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -668,14 +717,15 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <hr id="extendDictionary">
-  
+
   <h1>Method: ILanguageManager::extendDictionary()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> extendDictionary(<span class="php-keyword1">array</span> <span class="php-var">$dictionary</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> extendDictionary(<span class="php-keyword1">array</span> <span class="php-var">$dictionary</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Adds additional translations to the dictionary.</p>
+  <p>Adds validated translations to this instance without changing shared APCu data.</p>
   </div>
   
 
@@ -685,7 +735,8 @@ If you do not need the $context, just do not specify it.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -693,7 +744,7 @@ If you do not need the $context, just do not specify it.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -703,23 +754,27 @@ If you do not need the $context, just do not specify it.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, array&lt;string, string&gt;&gt;</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The array with additional translations.</p>
+                <p>Text identifiers mapped to language-to-string maps; numeric identifiers are preserved.
+Individual language values override previous values. An explicit source reload discards additions.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Validates the entire addition before changing the dictionary.</p></div>
   
   </div>
   
@@ -727,9 +782,19 @@ If you do not need the $context, just do not specify it.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\LogicException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
   
   
   </div>
@@ -750,7 +815,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#61'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#85'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -769,10 +834,11 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <hr id="getContext">
-  
+
   <h1>Method: ILanguageManager::getContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getContext(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -783,10 +849,10 @@ If you do not need the $context, just do not specify it.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Some applications may consist of two parts - administration
-console and public site. A usual example is a CMS system.</p>
+  <p>Some applications may consist of two parts: an administration
+console and a public site. A usual example is a CMS system.</p>
 <p>For example, you are using administration console in English
-and editing the public site for German and French.
+and editing the public site in German and French.
 When you open the public site for preview in German or French,
 you want it to be open in the corresponding language, but
 the administration console should remain in English.</p>
@@ -803,7 +869,7 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the current context.</p></div>
   
@@ -828,11 +894,17 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#148'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#200'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
+  <h2>See also</h2>
+  <div class="item_list">
   
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#setContext">\SmartFactory\Interfaces\ILanguageManager::setContext()</a><br>
+  
+  
+  </div>
 
   
 
@@ -847,10 +919,11 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <hr id="getCountryCode">
-  
+
   <h1>Method: ILanguageManager::getCountryCode()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryCode(string <span class="php-var">$country_name</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryCode(<span class="php-keyword1">string</span> <span class="php-var">$country_name</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -859,12 +932,19 @@ If you do not need the $context, just do not specify it.</p>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Name comparison is Unicode case-insensitive and searches supported languages
+in their configured order.</p>
+  </div>
+  
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -872,7 +952,7 @@ If you do not need the $context, just do not specify it.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -882,7 +962,7 @@ If you do not need the $context, just do not specify it.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -892,20 +972,39 @@ If you do not need the $context, just do not specify it.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the country code if it could be found, otherwise an empty string.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -923,23 +1022,23 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#383'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#569'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName'>\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName">\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateCountryCode'>\SmartFactory\Interfaces\ILanguageManager::validateCountryCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasCountryName">\SmartFactory\Interfaces\ILanguageManager::hasCountryName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList'>\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList">\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode">\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
   
   
   </div>
@@ -957,10 +1056,11 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <hr id="getCountryList">
-  
+
   <h1>Method: ILanguageManager::getCountryList()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$country_list</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$country_list</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
@@ -969,12 +1069,19 @@ If you do not need the $context, just do not specify it.</p>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Unknown preferred codes are ignored. Sorts a copy using the process locale,
+leaving dictionary order unchanged. The output is empty when no names are available.</p>
+  </div>
+  
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -982,7 +1089,7 @@ If you do not need the $context, just do not specify it.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -992,7 +1099,7 @@ If you do not need the $context, just do not specify it.</p>
                 by reference
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, string&gt;</code>
             </td>
             <td>
                 
@@ -1010,7 +1117,7 @@ If you do not need the $context, just do not specify it.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -1029,7 +1136,7 @@ the default language is used.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">list&lt;string&gt;</code>
             </td>
             <td>
                 []
@@ -1039,20 +1146,39 @@ the default language is used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the country list is successfully retrieved, otherwise false.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1070,23 +1196,23 @@ the default language is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#430'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#637'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName'>\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName">\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode'>\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode">\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateCountryCode'>\SmartFactory\Interfaces\ILanguageManager::validateCountryCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasCountryName">\SmartFactory\Interfaces\ILanguageManager::hasCountryName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList'>\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList">\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
   
   
   </div>
@@ -1104,10 +1230,11 @@ the default language is used.</p>
   
 
   <hr id="getCountryName">
-  
+
   <h1>Method: ILanguageManager::getCountryName()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCountryName(<span class="php-keyword1">string</span> <span class="php-var">$code</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1122,7 +1249,8 @@ for the given language.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1130,7 +1258,7 @@ for the given language.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1140,7 +1268,7 @@ for the given language.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1158,7 +1286,7 @@ for the given language.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -1169,13 +1297,14 @@ the default language is used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the translation text for the country name or the $code if no translation
 is found.</p></div>
@@ -1183,7 +1312,25 @@ is found.</p></div>
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1201,23 +1348,23 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#365'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#539'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode'>\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode">\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateCountryCode'>\SmartFactory\Interfaces\ILanguageManager::validateCountryCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasCountryName">\SmartFactory\Interfaces\ILanguageManager::hasCountryName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList'>\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList">\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName'>\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName">\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
   
   
   </div>
@@ -1235,10 +1382,11 @@ is found.</p></div>
   
 
   <hr id="getCurrentLanguage">
-  
+
   <h1>Method: ILanguageManager::getCurrentLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCurrentLanguage(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getCurrentLanguage(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1246,6 +1394,11 @@ is found.</p></div>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Loads the dictionary if necessary. New contexts use the first configured language.</p>
+  </div>
   
 
   
@@ -1255,14 +1408,32 @@ is found.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the current language ISO code.</p></div>
+  <div class="item_description"><p>Returns the normalized supported language tag.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1280,14 +1451,14 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#184'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#272'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#setCurrentLanguage'>\SmartFactory\Interfaces\ILanguageManager::setCurrentLanguage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#setCurrentLanguage">\SmartFactory\Interfaces\ILanguageManager::setCurrentLanguage()</a><br>
   
   
   </div>
@@ -1305,14 +1476,15 @@ is found.</p></div>
   
 
   <hr id="getFallbackLanguage">
-  
+
   <h1>Method: ILanguageManager::getFallbackLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getFallbackLanguage(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getFallbackLanguage(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the fallback language. If set and a translation
+  <p>Returns the normalized fallback tag, or an empty string when disabled. If set and a translation
 is missing on a language, the translation on this language will be used.</p>
   </div>
   
@@ -1326,9 +1498,9 @@ is missing on a language, the translation on this language will be used.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the fallback language.</p></div>
+  <div class="item_description"><p>Returns the normalized fallback tag, or an empty string when disabled.</p></div>
   
   </div>
   
@@ -1351,7 +1523,7 @@ is missing on a language, the translation on this language will be used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#195'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#283'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -1370,10 +1542,11 @@ is missing on a language, the translation on this language will be used.</p>
   
 
   <hr id="getLanguageCode">
-  
+
   <h1>Method: ILanguageManager::getLanguageCode()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageCode(string <span class="php-var">$lang_name</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageCode(<span class="php-keyword1">string</span> <span class="php-var">$lang_name</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1382,12 +1555,19 @@ is missing on a language, the translation on this language will be used.</p>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Name comparison is Unicode case-insensitive and searches supported languages
+in their configured order.</p>
+  </div>
+  
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1395,7 +1575,7 @@ is missing on a language, the translation on this language will be used.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1405,7 +1585,7 @@ is missing on a language, the translation on this language will be used.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1415,20 +1595,39 @@ is missing on a language, the translation on this language will be used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the language code if it could be found, otherwise an empty string.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1446,23 +1645,23 @@ is missing on a language, the translation on this language will be used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#294'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#438'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName'>\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName">\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::validateLanguageCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasLanguageName">\SmartFactory\Interfaces\ILanguageManager::hasLanguageName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList'>\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList">\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode'>\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode">\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
   
   
   </div>
@@ -1480,10 +1679,11 @@ is missing on a language, the translation on this language will be used.</p>
   
 
   <hr id="getLanguageList">
-  
+
   <h1>Method: ILanguageManager::getLanguageList()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$language_list</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageList(<span class="php-keyword1">array</span> &amp;<span class="php-var">$language_list</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$display_first</span> = []): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1492,12 +1692,19 @@ is missing on a language, the translation on this language will be used.</p>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Unknown preferred codes are ignored. Sorts a copy using the process locale,
+leaving dictionary order unchanged. The output is empty when no names are available.</p>
+  </div>
+  
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1505,7 +1712,7 @@ is missing on a language, the translation on this language will be used.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1515,7 +1722,7 @@ is missing on a language, the translation on this language will be used.</p>
                 by reference
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, string&gt;</code>
             </td>
             <td>
                 
@@ -1533,7 +1740,7 @@ is missing on a language, the translation on this language will be used.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -1552,7 +1759,7 @@ the default language is used.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">list&lt;string&gt;</code>
             </td>
             <td>
                 []
@@ -1562,20 +1769,39 @@ the default language is used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the language list is successfully retrieved, otherwise false.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1593,23 +1819,23 @@ the default language is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#341'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#506'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName'>\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName">\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode">\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::validateLanguageCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasLanguageName">\SmartFactory\Interfaces\ILanguageManager::hasLanguageName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList'>\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList">\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
   
   
   </div>
@@ -1627,10 +1853,11 @@ the default language is used.</p>
   
 
   <hr id="getLanguageName">
-  
+
   <h1>Method: ILanguageManager::getLanguageName()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageName(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLanguageName(<span class="php-keyword1">string</span> <span class="php-var">$code</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1645,7 +1872,8 @@ for the given language.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1653,7 +1881,7 @@ for the given language.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1663,7 +1891,7 @@ for the given language.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1681,7 +1909,7 @@ for the given language.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -1692,13 +1920,14 @@ the default language is used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the translation text for the language name or the $code if no translation
 is found.</p></div>
@@ -1706,7 +1935,25 @@ is found.</p></div>
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1724,23 +1971,23 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#276'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#408'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode">\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::validateLanguageCode()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasLanguageName">\SmartFactory\Interfaces\ILanguageManager::hasLanguageName()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList'>\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList">\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName'>\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName">\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
   
   
   </div>
@@ -1758,14 +2005,15 @@ is found.</p></div>
   
 
   <hr id="getSupportedLanguages">
-  
+
   <h1>Method: ILanguageManager::getSupportedLanguages()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getSupportedLanguages(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the list of supported languages.</p>
+  <p>Returns normalized tags mapped to themselves in their configured order.</p>
   </div>
   
 
@@ -1778,14 +2026,32 @@ is found.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">array&lt;string, string&gt;</code><br>
   
-  <div class="item_description"><p>Returns the list of supported languages.</p></div>
+  <div class="item_description"><p>Returns normalized tags mapped to themselves in their configured order.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1803,11 +2069,311 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#158'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#219'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="hasCountryName">
+
+  <h1>Method: ILanguageManager::hasCountryName()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasCountryName(<span class="php-keyword1">string</span> <span class="php-var">$code</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">bool</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Checks whether a nonempty localized country name exists.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $code
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Country ISO code (uppercase, e.g. US, DE, FR).</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $lng
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The language. If it is not specified,
+the default language is used.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code><br>
+  
+  <div class="item_description"><p>Returns true if a nonempty country name exists, otherwise false.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#600'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName">\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
+  
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode">\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
+  
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList">\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
+  
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasLanguageName">\SmartFactory\Interfaces\ILanguageManager::hasLanguageName()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="hasLanguageName">
+
+  <h1>Method: ILanguageManager::hasLanguageName()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasLanguageName(<span class="php-keyword1">string</span> <span class="php-var">$code</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">bool</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Checks whether a nonempty localized language name exists.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $code
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Language ISO code (lowercase, e.g. en, de, fr).</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $lng
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                &quot;&quot;
+            </td>
+            <td class="description_column">
+                <p>The language. If it is not specified,
+the default language is used.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code><br>
+  
+  <div class="item_description"><p>Returns true if a nonempty language name exists, otherwise false.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#469'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName">\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
+  
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode">\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
+  
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList">\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
+  
+  
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#hasCountryName">\SmartFactory\Interfaces\ILanguageManager::hasCountryName()</a><br>
+  
+  
+  </div>
 
   
 
@@ -1822,10 +2388,11 @@ is found.</p></div>
   
 
   <hr id="hasTranslation">
-  
+
   <h1>Method: ILanguageManager::hasTranslation()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasTranslation(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> hasTranslation(<span class="php-keyword1">string</span> <span class="php-var">$text_id</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1834,12 +2401,19 @@ is found.</p></div>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Checks only the requested language, without fallback. The string "0" exists;
+an empty translation does not.</p>
+  </div>
+  
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1847,7 +2421,7 @@ is found.</p></div>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1857,7 +2431,7 @@ is found.</p></div>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1875,7 +2449,7 @@ is found.</p></div>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -1886,20 +2460,39 @@ the default language is used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
   <div class="item_description"><p>Returns true if the translation exists, otherwise false.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -1917,7 +2510,7 @@ the default language is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#252'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#375'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -1936,14 +2529,15 @@ the default language is used.</p>
   
 
   <hr id="init">
-  
+
   <h1>Method: ILanguageManager::init()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Initializes the language manager with parameters.</p>
+  <p>Replaces the complete localization configuration and resets all instance state.</p>
   </div>
   
 
@@ -1953,7 +2547,8 @@ the default language is used.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1961,7 +2556,7 @@ the default language is used.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1971,23 +2566,37 @@ the default language is used.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array{
+    localization_path: string,
+    additional_localization_files?: (string | list&lt;string&gt;),
+    use_cookie?: bool,
+    use_fallback_language?: string,
+    cookie_path?: string,
+    use_apcu?: bool,
+    warn_missing?: bool
+}</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The parameters may vary for each language manager.</p>
+                <p>The source directory, optional ordered extra text files, fallback tag and cookie/cache options.
+The directory may omit its final separator. Missing options use defaults: cookies and APCu
+are disabled, cookie_path is "/", fallback is empty and warn_missing is true.
+False values and an empty fallback are respected. Additional files override individual languages.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Commits validated options without reading documents and resets the context to "default".</p></div>
   
   </div>
   
@@ -1995,9 +2604,9 @@ the default language is used.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any system errors.</p></div>
+  <div class="item_description"><p>If paths or string options are invalid, the fallback tag is malformed, or requested APCu is unavailable.</p></div>
   
   
   </div>
@@ -2005,7 +2614,7 @@ the default language is used.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='interface-SmartFactory.Interfaces.IInitable.html#init'>\SmartFactory\Interfaces\IInitable::init()</a>
+  <a href="interface-SmartFactory.Interfaces.IInitable.html#init">\SmartFactory\Interfaces\IInitable::init()</a>
   </div>
   
 
@@ -2023,7 +2632,7 @@ the default language is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#32'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#36'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -2042,27 +2651,71 @@ the default language is used.</p>
   
 
   <hr id="loadDictionary">
-  
+
   <h1>Method: ILanguageManager::loadDictionary()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadDictionary(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> loadDictionary(<span class="php-keyword1">bool</span> <span class="php-var">$force_reload</span> = <span class="php-keyword1">false</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>This is function for loading the translations from the source JSON file.</p>
+  <p>Loads a complete validated dictionary from JSON documents or APCu.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Each texts.json is followed by its optional sibling user_texts.json. Only
+nonempty user translations replace master values; the string "0" is nonempty.</p>
   </div>
   
 
   
 
-  
+  <h2>Parameters</h2>
 
-  
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $force_reload
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">bool</code>
+            </td>
+            <td>
+                false
+            </td>
+            <td class="description_column">
+                <p>Bypasses instance and APCu snapshots, replaces deleted entries and refreshes APCu after success.
+Otherwise source changes require explicit reload or cache eviction. Instance-only additions
+from extendDictionary() are discarded by source reload.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Applies all documents together. Read or validation failures preserve the previous snapshot.</p></div>
   
   </div>
   
@@ -2070,12 +2723,19 @@ the default language is used.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\LogicException</code><br>
   
-  <div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the translation file is invalid.</li>
-</ul></div>
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
   
   
   </div>
@@ -2096,7 +2756,7 @@ the default language is used.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#46'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#62'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -2115,10 +2775,11 @@ the default language is used.</p>
   
 
   <hr id="setContext">
-  
+
   <h1>Method: ILanguageManager::setContext()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(string <span class="php-var">$context</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setContext(<span class="php-keyword1">string</span> <span class="php-var">$context</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -2129,10 +2790,10 @@ the default language is used.</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Some applications may consist of two parts - administration
-console and public site. A usual example is a CMS system.</p>
+  <p>Some applications may consist of two parts: an administration
+console and a public site. A usual example is a CMS system.</p>
 <p>For example, you are using administration console in English
-and editing the public site for German and French.
+and editing the public site in German and French.
 When you open the public site for preview in German or French,
 you want it to be open in the corresponding language, but
 the administration console should remain in English.</p>
@@ -2146,7 +2807,8 @@ If you do not need the $context, just do not specify it.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -2154,7 +2816,7 @@ If you do not need the $context, just do not specify it.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -2164,7 +2826,7 @@ If you do not need the $context, just do not specify it.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -2174,13 +2836,14 @@ If you do not need the $context, just do not specify it.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -2203,14 +2866,14 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#125'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#175'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.LanguageManager.html#getContext'>\SmartFactory\LanguageManager::getContext()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getContext">\SmartFactory\Interfaces\ILanguageManager::getContext()</a><br>
   
   
   </div>
@@ -2228,10 +2891,11 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <hr id="setCurrentLanguage">
-  
+
   <h1>Method: ILanguageManager::setCurrentLanguage()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setCurrentLanguage(string <span class="php-var">$language</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setCurrentLanguage(<span class="php-keyword1">string</span> <span class="php-var">$language</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -2240,12 +2904,19 @@ If you do not need the $context, just do not specify it.</p>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Unsupported tags leave the selection unchanged. Matching ignores case and may
+fall back from a regional tag to a supported parent tag.</p>
+  </div>
+  
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -2253,7 +2924,7 @@ If you do not need the $context, just do not specify it.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -2263,28 +2934,54 @@ If you do not need the $context, just do not specify it.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The language ISO code to be set.</p>
+                <p>The language tag to select.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Returns without a value.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  <code class="php-type">\ValueError</code><br>
+  
+  <div class="item_description"><p>If enabled cookie storage encounters an invalid cookie name or path.</p></div>
+  
+  
+  </div>
 
   
 
@@ -2302,14 +2999,14 @@ If you do not need the $context, just do not specify it.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#172'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#249'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCurrentLanguage'>\SmartFactory\Interfaces\ILanguageManager::getCurrentLanguage()</a><br>
+  <a href="interface-SmartFactory.Interfaces.ILanguageManager.html#getCurrentLanguage">\SmartFactory\Interfaces\ILanguageManager::getCurrentLanguage()</a><br>
   
   
   </div>
@@ -2327,10 +3024,11 @@ If you do not need the $context, just do not specify it.</p>
   
 
   <hr id="text">
-  
+
   <h1>Method: ILanguageManager::text()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> text(<span class="php-keyword1">string</span> <span class="php-var">$text_id</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -2339,12 +3037,20 @@ If you do not need the $context, just do not specify it.</p>
   
 
   
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The string "0" is a valid translation or default; an empty translation is missing.
+Resolution order is the requested translation, nonempty default, fallback, then ID.
+Configured warnings concern the missing requested translation, even when fallback exists.</p>
+  </div>
+  
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -2352,7 +3058,7 @@ If you do not need the $context, just do not specify it.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -2362,7 +3068,7 @@ If you do not need the $context, just do not specify it.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -2380,7 +3086,7 @@ If you do not need the $context, just do not specify it.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -2399,7 +3105,7 @@ the default language is used.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -2409,21 +3115,39 @@ the default language is used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the translation text or the $default_text/$text_id if no translation
-is found.</p></div>
+  <div class="item_description"><p>Returns the requested translation, nonempty default, fallback translation or text ID.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -2441,7 +3165,7 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#216'>SmartFactory/Interfaces/ILanguageManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#316'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
   
 
@@ -2460,10 +3184,11 @@ is found.</p></div>
   
 
   <hr id="try_text">
-  
+
   <h1>Method: ILanguageManager::try_text()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> try_text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> try_text(<span class="php-keyword1">string</span> <span class="php-var">$text_id</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -2474,7 +3199,9 @@ is found.</p></div>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Otherwise, it returns the text ID and emits no warning.</p>
+  <p>Otherwise, it tries the configured fallback and returns the text ID if that is also missing.</p>
+<p>Uses this instance without accessing the global factory. The configured fallback
+is tried before returning the identifier. Empty translations are considered missing.</p>
   </div>
   
 
@@ -2482,7 +3209,8 @@ is found.</p></div>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -2490,7 +3218,7 @@ is found.</p></div>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -2500,7 +3228,7 @@ is found.</p></div>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -2518,7 +3246,7 @@ is found.</p></div>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -2529,21 +3257,39 @@ the default language is used.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the translation text or the $default_text/$text_id if no translation
-is found.</p></div>
+  <div class="item_description"><p>Returns the requested translation, fallback translation or text ID without missing-text warnings.</p></div>
   
   </div>
   
 
+  <h2>Throws</h2>
+  <div class="item_list">
   
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not selected a localization directory.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If a source document cannot be read.</p></div>
+  
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If JSON or a document structure is invalid, or the supported-language list is empty.</p></div>
+  
+  
+  </div>
 
   
 
@@ -2561,272 +3307,11 @@ is found.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#235'>SmartFactory/Interfaces/ILanguageManager.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="validateCountryCode">
-  
-  <h1>Method: ILanguageManager::validateCountryCode()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateCountryCode(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): bool;</div>
-
-  
-  <div class="short-description">
-  <p>Checks whether the country code is valid (has translation).</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $code
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Country ISO code (uppercase, e.g. US, DE, FR).</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $lng
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The language. If it is not specified,
-the default language is used.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the country code is valid (has translation), otherwise false.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#405'>SmartFactory/Interfaces/ILanguageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryName'>\SmartFactory\Interfaces\ILanguageManager::getCountryName()</a><br>
-  
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryCode'>\SmartFactory\Interfaces\ILanguageManager::getCountryCode()</a><br>
-  
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getCountryList'>\SmartFactory\Interfaces\ILanguageManager::getCountryList()</a><br>
-  
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::validateLanguageCode()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="validateLanguageCode">
-  
-  <h1>Method: ILanguageManager::validateLanguageCode()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> validateLanguageCode(string <span class="php-var">$code</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>): bool;</div>
-
-  
-  <div class="short-description">
-  <p>Checks whether the language code is valid (has translation).</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $code
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Language ISO code (lowercase, e.g. en, de, fr).</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $lng
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                &quot;&quot;
-            </td>
-            <td class="description_column">
-                <p>The language. If it is not specified,
-the default language is used.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the language code is valid (has translation), otherwise false.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.ILanguageManager.php.html#316'>SmartFactory/Interfaces/ILanguageManager.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageName'>\SmartFactory\Interfaces\ILanguageManager::getLanguageName()</a><br>
-  
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageCode'>\SmartFactory\Interfaces\ILanguageManager::getLanguageCode()</a><br>
-  
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#getLanguageList'>\SmartFactory\Interfaces\ILanguageManager::getLanguageList()</a><br>
-  
-  
-  <a href='interface-SmartFactory.Interfaces.ILanguageManager.html#validateCountryCode'>\SmartFactory\Interfaces\ILanguageManager::validateCountryCode()</a><br>
-  
-  
+  <a href='source-src.SmartFactory.Interfaces.ILanguageManager.php.html#346'>src/SmartFactory/Interfaces/ILanguageManager.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

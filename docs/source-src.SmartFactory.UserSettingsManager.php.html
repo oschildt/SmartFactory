@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Source Code: src/SmartFactory/UserSettingsManager.php - SmartFactory Library
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+ 
+
+                        <li class="active"></li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Source Code: src/SmartFactory/UserSettingsManager.php</h2>
+
+<div id="source"><pre class="code"><code><span class="source-line" id="line-1"><a class="line" id="1" href="#1">1:</a> <span class="xlang">&lt;?php</span></span>
+<span class="source-line" id="line-2"><a class="line" id="2" href="#2">2:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-3"><a class="line" id="3" href="#3">3:</a> <span class="php-comment"> * Implements database storage for per-user settings.</span></span>
+<span class="source-line" id="line-4"><a class="line" id="4" href="#4">4:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-5"><a class="line" id="5" href="#5">5:</a> <span class="php-comment"> * @package System</span></span>
+<span class="source-line" id="line-6"><a class="line" id="6" href="#6">6:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-7"><a class="line" id="7" href="#7">7:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-8"><a class="line" id="8" href="#8">8:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-9"><a class="line" id="9" href="#9">9:</a> </span>
+<span class="source-line" id="line-10"><a class="line" id="10" href="#10">10:</a> <span class="php-keyword1">namespace</span> SmartFactory;</span>
+<span class="source-line" id="line-11"><a class="line" id="11" href="#11">11:</a> </span>
+<span class="source-line" id="line-12"><a class="line" id="12" href="#12">12:</a> <span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\DBWorker;</span>
+<span class="source-line" id="line-13"><a class="line" id="13" href="#13">13:</a> </span>
+<span class="source-line" id="line-14"><a class="line" id="14" href="#14">14:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-15"><a class="line" id="15" href="#15">15:</a> <span class="php-comment"> * Manages user settings mapped to database columns and multichoice tables.</span></span>
+<span class="source-line" id="line-16"><a class="line" id="16" href="#16">16:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-17"><a class="line" id="17" href="#17">17:</a> <span class="php-comment"> * New scalar settings require a column and a field/type definition. Values are cached</span></span>
+<span class="source-line" id="line-18"><a class="line" id="18" href="#18">18:</a> <span class="php-comment"> * in this object, not in the PHP session. Switching users invalidates the snapshot.</span></span>
+<span class="source-line" id="line-19"><a class="line" id="19" href="#19">19:</a> <span class="php-comment"> * Canonical names are table.column; unambiguous short column names remain supported.</span></span>
+<span class="source-line" id="line-20"><a class="line" id="20" href="#20">20:</a> <span class="php-comment"> * Saves write only explicitly assigned parameters in one transaction. The first settings</span></span>
+<span class="source-line" id="line-21"><a class="line" id="21" href="#21">21:</a> <span class="php-comment"> * table identifies the existing owner and provides the aggregate lock for all user settings.</span></span>
+<span class="source-line" id="line-22"><a class="line" id="22" href="#22">22:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-23"><a class="line" id="23" href="#23">23:</a> <span class="php-comment"> * @see ConfigSettingsManager</span></span>
+<span class="source-line" id="line-24"><a class="line" id="24" href="#24">24:</a> <span class="php-comment"> * @see ApplicationSettingsManager</span></span>
+<span class="source-line" id="line-25"><a class="line" id="25" href="#25">25:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-26"><a class="line" id="26" href="#26">26:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-27"><a class="line" id="27" href="#27">27:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-28"><a class="line" id="28" href="#28">28:</a> <span class="php-keyword1">class</span> UserSettingsManager <span class="php-keyword1">extends</span> AbstractDatabaseSettingsManager</span>
+<span class="source-line" id="line-29"><a class="line" id="29" href="#29">29:</a> {</span>
+<span class="source-line" id="line-30"><a class="line" id="30" href="#30">30:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-31"><a class="line" id="31" href="#31">31:</a> <span class="php-comment">     * The current user identifier; NULL means no user has been selected.</span></span>
+<span class="source-line" id="line-32"><a class="line" id="32" href="#32">32:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-33"><a class="line" id="33" href="#33">33:</a> <span class="php-comment">     * @var int|null</span></span>
+<span class="source-line" id="line-34"><a class="line" id="34" href="#34">34:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-35"><a class="line" id="35" href="#35">35:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-36"><a class="line" id="36" href="#36">36:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-37"><a class="line" id="37" href="#37">37:</a>     <span class="php-keyword1">protected</span> ?<span class="php-keyword1">int</span> <span class="php-var">$user_id</span> = <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-38"><a class="line" id="38" href="#38">38:</a> </span>
+<span class="source-line" id="line-39"><a class="line" id="39" href="#39">39:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-40"><a class="line" id="40" href="#40">40:</a> <span class="php-comment">     * Scalar settings tables; the first field of each definition is the user key.</span></span>
+<span class="source-line" id="line-41"><a class="line" id="41" href="#41">41:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-42"><a class="line" id="42" href="#42">42:</a> <span class="php-comment">     * @var array&lt;string, array&lt;string, int&gt;&gt;</span></span>
+<span class="source-line" id="line-43"><a class="line" id="43" href="#43">43:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-44"><a class="line" id="44" href="#44">44:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-45"><a class="line" id="45" href="#45">45:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-46"><a class="line" id="46" href="#46">46:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$settings_tables</span> = [];</span>
+<span class="source-line" id="line-47"><a class="line" id="47" href="#47">47:</a> </span>
+<span class="source-line" id="line-48"><a class="line" id="48" href="#48">48:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-49"><a class="line" id="49" href="#49">49:</a> <span class="php-comment">     * Multichoice tables; each definition contains the user key followed by the value field.</span></span>
+<span class="source-line" id="line-50"><a class="line" id="50" href="#50">50:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-51"><a class="line" id="51" href="#51">51:</a> <span class="php-comment">     * @var array&lt;string, array&lt;string, int&gt;&gt;</span></span>
+<span class="source-line" id="line-52"><a class="line" id="52" href="#52">52:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-53"><a class="line" id="53" href="#53">53:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-54"><a class="line" id="54" href="#54">54:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-55"><a class="line" id="55" href="#55">55:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$multichoice_tables</span> = [];</span>
+<span class="source-line" id="line-56"><a class="line" id="56" href="#56">56:</a> </span>
+<span class="source-line" id="line-57"><a class="line" id="57" href="#57">57:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-58"><a class="line" id="58" href="#58">58:</a> <span class="php-comment">     * Generated key columns requiring identity handling by save_records().</span></span>
+<span class="source-line" id="line-59"><a class="line" id="59" href="#59">59:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-60"><a class="line" id="60" href="#60">60:</a> <span class="php-comment">     * @var array&lt;string, string&gt;</span></span>
+<span class="source-line" id="line-61"><a class="line" id="61" href="#61">61:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-62"><a class="line" id="62" href="#62">62:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-63"><a class="line" id="63" href="#63">63:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-64"><a class="line" id="64" href="#64">64:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$identity_fields</span> = [];</span>
+<span class="source-line" id="line-65"><a class="line" id="65" href="#65">65:</a> </span>
+<span class="source-line" id="line-66"><a class="line" id="66" href="#66">66:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-67"><a class="line" id="67" href="#67">67:</a> <span class="php-comment">     * Public names mapped to canonical names; NULL marks an ambiguous short alias.</span></span>
+<span class="source-line" id="line-68"><a class="line" id="68" href="#68">68:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-69"><a class="line" id="69" href="#69">69:</a> <span class="php-comment">     * @var array&lt;string, string|null&gt;</span></span>
+<span class="source-line" id="line-70"><a class="line" id="70" href="#70">70:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-71"><a class="line" id="71" href="#71">71:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-72"><a class="line" id="72" href="#72">72:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-73"><a class="line" id="73" href="#73">73:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$parameter_names</span> = [];</span>
+<span class="source-line" id="line-74"><a class="line" id="74" href="#74">74:</a> </span>
+<span class="source-line" id="line-75"><a class="line" id="75" href="#75">75:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-76"><a class="line" id="76" href="#76">76:</a> <span class="php-comment">     * User key parameters that may be read but never assigned as settings.</span></span>
+<span class="source-line" id="line-77"><a class="line" id="77" href="#77">77:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-78"><a class="line" id="78" href="#78">78:</a> <span class="php-comment">     * @var array&lt;string, true&gt;</span></span>
+<span class="source-line" id="line-79"><a class="line" id="79" href="#79">79:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-80"><a class="line" id="80" href="#80">80:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-81"><a class="line" id="81" href="#81">81:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-82"><a class="line" id="82" href="#82">82:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$read_only_parameters</span> = [];</span>
+<span class="source-line" id="line-83"><a class="line" id="83" href="#83">83:</a> </span>
+<span class="source-line" id="line-84"><a class="line" id="84" href="#84">84:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-85"><a class="line" id="85" href="#85">85:</a> <span class="php-comment">     * Configures scalar and multichoice tables without loading a user&#039;s settings.</span></span>
+<span class="source-line" id="line-86"><a class="line" id="86" href="#86">86:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-87"><a class="line" id="87" href="#87">87:</a> <span class="php-comment">     * @param array{dbworker: DBWorker, settings_tables: array&lt;string, array&lt;string, int&gt;&gt;, multichoice_tables?: array&lt;string, array&lt;string, int&gt;&gt;, identity_fields?: array&lt;string, string&gt;, no_own_transaction?: bool} $parameters</span></span>
+<span class="source-line" id="line-88"><a class="line" id="88" href="#88">88:</a> <span class="php-comment">     * Maps tables to ordered field/type definitions. The first field is the user key.</span></span>
+<span class="source-line" id="line-89"><a class="line" id="89" href="#89">89:</a> <span class="php-comment">     * Scalar tables need at least one setting field; multichoice tables need exactly two</span></span>
+<span class="source-line" id="line-90"><a class="line" id="90" href="#90">90:</a> <span class="php-comment">     * fields. The first scalar table must contain the existing owner row. identity_fields</span></span>
+<span class="source-line" id="line-91"><a class="line" id="91" href="#91">91:</a> <span class="php-comment">     * identifies generated keys, for example [&quot;users&quot; =&gt; &quot;id&quot;]. Multichoice tables support</span></span>
+<span class="source-line" id="line-92"><a class="line" id="92" href="#92">92:</a> <span class="php-comment">     * scalar, numeric and date values; each parameter is addressed by its table name.</span></span>
+<span class="source-line" id="line-93"><a class="line" id="93" href="#93">93:</a> <span class="php-comment">     * Set no_own_transaction to require an existing caller-managed transaction.</span></span>
+<span class="source-line" id="line-94"><a class="line" id="94" href="#94">94:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-95"><a class="line" id="95" href="#95">95:</a> <span class="php-comment">     * Example:</span></span>
+<span class="source-line" id="line-96"><a class="line" id="96" href="#96">96:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-97"><a class="line" id="97" href="#97">97:</a> <span class="php-comment">     * ```php</span></span>
+<span class="source-line" id="line-98"><a class="line" id="98" href="#98">98:</a> <span class="php-comment">     * $instance-&gt;init([</span></span>
+<span class="source-line" id="line-99"><a class="line" id="99" href="#99">99:</a> <span class="php-comment">     *     &quot;dbworker&quot; =&gt; app_dbworker(),</span></span>
+<span class="source-line" id="line-100"><a class="line" id="100" href="#100">100:</a> <span class="php-comment">     *     &quot;identity_fields&quot; =&gt; [&quot;users&quot; =&gt; &quot;id&quot;],</span></span>
+<span class="source-line" id="line-101"><a class="line" id="101" href="#101">101:</a> <span class="php-comment">     *     &quot;settings_tables&quot; =&gt; [</span></span>
+<span class="source-line" id="line-102"><a class="line" id="102" href="#102">102:</a> <span class="php-comment">     *         &quot;users&quot; =&gt; [</span></span>
+<span class="source-line" id="line-103"><a class="line" id="103" href="#103">103:</a> <span class="php-comment">     *             &quot;id&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-104"><a class="line" id="104" href="#104">104:</a> <span class="php-comment">     *             &quot;language&quot; =&gt; DBWorker::DB_STRING,</span></span>
+<span class="source-line" id="line-105"><a class="line" id="105" href="#105">105:</a> <span class="php-comment">     *             &quot;time_zone&quot; =&gt; DBWorker::DB_STRING</span></span>
+<span class="source-line" id="line-106"><a class="line" id="106" href="#106">106:</a> <span class="php-comment">     *         ],</span></span>
+<span class="source-line" id="line-107"><a class="line" id="107" href="#107">107:</a> <span class="php-comment">     *         &quot;user_forum_settings&quot; =&gt; [</span></span>
+<span class="source-line" id="line-108"><a class="line" id="108" href="#108">108:</a> <span class="php-comment">     *             &quot;user_id&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-109"><a class="line" id="109" href="#109">109:</a> <span class="php-comment">     *             &quot;signature&quot; =&gt; DBWorker::DB_STRING,</span></span>
+<span class="source-line" id="line-110"><a class="line" id="110" href="#110">110:</a> <span class="php-comment">     *             &quot;status&quot; =&gt; DBWorker::DB_STRING,</span></span>
+<span class="source-line" id="line-111"><a class="line" id="111" href="#111">111:</a> <span class="php-comment">     *             &quot;hide_pictures&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-112"><a class="line" id="112" href="#112">112:</a> <span class="php-comment">     *             &quot;hide_signatures&quot; =&gt; DBWorker::DB_NUMBER</span></span>
+<span class="source-line" id="line-113"><a class="line" id="113" href="#113">113:</a> <span class="php-comment">     *         ]</span></span>
+<span class="source-line" id="line-114"><a class="line" id="114" href="#114">114:</a> <span class="php-comment">     *     ],</span></span>
+<span class="source-line" id="line-115"><a class="line" id="115" href="#115">115:</a> <span class="php-comment">     *     &quot;multichoice_tables&quot; =&gt; [</span></span>
+<span class="source-line" id="line-116"><a class="line" id="116" href="#116">116:</a> <span class="php-comment">     *         &quot;user_colors&quot; =&gt; [</span></span>
+<span class="source-line" id="line-117"><a class="line" id="117" href="#117">117:</a> <span class="php-comment">     *             &quot;user_id&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-118"><a class="line" id="118" href="#118">118:</a> <span class="php-comment">     *             &quot;color&quot; =&gt; DBWorker::DB_STRING</span></span>
+<span class="source-line" id="line-119"><a class="line" id="119" href="#119">119:</a> <span class="php-comment">     *         ]</span></span>
+<span class="source-line" id="line-120"><a class="line" id="120" href="#120">120:</a> <span class="php-comment">     *     ]</span></span>
+<span class="source-line" id="line-121"><a class="line" id="121" href="#121">121:</a> <span class="php-comment">     * ]);</span></span>
+<span class="source-line" id="line-122"><a class="line" id="122" href="#122">122:</a> <span class="php-comment">     * ```</span></span>
+<span class="source-line" id="line-123"><a class="line" id="123" href="#123">123:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-124"><a class="line" id="124" href="#124">124:</a> <span class="php-comment">     * Example:</span></span>
+<span class="source-line" id="line-125"><a class="line" id="125" href="#125">125:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-126"><a class="line" id="126" href="#126">126:</a> <span class="php-comment">     * ```php</span></span>
+<span class="source-line" id="line-127"><a class="line" id="127" href="#127">127:</a> <span class="php-comment">     * $instance-&gt;init([</span></span>
+<span class="source-line" id="line-128"><a class="line" id="128" href="#128">128:</a> <span class="php-comment">     *     &quot;dbworker&quot; =&gt; app_dbworker(),</span></span>
+<span class="source-line" id="line-129"><a class="line" id="129" href="#129">129:</a> <span class="php-comment">     *     &quot;identity_fields&quot; =&gt; [&quot;users&quot; =&gt; &quot;id&quot;],</span></span>
+<span class="source-line" id="line-130"><a class="line" id="130" href="#130">130:</a> <span class="php-comment">     *     &quot;settings_tables&quot; =&gt; [</span></span>
+<span class="source-line" id="line-131"><a class="line" id="131" href="#131">131:</a> <span class="php-comment">     *         &quot;users&quot; =&gt; [</span></span>
+<span class="source-line" id="line-132"><a class="line" id="132" href="#132">132:</a> <span class="php-comment">     *             &quot;id&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-133"><a class="line" id="133" href="#133">133:</a> <span class="php-comment">     *             &quot;language&quot; =&gt; DBWorker::DB_STRING,</span></span>
+<span class="source-line" id="line-134"><a class="line" id="134" href="#134">134:</a> <span class="php-comment">     *             &quot;time_zone&quot; =&gt; DBWorker::DB_STRING</span></span>
+<span class="source-line" id="line-135"><a class="line" id="135" href="#135">135:</a> <span class="php-comment">     *         ],</span></span>
+<span class="source-line" id="line-136"><a class="line" id="136" href="#136">136:</a> <span class="php-comment">     *         &quot;user_forum_settings&quot; =&gt; [</span></span>
+<span class="source-line" id="line-137"><a class="line" id="137" href="#137">137:</a> <span class="php-comment">     *             &quot;user_id&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-138"><a class="line" id="138" href="#138">138:</a> <span class="php-comment">     *             &quot;signature&quot; =&gt; DBWorker::DB_STRING,</span></span>
+<span class="source-line" id="line-139"><a class="line" id="139" href="#139">139:</a> <span class="php-comment">     *             &quot;status&quot; =&gt; DBWorker::DB_STRING,</span></span>
+<span class="source-line" id="line-140"><a class="line" id="140" href="#140">140:</a> <span class="php-comment">     *             &quot;hide_pictures&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-141"><a class="line" id="141" href="#141">141:</a> <span class="php-comment">     *             &quot;hide_signatures&quot; =&gt; DBWorker::DB_NUMBER</span></span>
+<span class="source-line" id="line-142"><a class="line" id="142" href="#142">142:</a> <span class="php-comment">     *         ]</span></span>
+<span class="source-line" id="line-143"><a class="line" id="143" href="#143">143:</a> <span class="php-comment">     *     ],</span></span>
+<span class="source-line" id="line-144"><a class="line" id="144" href="#144">144:</a> <span class="php-comment">     *     &quot;multichoice_tables&quot; =&gt; [</span></span>
+<span class="source-line" id="line-145"><a class="line" id="145" href="#145">145:</a> <span class="php-comment">     *         &quot;user_colors&quot; =&gt; [</span></span>
+<span class="source-line" id="line-146"><a class="line" id="146" href="#146">146:</a> <span class="php-comment">     *             &quot;user_id&quot; =&gt; DBWorker::DB_NUMBER,</span></span>
+<span class="source-line" id="line-147"><a class="line" id="147" href="#147">147:</a> <span class="php-comment">     *             &quot;color&quot; =&gt; DBWorker::DB_STRING</span></span>
+<span class="source-line" id="line-148"><a class="line" id="148" href="#148">148:</a> <span class="php-comment">     *         ]</span></span>
+<span class="source-line" id="line-149"><a class="line" id="149" href="#149">149:</a> <span class="php-comment">     *     ]</span></span>
+<span class="source-line" id="line-150"><a class="line" id="150" href="#150">150:</a> <span class="php-comment">     * ]);</span></span>
+<span class="source-line" id="line-151"><a class="line" id="151" href="#151">151:</a> <span class="php-comment">     * ```</span></span>
+<span class="source-line" id="line-152"><a class="line" id="152" href="#152">152:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-153"><a class="line" id="153" href="#153">153:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-154"><a class="line" id="154" href="#154">154:</a> <span class="php-comment">     * Replaces definitions and discards cached values and unsaved edits.</span></span>
+<span class="source-line" id="line-155"><a class="line" id="155" href="#155">155:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-156"><a class="line" id="156" href="#156">156:</a> <span class="php-comment">     * @throws \InvalidArgumentException</span></span>
+<span class="source-line" id="line-157"><a class="line" id="157" href="#157">157:</a> <span class="php-comment">     * If the worker, table definitions, field types, identifiers or identity mapping are invalid.</span></span>
+<span class="source-line" id="line-158"><a class="line" id="158" href="#158">158:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-159"><a class="line" id="159" href="#159">159:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-160"><a class="line" id="160" href="#160">160:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-161"><a class="line" id="161" href="#161">161:</a>     <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-162"><a class="line" id="162" href="#162">162:</a>     {</span>
+<span class="source-line" id="line-163"><a class="line" id="163" href="#163">163:</a>         <span class="php-var">$worker</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&#039;dbworker&#039;</span>] ?? <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-164"><a class="line" id="164" href="#164">164:</a>         <span class="php-var">$tables</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&#039;settings_tables&#039;</span>] ?? <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-165"><a class="line" id="165" href="#165">165:</a>         <span class="php-var">$choices</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&#039;multichoice_tables&#039;</span>] ?? [];</span>
+<span class="source-line" id="line-166"><a class="line" id="166" href="#166">166:</a>         <span class="php-var">$identities</span> = <span class="php-var">$parameters</span>[<span class="php-quote">&#039;identity_fields&#039;</span>] ?? [];</span>
+<span class="source-line" id="line-167"><a class="line" id="167" href="#167">167:</a> </span>
+<span class="source-line" id="line-168"><a class="line" id="168" href="#168">168:</a>         <span class="php-keyword1">if</span> (!<span class="php-var">$worker</span> <span class="php-keyword1">instanceof</span> DBWorker || !is_array(<span class="php-var">$tables</span>) || <span class="php-var">$tables</span> === []</span>
+<span class="source-line" id="line-169"><a class="line" id="169" href="#169">169:</a>             || !is_array(<span class="php-var">$choices</span>) || !is_array(<span class="php-var">$identities</span>) || array_intersect_key(<span class="php-var">$tables</span>, <span class="php-var">$choices</span>) !== []) {</span>
+<span class="source-line" id="line-170"><a class="line" id="170" href="#170">170:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;Invalid user settings configuration.&quot;</span>);</span>
+<span class="source-line" id="line-171"><a class="line" id="171" href="#171">171:</a>         }</span>
+<span class="source-line" id="line-172"><a class="line" id="172" href="#172">172:</a> </span>
+<span class="source-line" id="line-173"><a class="line" id="173" href="#173">173:</a>         <span class="php-var">$this</span>-&gt;validateTableDefinitions(<span class="php-var">$tables</span>, <span class="php-keyword1">false</span>);</span>
+<span class="source-line" id="line-174"><a class="line" id="174" href="#174">174:</a> </span>
+<span class="source-line" id="line-175"><a class="line" id="175" href="#175">175:</a>         <span class="php-var">$this</span>-&gt;validateTableDefinitions(<span class="php-var">$choices</span>, <span class="php-keyword1">true</span>);</span>
+<span class="source-line" id="line-176"><a class="line" id="176" href="#176">176:</a> </span>
+<span class="source-line" id="line-177"><a class="line" id="177" href="#177">177:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$identities</span> <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$field</span>) {</span>
+<span class="source-line" id="line-178"><a class="line" id="178" href="#178">178:</a>             <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$tables</span>[<span class="php-var">$table</span>]) || !is_string(<span class="php-var">$field</span>) || array_key_first(<span class="php-var">$tables</span>[<span class="php-var">$table</span>]) !== <span class="php-var">$field</span>) {</span>
+<span class="source-line" id="line-179"><a class="line" id="179" href="#179">179:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;An identity field must be the configured user key of a scalar settings table.&quot;</span>);</span>
+<span class="source-line" id="line-180"><a class="line" id="180" href="#180">180:</a>             }</span>
+<span class="source-line" id="line-181"><a class="line" id="181" href="#181">181:</a>         }</span>
+<span class="source-line" id="line-182"><a class="line" id="182" href="#182">182:</a> </span>
+<span class="source-line" id="line-183"><a class="line" id="183" href="#183">183:</a>         <span class="php-var">$names</span> = [];</span>
+<span class="source-line" id="line-184"><a class="line" id="184" href="#184">184:</a>         <span class="php-var">$read_only</span> = [];</span>
+<span class="source-line" id="line-185"><a class="line" id="185" href="#185">185:</a> </span>
+<span class="source-line" id="line-186"><a class="line" id="186" href="#186">186:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$tables</span> <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$fields</span>) {</span>
+<span class="source-line" id="line-187"><a class="line" id="187" href="#187">187:</a>             <span class="php-keyword1">foreach</span> (<span class="php-var">$fields</span> <span class="php-keyword1">as</span> <span class="php-var">$field</span> =&gt; <span class="php-var">$_</span>) {</span>
+<span class="source-line" id="line-188"><a class="line" id="188" href="#188">188:</a>                 <span class="php-var">$canonical</span> = <span class="php-var">$table</span> . <span class="php-quote">&quot;.&quot;</span> . <span class="php-var">$field</span>;</span>
+<span class="source-line" id="line-189"><a class="line" id="189" href="#189">189:</a>                 <span class="php-var">$names</span>[<span class="php-var">$canonical</span>] = <span class="php-var">$canonical</span>;</span>
+<span class="source-line" id="line-190"><a class="line" id="190" href="#190">190:</a>                 <span class="php-var">$names</span>[<span class="php-var">$field</span>] = array_key_exists(<span class="php-var">$field</span>, <span class="php-var">$names</span>) ? <span class="php-keyword1">null</span> : <span class="php-var">$canonical</span>;</span>
+<span class="source-line" id="line-191"><a class="line" id="191" href="#191">191:</a>             }</span>
+<span class="source-line" id="line-192"><a class="line" id="192" href="#192">192:</a> </span>
+<span class="source-line" id="line-193"><a class="line" id="193" href="#193">193:</a>             <span class="php-var">$read_only</span>[<span class="php-var">$table</span> . <span class="php-quote">&quot;.&quot;</span> . array_key_first(<span class="php-var">$fields</span>)] = <span class="php-keyword1">true</span>;</span>
+<span class="source-line" id="line-194"><a class="line" id="194" href="#194">194:</a>         }</span>
+<span class="source-line" id="line-195"><a class="line" id="195" href="#195">195:</a> </span>
+<span class="source-line" id="line-196"><a class="line" id="196" href="#196">196:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$choices</span> <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$_</span>) {</span>
+<span class="source-line" id="line-197"><a class="line" id="197" href="#197">197:</a>             <span class="php-keyword1">if</span> (array_key_exists(<span class="php-var">$table</span>, <span class="php-var">$names</span>)) {</span>
+<span class="source-line" id="line-198"><a class="line" id="198" href="#198">198:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;A multichoice table name conflicts with a scalar parameter: &quot;</span> . <span class="php-var">$table</span>);</span>
+<span class="source-line" id="line-199"><a class="line" id="199" href="#199">199:</a>             }</span>
+<span class="source-line" id="line-200"><a class="line" id="200" href="#200">200:</a> </span>
+<span class="source-line" id="line-201"><a class="line" id="201" href="#201">201:</a>             <span class="php-var">$names</span>[<span class="php-var">$table</span>] = <span class="php-var">$table</span>;</span>
+<span class="source-line" id="line-202"><a class="line" id="202" href="#202">202:</a>         }</span>
+<span class="source-line" id="line-203"><a class="line" id="203" href="#203">203:</a> </span>
+<span class="source-line" id="line-204"><a class="line" id="204" href="#204">204:</a>         <span class="php-var">$this</span>-&gt;settings_tables = <span class="php-var">$tables</span>;</span>
+<span class="source-line" id="line-205"><a class="line" id="205" href="#205">205:</a>         <span class="php-var">$this</span>-&gt;multichoice_tables = <span class="php-var">$choices</span>;</span>
+<span class="source-line" id="line-206"><a class="line" id="206" href="#206">206:</a>         <span class="php-var">$this</span>-&gt;identity_fields = <span class="php-var">$identities</span>;</span>
+<span class="source-line" id="line-207"><a class="line" id="207" href="#207">207:</a>         <span class="php-var">$this</span>-&gt;parameter_names = <span class="php-var">$names</span>;</span>
+<span class="source-line" id="line-208"><a class="line" id="208" href="#208">208:</a>         <span class="php-var">$this</span>-&gt;read_only_parameters = <span class="php-var">$read_only</span>;</span>
+<span class="source-line" id="line-209"><a class="line" id="209" href="#209">209:</a> </span>
+<span class="source-line" id="line-210"><a class="line" id="210" href="#210">210:</a>         <span class="php-var">$this</span>-&gt;setDBWorker(<span class="php-var">$worker</span>, <span class="php-keyword2">(bool)</span> (<span class="php-var">$parameters</span>[<span class="php-quote">&#039;no_own_transaction&#039;</span>] ?? <span class="php-keyword1">false</span>));</span>
+<span class="source-line" id="line-211"><a class="line" id="211" href="#211">211:</a>     } <span class="php-comment">// init</span></span>
+<span class="source-line" id="line-212"><a class="line" id="212" href="#212">212:</a> </span>
+<span class="source-line" id="line-213"><a class="line" id="213" href="#213">213:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-214"><a class="line" id="214" href="#214">214:</a> <span class="php-comment">     * Validates ordered table definitions before using their identifiers in SQL.</span></span>
+<span class="source-line" id="line-215"><a class="line" id="215" href="#215">215:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-216"><a class="line" id="216" href="#216">216:</a> <span class="php-comment">     * @param array&lt;string, array&lt;string, int&gt;&gt; $tables</span></span>
+<span class="source-line" id="line-217"><a class="line" id="217" href="#217">217:</a> <span class="php-comment">     * The scalar or multichoice table definitions.</span></span>
+<span class="source-line" id="line-218"><a class="line" id="218" href="#218">218:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-219"><a class="line" id="219" href="#219">219:</a> <span class="php-comment">     * @param bool $multichoice</span></span>
+<span class="source-line" id="line-220"><a class="line" id="220" href="#220">220:</a> <span class="php-comment">     * Whether each definition must have exactly one user key and one scalar value field.</span></span>
+<span class="source-line" id="line-221"><a class="line" id="221" href="#221">221:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-222"><a class="line" id="222" href="#222">222:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-223"><a class="line" id="223" href="#223">223:</a> <span class="php-comment">     * Leaves the manager&#039;s current configuration unchanged.</span></span>
+<span class="source-line" id="line-224"><a class="line" id="224" href="#224">224:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-225"><a class="line" id="225" href="#225">225:</a> <span class="php-comment">     * @throws \InvalidArgumentException</span></span>
+<span class="source-line" id="line-226"><a class="line" id="226" href="#226">226:</a> <span class="php-comment">     * If a table has invalid identifiers, an invalid field count or unsupported field types.</span></span>
+<span class="source-line" id="line-227"><a class="line" id="227" href="#227">227:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-228"><a class="line" id="228" href="#228">228:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-229"><a class="line" id="229" href="#229">229:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-230"><a class="line" id="230" href="#230">230:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateTableDefinitions(<span class="php-keyword1">array</span> <span class="php-var">$tables</span>, <span class="php-keyword1">bool</span> <span class="php-var">$multichoice</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-231"><a class="line" id="231" href="#231">231:</a>     {</span>
+<span class="source-line" id="line-232"><a class="line" id="232" href="#232">232:</a>         <span class="php-var">$types</span> = [DBWorker::DB_AS_IS, DBWorker::DB_NUMBER, DBWorker::DB_STRING,</span>
+<span class="source-line" id="line-233"><a class="line" id="233" href="#233">233:</a>             DBWorker::DB_DATE, DBWorker::DB_DATETIME, DBWorker::DB_GEOMETRY,</span>
+<span class="source-line" id="line-234"><a class="line" id="234" href="#234">234:</a>             DBWorker::DB_GEOMETRY_4326, DBWorker::DB_LARGE_OBJECT_STREAM];</span>
+<span class="source-line" id="line-235"><a class="line" id="235" href="#235">235:</a> </span>
+<span class="source-line" id="line-236"><a class="line" id="236" href="#236">236:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$tables</span> <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$fields</span>) {</span>
+<span class="source-line" id="line-237"><a class="line" id="237" href="#237">237:</a>             <span class="php-keyword1">if</span> (!is_string(<span class="php-var">$table</span>) || !is_array(<span class="php-var">$fields</span>) || count(<span class="php-var">$fields</span>) &lt; <span class="php-num">2</span></span>
+<span class="source-line" id="line-238"><a class="line" id="238" href="#238">238:</a>                 || (<span class="php-var">$multichoice</span> &amp;&amp; count(<span class="php-var">$fields</span>) !== <span class="php-num">2</span>)) {</span>
+<span class="source-line" id="line-239"><a class="line" id="239" href="#239">239:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;Invalid user settings table definition.&quot;</span>);</span>
+<span class="source-line" id="line-240"><a class="line" id="240" href="#240">240:</a>             }</span>
+<span class="source-line" id="line-241"><a class="line" id="241" href="#241">241:</a> </span>
+<span class="source-line" id="line-242"><a class="line" id="242" href="#242">242:</a>             <span class="php-var">$this</span>-&gt;validateIdentifier(<span class="php-var">$table</span>, <span class="php-keyword1">true</span>);</span>
+<span class="source-line" id="line-243"><a class="line" id="243" href="#243">243:</a> </span>
+<span class="source-line" id="line-244"><a class="line" id="244" href="#244">244:</a>             <span class="php-keyword1">foreach</span> (<span class="php-var">$fields</span> <span class="php-keyword1">as</span> <span class="php-var">$field</span> =&gt; <span class="php-var">$type</span>) {</span>
+<span class="source-line" id="line-245"><a class="line" id="245" href="#245">245:</a>                 <span class="php-keyword1">if</span> (!is_string(<span class="php-var">$field</span>) || !in_array(<span class="php-var">$type</span>, <span class="php-var">$types</span>, <span class="php-keyword1">true</span>)</span>
+<span class="source-line" id="line-246"><a class="line" id="246" href="#246">246:</a>                     || (<span class="php-var">$multichoice</span> &amp;&amp; !in_array(<span class="php-var">$type</span>, [DBWorker::DB_AS_IS, DBWorker::DB_NUMBER,</span>
+<span class="source-line" id="line-247"><a class="line" id="247" href="#247">247:</a>                         DBWorker::DB_STRING, DBWorker::DB_DATE, DBWorker::DB_DATETIME], <span class="php-keyword1">true</span>))) {</span>
+<span class="source-line" id="line-248"><a class="line" id="248" href="#248">248:</a>                     <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;Invalid user settings field definition.&quot;</span>);</span>
+<span class="source-line" id="line-249"><a class="line" id="249" href="#249">249:</a>                 }</span>
+<span class="source-line" id="line-250"><a class="line" id="250" href="#250">250:</a> </span>
+<span class="source-line" id="line-251"><a class="line" id="251" href="#251">251:</a>                 <span class="php-var">$this</span>-&gt;validateIdentifier(<span class="php-var">$field</span>);</span>
+<span class="source-line" id="line-252"><a class="line" id="252" href="#252">252:</a>             }</span>
+<span class="source-line" id="line-253"><a class="line" id="253" href="#253">253:</a>         }</span>
+<span class="source-line" id="line-254"><a class="line" id="254" href="#254">254:</a>     } <span class="php-comment">// validateTableDefinitions</span></span>
+<span class="source-line" id="line-255"><a class="line" id="255" href="#255">255:</a> </span>
+<span class="source-line" id="line-256"><a class="line" id="256" href="#256">256:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-257"><a class="line" id="257" href="#257">257:</a> <span class="php-comment">     * Checks that table definitions, a worker and a user have been selected.</span></span>
+<span class="source-line" id="line-258"><a class="line" id="258" href="#258">258:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-259"><a class="line" id="259" href="#259">259:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-260"><a class="line" id="260" href="#260">260:</a> <span class="php-comment">     * Accepts user identifier zero and rejects only an unset identifier.</span></span>
+<span class="source-line" id="line-261"><a class="line" id="261" href="#261">261:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-262"><a class="line" id="262" href="#262">262:</a> <span class="php-comment">     * @throws \LogicException</span></span>
+<span class="source-line" id="line-263"><a class="line" id="263" href="#263">263:</a> <span class="php-comment">     * If the manager is uninitialized or setUserID() has not selected a user.</span></span>
+<span class="source-line" id="line-264"><a class="line" id="264" href="#264">264:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-265"><a class="line" id="265" href="#265">265:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-266"><a class="line" id="266" href="#266">266:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-267"><a class="line" id="267" href="#267">267:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters(): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-268"><a class="line" id="268" href="#268">268:</a>     {</span>
+<span class="source-line" id="line-269"><a class="line" id="269" href="#269">269:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;dbworker === <span class="php-keyword1">null</span> || <span class="php-var">$this</span>-&gt;settings_tables === []) {</span>
+<span class="source-line" id="line-270"><a class="line" id="270" href="#270">270:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;The user settings manager is not initialized.&quot;</span>);</span>
+<span class="source-line" id="line-271"><a class="line" id="271" href="#271">271:</a>         }</span>
+<span class="source-line" id="line-272"><a class="line" id="272" href="#272">272:</a> </span>
+<span class="source-line" id="line-273"><a class="line" id="273" href="#273">273:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;user_id === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-274"><a class="line" id="274" href="#274">274:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \LogicException(<span class="php-quote">&quot;A user ID must be selected before accessing user settings.&quot;</span>);</span>
+<span class="source-line" id="line-275"><a class="line" id="275" href="#275">275:</a>         }</span>
+<span class="source-line" id="line-276"><a class="line" id="276" href="#276">276:</a>     } <span class="php-comment">// validateParameters</span></span>
+<span class="source-line" id="line-277"><a class="line" id="277" href="#277">277:</a> </span>
+<span class="source-line" id="line-278"><a class="line" id="278" href="#278">278:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-279"><a class="line" id="279" href="#279">279:</a> <span class="php-comment">     * Resolves short names without creating duplicate copies of column values.</span></span>
+<span class="source-line" id="line-280"><a class="line" id="280" href="#280">280:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-281"><a class="line" id="281" href="#281">281:</a> <span class="php-comment">     * @param string $name</span></span>
+<span class="source-line" id="line-282"><a class="line" id="282" href="#282">282:</a> <span class="php-comment">     * A qualified column name, unambiguous short name or multichoice table name.</span></span>
+<span class="source-line" id="line-283"><a class="line" id="283" href="#283">283:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-284"><a class="line" id="284" href="#284">284:</a> <span class="php-comment">     * @return string</span></span>
+<span class="source-line" id="line-285"><a class="line" id="285" href="#285">285:</a> <span class="php-comment">     * Returns the canonical name. Unknown names remain absent when reading.</span></span>
+<span class="source-line" id="line-286"><a class="line" id="286" href="#286">286:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-287"><a class="line" id="287" href="#287">287:</a> <span class="php-comment">     * @throws \InvalidArgumentException</span></span>
+<span class="source-line" id="line-288"><a class="line" id="288" href="#288">288:</a> <span class="php-comment">     * If a short name identifies columns in more than one configured table.</span></span>
+<span class="source-line" id="line-289"><a class="line" id="289" href="#289">289:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-290"><a class="line" id="290" href="#290">290:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-291"><a class="line" id="291" href="#291">291:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-292"><a class="line" id="292" href="#292">292:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> normalizeParameterName(<span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">string</span></span>
+<span class="source-line" id="line-293"><a class="line" id="293" href="#293">293:</a>     {</span>
+<span class="source-line" id="line-294"><a class="line" id="294" href="#294">294:</a>         <span class="php-keyword1">if</span> (array_key_exists(<span class="php-var">$name</span>, <span class="php-var">$this</span>-&gt;parameter_names) &amp;&amp; <span class="php-var">$this</span>-&gt;parameter_names[<span class="php-var">$name</span>] === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-295"><a class="line" id="295" href="#295">295:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;Ambiguous settings name; use table.column: &quot;</span> . <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-296"><a class="line" id="296" href="#296">296:</a>         }</span>
+<span class="source-line" id="line-297"><a class="line" id="297" href="#297">297:</a> </span>
+<span class="source-line" id="line-298"><a class="line" id="298" href="#298">298:</a>         <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;parameter_names[<span class="php-var">$name</span>] ?? <span class="php-var">$name</span>;</span>
+<span class="source-line" id="line-299"><a class="line" id="299" href="#299">299:</a>     } <span class="php-comment">// normalizeParameterName</span></span>
+<span class="source-line" id="line-300"><a class="line" id="300" href="#300">300:</a> </span>
+<span class="source-line" id="line-301"><a class="line" id="301" href="#301">301:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-302"><a class="line" id="302" href="#302">302:</a> <span class="php-comment">     * Recognizes configured fields even when their optional database row is absent.</span></span>
+<span class="source-line" id="line-303"><a class="line" id="303" href="#303">303:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-304"><a class="line" id="304" href="#304">304:</a> <span class="php-comment">     * @param string $name</span></span>
+<span class="source-line" id="line-305"><a class="line" id="305" href="#305">305:</a> <span class="php-comment">     * The canonical parameter name.</span></span>
+<span class="source-line" id="line-306"><a class="line" id="306" href="#306">306:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-307"><a class="line" id="307" href="#307">307:</a> <span class="php-comment">     * @return bool</span></span>
+<span class="source-line" id="line-308"><a class="line" id="308" href="#308">308:</a> <span class="php-comment">     * Returns whether the parameter belongs to the configured schema.</span></span>
+<span class="source-line" id="line-309"><a class="line" id="309" href="#309">309:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-310"><a class="line" id="310" href="#310">310:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-311"><a class="line" id="311" href="#311">311:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-312"><a class="line" id="312" href="#312">312:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> isParameterDefined(<span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">bool</span></span>
+<span class="source-line" id="line-313"><a class="line" id="313" href="#313">313:</a>     {</span>
+<span class="source-line" id="line-314"><a class="line" id="314" href="#314">314:</a>         <span class="php-keyword1">return</span> <span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;parameter_names[<span class="php-var">$name</span>]);</span>
+<span class="source-line" id="line-315"><a class="line" id="315" href="#315">315:</a>     } <span class="php-comment">// isParameterDefined</span></span>
+<span class="source-line" id="line-316"><a class="line" id="316" href="#316">316:</a> </span>
+<span class="source-line" id="line-317"><a class="line" id="317" href="#317">317:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-318"><a class="line" id="318" href="#318">318:</a> <span class="php-comment">     * Rejects unknown fields, user key assignments and invalid multichoice structures.</span></span>
+<span class="source-line" id="line-319"><a class="line" id="319" href="#319">319:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-320"><a class="line" id="320" href="#320">320:</a> <span class="php-comment">     * @param string $name</span></span>
+<span class="source-line" id="line-321"><a class="line" id="321" href="#321">321:</a> <span class="php-comment">     * The canonical parameter name.</span></span>
+<span class="source-line" id="line-322"><a class="line" id="322" href="#322">322:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-323"><a class="line" id="323" href="#323">323:</a> <span class="php-comment">     * @param mixed $value</span></span>
+<span class="source-line" id="line-324"><a class="line" id="324" href="#324">324:</a> <span class="php-comment">     * A scalar setting value or an array of scalar/date multichoice values.</span></span>
+<span class="source-line" id="line-325"><a class="line" id="325" href="#325">325:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-326"><a class="line" id="326" href="#326">326:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-327"><a class="line" id="327" href="#327">327:</a> <span class="php-comment">     * Does not change the supplied value or the current settings snapshot.</span></span>
+<span class="source-line" id="line-328"><a class="line" id="328" href="#328">328:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-329"><a class="line" id="329" href="#329">329:</a> <span class="php-comment">     * @throws \InvalidArgumentException</span></span>
+<span class="source-line" id="line-330"><a class="line" id="330" href="#330">330:</a> <span class="php-comment">     * If the name is unknown or read-only, a multichoice value is not an array,</span></span>
+<span class="source-line" id="line-331"><a class="line" id="331" href="#331">331:</a> <span class="php-comment">     * or a multichoice entry is neither scalar, NULL nor an accepted date object.</span></span>
+<span class="source-line" id="line-332"><a class="line" id="332" href="#332">332:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-333"><a class="line" id="333" href="#333">333:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-334"><a class="line" id="334" href="#334">334:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-335"><a class="line" id="335" href="#335">335:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameterValue(<span class="php-keyword1">string</span> <span class="php-var">$name</span>, <span class="php-keyword1">mixed</span> <span class="php-var">$value</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-336"><a class="line" id="336" href="#336">336:</a>     {</span>
+<span class="source-line" id="line-337"><a class="line" id="337" href="#337">337:</a>         <span class="php-keyword1">if</span> (!<span class="php-var">$this</span>-&gt;isParameterDefined(<span class="php-var">$name</span>) || <span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;read_only_parameters[<span class="php-var">$name</span>])) {</span>
+<span class="source-line" id="line-338"><a class="line" id="338" href="#338">338:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;Unknown or read-only user setting: &quot;</span> . <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-339"><a class="line" id="339" href="#339">339:</a>         }</span>
+<span class="source-line" id="line-340"><a class="line" id="340" href="#340">340:</a> </span>
+<span class="source-line" id="line-341"><a class="line" id="341" href="#341">341:</a>         <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;multichoice_tables[<span class="php-var">$name</span>])) {</span>
+<span class="source-line" id="line-342"><a class="line" id="342" href="#342">342:</a>             <span class="php-keyword1">return</span>;</span>
+<span class="source-line" id="line-343"><a class="line" id="343" href="#343">343:</a>         }</span>
+<span class="source-line" id="line-344"><a class="line" id="344" href="#344">344:</a> </span>
+<span class="source-line" id="line-345"><a class="line" id="345" href="#345">345:</a>         <span class="php-keyword1">if</span> (!is_array(<span class="php-var">$value</span>)) {</span>
+<span class="source-line" id="line-346"><a class="line" id="346" href="#346">346:</a>             <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;Multichoice settings must be arrays: &quot;</span> . <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-347"><a class="line" id="347" href="#347">347:</a>         }</span>
+<span class="source-line" id="line-348"><a class="line" id="348" href="#348">348:</a> </span>
+<span class="source-line" id="line-349"><a class="line" id="349" href="#349">349:</a>         <span class="php-var">$type</span> = array_values(<span class="php-var">$this</span>-&gt;multichoice_tables[<span class="php-var">$name</span>])[<span class="php-num">1</span>];</span>
+<span class="source-line" id="line-350"><a class="line" id="350" href="#350">350:</a> </span>
+<span class="source-line" id="line-351"><a class="line" id="351" href="#351">351:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$value</span> <span class="php-keyword1">as</span> <span class="php-var">$entry</span>) {</span>
+<span class="source-line" id="line-352"><a class="line" id="352" href="#352">352:</a>             <span class="php-keyword1">if</span> (!is_scalar(<span class="php-var">$entry</span>) &amp;&amp; <span class="php-var">$entry</span> !== <span class="php-keyword1">null</span></span>
+<span class="source-line" id="line-353"><a class="line" id="353" href="#353">353:</a>                 &amp;&amp; !(in_array(<span class="php-var">$type</span>, [DBWorker::DB_DATE, DBWorker::DB_DATETIME], <span class="php-keyword1">true</span>)</span>
+<span class="source-line" id="line-354"><a class="line" id="354" href="#354">354:</a>                     &amp;&amp; <span class="php-var">$entry</span> <span class="php-keyword1">instanceof</span> \DateTimeInterface)) {</span>
+<span class="source-line" id="line-355"><a class="line" id="355" href="#355">355:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;Invalid multichoice entry: &quot;</span> . <span class="php-var">$name</span>);</span>
+<span class="source-line" id="line-356"><a class="line" id="356" href="#356">356:</a>             }</span>
+<span class="source-line" id="line-357"><a class="line" id="357" href="#357">357:</a>         }</span>
+<span class="source-line" id="line-358"><a class="line" id="358" href="#358">358:</a>     } <span class="php-comment">// validateParameterValue</span></span>
+<span class="source-line" id="line-359"><a class="line" id="359" href="#359">359:</a> </span>
+<span class="source-line" id="line-360"><a class="line" id="360" href="#360">360:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-361"><a class="line" id="361" href="#361">361:</a> <span class="php-comment">     * Reads all configured tables for the selected user using bound queries.</span></span>
+<span class="source-line" id="line-362"><a class="line" id="362" href="#362">362:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-363"><a class="line" id="363" href="#363">363:</a> <span class="php-comment">     * @param DBWorker $worker</span></span>
+<span class="source-line" id="line-364"><a class="line" id="364" href="#364">364:</a> <span class="php-comment">     * A connected worker with isolated statement state.</span></span>
+<span class="source-line" id="line-365"><a class="line" id="365" href="#365">365:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-366"><a class="line" id="366" href="#366">366:</a> <span class="php-comment">     * @return array&lt;string, mixed&gt;</span></span>
+<span class="source-line" id="line-367"><a class="line" id="367" href="#367">367:</a> <span class="php-comment">     * Returns canonical scalar parameters and arrays indexed by multichoice table names.</span></span>
+<span class="source-line" id="line-368"><a class="line" id="368" href="#368">368:</a> <span class="php-comment">     * Missing scalar rows contribute no parameters; empty multichoice tables contribute [].</span></span>
+<span class="source-line" id="line-369"><a class="line" id="369" href="#369">369:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-370"><a class="line" id="370" href="#370">370:</a> <span class="php-comment">     * @throws \UnexpectedValueException</span></span>
+<span class="source-line" id="line-371"><a class="line" id="371" href="#371">371:</a> <span class="php-comment">     * If a scalar settings table contains multiple rows for the same user.</span></span>
+<span class="source-line" id="line-372"><a class="line" id="372" href="#372">372:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-373"><a class="line" id="373" href="#373">373:</a> <span class="php-comment">     * @throws \Throwable</span></span>
+<span class="source-line" id="line-374"><a class="line" id="374" href="#374">374:</a> <span class="php-comment">     * If preparing, executing, fetching or converting a stored value fails.</span></span>
+<span class="source-line" id="line-375"><a class="line" id="375" href="#375">375:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-376"><a class="line" id="376" href="#376">376:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-377"><a class="line" id="377" href="#377">377:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-378"><a class="line" id="378" href="#378">378:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> readSettingsData(DBWorker <span class="php-var">$worker</span>): <span class="php-keyword1">array</span></span>
+<span class="source-line" id="line-379"><a class="line" id="379" href="#379">379:</a>     {</span>
+<span class="source-line" id="line-380"><a class="line" id="380" href="#380">380:</a>         <span class="php-var">$data</span> = [];</span>
+<span class="source-line" id="line-381"><a class="line" id="381" href="#381">381:</a> </span>
+<span class="source-line" id="line-382"><a class="line" id="382" href="#382">382:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;settings_tables <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$fields</span>) {</span>
+<span class="source-line" id="line-383"><a class="line" id="383" href="#383">383:</a>             <span class="php-var">$key</span> = array_key_first(<span class="php-var">$fields</span>);</span>
+<span class="source-line" id="line-384"><a class="line" id="384" href="#384">384:</a> </span>
+<span class="source-line" id="line-385"><a class="line" id="385" href="#385">385:</a>             <span class="php-keyword1">try</span> {</span>
+<span class="source-line" id="line-386"><a class="line" id="386" href="#386">386:</a>                 <span class="php-var">$worker</span>-&gt;prepare_query(<span class="php-quote">&#039;SELECT &#039;</span> . implode(<span class="php-quote">&#039;, &#039;</span>, array_keys(<span class="php-var">$fields</span>))</span>
+<span class="source-line" id="line-387"><a class="line" id="387" href="#387">387:</a>                     . <span class="php-quote">&#039; FROM &#039;</span> . <span class="php-var">$table</span> . <span class="php-quote">&#039; WHERE &#039;</span> . <span class="php-var">$key</span> . <span class="php-quote">&#039; = ?&#039;</span>);</span>
+<span class="source-line" id="line-388"><a class="line" id="388" href="#388">388:</a> </span>
+<span class="source-line" id="line-389"><a class="line" id="389" href="#389">389:</a>                 <span class="php-var">$worker</span>-&gt;execute_prepared_query(<span class="php-var">$this</span>-&gt;user_id);</span>
+<span class="source-line" id="line-390"><a class="line" id="390" href="#390">390:</a> </span>
+<span class="source-line" id="line-391"><a class="line" id="391" href="#391">391:</a>                 <span class="php-keyword1">if</span> (<span class="php-var">$worker</span>-&gt;fetch_row()) {</span>
+<span class="source-line" id="line-392"><a class="line" id="392" href="#392">392:</a>                     <span class="php-keyword1">foreach</span> (<span class="php-var">$fields</span> <span class="php-keyword1">as</span> <span class="php-var">$field</span> =&gt; <span class="php-var">$type</span>) {</span>
+<span class="source-line" id="line-393"><a class="line" id="393" href="#393">393:</a>                         <span class="php-var">$data</span>[<span class="php-var">$table</span> . <span class="php-quote">&quot;.&quot;</span> . <span class="php-var">$field</span>] = <span class="php-var">$worker</span>-&gt;field_by_name(<span class="php-var">$field</span>, <span class="php-var">$type</span>);</span>
+<span class="source-line" id="line-394"><a class="line" id="394" href="#394">394:</a>                     }</span>
+<span class="source-line" id="line-395"><a class="line" id="395" href="#395">395:</a> </span>
+<span class="source-line" id="line-396"><a class="line" id="396" href="#396">396:</a>                     <span class="php-keyword1">if</span> (<span class="php-var">$worker</span>-&gt;fetch_row()) {</span>
+<span class="source-line" id="line-397"><a class="line" id="397" href="#397">397:</a>                         <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \UnexpectedValueException(<span class="php-quote">&quot;Multiple settings rows for one user in &quot;</span> . <span class="php-var">$table</span>);</span>
+<span class="source-line" id="line-398"><a class="line" id="398" href="#398">398:</a>                     }</span>
+<span class="source-line" id="line-399"><a class="line" id="399" href="#399">399:</a>                 }</span>
+<span class="source-line" id="line-400"><a class="line" id="400" href="#400">400:</a>             } <span class="php-keyword1">finally</span> {</span>
+<span class="source-line" id="line-401"><a class="line" id="401" href="#401">401:</a>                 <span class="php-var">$worker</span>-&gt;free_prepared_query();</span>
+<span class="source-line" id="line-402"><a class="line" id="402" href="#402">402:</a>             }</span>
+<span class="source-line" id="line-403"><a class="line" id="403" href="#403">403:</a>         }</span>
+<span class="source-line" id="line-404"><a class="line" id="404" href="#404">404:</a> </span>
+<span class="source-line" id="line-405"><a class="line" id="405" href="#405">405:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;multichoice_tables <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$fields</span>) {</span>
+<span class="source-line" id="line-406"><a class="line" id="406" href="#406">406:</a>             [<span class="php-var">$key</span>, <span class="php-var">$value_field</span>] = array_keys(<span class="php-var">$fields</span>);</span>
+<span class="source-line" id="line-407"><a class="line" id="407" href="#407">407:</a>             <span class="php-var">$data</span>[<span class="php-var">$table</span>] = [];</span>
+<span class="source-line" id="line-408"><a class="line" id="408" href="#408">408:</a> </span>
+<span class="source-line" id="line-409"><a class="line" id="409" href="#409">409:</a>             <span class="php-keyword1">try</span> {</span>
+<span class="source-line" id="line-410"><a class="line" id="410" href="#410">410:</a>                 <span class="php-var">$worker</span>-&gt;prepare_query(<span class="php-quote">&#039;SELECT &#039;</span> . <span class="php-var">$value_field</span> . <span class="php-quote">&#039; FROM &#039;</span> . <span class="php-var">$table</span> . <span class="php-quote">&#039; WHERE &#039;</span> . <span class="php-var">$key</span> . <span class="php-quote">&#039; = ?&#039;</span>);</span>
+<span class="source-line" id="line-411"><a class="line" id="411" href="#411">411:</a> </span>
+<span class="source-line" id="line-412"><a class="line" id="412" href="#412">412:</a>                 <span class="php-var">$worker</span>-&gt;execute_prepared_query(<span class="php-var">$this</span>-&gt;user_id);</span>
+<span class="source-line" id="line-413"><a class="line" id="413" href="#413">413:</a> </span>
+<span class="source-line" id="line-414"><a class="line" id="414" href="#414">414:</a>                 <span class="php-keyword1">while</span> (<span class="php-var">$worker</span>-&gt;fetch_row()) {</span>
+<span class="source-line" id="line-415"><a class="line" id="415" href="#415">415:</a>                     <span class="php-var">$data</span>[<span class="php-var">$table</span>][] = <span class="php-var">$worker</span>-&gt;field_by_name(<span class="php-var">$value_field</span>, <span class="php-var">$fields</span>[<span class="php-var">$value_field</span>]);</span>
+<span class="source-line" id="line-416"><a class="line" id="416" href="#416">416:</a>                 }</span>
+<span class="source-line" id="line-417"><a class="line" id="417" href="#417">417:</a>             } <span class="php-keyword1">finally</span> {</span>
+<span class="source-line" id="line-418"><a class="line" id="418" href="#418">418:</a>                 <span class="php-var">$worker</span>-&gt;free_prepared_query();</span>
+<span class="source-line" id="line-419"><a class="line" id="419" href="#419">419:</a>             }</span>
+<span class="source-line" id="line-420"><a class="line" id="420" href="#420">420:</a>         }</span>
+<span class="source-line" id="line-421"><a class="line" id="421" href="#421">421:</a> </span>
+<span class="source-line" id="line-422"><a class="line" id="422" href="#422">422:</a>         <span class="php-keyword1">return</span> <span class="php-var">$data</span>;</span>
+<span class="source-line" id="line-423"><a class="line" id="423" href="#423">423:</a>     } <span class="php-comment">// readSettingsData</span></span>
+<span class="source-line" id="line-424"><a class="line" id="424" href="#424">424:</a> </span>
+<span class="source-line" id="line-425"><a class="line" id="425" href="#425">425:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-426"><a class="line" id="426" href="#426">426:</a> <span class="php-comment">     * Loads settings into a temporary canonical snapshot.</span></span>
+<span class="source-line" id="line-427"><a class="line" id="427" href="#427">427:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-428"><a class="line" id="428" href="#428">428:</a> <span class="php-comment">     * @param array&lt;string, mixed&gt; &amp;$data</span></span>
+<span class="source-line" id="line-429"><a class="line" id="429" href="#429">429:</a> <span class="php-comment">     * Receives the user&#039;s complete settings after successful reading.</span></span>
+<span class="source-line" id="line-430"><a class="line" id="430" href="#430">430:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-431"><a class="line" id="431" href="#431">431:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-432"><a class="line" id="432" href="#432">432:</a> <span class="php-comment">     * Does not change the currently loaded values on failure.</span></span>
+<span class="source-line" id="line-433"><a class="line" id="433" href="#433">433:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-434"><a class="line" id="434" href="#434">434:</a> <span class="php-comment">     * @throws \Throwable</span></span>
+<span class="source-line" id="line-435"><a class="line" id="435" href="#435">435:</a> <span class="php-comment">     * If a user or configuration is missing, connecting fails or a query/conversion fails.</span></span>
+<span class="source-line" id="line-436"><a class="line" id="436" href="#436">436:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-437"><a class="line" id="437" href="#437">437:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-438"><a class="line" id="438" href="#438">438:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-439"><a class="line" id="439" href="#439">439:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-440"><a class="line" id="440" href="#440">440:</a>     {</span>
+<span class="source-line" id="line-441"><a class="line" id="441" href="#441">441:</a>         <span class="php-var">$this</span>-&gt;validateParameters();</span>
+<span class="source-line" id="line-442"><a class="line" id="442" href="#442">442:</a> </span>
+<span class="source-line" id="line-443"><a class="line" id="443" href="#443">443:</a>         <span class="php-var">$data</span> = <span class="php-var">$this</span>-&gt;readSettingsData(<span class="php-var">$this</span>-&gt;databaseWorker());</span>
+<span class="source-line" id="line-444"><a class="line" id="444" href="#444">444:</a>     } <span class="php-comment">// loadSettingsData</span></span>
+<span class="source-line" id="line-445"><a class="line" id="445" href="#445">445:</a> </span>
+<span class="source-line" id="line-446"><a class="line" id="446" href="#446">446:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-447"><a class="line" id="447" href="#447">447:</a> <span class="php-comment">     * Converts a multichoice value to the same unquoted scalar used for bound comparisons.</span></span>
+<span class="source-line" id="line-448"><a class="line" id="448" href="#448">448:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-449"><a class="line" id="449" href="#449">449:</a> <span class="php-comment">     * @param DBWorker $worker</span></span>
+<span class="source-line" id="line-450"><a class="line" id="450" href="#450">450:</a> <span class="php-comment">     * The worker providing database-specific date formatting.</span></span>
+<span class="source-line" id="line-451"><a class="line" id="451" href="#451">451:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-452"><a class="line" id="452" href="#452">452:</a> <span class="php-comment">     * @param mixed $value</span></span>
+<span class="source-line" id="line-453"><a class="line" id="453" href="#453">453:</a> <span class="php-comment">     * A scalar, NULL or date/time object accepted by the configured field.</span></span>
+<span class="source-line" id="line-454"><a class="line" id="454" href="#454">454:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-455"><a class="line" id="455" href="#455">455:</a> <span class="php-comment">     * @param int $type</span></span>
+<span class="source-line" id="line-456"><a class="line" id="456" href="#456">456:</a> <span class="php-comment">     * The configured DBWorker field type.</span></span>
+<span class="source-line" id="line-457"><a class="line" id="457" href="#457">457:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-458"><a class="line" id="458" href="#458">458:</a> <span class="php-comment">     * @return scalar|null</span></span>
+<span class="source-line" id="line-459"><a class="line" id="459" href="#459">459:</a> <span class="php-comment">     * Returns NULL for empty strings and NULL, formatted dates, or the original scalar.</span></span>
+<span class="source-line" id="line-460"><a class="line" id="460" href="#460">460:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-461"><a class="line" id="461" href="#461">461:</a> <span class="php-comment">     * @throws \InvalidArgumentException</span></span>
+<span class="source-line" id="line-462"><a class="line" id="462" href="#462">462:</a> <span class="php-comment">     * If a date is not an integer timestamp, integer timestamp string or date/time object.</span></span>
+<span class="source-line" id="line-463"><a class="line" id="463" href="#463">463:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-464"><a class="line" id="464" href="#464">464:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-465"><a class="line" id="465" href="#465">465:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-466"><a class="line" id="466" href="#466">466:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> comparisonValue(DBWorker <span class="php-var">$worker</span>, <span class="php-keyword1">mixed</span> <span class="php-var">$value</span>, <span class="php-keyword1">int</span> <span class="php-var">$type</span>): <span class="php-keyword1">mixed</span></span>
+<span class="source-line" id="line-467"><a class="line" id="467" href="#467">467:</a>     {</span>
+<span class="source-line" id="line-468"><a class="line" id="468" href="#468">468:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$value</span> === <span class="php-quote">&#039;&#039;</span> || <span class="php-var">$value</span> === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-469"><a class="line" id="469" href="#469">469:</a>             <span class="php-keyword1">return</span> <span class="php-keyword1">null</span>;</span>
+<span class="source-line" id="line-470"><a class="line" id="470" href="#470">470:</a>         }</span>
+<span class="source-line" id="line-471"><a class="line" id="471" href="#471">471:</a> </span>
+<span class="source-line" id="line-472"><a class="line" id="472" href="#472">472:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$type</span> === DBWorker::DB_DATE || <span class="php-var">$type</span> === DBWorker::DB_DATETIME) {</span>
+<span class="source-line" id="line-473"><a class="line" id="473" href="#473">473:</a>             <span class="php-keyword1">if</span> (is_string(<span class="php-var">$value</span>) &amp;&amp; preg_match(<span class="php-quote">&#039;/\\A-?\\d+\\z/&#039;</span>, <span class="php-var">$value</span>)) {</span>
+<span class="source-line" id="line-474"><a class="line" id="474" href="#474">474:</a>                 <span class="php-var">$value</span> = filter_var(<span class="php-var">$value</span>, FILTER_VALIDATE_INT);</span>
+<span class="source-line" id="line-475"><a class="line" id="475" href="#475">475:</a>             }</span>
+<span class="source-line" id="line-476"><a class="line" id="476" href="#476">476:</a> </span>
+<span class="source-line" id="line-477"><a class="line" id="477" href="#477">477:</a>             <span class="php-keyword1">if</span> (!is_int(<span class="php-var">$value</span>) &amp;&amp; !<span class="php-var">$value</span> <span class="php-keyword1">instanceof</span> \DateTimeInterface) {</span>
+<span class="source-line" id="line-478"><a class="line" id="478" href="#478">478:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \InvalidArgumentException(<span class="php-quote">&quot;A settings date must be a Unix timestamp or date/time object.&quot;</span>);</span>
+<span class="source-line" id="line-479"><a class="line" id="479" href="#479">479:</a>             }</span>
+<span class="source-line" id="line-480"><a class="line" id="480" href="#480">480:</a> </span>
+<span class="source-line" id="line-481"><a class="line" id="481" href="#481">481:</a>             <span class="php-keyword1">return</span> <span class="php-var">$type</span> === DBWorker::DB_DATE</span>
+<span class="source-line" id="line-482"><a class="line" id="482" href="#482">482:</a>                 ? <span class="php-var">$worker</span>-&gt;format_date_bind(<span class="php-var">$value</span>) : <span class="php-var">$worker</span>-&gt;format_datetime_bind(<span class="php-var">$value</span>);</span>
+<span class="source-line" id="line-483"><a class="line" id="483" href="#483">483:</a>         }</span>
+<span class="source-line" id="line-484"><a class="line" id="484" href="#484">484:</a> </span>
+<span class="source-line" id="line-485"><a class="line" id="485" href="#485">485:</a>         <span class="php-keyword1">return</span> <span class="php-var">$type</span> === DBWorker::DB_NUMBER &amp;&amp; is_bool(<span class="php-var">$value</span>) ? <span class="php-keyword2">(int)</span> <span class="php-var">$value</span> : <span class="php-var">$value</span>;</span>
+<span class="source-line" id="line-486"><a class="line" id="486" href="#486">486:</a>     } <span class="php-comment">// comparisonValue</span></span>
+<span class="source-line" id="line-487"><a class="line" id="487" href="#487">487:</a> </span>
+<span class="source-line" id="line-488"><a class="line" id="488" href="#488">488:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-489"><a class="line" id="489" href="#489">489:</a> <span class="php-comment">     * Upserts selected choices and deletes removed choices through a bound query.</span></span>
+<span class="source-line" id="line-490"><a class="line" id="490" href="#490">490:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-491"><a class="line" id="491" href="#491">491:</a> <span class="php-comment">     * @param DBWorker $worker</span></span>
+<span class="source-line" id="line-492"><a class="line" id="492" href="#492">492:</a> <span class="php-comment">     * The worker inside the aggregate&#039;s transaction and user lock.</span></span>
+<span class="source-line" id="line-493"><a class="line" id="493" href="#493">493:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-494"><a class="line" id="494" href="#494">494:</a> <span class="php-comment">     * @param string $table</span></span>
+<span class="source-line" id="line-495"><a class="line" id="495" href="#495">495:</a> <span class="php-comment">     * The configured multichoice table name.</span></span>
+<span class="source-line" id="line-496"><a class="line" id="496" href="#496">496:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-497"><a class="line" id="497" href="#497">497:</a> <span class="php-comment">     * @param array&lt;array-key, scalar|\DateTimeInterface|null&gt; $values</span></span>
+<span class="source-line" id="line-498"><a class="line" id="498" href="#498">498:</a> <span class="php-comment">     * The complete desired choice list, including valid zero and NULL values.</span></span>
+<span class="source-line" id="line-499"><a class="line" id="499" href="#499">499:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-500"><a class="line" id="500" href="#500">500:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-501"><a class="line" id="501" href="#501">501:</a> <span class="php-comment">     * Leaves other users and unchanged choice rows intact. An empty list clears this user&#039;s choices.</span></span>
+<span class="source-line" id="line-502"><a class="line" id="502" href="#502">502:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-503"><a class="line" id="503" href="#503">503:</a> <span class="php-comment">     * @throws \Throwable</span></span>
+<span class="source-line" id="line-504"><a class="line" id="504" href="#504">504:</a> <span class="php-comment">     * If converting, saving or deleting a choice fails; the enclosing transaction must roll back.</span></span>
+<span class="source-line" id="line-505"><a class="line" id="505" href="#505">505:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-506"><a class="line" id="506" href="#506">506:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-507"><a class="line" id="507" href="#507">507:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-508"><a class="line" id="508" href="#508">508:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveChoices(DBWorker <span class="php-var">$worker</span>, <span class="php-keyword1">string</span> <span class="php-var">$table</span>, <span class="php-keyword1">array</span> <span class="php-var">$values</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-509"><a class="line" id="509" href="#509">509:</a>     {</span>
+<span class="source-line" id="line-510"><a class="line" id="510" href="#510">510:</a>         <span class="php-var">$fields</span> = <span class="php-var">$this</span>-&gt;multichoice_tables[<span class="php-var">$table</span>];</span>
+<span class="source-line" id="line-511"><a class="line" id="511" href="#511">511:</a>         [<span class="php-var">$key</span>, <span class="php-var">$value_field</span>] = array_keys(<span class="php-var">$fields</span>);</span>
+<span class="source-line" id="line-512"><a class="line" id="512" href="#512">512:</a>         <span class="php-var">$type</span> = <span class="php-var">$fields</span>[<span class="php-var">$value_field</span>];</span>
+<span class="source-line" id="line-513"><a class="line" id="513" href="#513">513:</a>         <span class="php-var">$bindings</span> = [];</span>
+<span class="source-line" id="line-514"><a class="line" id="514" href="#514">514:</a>         <span class="php-var">$keep_null</span> = <span class="php-keyword1">false</span>;</span>
+<span class="source-line" id="line-515"><a class="line" id="515" href="#515">515:</a> </span>
+<span class="source-line" id="line-516"><a class="line" id="516" href="#516">516:</a>         <span class="php-keyword1">foreach</span> (<span class="php-var">$values</span> <span class="php-keyword1">as</span> <span class="php-var">$value</span>) {</span>
+<span class="source-line" id="line-517"><a class="line" id="517" href="#517">517:</a>             <span class="php-var">$normalized</span> = <span class="php-var">$this</span>-&gt;comparisonValue(<span class="php-var">$worker</span>, <span class="php-var">$value</span>, <span class="php-var">$type</span>);</span>
+<span class="source-line" id="line-518"><a class="line" id="518" href="#518">518:</a>             <span class="php-var">$record</span> = [<span class="php-var">$key</span> =&gt; <span class="php-var">$this</span>-&gt;user_id,</span>
+<span class="source-line" id="line-519"><a class="line" id="519" href="#519">519:</a>                 <span class="php-var">$value_field</span> =&gt; <span class="php-var">$type</span> === DBWorker::DB_NUMBER &amp;&amp; is_bool(<span class="php-var">$value</span>) ? <span class="php-keyword2">(int)</span> <span class="php-var">$value</span> : <span class="php-var">$value</span>];</span>
+<span class="source-line" id="line-520"><a class="line" id="520" href="#520">520:</a> </span>
+<span class="source-line" id="line-521"><a class="line" id="521" href="#521">521:</a>             <span class="php-var">$worker</span>-&gt;save_records(<span class="php-var">$record</span>, [</span>
+<span class="source-line" id="line-522"><a class="line" id="522" href="#522">522:</a>                 <span class="php-quote">&#039;table&#039;</span> =&gt; <span class="php-var">$table</span>,</span>
+<span class="source-line" id="line-523"><a class="line" id="523" href="#523">523:</a>                 <span class="php-quote">&#039;fields&#039;</span> =&gt; <span class="php-var">$fields</span>,</span>
+<span class="source-line" id="line-524"><a class="line" id="524" href="#524">524:</a>                 <span class="php-quote">&#039;array_dimension_keys&#039;</span> =&gt; [],</span>
+<span class="source-line" id="line-525"><a class="line" id="525" href="#525">525:</a>                 <span class="php-quote">&#039;record_key_fields&#039;</span> =&gt; [<span class="php-var">$key</span>, <span class="php-var">$value_field</span>]</span>
+<span class="source-line" id="line-526"><a class="line" id="526" href="#526">526:</a>             ]);</span>
+<span class="source-line" id="line-527"><a class="line" id="527" href="#527">527:</a> </span>
+<span class="source-line" id="line-528"><a class="line" id="528" href="#528">528:</a>             <span class="php-keyword1">if</span> (<span class="php-var">$normalized</span> === <span class="php-keyword1">null</span>) {</span>
+<span class="source-line" id="line-529"><a class="line" id="529" href="#529">529:</a>                 <span class="php-var">$keep_null</span> = <span class="php-keyword1">true</span>;</span>
+<span class="source-line" id="line-530"><a class="line" id="530" href="#530">530:</a>             } <span class="php-keyword1">else</span> {</span>
+<span class="source-line" id="line-531"><a class="line" id="531" href="#531">531:</a>                 <span class="php-var">$bindings</span>[] = <span class="php-var">$normalized</span>;</span>
+<span class="source-line" id="line-532"><a class="line" id="532" href="#532">532:</a>             }</span>
+<span class="source-line" id="line-533"><a class="line" id="533" href="#533">533:</a>         }</span>
+<span class="source-line" id="line-534"><a class="line" id="534" href="#534">534:</a> </span>
+<span class="source-line" id="line-535"><a class="line" id="535" href="#535">535:</a>         <span class="php-var">$predicate</span> = <span class="php-quote">&#039;&#039;</span>;</span>
+<span class="source-line" id="line-536"><a class="line" id="536" href="#536">536:</a> </span>
+<span class="source-line" id="line-537"><a class="line" id="537" href="#537">537:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$bindings</span> !== []) {</span>
+<span class="source-line" id="line-538"><a class="line" id="538" href="#538">538:</a>             <span class="php-var">$not_in</span> = <span class="php-var">$value_field</span> . <span class="php-quote">&#039; NOT IN (&#039;</span> . implode(<span class="php-quote">&#039;, &#039;</span>, array_fill(<span class="php-num">0</span>, count(<span class="php-var">$bindings</span>), <span class="php-quote">&#039;?&#039;</span>)) . <span class="php-quote">&#039;)&#039;</span>;</span>
+<span class="source-line" id="line-539"><a class="line" id="539" href="#539">539:</a>             <span class="php-var">$predicate</span> = <span class="php-var">$keep_null</span> ? <span class="php-quote">&#039; AND &#039;</span> . <span class="php-var">$not_in</span> : <span class="php-quote">&#039; AND (&#039;</span> . <span class="php-var">$value_field</span> . <span class="php-quote">&#039; IS NULL OR &#039;</span> . <span class="php-var">$not_in</span> . <span class="php-quote">&#039;)&#039;</span>;</span>
+<span class="source-line" id="line-540"><a class="line" id="540" href="#540">540:</a>         } <span class="php-keyword1">elseif</span> (<span class="php-var">$keep_null</span>) {</span>
+<span class="source-line" id="line-541"><a class="line" id="541" href="#541">541:</a>             <span class="php-var">$predicate</span> = <span class="php-quote">&#039; AND &#039;</span> . <span class="php-var">$value_field</span> . <span class="php-quote">&#039; IS NOT NULL&#039;</span>;</span>
+<span class="source-line" id="line-542"><a class="line" id="542" href="#542">542:</a>         }</span>
+<span class="source-line" id="line-543"><a class="line" id="543" href="#543">543:</a> </span>
+<span class="source-line" id="line-544"><a class="line" id="544" href="#544">544:</a>         <span class="php-keyword1">try</span> {</span>
+<span class="source-line" id="line-545"><a class="line" id="545" href="#545">545:</a>             <span class="php-var">$worker</span>-&gt;prepare_query(<span class="php-quote">&#039;DELETE FROM &#039;</span> . <span class="php-var">$table</span> . <span class="php-quote">&#039; WHERE &#039;</span> . <span class="php-var">$key</span> . <span class="php-quote">&#039; = ?&#039;</span> . <span class="php-var">$predicate</span>);</span>
+<span class="source-line" id="line-546"><a class="line" id="546" href="#546">546:</a> </span>
+<span class="source-line" id="line-547"><a class="line" id="547" href="#547">547:</a>             <span class="php-var">$worker</span>-&gt;execute_prepared_query([<span class="php-var">$this</span>-&gt;user_id, ...<span class="php-var">$bindings</span>]);</span>
+<span class="source-line" id="line-548"><a class="line" id="548" href="#548">548:</a>         } <span class="php-keyword1">finally</span> {</span>
+<span class="source-line" id="line-549"><a class="line" id="549" href="#549">549:</a>             <span class="php-var">$worker</span>-&gt;free_prepared_query();</span>
+<span class="source-line" id="line-550"><a class="line" id="550" href="#550">550:</a>         }</span>
+<span class="source-line" id="line-551"><a class="line" id="551" href="#551">551:</a>     } <span class="php-comment">// saveChoices</span></span>
+<span class="source-line" id="line-552"><a class="line" id="552" href="#552">552:</a> </span>
+<span class="source-line" id="line-553"><a class="line" id="553" href="#553">553:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-554"><a class="line" id="554" href="#554">554:</a> <span class="php-comment">     * Saves only assigned parameters and choices in one transaction per user.</span></span>
+<span class="source-line" id="line-555"><a class="line" id="555" href="#555">555:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-556"><a class="line" id="556" href="#556">556:</a> <span class="php-comment">     * @param array&lt;string, mixed&gt; &amp;$data</span></span>
+<span class="source-line" id="line-557"><a class="line" id="557" href="#557">557:</a> <span class="php-comment">     * The local snapshot, replaced with freshly read database values after success.</span></span>
+<span class="source-line" id="line-558"><a class="line" id="558" href="#558">558:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-559"><a class="line" id="559" href="#559">559:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-560"><a class="line" id="560" href="#560">560:</a> <span class="php-comment">     * Does nothing without edits. Missing optional settings rows may be inserted, but</span></span>
+<span class="source-line" id="line-561"><a class="line" id="561" href="#561">561:</a> <span class="php-comment">     * the owner row in the first settings table must already exist.</span></span>
+<span class="source-line" id="line-562"><a class="line" id="562" href="#562">562:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-563"><a class="line" id="563" href="#563">563:</a> <span class="php-comment">     * @throws \OutOfBoundsException</span></span>
+<span class="source-line" id="line-564"><a class="line" id="564" href="#564">564:</a> <span class="php-comment">     * If the first settings table has no row for the selected user.</span></span>
+<span class="source-line" id="line-565"><a class="line" id="565" href="#565">565:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-566"><a class="line" id="566" href="#566">566:</a> <span class="php-comment">     * @throws \Throwable</span></span>
+<span class="source-line" id="line-567"><a class="line" id="567" href="#567">567:</a> <span class="php-comment">     * If configuration, locking, saving, deleting, refreshing or committing fails.</span></span>
+<span class="source-line" id="line-568"><a class="line" id="568" href="#568">568:</a> <span class="php-comment">     * External transactions must be rolled back by their caller after a failure.</span></span>
+<span class="source-line" id="line-569"><a class="line" id="569" href="#569">569:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-570"><a class="line" id="570" href="#570">570:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-571"><a class="line" id="571" href="#571">571:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-572"><a class="line" id="572" href="#572">572:</a>     <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-573"><a class="line" id="573" href="#573">573:</a>     {</span>
+<span class="source-line" id="line-574"><a class="line" id="574" href="#574">574:</a>         <span class="php-var">$this</span>-&gt;validateParameters();</span>
+<span class="source-line" id="line-575"><a class="line" id="575" href="#575">575:</a> </span>
+<span class="source-line" id="line-576"><a class="line" id="576" href="#576">576:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;changed === []) {</span>
+<span class="source-line" id="line-577"><a class="line" id="577" href="#577">577:</a>             <span class="php-keyword1">return</span>;</span>
+<span class="source-line" id="line-578"><a class="line" id="578" href="#578">578:</a>         }</span>
+<span class="source-line" id="line-579"><a class="line" id="579" href="#579">579:</a> </span>
+<span class="source-line" id="line-580"><a class="line" id="580" href="#580">580:</a>         <span class="php-var">$data</span> = <span class="php-var">$this</span>-&gt;withTransaction(<span class="php-keyword1">function</span> (DBWorker <span class="php-var">$worker</span>) <span class="php-keyword1">use</span> (<span class="php-var">$data</span>): <span class="php-keyword1">array</span> {</span>
+<span class="source-line" id="line-581"><a class="line" id="581" href="#581">581:</a>             <span class="php-var">$owner_table</span> = array_key_first(<span class="php-var">$this</span>-&gt;settings_tables);</span>
+<span class="source-line" id="line-582"><a class="line" id="582" href="#582">582:</a>             <span class="php-var">$owner_key</span> = array_key_first(<span class="php-var">$this</span>-&gt;settings_tables[<span class="php-var">$owner_table</span>]);</span>
+<span class="source-line" id="line-583"><a class="line" id="583" href="#583">583:</a> </span>
+<span class="source-line" id="line-584"><a class="line" id="584" href="#584">584:</a>             <span class="php-comment">// Serialize the whole user aggregate, including requests that only change choice lists.</span></span>
+<span class="source-line" id="line-585"><a class="line" id="585" href="#585">585:</a>             <span class="php-keyword1">if</span> (!<span class="php-var">$worker</span>-&gt;lock_record(<span class="php-var">$owner_table</span>, [<span class="php-var">$owner_key</span> =&gt; <span class="php-var">$this</span>-&gt;user_id])) {</span>
+<span class="source-line" id="line-586"><a class="line" id="586" href="#586">586:</a>                 <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> \OutOfBoundsException(<span class="php-quote">&quot;The selected user has no owner row in &quot;</span> . <span class="php-var">$owner_table</span>);</span>
+<span class="source-line" id="line-587"><a class="line" id="587" href="#587">587:</a>             }</span>
+<span class="source-line" id="line-588"><a class="line" id="588" href="#588">588:</a> </span>
+<span class="source-line" id="line-589"><a class="line" id="589" href="#589">589:</a>             <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;settings_tables <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$fields</span>) {</span>
+<span class="source-line" id="line-590"><a class="line" id="590" href="#590">590:</a>                 <span class="php-var">$key</span> = array_key_first(<span class="php-var">$fields</span>);</span>
+<span class="source-line" id="line-591"><a class="line" id="591" href="#591">591:</a>                 <span class="php-var">$record</span> = [<span class="php-var">$key</span> =&gt; <span class="php-var">$this</span>-&gt;user_id];</span>
+<span class="source-line" id="line-592"><a class="line" id="592" href="#592">592:</a> </span>
+<span class="source-line" id="line-593"><a class="line" id="593" href="#593">593:</a>                 <span class="php-keyword1">foreach</span> (<span class="php-var">$fields</span> <span class="php-keyword1">as</span> <span class="php-var">$field</span> =&gt; <span class="php-var">$type</span>) {</span>
+<span class="source-line" id="line-594"><a class="line" id="594" href="#594">594:</a>                     <span class="php-var">$name</span> = <span class="php-var">$table</span> . <span class="php-quote">&quot;.&quot;</span> . <span class="php-var">$field</span>;</span>
+<span class="source-line" id="line-595"><a class="line" id="595" href="#595">595:</a> </span>
+<span class="source-line" id="line-596"><a class="line" id="596" href="#596">596:</a>                     <span class="php-keyword1">if</span> (<span class="php-var">$field</span> !== <span class="php-var">$key</span> &amp;&amp; <span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;changed[<span class="php-var">$name</span>])) {</span>
+<span class="source-line" id="line-597"><a class="line" id="597" href="#597">597:</a>                         <span class="php-var">$value</span> = <span class="php-var">$data</span>[<span class="php-var">$name</span>];</span>
+<span class="source-line" id="line-598"><a class="line" id="598" href="#598">598:</a>                         <span class="php-var">$record</span>[<span class="php-var">$field</span>] = <span class="php-var">$type</span> === DBWorker::DB_NUMBER &amp;&amp; is_bool(<span class="php-var">$value</span>) ? <span class="php-keyword2">(int)</span> <span class="php-var">$value</span> : <span class="php-var">$value</span>;</span>
+<span class="source-line" id="line-599"><a class="line" id="599" href="#599">599:</a>                     }</span>
+<span class="source-line" id="line-600"><a class="line" id="600" href="#600">600:</a>                 }</span>
+<span class="source-line" id="line-601"><a class="line" id="601" href="#601">601:</a> </span>
+<span class="source-line" id="line-602"><a class="line" id="602" href="#602">602:</a>                 <span class="php-keyword1">if</span> (count(<span class="php-var">$record</span>) === <span class="php-num">1</span>) {</span>
+<span class="source-line" id="line-603"><a class="line" id="603" href="#603">603:</a>                     <span class="php-keyword1">continue</span>;</span>
+<span class="source-line" id="line-604"><a class="line" id="604" href="#604">604:</a>                 }</span>
+<span class="source-line" id="line-605"><a class="line" id="605" href="#605">605:</a> </span>
+<span class="source-line" id="line-606"><a class="line" id="606" href="#606">606:</a>                 <span class="php-var">$worker</span>-&gt;save_records(<span class="php-var">$record</span>, [</span>
+<span class="source-line" id="line-607"><a class="line" id="607" href="#607">607:</a>                     <span class="php-quote">&#039;table&#039;</span> =&gt; <span class="php-var">$table</span>,</span>
+<span class="source-line" id="line-608"><a class="line" id="608" href="#608">608:</a>                     <span class="php-quote">&#039;fields&#039;</span> =&gt; <span class="php-var">$fields</span>,</span>
+<span class="source-line" id="line-609"><a class="line" id="609" href="#609">609:</a>                     <span class="php-quote">&#039;array_dimension_keys&#039;</span> =&gt; [],</span>
+<span class="source-line" id="line-610"><a class="line" id="610" href="#610">610:</a>                     <span class="php-quote">&#039;record_key_fields&#039;</span> =&gt; [<span class="php-var">$key</span>],</span>
+<span class="source-line" id="line-611"><a class="line" id="611" href="#611">611:</a>                     <span class="php-quote">&#039;identity_field&#039;</span> =&gt; <span class="php-var">$this</span>-&gt;identity_fields[<span class="php-var">$table</span>] ?? <span class="php-quote">&#039;&#039;</span></span>
+<span class="source-line" id="line-612"><a class="line" id="612" href="#612">612:</a>                 ]);</span>
+<span class="source-line" id="line-613"><a class="line" id="613" href="#613">613:</a>             }</span>
+<span class="source-line" id="line-614"><a class="line" id="614" href="#614">614:</a> </span>
+<span class="source-line" id="line-615"><a class="line" id="615" href="#615">615:</a>             <span class="php-keyword1">foreach</span> (<span class="php-var">$this</span>-&gt;multichoice_tables <span class="php-keyword1">as</span> <span class="php-var">$table</span> =&gt; <span class="php-var">$_</span>) {</span>
+<span class="source-line" id="line-616"><a class="line" id="616" href="#616">616:</a>                 <span class="php-keyword1">if</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$this</span>-&gt;changed[<span class="php-var">$table</span>])) {</span>
+<span class="source-line" id="line-617"><a class="line" id="617" href="#617">617:</a>                     <span class="php-var">$this</span>-&gt;saveChoices(<span class="php-var">$worker</span>, <span class="php-var">$table</span>, <span class="php-var">$data</span>[<span class="php-var">$table</span>]);</span>
+<span class="source-line" id="line-618"><a class="line" id="618" href="#618">618:</a>                 }</span>
+<span class="source-line" id="line-619"><a class="line" id="619" href="#619">619:</a>             }</span>
+<span class="source-line" id="line-620"><a class="line" id="620" href="#620">620:</a> </span>
+<span class="source-line" id="line-621"><a class="line" id="621" href="#621">621:</a>             <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;readSettingsData(<span class="php-var">$worker</span>);</span>
+<span class="source-line" id="line-622"><a class="line" id="622" href="#622">622:</a>         });</span>
+<span class="source-line" id="line-623"><a class="line" id="623" href="#623">623:</a>     } <span class="php-comment">// saveSettingsData</span></span>
+<span class="source-line" id="line-624"><a class="line" id="624" href="#624">624:</a> </span>
+<span class="source-line" id="line-625"><a class="line" id="625" href="#625">625:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-626"><a class="line" id="626" href="#626">626:</a> <span class="php-comment">     * Selects a user and invalidates settings when the identifier changes.</span></span>
+<span class="source-line" id="line-627"><a class="line" id="627" href="#627">627:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-628"><a class="line" id="628" href="#628">628:</a> <span class="php-comment">     * @param int|null $user_id</span></span>
+<span class="source-line" id="line-629"><a class="line" id="629" href="#629">629:</a> <span class="php-comment">     * The user identifier, including zero, or NULL to clear the selection.</span></span>
+<span class="source-line" id="line-630"><a class="line" id="630" href="#630">630:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-631"><a class="line" id="631" href="#631">631:</a> <span class="php-comment">     * @return void</span></span>
+<span class="source-line" id="line-632"><a class="line" id="632" href="#632">632:</a> <span class="php-comment">     * Discards the previous user&#039;s loaded values and unsaved edits when switching.</span></span>
+<span class="source-line" id="line-633"><a class="line" id="633" href="#633">633:</a> <span class="php-comment">     * Selecting the same user preserves current edits.</span></span>
+<span class="source-line" id="line-634"><a class="line" id="634" href="#634">634:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-635"><a class="line" id="635" href="#635">635:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-636"><a class="line" id="636" href="#636">636:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-637"><a class="line" id="637" href="#637">637:</a>     <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setUserID(?<span class="php-keyword1">int</span> <span class="php-var">$user_id</span>): <span class="php-keyword1">void</span></span>
+<span class="source-line" id="line-638"><a class="line" id="638" href="#638">638:</a>     {</span>
+<span class="source-line" id="line-639"><a class="line" id="639" href="#639">639:</a>         <span class="php-keyword1">if</span> (<span class="php-var">$this</span>-&gt;user_id !== <span class="php-var">$user_id</span>) {</span>
+<span class="source-line" id="line-640"><a class="line" id="640" href="#640">640:</a>             <span class="php-var">$this</span>-&gt;user_id = <span class="php-var">$user_id</span>;</span>
+<span class="source-line" id="line-641"><a class="line" id="641" href="#641">641:</a> </span>
+<span class="source-line" id="line-642"><a class="line" id="642" href="#642">642:</a>             <span class="php-var">$this</span>-&gt;resetSettings();</span>
+<span class="source-line" id="line-643"><a class="line" id="643" href="#643">643:</a>         }</span>
+<span class="source-line" id="line-644"><a class="line" id="644" href="#644">644:</a>     } <span class="php-comment">// setUserID</span></span>
+<span class="source-line" id="line-645"><a class="line" id="645" href="#645">645:</a> </span>
+<span class="source-line" id="line-646"><a class="line" id="646" href="#646">646:</a>     <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-647"><a class="line" id="647" href="#647">647:</a> <span class="php-comment">     * Returns the selected user&#039;s identifier without accessing storage.</span></span>
+<span class="source-line" id="line-648"><a class="line" id="648" href="#648">648:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-649"><a class="line" id="649" href="#649">649:</a> <span class="php-comment">     * @return int|null</span></span>
+<span class="source-line" id="line-650"><a class="line" id="650" href="#650">650:</a> <span class="php-comment">     * Returns NULL when no user has been selected.</span></span>
+<span class="source-line" id="line-651"><a class="line" id="651" href="#651">651:</a> <span class="php-comment">     *</span></span>
+<span class="source-line" id="line-652"><a class="line" id="652" href="#652">652:</a> <span class="php-comment">     * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-653"><a class="line" id="653" href="#653">653:</a> <span class="php-comment">     */</span></span>
+<span class="source-line" id="line-654"><a class="line" id="654" href="#654">654:</a>     <span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getUserID(): ?<span class="php-keyword1">int</span></span>
+<span class="source-line" id="line-655"><a class="line" id="655" href="#655">655:</a>     {</span>
+<span class="source-line" id="line-656"><a class="line" id="656" href="#656">656:</a>         <span class="php-keyword1">return</span> <span class="php-var">$this</span>-&gt;user_id;</span>
+<span class="source-line" id="line-657"><a class="line" id="657" href="#657">657:</a>     } <span class="php-comment">// getUserID</span></span>
+<span class="source-line" id="line-658"><a class="line" id="658" href="#658">658:</a> } <span class="php-comment">// UserSettingsManager</span></span>
+<span class="source-line" id="line-659"><a class="line" id="659" href="#659">659:</a> </span>
+</code>
+</pre>
+</div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

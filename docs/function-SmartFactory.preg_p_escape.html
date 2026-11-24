@@ -107,12 +107,12 @@
                 <div class="col-md-12">
                     <h1>Function: preg_p_escape()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> preg_p_escape(string <span class="php-var">$pattern</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> preg_p_escape(<span class="php-keyword1">string</span> <span class="php-var">$pattern</span>, <span class="php-keyword1">string</span> <span class="php-var">$delimiter</span> = <span class="php-quote">&quot;/&quot;</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Escapes the special characters in the text used for the regular
-expression pattern.</p>
+<p>Escapes literal text for use in a regular expression pattern.</p>
 </div>
 
 
@@ -122,7 +122,8 @@ expression pattern.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -140,25 +141,44 @@ expression pattern.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The pattern to be escaped.</p>
+              <p>The literal text to escape, including regex metacharacters.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              $delimiter
+          </td>
+          <td>
+              by value
+          </td>
+          <td>
+              <code class="php-type">string</code>
+          </td>
+          <td>
+              &quot;/&quot;
+          </td>
+          <td class="description_column">
+              <p>The regular expression delimiter to escape in addition to regex metacharacters.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
-<div class="item_description"><p>Returns the text with escaped special characters.</p></div>
+<div class="item_description"><p>Returns text with regular expression metacharacters and the delimiter escaped.</p></div>
 
 </div>
 
@@ -186,20 +206,20 @@ string<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#424'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#510'>src/utility_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.preg_r_escape.html'>\SmartFactory\preg_r_escape()</a><br>
+<a href="function-SmartFactory.preg_r_escape.html">\SmartFactory\preg_r_escape()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

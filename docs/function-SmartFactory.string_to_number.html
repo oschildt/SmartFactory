@@ -107,21 +107,30 @@
                 <div class="col-md-12">
                     <h1>Function: string_to_number()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> string_to_number(string <span class="php-var">$str</span>, string <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, string <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>): float|string|<span class="php-keyword1">null</span>;</div>
+<div class="definition"><span class="php-keyword1">function</span> string_to_number(?<span class="php-keyword1">string</span> <span class="php-var">$str</span>, <span class="php-keyword1">string</span> <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>): <span class="php-keyword1">float</span>|<span class="php-keyword1">string</span>|<span class="php-keyword1">null</span>;</div>
+
 
 
 <div class="short-description">
-<p>Converts the string to number due to the specified settings.</p>
+<p>Converts a numeric string to a float using the specified separators.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Removes thousands separators, normalizes the decimal separator, and delegates
+parsing to floatval(). Numeric prefixes are accepted and nonnumeric strings
+become 0.0. Null and empty strings are preserved.</p>
+</div>
 
 
 
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -139,13 +148,13 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">(string | null)</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The string to be converted.</p>
+              <p>The string to convert, or null or an empty string for an absent value.</p>
           </td>
       </tr>
       
@@ -157,7 +166,7 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;.&quot;
@@ -175,38 +184,31 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;,&quot;
           </td>
           <td class="description_column">
-              <p>The thousand separator.</p>
+              <p>The thousands separator to remove before parsing.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-float|string|null<br>
+<code class="php-type">(float | string | null)</code><br>
 
-<div class="item_description"><p>If the string is a vialid number, its numeric value is returned.</p></div>
-
-</div>
-
-
-<h2>Throws</h2>
-<div class="item_list">
-
-\Exception<br>
-
-<div class="item_description"><p>It might throw the exception if the string is not a number</p></div>
-
+<div class="item_description"><p>Returns the parsed float, or the original null or empty string.</p></div>
 
 </div>
+
+
+
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -229,11 +231,11 @@ float|string|null<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#575'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#631'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

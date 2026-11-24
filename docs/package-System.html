@@ -127,6 +127,48 @@
       
       <tr>
           <td>
+              <a href="function-SmartFactory.application_settings.html">application_settings()</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Returns the shared application settings manager backed by centralized database storage.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="function-SmartFactory.blob.html">blob()</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Creates an explicit binary BLOB bind value without consuming its source.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="function-SmartFactory.clob.html">clob()</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Creates an explicit UTF-8 CLOB bind value without consuming its source.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="function-SmartFactory.config_settings.html">config_settings()</a>
           </td>
           <td class="namespace_column">
@@ -219,22 +261,7 @@
               
           </td>
           <td class="description_column">
-              <p>Short function for requesting the dbworker connected to the specified shard,
-that is chosen randomly for load balancing reason.</p>
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="function-SmartFactory.runtime_settings.html">runtime_settings()</a>
-          </td>
-          <td class="namespace_column">
-              
-              <a href="namespace-SmartFactory.html">SmartFactory</a>
-              
-          </td>
-          <td class="description_column">
-              <p>Short function for getting the instance of the RuntimeSettingsManager.</p>
+              <p>Returns a randomly selected shard worker through the shared shard manager.</p>
           </td>
       </tr>
       
@@ -312,7 +339,7 @@ the text ID for the given language.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for event management.</p>
+              <p>Defines synchronous event dispatch with immediate subscription and suspension changes.</p>
           </td>
       </tr>
       
@@ -369,7 +396,21 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for handling the API requests.</p>
+              <p>Initializes API handlers and optionally supplies a request-throttling service.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">IRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.Interfaces.html">SmartFactory\Interfaces</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Atomically enforces every configured rolling-window limit for an opaque caller key.</p>
           </td>
       </tr>
       
@@ -383,7 +424,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Interface for working with settings.</p>
+              <p>Provides settings access with explicit validation and persistence operations.</p>
           </td>
       </tr>
       
@@ -410,6 +451,34 @@ through the array of parameters.</p>
       
       <tr>
           <td>
+              <a href="class-SmartFactory.AbstractRequestThrottlingManager.html">AbstractRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Implements request limits, history expiry and retry delays for interchangeable storage backends.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.ApplicationSettingsManager.html">ApplicationSettingsManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Stores application-wide settings centrally in a database as a JSON document.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="class-SmartFactory.ConfigSettingsManager.html">ConfigSettingsManager</a>
           </td>
           <td class="namespace_column">
@@ -418,7 +487,21 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for management of the config settings stored in a config JSON file.</p>
+              <p>Manages configuration in a local JSON file, optionally encrypted and cached in APCu.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
+              <a href="class-SmartFactory.DBRequestThrottlingManager.html">DBRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Persists one caller's request history in one database row under a transactional logical-key lock.</p>
           </td>
       </tr>
       
@@ -446,7 +529,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for error handling.</p>
+              <p>Logs PHP errors and exception chains without implicitly writing to HTTP responses.</p>
           </td>
       </tr>
       
@@ -460,7 +543,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for event management.</p>
+              <p>Dispatches events synchronously using subscriptions and suspension state owned by this instance.</p>
           </td>
       </tr>
       
@@ -474,7 +557,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for handling the JSON API requests.</p>
+              <p>Handles JSON API requests using public action methods implemented by a subclass.</p>
           </td>
       </tr>
       
@@ -488,7 +571,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for working with localization of texts.</p>
+              <p>Manages instance-local localization dictionaries, context selections and optional APCu caching.</p>
           </td>
       </tr>
       
@@ -508,6 +591,20 @@ through the array of parameters.</p>
       
       <tr>
           <td>
+              <a href="class-SmartFactory.RedisRequestThrottlingManager.html">RedisRequestThrottlingManager</a>
+          </td>
+          <td class="namespace_column">
+              
+              <a href="namespace-SmartFactory.html">SmartFactory</a>
+              
+          </td>
+          <td class="description_column">
+              <p>Stores each caller's JSON history behind an expiring, owner-checked Redis lock.</p>
+          </td>
+      </tr>
+      
+      <tr>
+          <td>
               <a href="class-SmartFactory.RequestHandler.html">RequestHandler</a>
           </td>
           <td class="namespace_column">
@@ -516,21 +613,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Abstract class for handling the JSON and XML requests.</p>
-          </td>
-      </tr>
-      
-      <tr>
-          <td>
-              <a href="class-SmartFactory.RuntimeSettingsManager.html">RuntimeSettingsManager</a>
-          </td>
-          <td class="namespace_column">
-              
-              <a href="namespace-SmartFactory.html">SmartFactory</a>
-              
-          </td>
-          <td class="description_column">
-              <p>Class for management of the application settings.</p>
+              <p>Dispatches API actions to public methods and coordinates parsing, cleanup and responses.</p>
           </td>
       </tr>
       
@@ -544,7 +627,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for extended exception used in the SmartFactory library.</p>
+              <p>Carries a localized message, a stable string error code and optional structured diagnostics.</p>
           </td>
       </tr>
       
@@ -558,8 +641,7 @@ through the array of parameters.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for extended exception collection used in the SmartFactory library. It allows to collect many errors
-and report them at once.</p>
+              <p>Collects errors in insertion order and reports them together as an exception.</p>
           </td>
       </tr>
       
@@ -573,7 +655,7 @@ and report them at once.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for management of the user settings.</p>
+              <p>Manages user settings mapped to database columns and multichoice tables.</p>
           </td>
       </tr>
       
@@ -587,7 +669,7 @@ and report them at once.</p>
               
           </td>
           <td class="description_column">
-              <p>Class for handling the XML API requests.</p>
+              <p>Handles XML API requests using public action methods implemented by a subclass.</p>
           </td>
       </tr>
       
@@ -597,7 +679,7 @@ and report them at once.</p>
 
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

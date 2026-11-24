@@ -1,7 +1,6 @@
 <?php
 /**
- * This file contains the implementation of the class ObjectFactory
- * for creation of the objects.
+ * Provides context-specific class bindings and object creation.
  *
  * @package Factory
  *
@@ -11,266 +10,465 @@
 namespace SmartFactory;
 
 /**
- * Class for creation of the objects.
+ * Binds implementations to interfaces or parent classes and creates initialized objects.
  *
- * The class ObjectFactory is an auxiliary class that empowers the factory methods. It provides the methods
- * for binding of class implementations to the interfaces and for creation of objects for the requested interface.
+ * Bindings can also map a class to itself, allowing a derived implementation to be
+ * substituted later without changing business logic. Singleton instances are shared
+ * per context and requested contract, rather than per implementation class.
+ * Contracts are specified by class/interface names using ::class. Creation functions
+ * declare a compatible, non-nullable class or interface as their native return type.
+ * Each binding requires a named function or closure that accepts no arguments and
+ * constructs, initializes and returns an implementation. The factory never invokes
+ * constructors directly and validates each result before returning or caching it.
  *
  * @author Oleg Schildt
  */
 class ObjectFactory
 {
     /**
-     * Internal array for storing the singleton instances for re-using.
+     * Stores successfully initialized singleton instances by context and contract.
      *
-     * @var array
-     *
-     * @author Oleg Schildt
-     */
-    static protected array $singletons = [];
-    
-    /**
-     * Internal array for storing the mapping between interfaces/classes and the bound classes.
-     *
-     * @var array
+     * @var array<string, array<class-string, object>>
      *
      * @author Oleg Schildt
      */
-    static protected array $itable = [];
-    
-    /**
-     * Binds a class to an interface or a parent class.
-     *
-     * The key point of this approach is the definition common interfaces
-     * and implementation of them in classes. When an object that supports an
-     * interface is requested, an instance of the corresponding bound class
-     * is created. When you want to change the class, you need just bind
-     * the new class to the interface.
-     *
-     * You can also bind a class to itself and request it by own name in factory
-     * method. And later, you can implement a derived class and change the binding
-     * without affecting the code in the business logic.
-     *
-     * @param object|string $interface_or_class
-     * Name of the class/interface as string or the class/interface.
-     *
-     * @param object|string $class
-     * The class which instance should be created if the object is requested.
-     *
-     * @param ?callable $init_function
-     * The optional initialization function. You can provide it to do some
-     * custom initialization. The signature of
-     * this function is:
-     *
-     * ```php
-     * function (object $instance) : void;
-     * ```
-     *
-     * - $instance - the created instance.
-     *
-     * Example:
-     *
-     * ```php
-     * ObjectFactory::bindClass(ILanguageManager::class, LanguageManager::class, function($instance) {
-     *   $instance->detectLanguage();
-     * });
-     *
-     * ObjectFactory::bindClass(IRecordsetManager::class, RecordsetManager::class, function($instance) {
-     *   $instance->setDBWorker(dbworker());
-     * });
-     * ```
-     *
-     * @return void
-     *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
-     *
-     * - if the interface or bound class is not specified.
-     * - if the interface or class does not exist.
-     * - if the bound class is empty.
-     * - if the bound class does not implement the corresponding interface.
-     * - if the bound class is not instantiable.
-     * - if the check of the classes and interfaces fails.
-     *
-     * @author Oleg Schildt
-     */
-    static public function bindClass(object|string $interface_or_class, object|string $class, ?callable $init_function = null): void
-    {
-        self::bindClassContext("default", $interface_or_class, $class, $init_function);
-    } // bindClass
+    protected static array $singletons = [];
 
     /**
-     * Binds a class to an interface or a parent class.
+     * Stores declared return types and required creation functions by context and contract.
      *
-     * The key point of this approach is the definition common interfaces
-     * and implementation of them in classes. When an object that supports an
-     * interface is requested, an instance of the corresponding bound class
-     * is created. When you want to change the class, you need just bind
-     * the new class to the interface.
+     * @var array<string, array<class-string, array{return_type: class-string, factory_function: \ReflectionFunction}>>
      *
-     * You can also bind a class to itself and request it by own name in factory
-     * method. And later, you can implement a derived class and change the binding
-     * without affecting the code in the business logic.
+     * @author Oleg Schildt
+     */
+    protected static array $itable = [];
+
+    /**
+     * Tracks contracts currently being constructed or initialized in each context.
+     *
+     * @var array<string, array<class-string, true>>
+     *
+     * @author Oleg Schildt
+     */
+    protected static array $resolving = [];
+
+    /**
+     * Stores the active dependency chain, including contexts, contracts and declared return types.
+     *
+     * @var list<string>
+     *
+     * @author Oleg Schildt
+     */
+    protected static array $resolution_path = [];
+
+    /**
+     * Binds a factory function to an interface or class in the specified context.
+     *
+     * Contexts have independent bindings and singleton instances, with no fallback to
+     * the default context. Specify the requested contract using ::class. Omitting
+     * the context registers the default binding. The creation function's declared
+     * return type is checked against the contract without invoking the function.
+     * Existing bindings can be replaced before a singleton is created. Reset that
+     * singleton explicitly before replacing its creation function.
+     *
+     * Examples:
+     *
+     *     ObjectFactory::bindFactory(ILanguageManager::class, function (): LanguageManager {
+     *         $instance = new LanguageManager();
+     *
+     *         $instance->detectLanguage();
+     *
+     *         return $instance;
+     *     });
+     *
+     *     ObjectFactory::bindFactory(IRecordsetManager::class, function (): RecordsetManager {
+     *         $instance = new RecordsetManager();
+     *
+     *         $instance->setDBWorker(singleton(\SmartFactory\DatabaseWorkers\MySQL_DBWorker::class));
+     *
+     *         return $instance;
+     *     }, "console");
+     *
+     * @template T of object
+     *
+     * @param class-string<T> $interface_or_class
+     * The interface or class name of the requested contract, supplied using ::class.
+     *
+     * @param callable(): T $factory_function
+     * A named function or closure called without arguments when an instance is requested.
+     * It must declare one non-nullable class or interface return type compatible with
+     * the contract and return a fully initialized implementation on each call.
+     * Missing, built-in, union and intersection return types are rejected.
+     * Method callbacks and invokable objects are not supported.
      *
      * @param string $context
-     * The context of binding. You can introduce a different context, and bind another implementation.
-     * Then, you can request another instance specifying the context explicitly.
-     *
-     * @param object|string $interface_or_class
-     * Name of the class/interface as string or the class/interface.
-     *
-     * @param object|string $class
-     * The class which instance should be created if the object is requested.
-     *
-     * @param ?callable $init_function
-     * The optional initialization function. You can provide it to do some
-     * custom initialization. The signature of
-     * this function is:
-     *
-     * ```php
-     * function (object $instance) : void;
-     * ```
-     *
-     * - $instance - the created instance.
-     *
-     * Example:
-     *
-     * ```php
-     * ObjectFactory::bindClassContext("console", ILanguageManager::class, LanguageManager::class, function($instance) {
-     *   $instance->detectLanguage();
-     * });
-     *
-     * ObjectFactory::bindClassContext("console", IRecordsetManager::class, RecordsetManager::class, function($instance) {
-     *   $instance->setDBWorker(dbworker());
-     * });
-     * ```
+     * The binding context; defaults to "default". Any string, including an empty string, is accepted.
      *
      * @return void
+     * Registers the binding without creating an instance.
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
+     * @throws ObjectFactoryException
+     * If the contract or declared return type is unknown, the return declaration is
+     * missing, unsupported, nullable or incompatible with the contract, the creation
+     * function is unsupported or requires arguments, or the contract has a cached
+     * singleton or is currently being resolved.
      *
-     * - if the interface or bound class is not specified.
-     * - if the interface or class does not exist.
-     * - if the bound class is empty.
-     * - if the bound class does not implement the corresponding interface.
-     * - if the bound class is not instantiable.
-     * - if the check of the classes and interfaces fails.
+     * @throws \Throwable
+     * If autoloading the contract or declared return type throws an exception or error, it is propagated.
      *
      * @author Oleg Schildt
      */
-    static public function bindClassContext(string $context, object|string $interface_or_class, object|string $class, ?callable $init_function = null): void
+    public static function bindFactory(string $interface_or_class, callable $factory_function, string $context = "default"): void
     {
-        if (empty($class)) {
-            throw new \Exception("Bound class is empty!");
+        $contract = self::reflectClass($interface_or_class, $context);
+        $contract_name = $contract->getName();
+        $description = sprintf("context '%s', contract '%s'", $context, $contract_name);
+
+        self::assertMutable($context, $contract_name);
+
+        if (isset(self::$singletons[$context][$contract_name])) {
+            throw new ObjectFactoryException(sprintf("Cannot replace binding (%s): reset the singleton first.", $description));
         }
 
-        if (empty($interface_or_class)) {
-            throw new \Exception("Bound interface or class is empty!");
+        if (!$factory_function instanceof \Closure && (!is_string($factory_function) || !function_exists($factory_function))) {
+            throw new ObjectFactoryException(sprintf("Cannot register binding (%s): the creation function must be a named function or closure.", $description));
         }
 
-        if (!interface_exists($interface_or_class) && !class_exists($interface_or_class)) {
-            throw new \Exception(sprintf("The interface or class '%s' does not exist!", $interface_or_class));
+        $creator = new \ReflectionFunction($factory_function);
+
+        if ($creator->getNumberOfRequiredParameters() > 0) {
+            throw new ObjectFactoryException(sprintf("Cannot register binding (%s): the creation function must be callable without arguments.", $description));
         }
 
-        if (!class_exists($class)) {
-            throw new \Exception(sprintf("The class '%s' does not exist!", $class));
+        $return_class = self::reflectReturnClass($creator, $context, $contract_name);
+        $return_class_name = $return_class->getName();
+
+        if (!is_a($return_class_name, $contract_name, true)) {
+            throw new ObjectFactoryException(sprintf(
+                "Cannot register binding (%s, declared return type '%s'): the return type must implement or extend the contract.",
+                $description,
+                $return_class_name
+            ));
         }
 
-        $ic = new \ReflectionClass($interface_or_class);
-        $c = new \ReflectionClass($class);
-
-        if (!$c->isInstantiable()) {
-            throw new \Exception(sprintf("The class '%s' is not instantiable!", $c->getName()));
-        }
-
-        if ($c != $ic) {
-            if (!$c->isSubclassOf($ic)) {
-                throw new \Exception(sprintf("The class '%s' does not implement the interface '%s'!", $c->getName(), $ic->getName()));
-            }
-        }
-
-        $f = null;
-        if ($init_function !== null) {
-            if (!is_callable($init_function)) {
-                throw new \Exception(sprintf("'%s' is not a function!", $init_function));
-            }
-
-            $f = new \ReflectionFunction($init_function);
-        }
-
-        self::$itable[$context][$ic->getName()] = ["class" => $c, "init_function" => $f];
-    } // bindClassContext
+        self::$itable[$context][$contract_name] = ["return_type" => $return_class_name, "factory_function" => $creator];
+    } // bindFactory
 
     /**
-     * Сreates an object that support the interface $interface_or_class.
+     * Creates and initializes an implementation of the requested contract.
      *
-     * @param object|string $interface_or_class
-     * Name of the class/interface which instance should be created.
+     * Calls the registered creation function without arguments and verifies that its
+     * result implements or extends the requested contract.
+     * A singleton is cached only after successful creation and result validation.
+     * Failed requests can be retried. Recursive requests for the same contract in
+     * the same context are rejected throughout the creation function's execution.
+     * Singleton identity is scoped to the context and contract; different contracts
+     * bound to the same implementation can have different singleton instances.
+     *
+     * @template T of object
+     *
+     * @param class-string<T> $interface_or_class
+     * The interface or class name of the requested contract, supplied using ::class.
      *
      * @param bool $singleton
-     * If the parameter is true, it ensures that only one instance of this object exists.
-     * The singleton is a usual patter for the action objects like SessionManager, EventManager,
-     * DBWorker etc. It makes no sense to produce many instances of such classes,
-     * it wastes the computer resources and might cause errors.
+     * Whether to reuse a cached instance for this context and contract. If false, calls the creation function every time.
      *
      * @param string $context
-     * The context of binding. You can introduce a different context, and bind another implementation.
-     * Then, you can request another instance specifying the context explicitly.
+     * The exact binding context, without fallback to the default context.
      *
-     * @return object
-     * Returns object of the class bound to the interface.
+     * @return T
+     * Returns the fully initialized implementation of the contract.
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
+     * @throws ObjectFactoryException
+     * If the contract name is missing or unknown, no binding exists in the context,
+     * a circular dependency is detected, or the creation function returns a value
+     * that does not implement or extend the requested contract.
      *
-     * - if the interface or class is not specified.
-     * - if the interface or class does not exist.
-     * - if the check of the classes and interfaces fails.
+     * @throws \Throwable
+     * If autoloading or the creation function throws an exception or error, it is
+     * propagated unchanged and the failed instance is not cached.
      *
      * @used_by \SmartFactory\instance()
      * @used_by \SmartFactory\singleton()
      *
      * @author Oleg Schildt
      */
-    static public function getInstance(object|string $interface_or_class, bool $singleton, string $context = "default"): object
+    public static function getInstance(string $interface_or_class, bool $singleton, string $context = "default"): object
     {
-        if (empty($interface_or_class)) {
-            throw new \Exception("Class or interface is not specified!");
+        $contract = self::reflectClass($interface_or_class, $context);
+        $contract_name = $contract->getName();
+
+        if (!isset(self::$itable[$context][$contract_name])) {
+            throw new ObjectFactoryException(sprintf("No binding exists for contract '%s' in context '%s'.", $contract_name, $context));
         }
-        
-        if (!interface_exists($interface_or_class) && !class_exists($interface_or_class)) {
-            throw new \Exception(sprintf("The interface or class '%s' does not exist!", $interface_or_class));
+
+        $binding = self::$itable[$context][$contract_name];
+        $description = sprintf("[context '%s', contract '%s', declared return type '%s']", $context, $contract_name, $binding["return_type"]);
+
+        if (isset(self::$resolving[$context][$contract_name])) {
+            throw new ObjectFactoryException("Circular factory dependency: " . implode(" -> ", [...self::$resolution_path, $description]));
         }
-        
-        $class = new \ReflectionClass($interface_or_class);
-        
-        $class_name = $class->getName();
-        
-        if (empty(self::$itable[$context][$class_name])) {
-            throw new \Exception(sprintf("The interface or class '%s' has no bound class in the context '$context'!", $class_name));
+
+        if ($singleton && isset(self::$singletons[$context][$contract_name])) {
+            return self::$singletons[$context][$contract_name];
         }
-        
-        // if not singleton, we create a new instance every time it is requested
-        if (!$singleton) {
-            $instance = self::$itable[$context][$class_name]["class"]->newInstance();
-            
-            if (!empty(self::$itable[$context][$class_name]["init_function"])) {
-                self::$itable[$context][$class_name]["init_function"]->invoke($instance);
+
+        self::$resolving[$context][$contract_name] = true;
+        self::$resolution_path[] = $description;
+
+        try {
+            $instance = $binding["factory_function"]->invoke();
+
+            if (!is_object($instance) || !$contract->isInstance($instance)) {
+                throw new ObjectFactoryException(sprintf(
+                    "Invalid creation result (%s): expected an instance of '%s', got '%s'.",
+                    $description,
+                    $contract_name,
+                    get_debug_type($instance)
+                ));
             }
-            
+
+            // Publish only validated results; finally also cleans up failed requests.
+            if ($singleton) {
+                self::$singletons[$context][$contract_name] = $instance;
+            }
+
             return $instance;
-        }
-        
-        // if singleton, we create an instance only if it does not exist yet
-        if (empty(self::$singletons[$context][$class_name])) {
-            self::$singletons[$context][$class_name] = self::$itable[$context][$class_name]["class"]->newInstance();
-            
-            if (!empty(self::$itable[$context][$class_name]["init_function"])) {
-                self::$itable[$context][$class_name]["init_function"]->invoke(self::$singletons[$context][$class_name]);
+        } finally {
+            unset(self::$resolving[$context][$contract_name]);
+
+            if (self::$resolving[$context] === []) {
+                unset(self::$resolving[$context]);
             }
+
+            array_pop(self::$resolution_path);
         }
-        
-        return self::$singletons[$context][$class_name];
     } // getInstance
+
+    /**
+     * Forgets one cached singleton while preserving its binding.
+     *
+     * Previously returned objects remain valid and are not disconnected or disposed.
+     * A later singleton request creates and initializes a new object.
+     *
+     * @param class-string $interface_or_class
+     * The interface or class name of the contract to reset, supplied using ::class.
+     *
+     * @param string $context
+     * The context whose cached instance should be forgotten.
+     *
+     * @return void
+     * Removes the cached instance, or does nothing if none exists.
+     *
+     * @throws ObjectFactoryException
+     * If the contract name is missing or unknown, or the contract is currently being resolved.
+     *
+     * @throws \Throwable
+     * If autoloading the contract throws an exception or error, it is propagated.
+     *
+     * @author Oleg Schildt
+     */
+    public static function resetInstance(string $interface_or_class, string $context = "default"): void
+    {
+        $contract = self::reflectClass($interface_or_class, $context);
+        $contract_name = $contract->getName();
+
+        self::assertMutable($context, $contract_name);
+
+        unset(self::$singletons[$context][$contract_name]);
+
+        if (isset(self::$singletons[$context]) && self::$singletons[$context] === []) {
+            unset(self::$singletons[$context]);
+        }
+    } // resetInstance
+
+    /**
+     * Forgets cached singletons and optionally bindings in one context.
+     *
+     * Previously returned objects remain valid and are not disconnected or disposed.
+     *
+     * @param string $context
+     * The context to reset; an unknown context is ignored.
+     *
+     * @param bool $remove_bindings
+     * Whether to remove the context's bindings as well as its cached instances.
+     *
+     * @return void
+     * Clears the selected context while preserving other contexts.
+     *
+     * @throws ObjectFactoryException
+     * If any contract in the context is currently being constructed or initialized.
+     *
+     * @author Oleg Schildt
+     */
+    public static function resetContext(string $context = "default", bool $remove_bindings = false): void
+    {
+        self::assertMutable($context);
+
+        unset(self::$singletons[$context]);
+
+        if ($remove_bindings) {
+            unset(self::$itable[$context]);
+        }
+    } // resetContext
+
+    /**
+     * Forgets all cached singletons and optionally all bindings.
+     *
+     * Previously returned objects remain valid and are not disconnected or disposed.
+     *
+     * @param bool $remove_bindings
+     * Whether to remove every binding as well as all cached instances.
+     *
+     * @return void
+     * Clears factory state according to the requested scope.
+     *
+     * @throws ObjectFactoryException
+     * If any contract is currently being constructed or initialized.
+     *
+     * @author Oleg Schildt
+     */
+    public static function resetAll(bool $remove_bindings = false): void
+    {
+        self::assertMutable();
+
+        self::$singletons = [];
+
+        if ($remove_bindings) {
+            self::$itable = [];
+        }
+    } // resetAll
+
+    /**
+     * Resolves a class/interface name to its canonical reflection.
+     *
+     * @param class-string $class
+     * An existing class/interface name, including aliases and alternate casing.
+     *
+     * @param string $context
+     * The operation's context, included in validation errors.
+     *
+     * @return \ReflectionClass<object>
+     * Returns reflection with the canonical class or interface name.
+     *
+     * @throws ObjectFactoryException
+     * If the name is empty or does not identify an existing class or interface.
+     *
+     * @throws \Throwable
+     * If autoloading the class or interface throws an exception or error, it is propagated.
+     *
+     * @author Oleg Schildt
+     */
+    protected static function reflectClass(string $class, string $context): \ReflectionClass
+    {
+        if ($class === "" || (!interface_exists($class) && !class_exists($class))) {
+            throw new ObjectFactoryException(sprintf("The class or interface '%s' does not exist in context '%s'.", $class, $context));
+        }
+
+        return new \ReflectionClass($class);
+    } // reflectClass
+
+    /**
+     * Resolves the creation function's native return declaration to a class or interface.
+     *
+     * Only one non-nullable named object type is accepted. Contextual names self,
+     * parent and static are resolved using the closure's lexical or called class.
+     * The creation function is not invoked.
+     *
+     * @param \ReflectionFunction $creator
+     * The registered named function or closure to inspect.
+     *
+     * @param string $context
+     * The binding context, included in validation errors.
+     *
+     * @param class-string $contract_name
+     * The canonical requested contract name, included in validation errors.
+     *
+     * @return \ReflectionClass<object>
+     * Returns reflection for the existing class or interface declared as the return type.
+     *
+     * @throws ObjectFactoryException
+     * If the return declaration is missing, built-in, nullable, a union or intersection,
+     * names an unknown type, or contains a contextual name without a matching class scope.
+     *
+     * @throws \Throwable
+     * If autoloading the declared return type throws an exception or error, it is propagated.
+     *
+     * @author Oleg Schildt
+     */
+    protected static function reflectReturnClass(\ReflectionFunction $creator, string $context, string $contract_name): \ReflectionClass
+    {
+        $return_type = $creator->getReturnType();
+        $description = sprintf("context '%s', contract '%s'", $context, $contract_name);
+
+        if (!$return_type instanceof \ReflectionNamedType || $return_type->isBuiltin() || $return_type->allowsNull()) {
+            throw new ObjectFactoryException(sprintf(
+                "Cannot register binding (%s): the creation function must declare one non-nullable class or interface return type; got '%s'.",
+                $description,
+                $return_type === null ? "no return type" : (string) $return_type
+            ));
+        }
+
+        $return_name = $return_type->getName();
+
+        // Reflection preserves contextual names instead of expanding them to class names.
+        if (in_array($return_name, ["self", "parent", "static"], true)) {
+            $scope = $creator->getClosureScopeClass();
+            $return_class = match ($return_name) {
+                "self" => $scope,
+                "parent" => $scope === null ? false : $scope->getParentClass(),
+                "static" => $creator->getClosureCalledClass()
+            };
+
+            if (!$return_class instanceof \ReflectionClass) {
+                throw new ObjectFactoryException(sprintf(
+                    "Cannot register binding (%s): cannot resolve declared return type '%s' without a matching class scope.",
+                    $description,
+                    $return_name
+                ));
+            }
+
+            return $return_class;
+        }
+
+        if (!interface_exists($return_name) && !class_exists($return_name)) {
+            throw new ObjectFactoryException(sprintf(
+                "Cannot register binding (%s): declared return type '%s' does not exist.",
+                $description,
+                $return_name
+            ));
+        }
+
+        return new \ReflectionClass($return_name);
+    } // reflectReturnClass
+
+    /**
+     * Prevents binding and cache mutations that affect an active resolution.
+     *
+     * @param ?string $context
+     * The context to check, or null to check all contexts.
+     *
+     * @param ?string $contract_name
+     * The canonical contract name, or null to check the entire selected context.
+     *
+     * @return void
+     * Returns normally when no affected contract is being resolved.
+     *
+     * @throws ObjectFactoryException
+     * If the requested scope includes a contract currently being constructed or initialized.
+     *
+     * @author Oleg Schildt
+     */
+    protected static function assertMutable(?string $context = null, ?string $contract_name = null): void
+    {
+        $active = $context === null ? self::$resolving !== [] : isset(self::$resolving[$context]);
+
+        if ($context !== null && $contract_name !== null) {
+            $active = isset(self::$resolving[$context][$contract_name]);
+        }
+
+        if ($active) {
+            throw new ObjectFactoryException("Cannot change factory state during an affected resolution: " . implode(" -> ", self::$resolution_path));
+        }
+    } // assertMutable
 } // ObjectFactory

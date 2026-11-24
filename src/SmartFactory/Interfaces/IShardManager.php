@@ -10,22 +10,43 @@
 namespace SmartFactory\Interfaces;
 
 /**
- * Interface for managing connections to the DB shards.
+ * Registers database shards and selects their workers directly or through named groups.
+ *
+ * Implementations may use deterministic client affinity for random selections within each group.
  *
  * @author Oleg Schildt
  */
-interface IShardManager
+interface IShardManager extends IInitable
 {
     /**
-     * Registers a new shard.
+     * Initializes the manager's load-balancing and client-affinity settings.
+     *
+     * @param array<string, mixed> $parameters
+     * Implementation-specific settings. The standard manager accepts the boolean
+     * pin_shard_to_user_session (default false) and an optional zero-argument callable
+     * user_identificator_getter returning a string, int or null. A nonempty string or
+     * integer supplies the identity; null or an empty string uses the IP/User-Agent fallback.
+     *
+     * @return void
+     * Applies routing settings while preserving registered shards and cached workers.
+     *
+     * @throws \Exception
+     * If a supplied routing setting is invalid for the implementation.
+     *
+     * @author Oleg Schildt
+     */
+    public function init(array $parameters): void;
+
+    /**
+     * Registers a uniquely named shard and optionally adds it to a load-balancing group.
      *
      * @param string $shard_name
-     * Unique shard name.
+     * The nonempty unique shard name, including the valid name "0".
      *
-     * @param array $parameters
+     * @param array<string, mixed> $parameters
      * The connection parameters to the shard as an associative array in the form key => value:
      *
-     * - $parameters["db_type"] - type of the database (MySQL or MSSQL)
+     * - $parameters["db_type"] - database driver (MySQL, MSSQL, PostgreSQL or Oracle)
      *
      * - $parameters["db_server"] - server address
      *
@@ -35,58 +56,58 @@ interface IShardManager
      *
      * - $parameters["db_password"] - user password
      *
-     * - $parameters["autoconnect"] - should true if the connection should be established automatically
+     * - $parameters["autoconnect"] - true if the connection should be established automatically
      *                 upon creation.
      *
      * - $parameters["read_only"] - this parameter sets the connection to the read only mode.
      *
      * @param string $load_balancing_group
-     * The name of the load balancing group, if the shard should be part of it.
+     * The optional group name used by randomDBShard().
      *
      * @return bool
-     * It should return true if the registering was successful, otherwise false.
+     * Returns true on successful registration. Invalid registrations cause an exception.
      *
      * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * If the shard name is empty or already registered.
      *
      * @author Oleg Schildt
      */
     public function registerShard(string $shard_name, array $parameters, string $load_balancing_group = ""): bool;
-    
+
     /**
-     * The method provides the DBWorker object for working with the shard.
+     * Returns the independently cached worker for a registered shard.
      *
-     * If the parameters are omitted, the system takes the parameters from the configuration
-     * settings and reuses the single instance of the DBWorker for all requests.
-     * If the user passes the parameters explicitly, a new instance of the DBWorker is created upon each new request.
-     *
-     * Currently supported: MySQL und MS SQL.
+     * The first access creates a worker using the shard's registered connection settings.
+     * Later accesses through the same manager reuse it, independently of other shards' workers.
      *
      * @param string $shard_name
      * The name of the shard.
      *
      * @return ?\SmartFactory\DatabaseWorkers\DBWorker
-     * returns DBWorker object or null if the object could not be created.
+     * Returns the cached or newly created worker, or null if the worker factory returns null.
      *
      * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * If the shard is unknown, the driver cannot be created, or connection initialization fails.
      *
      * @author Oleg Schildt
      */
     public function dbshard(string $shard_name): ?\SmartFactory\DatabaseWorkers\DBWorker;
-    
+
     /**
-     * The method provides the DBWorker object for working with the shard, that is chosen randomly
-     * for load balancing reason.
+     * Returns the worker of a randomly selected group member, honoring client affinity if enabled.
      *
      * @param string $load_balancing_group
-     * The name of the load balancing group, from which the shard should be randomly picked.
+     * The name of a nonempty registered load-balancing group.
      *
      * @return ?\SmartFactory\DatabaseWorkers\DBWorker
-     * returns DBWorker object or null if the object could not be created.
+     * Returns the selected shard's worker, or null if the worker factory returns null.
      *
      * @throws \Exception
-     * It might throw an exception in the case of any errors.
+     * If the group is unknown, the selected shard cannot be initialized, or required
+     * client identity is unavailable or invalid.
+     *
+     * @throws \Throwable
+     * If the configured identifier getter throws an exception or error, it is propagated unchanged.
      *
      * @author Oleg Schildt
      */

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Source Code: src/initialization_inc.php - SmartFactory Library
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+ 
+
+                        <li class="active"></li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Source Code: src/initialization_inc.php</h2>
+
+<div id="source"><pre class="code"><code><span class="source-line" id="line-1"><a class="line" id="1" href="#1">1:</a> <span class="xlang">&lt;?php</span></span>
+<span class="source-line" id="line-2"><a class="line" id="2" href="#2">2:</a> <span class="php-comment">/**</span></span>
+<span class="source-line" id="line-3"><a class="line" id="3" href="#3">3:</a> <span class="php-comment"> * This file contains the mapping of the implementing classes to the interfaces.</span></span>
+<span class="source-line" id="line-4"><a class="line" id="4" href="#4">4:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-5"><a class="line" id="5" href="#5">5:</a> <span class="php-comment"> * @author Oleg Schildt</span></span>
+<span class="source-line" id="line-6"><a class="line" id="6" href="#6">6:</a> <span class="php-comment"> *</span></span>
+<span class="source-line" id="line-7"><a class="line" id="7" href="#7">7:</a> <span class="php-comment"> * @package Factory</span></span>
+<span class="source-line" id="line-8"><a class="line" id="8" href="#8">8:</a> <span class="php-comment"> */</span></span>
+<span class="source-line" id="line-9"><a class="line" id="9" href="#9">9:</a> </span>
+<span class="source-line" id="line-10"><a class="line" id="10" href="#10">10:</a> <span class="php-keyword1">namespace</span> SmartFactory;</span>
+<span class="source-line" id="line-11"><a class="line" id="11" href="#11">11:</a> </span>
+<span class="source-line" id="line-12"><a class="line" id="12" href="#12">12:</a> <span class="php-keyword1">use</span> SmartFactory\Interfaces\IMessageManager;</span>
+<span class="source-line" id="line-13"><a class="line" id="13" href="#13">13:</a> <span class="php-keyword1">use</span> SmartFactory\Interfaces\IErrorHandler;</span>
+<span class="source-line" id="line-14"><a class="line" id="14" href="#14">14:</a> <span class="php-keyword1">use</span> SmartFactory\Interfaces\IEventManager;</span>
+<span class="source-line" id="line-15"><a class="line" id="15" href="#15">15:</a> <span class="php-keyword1">use</span> SmartFactory\Interfaces\IShardManager;</span>
+<span class="source-line" id="line-16"><a class="line" id="16" href="#16">16:</a> </span>
+<span class="source-line" id="line-17"><a class="line" id="17" href="#17">17:</a> <span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\MySQL_DBWorker;</span>
+<span class="source-line" id="line-18"><a class="line" id="18" href="#18">18:</a> <span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker;</span>
+<span class="source-line" id="line-19"><a class="line" id="19" href="#19">19:</a> <span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\MSSQL_DBWorker;</span>
+<span class="source-line" id="line-20"><a class="line" id="20" href="#20">20:</a> <span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\Oracle_DBWorker;</span>
+<span class="source-line" id="line-21"><a class="line" id="21" href="#21">21:</a> <span class="php-keyword1">use</span> SmartFactory\DatabaseWorkers\ShardManager;</span>
+<span class="source-line" id="line-22"><a class="line" id="22" href="#22">22:</a> </span>
+<span class="source-line" id="line-23"><a class="line" id="23" href="#23">23:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-24"><a class="line" id="24" href="#24">24:</a> <span class="php-comment">// Class binding</span></span>
+<span class="source-line" id="line-25"><a class="line" id="25" href="#25">25:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-26"><a class="line" id="26" href="#26">26:</a> ObjectFactory::bindFactory(IErrorHandler::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): ErrorHandler {</span>
+<span class="source-line" id="line-27"><a class="line" id="27" href="#27">27:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> ErrorHandler();</span>
+<span class="source-line" id="line-28"><a class="line" id="28" href="#28">28:</a> </span>
+<span class="source-line" id="line-29"><a class="line" id="29" href="#29">29:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-30"><a class="line" id="30" href="#30">30:</a> });</span>
+<span class="source-line" id="line-31"><a class="line" id="31" href="#31">31:</a> </span>
+<span class="source-line" id="line-32"><a class="line" id="32" href="#32">32:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-33"><a class="line" id="33" href="#33">33:</a> ObjectFactory::bindFactory(IEventManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): EventManager {</span>
+<span class="source-line" id="line-34"><a class="line" id="34" href="#34">34:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> EventManager();</span>
+<span class="source-line" id="line-35"><a class="line" id="35" href="#35">35:</a> </span>
+<span class="source-line" id="line-36"><a class="line" id="36" href="#36">36:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-37"><a class="line" id="37" href="#37">37:</a> });</span>
+<span class="source-line" id="line-38"><a class="line" id="38" href="#38">38:</a> </span>
+<span class="source-line" id="line-39"><a class="line" id="39" href="#39">39:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-40"><a class="line" id="40" href="#40">40:</a> ObjectFactory::bindFactory(IMessageManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): MessageManager {</span>
+<span class="source-line" id="line-41"><a class="line" id="41" href="#41">41:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> MessageManager();</span>
+<span class="source-line" id="line-42"><a class="line" id="42" href="#42">42:</a> </span>
+<span class="source-line" id="line-43"><a class="line" id="43" href="#43">43:</a>     <span class="php-var">$instance</span>-&gt;init([<span class="php-quote">&quot;debug_mode&quot;</span> =&gt; <span class="php-num">1</span>]);</span>
+<span class="source-line" id="line-44"><a class="line" id="44" href="#44">44:</a> </span>
+<span class="source-line" id="line-45"><a class="line" id="45" href="#45">45:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-46"><a class="line" id="46" href="#46">46:</a> });</span>
+<span class="source-line" id="line-47"><a class="line" id="47" href="#47">47:</a> </span>
+<span class="source-line" id="line-48"><a class="line" id="48" href="#48">48:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-49"><a class="line" id="49" href="#49">49:</a> ObjectFactory::bindFactory(MySQL_DBWorker::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): MySQL_DBWorker {</span>
+<span class="source-line" id="line-50"><a class="line" id="50" href="#50">50:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> MySQL_DBWorker();</span>
+<span class="source-line" id="line-51"><a class="line" id="51" href="#51">51:</a> </span>
+<span class="source-line" id="line-52"><a class="line" id="52" href="#52">52:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-53"><a class="line" id="53" href="#53">53:</a> });</span>
+<span class="source-line" id="line-54"><a class="line" id="54" href="#54">54:</a> </span>
+<span class="source-line" id="line-55"><a class="line" id="55" href="#55">55:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-56"><a class="line" id="56" href="#56">56:</a> ObjectFactory::bindFactory(PostgreSQL_DBWorker::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): PostgreSQL_DBWorker {</span>
+<span class="source-line" id="line-57"><a class="line" id="57" href="#57">57:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> PostgreSQL_DBWorker();</span>
+<span class="source-line" id="line-58"><a class="line" id="58" href="#58">58:</a> </span>
+<span class="source-line" id="line-59"><a class="line" id="59" href="#59">59:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-60"><a class="line" id="60" href="#60">60:</a> });</span>
+<span class="source-line" id="line-61"><a class="line" id="61" href="#61">61:</a> </span>
+<span class="source-line" id="line-62"><a class="line" id="62" href="#62">62:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-63"><a class="line" id="63" href="#63">63:</a> ObjectFactory::bindFactory(MSSQL_DBWorker::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): MSSQL_DBWorker {</span>
+<span class="source-line" id="line-64"><a class="line" id="64" href="#64">64:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> MSSQL_DBWorker();</span>
+<span class="source-line" id="line-65"><a class="line" id="65" href="#65">65:</a> </span>
+<span class="source-line" id="line-66"><a class="line" id="66" href="#66">66:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-67"><a class="line" id="67" href="#67">67:</a> });</span>
+<span class="source-line" id="line-68"><a class="line" id="68" href="#68">68:</a> </span>
+<span class="source-line" id="line-69"><a class="line" id="69" href="#69">69:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-70"><a class="line" id="70" href="#70">70:</a> ObjectFactory::bindFactory(Oracle_DBWorker::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): Oracle_DBWorker {</span>
+<span class="source-line" id="line-71"><a class="line" id="71" href="#71">71:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> Oracle_DBWorker();</span>
+<span class="source-line" id="line-72"><a class="line" id="72" href="#72">72:</a> </span>
+<span class="source-line" id="line-73"><a class="line" id="73" href="#73">73:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-74"><a class="line" id="74" href="#74">74:</a> });</span>
+<span class="source-line" id="line-75"><a class="line" id="75" href="#75">75:</a> </span>
+<span class="source-line" id="line-76"><a class="line" id="76" href="#76">76:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-77"><a class="line" id="77" href="#77">77:</a> ObjectFactory::bindFactory(IShardManager::<span class="php-keyword1">class</span>, <span class="php-keyword1">function</span> (): ShardManager {</span>
+<span class="source-line" id="line-78"><a class="line" id="78" href="#78">78:</a>     <span class="php-var">$instance</span> = <span class="php-keyword1">new</span> ShardManager();</span>
+<span class="source-line" id="line-79"><a class="line" id="79" href="#79">79:</a> </span>
+<span class="source-line" id="line-80"><a class="line" id="80" href="#80">80:</a>     <span class="php-keyword1">return</span> <span class="php-var">$instance</span>;</span>
+<span class="source-line" id="line-81"><a class="line" id="81" href="#81">81:</a> });</span>
+<span class="source-line" id="line-82"><a class="line" id="82" href="#82">82:</a> <span class="php-comment">//-------------------------------------------------------------------</span></span>
+<span class="source-line" id="line-83"><a class="line" id="83" href="#83">83:</a> <span class="php-comment">// TODO: Override lang</span></span>
+<span class="source-line" id="line-84"><a class="line" id="84" href="#84">84:</a> </span>
+<span class="source-line" id="line-85"><a class="line" id="85" href="#85">85:</a> <span class="php-comment">// TODO: OAuth.php</span></span>
+<span class="source-line" id="line-86"><a class="line" id="86" href="#86">86:</a> <span class="php-comment">// TODO: PphDoxy</span></span>
+<span class="source-line" id="line-87"><a class="line" id="87" href="#87">87:</a> </span>
+<span class="source-line" id="line-88"><a class="line" id="88" href="#88">88:</a> </span>
+<span class="source-line" id="line-89"><a class="line" id="89" href="#89">89:</a> </span>
+</code>
+</pre>
+</div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

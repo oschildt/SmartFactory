@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: ApplicationSettingsManager
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">ApplicationSettingsManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: ApplicationSettingsManager</h1>
+
+
+
+<div class="definition"><span class="php-keyword1">class</span> ApplicationSettingsManager <span class="php-keyword1">extends</span> AbstractDatabaseSettingsManager
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Stores application-wide settings centrally in a database as a JSON document.</p>
+</div>
+
+
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Central storage allows an application distributed across several servers to share
+the same settings. A stable record key identifies the document. Saves lock that key,
+read the latest document and merge only explicitly edited parameters in one transaction.
+Concurrent edits to other parameters survive; the last save wins for the same parameter.
+Values are cached in this object; call loadSettings() to refresh a long-lived instance.
+Contextual validation supports separate forms, but drafts are not stored between requests.</p>
+</div>
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.AbstractDatabaseSettingsManager.html">\SmartFactory\AbstractDatabaseSettingsManager</a><br>
+
+</div>
+
+
+
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#30'>src/SmartFactory/ApplicationSettingsManager.php</a>
+</div>
+
+
+<h2>See also</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.ConfigSettingsManager.html">\SmartFactory\ConfigSettingsManager</a><br>
+
+
+<a href="class-SmartFactory.UserSettingsManager.html">\SmartFactory\UserSettingsManager</a><br>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$settings_column">$settings_column</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The column containing the JSON document.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$settings_id">$settings_id</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The document key, allowing separate applications to share one settings table.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$settings_id_column">$settings_id_column</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The non-generated unique key column identifying a settings document.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$settings_table">$settings_table</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>The table containing application settings documents.</p>
+          </td>
+      </tr>
+
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Configures database-backed settings without loading them immediately.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadJSON">loadJSON()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Loads the configured document using an isolated prepared statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadSettingsData">loadSettingsData()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Implements the shared loading contract using the JSON document reader.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#readJSON">readJSON()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reads one keyed JSON document through a bound query.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#saveJSON">saveJSON()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Locks the document key, merges local edits and saves through save_records().</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#saveSettingsData">saveSettingsData()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Implements the shared saving contract using a transactional JSON merge.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#validateParameters">validateParameters()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Verifies that the document location and worker have been configured.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<hr id="$settings_column">
+
+  <h1>Property: ApplicationSettingsManager::$settings_column</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$settings_column</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>The column containing the JSON document.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">string</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#48'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div><hr id="$settings_id">
+
+  <h1>Property: ApplicationSettingsManager::$settings_id</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">int</span> <span class="php-var">$settings_id</span> = <span class="php-num">1</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>The document key, allowing separate applications to share one settings table.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">int</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#66'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div><hr id="$settings_id_column">
+
+  <h1>Property: ApplicationSettingsManager::$settings_id_column</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$settings_id_column</span> = <span class="php-quote">&quot;id&quot;</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>The non-generated unique key column identifying a settings document.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">string</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#57'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div><hr id="$settings_table">
+
+  <h1>Property: ApplicationSettingsManager::$settings_table</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$settings_table</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>The table containing application settings documents.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">string</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#39'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+
+<hr id="init">
+
+  <h1>Method: ApplicationSettingsManager::init()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Configures database-backed settings without loading them immediately.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array{
+    dbworker: <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a>,
+    settings_table: string,
+    settings_column: string,
+    settings_id_column?: string,
+    settings_id?: int,
+    no_own_transaction?: bool
+}</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The worker, table and JSON column. The unique, non-generated integer key defaults
+to id = 1. A missing document is created on the first save. When no_own_transaction
+is true the caller must already have started a READ COMMITTED transaction.
+The settings table must provide the configured unique document key.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Discards the previous snapshot and unsaved edits.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If the worker, identifier names or document key have invalid types or values,
+or the key column and JSON column have the same name.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.ISettingsManager.html#init">\SmartFactory\Interfaces\ISettingsManager::init()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#86'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="loadJSON">
+
+  <h1>Method: ApplicationSettingsManager::loadJSON()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Loads the configured document using an isolated prepared statement.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $data
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Receives the complete document after successful loading.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not modify the currently cached settings snapshot.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If initialization, connection, reading or decoding fails.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#198'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#saveJSON">\SmartFactory\ApplicationSettingsManager::saveJSON()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="loadSettingsData">
+
+  <h1>Method: ApplicationSettingsManager::loadSettingsData()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Implements the shared loading contract using the JSON document reader.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $data
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Receives the complete document.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Leaves the active snapshot unchanged until loading succeeds.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If connecting, reading or decoding the configured document fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.AbstractSettingsManager.html#loadSettingsData">\SmartFactory\AbstractSettingsManager::loadSettingsData()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#267'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="readJSON">
+
+  <h1>Method: ApplicationSettingsManager::readJSON()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> readJSON(DBWorker <span class="php-var">$worker</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Reads one keyed JSON document through a bound query.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $worker
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">DBWorker</a></code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The connected worker, optionally holding the document's logical key lock.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">array&lt;string, mixed&gt;</code><br>
+  
+  <div class="item_description"><p>Returns the decoded document, or an empty array for a missing row or NULL payload.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\UnexpectedValueException</code><br>
+  
+  <div class="item_description"><p>If the JSON value is not an object or array, or duplicate document keys are found.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If preparing, executing, fetching or decoding the document fails.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#148'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="saveJSON">
+
+  <h1>Method: ApplicationSettingsManager::saveJSON()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveJSON(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Locks the document key, merges local edits and saves through save_records().</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $data
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The local snapshot, replaced with the merged document only after success.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Creates a missing keyed document and preserves unrelated concurrent edits.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If initialization, transaction setup, locking, reading, encoding or saving fails.
+External transactions remain the caller's responsibility and must be rolled back on failure.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#222'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.ApplicationSettingsManager.html#loadJSON">\SmartFactory\ApplicationSettingsManager::loadJSON()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="saveSettingsData">
+
+  <h1>Method: ApplicationSettingsManager::saveSettingsData()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveSettingsData(<span class="php-keyword1">array</span> &amp;<span class="php-var">$data</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Implements the shared saving contract using a transactional JSON merge.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $data
+            </td>
+            <td>
+                by reference
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, mixed&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Receives the merged document after successful saving.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Leaves change tracking to the public save method.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If transaction setup, locking, merging or saving fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.AbstractSettingsManager.html#saveSettingsData">\SmartFactory\AbstractSettingsManager::saveSettingsData()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#286'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="validateParameters">
+
+  <h1>Method: ApplicationSettingsManager::validateParameters()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> validateParameters(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Verifies that the document location and worker have been configured.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not open a connection or inspect table metadata.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not supplied a worker, table and JSON column.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.ApplicationSettingsManager.php.html#124'>src/SmartFactory/ApplicationSettingsManager.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

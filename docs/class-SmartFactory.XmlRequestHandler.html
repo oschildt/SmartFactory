@@ -109,36 +109,39 @@
 
 <span class="label label-primary">abstract</span>
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">class</span> XmlRequestHandler <span class="php-keyword1">extends</span> RequestHandler
+{
+}</div>
+
 
 
 <div class="short-description">
-<p>Class for handling the XML API requests.</p>
+<p>Handles XML API requests using public action methods implemented by a subclass.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>The user should derive from this class and implement the methods with the names
-of the API actions.</p>
-<p>URL: http://smartfactorydev.loc/api/get_rooms/</p>
-<p>Action: get_rooms</p>
-<pre><code class="language-php"><span class="php-keyword1">function</span> get_rooms()
+<p>For example, /api/get_rooms/ invokes get_rooms(), which reads request_xmldoc:</p>
+<pre><code class="language-php"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rooms(): <span class="php-keyword1">void</span>
 {
-   <span class="php-var">$xsdpath</span> = <span class="php-keyword1">new</span> \DOMXPath(<span class="php-var">$this</span>-&gt;request_xmldoc);
+    <span class="php-var">$xpath</span> = <span class="php-keyword1">new</span> \DOMXPath(<span class="php-var">$this</span>-&gt;request_xmldoc);
+    <span class="php-var">$nodes</span> = <span class="php-var">$xpath</span>-&gt;evaluate(<span class="php-quote">&quot;/Request/City&quot;</span>);
 
-   <span class="php-var">$nodes</span> = <span class="php-var">$xsdpath</span>-&gt;evaluate(<span class="php-quote">&quot;/Request/City&quot;</span>);
-   <span class="php-keyword1">if</span> (<span class="php-var">$nodes</span>-&gt;length == <span class="php-num">0</span>) {
-       <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;City is undefined!&quot;</span>, <span class="php-quote">&quot;no_city&quot;</span>);
-   }
-   <span class="php-var">$city</span> = <span class="php-var">$nodes</span>-&gt;item(<span class="php-num">0</span>)-&gt;nodeValue;
+    <span class="php-keyword1">if</span> (<span class="php-var">$nodes</span>-&gt;length === <span class="php-num">0</span>) {
+        <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> SmartException(<span class="php-quote">&quot;City is undefined!&quot;</span>, <span class="php-quote">&quot;no_city&quot;</span>);
+    }
 
-   <span class="php-var">$response</span> = <span class="php-var">$this</span>-&gt;response_xmldoc-&gt;createElement(<span class="php-quote">&quot;Response&quot;</span>);
-   <span class="php-var">$this</span>-&gt;response_xmldoc-&gt;appendChild(<span class="php-var">$response</span>);
+    <span class="php-var">$city</span> = <span class="php-var">$nodes</span>-&gt;item(<span class="php-num">0</span>)-&gt;nodeValue;
+    <span class="php-var">$response</span> = <span class="php-var">$this</span>-&gt;response_xmldoc-&gt;createElement(<span class="php-quote">&quot;Response&quot;</span>);
 
-   ...
+    <span class="php-var">$this</span>-&gt;response_xmldoc-&gt;appendChild(<span class="php-var">$response</span>);
+
+    <span class="php-comment">// Add response elements using createTextNode() for user-supplied values.</span>
 } <span class="php-comment">// get_rooms</span></code></pre>
+<p>The XML declaration or byte-order mark determines the input encoding. Responses use UTF-8.
+Fresh documents are created for each request; helpers and message assembly remain protected.</p>
 </div>
 
 
@@ -147,7 +150,7 @@ of the API actions.</p>
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.RequestHandler.html'>\SmartFactory\RequestHandler</a><br>
+<a href="class-SmartFactory.RequestHandler.html">\SmartFactory\RequestHandler</a><br>
 
 </div>
 
@@ -178,7 +181,7 @@ of the API actions.</p>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.XmlRequestHandler.php.html#45'>SmartFactory/XmlRequestHandler.php</a>
+<a href='source-src.SmartFactory.XmlRequestHandler.php.html#43'>src/SmartFactory/XmlRequestHandler.php</a>
 </div>
 
 
@@ -204,8 +207,21 @@ of the API actions.</p>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Properties</th></tr>
-      
+
       <tr>
+          <td>
+              <div style='float:left'><a href="#$initial_response_xmldoc">$initial_response_xmldoc</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Retains the response template configured before this instance handles its first request.</p>
+          </td>
+      </tr><tr>
           <td>
               <div style='float:left'><a href="#$request_xmldoc">$request_xmldoc</a></div>
 
@@ -216,7 +232,7 @@ of the API actions.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the request XML document.</p>
+              <p>Stores the parsed request document.</p>
           </td>
       </tr><tr>
           <td>
@@ -229,15 +245,15 @@ of the API actions.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the response XML document.</p>
+              <p>Stores the response document, which is serialized as UTF-8.</p>
           </td>
       </tr>
-      
+
   </table>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#__construct">__construct()</a></div>
@@ -249,7 +265,7 @@ of the API actions.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Constructor.</p>
+              <p>Initializes the request and response documents.</p>
           </td>
       </tr><tr>
           <td>
@@ -262,7 +278,46 @@ of the API actions.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>This is an auxiliary function for parsing the incoming XML data.</p>
+              <p>Validates the XML media type and parses the original request bytes.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#parseXml">parseXml()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Loads an XML body without trimming bytes or suppressing parser diagnostics.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#resetRequest">resetRequest()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Clears routing state and creates fresh request and response documents.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#sendErrorResponse">sendErrorResponse()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sends a fixed XML system error without reusing application documents or message hooks.</p>
           </td>
       </tr><tr>
           <td>
@@ -275,23 +330,63 @@ of the API actions.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>This is an auxiliary function for sending the response in XML format.</p>
+              <p>Assembles and serializes the XML response before sending headers.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
-<hr id="$request_xmldoc">
+<hr id="$initial_response_xmldoc">
+
+  <h1>Property: XmlRequestHandler::$initial_response_xmldoc</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> ?\DOMDocument <span class="php-var">$initial_response_xmldoc</span> = <span class="php-keyword1">null</span>;</div>
   
+
+  
+  <div class="short-description">
+  <p>Retains the response template configured before this instance handles its first request.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">(\DOMDocument | null)</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#70'>src/SmartFactory/XmlRequestHandler.php</a>
+  </div><hr id="$request_xmldoc">
+
   <h1>Property: XmlRequestHandler::$request_xmldoc</h1>
 
   <div class="definition"><span class="php-keyword1">protected</span> \DOMDocument <span class="php-var">$request_xmldoc</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing the request XML document.</p>
+  <p>Stores the parsed request document.</p>
   </div>
   
 
@@ -300,7 +395,7 @@ of the API actions.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  \DOMDocument
+  <code class="php-type">\DOMDocument</code>
   </div>
   
 
@@ -320,16 +415,17 @@ of the API actions.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#54'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#52'>src/SmartFactory/XmlRequestHandler.php</a>
   </div><hr id="$response_xmldoc">
-  
+
   <h1>Property: XmlRequestHandler::$response_xmldoc</h1>
 
   <div class="definition"><span class="php-keyword1">protected</span> \DOMDocument <span class="php-var">$response_xmldoc</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing the response XML document.</p>
+  <p>Stores the response document, which is serialized as UTF-8.</p>
   </div>
   
 
@@ -338,7 +434,7 @@ of the API actions.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  \DOMDocument
+  <code class="php-type">\DOMDocument</code>
   </div>
   
 
@@ -358,26 +454,22 @@ of the API actions.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#63'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#61'>src/SmartFactory/XmlRequestHandler.php</a>
   </div>
 
 <hr id="__construct">
-  
+
   <h1>Method: XmlRequestHandler::__construct()</h1>
 
-  <div class="definition"><span class="php-keyword1">function</span> __construct();</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct();</div>
+  
 
   
   <div class="short-description">
-  <p>Constructor.</p>
+  <p>Initializes the request and response documents.</p>
   </div>
   
 
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It initializes the XML document variables.</p>
-  </div>
   
 
   
@@ -404,7 +496,7 @@ of the API actions.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#72'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#77'>src/SmartFactory/XmlRequestHandler.php</a>
   </div>
   
 
@@ -423,22 +515,18 @@ of the API actions.</p>
   
 
   <hr id="parseInput">
-  
+
   <h1>Method: XmlRequestHandler::parseInput()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput(): void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseInput(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>This is an auxiliary function for parsing the incoming XML data.</p>
+  <p>Validates the XML media type and parses the original request bytes.</p>
   </div>
   
 
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It validates the content type 'application/xml' and takes the data from RAWDATA.</p>
-  </div>
   
 
   
@@ -448,7 +536,9 @@ of the API actions.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Loads the request document using the encoding declared in its XML data.</p></div>
   
   </div>
   
@@ -456,9 +546,15 @@ of the API actions.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a>|\Exception<br>
+  <code class="php-type"><a href="class-SmartFactory.SmartException.html">SmartException</a></code><br>
   
-  <div class="item_description"><p>It might throw an exception if the content type oк XML data is invalid.</p></div>
+  <div class="item_description"><p>If the media type is invalid, the body is empty or malformed, or input access fails.
+Unexpected failures use a neutral system-error message and retain technical details and their cause.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If logging an unexpected parsing failure fails.</p></div>
   
   
   </div>
@@ -466,7 +562,7 @@ of the API actions.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.RequestHandler.html#parseInput'>\SmartFactory\RequestHandler::parseInput()</a>
+  <a href="class-SmartFactory.RequestHandler.html#parseInput">\SmartFactory\RequestHandler::parseInput()</a>
   </div>
   
 
@@ -484,7 +580,273 @@ of the API actions.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#92'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#121'>src/SmartFactory/XmlRequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="parseXml">
+
+  <h1>Method: XmlRequestHandler::parseXml()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> parseXml(<span class="php-keyword1">string</span> <span class="php-var">$xml</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Loads an XML body without trimming bytes or suppressing parser diagnostics.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $xml
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The original XML bytes, with their declaration or byte-order mark intact.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Replaces the request document and restores the previous libxml error-handling mode.
+Collected libxml diagnostics are cleared after parsing.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.SmartException.html">SmartException</a></code><br>
+  
+  <div class="item_description"><p>If the body is empty or malformed; parser messages, lines and columns are retained as technical details.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If DOM construction or loading raises an unexpected failure; the previous libxml mode is restored.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#159'>src/SmartFactory/XmlRequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="resetRequest">
+
+  <h1>Method: XmlRequestHandler::resetRequest()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> resetRequest(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Clears routing state and creates fresh request and response documents.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The response is a deep clone of the template present before the first request,
+preserving document configuration or nodes initialized by a subclass constructor.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Removes document content from any earlier request handled by this instance.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.RequestHandler.html#resetRequest">\SmartFactory\RequestHandler::resetRequest()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#96'>src/SmartFactory/XmlRequestHandler.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="sendErrorResponse">
+
+  <h1>Method: XmlRequestHandler::sendErrorResponse()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendErrorResponse(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Sends a fixed XML system error without reusing application documents or message hooks.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Emits a valid XML error after handleRequest() selects HTTP status 500.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If fallback headers cannot be added or transmitted.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.RequestHandler.html#sendErrorResponse">\SmartFactory\RequestHandler::sendErrorResponse()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#248'>src/SmartFactory/XmlRequestHandler.php</a>
   </div>
   
 
@@ -503,23 +865,18 @@ of the API actions.</p>
   
 
   <hr id="sendResponse">
-  
+
   <h1>Method: XmlRequestHandler::sendResponse()</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse(): void;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sendResponse(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>This is an auxiliary function for sending the response in XML format.</p>
+  <p>Assembles and serializes the XML response before sending headers.</p>
   </div>
   
 
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It sends the prepared response XML document and the response headers. The header
-"Content-type: application/xml" ist sent automatically.</p>
-  </div>
   
 
   
@@ -529,7 +886,9 @@ of the API actions.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Sends application/xml with UTF-8 encoding. An empty document receives a Response root.</p></div>
   
   </div>
   
@@ -537,9 +896,14 @@ of the API actions.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html'>\SmartFactory\SmartException</a><br>
+  <code class="php-type">\RuntimeException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If XML serialization fails.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If message assembly, DOM construction or header transmission fails.</p></div>
   
   
   </div>
@@ -547,7 +911,7 @@ of the API actions.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.RequestHandler.html#sendResponse'>\SmartFactory\RequestHandler::sendResponse()</a>
+  <a href="class-SmartFactory.RequestHandler.html#sendResponse">\SmartFactory\RequestHandler::sendResponse()</a>
   </div>
   
 
@@ -565,11 +929,11 @@ of the API actions.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.XmlRequestHandler.php.html#138'>SmartFactory/XmlRequestHandler.php</a>
+  <a href='source-src.SmartFactory.XmlRequestHandler.php.html#215'>src/SmartFactory/XmlRequestHandler.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -107,7 +107,8 @@
                 <div class="col-md-12">
                     <h1>Function: table()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> table(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = [], bool <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): string|<span class="php-keyword1">null</span>;</div>
+<div class="definition"><span class="php-keyword1">function</span> table(<span class="php-keyword1">array</span> <span class="php-var">$array</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span> = [], <span class="php-keyword1">bool</span> <span class="php-var">$echo</span> = <span class="php-keyword1">true</span>): <span class="php-keyword1">string</span>|<span class="php-keyword1">null</span>;</div>
+
 
 
 <div class="short-description">
@@ -126,7 +127,8 @@
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -141,10 +143,10 @@
               $array
           </td>
           <td>
-              by reference
+              by value
           </td>
           <td>
-              array
+              <code class="php-type">array</code>
           </td>
           <td>
               
@@ -162,7 +164,7 @@
               by value
           </td>
           <td>
-              array
+              <code class="php-type">array</code>
           </td>
           <td>
               []
@@ -186,22 +188,22 @@ is escaped for html.</p>
 </li>
 <li>
 <p>$parameters["formatter"] - this function is used for the value formatting
-if specified. It is called for evelry cell of the table. The signature of
+if specified. It is called for every cell of the table. The signature of
 this function is:</p>
 </li>
 </ul>
-<pre><code class="language-php"><span class="php-keyword1">function</span> (<span class="php-var">$rownum</span>, <span class="php-var">$colnum</span>, <span class="php-var">$colname</span>, <span class="php-var">$val</span>) : string;</code></pre>
+<pre><code class="language-php"><span class="php-keyword1">function</span> (<span class="php-var">$rownum</span>, <span class="php-var">$colnum</span>, <span class="php-var">$colname</span>, <span class="php-var">$val</span>) : <span class="php-keyword1">string</span>;</code></pre>
 <ul>
 <li>
 <p>$rownum - the row number.</p>
 </li>
 <li>
-<p>$colnum - the colnum number.</p>
+<p>$colnum - the column number.</p>
 </li>
 <li>
 <p>$colname - the column name if the $parameters["captions"] are provided.
-The keys of the cpation array are used. If the $parameters["captions"]
-are not provided, $colname is equal to $colnum.</p>
+The keys of the caption array are used. If the $parameters["captions"]
+are not provided, $colname is equal to $column.</p>
 </li>
 <li>
 <p>$val - original value of the table cell.</p>
@@ -225,12 +227,12 @@ return the original value without changes.</p>
   <span class="php-quote">&quot;employee&quot;</span> =&gt; <span class="php-quote">&quot;Employee&quot;</span>,
   <span class="php-quote">&quot;time_estimation&quot;</span> =&gt; <span class="php-quote">&quot;Time estimation&quot;</span>,
   <span class="php-quote">&quot;deadline&quot;</span> =&gt; <span class="php-quote">&quot;Deadline&quot;</span>,
-  <span class="php-quote">&quot;comments&quot;</span> =&gt; <span class="php-quote">&quot;Conmments&quot;</span>
+  <span class="php-quote">&quot;comments&quot;</span> =&gt; <span class="php-quote">&quot;Comments&quot;</span>
 ];
 
 <span class="php-var">$formatter</span> = <span class="php-keyword1">function</span> (<span class="php-var">$rownum</span>, <span class="php-var">$colnum</span>, <span class="php-var">$colname</span>, <span class="php-var">$val</span>) {
   <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;time_estimation&quot;</span>) <span class="php-keyword1">return</span> format_number(<span class="php-var">$val</span>, <span class="php-num">2</span>);
-  <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;deadline&quot;</span>) <span class="php-keyword1">return</span> <span class="php-keyword2">date</span>(<span class="php-quote">&quot;Y-m-d H:i&quot;</span>, <span class="php-var">$val</span>);
+  <span class="php-keyword1">if</span>(<span class="php-var">$colname</span> == <span class="php-quote">&quot;deadline&quot;</span>) <span class="php-keyword1">return</span> date(<span class="php-quote">&quot;Y-m-d H:i&quot;</span>, <span class="php-var">$val</span>);
   <span class="php-keyword1">return</span> <span class="php-var">$val</span>;
 };
 
@@ -253,27 +255,28 @@ table(<span class="php-var">$rows</span>,
               by value
           </td>
           <td>
-              bool
+              <code class="php-type">boolean</code>
           </td>
           <td>
               true
           </td>
           <td class="description_column">
               <p>If the value of $echo is true, the html code of the table is directly echoed.
-Otherwise it is returned as string. It might be useful to pass this code to
+Otherwise, it is returned as string. It might be useful to pass this code to
 other rendering functions instead of echoing.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string|null<br>
+<code class="php-type">(string | null)</code><br>
 
-<div class="item_description"><p>If the paramter $echo is true, the string of the table html
+<div class="item_description"><p>If the parameter $echo is true, the string of the table html
 code is returned, otherwise null.</p></div>
 
 </div>
@@ -302,11 +305,11 @@ code is returned, otherwise null.</p></div>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-html_utils_inc.php.html#874'>html_utils_inc.php</a>
+<a href='source-src.html_utils_inc.php.html#874'>src/html_utils_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

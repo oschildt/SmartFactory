@@ -30,7 +30,7 @@ interface IErrorHandler extends IInitable
      * @author Oleg Schildt
      */
     public function init(array $parameters): void;
-    
+
     /**
      * This is the function for handling of the PHP errors. It is set in the
      * error handler.
@@ -52,7 +52,7 @@ interface IErrorHandler extends IInitable
      * @author Oleg Schildt
      */
     public function handleError(int $errno, string $errstr, string $errfile, int $errline): void;
-    
+
     /**
      * This is the function for handling of the PHP exceptions. It should
      * be called in the catch block to trace detailed information
@@ -69,7 +69,7 @@ interface IErrorHandler extends IInitable
      * @author Oleg Schildt
      */
     public function handleException(\Throwable $ex, int $errno): void;
-    
+
     /**
      * Returns the last error.
      *
@@ -79,7 +79,7 @@ interface IErrorHandler extends IInitable
      * @author Oleg Schildt
      */
     public function getLastError(): string;
-    
+
     /**
      * Stores the last error.
      *
@@ -91,7 +91,7 @@ interface IErrorHandler extends IInitable
      * @author Oleg Schildt
      */
     public function setLastError(string $error): void;
-    
+
     /**
      * Returns the state whether the trace is active or not.
      *
@@ -107,7 +107,7 @@ interface IErrorHandler extends IInitable
      * @author Oleg Schildt
      */
     public function traceActive(): bool;
-    
+
     /**
      * Enables the trace.
      *
@@ -122,7 +122,7 @@ interface IErrorHandler extends IInitable
      * @author Oleg Schildt
      */
     public function enableTrace(): void;
-    
+
     /**
      * Disables the trace.
      *

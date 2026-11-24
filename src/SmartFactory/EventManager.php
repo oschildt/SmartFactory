@@ -10,19 +10,19 @@
 
 namespace SmartFactory;
 
-use \SmartFactory\Interfaces\IEventManager;
+use SmartFactory\Interfaces\IEventManager;
 
 /**
- * Class for event management.
+ * Dispatches events synchronously using subscriptions and suspension state owned by this instance.
  *
  * @author Oleg Schildt
  */
 class EventManager implements IEventManager
 {
     /**
-     * Internal array for storing the event handler mappings.
+     * Stores handlers by event code and callable identity in registration order.
      *
-     * @var array
+     * @var array<int|string, array<string, array{id: int, handler: \Closure(string, array<array-key, mixed>): mixed}>>
      *
      * @see EventManager::addHandler()
      * @see EventManager::deleteHandler()
@@ -31,12 +31,12 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    protected static array $event_table = [];
-    
+    protected array $event_table = [];
+
     /**
-     * Internal array for storing the suspended events.
+     * Stores the event codes suspended for this instance.
      *
-     * @var array
+     * @var array<int|string, true>
      *
      * @see EventManager::suspendEvent()
      * @see EventManager::resumeEvent()
@@ -44,17 +44,30 @@ class EventManager implements IEventManager
      *
      * @author Oleg Schildt
      */
-    protected static array $suspended_events = [];
-    
+    protected array $suspended_events = [];
+
     /**
-     * Adds the handler of an event.
+     * Monotonically increasing registration ID, including across subscription resets.
+     *
+     * @var int
+     *
+     * @author Oleg Schildt
+     */
+    protected int $next_handler_id = 0;
+
+    /**
+     * Adds an event handler unless the same callable is already registered for this event.
+     *
+     * Changes take effect immediately, including during an active dispatch. Newly added
+     * handlers run after the remaining registered handlers. Closures are identified by
+     * object identity; other callables by their function or method and target object/class.
      *
      * @param string $event
-     * Event code.
+     * Nonempty event code. The string "0" is valid.
      *
-     * @param callable $handler
-     * The name or definition of the handler function. The signature of
-     * this function is:
+     * @param callable(string, array<array-key, mixed>): mixed $handler
+     * A function, closure, object method, static method or invokable object accepting the
+     * event code and event data. Its return value is ignored. A typical signature is:
      *
      * ```php
      * function (string $event, array $parameters) : void;
@@ -62,16 +75,12 @@ class EventManager implements IEventManager
      *
      * - $event - the event code.
      *
-     * - $parameters - parameters passed by the firing of the event.
+     * - $parameters - the data supplied to fireEvent().
      *
      * @return void
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
-     *
-     * - if the event name is not specified.
-     * - if the event handler is not valid.
-     * - if the creation of the handler fails.
+     * @throws \InvalidArgumentException
+     * If the event code is an empty string.
      *
      * @see EventManager::deleteHandler()
      * @see EventManager::deleteHandlers()
@@ -81,36 +90,38 @@ class EventManager implements IEventManager
      */
     public function addHandler(string $event, callable $handler): void
     {
-        if (empty($event)) {
-            throw new \Exception("Event is not specified!");
+        if ($event === '') {
+            throw new \InvalidArgumentException("Event is not specified!");
         }
-        
-        if (!is_callable($handler, true)) {
-            throw new \Exception("Event handler is not valid!");
+
+        $key = $this->getHandlerKey($handler);
+
+        if (isset($this->event_table[$event][$key])) {
+            return;
         }
-        
-        $f = new \ReflectionFunction($handler);
-        
-        self::$event_table[$event][$f->__toString()] = $f;
-    } // addEvent
-    
+
+        $this->event_table[$event][$key] = [
+            'id' => ++$this->next_handler_id,
+            'handler' => \Closure::fromCallable($handler),
+        ];
+    } // addHandler
+
     /**
-     * Deletes the handler of an event.
+     * Deletes an event handler if it is registered.
+     *
+     * Removal takes effect immediately: a pending invocation in an active dispatch
+     * is skipped. An invocation already in progress is allowed to finish.
      *
      * @param string $event
-     * Event code.
+     * Nonempty event code. The string "0" is valid.
      *
-     * @param callable $handler
-     * The name or definition of the handler function.
+     * @param callable(string, array<array-key, mixed>): mixed $handler
+     * The original closure or the function, method or invokable object to remove.
      *
      * @return void
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
-     *
-     * - if the event name is not specified.
-     * - if the event handler is not valid.
-     * - if the creation of the handler fails.
+     * @throws \InvalidArgumentException
+     * If the event code is an empty string.
      *
      * @see EventManager::addHandler()
      * @see EventManager::deleteHandlers()
@@ -120,33 +131,29 @@ class EventManager implements IEventManager
      */
     public function deleteHandler(string $event, callable $handler): void
     {
-        if (empty($event)) {
-            throw new \Exception("Event is not specified!");
+        if ($event === '') {
+            throw new \InvalidArgumentException("Event is not specified!");
         }
-        
-        if (!is_callable($handler)) {
-            throw new \Exception("Event handler is not valid!");
+
+        $key = $this->getHandlerKey($handler);
+
+        unset($this->event_table[$event][$key]);
+
+        if (empty($this->event_table[$event])) {
+            unset($this->event_table[$event]);
         }
-        
-        $f = new \ReflectionFunction($handler);
-        
-        if (isset(self::$event_table[$event][$f->__toString()])) {
-            unset(self::$event_table[$event][$f->__toString()]);
-        }
-    } // deleteEvent
-    
+    } // deleteHandler
+
     /**
-     * Deletes all handlers of an event.
+     * Deletes all handlers of an event, including pending invocations in active dispatches.
      *
      * @param string $event
-     * Event code.
+     * Nonempty event code. The string "0" is valid.
      *
      * @return void
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
-     *
-     * - if the event name is not specified.
+     * @throws \InvalidArgumentException
+     * If the event code is an empty string.
      *
      * @see EventManager::addHandler()
      * @see EventManager::deleteHandler()
@@ -156,20 +163,19 @@ class EventManager implements IEventManager
      */
     public function deleteHandlers(string $event): void
     {
-        if (empty($event)) {
-            throw new \Exception("Event is not specified!");
+        if ($event === '') {
+            throw new \InvalidArgumentException("Event is not specified!");
         }
-        
-        if (isset(self::$event_table[$event])) {
-            unset(self::$event_table[$event]);
-        }
+
+        unset($this->event_table[$event]);
     } // deleteHandlers
-    
+
     /**
-     * Deletes all handlers of all events.
+     * Deletes all handlers of all events for this instance immediately.
+     *
+     * Pending invocations in active dispatches are skipped. Suspension state is preserved.
      *
      * @return void
-     * Returns true if the deletion was successful, otherwise false.
      *
      * @see EventManager::addHandler()
      * @see EventManager::deleteHandler()
@@ -179,23 +185,22 @@ class EventManager implements IEventManager
      */
     public function deleteAllHandlers(): void
     {
-        self::$event_table = [];
+        $this->event_table = [];
     } // deleteAllHandlers
-    
+
     /**
      * Suspends an event.
      *
-     * If an event is suspended, its handlers are not called when the event is fired.
+     * Suspension takes effect immediately. No further handlers are called in an active
+     * dispatch while the event remains suspended; a handler already running can finish.
      *
      * @param string $event
-     * Event code.
+     * Nonempty event code. The string "0" is valid.
      *
      * @return void
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
-     *
-     * - if the event name is not specified.
+     * @throws \InvalidArgumentException
+     * If the event code is an empty string.
      *
      * @see EventManager::resumeEvent()
      * @see EventManager::resumeAllEvents()
@@ -204,25 +209,23 @@ class EventManager implements IEventManager
      */
     public function suspendEvent(string $event): void
     {
-        if (empty($event)) {
-            throw new \Exception("Event is not specified!");
+        if ($event === '') {
+            throw new \InvalidArgumentException("Event is not specified!");
         }
-        
-        self::$suspended_events[$event] = $event;
+
+        $this->suspended_events[$event] = true;
     } // suspendEvent
-    
+
     /**
-     * Resumes a previously suspended event.
+     * Resumes an event immediately without replaying previously skipped invocations.
      *
      * @param string $event
-     * Event code.
+     * Nonempty event code. The string "0" is valid.
      *
      * @return void
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
-     *
-     * - if the event name is not specified.
+     * @throws \InvalidArgumentException
+     * If the event code is an empty string.
      *
      * @see EventManager::suspendEvent()
      * @see EventManager::resumeAllEvents()
@@ -231,17 +234,15 @@ class EventManager implements IEventManager
      */
     public function resumeEvent(string $event): void
     {
-        if (empty($event)) {
-            throw new \Exception("Event is not specified!");
+        if ($event === '') {
+            throw new \InvalidArgumentException("Event is not specified!");
         }
-        
-        if (isset(self::$suspended_events[$event])) {
-            unset(self::$suspended_events[$event]);
-        }
+
+        unset($this->suspended_events[$event]);
     } // resumeEvent
-    
+
     /**
-     * Resumes all previously suspended events.
+     * Resumes all events for this instance immediately without replaying skipped invocations.
      *
      * @return void
      *
@@ -252,50 +253,116 @@ class EventManager implements IEventManager
      */
     public function resumeAllEvents(): void
     {
-        self::$suspended_events = [];
+        $this->suspended_events = [];
     } // resumeAllEvents
-    
+
     /**
-     * Fires and event.
+     * Fires an event synchronously, invoking handlers in registration order.
+     *
+     * Subscription changes take effect immediately during dispatch. Removed handlers
+     * are skipped, newly registered handlers are appended, and suspension stops further
+     * invocations while it remains in effect. Removing and registering a handler again
+     * creates a new registration at the end, even if it has already run in this dispatch.
+     * Recursive dispatches maintain independent invocation counts.
+     *
+     * Any exception or error from a handler stops dispatch immediately and is propagated
+     * unchanged to the caller. The remaining handlers are not invoked.
      *
      * @param string $event
-     * Event code.
+     * Nonempty event code. The string "0" is valid.
      *
-     * @param array $parameters
-     * Event code.
+     * @param array<array-key, mixed> $parameters
+     * Event data passed to each handler as its second argument.
      *
      * @return int
-     * Returns number of the handlers called for this event.
+     * Returns the number of handlers invoked by this dispatch, or zero if none ran.
      *
-     * @throws \Exception
-     * It might throw the following exceptions in the case of any errors:
+     * @throws \InvalidArgumentException
+     * If the event code is an empty string.
      *
-     * - if the event name is not specified.
-     * - if the creation of the handler fails.
+     * @throws \Throwable
+     * If a handler throws an exception or error; dispatch stops and the same throwable is propagated.
      *
      * @author Oleg Schildt
      */
     public function fireEvent(string $event, array $parameters): int
     {
-        if (empty($event)) {
-            throw new \Exception("Event is not specified!");
+        if ($event === '') {
+            throw new \InvalidArgumentException("Event is not specified!");
         }
-        
-        if (!empty(self::$suspended_events[$event])) {
-            return true;
-        }
-        
-        if (empty(self::$event_table[$event])) {
-            return true;
-        }
-        
+
         $cnt = 0;
-        
-        foreach (self::$event_table[$event] as $f) {
-            $cnt++;
-            $f->invoke($event, $parameters);
+        $last_id = 0;
+        $pending = $this->event_table[$event] ?? [];
+
+        while ($pending !== []) {
+            foreach ($pending as $key => $registration) {
+                if (isset($this->suspended_events[$event])) {
+                    return $cnt;
+                }
+
+                // A removed and re-added callable is a new registration, not this pending one.
+                if (($this->event_table[$event][$key]['id'] ?? null) !== $registration['id']) {
+                    continue;
+                }
+
+                $last_id = $registration['id'];
+
+                ($registration['handler'])($event, $parameters);
+
+                $cnt++;
+            }
+
+            // Pick up additions in registration order without invoking earlier registrations twice.
+            $pending = array_filter(
+                $this->event_table[$event] ?? [],
+                static fn(array $registration): bool => $registration['id'] > $last_id
+            );
         }
-        
+
         return $cnt;
     } // fireEvent
+
+    /**
+     * Builds an identity key without conflating distinct closure or target objects.
+     *
+     * Object references retained by registered closures prevent object ID reuse while
+     * their registrations exist. Reflection resolves declared function/method names and
+     * class aliases while preserving the called class of static methods and the spelling
+     * of dynamic method names passed to __call() or __callStatic().
+     * An explicit [$closure, '__invoke'] callable has the same identity as that closure.
+     *
+     * @param callable(string, array<array-key, mixed>): mixed $handler
+     * The callable whose registration identity is required.
+     *
+     * @return string
+     * Returns a key identifying a closure object, object method, static method or function.
+     *
+     * @author Oleg Schildt
+     */
+    protected function getHandlerKey(callable $handler): string
+    {
+        if (is_array($handler) && $handler[0] instanceof \Closure && strcasecmp($handler[1], '__invoke') === 0) {
+            $handler = $handler[0];
+        }
+
+        if ($handler instanceof \Closure) {
+            return 'closure:' . spl_object_id($handler);
+        }
+
+        $reflection = new \ReflectionFunction(\Closure::fromCallable($handler));
+        $object = $reflection->getClosureThis();
+        $class = $reflection->getClosureCalledClass();
+        $name = $reflection->getName();
+
+        if ($object !== null) {
+            return 'method:' . spl_object_id($object) . ':' . $name;
+        }
+
+        if ($class !== null) {
+            return 'static:' . strtolower($class->getName()) . '::' . $name;
+        }
+
+        return 'function:' . $name;
+    } // getHandlerKey
 } // EventManager

@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: RedisRequestThrottlingManager
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">RedisRequestThrottlingManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: RedisRequestThrottlingManager</h1>
+
+
+
+<div class="definition"><span class="php-keyword1">class</span> RedisRequestThrottlingManager <span class="php-keyword1">extends</span> AbstractRequestThrottlingManager
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Stores each caller's JSON history behind an expiring, owner-checked Redis lock.</p>
+</div>
+
+
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Requires the optional phpredis extension and a configured Redis connection. Lua guards
+reads, writes and lock release so an expired owner cannot overwrite another admission.
+Uses the Redis server clock and expires inactive history after its longest retained window.
+The client remains owned by the application and is never reconfigured or disconnected.</p>
+</div>
+
+
+
+
+<h2>Extends</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.AbstractRequestThrottlingManager.html">\SmartFactory\AbstractRequestThrottlingManager</a><br>
+
+</div>
+
+
+
+
+
+
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#24'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+</div>
+
+
+
+
+<h2>Links</h2>
+<div class="item_list">
+
+<a href="markdown-instructions.RedisRequestThrottlingManager.md.html" target="_blank" rel="noopener">Important notes</a><br>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$active_key">$active_key</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Identifies the caller currently protected by this instance.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$active_token">$active_token</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Identifies the unique owner of the current caller lock.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$key_prefix">$key_prefix</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Separates the application and policy from other Redis data.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$lock_retry_interval_ms">$lock_retry_interval_ms</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Sets the interval between contended lock attempts, in milliseconds.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$lock_timeout_ms">$lock_timeout_ms</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Bounds contention retries, in milliseconds, excluding individual network calls.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$lock_ttl_ms">$lock_ttl_ms</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Bounds how long an abandoned caller lock survives, in milliseconds.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$redis">$redis</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores the application-owned phpredis client.</p>
+          </td>
+      </tr>
+
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#client">client()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Verifies that the application client can execute immediate Lua commands safely.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#executeAtomically">executeAtomically()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Serializes a caller's admission and releases only the lock owned by this operation.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getCurrentTime">getCurrentTime()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reads the Redis server's clock for consistent windows across application servers.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Configures the client, namespace, contention settings and inherited rolling-window policy.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#keys">keys()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Builds the caller's history and lock keys in a common Redis hash tag.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadRecords">loadRecords()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Loads only the selected caller's ordered JSON history while checking lease ownership.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#saveRecords">saveRecords()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Replaces only the active caller's history if the lease is still owned, with atomic expiry.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#token">token()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Requires storage hooks to belong to the current locked caller.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<hr id="$active_key">
+
+  <h1>Property: RedisRequestThrottlingManager::$active_key</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> ?<span class="php-keyword1">string</span> <span class="php-var">$active_key</span> = <span class="php-keyword1">null</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Identifies the caller currently protected by this instance.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">(string | null)</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#78'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div><hr id="$active_token">
+
+  <h1>Property: RedisRequestThrottlingManager::$active_token</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> ?<span class="php-keyword1">string</span> <span class="php-var">$active_token</span> = <span class="php-keyword1">null</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Identifies the unique owner of the current caller lock.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">(string | null)</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#87'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div><hr id="$key_prefix">
+
+  <h1>Property: RedisRequestThrottlingManager::$key_prefix</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$key_prefix</span> = <span class="php-quote">&quot;smartfactory:throttling:&quot;</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Separates the application and policy from other Redis data.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">string</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#42'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div><hr id="$lock_retry_interval_ms">
+
+  <h1>Property: RedisRequestThrottlingManager::$lock_retry_interval_ms</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">int</span> <span class="php-var">$lock_retry_interval_ms</span> = <span class="php-num">10</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Sets the interval between contended lock attempts, in milliseconds.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">positive-int</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#69'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div><hr id="$lock_timeout_ms">
+
+  <h1>Property: RedisRequestThrottlingManager::$lock_timeout_ms</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">int</span> <span class="php-var">$lock_timeout_ms</span> = <span class="php-num">3000</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Bounds contention retries, in milliseconds, excluding individual network calls.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">non-negative-int</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#60'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div><hr id="$lock_ttl_ms">
+
+  <h1>Property: RedisRequestThrottlingManager::$lock_ttl_ms</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">int</span> <span class="php-var">$lock_ttl_ms</span> = <span class="php-num">10000</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Bounds how long an abandoned caller lock survives, in milliseconds.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">positive-int</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#51'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div><hr id="$redis">
+
+  <h1>Property: RedisRequestThrottlingManager::$redis</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> ?\Redis <span class="php-var">$redis</span> = <span class="php-keyword1">null</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Stores the application-owned phpredis client.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">(\Redis | null)</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#33'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+
+<hr id="client">
+
+  <h1>Method: RedisRequestThrottlingManager::client()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> client(): \Redis;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Verifies that the application client can execute immediate Lua commands safely.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">\Redis</code><br>
+  
+  <div class="item_description"><p>Returns the connected client in ATOMIC mode. Client prefixes are applied by phpredis to Lua KEYS.
+Lua arguments and stored JSON are independent of the client's serializer and compression options.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If the client is missing, disconnected, or inside MULTI or a pipeline.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#161'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="executeAtomically">
+
+  <h1>Method: RedisRequestThrottlingManager::executeAtomically()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> executeAtomically(<span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">callable</span> <span class="php-var">$operation</span>): <span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Serializes a caller's admission and releases only the lock owned by this operation.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The lowercase SHA-256 caller hash supplied by the common algorithm.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $operation
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">callable(): int</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The clock/read/check/write operation invoked exactly once after lock acquisition.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">int</code><br>
+  
+  <div class="item_description"><p>Returns admission or retry only after verifying ownership and releasing the lock.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If the client is unavailable, in queued mode, or admission is nested.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If Redis commands fail, lock contention exceeds the timeout, or the lease expires.
+An expired owner cannot write history or release a replacement owner's lock.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If token generation or the callback fails. The original failure survives cleanup failures.
+A write whose response is lost may consume a slot without granting admission.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.AbstractRequestThrottlingManager.html#executeAtomically">\SmartFactory\AbstractRequestThrottlingManager::executeAtomically()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#217'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getCurrentTime">
+
+  <h1>Method: RedisRequestThrottlingManager::getCurrentTime()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getCurrentTime(): <span class="php-keyword1">float</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Reads the Redis server's clock for consistent windows across application servers.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">float</code><br>
+  
+  <div class="item_description"><p>Returns Unix seconds with microsecond precision.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If the client cannot execute an immediate command.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If Redis returns an invalid TIME reply.</p></div>
+  
+  
+  <code class="php-type">\RedisException</code><br>
+  
+  <div class="item_description"><p>If Redis cannot execute TIME; the atomic boundary wraps the storage failure.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.AbstractRequestThrottlingManager.html#getCurrentTime">\SmartFactory\AbstractRequestThrottlingManager::getCurrentTime()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#326'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="init">
+
+  <h1>Method: RedisRequestThrottlingManager::init()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Configures the client, namespace, contention settings and inherited rolling-window policy.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array{
+    redis: \Redis,
+    key_prefix?: non-empty-string,
+    limits?: list&lt;
+        array{
+            0: positive-int,
+            1: positive-int
+        }
+    &gt;,
+    lock_ttl_ms?: positive-int,
+    lock_timeout_ms?: non-negative-int,
+    lock_retry_interval_ms?: positive-int
+}</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A phpredis client configured by the application. The default prefix is smartfactory:throttling:.
+Lock defaults are a 10000 ms lease, 3000 ms contention timeout and 10 ms retry interval.
+Each lock setting is an integer no greater than 2147483647. A zero timeout permits one attempt.
+Omitted limits use DEFAULT_LIMITS; an empty list disables all storage access.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Applies validated settings without connecting or changing existing history or client options.
+Invalid initialization preserves the previous configuration. See RedisRequestThrottlingManager.md.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If redis is not a phpredis client, the prefix is empty, a lock setting is outside its range,
+or the inherited limit policy is invalid.</p></div>
+  
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If initialization is attempted during an admission operation.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.AbstractRequestThrottlingManager.html#init">\SmartFactory\AbstractRequestThrottlingManager::init()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#111'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="keys">
+
+  <h1>Method: RedisRequestThrottlingManager::keys()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> keys(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Builds the caller's history and lock keys in a common Redis hash tag.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The lowercase SHA-256 caller hash supplied by the base algorithm.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">array{
+    0: string,
+    1: string
+}</code><br>
+  
+  <div class="item_description"><p>Returns the lock key followed by the history key, before any phpredis client prefix.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#185'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="loadRecords">
+
+  <h1>Method: RedisRequestThrottlingManager::loadRecords()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadRecords(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Loads only the selected caller's ordered JSON history while checking lease ownership.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The lowercase SHA-256 caller hash supplied to executeAtomically().</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;float&gt;</code><br>
+  
+  <div class="item_description"><p>Returns finite, nonnegative, ascending timestamps, preserving duplicates. A missing key
+returns an empty list. Existing empty, malformed, non-array or unordered history fails closed.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If access does not belong to the active caller or the client cannot execute commands.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the lease was lost, a command reply is invalid, or the stored JSON history is invalid.</p></div>
+  
+  
+  <code class="php-type">\RedisException</code><br>
+  
+  <div class="item_description"><p>If Redis cannot read the key; the atomic boundary wraps the storage failure.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.AbstractRequestThrottlingManager.html#loadRecords">\SmartFactory\AbstractRequestThrottlingManager::loadRecords()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#358'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="saveRecords">
+
+  <h1>Method: RedisRequestThrottlingManager::saveRecords()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveRecords(<span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">array</span> <span class="php-var">$timestamps</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Replaces only the active caller's history if the lease is still owned, with atomic expiry.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The lowercase SHA-256 caller hash supplied to executeAtomically().</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $timestamps
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">list&lt;float&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>This caller's nonempty, ordered history supplied by the common algorithm.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Stores JSON and a millisecond TTL covering the newest timestamp plus the longest window.
+Extremely large retention beyond Redis/Lua's safe millisecond range is stored without expiry
+to avoid discarding active history prematurely. Rejections never call this method or renew TTL.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If access is outside the active caller's operation or the timestamp list is empty.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If the lease was lost or Redis did not confirm persistence.</p></div>
+  
+  
+  <code class="php-type">\JsonException</code><br>
+  
+  <div class="item_description"><p>If the supplied history cannot be encoded as JSON.</p></div>
+  
+  
+  <code class="php-type">\RedisException</code><br>
+  
+  <div class="item_description"><p>If Redis cannot persist history; the atomic boundary wraps the storage failure.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.AbstractRequestThrottlingManager.html#saveRecords">\SmartFactory\AbstractRequestThrottlingManager::saveRecords()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#430'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="token">
+
+  <h1>Method: RedisRequestThrottlingManager::token()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> token(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Requires storage hooks to belong to the current locked caller.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The hashed caller selected by the storage hook.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns this operation's unique owner token.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If no operation is active or the hook requests another caller's history.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.RedisRequestThrottlingManager.php.html#300'>src/SmartFactory/RedisRequestThrottlingManager.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

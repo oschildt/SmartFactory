@@ -109,14 +109,23 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">class</span> SmartException <span class="php-keyword1">extends</span> \Exception
+{
+}</div>
+
 
 
 <div class="short-description">
-<p>Class for extended exception used in the SmartFactory library.</p>
+<p>Carries a localized message, a stable string error code and optional structured diagnostics.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>The string code is available through getErrorCode(); the inherited getCode() remains zero.
+The original exception or error can be preserved through getPrevious().</p>
+</div>
 
 
 
@@ -135,7 +144,7 @@
 <h2>Known inheritances</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+<a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
 
 </div>
 
@@ -160,7 +169,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.SmartException.php.html#24'>SmartFactory/SmartException.php</a>
+<a href='source-src.SmartFactory.SmartException.php.html#24'>src/SmartFactory/SmartException.php</a>
 </div>
 
 
@@ -184,7 +193,7 @@
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Constants</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#ERR_CODE_CONFIG_ERROR">ERR_CODE_CONFIG_ERROR</a></div>
@@ -304,6 +313,19 @@
           </td>
       </tr><tr>
           <td>
+              <div style='float:left'><a href="#ERR_CODE_TOO_MANY_REQUESTS">ERR_CODE_TOO_MANY_REQUESTS</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Identifies requests rejected because an API admission limit has been reached.</p>
+          </td>
+      </tr><tr>
+          <td>
               <div style='float:left'><a href="#ERR_CODE_XML_PARSE_ERROR">ERR_CODE_XML_PARSE_ERROR</a></div>
 
               <div style='float:right'>
@@ -316,12 +338,12 @@
               <p>Constant for the error code "xml_parse_error".</p>
           </td>
       </tr>
-      
+
   </table>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Properties</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#$error_code">$error_code</a></div>
@@ -333,7 +355,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing the error.</p>
+              <p>Stores the stable string error code independently of the native integer exception code.</p>
           </td>
       </tr><tr>
           <td>
@@ -375,12 +397,12 @@
               <p>Internal variable for storing the additional technical information.</p>
           </td>
       </tr>
-      
+
   </table>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#__construct">__construct()</a></div>
@@ -392,7 +414,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Constructor.</p>
+              <p>Creates an exception with a stable string code, optional diagnostics and an underlying cause.</p>
           </td>
       </tr><tr>
           <td>
@@ -460,14 +482,15 @@
               <p>Sets the error element.</p>
           </td>
       </tr>
-      
+
   </table>
 
 <hr id="ERR_CODE_CONFIG_ERROR">
-  
+
   <h1>Constant: SmartException::ERR_CODE_CONFIG_ERROR</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_CONFIG_ERROR = <span class="php-quote">&quot;config_error&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_CONFIG_ERROR = <span class="php-quote">&quot;config_error&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -480,7 +503,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -500,12 +523,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#42'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#42'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_FILE_WRITE_ERROR">
-  
+
   <h1>Constant: SmartException::ERR_CODE_FILE_WRITE_ERROR</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_FILE_WRITE_ERROR = <span class="php-quote">&quot;file_write_error&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_FILE_WRITE_ERROR = <span class="php-quote">&quot;file_write_error&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -518,7 +542,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -538,12 +562,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#105'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#114'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_INVALID_CONTENT_TYPE">
-  
+
   <h1>Constant: SmartException::ERR_CODE_INVALID_CONTENT_TYPE</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_INVALID_CONTENT_TYPE = <span class="php-quote">&quot;invalid_content_type&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_INVALID_CONTENT_TYPE = <span class="php-quote">&quot;invalid_content_type&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -556,7 +581,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -576,12 +601,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#69'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#69'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_INVALID_REQUEST_DATA">
-  
+
   <h1>Constant: SmartException::ERR_CODE_INVALID_REQUEST_DATA</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_INVALID_REQUEST_DATA = <span class="php-quote">&quot;invalid_request_data&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_INVALID_REQUEST_DATA = <span class="php-quote">&quot;invalid_request_data&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -594,7 +620,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -614,12 +640,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#60'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#60'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_JSON_PARSE_ERROR">
-  
+
   <h1>Constant: SmartException::ERR_CODE_JSON_PARSE_ERROR</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_JSON_PARSE_ERROR = <span class="php-quote">&quot;json_parse_error&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_JSON_PARSE_ERROR = <span class="php-quote">&quot;json_parse_error&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -632,7 +659,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -652,12 +679,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#78'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#87'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_MISSING_REQUEST_DATA">
-  
+
   <h1>Constant: SmartException::ERR_CODE_MISSING_REQUEST_DATA</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_MISSING_REQUEST_DATA = <span class="php-quote">&quot;missing_request_data&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_MISSING_REQUEST_DATA = <span class="php-quote">&quot;missing_request_data&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -670,7 +698,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -690,12 +718,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#51'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#51'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_NOT_FOUND">
-  
+
   <h1>Constant: SmartException::ERR_CODE_NOT_FOUND</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_NOT_FOUND = <span class="php-quote">&quot;not_found&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_NOT_FOUND = <span class="php-quote">&quot;not_found&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -708,7 +737,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -728,12 +757,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#114'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#123'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_PATH_ACCESS_ERROR">
-  
+
   <h1>Constant: SmartException::ERR_CODE_PATH_ACCESS_ERROR</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_PATH_ACCESS_ERROR = <span class="php-quote">&quot;path_access_error&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_PATH_ACCESS_ERROR = <span class="php-quote">&quot;path_access_error&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -746,7 +776,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -766,12 +796,13 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#96'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#105'>src/SmartFactory/SmartException.php</a>
   </div><hr id="ERR_CODE_SYSTEM_ERROR">
-  
+
   <h1>Constant: SmartException::ERR_CODE_SYSTEM_ERROR</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_SYSTEM_ERROR = <span class="php-quote">&quot;system_error&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_SYSTEM_ERROR = <span class="php-quote">&quot;system_error&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -784,7 +815,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -804,12 +835,52 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#33'>SmartFactory/SmartException.php</a>
-  </div><hr id="ERR_CODE_XML_PARSE_ERROR">
+  <a href='source-src.SmartFactory.SmartException.php.html#33'>src/SmartFactory/SmartException.php</a>
+  </div><hr id="ERR_CODE_TOO_MANY_REQUESTS">
+
+  <h1>Constant: SmartException::ERR_CODE_TOO_MANY_REQUESTS</h1>
+
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_TOO_MANY_REQUESTS = <span class="php-quote">&quot;too_many_requests&quot;</span>;</div>
   
+
+  
+  <div class="short-description">
+  <p>Identifies requests rejected because an API admission limit has been reached.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">string</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.SmartException.php.html#78'>src/SmartFactory/SmartException.php</a>
+  </div><hr id="ERR_CODE_XML_PARSE_ERROR">
+
   <h1>Constant: SmartException::ERR_CODE_XML_PARSE_ERROR</h1>
 
-  <div class="definition"><span class="php-keyword1">const</span> ERR_CODE_XML_PARSE_ERROR = <span class="php-quote">&quot;xml_parse_error&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">const</span> <span class="php-keyword1">string</span> ERR_CODE_XML_PARSE_ERROR = <span class="php-quote">&quot;xml_parse_error&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -822,7 +893,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -842,18 +913,19 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#87'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#96'>src/SmartFactory/SmartException.php</a>
   </div>
 
 <hr id="$error_code">
-  
+
   <h1>Property: SmartException::$error_code</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$error_code</span> = SmartException::ERR_CODE_SYSTEM_ERROR;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$error_code</span> = SmartException::ERR_CODE_SYSTEM_ERROR;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing the error.</p>
+  <p>Stores the stable string error code independently of the native integer exception code.</p>
   </div>
   
 
@@ -862,7 +934,7 @@
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -882,21 +954,22 @@
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#136'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#145'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getErrorCode'>\SmartFactory\SmartException::getErrorCode()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorCode">\SmartFactory\SmartException::getErrorCode()</a><br>
   
   
   </div><hr id="$error_details">
-  
+
   <h1>Property: SmartException::$error_details</h1>
 
   <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$error_details</span> = [];</div>
+  
 
   
   <div class="short-description">
@@ -909,15 +982,15 @@
   <h2>Details</h2>
   <p>The error details might be useful if the error message translations are provided on the client, not
 on the server, and the error message should contain some details that may vary from case to case.
-In that case, the servers return the error message id instead of final text and the details, the client
-uses the error message id, gets the final translated text and substitutes the parameters through the details.</p>
+In that case, the server returns a message identifier and details. The client translates the message
+and substitutes its parameters using those details. Keys, value types and nested data are preserved.</p>
   </div>
   
 
   
   <h2>Type</h2>
   <div class="item_list">
-  array
+  <code class="php-type">array&lt;array-key, mixed&gt;</code>
   </div>
   
 
@@ -937,21 +1010,22 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#152'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#161'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getErrorDetails'>\SmartFactory\SmartException::getErrorDetails()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorDetails">\SmartFactory\SmartException::getErrorDetails()</a><br>
   
   
   </div><hr id="$error_element">
-  
+
   <h1>Property: SmartException::$error_element</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -964,7 +1038,7 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -984,21 +1058,22 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#125'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#134'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getErrorElement'>\SmartFactory\SmartException::getErrorElement()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorElement">\SmartFactory\SmartException::getErrorElement()</a><br>
   
   
   </div><hr id="$technical_info">
-  
+
   <h1>Property: SmartException::$technical_info</h1>
 
-  <div class="definition"><span class="php-keyword1">protected</span> string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">string</span> <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1011,7 +1086,7 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Type</h2>
   <div class="item_list">
-  string
+  <code class="php-type">string</code>
   </div>
   
 
@@ -1031,27 +1106,28 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#163'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#172'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getTechnicalInfo'>\SmartFactory\SmartException::getTechnicalInfo()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getTechnicalInfo">\SmartFactory\SmartException::getTechnicalInfo()</a><br>
   
   
   </div>
 
 <hr id="__construct">
-  
+
   <h1>Method: SmartException::__construct()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(string <span class="php-var">$message</span>, string <span class="php-var">$error_code</span> = SmartException::ERR_CODE_SYSTEM_ERROR, string <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$error_details</span> = [], string <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>);</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct(<span class="php-keyword1">string</span> <span class="php-var">$message</span>, <span class="php-keyword1">string</span> <span class="php-var">$error_code</span> = SmartException::ERR_CODE_SYSTEM_ERROR, <span class="php-keyword1">string</span> <span class="php-var">$error_element</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">array</span> <span class="php-var">$error_details</span> = [], <span class="php-keyword1">string</span> <span class="php-var">$technical_info</span> = <span class="php-quote">&quot;&quot;</span>, ?\Throwable <span class="php-var">$previous</span> = <span class="php-keyword1">null</span>);</div>
+  
 
   
   <div class="short-description">
-  <p>Constructor.</p>
+  <p>Creates an exception with a stable string code, optional diagnostics and an underlying cause.</p>
   </div>
   
 
@@ -1061,7 +1137,8 @@ uses the error message id, gets the final translated text and substitutes the pa
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1069,7 +1146,7 @@ uses the error message id, gets the final translated text and substitutes the pa
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1079,7 +1156,7 @@ uses the error message id, gets the final translated text and substitutes the pa
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1097,15 +1174,14 @@ uses the error message id, gets the final translated text and substitutes the pa
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 SmartException::ERR_CODE_SYSTEM_ERROR
             </td>
             <td class="description_column">
                 <p>Error code.</p>
-<p>Since the error texts can be localized, the unique code of the error might be important fo using
-in comparison.</p>
+<p>The code identifies the error independently of the localized message.</p>
             </td>
         </tr>
         
@@ -1117,7 +1193,7 @@ in comparison.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
@@ -1135,7 +1211,7 @@ in comparison.</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, mixed&gt;</code>
             </td>
             <td>
                 []
@@ -1143,8 +1219,8 @@ in comparison.</p>
             <td class="description_column">
                 <p>The details might be useful if the message translations are provided on the client, not
 on the server, and the message should contain some details that may vary from case to case.
-In that case, the servers return the message id instead of final text and the details, the client
-uses the message id, gets the final translated text and substitutes the parameters through the details.</p>
+The server can return a message identifier and details so the client can translate the message
+and substitute its parameters. Keys, value types and nested data are preserved without conversion.</p>
             </td>
         </tr>
         
@@ -1156,18 +1232,37 @@ uses the message id, gets the final translated text and substitutes the paramete
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 &quot;&quot;
             </td>
             <td class="description_column">
-                <p>Additional technical information. It can be used if it is a programming error and displayed only if the debug mode is active.</p>
+                <p>Additional technical information. Applications should expose it only when debugging is enabled.</p>
             </td>
         </tr>
         
+        <tr>
+            <td>
+                $previous
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(\Throwable | null)</code>
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>The original exception or error, or null when there is no underlying cause.</p>
+            </td>
+        </tr>
         
+
     </table>
+  </div>
 
   
 
@@ -1189,7 +1284,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#191'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#202'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
@@ -1208,10 +1303,11 @@ uses the message id, gets the final translated text and substitutes the paramete
   
 
   <hr id="getErrorCode">
-  
+
   <h1>Method: SmartException::getErrorCode()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrorCode(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrorCode(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1222,8 +1318,7 @@ uses the message id, gets the final translated text and substitutes the paramete
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>Since the error texts can be localized, the unique code of the error might be important fo using
-in comparison.</p>
+  <p>The code identifies the error independently of the localized message.</p>
   </div>
   
 
@@ -1234,7 +1329,7 @@ in comparison.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the error code.</p></div>
   
@@ -1259,20 +1354,20 @@ in comparison.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#216'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#232'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getErrorDetails'>\SmartFactory\SmartException::getErrorDetails()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorDetails">\SmartFactory\SmartException::getErrorDetails()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getErrorElement'>\SmartFactory\SmartException::getErrorElement()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorElement">\SmartFactory\SmartException::getErrorElement()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getTechnicalInfo'>\SmartFactory\SmartException::getTechnicalInfo()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getTechnicalInfo">\SmartFactory\SmartException::getTechnicalInfo()</a><br>
   
   
   </div>
@@ -1290,10 +1385,11 @@ in comparison.</p>
   
 
   <hr id="getErrorDetails">
-  
+
   <h1>Method: SmartException::getErrorDetails()</h1>
 
   <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrorDetails(): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1306,8 +1402,8 @@ in comparison.</p>
   <h2>Details</h2>
   <p>The error details might be useful if the error message translations are provided on the client, not
 on the server, and the error message should contain some details that may vary from case to case.
-In that case, the servers return the error message id instead of final text and the details, the client
-uses the error message id, gets the final translated text and substitutes the parameters through the details.</p>
+In that case, the server returns a message identifier and details. The client translates the message
+and substitutes its parameters using those details.</p>
   </div>
   
 
@@ -1318,9 +1414,9 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Returns</h2>
   <div class="item_list">
-  array<br>
+  <code class="php-type">array&lt;array-key, mixed&gt;</code><br>
   
-  <div class="item_description"><p>Returns the error details.</p></div>
+  <div class="item_description"><p>Returns the details with their original keys, value types and nested data.</p></div>
   
   </div>
   
@@ -1343,20 +1439,20 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#273'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#290'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getErrorCode'>\SmartFactory\SmartException::getErrorCode()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorCode">\SmartFactory\SmartException::getErrorCode()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getErrorElement'>\SmartFactory\SmartException::getErrorElement()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorElement">\SmartFactory\SmartException::getErrorElement()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getTechnicalInfo'>\SmartFactory\SmartException::getTechnicalInfo()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getTechnicalInfo">\SmartFactory\SmartException::getTechnicalInfo()</a><br>
   
   
   </div>
@@ -1374,10 +1470,11 @@ uses the error message id, gets the final translated text and substitutes the pa
   
 
   <hr id="getErrorElement">
-  
+
   <h1>Method: SmartException::getErrorElement()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrorElement(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getErrorElement(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1394,7 +1491,7 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the error element.</p></div>
   
@@ -1419,23 +1516,23 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#251'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#268'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#setErrorElement'>\SmartFactory\SmartException::setErrorElement()</a><br>
+  <a href="class-SmartFactory.SmartException.html#setErrorElement">\SmartFactory\SmartException::setErrorElement()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getErrorCode'>\SmartFactory\SmartException::getErrorCode()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorCode">\SmartFactory\SmartException::getErrorCode()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getErrorDetails'>\SmartFactory\SmartException::getErrorDetails()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorDetails">\SmartFactory\SmartException::getErrorDetails()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getTechnicalInfo'>\SmartFactory\SmartException::getTechnicalInfo()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getTechnicalInfo">\SmartFactory\SmartException::getTechnicalInfo()</a><br>
   
   
   </div>
@@ -1453,10 +1550,11 @@ uses the error message id, gets the final translated text and substitutes the pa
   
 
   <hr id="getTechnicalInfo">
-  
+
   <h1>Method: SmartException::getTechnicalInfo()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getTechnicalInfo(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getTechnicalInfo(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1473,7 +1571,7 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the technical information for the error.</p></div>
   
@@ -1498,20 +1596,20 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#290'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#307'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getErrorCode'>\SmartFactory\SmartException::getErrorCode()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorCode">\SmartFactory\SmartException::getErrorCode()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getErrorElement'>\SmartFactory\SmartException::getErrorElement()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorElement">\SmartFactory\SmartException::getErrorElement()</a><br>
   
   
-  <a href='class-SmartFactory.SmartException.html#getTechnicalInfo'>\SmartFactory\SmartException::getTechnicalInfo()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorDetails">\SmartFactory\SmartException::getErrorDetails()</a><br>
   
   
   </div>
@@ -1529,10 +1627,11 @@ uses the error message id, gets the final translated text and substitutes the pa
   
 
   <hr id="setErrorElement">
-  
+
   <h1>Method: SmartException::setErrorElement()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setErrorElement(string <span class="php-var">$error_element</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> setErrorElement(<span class="php-keyword1">string</span> <span class="php-var">$error_element</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1546,7 +1645,8 @@ uses the error message id, gets the final translated text and substitutes the pa
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1554,7 +1654,7 @@ uses the error message id, gets the final translated text and substitutes the pa
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1564,7 +1664,7 @@ uses the error message id, gets the final translated text and substitutes the pa
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
@@ -1574,13 +1674,16 @@ uses the error message id, gets the final translated text and substitutes the pa
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Updates the related element without changing the other exception data.</p></div>
   
   </div>
   
@@ -1603,20 +1706,20 @@ uses the error message id, gets the final translated text and substitutes the pa
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.SmartException.php.html#233'>SmartFactory/SmartException.php</a>
+  <a href='source-src.SmartFactory.SmartException.php.html#250'>src/SmartFactory/SmartException.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.SmartException.html#getErrorElement'>\SmartFactory\SmartException::getErrorElement()</a><br>
+  <a href="class-SmartFactory.SmartException.html#getErrorElement">\SmartFactory\SmartException::getErrorElement()</a><br>
   
   
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

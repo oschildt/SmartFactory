@@ -1,7 +1,7 @@
 <?php
+
 /**
- * This file contains the implementation of the abstract base class DBWorker
- * for the MySQL database using the extension mysqli.
+ * This file contains the implementation of the class MySQL_DBWorker.
  *
  * @package Database
  *
@@ -10,1531 +10,997 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use function \SmartFactory\debugger;
-
 /**
- * This is the class for the MySQL database using the extension mysqli.
+ * Database worker for MySQL using the mysqli extension.
  *
- * This is a wrapper around the database connectivity. It offers an universal
- * common way for working with databases of different types. Currently, MySQL, PostgreSQL and
- * MS SQL are supported. If in the future, there will be a better solution, or
- * the current solution turns out to be inefficient in a new version of PHP,
- * we can easily reimplement the DB wrapper without touching the business logic code.
- * Adding support for new database types is also much easier with this wrapping approach.
+ * Implements native query execution, prepared binding and chunked LOB uploads.
+ * Results are read sequentially without buffering the complete result set. An unread result
+ * must be exhausted or freed before another worker uses the shared connection.
+ * The connection uses utf8mb4. SQL literal escaping follows the current SQL mode.
+ * mysqli materializes a complete BLOB field when fetching a row; copying that field
+ * to a stream does not remove the native row-memory requirement.
  *
- * @see PostgreSQL_DBWorker
- * @see MSSQL_DBWorker
+ * @see DBWorker
  *
  * @author Oleg Schildt
  */
 class MySQL_DBWorker extends DBWorker
 {
     /**
-     * Stores the resource handle of the opened connection.
+     * Stores this worker's native mysqli prepared statement.
      *
-     * @var resource
+     * A failed preparation briefly assigns false before native_prepare() resets it to null.
+     * The native mixed declaration preserves compatibility with the base property;
+     * the PHPDoc type distinguishes mysqli statements from other drivers' handles.
+     *
+     * @var \mysqli_stmt|false|null
      *
      * @author Oleg Schildt
      */
-    protected $connection = null;
+    protected mixed $statement = null;
 
     /**
-     * Flag for setting the connection to read only.
+     * Keeps stable variable references for mysqli_stmt::bind_result() until the next execution.
      *
-     * @var bool $read_only
+     * @var list<mixed>
      *
      * @author Oleg Schildt
      */
-    protected bool $read_only = false;
+    private array $bound_row = [];
 
     /**
-     * Internal MySQLi object.
+     * Returns the SQL dialect used by the placeholder compiler.
      *
-     * @var ?\MySQLi
+     * @return string
+     * Returns "mysql".
      *
-     * @author Oleg Schildt
-     */
-    protected ?\MySQLi $mysqli = null;
-
-    /**
-     * Internal mysqli_result object.
-     *
-     * @var bool|null|\mysqli_result
+     * @see PreparedQuery::compile()
      *
      * @author Oleg Schildt
      */
-    protected bool|null|\mysqli_result $mysqli_result = null;
-
-    /**
-     * Internal mysqli_stmt object.
-     *
-     * @var ?\mysqli_stmt
-     *
-     * @author Oleg Schildt
-     */
-    protected ?\mysqli_stmt $statement = null;
-
-    /**
-     * Internal variable for storing of the last prepared query.
-     *
-     * @var ?string
-     *
-     * @author Oleg Schildt
-     */
-    protected ?string $prepared_query = null;
-
-    /**
-     * Internal variable for storing of the current fetched row
-     * from the result of the last retrieving query.
-     *
-     * @var ?array
-     *
-     * @author Oleg Schildt
-     */
-    protected ?array $row = null;
-
-    /**
-     * Internal variable for storing of the column names
-     * from the result of the last retrieving query.
-     *
-     * @var ?array
-     *
-     * @author Oleg Schildt
-     */
-    protected ?array $field_names = null;
-
-    /**
-     * Creates a clone of the dbworker that is using the same open
-     * connection.
-     *
-     * This might be useful if you want to execute some additional
-     * queries while iteration through the active results of a select query.
-     *
-     * @return MySQL_DBWorker
-     * It throws an exception in the case of any errors.
-     *
-     * Returns the clone of this dbworker.
-     *
-     * @author Oleg Schildt
-     */
-    public function create_clone(): MySQL_DBWorker
+    protected function dialect(): string
     {
-        $cln = new MySQL_DBWorker();
-
-        $cln->is_clone = true;
-
-        $cln->db_server = $this->db_server;
-        $cln->db_port = $this->db_port;
-        $cln->db_name = $this->db_name;
-        $cln->db_user = $this->db_user;
-        $cln->db_password = $this->db_password;
-        $cln->read_only = $this->read_only;
-
-        return $cln;
-    } // create_clone
-
-    /**
-     * Constructor.
-     *
-     * @author Oleg Schildt
-     */
-    public function __construct()
-    {
-    } // __construct
-
-    /**
-     * Destructor.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function __destruct()
-    {
-        if (!$this->is_clone) {
-            $this->close_connection();
-        }
-    } // __destruct
-
-    /**
-     * Initializes the dbworker with connection parameters.
-     *
-     * @param array $parameters
-     * Connection settings as an associative array in the form key => value:
-     *
-     * - $parameters["db_server"] - server address.
-     * - $parameters["db_port"] - server port.
-     * - $parameters["db_name"] - database name.
-     * - $parameters["db_user"] - user name.
-     * - $parameters["db_password"] - user password.
-     * - $parameters["read_only"] - this parameter sets the connection to the read only mode.
-     *
-     * @return void
-     *
-     * @author Oleg Schildt
-     */
-    public function init(array $parameters): void
-    {
-        if (!empty($parameters["db_server"])) {
-            $this->db_server = $parameters["db_server"];
-        }
-        if (!empty($parameters["db_port"])) {
-            $this->db_port = $parameters["db_port"];
-        }
-        if (!empty($parameters["db_name"])) {
-            $this->db_name = $parameters["db_name"];
-        }
-        if (!empty($parameters["db_user"])) {
-            $this->db_user = $parameters["db_user"];
-        }
-        if (!empty($parameters["db_password"])) {
-            $this->db_password = $parameters["db_password"];
-        }
-        if (!empty($parameters["read_only"])) {
-            $this->read_only = $parameters["read_only"];
-        }
-    } // init
-
-    /**
-     * Checks whether the extension (mysqli) is installed which is required for work with
-     * the MySQL database.
-     *
-     * @return bool
-     * The method should return true if the extension is installed, otherwise false.
-     *
-     * @see MySQL_DBWorker::get_extension_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function is_extension_installed(): bool
-    {
-        if (!class_exists("MySQLi")) {
-            return false;
-        }
-
-        return true;
-    } // is_extension_installed
+        // Keep marker translation independent of the human-readable database name.
+        return 'mysql';
+    } // dialect
 
     /**
      * Returns the name of the required PHP extension - "mysqli".
      *
      * @return string
-     * Returns the name of the required PHP extension - "mysqli".
+     * Returns "mysqli".
      *
-     * @see MySQL_DBWorker::is_extension_installed()
+     * @see DBWorker::is_extension_installed()
      *
      * @author Oleg Schildt
      */
     public function get_extension_name(): string
     {
-        return "mysqli";
+        // Expose the extension identifier used by extension_loaded() and the factory.
+        return 'mysqli';
     } // get_extension_name
 
     /**
      * Returns the name of the supported database - "MySQL Server".
      *
      * @return string
-     * Returns the name of the supported database - "MySQL Server".
+     * Returns "MySQL Server".
      *
      * @author Oleg Schildt
      */
     public function get_rdbms_name(): string
     {
-        return "MySQL Server";
+        // Expose the database name for diagnostics and application messages.
+        return 'MySQL Server';
     } // get_rdbms_name
 
     /**
-     * Returns the connection state.
+     * Creates a clone of the DBWorker that uses the same open connection.
+     *
+     * The clone shares session and transaction state. Exhaust or free the active result
+     * before issuing another query on that connection. Closing one worker does not close
+     * the shared connection while another worker owns it.
+     *
+     * @return MySQL_DBWorker
+     * Returns a worker sharing the connection and transaction state, with independent statements and results.
+     *
+     * @author Oleg Schildt
+     */
+    public function create_clone(): MySQL_DBWorker
+    {
+        // Use the base clone hook to separate per-worker handles while retaining shared connection ownership.
+        return clone $this;
+    } // create_clone
+
+    /**
+     * Returns the state of this worker's native connection.
      *
      * @return bool
-     * Returns true if the connection is open, otherwise false.
+     * Returns true if a mysqli connection object is attached; otherwise returns false.
      *
      * @see DBWorker::check_connection()
      * @see MySQL_DBWorker::connect()
-     * @see MySQL_DBWorker::close_connection()
+     * @see DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
     public function is_connected(): bool
     {
-        return (!empty($this->mysqli) && empty($this->mysqli->connect_error));
+        // Inspect the attached native handle without opening another connection.
+        return $this->connection_state?->handle instanceof \mysqli;
     } // is_connected
 
     /**
-     * Establishes the connection to the database using the connection
-     * settings parameters specified by the initialization.
+     * Resets driver-specific state after cloning or statement cleanup.
+     *
+     * Clears bound-row references without touching the native handles owned by the original worker.
      *
      * @return void
+     * Does not return a value.
      *
-     * @throws \Throwable|DBWorkerException
-     * It throws an exception in the case of any errors.
+     * @author Oleg Schildt
+     */
+    protected function reset_driver_state(): void
+    {
+        // Reset only worker-owned native state; shared connection attributes remain intact.
+        $this->bound_row = [];
+    } // reset_driver_state
+
+    /**
+     * Establishes the database connection using the initialized settings.
      *
-     * @see DBWorker::check_connection()
+     * Uses utf8mb4 and caches the current NO_BACKSLASH_ESCAPES mode.
+     * An optional isolation_level or read_only setting is applied to the session.
+     * An already connected worker keeps its existing connection.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If connection settings are incomplete, the isolation level is invalid, or connection or session
+     * initialization fails.
+     *
+     * @see DBWorker::init()
      * @see MySQL_DBWorker::is_connected()
-     * @see MySQL_DBWorker::close_connection()
+     * @see DBWorker::close_connection()
      *
      * @author Oleg Schildt
      */
     public function connect(): void
     {
+        // Reuse an attached connection and validate the settings before creating a new native handle.
         if ($this->is_connected()) {
             return;
         }
 
-        mysqli_report(MYSQLI_REPORT_STRICT);
-
-        if (!$this->mysqli) {
-            if (empty($this->db_server) || empty($this->db_user) || empty($this->db_password)) {
-                throw new DBWorkerException("Connection data is incomplete", DBWorker::ERR_CONNECTION_DATA_INCOMPLETE);
-            }
-
-            try {
-                $this->mysqli = @new \MySQLi;
-
-                $this->mysqli->options(MYSQLI_OPT_CONNECT_TIMEOUT, 20);
-                $this->mysqli->options(MYSQLI_OPT_READ_TIMEOUT, 20);
-
-                $port = null;
-                if (!empty($this->db_port)) {
-                    $port = $this->db_port;
-                }
-
-                $this->mysqli->real_connect($this->db_server, $this->db_user, $this->db_password, null, $port);
-            } catch (\mysqli_sql_exception $ex) {
-                $err = $ex->getMessage();
-
-                throw match ($ex->getCode()) {
-                    2002 => new DBWorkerException($err, DBWorker::ERR_HOST_UNREACHABLE),
-                    1045 => new DBWorkerException($err, DBWorker::ERR_WRONG_USER_CREDENTIALS),
-                    default => new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED)
-                };
-            }
+        if ($this->db_server === '' || $this->db_user === '') {
+            throw new DBWorkerException('Connection data is incomplete.', self::ERR_CONNECTION_DATA_INCOMPLETE);
         }
 
-        if (!empty($this->db_name)) {
-            try {
-                $this->use_database($this->db_name);
-            } catch (\Throwable $ex) {
-                $this->connection = null;
-                throw $ex;
-            }
-        }
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
+        $connection = mysqli_init();
 
         try {
-            $this->execute_query("set charset utf8");
+            $connection->options(MYSQLI_OPT_CONNECT_TIMEOUT, (int) ($this->options['connect_timeout'] ?? 20));
 
-            if (!empty($this->read_only)) {
-                $this->execute_query("set transaction read only");
-                $this->execute_query("start transaction");
+            $connection->options(MYSQLI_OPT_READ_TIMEOUT, (int) ($this->options['read_timeout'] ?? 20));
+
+            $connection->real_connect(
+                $this->db_server,
+                $this->db_user,
+                $this->db_password,
+                $this->db_name === '' ? null : $this->db_name,
+                $this->db_port === '' ? null : (int) $this->db_port
+            );
+
+            // Configure the native connection encoding before any escaping or application query.
+            $connection->set_charset('utf8mb4');
+
+            $this->connection_state = new DBConnectionState($connection, static fn (\mysqli $db) => $db->close());
+
+            $this->refresh_sql_mode();
+
+            if (isset($this->options['isolation_level'])) {
+                $level = strtoupper((string) $this->options['isolation_level']);
+
+                if (
+                    !in_array($level, ['READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ', 'SERIALIZABLE'], true)
+                ) {
+                    throw new DBWorkerException('Invalid transaction isolation level.', self::ERR_WRONG_DATA_FORMAT);
+                }
+
+                $connection->query('SET SESSION TRANSACTION ISOLATION LEVEL ' . $level);
             }
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED);
+
+            if ($this->read_only) {
+                $connection->query('SET SESSION TRANSACTION READ ONLY');
+            }
+        } catch (\Throwable $error) {
+            $this->connection_state = null;
+
+            try {
+                $connection->close();
+            } catch (\Throwable) {
+            }
+
+            if ($error instanceof DBWorkerException) {
+                throw $error;
+            }
+
+            $code = match ($error->getCode()) {
+                2002, 2003 => self::ERR_HOST_UNREACHABLE,
+                1045 => self::ERR_WRONG_USER_CREDENTIALS,
+                1049 => self::ERR_DATABASE_NOT_FOUND,
+                default => self::ERR_CONNECTION_FAILED
+            };
+
+            throw new DBWorkerException($error->getMessage(), $code);
         }
     } // connect
 
     /**
-     * Sets the database as working database.
+     * Selects another MySQL database on the current connection.
+     *
+     * The configured database name is updated only after native selection succeeds.
      *
      * @param string $db_name
-     * The name of the database to be set as working database.
+     * The database name passed to mysqli::select_db().
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If no connection is open or mysqli cannot select the requested database.
      *
      * @author Oleg Schildt
      */
     public function use_database(string $db_name): void
     {
+        // Let mysqli select the database directly instead of constructing a quoted USE statement.
         $this->check_connection();
 
-        $this->db_name = $db_name;
-
         try {
-            if (!$this->mysqli->select_db($this->db_name)) {
-                throw new \mysqli_sql_exception($this->mysqli->error);
-            }
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_DATABASE_NOT_FOUND);
+            $this->connection_state->handle->select_db($db_name);
+        } catch (\mysqli_sql_exception $error) {
+            throw new DBWorkerException($error->getMessage(), self::ERR_DATABASE_NOT_FOUND);
         }
+
+        $this->db_name = $db_name;
     } // use_database
 
     /**
-     * Returns the name of the database schema if applicable.
+     * Executes SQL through the native driver and records the resulting metadata.
      *
-     * @return string
-     * Returns the name of the database schema if applicable, or an empty string.
-     *
-     * @see MySQL_DBWorker::qualify_name_with_schema()
-     *
-     * @author Oleg Schildt
-     */
-    public function get_schema(): string
-    {
-        return "";
-    } // get_schema
-
-    /**
-     * Completes the name of a database object with the schema name if applicable.
-     *
-     * @param string $name
-     * The name of the database object to be completed with the schema name.
-     *
-     * @return string
-     * Returns the name of the database object with the schema name if applicable,
-     * otherwise the name of the database object remains unchanged.
-     *
-     * @see MySQL_DBWorker::get_schema()
-     *
-     * @author Oleg Schildt
-     */
-    public function qualify_name_with_schema(string $name): string
-    {
-        return $name;
-    } // qualify_name_with_schema
-
-    /**
-     * Executes the SQL query.
-     *
-     * @param string $query_string
-     * The SQL query to be executed.
+     * @param string $sql
+     * The SQL query to execute. Driver-specific identity handling may extend it.
      *
      * @return void
-     *
-     * @throws \Exception|DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function execute_query(string $query_string): void
-    {
-        $this->check_connection();
-
-        $this->last_query = $query_string;
-
-        if ($this->logging) {
-            debugger()->debugMessage($this->last_query, "sql.log");
-        }
-
-        $this->mysqli_result = @$this->mysqli->query($query_string);
-        if (!$this->mysqli_result) {
-            throw new DBWorkerException($this->mysqli->error, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-    } // execute_query
-
-    /**
-     * Prepares the SQL query with bindable variables.
-     *
-     * @param string $query_string
-     * The SQL query to be prepared.
-     *
-     * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If native query execution fails.
      *
-     * @see MySQL_DBWorker::execute_prepared_query()
-     * @see MySQL_DBWorker::free_prepared_query()
+     * @see DBWorker::execute_query()
      *
      * @author Oleg Schildt
      */
-    public function prepare_query(string $query_string): void
+    protected function native_query(string $sql): void
     {
-        $this->check_connection();
+        // Execute the native statement, then expose its result through the shared result contract.
+        $result = $this->connection_state->handle->query($sql, MYSQLI_USE_RESULT);
 
-        if ($this->statement) {
-            $this->statement->close();
-            $this->statement = null;
+        if ($result === false) {
+            throw $this->query_error($this->connection_state->handle->error);
         }
 
-        $this->last_query = $query_string;
-        $this->prepared_query = $query_string;
+        $this->result = $result instanceof \mysqli_result ? $result : null;
 
-        try {
-            $this->statement = $this->mysqli->prepare($query_string);
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
+        $this->set_result(
+            $this->result ? $this->describe($this->result) : [],
+            $this->connection_state->handle->affected_rows
+        );
+
+        if (!($this->options['save_records_explicit_identity'] ?? false)) {
+            $this->save_insert_id($this->connection_state->handle->insert_id);
         }
-    } // prepare_query
+
+        if (preg_match('/\ASET\b[\s\S]*\bsql_mode\b/i', $this->sql_body($sql))) {
+            $this->refresh_sql_mode();
+        }
+    } // native_query
 
     /**
-     * Stores long data from a stream.
+     * Creates a native statement from SQL whose bind markers have already been compiled.
      *
-     * @param string $query_string
-     * The SQL query to be used for storing the long data.
-     *
-     * @param resource $stream
-     * The opened valid stream for reading the long data.
-     *
-     * Example:
-     * ```php
-     * $stream = fopen(".../large_binary.jpg", "rb");
-     *
-     * if(!$dbw->stream_long_data("UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1", $stream))
-     * {
-     *   error reporting ...;
-     * }
-     * ```
+     * @param string $sql
+     * The SQL query containing native bind markers.
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
+     * If the native statement cannot be prepared.
+     *
+     * @see DBWorker::prepare_query()
      *
      * @author Oleg Schildt
      */
-    public function stream_long_data(string $query_string, $stream): void
+    protected function native_prepare(string $sql): void
     {
-        $this->check_connection();
+        // Keep native statement preparation separate from public placeholder compilation.
+        $this->statement = $this->connection_state->handle->prepare($sql);
 
-        if (!is_resource($stream)) {
-            throw new DBWorkerException("Stream is invalid!", DBWorker::ERR_STREAM_ERROR);
-        }
-
-        if ($this->statement) {
-            $this->statement->close();
+        if ($this->statement === false) {
             $this->statement = null;
+
+            throw $this->query_error($this->connection_state->handle->error);
         }
-
-        $this->last_query = $query_string;
-        $this->prepared_query = $query_string;
-
-        try {
-            $this->statement = $this->mysqli->prepare($query_string);
-
-            $null = null;
-            $this->statement->bind_param("b", $null);
-
-            while (!feof($stream)) {
-                $this->statement->send_long_data(0, fread($stream, 8192));
-            }
-
-            $this->statement->execute();
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        } finally {
-            fclose($stream);
-
-            if ($this->statement) {
-                $this->statement->close();
-            }
-            $this->statement = null;
-        }
-    } // stream_long_data
+    } // native_prepare
 
     /**
-     * Executes the prepared SQL query.
+     * Binds validated values and executes the native prepared statement.
      *
-     * @param mixed ...$args
-     * The number of parameters may vary and be zero. An array can also be passed.
-     * These are parameters of the prepared query.
+     * Scalar PHP types determine mysqli bind types. LOBs are sent in chunks through
+     * send_long_data(); empty LOBs remain distinct from NULL. Result rows are read
+     * without buffering the result set, and bound-row references remain stable.
+     *
+     * @param list<scalar|null|BlobValue|ClobValue> $values
+     * The normalized values in SQL occurrence order, including any explicit LOB wrappers.
      *
      * @return void
+     * Does not return a value.
      *
-     * @throws \Exception|DBWorkerException
-     * It throws an exception in the case of any errors.
+     * @throws DBWorkerException
+     * If binding, LOB processing or native execution fails.
      *
-     * @see MySQL_DBWorker::prepare_query()
-     * @see MySQL_DBWorker::free_prepared_query()
+     * @see DBWorker::execute_prepared_query()
      *
      * @author Oleg Schildt
      */
-    public function execute_prepared_query(...$args): void
+    protected function native_execute(array $values): void
     {
-        $this->check_connection();
+        // Bind stable per-position values so repeated application names cannot share a loop variable by accident.
+        $types = '';
+        $bound = [];
+        $lobs = [];
 
-        if (empty($this->prepared_query) || empty($this->statement)) {
-            throw new DBWorkerException("No prepared query defined", DBWorker::ERR_QUERY_FAILED);
-        }
+        foreach ($values as $index => $value) {
+            if ($value instanceof BlobValue || $value instanceof ClobValue) {
+                $types .= 'b';
+                $bound[$index] = null;
+                $lobs[$index] = $value;
+            } elseif (is_int($value) || is_bool($value)) {
+                $types .= 'i';
+                $bound[$index] = (int) $value;
+            } elseif (is_float($value)) {
+                if (!is_finite($value)) {
+                    throw $this->query_error('Non-finite numeric parameter.');
+                }
 
-        if (count($args) == 1 && is_array($args[0])) {
-            $args = $args[0];
-        }
-
-        $this->last_query = $this->prepared_query;
-
-        $parameters = [];
-        $parameters[0] = "";
-
-        $counter = 1;
-        foreach ($args as &$argval) {
-            if ($argval === null) {
-                $parameters[0] .= "i";
-                $parameters[$counter] = &$argval;
-
-                $this->last_query = preg_replace("/\\?/", "null", $this->last_query, 1);
-            } elseif (is_int($argval)) {
-                $parameters[0] .= "i";
-                $parameters[$counter] = &$argval;
-
-                $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
-            } elseif (is_float($argval)) {
-                $parameters[0] .= "d";
-                $parameters[$counter] = &$argval;
-
-                $this->last_query = preg_replace("/\\?/", $argval, $this->last_query, 1);
+                $types .= 'd';
+                $bound[$index] = $value;
             } else {
-                $parameters[0] .= "s";
-                $parameters[$counter] = &$argval;
-
-                $this->last_query = preg_replace("/\\?/", \SmartFactory\preg_r_escape("'" . $this->escape($argval) . "'"), $this->last_query, 1);
+                $types .= 's';
+                $bound[$index] = $value;
             }
-
-            $counter++;
         }
 
-        if ($this->logging) {
-            debugger()->debugMessage($this->last_query, "sql.log");
+        if ($values && !$this->statement->bind_param($types, ...$bound)) {
+            throw $this->query_error($this->statement->error);
         }
 
-        if (count($args) > 0 && !call_user_func_array([$this->statement, 'bind_param'], $parameters)) {
-            $err = "Number of elements in type definition string doesn't match number of bind variables.";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
+        // Send each LOB to its own native position, preserving repeated named bindings.
+        foreach ($lobs as $index => $lob) {
+            $sent = false;
+
+            $this->write_chunks(
+                $lob->value,
+                function (string $chunk) use ($index, &$sent): void {
+                    if (!$this->statement->send_long_data($index, $chunk)) {
+                        throw $this->query_error($this->statement->error);
+                    }
+
+                    $sent = true;
+                },
+                $lob instanceof ClobValue
+            );
+
+            // An empty LOB is an empty value, not SQL NULL.
+            if (!$sent) {
+                $this->statement->send_long_data($index, '');
+            }
         }
 
         if (!$this->statement->execute()) {
-            throw new DBWorkerException($this->statement->error, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
+            throw $this->query_error($this->statement->error);
         }
 
-        if (!$this->statement->store_result()) {
-            throw new DBWorkerException($this->statement->error, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
+        $metadata = [];
 
-        $this->mysqli_result = $this->statement->result_metadata();
-    } // execute_prepared_query
+        // Bind result columns without buffering rows; successful DML has no result metadata.
+        if ($this->statement->field_count > 0) {
+            $result = $this->statement->result_metadata();
+            $metadata = $this->describe($result);
 
-    /**
-     * Executes the SQL stored procedure.
-     *
-     * @param string $procedure
-     * The name of the SQL stored procedure.
-     *
-     * All subsequent parameters are the paramteres of the SQL stored procedure.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function execute_procedure(string $procedure /* arg list */): void
-    {
-        $this->check_connection();
+            $result->free();
 
-        $args = func_get_args();
+            $this->bound_row = array_fill(0, count($metadata), null);
 
-        // prepare the arguments for placing in eval()
-        // escape single quotes
+            // bind_result() needs stable references, not a temporary unpacked copy of row values.
+            $references = [];
 
-        $this->last_query = "";
-
-        if (count($args) > 0) {
-            $proc_name = "";
-            $arg_list = "";
-
-            $first = true;
-            foreach ($args as $argval) {
-                if ($first) {
-                    $proc_name = $argval;
-                    $first = false;
-                    continue;
-                }
-
-                if ($argval === null) {
-                    $arg_list .= "null, ";
-                } elseif (is_int($argval)) {
-                    $arg_list .= "$argval, ";
-                } elseif (is_float($argval)) {
-                    $arg_list .= "$argval, ";
-                } else {
-                    $arg_list .= "'" . $this->escape($argval) . "', ";
-                }
+            foreach ($this->bound_row as &$value) {
+                $references[] = &$value;
             }
 
-            $arg_list = trim($arg_list, ", ");
+            unset($value);
 
-            $this->last_query = "CALL $proc_name($arg_list);";
+            if (!$this->statement->bind_result(...$references)) {
+                throw $this->query_error($this->statement->error);
+            }
         }
 
-        $this->execute_query($this->last_query);
+        $this->set_result($metadata, $this->statement->affected_rows);
 
-        if (is_object($this->mysqli_result) && get_class($this->mysqli_result) == "mysqli_result") {
-            $this->mysqli_result->free_result();
-
-            $this->mysqli_result = null;
+        if (!($this->options['save_records_explicit_identity'] ?? false)) {
+            $this->save_insert_id($this->statement->insert_id);
         }
-    } // execute_procedure
+
+        if (preg_match('/\ASET\b[\s\S]*\bsql_mode\b/i', $this->sql_body($this->compiled_query->original))) {
+            $this->refresh_sql_mode();
+        }
+    } // native_execute
 
     /**
-     * Frees the prepared query.
+     * Refreshes the shared MySQL backslash-escaping mode from the current session.
      *
-     * It should be called after all executions of the prepared query.
+     * Placeholder scanning and literal escaping must agree with NO_BACKSLASH_ESCAPES.
      *
      * @return void
+     * Does not return a value.
      *
      * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::prepare_query()
-     * @see MySQL_DBWorker::execute_prepared_query()
+     * If the session setting cannot be queried.
      *
      * @author Oleg Schildt
      */
-    public function free_prepared_query(): void
+    private function refresh_sql_mode(): void
     {
-        $this->check_connection();
+        // Read the session setting so scanning and escaping use the same backslash rules as MySQL.
+        $result = $this->connection_state->handle->query('select @@session.sql_mode', MYSQLI_USE_RESULT);
+
+        if ($result === false) {
+            throw $this->query_error($this->connection_state->handle->error);
+        }
+
+        $this->connection_state->attributes['no_backslash_escapes'] = in_array(
+            'NO_BACKSLASH_ESCAPES',
+            explode(',', $result->fetch_row()[0]),
+            true
+        );
+
+        $result->free();
+    } // refresh_sql_mode
+
+    /**
+     * Stores a native MySQL identifier after checking the PHP integer range.
+     *
+     * @param int|string $id
+     * The identifier returned by mysqli. Zero means that no generated identifier is available.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If the identifier cannot be represented as a PHP integer.
+     *
+     * @author Oleg Schildt
+     */
+    private function save_insert_id(int|string $id): void
+    {
+        // Ignore the native no-identity sentinel and reject identifiers outside the integer API.
+        if ((string) $id === '0') {
+            return;
+        }
+
+        if (filter_var($id, FILTER_VALIDATE_INT) === false) {
+            throw new DBWorkerException(
+                'Generated identifier exceeds the PHP integer range.',
+                self::ERR_WRONG_DATA_FORMAT
+            );
+        }
+
+        $this->last_insert_id = (int) $id;
+    } // save_insert_id
+
+    /**
+     * Fetches the next row through the native driver.
+     *
+     * @return list<mixed>|null
+     * Returns a numerically indexed row, or NULL at the end of the result set.
+     *
+     * @throws DBWorkerException
+     * If the native fetch operation fails.
+     *
+     * @see DBWorker::fetch_row()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_fetch(): ?array
+    {
+        // Preserve numeric field positions and distinguish end-of-result from a native error.
+        if ($this->statement !== null) {
+            $status = $this->statement->fetch();
+
+            if ($status === false) {
+                throw $this->query_error($this->statement->error);
+            }
+
+            return $status === null ? null : array_map(static fn (mixed $value): mixed => $value, $this->bound_row);
+        }
+
+        $row = $this->result->fetch_row();
+
+        return $row === null ? null : $row;
+    } // native_fetch
+
+    /**
+     * Releases native result resources without discarding a reusable prepared statement.
+     *
+     * Implementations must distinguish a result handle from a statement handle when both refer to the same resource.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @see DBWorker::free_result()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_free_result(): void
+    {
+        // Release result ownership while leaving a reusable prepared statement available.
+        if ($this->result instanceof \mysqli_result) {
+            $this->result->free();
+        }
+
+        $this->result = null;
+
+        if ($this->statement instanceof \mysqli_stmt) {
+            $this->statement->free_result();
+        }
+
+        $this->bound_row = [];
+
+        // CALL can leave additional protocol results pending.
+        if ($this->connection_state !== null && $this->statement === null) {
+            $db = $this->connection_state->handle;
+
+            // Drain additional CALL results before the shared connection accepts another query.
+            while ($db->more_results()) {
+                $db->next_result();
+
+                $extra = $db->use_result();
+
+                if ($extra instanceof \mysqli_result) {
+                    $extra->free();
+                }
+            }
+        }
+
+        if ($this->statement instanceof \mysqli_stmt) {
+            while ($this->statement->more_results()) {
+                $this->statement->next_result();
+
+                $this->statement->free_result();
+            }
+        }
+    } // native_free_result
+
+    /**
+     * Releases the native prepared statement and its driver-specific bind state.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @see DBWorker::free_prepared_query()
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_free_statement(): void
+    {
+        // Release native statement ownership and clear driver-specific bind state.
+        if ($this->statement instanceof \mysqli_stmt) {
+            $this->statement->close();
+        }
+
+        $this->statement = null;
+    } // native_free_statement
+
+    /**
+     * Performs a native transaction operation on the shared connection.
+     *
+     * The base class updates the shared transaction flag only after this operation succeeds.
+     *
+     * @param string $action
+     * The operation: begin, commit or rollback.
+     *
+     * @param string $isolation_level
+     * The validated isolation level applied only to the transaction being started.
+     * Ignored for commit and rollback.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If the native transaction operation fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_transaction(string $action, string $isolation_level = self::ISOLATION_READ_COMMITTED): void
+    {
+        // Perform the native operation; the base worker updates the shared flag after success.
+        $db = $this->connection_state->handle;
 
         try {
-            $this->statement?->close();
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        } finally {
-            $this->statement = null;
-            $this->last_query = null;
-            $this->prepared_query = null;
-        }
-    } // free_prepared_query
-
-    /**
-     * Closes the currently opened connection.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::is_connected()
-     * @see MySQL_DBWorker::connect()
-     *
-     * @author Oleg Schildt
-     */
-    public function close_connection(): void
-    {
-        $this->last_query = null;
-        $this->prepared_query = null;
-        $this->row = null;
-        $this->field_names = null;
-
-        try {
-            if ($this->statement) {
-                @$this->statement->close();
-            }
-
-            if ($this->mysqli) {
-                @$this->mysqli->close();
-            }
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_CONNECTION_FAILED);
-        } finally {
-            $this->statement = null;
-            $this->mysqli = null;
-            $this->mysqli_result = null;
-        }
-    } // close_connection
-
-    /**
-     * Starts the translation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::commit_transaction()
-     * @see MySQL_DBWorker::rollback_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function start_transaction(): void
-    {
-        $this->check_connection();
-
-        $this->execute_query("BEGIN");
-    } // start_transaction
-
-    /**
-     * Commits the translation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::start_transaction()
-     * @see MySQL_DBWorker::rollback_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function commit_transaction(): void
-    {
-        $this->check_connection();
-
-        $this->execute_query("COMMIT");
-    } // commit_transaction
-
-    /**
-     * Rolls back the translation.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::start_transaction()
-     * @see MySQL_DBWorker::commit_transaction()
-     *
-     * @author Oleg Schildt
-     */
-    public function rollback_transaction(): void
-    {
-        $this->check_connection();
-
-        $this->execute_query("ROLLBACK");
-    } // rollback_transaction
-
-    /**
-     * Frees the result of the previously executed retrieving query.
-     *
-     * It should be called only for the retrieving queries.
-     *
-     * @return void
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function free_result(): void
-    {
-        $this->check_connection();
-
-        try {
-            if (is_object($this->mysqli_result) && get_class($this->mysqli_result) == "mysqli_result") {
-                $this->mysqli_result->free_result();
-
-                $this->mysqli_result = null;
-            }
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        } finally {
-            $this->row = null;
-            $this->field_names = null;
-            $this->last_query = null;
-        }
-    } // free_result
-
-    /**
-     * Returns the value of the auto increment field by the last insertion.
-     *
-     * @return ?int
-     * Returns the value of the auto increment field by the last insertion.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function insert_id(): ?int
-    {
-        $this->check_connection();
-
-        return $this->mysqli->insert_id;
-    } // insert_id
-
-    /**
-     * Fetches the next row of data from the result of the execution of the retrieving query.
-     *
-     * @return bool
-     * Returns true if the next row exists and has been successfully fetched, otherwise false.
-     *
-     * Example:
-     * ```php
-     * if(!$dbw->execute_query("SELECT FIRST_NAME, LAST_NAME FROM USERS"))
-     * {
-     *   error reporting ...;
-     * }
-     *
-     * while($dbw->fetch_row())
-     * {
-     *   echo $dbw->field_by_name("FIRST_NAME") . " " . $dbw->field_by_name("LAST_NAME") . "<br>";
-     * }
-     *
-     * $dbw->free_result();
-     * ```
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetch_row(): bool
-    {
-        $this->check_connection();
-
-        try {
-            if ($this->statement) {
-                if (!$this->field_names) {
-                    $this->row = [];
-
-                    $fcnt = $this->statement->field_count;
-                    if ($fcnt == 0) {
-                        return false;
-                    }
-
-                    $params = [];
-                    for ($i = 0; $i < $fcnt; $i++) {
-                        $finfo = $this->field_info_by_num($i);
-                        if (empty($finfo)) {
-                            return false;
-                        }
-
-                        $this->field_names[] = $finfo["name"];
-
-                        $this->row[$finfo["name"]] = "";
-                        $params[] = &$this->row[$finfo["name"]];
-                    }
-
-                    call_user_func_array([$this->statement, 'bind_result'], $params);
-
-                    unset($params);
-                }
-
-                $result = $this->statement->fetch();
-                if (!$result) {
-                    $this->row = null;
-                }
-
-                return !empty($result);
-            } // prepared query
-
-            if (!$this->mysqli_result) {
-                $err = "Result is empty!";
-                throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-            }
-
-            $this->row = @$this->mysqli_result->fetch_assoc();
-
-            if (!$this->row) {
-                return false;
-            }
-
-            if (!$this->field_names) {
-                $this->field_names = array_keys($this->row);
-            }
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return true;
-    } // fetch_row
-
-    /**
-     * Fetches all rows from the result into an array.
-     *
-     * @param array &$rows
-     * Target array for loading the results.
-     *
-     * @param ?array $dimension_keys
-     * Array of the column names that should be used as dimensions.
-     *
-     * Per default, the rows are fetched as two-dimensional array.
-     *
-     * Example:
-     * ```php
-     * $rows = [];
-     * $dbw->fetch_array($rows);
-     *
-     * rows[n] = ["col1" => "val1", "col2" => "val2", "col3" => "val3", ...]
-     * ```
-     * If the dimension columns are specified, their values are used for the dimensions.
-     *
-     * Example:
-     * ```php
-     * $rows = [];
-     * $dbw->fetch_array($rows, ["col1", "col2"]);
-     *
-     * rows["val1"]["val2"] = ["col3" => "val3", ...]
-     * ```
-     *
-     * @return int
-     * Returns the number of the fetched rows. It might be also 0.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetch_array(array &$rows, ?array $dimension_keys = null): int
-    {
-        $this->check_connection();
-
-        $rows = [];
-
-        if (!empty($dimension_keys)) {
-            $dimension_keys = array_flip($dimension_keys);
-        }
-
-        $counter = 0;
-        $row = [];
-
-        try {
-            if ($this->statement) {
-                $fcnt = $this->statement->field_count;
-                if ($fcnt == 0) {
-                    return false;
-                }
-
-                for ($i = 0; $i < $fcnt; $i++) {
-                    $finfo = $this->field_info_by_num($i);
-                    if (empty($finfo)) {
-                        return false;
-                    }
-
-                    $this->field_names[] = $finfo["name"];
-
-                    $row[$finfo["name"]] = "";
-                }
-
-                $params = [];
-                foreach ($this->field_names as $fname) {
-                    $params[] = &$row[$fname];
-                }
-
-                call_user_func_array([$this->statement, 'bind_result'], $params);
-
-                unset($params);
-
-                while ($this->statement->fetch()) {
-                    $counter++;
-
-                    // we must create a copy from $row, because its
-                    // items are bound per reference
-                    $rowcpy = array_map(function ($val) {
-                        return $val;
-                    }, $row);
-
-                    if (empty($dimension_keys)) {
-                        $rows[] = $rowcpy;
-                    } else {
-                        $dimensions = array_intersect_key($rowcpy, $dimension_keys);
-                        $rowcpy = array_diff_key($rowcpy, $dimension_keys);
-
-                        $reference = &$rows;
-
-                        foreach ($dimensions as $dval) {
-                            if (empty($reference[$dval])) {
-                                $reference[$dval] = [];
-                            }
-                            $reference = &$reference[$dval];
-                        }
-
-                        $reference = $rowcpy;
-
-                        unset($reference);
-                    }
-                }
-
-                return $counter;
-            } // prepared query
-
-            if (!$this->mysqli_result) {
-                $err = "Result is empty!";
-                throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-            }
-
-            while ($row = @$this->mysqli_result->fetch_assoc()) {
-                $counter++;
-
-                if (!$this->field_names) {
-                    $this->field_names = array_keys($row);
-                }
-
-                if (empty($dimension_keys)) {
-                    $rows[] = $row;
-                } else {
-                    $dimensions = array_intersect_key($row, $dimension_keys);
-                    $row = array_diff_key($row, $dimension_keys);
-
-                    $reference = &$rows;
-
-                    foreach ($dimensions as $dval) {
-                        if (empty($reference[$dval])) {
-                            $reference[$dval] = [];
-                        }
-                        $reference = &$reference[$dval];
-                    }
-
-                    $reference = $row;
-
-                    unset($reference);
+            if ($action === 'begin') {
+                // Without SESSION this applies to the next transaction and preserves the session default.
+                if ($db->query('SET TRANSACTION ISOLATION LEVEL ' . $isolation_level) === false) {
+                    throw $this->query_error($db->error);
                 }
             }
 
-            return $counter;
+            $success = match ($action) {
+                'begin' => $db->begin_transaction($this->read_only ? MYSQLI_TRANS_START_READ_ONLY : 0),
+                'commit' => $db->commit(),
+                'rollback' => $db->rollback()
+            };
 
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-    } // fetch_array
-
-    /**
-     * Returns the number of the rows fetched by the last retrieving query.
-     *
-     * @return int
-     * Returns the number of the rows fetched by the last retrieving query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function fetched_count(): int
-    {
-        $this->check_connection();
-
-        if ($this->statement) {
-            return $this->statement->num_rows;
-        }
-
-        if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return $this->mysqli_result->num_rows;
-    } // fetched_count
-
-    /**
-     * Returns the number of the rows affected by the last modification query.
-     *
-     * @return int
-     * Returns the number of the rows affected by the last modification query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function affected_count(): int
-    {
-        $this->check_connection();
-
-        if (!$this->mysqli_result) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return $this->mysqli->affected_rows;
-    } // affected_count
-
-    /**
-     * Returns the number of the fields in the result of the last retrieving query.
-     *
-     * @return int
-     * Returns the number of the fields in the result of the last retrieving query.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @author Oleg Schildt
-     */
-    public function field_count(): int
-    {
-        $this->check_connection();
-
-        if ($this->statement) {
-            return $this->statement->field_count;
-        }
-
-        if (!$this->mysqli_result || !is_object($this->mysqli_result)) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        return $this->mysqli_result->field_count;
-    } // field_count
-
-    /**
-     * Returns the value of a field specified by name.
-     *
-     * @param string $name
-     * The name of the field.
-     *
-     * @param int $type
-     * The type of the field.
-     *
-     * @return mixed
-     * Returns the value of a field specified by name. In the case
-     * of any error returns null.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::field_by_num()
-     * @see MySQL_DBWorker::field_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_by_name(string $name, int $type = self::DB_AS_IS): mixed
-    {
-        $this->check_connection();
-
-        if (!$this->row) {
-            return null;
-        }
-
-        if (!array_key_exists($name, $this->row)) {
-            trigger_error("Field with the name '$name' does not exist in the result set!", E_USER_WARNING);
-            return null;
-        }
-
-        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$name])) {
-            return strtotime($this->row[$name]);
-        }
-
-        return $this->row[$name];
-    } // field_by_name
-
-    /**
-     * Returns the value of a field specified by number.
-     *
-     * @param int $num
-     * The number of the field.
-     *
-     * @param int $type
-     * The type of the field.
-     *
-     * @return mixed
-     * Returns the value of a field specified by number. In the case
-     * of any error returns null.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::field_by_name()
-     * @see MySQL_DBWorker::field_info_by_num()
-     * @see MySQL_DBWorker::field_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_by_num(int $num, int $type = self::DB_AS_IS): mixed
-    {
-        $this->check_connection();
-
-        if (!$this->row) {
-            return null;
-        }
-
-        if (!array_key_exists($num, $this->field_names)) {
-            trigger_error("Field with the index $num does not exist in the result set!", E_USER_WARNING);
-            return null;
-        }
-
-        if (($type == DBWorker::DB_DATE || $type == DBWorker::DB_DATETIME) && !empty($this->row[$this->field_names[$num]])) {
-            return strtotime($this->row[$this->field_names[$num]]);
-        }
-
-        return $this->row[$this->field_names[$num]];
-    } // field_by_num
-
-    /**
-     * Returns the name of the field by number.
-     *
-     * @param int $num
-     * The number of the field.
-     *
-     * @return ?string
-     * Returns the value of a field specified by number as an object with properties. In the case
-     * of any error returns null.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::field_by_num()
-     * @see MySQL_DBWorker::field_info_by_num()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_name(int $num): ?string
-    {
-        $this->check_connection();
-
-        $info = $this->field_info_by_num($num);
-        if (!$info) {
-            return null;
-        }
-
-        return $info["name"] ?? "";
-    } // field_name
-
-    /**
-     * Returns the meta information about the field as an object with properties.
-     *
-     * @param int $num
-     * The number of the field.
-     *
-     * @return ?array
-     * Returns the associative array with properties. In the case
-     * of any error returns null.
-     *
-     * - $info["name"] - name of the field.
-     * - $info["type"] - type of the field.
-     * - $info["size"] - size of the field.
-     * - $info["binary"] - whether the filed is binary.
-     * - $info["numeric"] - whether the filed is numeric.
-     * - $info["datetime"] - whether the filed is datetime.
-     *
-     * @throws DBWorkerException
-     * It throws an exception in the case of any errors.
-     *
-     * @see MySQL_DBWorker::field_by_num()
-     * @see MySQL_DBWorker::field_name()
-     *
-     * @author Oleg Schildt
-     */
-    public function field_info_by_num(int $num): ?array
-    {
-        $this->check_connection();
-
-        if (!$this->mysqli_result) {
-            $err = "Result fetch error";
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        try {
-            $res = @$this->mysqli_result->fetch_field_direct($num);
-        } catch (\mysqli_sql_exception $ex) {
-            $err = $ex->getMessage();
-            throw new DBWorkerException($err, DBWorker::ERR_QUERY_FAILED, "", [], $this->get_last_query());
-        }
-
-        // some corrections for compatible format
-
-        $mysqli_type = [];
-
-        $mysqli_type[0] = "decimal";
-        $mysqli_type[1] = "tinyint";
-        $mysqli_type[2] = "smallint";
-        $mysqli_type[3] = "integer";
-        $mysqli_type[4] = "float";
-        $mysqli_type[5] = "double";
-
-        $mysqli_type[7] = "timestamp";
-        $mysqli_type[8] = "bigint";
-        $mysqli_type[9] = "mediumint";
-        $mysqli_type[10] = "date";
-        $mysqli_type[11] = "time";
-        $mysqli_type[12] = "datetime";
-        $mysqli_type[13] = "year";
-        $mysqli_type[14] = "date";
-
-        $mysqli_type[16] = "bit";
-
-        $mysqli_type[246] = "decimal";
-        $mysqli_type[247] = "enum";
-        $mysqli_type[248] = "set";
-        $mysqli_type[249] = "tinyblob";
-        $mysqli_type[250] = "mediumblob";
-        $mysqli_type[251] = "longblob";
-        $mysqli_type[252] = "blob";
-        $mysqli_type[253] = "varchar";
-        $mysqli_type[254] = "char";
-        $mysqli_type[255] = "geometry";
-
-        $field_info = [];
-
-        $field_info["name"] = $res->name;
-        $field_info["type"] = $res->type;
-        $field_info["size"] = $res->length;
-
-        $field_info["binary"] = 0;
-        $field_info["numeric"] = 0;
-
-        if (!empty($field_info["type"])) {
-            if (in_array($field_info["type"], [0, 1, 2, 3, 4, 5, 7, 8, 9, 13, 16, 246])) {
-                $field_info["numeric"] = 1;
+            if (!$success) {
+                throw $this->query_error($db->error);
             }
-            elseif (in_array($field_info["type"], [252]) && !($res->flags & MYSQLI_BINARY_FLAG)) {
-                $field_info["string"] = 1;
-            } 
-            elseif (in_array($field_info["type"], [249, 250, 251, 252])) {
-                $field_info["binary"] = 1;
-            }
-            elseif (in_array($field_info["type"], [12, 14])) {
-                $field_info["datetime"] = 1;
-            }
-            elseif (in_array($field_info["type"], [253, 254])) {
-                $field_info["string"] = 1;
-            }
-
-            if (isset($mysqli_type[$field_info["type"]])) {
-                $field_info["type"] = $mysqli_type[$field_info["type"]];
-            } else {
-                $field_info["type"] = "undefined";
-            }
+        } catch (\mysqli_sql_exception $error) {
+            throw $this->query_error($error->getMessage());
         }
-
-        return $field_info;
-    } // field_info_by_num
+    } // native_transaction
 
     /**
-     * Escapes the string so that it can be used in the query without causing an error.
+     * Escapes a string for inclusion in an SQL string literal without adding quotation marks.
+     *
+     * The result is intended for string literals, not SQL identifiers.
+     * Prefer bound parameters when supplying application values to a query.
      *
      * @param string $str
-     * The string to be escaped.
+     * The string to escape.
      *
      * @return string
      * Returns the escaped string.
      *
-     * @see MySQL_DBWorker::format_date()
-     * @see MySQL_DBWorker::format_datetime()
+     * @throws DBWorkerException
+     * If no database connection is open.
+     *
+     * @see DBWorker::quotes_or_null()
+     * @see DBWorker::prepare_query()
      *
      * @author Oleg Schildt
      */
     public function escape(string $str): string
     {
-        return preg_replace("/(['\\\\])/", "\\\\$1", $str);
+        // Use native escaping except when the session explicitly disables backslash escapes.
+        $this->check_connection();
+
+        if ($this->connection_state->attributes['no_backslash_escapes'] ?? false) {
+            return str_replace("'", "''", $str);
+        }
+
+        return $this->connection_state->handle->real_escape_string($str);
     } // escape
 
     /**
-     * Formats the date to a string compatible for the corresponding database.
-     *
-     * @param int $date
-     * The date value as timestamp.
-     *
-     * @return string
-     * Returns the string representation of the date compatible for the corresponding database.
-     *
-     * @see MySQL_DBWorker::escape()
-     * @see MySQL_DBWorker::format_datetime()
-     *
-     * @author Oleg Schildt
-     */
-    public function format_date(int $date): string
-    {
-        if (empty($date)) {
-            return $this->quotes_or_null("");
-        }
-
-        return $this->quotes_or_null(date("Y-m-d", $date));
-    } // format_date
-
-    /**
-     * Formats the date/time to a string compatible for the corresponding database.
-     *
-     * @param int $datetime
-     * The date/time value as timestamp.
-     *
-     * @return string
-     * Returns the string representation of the date/time compatible for the corresponding database.
-     *
-     * @see MySQL_DBWorker::escape()
-     * @see MySQL_DBWorker::format_date()
-     *
-     * @author Oleg Schildt
-     */
-    public function format_datetime(int $datetime): string
-    {
-        if (empty($datetime)) {
-            return $this->quotes_or_null("");
-        }
-
-        return $this->quotes_or_null(date("Y-m-d H:i:s", $datetime));
-    } // format_datetime
-
-    /**
-     * Prepares the value for putting to a query depending on its type. It does escaping, formatting
-     * and quotation if necessary.
+     * Prepares a value for inclusion in an SQL query according to its type.
+     * It performs escaping, formatting and quoting where necessary.
      *
      * @param mixed $value
-     * The value to be formatted.
+     * The value to prepare. NULL and the empty string are represented as SQL NULL.
      *
      * @param int $type
-     * The type of the value.
+     * The DBWorker constant describing the value type.
      *
      * @return string
-     * Returns the prepared value.
+     * Returns the prepared SQL expression.
      *
      * @throws DBWorkerException
-     * It might throw an exception in the case of any errors.
+     * If the value format is invalid or the requested type is unsupported.
+     *
+     * @see DBWorker::quotes_or_null()
+     * @see DBWorker::format_date()
+     * @see DBWorker::format_datetime()
      *
      * @author Oleg Schildt
      */
-    function prepare_for_query(mixed $value, int $type): string
+    public function prepare_for_query(mixed $value, int $type): string
     {
-        if (empty($value) && (string)$value != "0") {
-            return "null";
-        } else {
-            return match ($type) {
-                DBWorker::DB_NUMBER => $this->number_or_null($value),
-                DBWorker::DB_DATETIME => $this->format_datetime($value),
-                DBWorker::DB_DATE => $this->format_date($value),
-                DBWorker::DB_GEOMETRY => "ST_GeomFromText('" . $this->escape($value) . "')",
-                DBWorker::DB_GEOMETRY_4326 => "ST_GeomFromText('" . $this->escape($value) . "', 4326, 'axis-order=lat-long')",
-                default => $this->quotes_or_null($value)
-            };
+        // Handle supported spatial expressions here and delegate ordinary value types to the base worker.
+        if ($value !== null && $value !== '' && in_array($type, [self::DB_GEOMETRY, self::DB_GEOMETRY_4326], true)) {
+            return "ST_GeomFromText('" . $this->escape((string) $value) . "'"
+                . ($type === self::DB_GEOMETRY_4326 ? ", 4326, 'axis-order=lat-long')" : ')');
         }
+
+        return parent::prepare_for_query($value, $type);
     } // prepare_for_query
 
     /**
-     * Builds simple select query based on parameters.
+     * Builds the common field metadata array from mysqli result metadata.
      *
-     * It is used for building queries with limits.
+     * @param \mysqli_result $result
+     * The native result or prepared-statement metadata result.
      *
-     * @param string $table
-     * The name of the table.
-     *
-     * @param array $fields
-     * The list of request fields.
-     *
-     * @param string $where_clause
-     * The where clause that should restrict the result.
-     *
-     * @param string $order_clause
-     * The order clause to sort the results.
-     *
-     * @param int $limit
-     * The limit how many records shoud be loaded. 0 for unlimited.
-     *
-     * @return string
-     * Returns the built query.
+     * @return list<array<string, int|string>>
+     * Returns ordered field descriptions with type names and text, binary, numeric and date/time flags.
      *
      * @author Oleg Schildt
      */
-    function build_select_query(string $table, array $fields, string $where_clause, string $order_clause, int $limit): string
+    private function describe(\mysqli_result $result): array
     {
-        $query = "select\n";
+        // Normalize native type codes while retaining decimal values as strings during row access.
+        $types = [
+            0 => 'decimal',
+            1 => 'tinyint',
+            2 => 'smallint',
+            3 => 'integer',
+            4 => 'float',
+            5 => 'double',
+            7 => 'timestamp',
+            8 => 'bigint',
+            9 => 'mediumint',
+            10 => 'date',
+            11 => 'time',
+            12 => 'datetime',
+            13 => 'year',
+            14 => 'date',
+            16 => 'bit',
+            245 => 'json',
+            246 => 'decimal',
+            247 => 'enum',
+            248 => 'set',
+            249 => 'tinyblob',
+            250 => 'mediumblob',
+            251 => 'longblob',
+            252 => 'blob',
+            253 => 'varchar',
+            254 => 'char',
+            255 => 'geometry'
+        ];
+        $metadata = [];
 
-        $query .= implode(", ", $fields) . "\n";
-
-        $query .= "from " . $table . "\n";
-
-        if (!empty($where_clause)) {
-            $query .= $where_clause . "\n";
+        foreach ($result->fetch_fields() as $field) {
+            $numeric = in_array($field->type, [0, 1, 2, 3, 4, 5, 8, 9, 13, 16, 246], true);
+            $datetime = in_array($field->type, [7, 10, 11, 12, 14], true);
+            $binary = $field->charsetnr === 63 && in_array($field->type, [249, 250, 251, 252, 253, 254, 255], true);
+            $metadata[] = [
+                'name' => $field->name,
+                'type' => $types[$field->type] ?? 'undefined',
+                'size' => $field->length,
+                'numeric' => (int) $numeric,
+                'datetime' => (int) $datetime,
+                'binary' => (int) $binary,
+                'string' => (int) (!$numeric && !$datetime && !$binary)
+            ];
         }
 
-        if (!empty($order_clause)) {
-            $query .= $order_clause . "\n";
+        return $metadata;
+    } // describe
+    /**
+     * Resolves a MySQL table and comparison expressions from information_schema.
+     *
+     * @param string $table
+     * The unquoted table name, optionally prefixed by its database.
+     *
+     * @return array
+     * Returns canonical table names and native key metadata.
+     *
+     * @throws DBWorkerException
+     * If the target cannot be resolved or its column metadata cannot be read.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_table(string $table): array
+    {
+        $parts = explode('.', $table);
+
+        if (count($parts) > 2) {
+            throw new DBWorkerException('MySQL table names support database.table.', self::ERR_WRONG_DATA_FORMAT);
         }
 
-        if (!empty($limit)) {
-            $query .= "limit " . $limit . "\n";
+        $name = array_pop($parts);
+        $database = $parts[0] ?? $this->save_sql('SELECT DATABASE()')['rows'][0][0];
+        $result = $this->save_sql('SELECT TABLE_SCHEMA, TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?', [$database, $name]);
+
+        if (count($result['rows']) !== 1) {
+            throw $this->query_error('The save_records table was not found.');
         }
 
-        return $query;
-    } // build_select_query
+        [$database, $name] = $result['rows'][0];
+        $quote = static fn (string $name): string => '`' . str_replace('`', '``', $name) . '`';
+        $columns = $this->save_sql(
+            'SELECT c.COLUMN_NAME, c.DATA_TYPE, c.NUMERIC_PRECISION, c.NUMERIC_SCALE, c.CHARACTER_SET_NAME, '
+            . 'c.COLLATION_NAME, co.PAD_ATTRIBUTE, c.EXTRA, c.CHARACTER_MAXIMUM_LENGTH, c.DATETIME_PRECISION '
+            . 'FROM information_schema.COLUMNS c LEFT JOIN information_schema.COLLATIONS co ON co.COLLATION_NAME = c.COLLATION_NAME '
+            . 'WHERE c.TABLE_SCHEMA = ? AND c.TABLE_NAME = ?', [$database, $name]
+        );
+        $context = ['table' => $quote($database) . '.' . $quote($name), 'lock_table' => $quote($database) . '.`dbworker_locks`',
+            'resource' => [$database, $name], 'columns' => []];
+
+        foreach ($columns['rows'] as $row) {
+            [$field, $type, $precision, $scale, $charset, $collation, $pad, $extra, $length, $fraction] = $row;
+            $cast = match ($type) {
+                'tinyint', 'smallint', 'mediumint', 'int', 'bigint', 'decimal', 'numeric' => 'CAST(? AS DECIMAL(65,' . (int) $scale . '))',
+                'float' => 'CAST(? AS FLOAT(24))',
+                'double', 'real' => 'CAST(? AS DOUBLE)',
+                'date' => 'CAST(? AS DATE)',
+                'datetime', 'timestamp' => 'CAST(? AS DATETIME(' . (int) $fraction . '))',
+                'time' => 'CAST(? AS TIME(' . (int) $fraction . '))',
+                default => '?'
+            };
+            $fingerprint = $cast;
+
+            if (in_array($type, ['enum', 'set'], true)) {
+                $fingerprint = null;
+            } elseif ($charset !== null) {
+                // Native sort weights preserve case/accent equivalence, including PAD SPACE collations.
+                $cast = 'CONVERT(? USING ' . $charset . ') COLLATE ' . $collation;
+                $source = $pad === 'PAD SPACE' || $type === 'char' ? 'RTRIM(' . $cast . ')' : $cast;
+                $fingerprint = 'HEX(WEIGHT_STRING(' . $source . '))';
+            } elseif (in_array($type, ['binary', 'varbinary'], true)) {
+                $cast = $type === 'binary' ? 'CAST(? AS BINARY(' . (int) $length . '))' : 'CAST(? AS BINARY)';
+                $fingerprint = 'HEX(' . $cast . ')';
+            } elseif (!in_array($type, ['tinyint', 'smallint', 'mediumint', 'int', 'bigint', 'decimal', 'numeric',
+                'float', 'double', 'real', 'date', 'datetime', 'timestamp', 'time'], true)) {
+                $fingerprint = null;
+            }
+
+            $context['columns'][strtolower($field)] = ['name' => $field, 'cast' => $cast, 'fingerprint' => $fingerprint,
+                'identity' => str_contains($extra, 'auto_increment'), 'length' => $length];
+        }
+
+        return $context;
+    } // native_save_table
+
+    /**
+     * Normalizes MySQL key values with their column types and native collation weights.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param array<string, scalar|null> $keys
+     * The supplied key values, ordered by canonical column name.
+     *
+     * @return array
+     * Returns the database-comparable key fingerprints.
+     *
+     * @throws DBWorkerException
+     * If a key type is unsupported or converting a supplied key fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_key(array $context, array $keys): array
+    {
+        $expressions = [];
+
+        foreach ($keys as $field => $value) {
+            $column = $this->save_column($context, $field);
+
+            if ($column['fingerprint'] === null) {
+                throw new DBWorkerException('Unsupported MySQL record-key type: ' . $field, self::ERR_WRONG_DATA_FORMAT);
+            }
+
+            $expressions[] = $column['fingerprint'];
+        }
+
+        $result = $this->save_sql('SELECT ' . implode(', ', $expressions), array_values($keys));
+
+        return $result['rows'][0];
+    } // native_save_key
+
+    /**
+     * Creates or exclusively locks an InnoDB service row without exposing duplicate-key errors.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param string $key
+     * The SHA-256 resource key.
+     *
+     * @param string $name
+     * The diagnostic description, or allocator watermark for an identity resource.
+     *
+     * @return void
+     * Does not return a value.
+     *
+     * @throws DBWorkerException
+     * If service-row creation or lock acquisition fails; expected primary-key duplicates are handled internally.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_lock(array $context, string $key, string $name): void
+    {
+        // Both INSERT and the duplicate-key no-op retain the exclusive record lock until transaction end.
+        $this->save_sql('INSERT INTO ' . $context['lock_table'] . ' (resource_key, resource_name) VALUES (?, ?) '
+            . 'ON DUPLICATE KEY UPDATE resource_key = resource_key', [$key, $name]);
+    } // native_save_lock
+
+    /**
+     * Checks the key using an InnoDB current read after acquiring its service lock.
+     *
+     * @param array $context
+     * The resolved table, column metadata and service-table location.
+     *
+     * @param string $where
+     * The typed key predicate.
+     *
+     * @param array $arguments
+     * The bound non-NULL key values.
+     *
+     * @return bool
+     * Returns whether the key currently exists.
+     *
+     * @throws DBWorkerException
+     * If preparing or executing the typed existence query fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_exists(array $context, string $where, array $arguments): bool
+    {
+        // A locking read uses current committed data even when the caller already established an RR snapshot.
+        $result = $this->save_sql('SELECT 1 FROM ' . $context['table'] . ' WHERE ' . $where . ' FOR UPDATE', $arguments);
+
+        return $result['rows'] !== [];
+    } // native_save_exists
+
+
+    /**
+     * Preserves an explicitly supplied zero identity without changing the session's normal SQL mode.
+     *
+     * @param array $context
+     * The resolved table and column metadata.
+     *
+     * @param array $values
+     * The prepared field values, including an explicit identity when supplied.
+     *
+     * @param array $expressions
+     * The positional SQL expression for each field.
+     *
+     * @param string $identity_field
+     * The configured identity field, or an empty string.
+     *
+     * @return int|null
+     * Returns the inserted identity, or NULL when none is configured.
+     *
+     * @throws DBWorkerException
+     * If changing SQL mode, inserting the record or restoring the mode fails.
+     *
+     * @author Oleg Schildt
+     */
+    protected function native_save_insert(array $context, array $values, array $expressions, string $identity_field): ?int
+    {
+        if ($identity_field === '' || ($values[$identity_field] ?? null) !== 0) {
+            return parent::native_save_insert($context, $values, $expressions, $identity_field);
+        }
+
+        $mode = $this->save_sql('SELECT @@SESSION.sql_mode')['rows'][0][0];
+
+        if (in_array('NO_AUTO_VALUE_ON_ZERO', explode(',', $mode), true)) {
+            return parent::native_save_insert($context, $values, $expressions, $identity_field);
+        }
+
+        // Zero is a known ID in this API, whereas MySQL normally interprets it as an allocation request.
+        $this->save_sql('SET SESSION sql_mode = ?', [ltrim($mode . ',NO_AUTO_VALUE_ON_ZERO', ',')]);
+
+        try {
+            return parent::native_save_insert($context, $values, $expressions, $identity_field);
+        } finally {
+            $this->save_sql('SET SESSION sql_mode = ?', [$mode]);
+        }
+    } // native_save_insert
+
 } // MySQL_DBWorker

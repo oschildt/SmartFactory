@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            DBRequestThrottlingManager - SmartFactory Library
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+ 
+
+                        <li class="active"></li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="markdown-content"><h1>DBRequestThrottlingManager</h1>
+<p><code>SmartFactory\DBRequestThrottlingManager</code> extends <code>AbstractRequestThrottlingManager</code>
+and implements the existing <code>IRequestThrottlingManager</code> contract through that base.
+It stores one caller's timestamp list in one database row. MySQL, PostgreSQL, SQL
+Server and Oracle use the same adapter through their DBWorker implementations.</p>
+<h2>Initialization</h2>
+<p>Supply a configured <code>DBWorker</code> and an unquoted table name. Connecting is lazy;
+initialization does not create tables or clear stored history.</p>
+<pre><code class="language-php"><span class="php-var">$manager</span> = <span class="php-keyword1">new</span> \SmartFactory\DBRequestThrottlingManager();
+
+<span class="php-var">$manager</span>-&gt;init([
+    <span class="php-quote">&quot;dbworker&quot;</span> =&gt; <span class="php-var">$dbworker</span>,
+    <span class="php-quote">&quot;table&quot;</span> =&gt; <span class="php-quote">&quot;api_request_throttling&quot;</span>,
+    <span class="php-quote">&quot;limits&quot;</span> =&gt; [[<span class="php-num">3</span>, <span class="php-num">1</span>], [<span class="php-num">15</span>, <span class="php-num">10</span>], [<span class="php-num">1550</span>, <span class="php-num">60</span>], [<span class="php-num">10000</span>, <span class="php-num">500</span>]],
+]);
+
+<span class="php-var">$handler</span>-&gt;init([
+    <span class="php-quote">&quot;throttling_manager&quot;</span> =&gt; <span class="php-var">$manager</span>,
+    <span class="php-quote">&quot;user_identificator_getter&quot;</span> =&gt; <span class="php-keyword1">static</span> <span class="php-keyword1">fn</span>(): <span class="php-keyword1">string</span>|<span class="php-keyword1">int</span>|<span class="php-keyword1">null</span> =&gt; <span class="php-var">$_SESSION</span>[<span class="php-quote">&quot;user_id&quot;</span>] ?? <span class="php-keyword1">null</span>,
+]);</code></pre>
+<p><code>limits</code> is optional and defaults to <code>IRequestThrottlingManager::DEFAULT_LIMITS</code>.
+An empty list disables limits without database access. Identity resolution stays
+in RequestHandler, including IP fallback. The table stores SHA-256 caller keys,
+not raw user IDs, API credentials or IP addresses.</p>
+<p>Factory bindings can continue using <code>IRequestThrottlingManager::class</code> with a
+creation function returning an initialized <code>DBRequestThrottlingManager</code>.</p>
+<h2>Storage table</h2>
+<p>Create the table before use. Its name is configurable; column names are fixed:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>client_key</code></td>
+<td>Primary key: the 64-character lowercase SHA-256 caller hash.</td>
+</tr>
+<tr>
+<td><code>request_times</code></td>
+<td>Non-null text/CLOB containing a JSON array of ordered Unix timestamps with subsecond precision. Equal timestamps are separate requests and are retained.</td>
+</tr>
+<tr>
+<td><code>expires_at</code></td>
+<td>Non-null numeric Unix timestamp: newest retained request plus the longest configured period. Indexed for cleanup.</td>
+</tr>
+</tbody>
+</table>
+<p>A caller owns one row. Text storage provides consistent binding and validation
+across all four databases. Null, empty, malformed, unordered, negative or nonnumeric
+history is rejected instead of resetting a budget.</p>
+<p>Package DDL:</p>
+<ul>
+<li><a href="../../sql/request_throttling_mysql.sql" target="_blank" rel="noopener">MySQL</a></li>
+<li><a href="../../sql/request_throttling_postgresql.sql" target="_blank" rel="noopener">PostgreSQL</a></li>
+<li><a href="../../sql/request_throttling_mssql.sql" target="_blank" rel="noopener">SQL Server</a></li>
+<li><a href="../../sql/request_throttling_oracle.sql" target="_blank" rel="noopener">Oracle</a></li>
+</ul>
+<p>For MySQL:</p>
+<pre><code class="language-sql">CREATE TABLE api_request_throttling (
+    client_key CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    request_times LONGTEXT NOT NULL,
+    expires_at DECIMAL(30, 6) NOT NULL,
+    PRIMARY KEY (client_key),
+    INDEX api_request_throttling_expiry (expires_at)
+) ENGINE=InnoDB;</code></pre>
+<p>PostgreSQL uses TEXT/NUMERIC, SQL Server NVARCHAR(MAX)/DECIMAL, and Oracle CLOB/NUMBER.
+All processes sharing a caller key must use the same limits. Increasing retention
+cannot restore timestamps already pruned under an earlier policy.</p>
+<h2>Logical-key lock service</h2>
+<p><code>DBWorker::lock_record()</code> and <code>save_records()</code> require <code>dbworker_locks</code> in the
+driver's standard location. The demo database creation scripts already include it.
+The target-table DDL above does not recreate this shared service table.</p>
+<p>If missing, run only the statement for the database being configured:</p>
+<pre><code class="language-sql">-- MySQL: current database.
+CREATE TABLE dbworker_locks (
+    resource_key CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY,
+    resource_name LONGTEXT NULL
+) ENGINE=InnoDB;
+
+-- PostgreSQL.
+CREATE TABLE public.dbworker_locks (
+    resource_key VARCHAR(64) NOT NULL PRIMARY KEY,
+    resource_name TEXT NULL
+);
+
+-- SQL Server.
+CREATE TABLE dbo.dbworker_locks (
+    resource_key CHAR(64) COLLATE Latin1_General_100_BIN2 NOT NULL PRIMARY KEY,
+    resource_name NVARCHAR(MAX) NULL
+);
+
+-- Oracle: current application schema.
+CREATE TABLE dbworker_locks (
+    resource_key CHAR(64 BYTE) NOT NULL PRIMARY KEY,
+    resource_name CLOB NULL
+);</code></pre>
+<p>See <a href="DatabaseWorkers/SAVE_RECORDS.md" target="_blank" rel="noopener">DBWorker's save/lock protocol</a>.
+Do not delete service-lock rows while cooperating writers are active.</p>
+<h2>Transactions</h2>
+<p>Each admission obtains a connected clone, starts its own explicit READ COMMITTED
+transaction, locks <code>["client_key" =&gt; $key]</code> through <code>lock_record()</code>, runs the inherited
+clock/read/check/write operation, and commits before returning its result.</p>
+<p>Logical-key locking covers simultaneous first requests before a caller row exists.
+Different caller keys use different logical locks. Rejections do not update the
+caller's history or extend its expiry.</p>
+<p>An existing managed transaction on the supplied connection is rejected without
+ending it. Joining application transactions would let a later rollback erase an
+already admitted request. Use a separate DBWorker connection if throttling runs
+while application work is transactional; a clone shares the native connection.</p>
+<p>Clones preserve prepared statement definitions but share native connection
+constraints. Finish unread results before admission when the driver cannot run
+another command on the same connection.</p>
+<p>Failed owned transactions are rolled back when still active. A rollback or cleanup
+failure does not replace the primary exception. A failed rollback requires caller
+connection recovery. DBWorkerException failures are wrapped in RuntimeException
+with the original cause, so RequestHandler logs a neutral HTTP 500 system error.</p>
+<h2>Expiry maintenance</h2>
+<p>The common algorithm prunes the current caller's timestamps during admitted updates.
+The DB adapter does not scan other callers. Schedule separate cleanup of inactive
+rows through indexed <code>expires_at</code> and a bound cutoff from the same time source:</p>
+<pre><code class="language-php"><span class="php-var">$cleanup</span> = <span class="php-var">$dbworker</span>-&gt;create_clone();
+
+<span class="php-keyword1">try</span> {
+    <span class="php-var">$cleanup</span>-&gt;prepare_query(<span class="php-quote">&quot;DELETE FROM api_request_throttling WHERE expires_at &lt; ?&quot;</span>);
+
+    <span class="php-var">$cleanup</span>-&gt;execute_prepared_query(sprintf(<span class="php-quote">&quot;%.6F&quot;</span>, microtime(<span class="php-keyword1">true</span>)));
+} <span class="php-keyword1">finally</span> {
+    <span class="php-var">$cleanup</span>-&gt;free_prepared_query();
+}</code></pre>
+<p>Use a trusted table name and a clock consistent with admission workers. Expiry uses
+the newest retained timestamp, conservatively retaining future entries after a
+clock rollback. Both the target and service tables require transactional storage.</p>
+<h2>Verification</h2>
+<p>From the development project root:</p>
+<pre><code class="language-text">php -d xdebug.mode=off tools/phpunit.phar --filter DBRequestThrottlingManagerTest
+php -d xdebug.mode=off application/tests/dbworkers/throttling.php</code></pre>
+<p>Unit tests use mock workers and deterministic time without database access. The
+integration runner uses all four demo connections and package DDL. It checks isolated
+caller histories, retry delays, statement preservation, transaction ownership,
+error recovery, large CLOB payloads, corruption and simultaneous admissions through
+independent PHP processes. Unique fixture tables and only their own service-lock
+rows are removed afterward; demo data is not modified.</p></div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

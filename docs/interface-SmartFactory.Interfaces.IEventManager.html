@@ -119,14 +119,22 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">interface</span> IEventManager
+{
+}</div>
+
 
 
 <div class="short-description">
-<p>Interface for event management.</p>
+<p>Defines synchronous event dispatch with immediate subscription and suspension changes.</p>
 </div>
 
 
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Handler exceptions and errors stop dispatch and are propagated unchanged to the caller.</p>
+</div>
 
 
 
@@ -138,7 +146,7 @@
 <h2>Known implementations</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.EventManager.html'>\SmartFactory\EventManager</a><br>
+<a href="class-SmartFactory.EventManager.html">\SmartFactory\EventManager</a><br>
 
 </div>
 
@@ -163,7 +171,7 @@
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.Interfaces.IEventManager.php.html#17'>SmartFactory/Interfaces/IEventManager.php</a>
+<a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#19'>src/SmartFactory/Interfaces/IEventManager.php</a>
 </div>
 
 
@@ -187,9 +195,11 @@
 
 
 
+
+
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
               <div style='float:left'><a href="#addHandler">addHandler()</a></div>
@@ -201,7 +211,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Adds the handler of an event.</p>
+              <p>Adds an event handler unless the same callable is already registered for this event.</p>
           </td>
       </tr><tr>
           <td>
@@ -214,7 +224,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Deletes all handlers of all events.</p>
+              <p>Deletes all handlers of all events for this instance immediately.</p>
           </td>
       </tr><tr>
           <td>
@@ -227,7 +237,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Deletes the handler of an event.</p>
+              <p>Deletes an event handler if it is registered.</p>
           </td>
       </tr><tr>
           <td>
@@ -240,7 +250,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Deletes all handlers of an event.</p>
+              <p>Deletes all handlers of an event, including pending invocations in active dispatches.</p>
           </td>
       </tr><tr>
           <td>
@@ -253,7 +263,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Fires and event.</p>
+              <p>Fires an event synchronously, invoking handlers in registration order.</p>
           </td>
       </tr><tr>
           <td>
@@ -266,7 +276,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Resumes all previously suspended events.</p>
+              <p>Resumes all events for this instance immediately without replaying skipped invocations.</p>
           </td>
       </tr><tr>
           <td>
@@ -279,7 +289,7 @@
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Resumes a previously suspended event.</p>
+              <p>Resumes an event immediately without replaying previously skipped invocations.</p>
           </td>
       </tr><tr>
           <td>
@@ -295,30 +305,41 @@
               <p>Suspends an event.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
+
+
 <hr id="addHandler">
-  
+
   <h1>Method: IEventManager::addHandler()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> addHandler(<span class="php-keyword1">string</span> <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Adds the handler of an event.</p>
+  <p>Adds an event handler unless the same callable is already registered for this event.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Changes take effect immediately, including during an active dispatch. Newly added
+handlers run after the remaining registered handlers. Closures are identified by
+object identity; other callables by their function or method and target object/class.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -326,7 +347,7 @@
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -336,13 +357,13 @@
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Event code.</p>
+                <p>Nonempty event code. The string "0" is valid.</p>
             </td>
         </tr>
         
@@ -354,29 +375,33 @@
                 by value
             </td>
             <td>
-                callable
+                <code class="php-type">callable(
+    string,
+    array&lt;array-key, mixed&gt;
+): mixed</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The name or definition of the handler function. The signature of
-this function is:</p>
-<pre><code class="language-php"><span class="php-keyword1">function</span> (string <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : void;</code></pre>
+                <p>A function, closure, object method, static method or invokable object accepting the
+event code and event data. Its return value is ignored. A typical signature is:</p>
+<pre><code class="language-php"><span class="php-keyword1">function</span> (<span class="php-keyword1">string</span> <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>) : <span class="php-keyword1">void</span>;</code></pre>
 <ul>
 <li>$event - the event code.</li>
-<li>$parameters - parameters passed by the firing of the event.</li>
+<li>$parameters - the data supplied to fireEvent().</li>
 </ul>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -384,9 +409,9 @@ this function is:</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the event code is an empty string.</p></div>
   
   
   </div>
@@ -407,20 +432,20 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#47'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#53'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler'>\SmartFactory\Interfaces\IEventManager::deleteHandler()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler">\SmartFactory\Interfaces\IEventManager::deleteHandler()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers'>\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers">\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers'>\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers">\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a><br>
   
   
   </div>
@@ -438,17 +463,23 @@ this function is:</p>
   
 
   <hr id="deleteAllHandlers">
-  
+
   <h1>Method: IEventManager::deleteAllHandlers()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteAllHandlers(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteAllHandlers(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Deletes all handlers of all events.</p>
+  <p>Deletes all handlers of all events for this instance immediately.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Pending invocations in active dispatches are skipped. Suspension state is preserved.</p>
+  </div>
   
 
   
@@ -458,7 +489,7 @@ this function is:</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -481,20 +512,20 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#101'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#112'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#addHandler'>\SmartFactory\Interfaces\IEventManager::addHandler()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#addHandler">\SmartFactory\Interfaces\IEventManager::addHandler()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler'>\SmartFactory\Interfaces\IEventManager::deleteHandler()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler">\SmartFactory\Interfaces\IEventManager::deleteHandler()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers'>\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers">\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a><br>
   
   
   </div>
@@ -512,24 +543,32 @@ this function is:</p>
   
 
   <hr id="deleteHandler">
-  
+
   <h1>Method: IEventManager::deleteHandler()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandler(string <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandler(<span class="php-keyword1">string</span> <span class="php-var">$event</span>, <span class="php-keyword1">callable</span> <span class="php-var">$handler</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Deletes the handler of an event.</p>
+  <p>Deletes an event handler if it is registered.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Removal takes effect immediately: a pending invocation in an active dispatch
+is skipped. An invocation already in progress is allowed to finish.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -537,7 +576,7 @@ this function is:</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -547,13 +586,13 @@ this function is:</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Event code.</p>
+                <p>Nonempty event code. The string "0" is valid.</p>
             </td>
         </tr>
         
@@ -565,23 +604,27 @@ this function is:</p>
                 by value
             </td>
             <td>
-                callable
+                <code class="php-type">callable(
+    string,
+    array&lt;array-key, mixed&gt;
+): mixed</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The name or definition of the handler function. otherwise false.</p>
+                <p>The original closure or the function, method or invokable object to remove.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -589,9 +632,9 @@ this function is:</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the event code is an empty string.</p></div>
   
   
   </div>
@@ -612,20 +655,20 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#69'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#78'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#addHandler'>\SmartFactory\Interfaces\IEventManager::addHandler()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#addHandler">\SmartFactory\Interfaces\IEventManager::addHandler()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers'>\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandlers">\SmartFactory\Interfaces\IEventManager::deleteHandlers()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers'>\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers">\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a><br>
   
   
   </div>
@@ -643,14 +686,15 @@ this function is:</p>
   
 
   <hr id="deleteHandlers">
-  
+
   <h1>Method: IEventManager::deleteHandlers()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandlers(string <span class="php-var">$event</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> deleteHandlers(<span class="php-keyword1">string</span> <span class="php-var">$event</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Deletes all handlers of an event.</p>
+  <p>Deletes all handlers of an event, including pending invocations in active dispatches.</p>
   </div>
   
 
@@ -660,7 +704,8 @@ this function is:</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -668,7 +713,7 @@ this function is:</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -678,23 +723,24 @@ this function is:</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Event code.</p>
+                <p>Nonempty event code. The string "0" is valid.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -702,9 +748,9 @@ this function is:</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the event code is an empty string.</p></div>
   
   
   </div>
@@ -725,20 +771,20 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#88'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#97'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#addHandler'>\SmartFactory\Interfaces\IEventManager::addHandler()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#addHandler">\SmartFactory\Interfaces\IEventManager::addHandler()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler'>\SmartFactory\Interfaces\IEventManager::deleteHandler()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteHandler">\SmartFactory\Interfaces\IEventManager::deleteHandler()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers'>\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#deleteAllHandlers">\SmartFactory\Interfaces\IEventManager::deleteAllHandlers()</a><br>
   
   
   </div>
@@ -756,24 +802,37 @@ this function is:</p>
   
 
   <hr id="fireEvent">
-  
+
   <h1>Method: IEventManager::fireEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fireEvent(string <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): int;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fireEvent(<span class="php-keyword1">string</span> <span class="php-var">$event</span>, <span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">int</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Fires and event.</p>
+  <p>Fires an event synchronously, invoking handlers in registration order.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Subscription changes take effect immediately during dispatch. Removed handlers
+are skipped, newly registered handlers are appended, and suspension stops further
+invocations while it remains in effect. Removing and registering a handler again
+creates a new registration at the end, even if it has already run in this dispatch.
+Recursive dispatches maintain independent invocation counts.</p>
+<p>Any exception or error from a handler stops dispatch immediately and is propagated
+unchanged to the caller. The remaining handlers are not invoked.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -781,7 +840,7 @@ this function is:</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -791,13 +850,13 @@ this function is:</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Event code.</p>
+                <p>Nonempty event code. The string "0" is valid.</p>
             </td>
         </tr>
         
@@ -809,25 +868,26 @@ this function is:</p>
                 by value
             </td>
             <td>
-                array
+                <code class="php-type">array&lt;array-key, mixed&gt;</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Event code.</p>
+                <p>Event data passed to each handler as its second argument.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  int<br>
+  <code class="php-type">int</code><br>
   
-  <div class="item_description"><p>Should return number of the handlers called for this event.</p></div>
+  <div class="item_description"><p>Returns the number of handlers invoked by this dispatch, or zero if none ran.</p></div>
   
   </div>
   
@@ -835,9 +895,14 @@ this function is:</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the event code is an empty string.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If a handler throws an exception or error; dispatch stops and the same throwable is propagated.</p></div>
   
   
   </div>
@@ -858,7 +923,7 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#170'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#194'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
@@ -877,14 +942,15 @@ this function is:</p>
   
 
   <hr id="resumeAllEvents">
-  
+
   <h1>Method: IEventManager::resumeAllEvents()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeAllEvents(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeAllEvents(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Resumes all previously suspended events.</p>
+  <p>Resumes all events for this instance immediately without replaying skipped invocations.</p>
   </div>
   
 
@@ -897,7 +963,7 @@ this function is:</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -920,17 +986,17 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#151'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#163'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#suspendEvent'>\SmartFactory\Interfaces\IEventManager::suspendEvent()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#suspendEvent">\SmartFactory\Interfaces\IEventManager::suspendEvent()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#resumeEvent'>\SmartFactory\Interfaces\IEventManager::resumeEvent()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#resumeEvent">\SmartFactory\Interfaces\IEventManager::resumeEvent()</a><br>
   
   
   </div>
@@ -948,14 +1014,15 @@ this function is:</p>
   
 
   <hr id="resumeEvent">
-  
+
   <h1>Method: IEventManager::resumeEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeEvent(string <span class="php-var">$event</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> resumeEvent(<span class="php-keyword1">string</span> <span class="php-var">$event</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Resumes a previously suspended event.</p>
+  <p>Resumes an event immediately without replaying previously skipped invocations.</p>
   </div>
   
 
@@ -965,7 +1032,8 @@ this function is:</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -973,7 +1041,7 @@ this function is:</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -983,23 +1051,24 @@ this function is:</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Event code.</p>
+                <p>Nonempty event code. The string "0" is valid.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -1007,9 +1076,9 @@ this function is:</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the event code is an empty string.</p></div>
   
   
   </div>
@@ -1030,17 +1099,17 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#139'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#151'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#suspendEvent'>\SmartFactory\Interfaces\IEventManager::suspendEvent()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#suspendEvent">\SmartFactory\Interfaces\IEventManager::suspendEvent()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#resumeAllEvents'>\SmartFactory\Interfaces\IEventManager::resumeAllEvents()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#resumeAllEvents">\SmartFactory\Interfaces\IEventManager::resumeAllEvents()</a><br>
   
   
   </div>
@@ -1058,10 +1127,11 @@ this function is:</p>
   
 
   <hr id="suspendEvent">
-  
+
   <h1>Method: IEventManager::suspendEvent()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> suspendEvent(string <span class="php-var">$event</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> suspendEvent(<span class="php-keyword1">string</span> <span class="php-var">$event</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
@@ -1072,7 +1142,8 @@ this function is:</p>
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>If an event is suspended, its handlers are not called when the event is fired.</p>
+  <p>Suspension takes effect immediately. No further handlers are called in an active
+dispatch while the event remains suspended; a handler already running can finish.</p>
   </div>
   
 
@@ -1080,7 +1151,8 @@ this function is:</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1088,7 +1160,7 @@ this function is:</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1098,23 +1170,24 @@ this function is:</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>Event code.</p>
+                <p>Nonempty event code. The string "0" is valid.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
   </div>
   
@@ -1122,9 +1195,9 @@ this function is:</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  \Exception<br>
+  <code class="php-type">\InvalidArgumentException</code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the event code is an empty string.</p></div>
   
   
   </div>
@@ -1145,23 +1218,23 @@ this function is:</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.Interfaces.IEventManager.php.html#121'>SmartFactory/Interfaces/IEventManager.php</a>
+  <a href='source-src.SmartFactory.Interfaces.IEventManager.php.html#133'>src/SmartFactory/Interfaces/IEventManager.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#resumeEvent'>\SmartFactory\Interfaces\IEventManager::resumeEvent()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#resumeEvent">\SmartFactory\Interfaces\IEventManager::resumeEvent()</a><br>
   
   
-  <a href='interface-SmartFactory.Interfaces.IEventManager.html#resumeAllEvents'>\SmartFactory\Interfaces\IEventManager::resumeAllEvents()</a><br>
+  <a href="interface-SmartFactory.Interfaces.IEventManager.html#resumeAllEvents">\SmartFactory\Interfaces\IEventManager::resumeAllEvents()</a><br>
   
   
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

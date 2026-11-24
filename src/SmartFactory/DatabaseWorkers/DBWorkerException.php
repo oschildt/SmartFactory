@@ -1,7 +1,6 @@
 <?php
 /**
- * This file contains the implementation of the class DBWorkerException. It extends the DBWorkerException
- * exception to distinguish the database related errors in catches.
+ * This file contains the implementation of the class DBWorkerException.
  *
  * @package Database
  *
@@ -10,43 +9,48 @@
 
 namespace SmartFactory\DatabaseWorkers;
 
-use \SmartFactory\SmartException;
+use SmartFactory\SmartException;
 
 /**
- * Class for DBWorkerException in the SmartFactory library.
+ * Exception for database worker connection, query, data-format and stream errors.
+ *
+ * Extends SmartException with stable string error codes and optional technical SQL information.
  *
  * @author Oleg Schildt
  */
 class DBWorkerException extends SmartException
 {
     /**
-     * Constructor.
+     * Creates an exception carrying a stable database-worker error code.
      *
      * @param string $message
-     * Error message.
+     * The human-readable error message.
      *
      * @param string $error_code
-     * Error code.
-     *
-     * Since the error texts can be localized, the unique code of the error might be important fo using
-     * in comparison.
+     * The stable error code, independent of the localized error message.
      *
      * @param string $error_element
-     * Error element.
+     * The related input or application element, when available.
      *
-     * @param array $error_details
-     * The details might be useful if the message translations are provided on the client, not
-     * on the server, and the message should contain some details that may vary from case to case.
-     * In that case, the servers return the message id instead of final text and the details, the client
-     * uses the message id, gets the final translated text and substitutes the parameters through the details.
+     * @param array<array-key, mixed> $error_details
+     * Optional structured details used by an application, including localized-message substitutions.
      *
      * @param string $technical_info
-     * Additional technical information. It can be used if it is a programming error and displayed only if the debug mode is active.
+     * Technical diagnostics such as an SQL template. Applications decide whether to display them.
+     *
+     * @param \Throwable|null $previous
+     * The original exception or error, or null when there is no underlying cause.
      *
      * @author Oleg Schildt
      */
-    public function __construct(string $message, string $error_code, string $error_element = "", array $error_details = [], string $technical_info = "")
-    {
-        parent::__construct($message, $error_code, $error_element, $error_details, $technical_info);
-    }
+    public function __construct(
+        string $message,
+        string $error_code,
+        string $error_element = "",
+        array $error_details = [],
+        string $technical_info = "",
+        ?\Throwable $previous = null
+    ) {
+        parent::__construct($message, $error_code, $error_element, $error_details, $technical_info, $previous);
+    } // __construct
 } // DBWorkerException

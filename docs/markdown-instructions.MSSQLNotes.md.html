@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            SQL Server results without MARS - SmartFactory Library
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+ 
+
+                        <li class="active"></li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="markdown-content"><h1>SQL Server results without MARS</h1>
+<p><code>MSSQL_DBWorker</code> explicitly connects with <code>MultipleActiveResultSets =&gt; false</code>.
+Clones continue to share one native connection, session and transaction. Creating
+a clone does not open a second connection.</p>
+<h2>Forward-only results</h2>
+<p>All statements use <code>SQLSRV_CURSOR_FORWARD</code>. An unread result keeps the shared
+connection busy; the former <code>scrollable</code> option no longer selects static cursors.
+Before another worker issues a request or starts a transaction, either read the
+result until <code>fetch_row()</code> returns false or call <code>free_result()</code> to cancel it.
+Otherwise the native driver reports a pending-results error as DBWorkerException.
+The failed competing request does not cancel the original worker's result.</p>
+<p>A prepared
+statement remains reusable after EOF or <code>free_result()</code>. Explicit cancellation
+discards pending results; reading to EOF completes trailing batch commands and
+reports deferred SQL errors.</p>
+<p>Stored procedure results and explicit OUTPUT clauses also use forward-only
+results. The wrapper exposes the first public row result and skips preceding row-count results.
+It does not provide a public interface for multiple row result sets; later row
+sets are discarded when the batch is completed.</p>
+<h2>Internal and discarded results</h2>
+<p>Result-free batches and internal SCOPE_IDENTITY results are consumed completely
+before returning. This releases the connection and prevents unread protocol
+results from blocking a clone's metadata queries or transaction commands.</p>
+<p><code>execute_procedure()</code> intentionally exposes no result rows or output parameters.
+SQL Server consumes those results before freeing the procedure statement, so
+commands following an ignored SELECT execute and deferred errors are reported.
+To read a procedure result, use an ordinary or prepared EXEC query and fetch its
+first row result.</p>
+<p>On execution or fetch failure, the driver cancels its own pending results. It
+keeps other workers' results intact. Explicit-ID batches still restore
+IDENTITY_INSERT and stream parameters retain their existing ownership rules.</p>
+<h2>Verification</h2>
+<p>The integration runner includes <code>mssql_mars_cases.php</code> for the MSSQL driver.
+It checks that a pending forward-only result really blocks a clone, which also
+detects accidentally enabling MARS or replacing streaming with silent buffering.
+The normal integration checks additionally cover transactions, shared clones,
+bound parameters, large binary/Unicode fields and concurrent record saving.</p></div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

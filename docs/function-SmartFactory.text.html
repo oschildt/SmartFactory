@@ -107,7 +107,8 @@
                 <div class="col-md-12">
                     <h1>Function: text()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> text(string <span class="php-var">$text_id</span>, string <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, string <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>): string;</div>
+<div class="definition"><span class="php-keyword1">function</span> text(<span class="php-keyword1">string</span> <span class="php-var">$text_id</span>, <span class="php-keyword1">string</span> <span class="php-var">$lng</span> = <span class="php-quote">&quot;&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$default_text</span> = <span class="php-quote">&quot;&quot;</span>): <span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
@@ -122,7 +123,8 @@ the text ID for the given language.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -140,7 +142,7 @@ the text ID for the given language.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               
@@ -158,7 +160,7 @@ the text ID for the given language.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;&quot;
@@ -177,7 +179,7 @@ the default language is used.</p>
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;&quot;
@@ -189,13 +191,14 @@ the default language is used.</p>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-string<br>
+<code class="php-type">string</code><br>
 
-<div class="item_description"><p>Returns the translation text or the $text_id if no translation
+<div class="item_description"><p>Returns the translation text or the $default_text/$text_id if no translation
 is found.</p></div>
 
 </div>
@@ -204,14 +207,15 @@ is found.</p></div>
 <h2>Throws</h2>
 <div class="item_list">
 
-\Exception<br>
+<code class="php-type"><a href="class-SmartFactory.ObjectFactoryException.html">ObjectFactoryException</a></code><br>
 
-<div class="item_description"><p>It might throw the following exceptions in the case of any errors:</p>
-<ul>
-<li>if the interface or class is not specified.</li>
-<li>if the interface or class does not exist.</li>
-<li>if the check of the classes and interfaces fails.</li>
-</ul></div>
+<div class="item_description"><p>If the service binding is missing, the contract is unknown, a circular dependency
+is detected, or the factory result does not satisfy the requested contract.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If creating the language manager or resolving the requested translation throws.</p></div>
 
 
 </div>
@@ -237,11 +241,11 @@ is found.</p></div>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-short_functions_inc.php.html#47'>short_functions_inc.php</a>
+<a href='source-src.short_functions_inc.php.html#83'>src/short_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

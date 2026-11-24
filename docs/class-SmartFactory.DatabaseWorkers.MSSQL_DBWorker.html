@@ -119,23 +119,26 @@
 
 
 
-<div class="definition"></div>
+<div class="definition"><span class="php-keyword1">class</span> MSSQL_DBWorker <span class="php-keyword1">extends</span> DBWorker
+{
+}</div>
+
 
 
 <div class="short-description">
-<p>This is the class for the MS SQL database using the extension sqlsrv.</p>
+<p>Database worker for Microsoft SQL Server using the sqlsrv extension.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>This is a wrapper around the database connectivity. It offers a universal
-common way for working with databases of different types. Currently, MySQL, PostgreSQL and
-MS SQL are supported. If in the future, there will be a better solution, or
-the current solution turns out to be inefficient in a new version of PHP,
-we can easily reimplement the DB wrapper without touching the business logic code.
-Adding support for new database types is also much easier with this wrapping approach.</p>
+<p>Uses UTF-8 connections with Multiple Active Result Sets disabled.
+All queries use forward-only cursors without buffering the complete result set.
+An unread forward-only result must be exhausted or freed before another request uses the connection.
+Large result fields are spooled to temporary files; Unicode streams are converted
+from UTF-16LE without splitting surrogate pairs.</p>
+<p>SQL Server has no native read-only transaction mode, so the read_only option is rejected.</p>
 </div>
 
 
@@ -144,7 +147,7 @@ Adding support for new database types is also much easier with this wrapping app
 <h2>Extends</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.DatabaseWorkers.DBWorker.html'>\SmartFactory\DatabaseWorkers\DBWorker</a><br>
+<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
 
 </div>
 
@@ -175,22 +178,25 @@ Adding support for new database types is also much easier with this wrapping app
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#30'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+<a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#30'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='class-SmartFactory.DatabaseWorkers.PostgreSQL_DBWorker.html'>\SmartFactory\DatabaseWorkers\PostgreSQL_DBWorker</a><br>
-
-
-<a href='class-SmartFactory.DatabaseWorkers.MySQL_DBWorker.html'>\SmartFactory\DatabaseWorkers\MySQL_DBWorker</a><br>
+<a href="class-SmartFactory.DatabaseWorkers.DBWorker.html">\SmartFactory\DatabaseWorkers\DBWorker</a><br>
 
 
 </div>
 
+<h2>Links</h2>
+<div class="item_list">
 
+<a href="markdown-instructions.MSSQLNotes.md.html" target="_blank" rel="noopener">Important notes</a><br>
+
+
+</div>
 
 
 
@@ -210,186 +216,104 @@ Adding support for new database types is also much easier with this wrapping app
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Properties</th></tr>
-      
+
       <tr>
           <td>
-              <div style='float:left'><a href="#$connection">$connection</a></div>
+              <div style='float:left'><a href="#$bound_values">$bound_values</a></div>
 
               <div style='float:right'>
               
-              <span class='label label-warning'>protected</span>
+              <span class='label label-danger'>private</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the resource handle of the opened connection.</p>
+              <p>Keeps native bind variables alive until statement execution has completed.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$field_names">$field_names</a></div>
+              <div style='float:left'><a href="#$captures_identity">$captures_identity</a></div>
 
               <div style='float:right'>
               
-              <span class='label label-warning'>protected</span>
+              <span class='label label-danger'>private</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing of the column names
-from the result of the last retrieving query.</p>
+              <p>Indicates whether the SQL Server INSERT batch includes an internal SCOPE_IDENTITY result.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$last_query_is_insert">$last_query_is_insert</a></div>
+              <div style='float:left'><a href="#$executed">$executed</a></div>
 
               <div style='float:right'>
               
-              <span class='label label-warning'>protected</span>
+              <span class='label label-danger'>private</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Stores the state whether the last query was an insert or not.</p>
+              <p>Indicates whether a sqlsrv statement has executed and may need its active results canceled.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$prepared_query">$prepared_query</a></div>
+              <div style='float:left'><a href="#$native_parameters">$native_parameters</a></div>
 
               <div style='float:right'>
               
-              <span class='label label-warning'>protected</span>
+              <span class='label label-danger'>private</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing of the last prepared query.</p>
+              <p>Stores sqlsrv parameter descriptors referencing the persistent bound_values entries.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$query_parameters">$query_parameters</a></div>
+              <div style='float:left'><a href="#$parameter_signature">$parameter_signature</a></div>
 
               <div style='float:right'>
               
-              <span class='label label-warning'>protected</span>
+              <span class='label label-danger'>private</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing of the parameters
-of the last prepared query.</p>
+              <p>Stores the serialized sqlsrv parameter types used to decide whether rebinding requires preparation.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#$row">$row</a></div>
+              <div style='float:left'><a href="#$prepared_sql">$prepared_sql</a></div>
 
               <div style='float:right'>
               
-              <span class='label label-warning'>protected</span>
+              <span class='label label-danger'>private</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Internal variable for storing of the current fetched row
-from the result of the last retrieving query.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#$statement">$statement</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-warning'>protected</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Stores the resource handle of the statement
-of the last executed query.</p>
+              <p>Stores native SQL, including any appended identity query, for sqlsrv re-preparation.</p>
           </td>
       </tr>
-      
+
   </table>
 
 <table class="table table-responsive table-bordered table-striped class_multicolumn">
       <tr><th colspan="2">Methods</th></tr>
-      
+
       <tr>
           <td>
-              <div style='float:left'><a href="#__construct">__construct()</a></div>
+              <div style='float:left'><a href="#accept_statement">accept_statement()</a></div>
 
               <div style='float:right'>
               
-              <span class='label label-success'>public</span>
+              <span class='label label-danger'>private</span>
               </div>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Constructor.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#__destruct">__destruct()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Destructor.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#affected_count">affected_count()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the number of the rows affected by the last modification query.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#build_select_query">build_select_query()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Builds simple select query based on parameters.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#close_connection">close_connection()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Closes the currently opened connection.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#commit_transaction">commit_transaction()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Commits the translation.</p>
+              <p>Captures SQL Server row counts, identity values and result metadata.</p>
           </td>
       </tr><tr>
           <td>
@@ -402,8 +326,7 @@ of the last executed query.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Establishes the connection to the database using the connection
-settings parameters specified by the initialization.</p>
+              <p>Establishes the database connection using the initialized settings.</p>
           </td>
       </tr><tr>
           <td>
@@ -416,8 +339,33 @@ settings parameters specified by the initialization.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Creates a clone of the dbworker that is using the same open
-connection.</p>
+              <p>Creates a clone of the DBWorker that uses the same open connection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#dialect">dialect()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the SQL dialect used by the placeholder compiler.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#errors">errors()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Returns the most recent native driver error message.</p>
           </td>
       </tr><tr>
           <td>
@@ -430,11 +378,24 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Escapes the string so that it can be used in the query without causing an error.</p>
+              <p>Escapes a string for inclusion in an SQL string literal without adding quotation marks.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#execute_prepared_query">execute_prepared_query()</a></div>
+              <div style='float:left'><a href="#finish_results">finish_results()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Completes the remaining results after the public row result or internal identity is consumed.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#format_date_bind">format_date_bind()</a></div>
 
               <div style='float:right'>
               
@@ -443,11 +404,11 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Executes the prepared SQL query.</p>
+              <p>Formats a date as a native bind value.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#execute_procedure">execute_procedure()</a></div>
+              <div style='float:left'><a href="#format_datetime_bind">format_datetime_bind()</a></div>
 
               <div style='float:right'>
               
@@ -456,176 +417,7 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Executes the SQL stored procedure.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#execute_query">execute_query()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Executes the SQL query.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#fetch_array">fetch_array()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Fetches all rows from the result into an array.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#fetch_row">fetch_row()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Fetches the next row of data from the result of the execution of the retrieving query.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#fetched_count">fetched_count()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the number of the rows fetched by the last retrieving query.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#field_by_name">field_by_name()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the value of a field specified by name.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#field_by_num">field_by_num()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the value of a field specified by number.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#field_count">field_count()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the number of the fields in the result of the last retrieving query.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#field_info_by_num">field_info_by_num()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the meta information about the field as an object with properties.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#field_name">field_name()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the name of the field by number.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#format_date">format_date()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Formats the date to a string compatible for the corresponding database.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#format_datetime">format_datetime()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Formats the date/time to a string compatible for the corresponding database.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#free_prepared_query">free_prepared_query()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Frees the prepared query.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#free_result">free_result()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Frees the result of the previously executed retrieving query.</p>
+              <p>Formats a date/time as a native bind value.</p>
           </td>
       </tr><tr>
           <td>
@@ -655,45 +447,6 @@ connection.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#get_schema">get_schema()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the name of the database schema if applicable.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#init">init()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Initializes the dbworker with connection parameters.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#insert_id">insert_id()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Returns the value of the auto increment field by the last insertion.</p>
-          </td>
-      </tr><tr>
-          <td>
               <div style='float:left'><a href="#is_connected">is_connected()</a></div>
 
               <div style='float:right'>
@@ -703,104 +456,11 @@ connection.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Returns the connection state.</p>
+              <p>Returns the state of this worker's native connection.</p>
           </td>
       </tr><tr>
           <td>
-              <div style='float:left'><a href="#is_extension_installed">is_extension_installed()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Checks whether the extension (sqlsrv) is installed which is required for work with
-the MySQL database.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#prepare_for_query">prepare_for_query()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Prepares the value for putting to a query depending on its type. It does escaping, formatting
-and quotation if necessary.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#prepare_query">prepare_query()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Prepares the SQL query with bindable variables.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#qualify_name_with_schema">qualify_name_with_schema()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Completes the name of a database object with the schema name if applicable.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#rollback_transaction">rollback_transaction()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Rolls back the translation.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#start_transaction">start_transaction()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Starts the translation.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#stream_long_data">stream_long_data()</a></div>
-
-              <div style='float:right'>
-              
-              <span class='label label-success'>public</span>
-              </div>
-              <div style="clear:both"></div>
-          </td>
-          <td class="description_column">
-              <p>Stores long data from a stream.</p>
-          </td>
-      </tr><tr>
-          <td>
-              <div style='float:left'><a href="#sys_get_errors">sys_get_errors()</a></div>
+              <div style='float:left'><a href="#native_execute">native_execute()</a></div>
 
               <div style='float:right'>
               
@@ -809,7 +469,228 @@ and quotation if necessary.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Retrieves the last errors occurred while execution of the query.</p>
+              <p>Binds validated values and executes the native prepared statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_fetch">native_fetch()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Fetches the next row through the native driver.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_finish_procedure">native_finish_procedure()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Consumes procedure results that the public execute_procedure() convenience method discards.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_free_result">native_free_result()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Releases native result resources without discarding a reusable prepared statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_free_statement">native_free_statement()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Releases the native prepared statement and its driver-specific bind state.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_prepare">native_prepare()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Creates a native statement from SQL whose bind markers have already been compiled.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_query">native_query()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Executes SQL through the native driver and records the resulting metadata.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_restore_transaction_isolation">native_restore_transaction_isolation()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Restores the SQL Server session default after a successful commit or rollback.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_check">native_save_check()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Rejects an aborted, externally ended or snapshot-isolated managed SQL Server transaction.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_insert">native_save_insert()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Temporarily enables explicit SQL Server identity insertion and restores the session setting.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_key">native_save_key()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Hashes typed SQL Server key expressions according to their native equality semantics.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_lock">native_save_lock()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Creates or exclusively locks a SQL Server service row under serializable key-range protection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_save_table">native_save_table()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resolves SQL Server table identity, column types and collation-aware comparison fingerprints.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#native_transaction">native_transaction()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Performs a native transaction operation on the shared connection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#quotes_or_null">quotes_or_null()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Escapes and quotes a string, or prepares an SQL NULL literal.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#reset_driver_state">reset_driver_state()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Resets driver-specific state after cloning or statement cleanup.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#session_transaction_isolation">session_transaction_isolation()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reads or sets SQL Server session isolation without replacing the worker's public statement.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#statement_options">statement_options()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Builds SQL Server statement options for sequential result reading.</p>
           </td>
       </tr><tr>
           <td>
@@ -822,23 +703,37 @@ and quotation if necessary.</p>
               <div style="clear:both"></div>
           </td>
           <td class="description_column">
-              <p>Sets the database as working database.</p>
+              <p>Selects another SQL Server database on the current connection.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#with_identity">with_identity()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-danger'>private</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Appends an identity query to an eligible SQL Server INSERT batch.</p>
           </td>
       </tr>
-      
+
   </table>
 
 
 
-<hr id="$connection">
-  
-  <h1>Property: MSSQL_DBWorker::$connection</h1>
+<hr id="$bound_values">
 
-  <div class="definition"><span class="php-keyword1">protected</span> resource <span class="php-var">$connection</span> = <span class="php-keyword1">null</span>;</div>
+  <h1>Property: MSSQL_DBWorker::$bound_values</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">array</span> <span class="php-var">$bound_values</span> = [];</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the resource handle of the opened connection.</p>
+  <p>Keeps native bind variables alive until statement execution has completed.</p>
   </div>
   
 
@@ -847,7 +742,7 @@ and quotation if necessary.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  resource
+  <code class="php-type">array&lt;int, (int | float | string | resource | null)&gt;</code>
   </div>
   
 
@@ -867,17 +762,17 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#39'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div><hr id="$field_names">
-  
-  <h1>Property: MSSQL_DBWorker::$field_names</h1>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#39'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div><hr id="$captures_identity">
 
-  <div class="definition"><span class="php-keyword1">protected</span> ?<span class="php-keyword1">array</span> <span class="php-var">$field_names</span> = <span class="php-keyword1">null</span>;</div>
+  <h1>Property: MSSQL_DBWorker::$captures_identity</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">bool</span> <span class="php-var">$captures_identity</span> = <span class="php-keyword1">false</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing of the column names
-from the result of the last retrieving query.</p>
+  <p>Indicates whether the SQL Server INSERT batch includes an internal SCOPE_IDENTITY result.</p>
   </div>
   
 
@@ -886,7 +781,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  ?array
+  <code class="php-type">bool</code>
   </div>
   
 
@@ -906,16 +801,17 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#87'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div><hr id="$last_query_is_insert">
-  
-  <h1>Property: MSSQL_DBWorker::$last_query_is_insert</h1>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#75'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div><hr id="$executed">
 
-  <div class="definition"><span class="php-keyword1">protected</span> bool <span class="php-var">$last_query_is_insert</span> = <span class="php-keyword1">false</span>;</div>
+  <h1>Property: MSSQL_DBWorker::$executed</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">bool</span> <span class="php-var">$executed</span> = <span class="php-keyword1">false</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the state whether the last query was an insert or not.</p>
+  <p>Indicates whether a sqlsrv statement has executed and may need its active results canceled.</p>
   </div>
   
 
@@ -924,7 +820,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  bool
+  <code class="php-type">bool</code>
   </div>
   
 
@@ -944,16 +840,17 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#67'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div><hr id="$prepared_query">
-  
-  <h1>Property: MSSQL_DBWorker::$prepared_query</h1>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#84'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div><hr id="$native_parameters">
 
-  <div class="definition"><span class="php-keyword1">protected</span> ?string <span class="php-var">$prepared_query</span> = <span class="php-keyword1">null</span>;</div>
+  <h1>Property: MSSQL_DBWorker::$native_parameters</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">array</span> <span class="php-var">$native_parameters</span> = [];</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing of the last prepared query.</p>
+  <p>Stores sqlsrv parameter descriptors referencing the persistent bound_values entries.</p>
   </div>
   
 
@@ -962,7 +859,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  ?string
+  <code class="php-type">list&lt;list&lt;mixed&gt;&gt;</code>
   </div>
   
 
@@ -982,17 +879,17 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#58'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div><hr id="$query_parameters">
-  
-  <h1>Property: MSSQL_DBWorker::$query_parameters</h1>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#48'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div><hr id="$parameter_signature">
 
-  <div class="definition"><span class="php-keyword1">protected</span> ?<span class="php-keyword1">array</span> <span class="php-var">$query_parameters</span> = <span class="php-keyword1">null</span>;</div>
+  <h1>Property: MSSQL_DBWorker::$parameter_signature</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> ?<span class="php-keyword1">string</span> <span class="php-var">$parameter_signature</span> = <span class="php-keyword1">null</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing of the parameters
-of the last prepared query.</p>
+  <p>Stores the serialized sqlsrv parameter types used to decide whether rebinding requires preparation.</p>
   </div>
   
 
@@ -1001,7 +898,7 @@ of the last prepared query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  ?array
+  <code class="php-type">(string | null)</code>
   </div>
   
 
@@ -1021,17 +918,17 @@ of the last prepared query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#97'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div><hr id="$row">
-  
-  <h1>Property: MSSQL_DBWorker::$row</h1>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#57'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div><hr id="$prepared_sql">
 
-  <div class="definition"><span class="php-keyword1">protected</span> ?<span class="php-keyword1">array</span> <span class="php-var">$row</span> = <span class="php-keyword1">null</span>;</div>
+  <h1>Property: MSSQL_DBWorker::$prepared_sql</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">string</span> <span class="php-var">$prepared_sql</span> = <span class="php-quote">&#039;&#039;</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Internal variable for storing of the current fetched row
-from the result of the last retrieving query.</p>
+  <p>Stores native SQL, including any appended identity query, for sqlsrv re-preparation.</p>
   </div>
   
 
@@ -1040,7 +937,7 @@ from the result of the last retrieving query.</p>
   
   <h2>Type</h2>
   <div class="item_list">
-  ?array
+  <code class="php-type">string</code>
   </div>
   
 
@@ -1060,438 +957,29 @@ from the result of the last retrieving query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#77'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div><hr id="$statement">
-  
-  <h1>Property: MSSQL_DBWorker::$statement</h1>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#66'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
 
-  <div class="definition"><span class="php-keyword1">protected</span> resource <span class="php-var">$statement</span> = <span class="php-keyword1">null</span>;</div>
+<hr id="accept_statement">
+
+  <h1>Method: MSSQL_DBWorker::accept_statement()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> accept_statement(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Stores the resource handle of the statement
-of the last executed query.</p>
-  </div>
-  
-
-  
-
-  
-  <h2>Type</h2>
-  <div class="item_list">
-  resource
-  </div>
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#49'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-
-<hr id="__construct">
-  
-  <h1>Method: MSSQL_DBWorker::__construct()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __construct();</div>
-
-  
-  <div class="short-description">
-  <p>Constructor.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#155'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="__destruct">
-  
-  <h1>Method: MSSQL_DBWorker::__destruct()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> __destruct(): void;</div>
-
-  
-  <div class="short-description">
-  <p>Destructor.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#166'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="affected_count">
-  
-  <h1>Method: MSSQL_DBWorker::affected_count()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> affected_count(): int;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the number of the rows affected by the last modification query.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  int<br>
-  
-  <div class="item_description"><p>Returns the number of the rows affected by the last modification query.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#affected_count'>\SmartFactory\DatabaseWorkers\DBWorker::affected_count()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1141'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="build_select_query">
-  
-  <h1>Method: MSSQL_DBWorker::build_select_query()</h1>
-
-  <div class="definition"><span class="php-keyword1">function</span> build_select_query(string <span class="php-var">$table</span>, 
-                            <span class="php-keyword1">array</span> <span class="php-var">$fields</span>, 
-                            string <span class="php-var">$where_clause</span>, 
-                            string <span class="php-var">$order_clause</span>, 
-                            int <span class="php-var">$limit</span>
-                           ) : string;
-</div>
-
-  
-  <div class="short-description">
-  <p>Builds simple select query based on parameters.</p>
+  <p>Captures SQL Server row counts, identity values and result metadata.</p>
   </div>
   
 
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>It is used for building queries with limits.</p>
+  <p>Consumes leading row-count results and complete result-free batches. An appended
+SCOPE_IDENTITY result is consumed internally. The first ordinary row result remains
+available for public field access; its cursor is released when reading reaches EOF.</p>
   </div>
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $table
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The name of the table.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $fields
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                array
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The list of request fields.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $where_clause
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The where clause that should restrict the result.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $order_clause
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The order clause to sort the results.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $limit
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                int
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The limit how many records should be loaded. 0 for unlimited.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  string<br>
-  
-  <div class="item_description"><p>Returns the built query.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#build_select_query'>\SmartFactory\DatabaseWorkers\DBWorker::build_select_query()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1518'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="close_connection">
-  
-  <h1>Method: MSSQL_DBWorker::close_connection()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> close_connection(): void;</div>
-
-  
-  <div class="short-description">
-  <p>Closes the currently opened connection.</p>
-  </div>
-  
-
   
 
   
@@ -1501,83 +989,9 @@ of the last executed query.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
   
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection'>\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#795'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#is_connected'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::is_connected()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#connect'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::connect()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="commit_transaction">
-  
-  <h1>Method: MSSQL_DBWorker::commit_transaction()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> commit_transaction(): void;</div>
-
-  
-  <div class="short-description">
-  <p>Commits the translation.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
+  <div class="item_description"><p>Does not return a value.</p></div>
   
   </div>
   
@@ -1585,18 +999,13 @@ of the last executed query.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
   
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If native result processing fails.</p></div>
   
   
   </div>
 
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#commit_transaction'>\SmartFactory\DatabaseWorkers\DBWorker::commit_transaction()</a>
-  </div>
   
 
   <h2>Authors</h2>
@@ -1613,20 +1022,11 @@ of the last executed query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#847'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#600'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
-  <h2>See also</h2>
-  <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#start_transaction'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::start_transaction()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#rollback_transaction'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::rollback_transaction()</a><br>
-  
-  
-  </div>
 
   
 
@@ -1641,18 +1041,25 @@ of the last executed query.</p>
   
 
   <hr id="connect">
-  
+
   <h1>Method: MSSQL_DBWorker::connect()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect(): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> connect(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Establishes the connection to the database using the connection
-settings parameters specified by the initialization.</p>
+  <p>Establishes the database connection using the initialized settings.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Uses UTF-8 and string date values with Multiple Active Result Sets disabled.
+The read_only option is rejected because SQL Server cannot enforce a read-only transaction.
+An already connected worker keeps its existing connection.</p>
+  </div>
   
 
   
@@ -1662,7 +1069,9 @@ settings parameters specified by the initialization.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
   
   </div>
   
@@ -1670,9 +1079,10 @@ settings parameters specified by the initialization.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
   
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If connection settings are incomplete, read_only is enabled, the isolation level is invalid,
+or connection or session initialization fails.</p></div>
   
   
   </div>
@@ -1680,7 +1090,7 @@ settings parameters specified by the initialization.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#connect'>\SmartFactory\DatabaseWorkers\DBWorker::connect()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#connect">\SmartFactory\DatabaseWorkers\DBWorker::connect()</a>
   </div>
   
 
@@ -1698,20 +1108,20 @@ settings parameters specified by the initialization.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#284'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#225'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#check_connection'>\SmartFactory\DatabaseWorkers\DBWorker::check_connection()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#init">\SmartFactory\DatabaseWorkers\DBWorker::init()</a><br>
   
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#is_connected'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::is_connected()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#is_connected">\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::is_connected()</a><br>
   
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#close_connection'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::close_connection()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection">\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a><br>
   
   
   </div>
@@ -1729,23 +1139,25 @@ settings parameters specified by the initialization.</p>
   
 
   <hr id="create_clone">
-  
+
   <h1>Method: MSSQL_DBWorker::create_clone()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone(): \SmartFactory\DatabaseWorkers\MSSQL_DBWorker;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> create_clone(): MSSQL_DBWorker;</div>
+  
 
   
   <div class="short-description">
-  <p>Creates a clone of the dbworker that is using the same open
-connection.</p>
+  <p>Creates a clone of the DBWorker that uses the same open connection.</p>
   </div>
   
 
   
   <div class="long_description">
   <h2>Details</h2>
-  <p>This might be useful if you want to execute some additional
-queries while iteration through the active results of a select query.</p>
+  <p>Exhaust or free an active result before issuing another query through a clone.
+Closing one worker does not close the shared connection while another worker owns it.
+A clone shares the same SQL Server session and cannot bypass an unread forward-only result;
+consume that result to EOF or call free_result() before sending another request.</p>
   </div>
   
 
@@ -1756,9 +1168,9 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Returns</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html">MSSQL_DBWorker</a></code><br>
   
-  <div class="item_description"><p>Returns the clone of this dbworker.</p></div>
+  <div class="item_description"><p>Returns a worker sharing the connection and transaction state, with independent statements and results.</p></div>
   
   </div>
   
@@ -1768,7 +1180,7 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#create_clone'>\SmartFactory\DatabaseWorkers\DBWorker::create_clone()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#create_clone">\SmartFactory\DatabaseWorkers\DBWorker::create_clone()</a>
   </div>
   
 
@@ -1786,7 +1198,148 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#135'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#145'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="dialect">
+
+  <h1>Method: MSSQL_DBWorker::dialect()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> dialect(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the SQL dialect used by the placeholder compiler.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns "mssql".</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#dialect">\SmartFactory\DatabaseWorkers\DBWorker::dialect()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#96'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.PreparedQuery.html#compile">\SmartFactory\DatabaseWorkers\PreparedQuery::compile()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="errors">
+
+  <h1>Method: MSSQL_DBWorker::errors()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> errors(): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Returns the most recent native driver error message.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the native error text, or a fallback message when no details are available.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#197'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
@@ -1805,24 +1358,33 @@ queries while iteration through the active results of a select query.</p>
   
 
   <hr id="escape">
-  
+
   <h1>Method: MSSQL_DBWorker::escape()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(string <span class="php-var">$str</span>): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> escape(<span class="php-keyword1">string</span> <span class="php-var">$str</span>): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Escapes the string so that it can be used in the query without causing an error.</p>
+  <p>Escapes a string for inclusion in an SQL string literal without adding quotation marks.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The result is intended for string literals, not SQL identifiers.
+Prefer bound parameters when supplying application values to a query.
+This operation does not require an open database connection.</p>
+  </div>
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1830,7 +1392,7 @@ queries while iteration through the active results of a select query.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -1840,23 +1402,24 @@ queries while iteration through the active results of a select query.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The string to be escaped.</p>
+                <p>The string to escape.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
   <div class="item_description"><p>Returns the escaped string.</p></div>
   
@@ -1868,7 +1431,7 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#escape'>\SmartFactory\DatabaseWorkers\DBWorker::escape()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#escape">\SmartFactory\DatabaseWorkers\DBWorker::escape()</a>
   </div>
   
 
@@ -1886,17 +1449,17 @@ queries while iteration through the active results of a select query.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1410'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1148'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#format_date'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::format_date()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#quotes_or_null">\SmartFactory\DatabaseWorkers\DBWorker::quotes_or_null()</a><br>
   
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#format_datetime'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::format_datetime()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_query">\SmartFactory\DatabaseWorkers\DBWorker::prepare_query()</a><br>
   
   
   </div>
@@ -1913,15 +1476,95 @@ queries while iteration through the active results of a select query.</p>
 
   
 
-  <hr id="execute_prepared_query">
-  
-  <h1>Method: MSSQL_DBWorker::execute_prepared_query()</h1>
+  <hr id="finish_results">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_prepared_query(mixed ...<span class="php-var">$args</span>): void;</div>
+  <h1>Method: MSSQL_DBWorker::finish_results()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> finish_results(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Executes the prepared SQL query.</p>
+  <p>Completes the remaining results after the public row result or internal identity is consumed.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Additional row results are discarded because DBWorker exposes only the first public result.
+Advancing through the batch executes trailing commands and reports deferred SQL errors.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Releases pending protocol results without freeing a reusable prepared statement.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If advancing to a later result reports a native SQL error.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#789'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="format_date_bind">
+
+  <h1>Method: MSSQL_DBWorker::format_date_bind()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date_bind(<span class="php-keyword1">int</span>|\DateTimeInterface|<span class="php-keyword1">null</span> <span class="php-var">$date</span>): ?<span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Formats a date as a native bind value.</p>
   </div>
   
 
@@ -1931,7 +1574,8 @@ queries while iteration through the active results of a select query.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -1939,1234 +1583,7 @@ queries while iteration through the active results of a select query.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
-        
-        <tr>
-            <td>
-                $args
-            </td>
-            <td>
-                by value, variadic
-            </td>
-            <td>
-                mixed
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The number of parameters may vary and be zero. An array can also be passed.
-These are parameters of the prepared query.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
 
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  \Exception|<a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_prepared_query'>\SmartFactory\DatabaseWorkers\DBWorker::execute_prepared_query()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#650'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#prepare_query'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::prepare_query()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#free_prepared_query'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::free_prepared_query()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="execute_procedure">
-  
-  <h1>Method: MSSQL_DBWorker::execute_procedure()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_procedure(string <span class="php-var">$procedure</span>): void;</div>
-
-  
-  <div class="short-description">
-  <p>Executes the SQL stored procedure.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $procedure
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The name of the SQL stored procedure.</p>
-<p>All subsequent parameters are the parameters of the SQL stored procedure.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_procedure'>\SmartFactory\DatabaseWorkers\DBWorker::execute_procedure()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#706'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="execute_query">
-  
-  <h1>Method: MSSQL_DBWorker::execute_query()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> execute_query(string <span class="php-var">$query_string</span>): void;</div>
-
-  
-  <div class="short-description">
-  <p>Executes the SQL query.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $query_string
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The SQL query to be executed.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  \Exception|<a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_query'>\SmartFactory\DatabaseWorkers\DBWorker::execute_query()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#438'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="fetch_array">
-  
-  <h1>Method: MSSQL_DBWorker::fetch_array()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_array(<span class="php-keyword1">array</span> &amp;<span class="php-var">$rows</span>, ?<span class="php-keyword1">array</span> <span class="php-var">$dimension_keys</span> = <span class="php-keyword1">null</span>): int;</div>
-
-  
-  <div class="short-description">
-  <p>Fetches all rows from the result into an array.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $rows
-            </td>
-            <td>
-                by reference
-            </td>
-            <td>
-                array
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Target array for loading the results.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $dimension_keys
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                ?array
-            </td>
-            <td>
-                null
-            </td>
-            <td class="description_column">
-                <p>Array of the column names that should be used as dimensions.</p>
-<p>Per default, the rows are fetched as two-dimensional array.</p>
-<p>Example:</p>
-<pre><code class="language-php"><span class="php-var">$rows</span> = [];
-<span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>);
-
-rows[n] = [<span class="php-quote">&quot;col1&quot;</span> =&gt; <span class="php-quote">&quot;val1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span> =&gt; <span class="php-quote">&quot;val2&quot;</span>, , <span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
-<p>If the dimension columns are specified, their values are used for the dimensions.</p>
-<p>Example:</p>
-<pre><code class="language-php"><span class="php-var">$rows</span> = [];
-<span class="php-var">$dbw</span>-&gt;fetch_array(<span class="php-var">$rows</span>, [<span class="php-quote">&quot;col1&quot;</span>, <span class="php-quote">&quot;col2&quot;</span>]);
-
-rows[<span class="php-quote">&quot;val1&quot;</span>][<span class="php-quote">&quot;val2&quot;</span>] = [<span class="php-quote">&quot;col3&quot;</span> =&gt; <span class="php-quote">&quot;val3&quot;</span>, ...]</code></pre>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  int<br>
-  
-  <div class="item_description"><p>Returns the number of the fetched rows. It might be also 0.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#fetch_array'>\SmartFactory\DatabaseWorkers\DBWorker::fetch_array()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1046'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="fetch_row">
-  
-  <h1>Method: MSSQL_DBWorker::fetch_row()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetch_row(): bool;</div>
-
-  
-  <div class="short-description">
-  <p>Fetches the next row of data from the result of the execution of the retrieving query.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>Returns true if the next row exists and has been successfully fetched, otherwise false.</p>
-<p>Example:</p>
-<pre><code class="language-php"><span class="php-keyword1">if</span>(!<span class="php-var">$dbw</span>-&gt;execute_query(<span class="php-quote">&quot;SELECT FIRST_NAME, LAST_NAME FROM USERS&quot;</span>))
-{
-  error reporting ...;
-}
-
-<span class="php-keyword1">while</span>(<span class="php-var">$dbw</span>-&gt;fetch_row())
-{
-  <span class="php-keyword1">echo</span> <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;FIRST_NAME&quot;</span>) . <span class="php-quote">&quot; &quot;</span> . <span class="php-var">$dbw</span>-&gt;field_by_name(<span class="php-quote">&quot;LAST_NAME&quot;</span>) . <span class="php-quote">&quot;&lt;br&gt;&quot;</span>;
-}
-
-<span class="php-var">$dbw</span>-&gt;free_result();</code></pre></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#fetch_row'>\SmartFactory\DatabaseWorkers\DBWorker::fetch_row()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#989'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="fetched_count">
-  
-  <h1>Method: MSSQL_DBWorker::fetched_count()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> fetched_count(): int;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the number of the rows fetched by the last retrieving query.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  int<br>
-  
-  <div class="item_description"><p>Returns the number of the rows fetched by the last retrieving query.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#fetched_count'>\SmartFactory\DatabaseWorkers\DBWorker::fetched_count()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1104'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="field_by_name">
-  
-  <h1>Method: MSSQL_DBWorker::field_by_name()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_name(string <span class="php-var">$name</span>, int <span class="php-var">$type</span> = self::DB_AS_IS): mixed;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the value of a field specified by name.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $name
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The name of the field.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $type
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                int
-            </td>
-            <td>
-                self::DB_AS_IS
-            </td>
-            <td class="description_column">
-                <p>The type of the field.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  mixed<br>
-  
-  <div class="item_description"><p>Returns the value of a field specified by name. In the case
-of any error returns null.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#field_by_name'>\SmartFactory\DatabaseWorkers\DBWorker::field_by_name()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1197'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_by_num'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_by_num()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_name'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_name()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="field_by_num">
-  
-  <h1>Method: MSSQL_DBWorker::field_by_num()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_by_num(int <span class="php-var">$num</span>, int <span class="php-var">$type</span> = self::DB_AS_IS): mixed;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the value of a field specified by number.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $num
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                int
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The number of the field.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $type
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                int
-            </td>
-            <td>
-                self::DB_AS_IS
-            </td>
-            <td class="description_column">
-                <p>The type of the field.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  mixed<br>
-  
-  <div class="item_description"><p>Returns the value of a field specified by number. In the case
-of any error returns null.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#field_by_num'>\SmartFactory\DatabaseWorkers\DBWorker::field_by_num()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1239'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_by_name'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_by_name()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_info_by_num'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_info_by_num()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_name'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_name()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="field_count">
-  
-  <h1>Method: MSSQL_DBWorker::field_count()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_count(): int;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the number of the fields in the result of the last retrieving query.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  int<br>
-  
-  <div class="item_description"><p>Returns the number of the fields in the result of the last retrieving query.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#field_count'>\SmartFactory\DatabaseWorkers\DBWorker::field_count()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1164'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="field_info_by_num">
-  
-  <h1>Method: MSSQL_DBWorker::field_info_by_num()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_info_by_num(int <span class="php-var">$num</span>): ?<span class="php-keyword1">array</span>;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the meta information about the field as an object with properties.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $num
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                int
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The number of the field.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  ?array<br>
-  
-  <div class="item_description"><p>Returns the associative array with properties.</p>
-<ul>
-<li>$info["name"] - name of the field.</li>
-<li>$info["type"] - type of the field.</li>
-<li>$info["size"] - size of the field.</li>
-<li>$info["binary"] - whether the filed is binary.</li>
-<li>$info["numeric"] - whether the filed is numeric.</li>
-<li>$info["datetime"] - whether the filed is datetime.</li>
-</ul></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#field_info_by_num'>\SmartFactory\DatabaseWorkers\DBWorker::field_info_by_num()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1283'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_by_num'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_by_num()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_name'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_name()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="field_name">
-  
-  <h1>Method: MSSQL_DBWorker::field_name()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> field_name(int <span class="php-var">$num</span>): ?string;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the name of the field by number.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $num
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                int
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The number of the field.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  ?string<br>
-  
-  <div class="item_description"><p>Returns the name of the field by number.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#field_name'>\SmartFactory\DatabaseWorkers\DBWorker::field_name()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1384'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_by_num'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_by_num()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#field_info_by_num'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::field_info_by_num()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="format_date">
-  
-  <h1>Method: MSSQL_DBWorker::format_date()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_date(int <span class="php-var">$date</span>): string;</div>
-
-  
-  <div class="short-description">
-  <p>Formats the date to a string compatible for the corresponding database.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
         
         <tr>
             <td>
@@ -3176,25 +1593,27 @@ of any error returns null.</p></div>
                 by value
             </td>
             <td>
-                int
+                <code class="php-type">(int | \DateTimeInterface | null)</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The date value as timestamp.</p>
+                <p>A Unix timestamp, a date/time object, or NULL. Timestamp zero is a valid date.
+Objects retain their timezone; integer timestamps use the configured PHP timezone.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">(string | null)</code><br>
   
-  <div class="item_description"><p>Returns the string representation of the date compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns an unquoted driver-compatible string, or NULL.</p></div>
   
   </div>
   
@@ -3204,7 +1623,7 @@ of any error returns null.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#format_date'>\SmartFactory\DatabaseWorkers\DBWorker::format_date()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_date_bind">\SmartFactory\DatabaseWorkers\DBWorker::format_date_bind()</a>
   </div>
   
 
@@ -3222,17 +1641,14 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1429'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1188'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#escape'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::escape()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#format_datetime'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::format_datetime()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_date">\SmartFactory\DatabaseWorkers\DBWorker::format_date()</a><br>
   
   
   </div>
@@ -3249,15 +1665,16 @@ of any error returns null.</p></div>
 
   
 
-  <hr id="format_datetime">
-  
-  <h1>Method: MSSQL_DBWorker::format_datetime()</h1>
+  <hr id="format_datetime_bind">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime(int <span class="php-var">$datetime</span>): string;</div>
+  <h1>Method: MSSQL_DBWorker::format_datetime_bind()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> format_datetime_bind(<span class="php-keyword1">int</span>|\DateTimeInterface|<span class="php-keyword1">null</span> <span class="php-var">$datetime</span>): ?<span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Formats the date/time to a string compatible for the corresponding database.</p>
+  <p>Formats a date/time as a native bind value.</p>
   </div>
   
 
@@ -3267,7 +1684,8 @@ of any error returns null.</p></div>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -3275,7 +1693,7 @@ of any error returns null.</p></div>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -3285,25 +1703,27 @@ of any error returns null.</p></div>
                 by value
             </td>
             <td>
-                int
+                <code class="php-type">(int | \DateTimeInterface | null)</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The date/time value as timestamp.</p>
+                <p>A Unix timestamp, a date/time object, or NULL. Timestamp zero is a valid date.
+Objects retain their timezone; integer timestamps use the configured PHP timezone.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">(string | null)</code><br>
   
-  <div class="item_description"><p>Returns the string representation of the date/time compatible for the corresponding database.</p></div>
+  <div class="item_description"><p>Returns an unquoted driver-compatible string, or NULL.</p></div>
   
   </div>
   
@@ -3313,7 +1733,7 @@ of any error returns null.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#format_datetime'>\SmartFactory\DatabaseWorkers\DBWorker::format_datetime()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_datetime_bind">\SmartFactory\DatabaseWorkers\DBWorker::format_datetime_bind()</a>
   </div>
   
 
@@ -3331,189 +1751,17 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1452'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1209'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#escape'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::escape()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#format_date'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::format_date()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#format_datetime">\SmartFactory\DatabaseWorkers\DBWorker::format_datetime()</a><br>
   
   
   </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="free_prepared_query">
-  
-  <h1>Method: MSSQL_DBWorker::free_prepared_query()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_prepared_query(): void;</div>
-
-  
-  <div class="short-description">
-  <p>Frees the prepared query.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It should be called after all executions of the prepared query.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#free_prepared_query'>\SmartFactory\DatabaseWorkers\DBWorker::free_prepared_query()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#769'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#prepare_query'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::prepare_query()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#execute_prepared_query'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::execute_prepared_query()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="free_result">
-  
-  <h1>Method: MSSQL_DBWorker::free_result()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> free_result(): void;</div>
-
-  
-  <div class="short-description">
-  <p>Frees the result of the previously executed retrieving query.</p>
-  </div>
-  
-
-  
-  <div class="long_description">
-  <h2>Details</h2>
-  <p>It should be called only for the retrieving queries.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#free_result'>\SmartFactory\DatabaseWorkers\DBWorker::free_result()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#894'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
 
   
 
@@ -3528,10 +1776,11 @@ of any error returns null.</p></div>
   
 
   <hr id="get_extension_name">
-  
+
   <h1>Method: MSSQL_DBWorker::get_extension_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_extension_name(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -3548,9 +1797,9 @@ of any error returns null.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the name of the required PHP extension - "sqlsrv".</p></div>
+  <div class="item_description"><p>Returns "sqlsrv".</p></div>
   
   </div>
   
@@ -3560,7 +1809,7 @@ of any error returns null.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#get_extension_name'>\SmartFactory\DatabaseWorkers\DBWorker::get_extension_name()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#get_extension_name">\SmartFactory\DatabaseWorkers\DBWorker::get_extension_name()</a>
   </div>
   
 
@@ -3578,14 +1827,14 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#234'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#112'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#is_extension_installed'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::is_extension_installed()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#is_extension_installed">\SmartFactory\DatabaseWorkers\DBWorker::is_extension_installed()</a><br>
   
   
   </div>
@@ -3603,10 +1852,11 @@ of any error returns null.</p></div>
   
 
   <hr id="get_rdbms_name">
-  
+
   <h1>Method: MSSQL_DBWorker::get_rdbms_name()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name(): string;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_rdbms_name(): <span class="php-keyword1">string</span>;</div>
+  
 
   
   <div class="short-description">
@@ -3623,9 +1873,9 @@ of any error returns null.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">string</code><br>
   
-  <div class="item_description"><p>Returns the name of the supported database - "Microsoft SQL Server".</p></div>
+  <div class="item_description"><p>Returns "Microsoft SQL Server".</p></div>
   
   </div>
   
@@ -3635,7 +1885,7 @@ of any error returns null.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#get_rdbms_name'>\SmartFactory\DatabaseWorkers\DBWorker::get_rdbms_name()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#get_rdbms_name">\SmartFactory\DatabaseWorkers\DBWorker::get_rdbms_name()</a>
   </div>
   
 
@@ -3653,264 +1903,7 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#247'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="get_schema">
-  
-  <h1>Method: MSSQL_DBWorker::get_schema()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> get_schema(): string;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the name of the database schema if applicable.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  string<br>
-  
-  <div class="item_description"><p>Returns the name of the database schema if applicable, or an empty string.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#get_schema'>\SmartFactory\DatabaseWorkers\DBWorker::get_schema()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#395'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#qualify_name_with_schema'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::qualify_name_with_schema()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="init">
-  
-  <h1>Method: MSSQL_DBWorker::init()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): void;</div>
-
-  
-  <div class="short-description">
-  <p>Initializes the dbworker with connection parameters.</p>
-  </div>
-  
-
-  
-
-  
-
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $parameters
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                array
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>Connection settings as an associative array in the form key =&gt; value:</p>
-<ul>
-<li>$parameters["db_server"] - server address.</li>
-<li>$parameters["db_port"] - server port.</li>
-<li>$parameters["db_name"] - database name.</li>
-<li>$parameters["db_user"] - user name.</li>
-<li>$parameters["db_password"] - user password.</li>
-</ul>
-            </td>
-        </tr>
-        
-        
-    </table>
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#init'>\SmartFactory\DatabaseWorkers\DBWorker::init()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#189'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="insert_id">
-  
-  <h1>Method: MSSQL_DBWorker::insert_id()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> insert_id(): ?int;</div>
-
-  
-  <div class="short-description">
-  <p>Returns the value of the auto increment field by the last insertion.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  ?int<br>
-  
-  <div class="item_description"><p>Returns the value of the auto increment field by the last insertion.</p></div>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#insert_id'>\SmartFactory\DatabaseWorkers\DBWorker::insert_id()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#917'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#126'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
@@ -3929,14 +1922,15 @@ of any error returns null.</p></div>
   
 
   <hr id="is_connected">
-  
+
   <h1>Method: MSSQL_DBWorker::is_connected()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected(): bool;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_connected(): <span class="php-keyword1">bool</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Returns the connection state.</p>
+  <p>Returns the state of this worker's native connection.</p>
   </div>
   
 
@@ -3949,9 +1943,9 @@ of any error returns null.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  bool<br>
+  <code class="php-type">bool</code><br>
   
-  <div class="item_description"><p>Returns true if the connection is open, otherwise false.</p></div>
+  <div class="item_description"><p>Returns true if an open native connection resource is attached; otherwise returns false.</p></div>
   
   </div>
   
@@ -3961,7 +1955,7 @@ of any error returns null.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected'>\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#is_connected">\SmartFactory\DatabaseWorkers\DBWorker::is_connected()</a>
   </div>
   
 
@@ -3979,20 +1973,20 @@ of any error returns null.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#264'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#163'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#check_connection'>\SmartFactory\DatabaseWorkers\DBWorker::check_connection()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#check_connection">\SmartFactory\DatabaseWorkers\DBWorker::check_connection()</a><br>
   
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#connect'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::connect()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#connect">\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::connect()</a><br>
   
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#close_connection'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::close_connection()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#close_connection">\SmartFactory\DatabaseWorkers\DBWorker::close_connection()</a><br>
   
   
   </div>
@@ -4009,102 +2003,34 @@ of any error returns null.</p></div>
 
   
 
-  <hr id="is_extension_installed">
-  
-  <h1>Method: MSSQL_DBWorker::is_extension_installed()</h1>
+  <hr id="native_execute">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> is_extension_installed(): bool;</div>
+  <h1>Method: MSSQL_DBWorker::native_execute()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_execute(<span class="php-keyword1">array</span> <span class="php-var">$values</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Checks whether the extension (sqlsrv) is installed which is required for work with
-the MySQL database.</p>
+  <p>Binds validated values and executes the native prepared statement.</p>
   </div>
   
 
   
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  bool<br>
-  
-  <div class="item_description"><p>The method should return true if the extension is installed, otherwise false.</p></div>
-  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Uses explicit PHP/SQL parameter types and re-prepares the native statement when its
+type signature changes. Caller-owned stream parameters are copied into temporary
+seekable streams, sent before result processing, and released in the cleanup path.</p>
   </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#is_extension_installed'>\SmartFactory\DatabaseWorkers\DBWorker::is_extension_installed()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#219'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#get_extension_name'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::get_extension_name()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="prepare_for_query">
-  
-  <h1>Method: MSSQL_DBWorker::prepare_for_query()</h1>
-
-  <div class="definition"><span class="php-keyword1">function</span> prepare_for_query(mixed <span class="php-var">$value</span>, int <span class="php-var">$type</span>): string;</div>
-
-  
-  <div class="short-description">
-  <p>Prepares the value for putting to a query depending on its type. It does escaping, formatting
-and quotation if necessary.</p>
-  </div>
-  
-
   
 
   
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -4112,53 +2038,36 @@ and quotation if necessary.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
-                $value
+                $values
             </td>
             <td>
                 by value
             </td>
             <td>
-                mixed
+                <code class="php-type">list&lt;(scalar | null | <a href="class-SmartFactory.DatabaseWorkers.BlobValue.html">BlobValue</a> | <a href="class-SmartFactory.DatabaseWorkers.ClobValue.html">ClobValue</a>)&gt;</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The value to be formatted.</p>
+                <p>The normalized values in SQL occurrence order, including any explicit LOB wrappers.</p>
             </td>
         </tr>
         
-        <tr>
-            <td>
-                $type
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                int
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The type of the value.</p>
-            </td>
-        </tr>
-        
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">void</code><br>
   
-  <div class="item_description"><p>Returns the prepared value.</p></div>
+  <div class="item_description"><p>Does not return a value.</p></div>
   
   </div>
   
@@ -4166,9 +2075,10 @@ and quotation if necessary.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
   
-  <div class="item_description"><p>It might throw an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If binding, LOB processing, execution or result completion fails, including when
+another worker has a pending forward-only result on the shared connection.</p></div>
   
   
   </div>
@@ -4176,7 +2086,7 @@ and quotation if necessary.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_for_query'>\SmartFactory\DatabaseWorkers\DBWorker::prepare_for_query()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_execute">\SmartFactory\DatabaseWorkers\DBWorker::native_execute()</a>
   </div>
   
 
@@ -4194,11 +2104,17 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1479'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#467'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
+  <h2>See also</h2>
+  <div class="item_list">
   
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::execute_prepared_query()</a><br>
+  
+  
+  </div>
 
   
 
@@ -4212,15 +2128,16 @@ and quotation if necessary.</p>
 
   
 
-  <hr id="prepare_query">
-  
-  <h1>Method: MSSQL_DBWorker::prepare_query()</h1>
+  <hr id="native_fetch">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> prepare_query(string <span class="php-var">$query_string</span>): void;</div>
+  <h1>Method: MSSQL_DBWorker::native_fetch()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_fetch(): ?<span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Prepares the SQL query with bindable variables.</p>
+  <p>Fetches the next row through the native driver.</p>
   </div>
   
 
@@ -4228,43 +2145,14 @@ and quotation if necessary.</p>
 
   
 
-  <h2>Parameters</h2>
-
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
-        <tr>
-        <th>Name</th>
-        <th>Pass type</th>
-        <th>Value type</th>
-        <th>Default value</th>
-        <th>Description</th>
-        </tr>
-        
-        
-        <tr>
-            <td>
-                $query_string
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The SQL query to be prepared.</p>
-            </td>
-        </tr>
-        
-        
-    </table>
+  
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">(list&lt;mixed&gt; | null)</code><br>
+  
+  <div class="item_description"><p>Returns a numerically indexed row, or NULL at the end of the result set.</p></div>
   
   </div>
   
@@ -4272,9 +2160,9 @@ and quotation if necessary.</p>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
   
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If fetching or spooling a field fails, or a trailing batch result reports a deferred SQL error.</p></div>
   
   
   </div>
@@ -4282,7 +2170,7 @@ and quotation if necessary.</p>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_query'>\SmartFactory\DatabaseWorkers\DBWorker::prepare_query()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_fetch">\SmartFactory\DatabaseWorkers\DBWorker::native_fetch()</a>
   </div>
   
 
@@ -4300,17 +2188,14 @@ and quotation if necessary.</p>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#492'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#833'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
   <h2>See also</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#execute_prepared_query'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::execute_prepared_query()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#free_prepared_query'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::free_prepared_query()</a><br>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#fetch_row">\SmartFactory\DatabaseWorkers\DBWorker::fetch_row()</a><br>
   
   
   </div>
@@ -4327,15 +2212,251 @@ and quotation if necessary.</p>
 
   
 
-  <hr id="qualify_name_with_schema">
-  
-  <h1>Method: MSSQL_DBWorker::qualify_name_with_schema()</h1>
+  <hr id="native_finish_procedure">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> qualify_name_with_schema(string <span class="php-var">$name</span>): string;</div>
+  <h1>Method: MSSQL_DBWorker::native_finish_procedure()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_finish_procedure(): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Completes the name of a database object with the schema name if applicable.</p>
+  <p>Consumes procedure results that the public execute_procedure() convenience method discards.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Completes trailing commands and releases pending results before the procedure statement is freed.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If advancing through the remaining results reports a deferred SQL error.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_finish_procedure">\SmartFactory\DatabaseWorkers\DBWorker::native_finish_procedure()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#813'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_free_result">
+
+  <h1>Method: MSSQL_DBWorker::native_free_result()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_free_result(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Releases native result resources without discarding a reusable prepared statement.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Implementations must distinguish a result handle from a statement handle when both refer to the same resource.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_free_result">\SmartFactory\DatabaseWorkers\DBWorker::native_free_result()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#976'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#free_result">\SmartFactory\DatabaseWorkers\DBWorker::free_result()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_free_statement">
+
+  <h1>Method: MSSQL_DBWorker::native_free_statement()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_free_statement(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Releases the native prepared statement and its driver-specific bind state.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_free_statement">\SmartFactory\DatabaseWorkers\DBWorker::native_free_statement()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#997'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#free_prepared_query">\SmartFactory\DatabaseWorkers\DBWorker::free_prepared_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_prepare">
+
+  <h1>Method: MSSQL_DBWorker::native_prepare()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_prepare(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Creates a native statement from SQL whose bind markers have already been compiled.</p>
   </div>
   
 
@@ -4345,7 +2466,8 @@ and quotation if necessary.</p>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -4353,7 +2475,728 @@ and quotation if necessary.</p>
         <th>Default value</th>
         <th>Description</th>
         </tr>
+
         
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The SQL query containing native bind markers.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the native statement cannot be prepared.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_prepare">\SmartFactory\DatabaseWorkers\DBWorker::native_prepare()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#417'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#prepare_query">\SmartFactory\DatabaseWorkers\DBWorker::prepare_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_query">
+
+  <h1>Method: MSSQL_DBWorker::native_query()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_query(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Executes SQL through the native driver and records the resulting metadata.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The SQL query to execute. Driver-specific identity handling may extend it.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If native execution fails, including when another worker has a pending forward-only result,
+or processing the returned results reports a database error.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_query">\SmartFactory\DatabaseWorkers\DBWorker::native_query()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#378'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#execute_query">\SmartFactory\DatabaseWorkers\DBWorker::execute_query()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_restore_transaction_isolation">
+
+  <h1>Method: MSSQL_DBWorker::native_restore_transaction_isolation()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_restore_transaction_isolation(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Restores the SQL Server session default after a successful commit or rollback.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Restores the level recorded when the shared transaction began, including completion through a clone.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If the session setting cannot be restored. The completed transaction remains marked as ended.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_restore_transaction_isolation">\SmartFactory\DatabaseWorkers\DBWorker::native_restore_transaction_isolation()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1117'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_check">
+
+  <h1>Method: MSSQL_DBWorker::native_save_check()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_check(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Rejects an aborted, externally ended or snapshot-isolated managed SQL Server transaction.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If SQL Server reports an uncommittable or unexpectedly absent transaction, or SNAPSHOT isolation.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_check">\SmartFactory\DatabaseWorkers\DBWorker::native_save_check()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1361'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_insert">
+
+  <h1>Method: MSSQL_DBWorker::native_save_insert()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_insert(<span class="php-keyword1">array</span> <span class="php-var">$context</span>, <span class="php-keyword1">array</span> <span class="php-var">$values</span>, <span class="php-keyword1">array</span> <span class="php-var">$expressions</span>, <span class="php-keyword1">string</span> <span class="php-var">$identity_field</span>): ?<span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Temporarily enables explicit SQL Server identity insertion and restores the session setting.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The resolved table, column metadata and service-table location.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $values
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The prepared field values.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $expressions
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The positional SQL expressions.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $identity_field
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The identity field, or an empty string.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">(int | null)</code><br>
+  
+  <div class="item_description"><p>Returns the inserted identity, or NULL when none is configured.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If identity handling or inserting the record fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_insert">\SmartFactory\DatabaseWorkers\DBWorker::native_save_insert()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1405'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_key">
+
+  <h1>Method: MSSQL_DBWorker::native_save_key()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_key(<span class="php-keyword1">array</span> <span class="php-var">$context</span>, <span class="php-keyword1">array</span> <span class="php-var">$keys</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Hashes typed SQL Server key expressions according to their native equality semantics.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The resolved table, column metadata and service-table location.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $keys
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array&lt;string, (scalar | null)&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The supplied key values, ordered by canonical column name.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">array</code><br>
+  
+  <div class="item_description"><p>Returns equality-compatible fingerprints; hash collisions share a lock but never a row predicate.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If a key type is unsupported or converting a supplied key fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_key">\SmartFactory\DatabaseWorkers\DBWorker::native_save_key()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1299'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="native_save_lock">
+
+  <h1>Method: MSSQL_DBWorker::native_save_lock()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_lock(<span class="php-keyword1">array</span> <span class="php-var">$context</span>, <span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">string</span> <span class="php-var">$name</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Creates or exclusively locks a SQL Server service row under serializable key-range protection.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $context
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The resolved table, column metadata and service-table location.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The SHA-256 resource key.</p>
+            </td>
+        </tr>
         
         <tr>
             <td>
@@ -4363,99 +3206,26 @@ and quotation if necessary.</p>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The name of the database object to be completed with the schema name.</p>
+                <p>The diagnostic description, or allocator watermark for an identity resource.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">void</code><br>
   
-  <div class="item_description"><p>Returns the name of the database object with the schema name if applicable,
-otherwise the name of the database object remains unchanged.</p></div>
-  
-  </div>
-  
-
-  
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#qualify_name_with_schema'>\SmartFactory\DatabaseWorkers\DBWorker::qualify_name_with_schema()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#414'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#get_schema'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::get_schema()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="rollback_transaction">
-  
-  <h1>Method: MSSQL_DBWorker::rollback_transaction()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> rollback_transaction(): void;</div>
-
-  
-  <div class="short-description">
-  <p>Rolls back the translation.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
+  <div class="item_description"><p>Does not return a value.</p></div>
   
   </div>
   
@@ -4463,9 +3233,9 @@ otherwise the name of the database object remains unchanged.</p></div>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
   
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If service-row creation or lock acquisition fails; expected primary-key duplicates are handled internally.</p></div>
   
   
   </div>
@@ -4473,7 +3243,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#rollback_transaction'>\SmartFactory\DatabaseWorkers\DBWorker::rollback_transaction()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_lock">\SmartFactory\DatabaseWorkers\DBWorker::native_save_lock()</a>
   </div>
   
 
@@ -4491,20 +3261,11 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#871'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1338'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
-  <h2>See also</h2>
-  <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#start_transaction'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::start_transaction()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#commit_transaction'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::commit_transaction()</a><br>
-  
-  
-  </div>
 
   
 
@@ -4518,99 +3279,16 @@ otherwise the name of the database object remains unchanged.</p></div>
 
   
 
-  <hr id="start_transaction">
-  
-  <h1>Method: MSSQL_DBWorker::start_transaction()</h1>
+  <hr id="native_save_table">
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> start_transaction(): void;</div>
+  <h1>Method: MSSQL_DBWorker::native_save_table()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_save_table(<span class="php-keyword1">string</span> <span class="php-var">$table</span>): <span class="php-keyword1">array</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Starts the translation.</p>
-  </div>
-  
-
-  
-
-  
-
-  
-
-  
-  <h2>Returns</h2>
-  <div class="item_list">
-  void<br>
-  
-  </div>
-  
-
-  <h2>Throws</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
-  
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
-  
-  
-  </div>
-
-  
-  <h2>Overrides</h2>
-  <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#start_transaction'>\SmartFactory\DatabaseWorkers\DBWorker::start_transaction()</a>
-  </div>
-  
-
-  <h2>Authors</h2>
-  <div class="item_list">
-  
-  <div class='item'>Oleg Schildt</div>
-  
-  </div>
-
-  
-
-  
-
-  
-  <h2>Source code</h2>
-  <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#823'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
-  </div>
-  
-
-  <h2>See also</h2>
-  <div class="item_list">
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#commit_transaction'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::commit_transaction()</a><br>
-  
-  
-  <a href='class-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.html#rollback_transaction'>\SmartFactory\DatabaseWorkers\MSSQL_DBWorker::rollback_transaction()</a><br>
-  
-  
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  <hr id="stream_long_data">
-  
-  <h1>Method: MSSQL_DBWorker::stream_long_data()</h1>
-
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> stream_long_data(string <span class="php-var">$query_string</span>, resource <span class="php-var">$stream</span>): void;</div>
-
-  
-  <div class="short-description">
-  <p>Stores long data from a stream.</p>
+  <p>Resolves SQL Server table identity, column types and collation-aware comparison fingerprints.</p>
   </div>
   
 
@@ -4620,7 +3298,8 @@ otherwise the name of the database object remains unchanged.</p></div>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -4628,58 +3307,36 @@ otherwise the name of the database object remains unchanged.</p></div>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
-        
-        <tr>
-            <td>
-                $query_string
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                string
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The SQL query to be used for storing the long data.</p>
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
-                $stream
-            </td>
-            <td>
-                by value
-            </td>
-            <td>
-                resource
-            </td>
-            <td>
-                
-            </td>
-            <td class="description_column">
-                <p>The opened valid stream for reading the long data.</p>
-<p>Example:</p>
-<pre><code class="language-php"><span class="php-var">$stream</span> = <span class="php-keyword2">fopen</span>(<span class="php-quote">&quot;.../large_binary.jpg&quot;</span>, <span class="php-quote">&quot;rb&quot;</span>);
 
-<span class="php-keyword1">if</span>(!<span class="php-var">$dbw</span>-&gt;stream_long_data(<span class="php-quote">&quot;UPDATE LARGE_DATA SET BLOB_DATA = ? WHERE ID = 1&quot;</span>, <span class="php-var">$stream</span>))
-{
-  error reporting ...;
-}</code></pre>
+        
+        <tr>
+            <td>
+                $table
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The unquoted table, schema.table or database.schema.table name.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">array</code><br>
+  
+  <div class="item_description"><p>Returns canonical table names and native key metadata.</p></div>
   
   </div>
   
@@ -4687,9 +3344,9 @@ otherwise the name of the database object remains unchanged.</p></div>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
   
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If the target cannot be resolved or its column metadata cannot be read.</p></div>
   
   
   </div>
@@ -4697,7 +3354,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#stream_long_data'>\SmartFactory\DatabaseWorkers\DBWorker::stream_long_data()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_save_table">\SmartFactory\DatabaseWorkers\DBWorker::native_save_table()</a>
   </div>
   
 
@@ -4715,7 +3372,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#579'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1229'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
@@ -4733,18 +3390,272 @@ otherwise the name of the database object remains unchanged.</p></div>
 
   
 
-  <hr id="sys_get_errors">
-  
-  <h1>Method: MSSQL_DBWorker::sys_get_errors()</h1>
+  <hr id="native_transaction">
 
-  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> sys_get_errors(): string;</div>
+  <h1>Method: MSSQL_DBWorker::native_transaction()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> native_transaction(<span class="php-keyword1">string</span> <span class="php-var">$action</span>, <span class="php-keyword1">string</span> <span class="php-var">$isolation_level</span> = <span class="php-keyword1">self</span>::ISOLATION_READ_COMMITTED): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Retrieves the last errors occurred while execution of the query.</p>
+  <p>Performs a native transaction operation on the shared connection.</p>
   </div>
   
 
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The base class updates the shared transaction flag only after this operation succeeds.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $action
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The operation: begin, commit or rollback.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $isolation_level
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                self::ISOLATION_READ_COMMITTED
+            </td>
+            <td class="description_column">
+                <p>The validated isolation level for begin; ignored for commit and rollback.
+The previous session level is restored after the transaction ends.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If reading or applying session isolation, starting, committing or rolling back fails.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#native_transaction">\SmartFactory\DatabaseWorkers\DBWorker::native_transaction()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1029'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="quotes_or_null">
+
+  <h1>Method: MSSQL_DBWorker::quotes_or_null()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> quotes_or_null(?<span class="php-keyword1">string</span> <span class="php-var">$str</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Escapes and quotes a string, or prepares an SQL NULL literal.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $str
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(string | null)</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The value to quote. NULL and the empty string are represented as SQL NULL.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns a quoted SQL string literal, or the unquoted literal null.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#quotes_or_null">\SmartFactory\DatabaseWorkers\DBWorker::quotes_or_null()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1168'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  <h2>See also</h2>
+  <div class="item_list">
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#escape">\SmartFactory\DatabaseWorkers\DBWorker::escape()</a><br>
+  
+  
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#number_or_null">\SmartFactory\DatabaseWorkers\DBWorker::number_or_null()</a><br>
+  
+  
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="reset_driver_state">
+
+  <h1>Method: MSSQL_DBWorker::reset_driver_state()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> reset_driver_state(): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Resets driver-specific state after cloning or statement cleanup.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Clears bind arrays, cached parameter types, statement SQL and execution flags.
+The shared native connection is retained.</p>
+  </div>
   
 
   
@@ -4754,9 +3665,193 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Returns</h2>
   <div class="item_list">
-  string<br>
+  <code class="php-type">void</code><br>
   
-  <div class="item_description"><p>Returns the string of errors separated by the new line symbol.</p></div>
+  <div class="item_description"><p>Does not return a value.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#reset_driver_state">\SmartFactory\DatabaseWorkers\DBWorker::reset_driver_state()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#180'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="session_transaction_isolation">
+
+  <h1>Method: MSSQL_DBWorker::session_transaction_isolation()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> session_transaction_isolation(?<span class="php-keyword1">string</span> <span class="php-var">$isolation_level</span> = <span class="php-keyword1">null</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Reads or sets SQL Server session isolation without replacing the worker's public statement.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $isolation_level
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">(string | null)</code>
+            </td>
+            <td>
+                null
+            </td>
+            <td class="description_column">
+                <p>A validated native isolation name to apply, or NULL to read the current level.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns the applied or current native isolation level.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
+  
+  <div class="item_description"><p>If SQL Server cannot execute the session command or return its isolation setting.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#1074'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="statement_options">
+
+  <h1>Method: MSSQL_DBWorker::statement_options()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> statement_options(): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Builds SQL Server statement options for sequential result reading.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Unread results keep the shared connection busy until EOF or explicit cancellation.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">array{
+    QueryTimeout: int,
+    Scrollable: string
+}</code><br>
+  
+  <div class="item_description"><p>Returns the query timeout and the forward-only cursor setting.</p></div>
   
   </div>
   
@@ -4779,7 +3874,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#107'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#331'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
   
 
@@ -4798,14 +3893,15 @@ otherwise the name of the database object remains unchanged.</p></div>
   
 
   <hr id="use_database">
-  
+
   <h1>Method: MSSQL_DBWorker::use_database()</h1>
 
-  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(string <span class="php-var">$db_name</span>): void;</div>
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> use_database(<span class="php-keyword1">string</span> <span class="php-var">$db_name</span>): <span class="php-keyword1">void</span>;</div>
+  
 
   
   <div class="short-description">
-  <p>Sets the database as working database.</p>
+  <p>Selects another SQL Server database on the current connection.</p>
   </div>
   
 
@@ -4815,7 +3911,8 @@ otherwise the name of the database object remains unchanged.</p></div>
 
   <h2>Parameters</h2>
 
-    <table class="table table-responsive table-bordered table-striped param_multicolumn">
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
         <tr>
         <th>Name</th>
         <th>Pass type</th>
@@ -4823,7 +3920,7 @@ otherwise the name of the database object remains unchanged.</p></div>
         <th>Default value</th>
         <th>Description</th>
         </tr>
-        
+
         
         <tr>
             <td>
@@ -4833,23 +3930,26 @@ otherwise the name of the database object remains unchanged.</p></div>
                 by value
             </td>
             <td>
-                string
+                <code class="php-type">string</code>
             </td>
             <td>
                 
             </td>
             <td class="description_column">
-                <p>The name of the database to be set as working database.</p>
+                <p>The database name, quoted as an identifier in the USE statement.</p>
             </td>
         </tr>
         
-        
+
     </table>
+  </div>
 
   
   <h2>Returns</h2>
   <div class="item_list">
-  void<br>
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Does not return a value.</p></div>
   
   </div>
   
@@ -4857,9 +3957,9 @@ otherwise the name of the database object remains unchanged.</p></div>
   <h2>Throws</h2>
   <div class="item_list">
   
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorkerException.html'>\SmartFactory\DatabaseWorkers\DBWorkerException</a><br>
+  <code class="php-type"><a href="class-SmartFactory.DatabaseWorkers.DBWorkerException.html">DBWorkerException</a></code><br>
   
-  <div class="item_description"><p>It throws an exception in the case of any errors.</p></div>
+  <div class="item_description"><p>If no connection is open or SQL Server rejects the USE statement.</p></div>
   
   
   </div>
@@ -4867,7 +3967,7 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Overrides</h2>
   <div class="item_list">
-  <a href='class-SmartFactory.DatabaseWorkers.DBWorker.html#use_database'>\SmartFactory\DatabaseWorkers\DBWorker::use_database()</a>
+  <a href="class-SmartFactory.DatabaseWorkers.DBWorker.html#use_database">\SmartFactory\DatabaseWorkers\DBWorker::use_database()</a>
   </div>
   
 
@@ -4885,11 +3985,114 @@ otherwise the name of the database object remains unchanged.</p></div>
   
   <h2>Source code</h2>
   <div class="item_list">
-  <a href='source-SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#374'>SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#313'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="with_identity">
+
+  <h1>Method: MSSQL_DBWorker::with_identity()</h1>
+
+  <div class="definition"><span class="php-keyword1">private</span> <span class="php-keyword1">function</span> with_identity(<span class="php-keyword1">string</span> <span class="php-var">$sql</span>): <span class="php-keyword1">string</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Appends an identity query to an eligible SQL Server INSERT batch.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>The internal result is identified by a reserved column alias and consumed by accept_statement().</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $sql
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The SQL statement to inspect.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">string</code><br>
+  
+  <div class="item_description"><p>Returns SQL with SCOPE_IDENTITY() in the same batch, or the original SQL when OUTPUT is already present.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.DatabaseWorkers.MSSQL_DBWorker.php.html#352'>src/SmartFactory/DatabaseWorkers/MSSQL_DBWorker.php</a>
   </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

@@ -107,12 +107,12 @@
                 <div class="col-md-12">
                     <h1>Function: escape_html_array()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> escape_html_array(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): void;</div>
+<div class="definition"><span class="php-keyword1">function</span> escape_html_array(<span class="php-keyword1">array</span> &amp;<span class="php-var">$array</span>): <span class="php-keyword1">void</span>;</div>
+
 
 
 <div class="short-description">
-<p>Escapes recursively the HTML special characters in the values
-of the array.</p>
+<p>Recursively escapes UTF-8 array values for HTML while preserving null entries.</p>
 </div>
 
 
@@ -122,7 +122,8 @@ of the array.</p>
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -140,28 +141,45 @@ of the array.</p>
               by reference
           </td>
           <td>
-              array
+              <code class="php-type">array&lt;array-key, mixed&gt;</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The array to be escaped.</p>
+              <p>The acyclic nested array of strings, scalars, null or Stringable values.
+Non-null scalar and Stringable values are converted to escaped strings.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-void<br>
+<code class="php-type">void</code><br>
+
+<div class="item_description"><p>Updates values in place without changing array keys.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+<code class="php-type">\InvalidArgumentException</code><br>
+
+<div class="item_description"><p>If an entry is a resource or an object that does not implement Stringable.</p></div>
+
+
+<code class="php-type">\Throwable</code><br>
+
+<div class="item_description"><p>If converting a Stringable object to text throws an exception or error.</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -184,23 +202,23 @@ void<br>
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#294'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#349'>src/utility_functions_inc.php</a>
 </div>
 
 
 <h2>See also</h2>
 <div class="item_list">
 
-<a href='function-SmartFactory.escape_html.html'>\SmartFactory\escape_html()</a><br>
+<a href="function-SmartFactory.escape_html.html">\SmartFactory\escape_html()</a><br>
 
 
-<a href='function-SmartFactory.escape_js.html'>\SmartFactory\escape_js()</a><br>
+<a href="function-SmartFactory.escape_js.html">\SmartFactory\escape_js()</a><br>
 
 
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>

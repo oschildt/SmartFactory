@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <link rel="stylesheet" href="resources/bootstrap.min.css">
+        <link rel="stylesheet" href="resources/style.css">
+        <link rel="stylesheet" href="resources/jquery.iviewer.css">
+
+        <title>
+            Class: AbstractRequestThrottlingManager
+        </title>
+    </head>
+
+    <body>
+        <div id="navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar">
+                    <ul class="nav navbar-nav">
+                        
+                        
+                        <li>
+                            <a href="index.html" class="">
+                                Overview
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="classes.html" class="active">
+                                Classes
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="interfaces.html" class="">
+                                Interfaces
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="functions.html" class="">
+                                Functions
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="structure.html" class="">
+                                Structure
+                            </a>
+                        </li>
+                        
+
+                    </ul>
+
+                    <form id="search" class="pull-right">
+                        <input type="text" name="q" class="form-control text" placeholder="Search class, function or namespace">
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div id="breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            
+                
+                <div class="pull-left type">
+                    <span class="label label-success">Class</span>
+                </div>
+                
+                
+                <ol class="breadcrumb pull-left">
+                        
+                        
+
+                        <li>
+                            <a href="namespace-SmartFactory.html">SmartFactory</a>
+                        </li>
+
+                        <!-- if separator -->
+                        <li class="backslash">\</li>
+                        <!-- endif separator -->
+
+                        
+ 
+
+                        <li class="active">AbstractRequestThrottlingManager</li>
+                </ol>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Class: AbstractRequestThrottlingManager</h1>
+
+<span class="label label-primary">abstract</span>
+
+<div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">class</span> AbstractRequestThrottlingManager <span class="php-keyword1">implements</span> IRequestThrottlingManager
+{
+}</div>
+
+
+
+<div class="short-description">
+<p>Implements request limits, history expiry and retry delays for interchangeable storage backends.</p>
+</div>
+
+
+
+<div class="long_description">
+<h2>Details</h2>
+<p>Subclasses supply history reading, persistence and an atomic execution boundary. The boundary
+must protect the complete read/check/write operation for the same caller key across processes.
+Caller keys are hashed once and passed explicitly to each storage hook. Rejected requests
+are not recorded. Backends maintain expiry of inactive callers independently.
+The interface remains the dependency and factory contract for concrete implementations.</p>
+</div>
+
+
+
+
+
+
+<h2>Implements</h2>
+<div class="item_list">
+
+<a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html">\SmartFactory\Interfaces\IRequestThrottlingManager</a><br>
+
+</div>
+
+
+
+<h2>Known inheritances</h2>
+<div class="item_list">
+
+<a href="class-SmartFactory.DBRequestThrottlingManager.html">\SmartFactory\DBRequestThrottlingManager</a><br>
+
+<a href="class-SmartFactory.RedisRequestThrottlingManager.html">\SmartFactory\RedisRequestThrottlingManager</a><br>
+
+</div>
+
+<h2>Authors</h2>
+<div class="item_list">
+
+<div class='item'>Oleg Schildt</div>
+
+</div>
+
+
+
+
+
+
+<h2>Package</h2>
+<div class="item_list">
+<a href='package-System.html'>System</a>
+</div>
+
+
+
+<h2>Source code</h2>
+<div class="item_list">
+<a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#25'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;</p>
+
+
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Properties</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#$initialized">$initialized</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Records whether initialization has successfully applied a policy.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#$limits">$limits</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Stores maximum-count/period pairs applied simultaneously to each caller.</p>
+          </td>
+      </tr>
+
+  </table>
+
+<table class="table table-responsive table-bordered table-striped class_multicolumn">
+      <tr><th colspan="2">Methods</th></tr>
+
+      <tr>
+          <td>
+              <div style='float:left'><a href="#executeAtomically">executeAtomically()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Executes one admission operation while protecting the caller's history against concurrent updates.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getCurrentTime">getCurrentTime()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reads the clock inside the storage's atomic execution boundary.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#getLimits">getLimits()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Retrieves the policy applied to every caller key.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#init">init()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Validates and applies rolling-window limits without changing shared request history.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#loadRecords">loadRecords()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Reads and validates one caller's retained history inside its atomic execution boundary.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#pruneRecords">pruneRecords()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Removes timestamps outside the longest configured window for one caller.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#registerRequest">registerRequest()</a></div>
+
+              <div style='float:right'>
+              
+              <span class='label label-success'>public</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Atomically reserves one request if every rolling-window limit permits it.</p>
+          </td>
+      </tr><tr>
+          <td>
+              <div style='float:left'><a href="#saveRecords">saveRecords()</a></div>
+
+              <div style='float:right'>
+              <span class="label label-info">abstract</span>
+              <span class='label label-warning'>protected</span>
+              </div>
+              <div style="clear:both"></div>
+          </td>
+          <td class="description_column">
+              <p>Persists one caller's updated history inside its atomic execution boundary.</p>
+          </td>
+      </tr>
+
+  </table>
+
+
+
+<hr id="$initialized">
+
+  <h1>Property: AbstractRequestThrottlingManager::$initialized</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">bool</span> <span class="php-var">$initialized</span> = <span class="php-keyword1">false</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Records whether initialization has successfully applied a policy.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">bool</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#43'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div><hr id="$limits">
+
+  <h1>Property: AbstractRequestThrottlingManager::$limits</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">array</span> <span class="php-var">$limits</span> = <span class="php-keyword1">self</span>::DEFAULT_LIMITS;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Stores maximum-count/period pairs applied simultaneously to each caller.</p>
+  </div>
+  
+
+  
+
+  
+  <h2>Type</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;
+    array{
+        0: positive-int,
+        1: positive-int
+    }
+&gt;</code>
+  </div>
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#34'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+
+<hr id="executeAtomically">
+
+  <h1>Method: AbstractRequestThrottlingManager::executeAtomically()</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> executeAtomically(<span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">callable</span> <span class="php-var">$operation</span>): <span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Executes one admission operation while protecting the caller's history against concurrent updates.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Subclasses must invoke the callback exactly once after acquiring a lock or equivalent
+transaction for this key, commit successful updates and release resources in a finally block.
+Protection must include the first admission for a key with no stored history yet.
+Shared-file implementations may lock the entire file to preserve unrelated callers' records.
+Locking only loadRecords() and saveRecords() independently is insufficient: another caller
+could reserve the same remaining slot between those operations.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The lowercase SHA-256 caller hash used by every storage hook in this operation.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $operation
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">callable(): int</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The complete clock/read/check/write operation to execute inside the protected boundary.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">int</code><br>
+  
+  <div class="item_description"><p>Returns the callback's admission result unchanged.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If acquiring, committing or releasing the storage protection fails.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If the admission callback fails; its failure must propagate after resources are released.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#263'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getCurrentTime">
+
+  <h1>Method: AbstractRequestThrottlingManager::getCurrentTime()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> getCurrentTime(): <span class="php-keyword1">float</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Reads the clock inside the storage's atomic execution boundary.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">float</code><br>
+  
+  <div class="item_description"><p>Returns Unix time in seconds with subsecond precision.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#110'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="getLimits">
+
+  <h1>Method: AbstractRequestThrottlingManager::getLimits()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> getLimits(): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Retrieves the policy applied to every caller key.</p>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;
+    array{
+        0: positive-int,
+        1: positive-int
+    }
+&gt;</code><br>
+  
+  <div class="item_description"><p>Returns count/period pairs, or an empty list when limits are disabled.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html#getLimits">\SmartFactory\Interfaces\IRequestThrottlingManager::getLimits()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#97'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="init">
+
+  <h1>Method: AbstractRequestThrottlingManager::init()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> init(<span class="php-keyword1">array</span> <span class="php-var">$parameters</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Validates and applies rolling-window limits without changing shared request history.</p>
+  </div>
+  
+
+  
+  <div class="long_description">
+  <h2>Details</h2>
+  <p>Subclasses should validate storage settings before calling this implementation and
+commit their validated settings afterward, preserving the old configuration on failure.</p>
+  </div>
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $parameters
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">array{
+    limits?: list&lt;
+        array{
+            0: positive-int,
+            1: positive-int
+        }
+    &gt;
+}</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Count/period pairs containing positive integers. Omission selects DEFAULT_LIMITS;
+an empty list disables limits. Other parameters are reserved for storage implementations.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Applies a validated policy and marks the manager initialized; rejected settings change neither.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If limits are not a list of exactly two positive integers per entry.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html#init">\SmartFactory\Interfaces\IRequestThrottlingManager::init()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#63'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="loadRecords">
+
+  <h1>Method: AbstractRequestThrottlingManager::loadRecords()</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> loadRecords(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Reads and validates one caller's retained history inside its atomic execution boundary.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The lowercase SHA-256 caller hash supplied to executeAtomically().</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;float&gt;</code><br>
+  
+  <div class="item_description"><p>Returns only this caller's timestamps, ordered from oldest to newest.
+Equal timestamps represent separate requests and must remain separate entries.
+Timestamps are finite, nonnegative Unix seconds with microsecond precision. Missing history
+returns an empty array; malformed or unavailable existing history must not be treated as empty.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If history cannot be read or does not satisfy the storage schema and timestamp ordering.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#282'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="pruneRecords">
+
+  <h1>Method: AbstractRequestThrottlingManager::pruneRecords()</h1>
+
+  <div class="definition"><span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> pruneRecords(<span class="php-keyword1">array</span> <span class="php-var">$timestamps</span>, <span class="php-keyword1">float</span> <span class="php-var">$now</span>): <span class="php-keyword1">array</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Removes timestamps outside the longest configured window for one caller.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $timestamps
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">list&lt;float&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>Validated, chronologically ordered Unix timestamps belonging to one caller.</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $now
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">float</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A finite, nonnegative reference time in Unix seconds.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">list&lt;float&gt;</code><br>
+  
+  <div class="item_description"><p>Returns retained timestamps in their original order, preserving future entries after a clock rollback.
+With disabled limits, returns the supplied timestamps unchanged.</p></div>
+  
+  </div>
+  
+
+  
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#130'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="registerRequest">
+
+  <h1>Method: AbstractRequestThrottlingManager::registerRequest()</h1>
+
+  <div class="definition"><span class="php-keyword1">public</span> <span class="php-keyword1">function</span> registerRequest(<span class="php-keyword1">string</span> <span class="php-var">$key</span>): <span class="php-keyword1">int</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Atomically reserves one request if every rolling-window limit permits it.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>A nonempty caller identity supplied by the request handler.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">int</code><br>
+  
+  <div class="item_description"><p>Returns zero when admitted, or the longest required delay rounded up to whole seconds,
+capped at PHP_INT_MAX. Rejected requests do not change stored history. Accepted requests
+remove this caller's history older than the longest configured period. Other callers'
+history and its background expiry remain the responsibility of the storage backend.
+Future timestamps are retained if the system clock moves backwards.
+Elapsed times use microsecond precision so fractional window boundaries expire exactly.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\InvalidArgumentException</code><br>
+  
+  <div class="item_description"><p>If the caller key is empty.</p></div>
+  
+  
+  <code class="php-type">\LogicException</code><br>
+  
+  <div class="item_description"><p>If init() has not successfully initialized the manager.</p></div>
+  
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If locking, the clock, reading, history validation or persistence fails.
+Storage failures deny admission; the backend must release any acquired lock.</p></div>
+  
+  
+  <code class="php-type">\Throwable</code><br>
+  
+  <div class="item_description"><p>If a storage hook or overridden clock propagates another exception or error through atomic execution.</p></div>
+  
+  
+  </div>
+
+  
+  <h2>Overrides</h2>
+  <div class="item_list">
+  <a href="interface-SmartFactory.Interfaces.IRequestThrottlingManager.html#registerRequest">\SmartFactory\Interfaces\IRequestThrottlingManager::registerRequest()</a>
+  </div>
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#177'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <hr id="saveRecords">
+
+  <h1>Method: AbstractRequestThrottlingManager::saveRecords()</h1>
+
+  <div class="definition"><span class="php-keyword1">abstract</span> <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> saveRecords(<span class="php-keyword1">string</span> <span class="php-var">$key</span>, <span class="php-keyword1">array</span> <span class="php-var">$timestamps</span>): <span class="php-keyword1">void</span>;</div>
+  
+
+  
+  <div class="short-description">
+  <p>Persists one caller's updated history inside its atomic execution boundary.</p>
+  </div>
+  
+
+  
+
+  
+
+  <h2>Parameters</h2>
+
+  <div class="parameter-table">
+    <table class="table table-bordered table-striped param_multicolumn">
+        <tr>
+        <th>Name</th>
+        <th>Pass type</th>
+        <th>Value type</th>
+        <th>Default value</th>
+        <th>Description</th>
+        </tr>
+
+        
+        <tr>
+            <td>
+                $key
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">string</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>The lowercase SHA-256 caller hash supplied to executeAtomically().</p>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                $timestamps
+            </td>
+            <td>
+                by value
+            </td>
+            <td>
+                <code class="php-type">list&lt;float&gt;</code>
+            </td>
+            <td>
+                
+            </td>
+            <td class="description_column">
+                <p>This caller's ordered timestamps, with expired history already removed.
+Repeated timestamp values represent separate requests and must not be deduplicated.</p>
+            </td>
+        </tr>
+        
+
+    </table>
+  </div>
+
+  
+  <h2>Returns</h2>
+  <div class="item_list">
+  <code class="php-type">void</code><br>
+  
+  <div class="item_description"><p>Replaces this caller's history and makes the update visible before atomic execution finishes.
+Other callers' active history must be preserved. Inactive history may be expired by the backend.</p></div>
+  
+  </div>
+  
+
+  <h2>Throws</h2>
+  <div class="item_list">
+  
+  <code class="php-type">\RuntimeException</code><br>
+  
+  <div class="item_description"><p>If persistence fails; incomplete writes must not replace the last valid history.</p></div>
+  
+  
+  </div>
+
+  
+
+  <h2>Authors</h2>
+  <div class="item_list">
+  
+  <div class='item'>Oleg Schildt</div>
+  
+  </div>
+
+  
+
+  
+
+  
+  <h2>Source code</h2>
+  <div class="item_list">
+  <a href='source-src.SmartFactory.AbstractRequestThrottlingManager.php.html#303'>src/SmartFactory/AbstractRequestThrottlingManager.php</a>
+  </div>
+                    
+                    <div id="footer">
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+
+        <script src="resources/jquery-3.2.1.min.js"></script>
+        <script src="resources/jquery-ui-1.12.1.min.js"></script>
+
+        <script src="elementlist.js"></script>
+        <script src="resources/main.js"></script>
+        
+        <script src="resources/jquery.iviewer.js" type="text/javascript"></script>
+        <script src="resources/jquery.mousewheel.js" type="text/javascript"></script>
+        
+    </body>
+</html>
+
+

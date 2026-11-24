@@ -107,18 +107,19 @@
                 <div class="col-md-12">
                     <h1>Function: format_number()</h1>
 
-<div class="definition"><span class="php-keyword1">function</span> format_number(string <span class="php-var">$number</span>, int <span class="php-var">$decimals</span> = <span class="php-num">0</span>, string <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, string <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>): ?string;</div>
+<div class="definition"><span class="php-keyword1">function</span> format_number(?<span class="php-keyword1">string</span> <span class="php-var">$number</span>, <span class="php-keyword1">int</span> <span class="php-var">$decimals</span> = <span class="php-num">0</span>, <span class="php-keyword1">string</span> <span class="php-var">$dec_point</span> = <span class="php-quote">&quot;.&quot;</span>, <span class="php-keyword1">string</span> <span class="php-var">$thousand_sep</span> = <span class="php-quote">&quot;,&quot;</span>): ?<span class="php-keyword1">string</span>;</div>
+
 
 
 <div class="short-description">
-<p>Formats the number due to the specified settings.</p>
+<p>Formats a numeric string using the specified separators and decimal precision.</p>
 </div>
 
 
 
 <div class="long_description">
 <h2>Details</h2>
-<p>It is a wrapper over the system function number_format.</p>
+<p>Null and empty strings are preserved to distinguish an absent value from zero.</p>
 </div>
 
 
@@ -126,7 +127,8 @@
 
 <h2>Parameters</h2>
 
-  <table class="table table-responsive table-bordered table-striped param_multicolumn">
+<div class="parameter-table">
+  <table class="table table-bordered table-striped param_multicolumn">
       <tr>
       <th>Name</th>
       <th>Pass type</th>
@@ -144,13 +146,13 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">(string | null)</code>
           </td>
           <td>
               
           </td>
           <td class="description_column">
-              <p>The number to be formatted.</p>
+              <p>The numeric string to format, or null or an empty string for an absent value.</p>
           </td>
       </tr>
       
@@ -162,7 +164,7 @@
               by value
           </td>
           <td>
-              int
+              <code class="php-type">int</code>
           </td>
           <td>
               0
@@ -180,7 +182,7 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;.&quot;
@@ -198,31 +200,39 @@
               by value
           </td>
           <td>
-              string
+              <code class="php-type">string</code>
           </td>
           <td>
               &quot;,&quot;
           </td>
           <td class="description_column">
-              <p>The thousand separator.</p>
+              <p>The thousands separator.</p>
           </td>
       </tr>
       
       
   </table>
+</div>
 
 
 <h2>Returns</h2>
 <div class="item_list">
-?string<br>
+<code class="php-type">(string | null)</code><br>
 
-<div class="item_description"><p>If the number is a vialid number, its formatted value is returned. Otherwise,
-the empty value is returned. It is usefil if we need to distiguish the empty value and 0.</p></div>
+<div class="item_description"><p>Returns the formatted number, or the original null or empty string.</p></div>
 
 </div>
 
 
+<h2>Throws</h2>
+<div class="item_list">
 
+<code class="php-type">\TypeError</code><br>
+
+<div class="item_description"><p>If a nonempty number string is not numeric and number_format() rejects it.</p></div>
+
+
+</div>
 
 <h2>Authors</h2>
 <div class="item_list">
@@ -245,11 +255,11 @@ the empty value is returned. It is usefil if we need to distiguish the empty val
 
 <h2>Source code</h2>
 <div class="item_list">
-<a href='source-utility_functions_inc.php.html#546'>utility_functions_inc.php</a>
+<a href='source-src.utility_functions_inc.php.html#601'>src/utility_functions_inc.php</a>
 </div>
                     
                     <div id="footer">
-                        Generated on 2025-11-25 16:57 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
+                        Generated on 2026-11-23 01:21 with <a href="https://github.com/oschildt/PhpDoxy" target="_blank">PhpDoxy</a>
                     </div>                    
                 </div>
             </div>
