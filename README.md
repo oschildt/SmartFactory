@@ -3,7 +3,7 @@
 - Lightweight simple PHP library
 - With many useful tools and functions
 - Without overhead
-- Designed based on IoC 
+- Designed based on IoC
 
 For more details see [Presentation](http://php-smart-factory.org/smartfactory_presentation.pdf) and
 [API documentation](http://php-smart-factory.org/smartfactory/).
@@ -19,7 +19,7 @@ composer require "smartfactory/smartfactory"
 ```
 
 **composer.json**
- 
+
 ```
 {
   ...
@@ -28,17 +28,24 @@ composer require "smartfactory/smartfactory"
     "php": ">=8.5",
     "smartfactory/smartfactory": ">=2.2.0"
   }
-  
+
   ...
 }
 ```
 
 ### To get familiar with the SmartFactory do the following:
 
-- Git-clone the demo application [SmartFactoryDemo](https://github.com/oschildt/SmartFactoryDemo) and run 'composer update'.
-- Use the script *database/create_database_mysql.sql* (*create_database_mssql.sql*) to create a demo database necessary for some examples.
-- View and study the API documentation in the folder docs or here [API documentation](http://php-smart-factory.org/smartfactory/).
-- Study the core code of the library SmartFactory.
+1. Git-clone the demo application [SmartFactoryDemo](https://github.com/oschildt/SmartFactoryDemo) and run 'composer update'.
+
+2. Use the scripts for your database engines to create the demo database required by some examples.
+  - MySQL - `database/mysql/create_database.cmd`
+  - PostgreSQL - `database/postgres/create_database.cmd`
+  - SQL Server - `database/mssql/create_database.cmd`
+  - Oracle - `database/oracle/create_database.cmd`
+
+3. View and study the API documentation in the folder docs or here [API documentation](http://php-smart-factory.org/smartfactory/).
+
+4. Study the core code of the library SmartFactory.
 
 ### To start writing own application using SmartFactory
 
@@ -46,17 +53,17 @@ composer require "smartfactory/smartfactory"
 
 2. Study the directory structure of the demo application and the code.
 
-3. Implement your classes and functions. 
+3. Implement your classes and functions.
 
 4. Bind you factory functions to the interfaces in the file *initialization_inc.php* to be able to use the IoC approach for creating objects offered by the library SmartFactory.
 
-5. Implement you business logic in the root directory or any subdirectory. 
+5. Implement you business logic in the root directory or any subdirectory.
 
 7. Implement the API request handlers for JSON or XML requests if necessary.
 
 8. Add translation texts for your application over the *localization/edit.php* or directly into the JSON file *localization/texts.json*. Use the option *Check* to check your translations for missing translations.
 
-## Directory Structure 
+## Directory Structure
 
 ```
 docs
